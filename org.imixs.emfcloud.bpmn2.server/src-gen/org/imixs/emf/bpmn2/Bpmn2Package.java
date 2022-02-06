@@ -520,14 +520,14 @@ public interface Bpmn2Package extends EPackage {
 	int ICON_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.imixs.emf.bpmn2.impl.WeightedEdgeImpl <em>Weighted Edge</em>}' class.
+	 * The meta object id for the '{@link org.imixs.emf.bpmn2.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.imixs.emf.bpmn2.impl.WeightedEdgeImpl
-	 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getWeightedEdge()
+	 * @see org.imixs.emf.bpmn2.impl.SequenceFlowImpl
+	 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getSequenceFlow()
 	 * @generated
 	 */
-	int WEIGHTED_EDGE = 3;
+	int SEQUENCE_FLOW = 3;
 
 	/**
 	 * The feature id for the '<em><b>Args</b></em>' map.
@@ -536,7 +536,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__ARGS = GraphPackage.GEDGE__ARGS;
+	int SEQUENCE_FLOW__ARGS = GraphPackage.GEDGE__ARGS;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -545,7 +545,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__ID = GraphPackage.GEDGE__ID;
+	int SEQUENCE_FLOW__ID = GraphPackage.GEDGE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -554,7 +554,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
+	int SEQUENCE_FLOW__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -563,7 +563,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__CHILDREN = GraphPackage.GEDGE__CHILDREN;
+	int SEQUENCE_FLOW__CHILDREN = GraphPackage.GEDGE__CHILDREN;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -572,7 +572,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__PARENT = GraphPackage.GEDGE__PARENT;
+	int SEQUENCE_FLOW__PARENT = GraphPackage.GEDGE__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -581,7 +581,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__TRACE = GraphPackage.GEDGE__TRACE;
+	int SEQUENCE_FLOW__TRACE = GraphPackage.GEDGE__TRACE;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -590,7 +590,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__TYPE = GraphPackage.GEDGE__TYPE;
+	int SEQUENCE_FLOW__TYPE = GraphPackage.GEDGE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Routing Points</b></em>' containment reference list.
@@ -599,7 +599,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
+	int SEQUENCE_FLOW__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
 
 	/**
 	 * The feature id for the '<em><b>Source Id</b></em>' attribute.
@@ -608,7 +608,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
+	int SEQUENCE_FLOW__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
 
 	/**
 	 * The feature id for the '<em><b>Target Id</b></em>' attribute.
@@ -617,7 +617,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
+	int SEQUENCE_FLOW__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -626,7 +626,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__SOURCE = GraphPackage.GEDGE__SOURCE;
+	int SEQUENCE_FLOW__SOURCE = GraphPackage.GEDGE__SOURCE;
 
 	/**
 	 * The feature id for the '<em><b>Target</b></em>' reference.
@@ -635,7 +635,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__TARGET = GraphPackage.GEDGE__TARGET;
+	int SEQUENCE_FLOW__TARGET = GraphPackage.GEDGE__TARGET;
 
 	/**
 	 * The feature id for the '<em><b>Router Kind</b></em>' attribute.
@@ -644,44 +644,44 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
+	int SEQUENCE_FLOW__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
 
 	/**
-	 * The feature id for the '<em><b>Probability</b></em>' attribute.
+	 * The feature id for the '<em><b>Condition</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE__PROBABILITY = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+	int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Weighted Edge</em>' class.
+	 * The number of structural features of the '<em>Sequence Flow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+	int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of operations of the '<em>Weighted Edge</em>' class.
+	 * The number of operations of the '<em>Sequence Flow</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int WEIGHTED_EDGE_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
+	int SEQUENCE_FLOW_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
 
 	/**
-	 * The meta object id for the '{@link org.imixs.emf.bpmn2.impl.CategoryImpl <em>Category</em>}' class.
+	 * The meta object id for the '{@link org.imixs.emf.bpmn2.impl.PoolImpl <em>Pool</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.imixs.emf.bpmn2.impl.CategoryImpl
-	 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getCategory()
+	 * @see org.imixs.emf.bpmn2.impl.PoolImpl
+	 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getPool()
 	 * @generated
 	 */
-	int CATEGORY = 4;
+	int POOL = 4;
 
 	/**
 	 * The feature id for the '<em><b>Args</b></em>' map.
@@ -690,7 +690,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__ARGS = ACTIVITY_NODE__ARGS;
+	int POOL__ARGS = ACTIVITY_NODE__ARGS;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -699,7 +699,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__ID = ACTIVITY_NODE__ID;
+	int POOL__ID = ACTIVITY_NODE__ID;
 
 	/**
 	 * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -708,7 +708,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+	int POOL__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
 
 	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -717,7 +717,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__CHILDREN = ACTIVITY_NODE__CHILDREN;
+	int POOL__CHILDREN = ACTIVITY_NODE__CHILDREN;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -726,7 +726,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__PARENT = ACTIVITY_NODE__PARENT;
+	int POOL__PARENT = ACTIVITY_NODE__PARENT;
 
 	/**
 	 * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -735,7 +735,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__TRACE = ACTIVITY_NODE__TRACE;
+	int POOL__TRACE = ACTIVITY_NODE__TRACE;
 
 	/**
 	 * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -744,7 +744,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__TYPE = ACTIVITY_NODE__TYPE;
+	int POOL__TYPE = ACTIVITY_NODE__TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -753,7 +753,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__POSITION = ACTIVITY_NODE__POSITION;
+	int POOL__POSITION = ACTIVITY_NODE__POSITION;
 
 	/**
 	 * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -762,7 +762,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__SIZE = ACTIVITY_NODE__SIZE;
+	int POOL__SIZE = ACTIVITY_NODE__SIZE;
 
 	/**
 	 * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -771,7 +771,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+	int POOL__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
 
 	/**
 	 * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -780,7 +780,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__LAYOUT = ACTIVITY_NODE__LAYOUT;
+	int POOL__LAYOUT = ACTIVITY_NODE__LAYOUT;
 
 	/**
 	 * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -789,7 +789,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
+	int POOL__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
 
 	/**
 	 * The feature id for the '<em><b>Node Type</b></em>' attribute.
@@ -798,7 +798,7 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+	int POOL__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -807,26 +807,25 @@ public interface Bpmn2Package extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+	int POOL__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
 
 	/**
-	 * The number of structural features of the '<em>Category</em>' class.
+	 * The number of structural features of the '<em>Pool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
+	int POOL_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
 
 	/**
-	 * The number of operations of the '<em>Category</em>' class.
+	 * The number of operations of the '<em>Pool</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CATEGORY_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
-
+	int POOL_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
 
 	/**
 	 * Returns the meta object for class '{@link org.imixs.emf.bpmn2.ActivityNode <em>Activity Node</em>}'.
@@ -925,46 +924,46 @@ public interface Bpmn2Package extends EPackage {
 	EClass getIcon();
 
 	/**
-	 * Returns the meta object for class '{@link org.imixs.emf.bpmn2.WeightedEdge <em>Weighted Edge</em>}'.
+	 * Returns the meta object for class '{@link org.imixs.emf.bpmn2.SequenceFlow <em>Sequence Flow</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Weighted Edge</em>'.
-	 * @see org.imixs.emf.bpmn2.WeightedEdge
+	 * @return the meta object for class '<em>Sequence Flow</em>'.
+	 * @see org.imixs.emf.bpmn2.SequenceFlow
 	 * @generated
 	 */
-	EClass getWeightedEdge();
+	EClass getSequenceFlow();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.imixs.emf.bpmn2.WeightedEdge#getProbability <em>Probability</em>}'.
+	 * Returns the meta object for the attribute '{@link org.imixs.emf.bpmn2.SequenceFlow#getCondition <em>Condition</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Probability</em>'.
-	 * @see org.imixs.emf.bpmn2.WeightedEdge#getProbability()
-	 * @see #getWeightedEdge()
+	 * @return the meta object for the attribute '<em>Condition</em>'.
+	 * @see org.imixs.emf.bpmn2.SequenceFlow#getCondition()
+	 * @see #getSequenceFlow()
 	 * @generated
 	 */
-	EAttribute getWeightedEdge_Probability();
+	EAttribute getSequenceFlow_Condition();
 
 	/**
-	 * Returns the meta object for class '{@link org.imixs.emf.bpmn2.Category <em>Category</em>}'.
+	 * Returns the meta object for class '{@link org.imixs.emf.bpmn2.Pool <em>Pool</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Category</em>'.
-	 * @see org.imixs.emf.bpmn2.Category
+	 * @return the meta object for class '<em>Pool</em>'.
+	 * @see org.imixs.emf.bpmn2.Pool
 	 * @generated
 	 */
-	EClass getCategory();
+	EClass getPool();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.imixs.emf.bpmn2.Category#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.imixs.emf.bpmn2.Pool#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.imixs.emf.bpmn2.Category#getName()
-	 * @see #getCategory()
+	 * @see org.imixs.emf.bpmn2.Pool#getName()
+	 * @see #getPool()
 	 * @generated
 	 */
-	EAttribute getCategory_Name();
+	EAttribute getPool_Name();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1068,32 +1067,32 @@ public interface Bpmn2Package extends EPackage {
 		EClass ICON = eINSTANCE.getIcon();
 
 		/**
-		 * The meta object literal for the '{@link org.imixs.emf.bpmn2.impl.WeightedEdgeImpl <em>Weighted Edge</em>}' class.
+		 * The meta object literal for the '{@link org.imixs.emf.bpmn2.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.imixs.emf.bpmn2.impl.WeightedEdgeImpl
-		 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getWeightedEdge()
+		 * @see org.imixs.emf.bpmn2.impl.SequenceFlowImpl
+		 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getSequenceFlow()
 		 * @generated
 		 */
-		EClass WEIGHTED_EDGE = eINSTANCE.getWeightedEdge();
+		EClass SEQUENCE_FLOW = eINSTANCE.getSequenceFlow();
 
 		/**
-		 * The meta object literal for the '<em><b>Probability</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute WEIGHTED_EDGE__PROBABILITY = eINSTANCE.getWeightedEdge_Probability();
+		EAttribute SEQUENCE_FLOW__CONDITION = eINSTANCE.getSequenceFlow_Condition();
 
 		/**
-		 * The meta object literal for the '{@link org.imixs.emf.bpmn2.impl.CategoryImpl <em>Category</em>}' class.
+		 * The meta object literal for the '{@link org.imixs.emf.bpmn2.impl.PoolImpl <em>Pool</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.imixs.emf.bpmn2.impl.CategoryImpl
-		 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getCategory()
+		 * @see org.imixs.emf.bpmn2.impl.PoolImpl
+		 * @see org.imixs.emf.bpmn2.impl.Bpmn2PackageImpl#getPool()
 		 * @generated
 		 */
-		EClass CATEGORY = eINSTANCE.getCategory();
+		EClass POOL = eINSTANCE.getPool();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1101,7 +1100,7 @@ public interface Bpmn2Package extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute CATEGORY__NAME = eINSTANCE.getCategory_Name();
+		EAttribute POOL__NAME = eINSTANCE.getPool_Name();
 
 	}
 

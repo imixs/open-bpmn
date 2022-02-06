@@ -1,0 +1,15 @@
+{
+  "version": "0.9.0",
+  "useWorkspaces": true,
+  "npmClient": "yarn",
+  "command": {
+    "run": {
+      "stream": true
+    },
+    "publish": {
+      "forcePublish": true,
+      "skipGit": true,
+      "registry": "https://registry.npmjs.org/"
+    }
+  }
+}

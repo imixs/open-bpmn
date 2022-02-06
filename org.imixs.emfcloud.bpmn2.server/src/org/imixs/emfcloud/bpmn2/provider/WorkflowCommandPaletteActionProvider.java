@@ -48,7 +48,6 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
    protected GModelState modelState;
 
    @Override
-   @SuppressWarnings("checkstyle:CyclomaticComplexity")
    public List<LabeledAction> getActions(final EditorContext editorContext) {
       List<LabeledAction> actions = Lists.newArrayList();
       if (modelState.isReadonly()) {
@@ -73,7 +72,7 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
          new LabeledAction("Create Decision Node", Lists.newArrayList(new CreateNodeOperation(
             ModelTypes.DECISION_NODE, lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
          new LabeledAction("Create Category", Lists.newArrayList(new CreateNodeOperation(
-            ModelTypes.CATEGORY, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))));
+            ModelTypes.POOL, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))));
 
       // Create edge actions between two nodes
       if (selectedElements.size() == 1) {
@@ -116,7 +115,7 @@ public class WorkflowCommandPaletteActionProvider implements CommandPaletteActio
 
    private LabeledAction createWeightedEdgeAction(final String label, final GNode source, final GNode node) {
       return new LabeledAction(label, Lists.newArrayList(
-         new CreateEdgeOperation(ModelTypes.WEIGHTED_EDGE, source.getId(), node.getId())), "fa-plus-square");
+         new CreateEdgeOperation(ModelTypes.SEQUENCE_FLOW, source.getId(), node.getId())), "fa-plus-square");
    }
 
    private LabeledAction createEdgeAction(final String label, final GNode source, final GNode node) {

@@ -28,10 +28,10 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.emf.bpmn2.ActivityNode;
 import org.imixs.emf.bpmn2.Bpmn2Factory;
-import org.imixs.emf.bpmn2.Category;
+import org.imixs.emf.bpmn2.Pool;
 import org.imixs.emf.bpmn2.Icon;
 import org.imixs.emf.bpmn2.TaskNode; 
-import org.imixs.emf.bpmn2.WeightedEdge;
+import org.imixs.emf.bpmn2.SequenceFlow;
 
 
 public final class WorkflowBuilder {
@@ -40,32 +40,32 @@ public final class WorkflowBuilder {
    private static final String H_GRAB = "hGrab";
    private static final String H_ALIGN = "hAlign";
 
-   public static class WeightedEdgeBuilder extends AbstractGEdgeBuilder<WeightedEdge, WeightedEdgeBuilder> {
+   public static class SequenceFlowBuilder extends AbstractGEdgeBuilder<SequenceFlow, SequenceFlowBuilder> {
 
-      private String probability;
+      private String condition;
 
-      public WeightedEdgeBuilder() {
-         super(ModelTypes.WEIGHTED_EDGE);
+      public SequenceFlowBuilder() {
+         super(ModelTypes.SEQUENCE_FLOW);
       }
 
-      public WeightedEdgeBuilder probability(final String probability) {
-         this.probability = probability;
+      public SequenceFlowBuilder probability(final String condition) {
+         this.condition = condition;
          return self();
       }
 
       @Override
-      protected void setProperties(final WeightedEdge edge) {
+      protected void setProperties(final SequenceFlow edge) {
          super.setProperties(edge);
-         edge.setProbability(probability);
+         edge.setCondition(condition);
       }
 
       @Override
-      protected WeightedEdge instantiate() {
-         return Bpmn2Factory.eINSTANCE.createWeightedEdge();
+      protected SequenceFlow instantiate() {
+         return Bpmn2Factory.eINSTANCE.createSequenceFlow();
       }
 
       @Override
-      protected WeightedEdgeBuilder self() {
+      protected SequenceFlowBuilder self() {
          return this;
       }
 
@@ -162,28 +162,28 @@ public final class WorkflowBuilder {
 
    }
 
-   public static class CategoryNodeBuilder extends AbstractGNodeBuilder<Category, CategoryNodeBuilder> {
+   public static class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder> {
       private String name;
 
-      public CategoryNodeBuilder(final String name) {
-         super(ModelTypes.CATEGORY);
+      public PoolNodeBuilder(final String name) {
+         super(ModelTypes.POOL);
          this.name = name;
       }
 
       @Override
-      protected Category instantiate() {
-         return Bpmn2Factory.eINSTANCE.createCategory();
+      protected Pool instantiate() {
+         return Bpmn2Factory.eINSTANCE.createPool();
       }
 
       @Override
-      protected CategoryNodeBuilder self() {
+      protected PoolNodeBuilder self() {
          return this;
       }
 
       public void setName(final String name) { this.name = name; }
 
       @Override
-      protected void setProperties(final Category node) {
+      protected void setProperties(final Pool node) {
          super.setProperties(node);
          node.setName(name);
          node.setLayout(GConstants.Layout.VBOX);
@@ -195,7 +195,7 @@ public final class WorkflowBuilder {
          node.getChildren().add(createStructCompartment(node));
       }
 
-      private GCompartment createLabelCompartment(final Category node) {
+      private GCompartment createLabelCompartment(final Pool node) {
          Map<String, Object> layoutOptions = new HashMap<>();
 
          return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
@@ -206,14 +206,14 @@ public final class WorkflowBuilder {
             .build();
       }
 
-      private GLabel createCompartmentHeader(final Category node) {
+      private GLabel createCompartmentHeader(final Pool node) {
          return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
             .id(node.getId() + "_classname") //
             .text(node.getName()) //
             .build();
       }
 
-      private GCompartment createStructCompartment(final Category node) {
+      private GCompartment createStructCompartment(final Pool node) {
          Map<String, Object> layoutOptions = new HashMap<>();
          layoutOptions.put(H_ALIGN, "left");
          layoutOptions.put(H_GRAB, true);

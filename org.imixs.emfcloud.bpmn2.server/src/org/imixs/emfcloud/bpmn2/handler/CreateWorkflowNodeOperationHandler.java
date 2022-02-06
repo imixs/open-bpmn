@@ -22,7 +22,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
-import org.imixs.emf.bpmn2.Category;
+import org.imixs.emf.bpmn2.Pool;
 import org.imixs.emfcloud.bpmn2.util.ModelTypes;
 
 public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOperationHandler {
@@ -40,12 +40,12 @@ public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOpera
    protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
       Optional<GModelElement> container = super.getContainer(operation);
       // If the container is a Category node, find its structure compartment
-      Optional<GModelElement> structCompt = container.filter(Category.class::isInstance).map(Category.class::cast)
+      Optional<GModelElement> structCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
          .flatMap(this::getCategoryCompartment);
       return structCompt.isPresent() ? structCompt : container;
    }
 
-   protected Optional<GCompartment> getCategoryCompartment(final Category category) {
+   protected Optional<GCompartment> getCategoryCompartment(final Pool category) {
       return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
          .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
    }

@@ -18,11 +18,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//TaskNode/reference"/>
     </genClasses>
     <genClasses ecoreClass="bpmn2.ecore#//Icon"/>
-    <genClasses ecoreClass="bpmn2.ecore#//WeightedEdge">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//WeightedEdge/probability"/>
+    <genClasses ecoreClass="bpmn2.ecore#//SequenceFlow">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//SequenceFlow/condition"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn2.ecore#//Category">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Category/name"/>
+    <genClasses ecoreClass="bpmn2.ecore#//Pool">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Pool/name"/>
     </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"

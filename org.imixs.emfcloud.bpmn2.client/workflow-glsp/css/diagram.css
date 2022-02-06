@@ -1,0 +1,106 @@
+/********************************************************************************
+ * Copyright (c) 2019-2022 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+.sprotty-graph {
+    font-size: 15pt;
+    border: none;
+    height: 100%;
+}
+
+.sprotty-text {
+    font-size: 12pt;
+    text-anchor: middle;
+}
+
+.sprotty-node {
+    stroke-width: 0;
+    font-weight: bold;
+}
+
+.sprotty-label {
+    stroke-width: 0;
+    fill: #000;
+    font-weight: inherit;
+    text-align: inherit;
+    font-size: 100%;
+}
+
+.sprotty-label.heading {
+    font-weight: normal;
+    font-size: 0.7em;
+    fill: #f0f3f8;
+}
+
+.icon path {
+    stroke-width: 0;
+    fill: #f0f3f8;
+}
+
+.icon .icon-background {
+    fill: transparent;
+}
+
+.task.automated > .sprotty-node {
+    fill: #5b9fa8;
+}
+
+.task.manual > .sprotty-node {
+    fill: #db8651;
+}
+
+.pool > .sprotty-node {
+    fill: #5c87bd;
+}
+
+.sprotty-edge.weighted.low:not(.selected),
+.sprotty-edge.weighted.low:not(.selected) .arrow {
+    stroke: rgb(128, 90, 233);
+}
+
+.sprotty-edge.weighted.low:not(.selected) .arrow {
+    fill: rgb(128, 90, 233);
+}
+
+.sprotty-edge.weighted:not(.selected),
+.sprotty-edge.weighted:not(.selected) .arrow,
+.sprotty-edge.weighted.medium:not(.selected),
+.sprotty-edge.weighted.medium:not(.selected) .arrow {
+    stroke: rgb(98, 60, 193);
+}
+
+.sprotty-edge.weighted:not(.selected) .arrow,
+.sprotty-edge.weighted.medium:not(.selected) .arrow {
+    fill: rgb(98, 60, 193);
+}
+
+.sprotty-edge.weighted.high:not(.selected),
+.sprotty-edge.weighted.high:not(.selected) .arrow {
+    stroke: rgb(68, 30, 163);
+}
+
+.sprotty-edge.weighted.high:not(.selected) .arrow {
+    fill: rgb(68, 30, 163);
+}
+
+.sprotty-comp {
+    stroke: transparent;
+    fill: transparent;
+}
+
+.label-edit input {
+    margin-top: -3px;
+    margin-left: -3px;
+}

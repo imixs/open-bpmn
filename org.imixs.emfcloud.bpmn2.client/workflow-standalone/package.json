@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "workflow-standalone",
+  "version": "0.9.0",
+  "description": "Standalone browser-app for the Workflow example",
+  "author": {
+    "name": "Eclipse GLSP"
+  },
+  "homepage": "https://www.eclipse.org/glsp/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-glsp/glsp-client.git"
+  },
+  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "contributors": [
+    {
+      "name": "Eclipse GLSP Project",
+      "email": "glsp-dev@eclipse.org",
+      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+    }
+  ],
+  "dependencies": {
+    "@eclipse-glsp-examples/workflow-glsp": "0.9.0",
+    "@eclipse-glsp/client": "0.9.0"
+  },
+  "devDependencies": {
+    "circular-dependency-plugin": "^5.2.2",
+    "css-loader": "^2.1.0",
+    "file-loader": "^6.2.0",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^3.0.2",
+    "source-map-loader": "^1.0.2",
+    "style-loader": "^2.0.0",
+    "typescript": "^3.9.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepare": "yarn clean && yarn build && yarn lint",
+    "clean": "rimraf lib app/bundle.js app/bundle.js.map app/css",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "build": "tsc && webpack",
+    "watch": "tsc -w -p ./tsconfig.json"
+  },
+  "types": "lib",
+  "main": "lib"
+}

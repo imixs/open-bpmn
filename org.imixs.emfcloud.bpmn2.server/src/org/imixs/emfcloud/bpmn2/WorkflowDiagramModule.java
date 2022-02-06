@@ -40,14 +40,14 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateAutomatedTaskHandler;
-import org.imixs.emfcloud.bpmn2.handler.CreateCategoryHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreatePoolHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateDecisionNodeHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateEdgeHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateForkNodeHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateJoinNodeHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateManualTaskHandler;
 import org.imixs.emfcloud.bpmn2.handler.CreateMergeNodeHandler;
-import org.imixs.emfcloud.bpmn2.handler.CreateWeightedEdgeHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateSequenceFlowEdgeHandler;
 import org.imixs.emfcloud.bpmn2.handler.LogActionHandler;
 import org.imixs.emfcloud.bpmn2.handler.WorkflowRequestContextActionsHandler;
 import org.imixs.emfcloud.bpmn2.labeledit.WorkflowLabelEditValidator;
@@ -121,8 +121,8 @@ public class WorkflowDiagramModule extends GModelJsonDiagramModule {
 	      binding.add(CreateForkNodeHandler.class);
 	      binding.add(CreateJoinNodeHandler.class);
 	      binding.add(CreateEdgeHandler.class);
-	      binding.add(CreateWeightedEdgeHandler.class);
-	      binding.add(CreateCategoryHandler.class);
+	      binding.add(CreateSequenceFlowEdgeHandler.class);
+	      binding.add(CreatePoolHandler.class);
 	      binding.add(EditTaskOperationHandler.class);
 	      binding.add(ApplyTaskEditOperationHandler.class);
 	   }

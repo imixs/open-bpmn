@@ -59,8 +59,8 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
 			case Bpmn2Package.ACTIVITY_NODE: return createActivityNode();
 			case Bpmn2Package.TASK_NODE: return createTaskNode();
 			case Bpmn2Package.ICON: return createIcon();
-			case Bpmn2Package.WEIGHTED_EDGE: return createWeightedEdge();
-			case Bpmn2Package.CATEGORY: return createCategory();
+			case Bpmn2Package.SEQUENCE_FLOW: return createSequenceFlow();
+			case Bpmn2Package.POOL: return createPool();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -101,9 +101,9 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public WeightedEdge createWeightedEdge() {
-		WeightedEdgeImpl weightedEdge = new WeightedEdgeImpl();
-		return weightedEdge;
+	public SequenceFlow createSequenceFlow() {
+		SequenceFlowImpl sequenceFlow = new SequenceFlowImpl();
+		return sequenceFlow;
 	}
 
 	/**
@@ -111,9 +111,9 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Category createCategory() {
-		CategoryImpl category = new CategoryImpl();
-		return category;
+	public Pool createPool() {
+		PoolImpl pool = new PoolImpl();
+		return pool;
 	}
 
 	/**

@@ -115,26 +115,26 @@ public class Bpmn2Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case Bpmn2Package.WEIGHTED_EDGE: {
-				WeightedEdge weightedEdge = (WeightedEdge)theEObject;
-				T result = caseWeightedEdge(weightedEdge);
-				if (result == null) result = caseGEdge(weightedEdge);
-				if (result == null) result = caseGModelElement(weightedEdge);
-				if (result == null) result = caseGArgumentable(weightedEdge);
+			case Bpmn2Package.SEQUENCE_FLOW: {
+				SequenceFlow sequenceFlow = (SequenceFlow)theEObject;
+				T result = caseSequenceFlow(sequenceFlow);
+				if (result == null) result = caseGEdge(sequenceFlow);
+				if (result == null) result = caseGModelElement(sequenceFlow);
+				if (result == null) result = caseGArgumentable(sequenceFlow);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case Bpmn2Package.CATEGORY: {
-				Category category = (Category)theEObject;
-				T result = caseCategory(category);
-				if (result == null) result = caseActivityNode(category);
-				if (result == null) result = caseGNode(category);
-				if (result == null) result = caseGShapeElement(category);
-				if (result == null) result = caseGEdgeLayoutable(category);
-				if (result == null) result = caseGLayouting(category);
-				if (result == null) result = caseGModelElement(category);
-				if (result == null) result = caseGBoundsAware(category);
-				if (result == null) result = caseGArgumentable(category);
+			case Bpmn2Package.POOL: {
+				Pool pool = (Pool)theEObject;
+				T result = casePool(pool);
+				if (result == null) result = caseActivityNode(pool);
+				if (result == null) result = caseGNode(pool);
+				if (result == null) result = caseGShapeElement(pool);
+				if (result == null) result = caseGEdgeLayoutable(pool);
+				if (result == null) result = caseGLayouting(pool);
+				if (result == null) result = caseGModelElement(pool);
+				if (result == null) result = caseGBoundsAware(pool);
+				if (result == null) result = caseGArgumentable(pool);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -188,32 +188,32 @@ public class Bpmn2Switch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Weighted Edge</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Sequence Flow</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Weighted Edge</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Sequence Flow</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseWeightedEdge(WeightedEdge object) {
+	public T caseSequenceFlow(SequenceFlow object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Category</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Pool</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Category</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Pool</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseCategory(Category object) {
+	public T casePool(Pool object) {
 		return null;
 	}
 

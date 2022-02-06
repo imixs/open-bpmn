@@ -1,0 +1,217 @@
+/********************************************************************************
+ * Copyright (c) 2019-2022 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+.sprotty {
+    padding: 0px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.sprotty svg text::selection {
+    background: none;
+}
+
+.sprotty-hidden {
+    display: block;
+    position: absolute;
+    width: 0px;
+    height: 0px;
+}
+
+.sprotty-popup {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    position: absolute;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid;
+    max-width: 400px;
+    min-width: 100px;
+    z-index: 1;
+}
+
+.sprotty-popup > div {
+    margin: 10px;
+}
+
+.sprotty-popup-closed {
+    display: none;
+}
+
+.sprotty-resize-handle {
+    /* radius does not work in Firefox */
+    r: 5px;
+    fill: #1d80d1;
+    stroke: none;
+    z-index: 1000;
+}
+
+.sprotty-resize-handle.selected {
+    fill: #1d80d1;
+}
+
+.sprotty-resize-handle.active {
+    fill: #1d80d1;
+}
+
+.sprotty-edge {
+    fill: none;
+    stroke-width: 1.5px;
+}
+
+.sprotty-edge.selected {
+    stroke-width: 1.5px;
+}
+
+.sprotty-edge.mouseover:not(.selected) path {
+    stroke-width: 1.5px;
+}
+
+.sprotty-node:not(.selected) {
+    stroke-width: 0px;
+}
+
+.sprotty-node.mouseover:not(.selected),
+.sprotty-edge.mouseover:not(.selected) {
+    opacity: 60%;
+}
+
+.sprotty-node.selected,
+.sprotty-edge.selected {
+    stroke: #1d80d1;
+    stroke-width: 1.5px;
+    stroke-dashoffset: 5;
+    stroke-dasharray: 5, 5;
+    stroke-linecap: round;
+}
+
+.sprotty-edge.mouseover:not(.selected) .arrow,
+.sprotty-edge.selected .arrow {
+    stroke-dashoffset: none;
+    stroke-dasharray: none;
+}
+
+.node-creation-mode {
+    cursor: copy;
+}
+
+.overlap-forbidden-mode {
+    cursor: not-allowed;
+}
+
+.default-mode {
+    cursor: default;
+}
+
+.edge-modification-not-allowed-mode {
+    cursor: no-drop;
+}
+
+.edge-creation-select-source-mode {
+    cursor: pointer;
+}
+
+.edge-creation-select-target-mode,
+.edge-reconnect-select-target-mode {
+    cursor: crosshair;
+}
+
+.move-mode {
+    cursor: move;
+}
+
+.resize-nesw-mode {
+    cursor: nesw-resize;
+}
+
+.resize-nwse-mode {
+    cursor: nwse-resize;
+}
+
+.element-deletion-mode {
+    cursor: pointer;
+}
+
+.marquee-mode {
+    cursor: crosshair;
+}
+
+.sprotty-node.marquee {
+    fill: lightgray;
+    opacity: 0.2;
+}
+
+.sprotty-edge > .sprotty-routing-handle {
+    r: 5px;
+    fill: #1d80d1;
+    stroke: none;
+    z-index: 1000;
+}
+
+.sprotty-edge > .sprotty-routing-handle[data-kind='line'] {
+    opacity: 0.35;
+}
+
+.sprotty-edge > .sprotty-routing-handle.selected {
+    fill: #1d80d1;
+}
+
+.sprotty-edge > .sprotty-routing-handle.mouseover {
+    stroke: #1d80d1a1;
+    stroke-width: 1;
+}
+
+.sprotty-missing {
+    stroke-width: 1;
+    stroke: #f00;
+    fill: #f00;
+    font-size: 14pt;
+    text-anchor: middle;
+}
+
+g .movement-not-allowed > .sprotty-node {
+    stroke: var(--glsp-error-foreground) !important;
+}
+
+.sprotty-resize-handle.movement-not-allowed {
+    stroke: var(--glsp-error-foreground) !important;
+    fill: var(--glsp-error-foreground) !important;
+}
+
+.error > .sprotty-node {
+    filter: drop-shadow(0px 0px 2px var(--glsp-error-foreground)) !important;
+}
+
+.warning > .sprotty-node {
+    filter: drop-shadow(0px 0px 2px var(--glsp-warning-foreground)) !important;
+}
+
+.info > .sprotty-node {
+    filter: drop-shadow(0px 0px 2px var(--glsp-info-foreground)) !important;
+}
+
+svg {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #bbb;
+}
+
+text {
+    stroke-width: 0;
+    stroke: #000;
+    fill: #000;
+    font-family: sans-serif;
+    font-size: 8pt;
+    text-anchor: middle;
+}

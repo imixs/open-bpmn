@@ -1,0 +1,70 @@
+{
+  "name": "@eclipse-glsp/client",
+  "version": "0.9.0",
+  "description": "A sprotty-based client for GLSP",
+  "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
+  "keywords": [
+    "eclipse",
+    "graphics",
+    "diagram",
+    "modeling",
+    "visualization",
+    "glsp",
+    "diagram editor"
+  ],
+  "author": {
+    "name": "Eclipse GLSP"
+  },
+  "homepage": "https://www.eclipse.org/glsp/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-glsp/glsp-client.git"
+  },
+  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "contributors": [
+    {
+      "name": "Eclipse GLSP Project",
+      "email": "glsp-dev@eclipse.org",
+      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+    }
+  ],
+  "files": [
+    "lib",
+    "src",
+    "css"
+  ],
+  "dependencies": {
+    "@eclipse-glsp/protocol": "0.9.0",
+    "autocompleter": "5.1.0",
+    "sprotty": "0.10.0"
+  },
+  "devDependencies": {
+    "@babel/runtime": "^7.11.2",
+    "@types/chai": "4.1.3",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "10.14.18",
+    "@vscode/codicons": "^0.0.25",
+    "chai": "^4.2.0",
+    "ignore-styles": "^5.0.1",
+    "mocha": "^6.2.0",
+    "mocha-jenkins-reporter": "0.4.5",
+    "reflect-metadata": "^0.1.13",
+    "rimraf": "^2.6.1",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.9.2"
+  },
+  "scripts": {
+    "prepare": "yarn clean && yarn build && yarn lint",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "watch": "tsc -w",
+    "test": "mocha --opts ./mocha.opts \"./src/**/*.spec.?(ts|tsx)\"",
+    "test:ci": "export JUNIT_REPORT_PATH=./report.xml && yarn test --reporter mocha-jenkins-reporter"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "lib/index",
+  "types": "lib/index"
+}

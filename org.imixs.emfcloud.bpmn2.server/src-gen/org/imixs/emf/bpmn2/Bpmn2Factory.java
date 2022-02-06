@@ -49,22 +49,22 @@ public interface Bpmn2Factory extends EFactory {
 	Icon createIcon();
 
 	/**
-	 * Returns a new object of class '<em>Weighted Edge</em>'.
+	 * Returns a new object of class '<em>Sequence Flow</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Weighted Edge</em>'.
+	 * @return a new object of class '<em>Sequence Flow</em>'.
 	 * @generated
 	 */
-	WeightedEdge createWeightedEdge();
+	SequenceFlow createSequenceFlow();
 
 	/**
-	 * Returns a new object of class '<em>Category</em>'.
+	 * Returns a new object of class '<em>Pool</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Category</em>'.
+	 * @return a new object of class '<em>Pool</em>'.
 	 * @generated
 	 */
-	Category createCategory();
+	Pool createPool();
 
 	/**
 	 * Returns the package supported by this factory.
