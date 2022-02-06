@@ -10,7 +10,19 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: model,
  model.impl,
- model.util
+ model.util,
+ bpmn2,
+ bpmn2.impl,
+ bpmn2.util,
+ graph,
+ graph.impl,
+ graph.util,
+ org.eclipse.glsp.graph,
+ org.eclipse.glsp.graph.impl,
+ org.eclipse.glsp.graph.util,
+ org.imixs.emfcloud.bpmn2.model.bpmn2,
+ org.imixs.emfcloud.bpmn2.model.bpmn2.impl,
+ org.imixs.emfcloud.bpmn2.model.bpmn2.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy

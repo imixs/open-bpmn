@@ -27,12 +27,21 @@
             genModel="model/workflow-graph.genmodel"/>
    </extension>
 
+  
+
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated mymodel -->
+      <!-- @generated bpmn2 -->
       <package
-            uri="http://www.imixs.org/bpmn2cloud"
-            class="model.ModelPackage"
-            genModel="model/mymodel.genmodel"/>
+            uri="http://www.eclipse.org/glsp/bpmn2"
+            class="bpmn2.Bpmn2Package"
+            genModel="model/bpmn2.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated bpmn2 -->
+      <package
+            uri="http://www.eclipse.org/glsp/graph"
+            class="graph.GraphPackage"
+            genModel="model/bpmn2.genmodel"/>
+   </extension>
 </plugin>
