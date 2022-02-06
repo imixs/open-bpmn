@@ -16,6 +16,7 @@
 package org.imixs.emfcloud.bpmn2;
 
 
+
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
@@ -37,7 +38,31 @@ import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreatePoolHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateTaskHandler;
+import org.imixs.emfcloud.bpmn2.irgendwas.ApplyTaskEditOperationHandler;
+import org.imixs.emfcloud.bpmn2.irgendwas.EditTaskOperationHandler;
+import org.imixs.emfcloud.bpmn2.irgendwas.LogActionHandler;
+import org.imixs.emfcloud.bpmn2.irgendwas.NextNodeNavigationTargetProvider;
+import org.imixs.emfcloud.bpmn2.irgendwas.NodeDocumentationNavigationTargetProvider;
+import org.imixs.emfcloud.bpmn2.irgendwas.PreviousNodeNavigationTargetProvider;
+import org.imixs.emfcloud.bpmn2.irgendwas.TaskEditContextActionProvider;
+import org.imixs.emfcloud.bpmn2.irgendwas.TaskEditValidator;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowCommandPaletteActionProvider;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowContextMenuItemProvider;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowLabelEditValidator;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowModelValidator;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowNavigationTargetResolver;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowPopupFactory;
+import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowRequestContextActionsHandler;
+import org.imixs.emfcloud.bpmn2.layout.WorkflowLayoutEngine;
+import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.PoolNodeBuilder;
 
+/**
+ * This class is -- FOR WHAT???
+ * @author rsoika
+ *
+ */
 public class WorkflowDiagramModule extends GModelJsonDiagramModule {
 
    @Override
@@ -83,15 +108,8 @@ public class WorkflowDiagramModule extends GModelJsonDiagramModule {
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
       super.configureOperationHandlers(binding);
-      binding.add(CreateAutomatedTaskHandler.class);
-      binding.add(CreateManualTaskHandler.class);
-      binding.add(CreateDecisionNodeHandler.class);
-      binding.add(CreateMergeNodeHandler.class);
-      binding.add(CreateForkNodeHandler.class);
-      binding.add(CreateJoinNodeHandler.class);
-      binding.add(CreateEdgeHandler.class);
-      binding.add(CreateWeightedEdgeHandler.class);
-      binding.add(CreateCategoryHandler.class);
+      binding.add(CreateTaskHandler.class);
+      binding.add(CreatePoolHandler.class);
       binding.add(EditTaskOperationHandler.class);
       binding.add(ApplyTaskEditOperationHandler.class);
    }
