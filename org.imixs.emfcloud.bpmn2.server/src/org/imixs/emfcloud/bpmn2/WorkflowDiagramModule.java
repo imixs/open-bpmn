@@ -15,30 +15,7 @@
  ********************************************************************************/
 package org.imixs.emfcloud.bpmn2;
 
-import org.eclipse.glsp.example.workflow.handler.CreateAutomatedTaskHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateCategoryHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateDecisionNodeHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateEdgeHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateForkNodeHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateJoinNodeHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateManualTaskHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateMergeNodeHandler;
-import org.eclipse.glsp.example.workflow.handler.CreateWeightedEdgeHandler;
-import org.eclipse.glsp.example.workflow.handler.LogActionHandler;
-import org.eclipse.glsp.example.workflow.handler.WorkflowRequestContextActionsHandler;
-import org.eclipse.glsp.example.workflow.labeledit.WorkflowLabelEditValidator;
-import org.eclipse.glsp.example.workflow.layout.WorkflowLayoutEngine;
-import org.eclipse.glsp.example.workflow.marker.WorkflowModelValidator;
-import org.eclipse.glsp.example.workflow.model.WorkflowNavigationTargetResolver;
-import org.eclipse.glsp.example.workflow.provider.NextNodeNavigationTargetProvider;
-import org.eclipse.glsp.example.workflow.provider.NodeDocumentationNavigationTargetProvider;
-import org.eclipse.glsp.example.workflow.provider.PreviousNodeNavigationTargetProvider;
-import org.eclipse.glsp.example.workflow.provider.WorkflowCommandPaletteActionProvider;
-import org.eclipse.glsp.example.workflow.provider.WorkflowContextMenuItemProvider;
-import org.eclipse.glsp.example.workflow.taskedit.ApplyTaskEditOperationHandler;
-import org.eclipse.glsp.example.workflow.taskedit.EditTaskOperationHandler;
-import org.eclipse.glsp.example.workflow.taskedit.TaskEditContextActionProvider;
-import org.eclipse.glsp.example.workflow.taskedit.TaskEditValidator;
+
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;

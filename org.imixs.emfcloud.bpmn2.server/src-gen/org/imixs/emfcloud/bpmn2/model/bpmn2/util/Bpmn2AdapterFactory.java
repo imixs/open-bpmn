@@ -11,6 +11,8 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.glsp.graph.GArgumentable;
 import org.eclipse.glsp.graph.GBoundsAware;
+import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
@@ -80,6 +82,18 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
 				return createTaskAdapter();
 			}
 			@Override
+			public Adapter casePool(Pool object) {
+				return createPoolAdapter();
+			}
+			@Override
+			public Adapter caseSequenceFlow(SequenceFlow object) {
+				return createSequenceFlowAdapter();
+			}
+			@Override
+			public Adapter caseIcon(Icon object) {
+				return createIconAdapter();
+			}
+			@Override
 			public Adapter caseGArgumentable(GArgumentable object) {
 				return createGArgumentableAdapter();
 			}
@@ -106,6 +120,14 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseGNode(GNode object) {
 				return createGNodeAdapter();
+			}
+			@Override
+			public Adapter caseGEdge(GEdge object) {
+				return createGEdgeAdapter();
+			}
+			@Override
+			public Adapter caseGCompartment(GCompartment object) {
+				return createGCompartmentAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -138,6 +160,48 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTaskAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.imixs.emfcloud.bpmn2.model.bpmn2.Pool <em>Pool</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.imixs.emfcloud.bpmn2.model.bpmn2.Pool
+	 * @generated
+	 */
+	public Adapter createPoolAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.imixs.emfcloud.bpmn2.model.bpmn2.SequenceFlow <em>Sequence Flow</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.imixs.emfcloud.bpmn2.model.bpmn2.SequenceFlow
+	 * @generated
+	 */
+	public Adapter createSequenceFlowAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.imixs.emfcloud.bpmn2.model.bpmn2.Icon <em>Icon</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.imixs.emfcloud.bpmn2.model.bpmn2.Icon
+	 * @generated
+	 */
+	public Adapter createIconAdapter() {
 		return null;
 	}
 
@@ -236,6 +300,34 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createGNodeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdge <em>GEdge</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.glsp.graph.GEdge
+	 * @generated
+	 */
+	public Adapter createGEdgeAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GCompartment <em>GCompartment</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.glsp.graph.GCompartment
+	 * @generated
+	 */
+	public Adapter createGCompartmentAdapter() {
 		return null;
 	}
 

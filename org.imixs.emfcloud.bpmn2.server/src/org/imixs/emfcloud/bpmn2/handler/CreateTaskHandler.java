@@ -13,20 +13,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.example.workflow.handler;
+package org.imixs.emfcloud.bpmn2.handler;
 
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.eclipse.glsp.example.workflow.utils.ModelTypes;
-import org.eclipse.glsp.example.workflow.utils.WorkflowBuilder.TaskNodeBuilder;
-import org.eclipse.glsp.example.workflow.wfgraph.WfgraphPackage;
+
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
+import org.imixs.emfcloud.bpmn2.model.bpmn2.Bpmn2Package;
+import org.imixs.emfcloud.bpmn2.util.ModelTypes;
+import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.TaskBuilder;
 
 public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandler {
 
@@ -41,11 +42,11 @@ public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandl
 
    protected String getElementTypeId() { return elementTypeId; }
 
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(WfgraphPackage.Literals.TASK_NODE, "task", modelState);
+   protected TaskBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+      int nodeCounter = GModelUtil.generateId(Bpmn2Package.Literals.TASK, "task", modelState);
       String name = labelProvider.apply(nodeCounter);
       String taskType = ModelTypes.toNodeType(getElementTypeId());
-      return new TaskNodeBuilder(getElementTypeId(), name, taskType, 0) //
+      return new TaskBuilder(getElementTypeId(), name, taskType, 0) //
          .position(point.orElse(null))
          .addArguments(GArguments.cornerRadius(5))
          .addCssClass("task");

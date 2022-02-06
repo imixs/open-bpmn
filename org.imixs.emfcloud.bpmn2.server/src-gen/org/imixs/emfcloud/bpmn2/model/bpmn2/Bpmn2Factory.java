@@ -31,6 +31,33 @@ public interface Bpmn2Factory extends EFactory {
 	Task createTask();
 
 	/**
+	 * Returns a new object of class '<em>Pool</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Pool</em>'.
+	 * @generated
+	 */
+	Pool createPool();
+
+	/**
+	 * Returns a new object of class '<em>Sequence Flow</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Sequence Flow</em>'.
+	 * @generated
+	 */
+	SequenceFlow createSequenceFlow();
+
+	/**
+	 * Returns a new object of class '<em>Icon</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Icon</em>'.
+	 * @generated
+	 */
+	Icon createIcon();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

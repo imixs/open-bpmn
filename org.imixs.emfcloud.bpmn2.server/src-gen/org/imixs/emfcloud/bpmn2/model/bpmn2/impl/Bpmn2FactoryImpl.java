@@ -57,6 +57,9 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case Bpmn2Package.TASK: return createTask();
+			case Bpmn2Package.POOL: return createPool();
+			case Bpmn2Package.SEQUENCE_FLOW: return createSequenceFlow();
+			case Bpmn2Package.ICON: return createIcon();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -70,6 +73,36 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
 	public Task createTask() {
 		TaskImpl task = new TaskImpl();
 		return task;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Pool createPool() {
+		PoolImpl pool = new PoolImpl();
+		return pool;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SequenceFlow createSequenceFlow() {
+		SequenceFlowImpl sequenceFlow = new SequenceFlowImpl();
+		return sequenceFlow;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Icon createIcon() {
+		IconImpl icon = new IconImpl();
+		return icon;
 	}
 
 	/**

@@ -9,6 +9,8 @@ import org.eclipse.emf.ecore.util.Switch;
 
 import org.eclipse.glsp.graph.GArgumentable;
 import org.eclipse.glsp.graph.GBoundsAware;
+import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GEdgeLayoutable;
 import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
@@ -87,6 +89,40 @@ public class Bpmn2Switch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case Bpmn2Package.POOL: {
+				Pool pool = (Pool)theEObject;
+				T result = casePool(pool);
+				if (result == null) result = caseGNode(pool);
+				if (result == null) result = caseGShapeElement(pool);
+				if (result == null) result = caseGEdgeLayoutable(pool);
+				if (result == null) result = caseGLayouting(pool);
+				if (result == null) result = caseGModelElement(pool);
+				if (result == null) result = caseGBoundsAware(pool);
+				if (result == null) result = caseGArgumentable(pool);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case Bpmn2Package.SEQUENCE_FLOW: {
+				SequenceFlow sequenceFlow = (SequenceFlow)theEObject;
+				T result = caseSequenceFlow(sequenceFlow);
+				if (result == null) result = caseGEdge(sequenceFlow);
+				if (result == null) result = caseGModelElement(sequenceFlow);
+				if (result == null) result = caseGArgumentable(sequenceFlow);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case Bpmn2Package.ICON: {
+				Icon icon = (Icon)theEObject;
+				T result = caseIcon(icon);
+				if (result == null) result = caseGCompartment(icon);
+				if (result == null) result = caseGShapeElement(icon);
+				if (result == null) result = caseGLayouting(icon);
+				if (result == null) result = caseGModelElement(icon);
+				if (result == null) result = caseGBoundsAware(icon);
+				if (result == null) result = caseGArgumentable(icon);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -103,6 +139,51 @@ public class Bpmn2Switch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseTask(Task object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Pool</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Pool</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T casePool(Pool object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Sequence Flow</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Sequence Flow</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSequenceFlow(SequenceFlow object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Icon</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Icon</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseIcon(Icon object) {
 		return null;
 	}
 
@@ -208,6 +289,36 @@ public class Bpmn2Switch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseGNode(GNode object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>GEdge</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>GEdge</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGEdge(GEdge object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>GCompartment</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>GCompartment</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGCompartment(GCompartment object) {
 		return null;
 	}
 

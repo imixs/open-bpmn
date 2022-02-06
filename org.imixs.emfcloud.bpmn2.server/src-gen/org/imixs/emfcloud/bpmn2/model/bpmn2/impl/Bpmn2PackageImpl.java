@@ -14,6 +14,9 @@ import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 
 import org.imixs.emfcloud.bpmn2.model.bpmn2.Bpmn2Factory;
 import org.imixs.emfcloud.bpmn2.model.bpmn2.Bpmn2Package;
+import org.imixs.emfcloud.bpmn2.model.bpmn2.Icon;
+import org.imixs.emfcloud.bpmn2.model.bpmn2.Pool;
+import org.imixs.emfcloud.bpmn2.model.bpmn2.SequenceFlow;
 import org.imixs.emfcloud.bpmn2.model.bpmn2.Task;
 
 /**
@@ -29,6 +32,27 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 	 * @generated
 	 */
 	private EClass taskEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass poolEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass sequenceFlowEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass iconEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -147,6 +171,60 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getPool() {
+		return poolEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPool_NodeType() {
+		return (EAttribute)poolEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getPool_Name() {
+		return (EAttribute)poolEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getSequenceFlow() {
+		return sequenceFlowEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSequenceFlow_Condition() {
+		return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getIcon() {
+		return iconEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Bpmn2Factory getBpmn2Factory() {
 		return (Bpmn2Factory)getEFactoryInstance();
 	}
@@ -175,6 +253,15 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 		createEAttribute(taskEClass, TASK__NAME);
 		createEAttribute(taskEClass, TASK__TASK_TYPE);
 		createEAttribute(taskEClass, TASK__REFERENCE);
+
+		poolEClass = createEClass(POOL);
+		createEAttribute(poolEClass, POOL__NODE_TYPE);
+		createEAttribute(poolEClass, POOL__NAME);
+
+		sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
+		createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION);
+
+		iconEClass = createEClass(ICON);
 	}
 
 	/**
@@ -209,6 +296,9 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 
 		// Add supertypes to classes
 		taskEClass.getESuperTypes().add(theGraphPackage.getGNode());
+		poolEClass.getESuperTypes().add(theGraphPackage.getGNode());
+		sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+		iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -216,6 +306,15 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_TaskType(), ecorePackage.getEString(), "taskType", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_Reference(), ecorePackage.getEString(), "reference", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getPool_NodeType(), ecorePackage.getEString(), "nodeType", null, 0, 1, Pool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getPool_Name(), ecorePackage.getEString(), "name", null, 0, 1, Pool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSequenceFlow_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Create resource
 		createResource(eNS_URI);

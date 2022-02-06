@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.imixs.emfcloud.bpmn2.server/src" modelPluginID="org.imixs.emfcloud.bpmn2.server"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.imixs.emfcloud.bpmn2.server/src-gen" modelPluginID="org.imixs.emfcloud.bpmn2.server"
     modelName="Bpmn2" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>bpmn2.ecore</foreignModel>
-  <genPackages prefix="Bpmn2" disposableProviderFactory="true" ecorePackage="bpmn2.ecore#/">
+  <genPackages prefix="Bpmn2" basePackage="org.imixs.emfcloud.bpmn2.model" disposableProviderFactory="true"
+      ecorePackage="bpmn2.ecore#/">
     <genClasses ecoreClass="bpmn2.ecore#//Task">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Task/nodeType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Task/name"/>
@@ -16,8 +17,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Pool/nodeType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Pool/name"/>
     </genClasses>
+    <genClasses ecoreClass="bpmn2.ecore#//SequenceFlow">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//SequenceFlow/condition"/>
+    </genClasses>
+    <genClasses ecoreClass="bpmn2.ecore#//Icon"/>
   </genPackages>
-  <genPackages prefix="Graph" disposableProviderFactory="true" ecorePackage="glsp-graph.ecore#/">
+  <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
+      ecorePackage="glsp-graph.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="glsp-graph.ecore#//GSeverity">
       <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/error"/>
       <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/warning"/>
