@@ -32,8 +32,8 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated bpmn2 -->
       <package
-            uri="http://www.eclipse.org/glsp/bpmn2"
-            class="org.imixs.emfcloud.bpmn2.model.bpmn2.Bpmn2Package"
+            uri="http://www.eclipse.org/glsp/bpmn2/graph"
+            class="org.imixs.emf.bpmn2.Bpmn2Package"
             genModel="model/bpmn2.genmodel"/>
    </extension>
 

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2021-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -17,7 +17,6 @@ package org.imixs.emfcloud.bpmn2.handler;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
@@ -26,29 +25,22 @@ import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.imixs.emf.bpmn2.Bpmn2Package;
 import org.imixs.emfcloud.bpmn2.util.ModelTypes;
-import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.TaskNodeBuilder;
+import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.CategoryNodeBuilder;
 
-public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandler {
+public class CreateCategoryHandler extends CreateWorkflowNodeOperationHandler {
 
-   private final Function<Integer, String> labelProvider;
-   private final String elementTypeId;
-
-   public CreateTaskHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
-      super(elementTypeId);
-      this.elementTypeId = elementTypeId;
-      this.labelProvider = labelProvider;
+   public CreateCategoryHandler() {
+      super(ModelTypes.CATEGORY);
    }
 
-   protected String getElementTypeId() { return elementTypeId; }
+   protected CategoryNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
 
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(Bpmn2Package.Literals.TASK_NODE, "task", modelState);
-      String name = labelProvider.apply(nodeCounter);
-      String taskType = ModelTypes.toNodeType(getElementTypeId());
-      return new TaskNodeBuilder(getElementTypeId(), name, taskType, 0) //
+      int nodeCounter = GModelUtil.generateId(Bpmn2Package.Literals.CATEGORY, "category", modelState);
+      String name = "Category " + nodeCounter;
+
+      return new CategoryNodeBuilder(name) //
          .position(point.orElse(null))
-         .addArguments(GArguments.cornerRadius(5))
-         .addCssClass("task");
+         .addArguments(GArguments.cornerRadius(5));
    }
 
    @Override
@@ -56,4 +48,6 @@ public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandl
       return builder(point, modelState).build();
    }
 
+   @Override
+   public String getLabel() { return "Category"; }
 }

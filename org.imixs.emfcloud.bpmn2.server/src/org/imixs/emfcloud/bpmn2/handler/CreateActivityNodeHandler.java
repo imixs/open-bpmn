@@ -17,43 +17,39 @@ package org.imixs.emfcloud.bpmn2.handler;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
+
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.GModelUtil;
-import org.imixs.emf.bpmn2.Bpmn2Package;
 import org.imixs.emfcloud.bpmn2.util.ModelTypes;
-import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.TaskNodeBuilder;
+import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.ActivityNodeBuilder;
 
-public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandler {
+public abstract class CreateActivityNodeHandler extends CreateWorkflowNodeOperationHandler {
 
-   private final Function<Integer, String> labelProvider;
+   private final String label;
    private final String elementTypeId;
 
-   public CreateTaskHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
+   public CreateActivityNodeHandler(final String elementTypeId, final String label) {
       super(elementTypeId);
       this.elementTypeId = elementTypeId;
-      this.labelProvider = labelProvider;
+      this.label = label;
    }
 
    protected String getElementTypeId() { return elementTypeId; }
 
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(Bpmn2Package.Literals.TASK_NODE, "task", modelState);
-      String name = labelProvider.apply(nodeCounter);
-      String taskType = ModelTypes.toNodeType(getElementTypeId());
-      return new TaskNodeBuilder(getElementTypeId(), name, taskType, 0) //
-         .position(point.orElse(null))
-         .addArguments(GArguments.cornerRadius(5))
-         .addCssClass("task");
+   protected ActivityNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+      String nodeType = ModelTypes.toNodeType(getElementTypeId());
+      return new ActivityNodeBuilder(getElementTypeId(), nodeType) //
+         .position(point.orElse(null));
    }
 
    @Override
    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
       return builder(point, modelState).build();
    }
+
+   @Override
+   public String getLabel() { return label; }
 
 }

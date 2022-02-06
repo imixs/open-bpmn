@@ -10,6 +10,7 @@
 
 	<properties>
 		<package-type>eclipse-plugin</package-type>
+		<server-launcher>org.imixs.emfcloud.bpmn2.server.launch.BPMN2ServerLauncher</server-launcher>
 	</properties>
 
 	<dependencies>
@@ -89,7 +90,7 @@
 						<configuration>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>org.eclipse.glsp.example.workflow.launch.WorkflowServerLauncher</mainClass>
+									<mainClass>${server-launcher}</mainClass>
 								</transformer>
 							</transformers>
 							<artifactSet>

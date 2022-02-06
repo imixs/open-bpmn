@@ -17,6 +17,7 @@ package org.imixs.emfcloud.bpmn2;
 
 
 
+
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
@@ -38,25 +39,30 @@ import org.eclipse.glsp.server.features.popup.PopupModelFactory;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.layout.LayoutEngine;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.imixs.emfcloud.bpmn2.handler.CreatePoolHandler;
-import org.imixs.emfcloud.bpmn2.handler.CreateTaskHandler;
-import org.imixs.emfcloud.bpmn2.irgendwas.ApplyTaskEditOperationHandler;
-import org.imixs.emfcloud.bpmn2.irgendwas.EditTaskOperationHandler;
-import org.imixs.emfcloud.bpmn2.irgendwas.LogActionHandler;
-import org.imixs.emfcloud.bpmn2.irgendwas.NextNodeNavigationTargetProvider;
-import org.imixs.emfcloud.bpmn2.irgendwas.NodeDocumentationNavigationTargetProvider;
-import org.imixs.emfcloud.bpmn2.irgendwas.PreviousNodeNavigationTargetProvider;
-import org.imixs.emfcloud.bpmn2.irgendwas.TaskEditContextActionProvider;
-import org.imixs.emfcloud.bpmn2.irgendwas.TaskEditValidator;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowCommandPaletteActionProvider;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowContextMenuItemProvider;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowLabelEditValidator;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowModelValidator;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowNavigationTargetResolver;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowPopupFactory;
-import org.imixs.emfcloud.bpmn2.irgendwas.WorkflowRequestContextActionsHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateAutomatedTaskHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateCategoryHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateDecisionNodeHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateEdgeHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateForkNodeHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateJoinNodeHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateManualTaskHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateMergeNodeHandler;
+import org.imixs.emfcloud.bpmn2.handler.CreateWeightedEdgeHandler;
+import org.imixs.emfcloud.bpmn2.handler.LogActionHandler;
+import org.imixs.emfcloud.bpmn2.handler.WorkflowRequestContextActionsHandler;
+import org.imixs.emfcloud.bpmn2.labeledit.WorkflowLabelEditValidator;
 import org.imixs.emfcloud.bpmn2.layout.WorkflowLayoutEngine;
-import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.PoolNodeBuilder;
+import org.imixs.emfcloud.bpmn2.marker.WorkflowModelValidator;
+import org.imixs.emfcloud.bpmn2.model.WorkflowNavigationTargetResolver;
+import org.imixs.emfcloud.bpmn2.provider.NextNodeNavigationTargetProvider;
+import org.imixs.emfcloud.bpmn2.provider.NodeDocumentationNavigationTargetProvider;
+import org.imixs.emfcloud.bpmn2.provider.PreviousNodeNavigationTargetProvider;
+import org.imixs.emfcloud.bpmn2.provider.WorkflowCommandPaletteActionProvider;
+import org.imixs.emfcloud.bpmn2.provider.WorkflowContextMenuItemProvider;
+import org.imixs.emfcloud.bpmn2.taskedit.ApplyTaskEditOperationHandler;
+import org.imixs.emfcloud.bpmn2.taskedit.EditTaskOperationHandler;
+import org.imixs.emfcloud.bpmn2.taskedit.TaskEditContextActionProvider;
+import org.imixs.emfcloud.bpmn2.taskedit.TaskEditValidator;
 
 /**
  * This class is -- FOR WHAT???
@@ -65,98 +71,105 @@ import org.imixs.emfcloud.bpmn2.util.WorkflowBuilder.PoolNodeBuilder;
  */
 public class WorkflowDiagramModule extends GModelJsonDiagramModule {
 
-   @Override
-   protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-      return WorkflowDiagramConfiguration.class;
-   }
+	   @Override
+	   protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
+	      return WorkflowDiagramConfiguration.class;
+	   }
 
-   @Override
-   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-      return JsonFileGModelLoader.class;
-   }
+	   @Override
+	   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
+	      return JsonFileGModelLoader.class;
+	   }
 
-   @Override
-   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
-      return FileWatcher.class;
-   }
+	   @Override
+	   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+	      return FileWatcher.class;
+	   }
 
-   @Override
-   protected Class<? extends GraphExtension> bindGraphExtension() {
-      return WFGraphExtension.class;
-   }
+	   @Override
+	   protected Class<? extends GraphExtension> bindGraphExtension() {
+	      return WFGraphExtension.class;
+	   }
 
-   @Override
-   protected void configureContextActionsProviders(final MultiBinding<ContextActionsProvider> binding) {
-      super.configureContextActionsProviders(binding);
-      binding.add(TaskEditContextActionProvider.class);
-   }
+	   @Override
+	   protected void configureContextActionsProviders(final MultiBinding<ContextActionsProvider> binding) {
+	      super.configureContextActionsProviders(binding);
+	      binding.add(TaskEditContextActionProvider.class);
+	   }
 
-   @Override
-   protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
-      super.configureContextEditValidators(binding);
-      binding.add(TaskEditValidator.class);
-   }
+	   @Override
+	   protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
+	      super.configureContextEditValidators(binding);
+	      binding.add(TaskEditValidator.class);
+	   }
 
-   @Override
-   protected void configureNavigationTargetProviders(final MultiBinding<NavigationTargetProvider> binding) {
-      super.configureNavigationTargetProviders(binding);
-      binding.add(NextNodeNavigationTargetProvider.class);
-      binding.add(PreviousNodeNavigationTargetProvider.class);
-      binding.add(NodeDocumentationNavigationTargetProvider.class);
-   }
+	   @Override
+	   protected void configureNavigationTargetProviders(final MultiBinding<NavigationTargetProvider> binding) {
+	      super.configureNavigationTargetProviders(binding);
+	      binding.add(NextNodeNavigationTargetProvider.class);
+	      binding.add(PreviousNodeNavigationTargetProvider.class);
+	      binding.add(NodeDocumentationNavigationTargetProvider.class);
+	   }
 
-   @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
-      super.configureOperationHandlers(binding);
-      binding.add(CreateTaskHandler.class);
-      binding.add(CreatePoolHandler.class);
-      binding.add(EditTaskOperationHandler.class);
-      binding.add(ApplyTaskEditOperationHandler.class);
-   }
+	   @Override
+	   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+	      super.configureOperationHandlers(binding);
+	      binding.add(CreateAutomatedTaskHandler.class);
+	      binding.add(CreateManualTaskHandler.class);
+	      binding.add(CreateDecisionNodeHandler.class);
+	      binding.add(CreateMergeNodeHandler.class);
+	      binding.add(CreateForkNodeHandler.class);
+	      binding.add(CreateJoinNodeHandler.class);
+	      binding.add(CreateEdgeHandler.class);
+	      binding.add(CreateWeightedEdgeHandler.class);
+	      binding.add(CreateCategoryHandler.class);
+	      binding.add(EditTaskOperationHandler.class);
+	      binding.add(ApplyTaskEditOperationHandler.class);
+	   }
 
-   @Override
-   protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
-      super.configureActionHandlers(binding);
-      binding.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
-      binding.add(LogActionHandler.class);
-   }
+	   @Override
+	   protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
+	      super.configureActionHandlers(binding);
+	      binding.rebind(RequestContextActionsHandler.class, WorkflowRequestContextActionsHandler.class);
+	      binding.add(LogActionHandler.class);
+	   }
 
-   @Override
-   public Class<? extends PopupModelFactory> bindPopupModelFactory() {
-      return WorkflowPopupFactory.class;
-   }
+	   @Override
+	   public Class<? extends PopupModelFactory> bindPopupModelFactory() {
+	      return WorkflowPopupFactory.class;
+	   }
 
-   @Override
-   protected Class<? extends ModelValidator> bindModelValidator() {
-      return WorkflowModelValidator.class;
-   }
+	   @Override
+	   protected Class<? extends ModelValidator> bindModelValidator() {
+	      return WorkflowModelValidator.class;
+	   }
 
-   @Override
-   protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
-      return WorkflowLabelEditValidator.class;
-   }
+	   @Override
+	   protected Class<? extends LabelEditValidator> bindLabelEditValidator() {
+	      return WorkflowLabelEditValidator.class;
+	   }
 
-   @Override
-   protected Class<? extends LayoutEngine> bindLayoutEngine() {
-      return WorkflowLayoutEngine.class;
-   }
+	   @Override
+	   protected Class<? extends LayoutEngine> bindLayoutEngine() {
+	      return WorkflowLayoutEngine.class;
+	   }
 
-   @Override
-   protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
-      return WorkflowContextMenuItemProvider.class;
-   }
+	   @Override
+	   protected Class<? extends ContextMenuItemProvider> bindContextMenuItemProvider() {
+	      return WorkflowContextMenuItemProvider.class;
+	   }
 
-   @Override
-   protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
-      return WorkflowCommandPaletteActionProvider.class;
-   }
+	   @Override
+	   protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
+	      return WorkflowCommandPaletteActionProvider.class;
+	   }
 
-   @Override
-   protected Class<? extends NavigationTargetResolver> bindNavigationTargetResolver() {
-      return WorkflowNavigationTargetResolver.class;
-   }
+	   @Override
+	   protected Class<? extends NavigationTargetResolver> bindNavigationTargetResolver() {
+	      return WorkflowNavigationTargetResolver.class;
+	   }
 
-   @Override
-   public String getDiagramType() { return "workflow-diagram"; }
+	   @Override
+	   public String getDiagramType() { return "workflow-diagram"; }
 
-}
+	}

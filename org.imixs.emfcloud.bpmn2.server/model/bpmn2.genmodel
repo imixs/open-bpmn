@@ -5,22 +5,25 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>bpmn2.ecore</foreignModel>
-  <genPackages prefix="Bpmn2" basePackage="org.imixs.emfcloud.bpmn2.model" disposableProviderFactory="true"
+  <genPackages prefix="Bpmn2" basePackage="org.imixs.emf" disposableProviderFactory="true"
       ecorePackage="bpmn2.ecore#/">
-    <genClasses ecoreClass="bpmn2.ecore#//Task">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Task/nodeType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Task/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Task/taskType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Task/reference"/>
+    <genClasses ecoreClass="bpmn2.ecore#//ActivityNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//ActivityNode/nodeType"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn2.ecore#//Pool">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Pool/nodeType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Pool/name"/>
-    </genClasses>
-    <genClasses ecoreClass="bpmn2.ecore#//SequenceFlow">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//SequenceFlow/condition"/>
+    <genClasses ecoreClass="bpmn2.ecore#//TaskNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//TaskNode/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//TaskNode/expanded"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//TaskNode/duration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//TaskNode/taskType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//TaskNode/reference"/>
     </genClasses>
     <genClasses ecoreClass="bpmn2.ecore#//Icon"/>
+    <genClasses ecoreClass="bpmn2.ecore#//WeightedEdge">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//WeightedEdge/probability"/>
+    </genClasses>
+    <genClasses ecoreClass="bpmn2.ecore#//Category">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn2.ecore#//Category/name"/>
+    </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
       ecorePackage="glsp-graph.ecore#/">

@@ -20,9 +20,16 @@ Export-Package: model,
  org.eclipse.glsp.graph,
  org.eclipse.glsp.graph.impl,
  org.eclipse.glsp.graph.util,
+ org.imixs.emf.bpmn2,
+ org.imixs.emf.bpmn2.impl,
+ org.imixs.emf.bpmn2.util,
+ org.imixs.emf.bpmn2.graph.bpmn2graph,
+ org.imixs.emf.bpmn2.graph.bpmn2graph.impl,
+ org.imixs.emf.bpmn2.graph.bpmn2graph.util,
  org.imixs.emfcloud.bpmn2.model.bpmn2,
  org.imixs.emfcloud.bpmn2.model.bpmn2.impl,
  org.imixs.emfcloud.bpmn2.model.bpmn2.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Import-Package: org.imixs.emf.bpmn2
