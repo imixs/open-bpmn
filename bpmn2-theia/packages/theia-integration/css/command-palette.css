@@ -1,0 +1,101 @@
+/********************************************************************************
+ * Copyright (c) 2019-2021 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+.command-palette {
+    z-index: var(--theia-menu-z-index);
+    -webkit-animation: fadein 0.3s;
+    -moz-animation: fadein 0.3s;
+    -ms-animation: fadein 0.3s;
+    -o-animation: fadein 0.3s;
+    animation: fadein 0.3s;
+}
+
+.command-palette.validation .validation-decorator {
+    position: absolute;
+    padding: 5px;
+    border-radius: 5px 5px 0px 0px;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    /* let error decoration fade in */
+    -webkit-animation: fadein 0.3s;
+    -moz-animation: fadein 0.3s;
+    -ms-animation: fadein 0.3s;
+    -o-animation: fadein 0.3s;
+    animation: fadein 0.3s;
+}
+
+.command-palette.validation .validation-decorator span {
+    margin-right: 5px;
+}
+
+.command-palette.validation.error input,
+.command-palette.validation.error input:focus {
+    color: var(--theia-inputValidation-errorForeground);
+    outline-color: var(--theia-inputValidation-errorBorder);
+}
+
+.command-palette.validation.error .validation-decorator.error {
+    border: 1px solid var(--theia-inputValidation-errorBorder);
+    background-color: var(--theia-inputValidation-errorBorder);
+}
+
+.command-palette.validation.warning input,
+.command-palette.validation.warning input:focus {
+    color: var(--theia-inputValidation-warningForeground);
+    outline-color: var(--theia-inputValidation-warningBorder);
+}
+
+.command-palette.validation.warning .validation-decorator.warning {
+    border: 1px solid var(--theia-inputValidation-warningBorder);
+    background-color: var(--theia-inputValidation-warningBorder);
+}
+
+.command-palette {
+    box-shadow: var(--theia-border-width) var(--theia-border-width) var(--theia-widget-shadow);
+    background-color: var(--theia-menu-background);
+}
+
+.command-palette input {
+    background: var(--theia-input-background);
+    color: var(--theia-input-foreground);
+    border: var(--theia-border-width) solid var(--theia-input-border);
+    font-family: var(--theia-ui-font-family);
+    font-size: var(--theia-ui-font-size1);
+    line-height: var(--theia-content-line-height);
+    padding-left: 5px;
+}
+
+.command-palette .command-palette-suggestions {
+    background: inherit;
+    line-height: var(--theia-content-line-height);
+}
+
+.command-palette .command-palette-suggestions > div:hover:not(.group) {
+    background: var(--theia-menubar-selectionBackground);
+}
+
+.command-palette .command-palette-suggestions > div.selected {
+    background: var(--theia-menu-selectionBackground);
+    color: var(--theia-menu-selectionForeground);
+}
+
+.command-palette .loading {
+    position: absolute;
+    font-size: inherit;
+    top: 5px;
+    right: 0;
+}

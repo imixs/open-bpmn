@@ -1,0 +1,12 @@
+{
+  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "skipLibCheck": false,
+    "baseUrl": ".",
+    "paths": {
+      "@eclipse-glsp-examples/workflow-theia": ["examples/workflow-theia/src/*"],
+      "@eclipse/theia-integration": ["theia-integration/src/*"]
+    }
+  },
+  "include": ["theia-integration/src", "examples/*/src"]
+}

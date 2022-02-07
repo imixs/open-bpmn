@@ -1,0 +1,6 @@
+{
+  "files.exclude": {
+    "**/.theia": true
+  },
+  "keyboard.dispatch": "keyCode"
+}

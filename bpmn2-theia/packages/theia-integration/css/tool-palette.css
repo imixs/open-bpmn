@@ -1,0 +1,120 @@
+/********************************************************************************
+ * Copyright (c) 2020-2021 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+.tool-palette {
+    box-shadow: 0px 1px 6px var(--theia-widget-shadow);
+    top: 0px;
+    width: 210px;
+}
+
+.tool-group {
+    background-color: unset;
+}
+
+.tool-palette .palette-header {
+    background: var(--theia-titleBar-activeBackground);
+    color: var(--theia-titleBar-activeForeground);
+    border: 0;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0.2em;
+    line-height: 1.5em;
+    box-shadow: none;
+    border-top: 1px solid var(--theia-focusBorder);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.inactive .tool-palette .palette-header {
+    border-top: 1px solid var(--theia-tab-unfocusedInactiveForeground);
+}
+
+.tool-palette .palette-header .header-icon {
+    font-size: var(--theia-ui-font-size1);
+    padding: 0.2em;
+    display: flex;
+    align-items: center;
+}
+
+.tool-palette .palette-header .header-tools {
+    display: flex;
+    align-items: center;
+}
+
+.tool-palette .palette-header .header-tools i {
+    border: none;
+}
+
+.tool-palette .palette-header .header-tools i:hover:not(.clicked) {
+    background: var(--theia-menubar-selectionBackground);
+}
+
+.tool-palette .palette-header .header-tools .clicked {
+    background: var(--theia-inputOption-activeBackground);
+}
+
+.inactive .tool-palette .palette-header .header-tools .clicked {
+    background: var(--theia-menubar-selectionBackground);
+}
+
+.tool-palette .palette-body {
+    border: 0;
+    box-shadow: none;
+}
+
+.tool-palette .palette-body .group-header {
+    font-size: var(--theia-ui-font-size1);
+    font-weight: normal;
+    background: var(--theia-activityBar-background);
+    color: var(--theia-titleBar-activeForeground);
+    border: 0;
+    display: flex;
+    align-items: center;
+}
+
+.tool-palette .palette-body .tool-button {
+    background: var(--theia-menu-background);
+    color: var(--theia-titleBar-activeForeground);
+}
+
+.tool-palette .palette-body .tool-button:hover:not(.clicked) {
+    background: var(--theia-list-hoverBackground);
+}
+
+.tool-palette .tool-button.clicked {
+    background: var(--theia-menu-selectionBackground);
+    color: var(--theia-menu-selectionForeground);
+}
+
+.inactive .tool-palette .tool-button.clicked {
+    background: var(--theia-list-hoverBackground);
+    color: var(--theia-titleBar-activeForeground);
+}
+
+.search-input {
+    background: var(--theia-input-background);
+    color: var(--theia-input-foreground);
+    border: var(--theia-border-width) solid var(--theia-input-border);
+    font-family: var(--theia-ui-font-family);
+    font-size: var(--theia-ui-font-size1);
+    line-height: var(--theia-content-line-height);
+}
+
+.minimize-palette-button {
+    top: 10px;
+}

@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "parent",
+  "version": "0.8.0",
+  "engines": {
+    "yarn": ">=1.7.0 <2.x.x",
+    "node": ">=12.14.1"
+  },
+  "scripts": {
+    "test": "yarn",
+    "prepare": "lerna run prepare",
+    "watch": "lerna run --parallel watch",
+    "build": "yarn install --ignore-scripts && lerna run build",
+    "lint": "lerna run lint --",
+    "rebuild:browser": "theia rebuild:browser",
+    "publish:prepare": "lerna version minor --exact --ignore-scripts --yes --no-push",
+    "publish:latest": "lerna publish from-git --no-git-reset --no-verify-access --no-push",
+    "publish:next": "SHA=$(git rev-parse --short HEAD) && lerna publish preminor --exact --canary --preid next.${SHA} --dist-tag next --no-git-reset --no-git-tag-version --no-push --ignore-scripts --yes --no-verify-access",
+    "upgrade:next": "yarn upgrade -p \"sprotty-theia|@eclipse-glsp.*\" --next ",
+    "download:exampleServer": "ts-node examples/workflow-theia/server/download.ts"
+  },
+  "devDependencies": {
+    "@eclipse-glsp/config": "0.9.0",
+    "@wdio/cli": "^6.0.14",
+    "@wdio/local-runner": "^6.0.14",
+    "@wdio/mocha-framework": "^6.0.13",
+    "@wdio/selenium-standalone-service": "^6.0.12",
+    "@wdio/sync": "^6.0.14",
+    "lerna": "^4.0.0",
+    "typescript": "^3.9.2"
+  },
+  "workspaces": [
+    "packages/theia-integration",
+    "examples/*"
+  ]
+}

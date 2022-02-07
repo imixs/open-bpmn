@@ -1,0 +1,78 @@
+/********************************************************************************
+ * Copyright (c) 2020-2022 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ ********************************************************************************/
+
+.sprotty-graph {
+    background: var(--theia-editor-background);
+}
+
+.sprotty-node {
+    stroke: var(--theia-editor-foreground);
+    fill: var(--theia-editor-foreground);
+}
+
+.sprotty-edge {
+    fill: none;
+    stroke: var(--theia-editor-foreground);
+}
+
+.sprotty-edge .arrow {
+    fill: var(--theia-editor-foreground);
+}
+
+.sprotty-node.selected,
+.sprotty-edge.selected {
+    stroke: var(--theia-focusBorder);
+}
+
+.sprotty-edge.selected .arrow {
+    fill: var(--theia-focusBorder);
+    stroke: var(--theia-focusBorder);
+}
+
+.inactive .sprotty-node.selected {
+    stroke: var(--theia-editor-inactiveSelectionBackground);
+}
+
+.sprotty-resize-handle.selected,
+.sprotty-resize-handle.active,
+.sprotty-edge > .sprotty-routing-handle.selected,
+.sprotty-edge > .sprotty-routing-handle.mouseover {
+    fill: var(--theia-focusBorder);
+}
+
+.inactive .sprotty-resize-handle,
+.inactive .sprotty-routing-handle {
+    fill: var(--theia-tab-unfocusedInactiveForeground);
+}
+
+.sprotty-node.mouseover:not(.selected),
+.sprotty-edge.mouseover:not(.selected) {
+    stroke: var(--theia-editor-foreground);
+}
+
+.sprotty-edge.mouseover:not(.selected) .arrow {
+    fill: var(--theia-editor-foreground);
+    stroke: var(--theia-editor-foreground);
+}
+
+.sprotty-popup {
+    padding: 0px;
+    border-radius: 2px;
+    box-shadow: 0px 1px 6px var(--theia-widget-shadow);
+    background-color: var(--theia-editorHoverWidget-background);
+    color: var(--theia-editorHoverWidget-foreground);
+    border: 1px solid var(--theia-editorHoverWidget-border);
+}
