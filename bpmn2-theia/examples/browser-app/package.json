@@ -3,7 +3,7 @@
   "name": "browser-app",
   "version": "0.9.0",
   "dependencies": {
-    "@eclipse-glsp-examples/workflow-theia": "0.9.0",
+    "@bpmn2-theia/workflow-theia": "0.9.0",
     "@theia/core": "^1.0.0",
     "@theia/editor": "^1.0.0",
     "@theia/filesystem": "^1.0.0",

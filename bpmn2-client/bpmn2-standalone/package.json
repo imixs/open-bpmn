@@ -1,8 +1,8 @@
 {
   "private": true,
-  "name": "workflow-standalone",
+  "name": "bpmn2-standalone",
   "version": "0.9.0",
-  "description": "Standalone browser-app for the Workflow example",
+  "description": "Standalone browser-app for the bpmn2 example",
   "author": {
     "name": "Eclipse GLSP"
   },
@@ -20,7 +20,7 @@
     }
   ],
   "dependencies": {
-    "@eclipse-glsp-examples/workflow-glsp": "0.9.0",
+    "@bpmn2-client/bpmn2-glsp": "0.9.0",
     "@eclipse-glsp/client": "0.9.0"
   },
   "devDependencies": {
