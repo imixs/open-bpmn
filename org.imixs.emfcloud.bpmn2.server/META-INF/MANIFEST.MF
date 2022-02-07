@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.imixs.emfcloud.bpmn2.server;singleton:=true
+Bundle-SymbolicName: bpmn2-server;singleton:=true
 Automatic-Module-Name: org.imixs.emfcloud.bpmn2.server
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
