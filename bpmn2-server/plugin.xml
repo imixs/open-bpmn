@@ -33,7 +33,7 @@
       <!-- @generated bpmn2 -->
       <package
             uri="http://www.eclipse.org/glsp/bpmn2/graph"
-            class="org.imixs.emf.bpmn2.Bpmn2Package"
+            class="org.imixs.bpmn.emf.Bpmn2Package"
             genModel="model/bpmn2.genmodel"/>
    </extension>
 

@@ -2,15 +2,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.imixs.bpmn</groupId>
-		<artifactId>org.imixs.emfcloud.bpmn2</artifactId>
+		<artifactId>org.imixs.bpmn.glsp</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.imixs.emfcloud.bpmn2.server</artifactId>
+	<artifactId>org.imixs.bpmn.glsp.server</artifactId>
+	<name>Imixs BPMN GLSP Server</name>
 
 
 	<properties>
 		<package-type>eclipse-plugin</package-type>
-		<server-launcher>org.imixs.emfcloud.bpmn2.server.launch.BPMN2ServerLauncher</server-launcher>
+		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
 	</properties>
 
 	<dependencies>

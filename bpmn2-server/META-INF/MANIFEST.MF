@@ -8,21 +8,21 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: model,
- model.impl,
- model.util,
- bpmn2,
+Export-Package: bpmn2,
  bpmn2.impl,
  bpmn2.util,
  graph,
  graph.impl,
  graph.util,
+ model,
+ model.impl,
+ model.util,
  org.eclipse.glsp.graph,
  org.eclipse.glsp.graph.impl,
  org.eclipse.glsp.graph.util,
- org.imixs.emf.bpmn2,
- org.imixs.emf.bpmn2.impl,
- org.imixs.emf.bpmn2.util,
+ org.imixs.bpmn.emf,
+ org.imixs.bpmn.emf.impl,
+ org.imixs.bpmn.emf.util,
  org.imixs.emf.bpmn2.graph.bpmn2graph,
  org.imixs.emf.bpmn2.graph.bpmn2graph.impl,
  org.imixs.emf.bpmn2.graph.bpmn2graph.util,
@@ -32,4 +32,4 @@ Export-Package: model,
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Import-Package: org.imixs.emf.bpmn2
+Import-Package: org.imixs.bpmn.emf
