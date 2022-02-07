@@ -117,9 +117,9 @@
 
 
 	<modules>
-		<module>org.imixs.emfcloud.bpmn2.server</module>
-		<module>org.imixs.emfcloud.bpmn2.client</module>
-		<module>org.imixs.emfcloud.bpmn2.web</module>
+		<module>bpmn2-server</module>
+		<module>bpmn2-client</module>
+		<module>bpmn2-theia</module>
 	</modules>
 
 			<pluginRepositories>
