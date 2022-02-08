@@ -32,5 +32,8 @@
   "workspaces": [
     "packages/theia-integration",
     "examples/*"
-  ]
+  ],
+  "dependencies": {
+    "parent": "file:../imixs-bpmn.glsp-client/"
+  }
 }
