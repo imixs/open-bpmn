@@ -1,6 +1,6 @@
 {
   "name": "@imixs-bpmn/bpmn-glsp",
-  "version": "0.9.0",
+  "version": "0.0.1",
   "description": "GLSP diagrams for the BPMN2 DSL",
   "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
   "keywords": [
@@ -9,19 +9,19 @@
     "diagram"
   ],
   "author": {
-    "name": "Eclipse GLSP"
+    "name": "imixs.org"
   },
-  "homepage": "https://www.eclipse.org/glsp/",
+  "homepage": "https://www.imixs.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipse-glsp/glsp-client.git"
+    "url": "https://github.com/imixs/imixs-bpmn.glsp.git"
   },
-  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "bugs": "https://github.com/imixs/imixs-bpmn.glsp/issues",
   "contributors": [
     {
-      "name": "Eclipse GLSP Project",
-      "email": "glsp-dev@eclipse.org",
-      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+      "name": "Imixs Workflow Project",
+      "email": "info@imixs.org",
+      "url": "https://www.imixs.org"
     }
   ],
   "dependencies": {

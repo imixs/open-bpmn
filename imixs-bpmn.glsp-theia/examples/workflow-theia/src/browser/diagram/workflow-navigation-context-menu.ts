@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { isTaskNode } from '@eclipse-glsp-examples/workflow-glsp/lib/model';
+import { isTaskNode } from '@imixs-bpmn/bpmn-glsp/lib/model';
 import { NavigateAction } from '@eclipse-glsp/client';
 import { GLSPCommandHandler, GLSPContextMenu } from '@eclipse-glsp/theia-integration';
 import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry } from '@theia/core';

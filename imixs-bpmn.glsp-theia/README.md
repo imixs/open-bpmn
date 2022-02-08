@@ -16,3 +16,8 @@ Next:
 
 	cd examples/browser-app
 	yarn start
+
+	
+##### Refering Local Packages
+
+https://stackoverflow.com/questions/40102686/how-to-install-package-with-local-path-by-yarn-it-couldnt-find-package

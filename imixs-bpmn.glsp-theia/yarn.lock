@@ -900,15 +900,7 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.6.tgz#d5e0706cf8c6acd8c6032f8d54070af261bbbb2f"
   integrity sha512-ws57AidsDvREKrZKYffXddNkyaF14iHNHm8VQnZH6t99E8gczjNN0GpvcGny0imC80yQ0tHz1xVUKk/KFQSUyA==
 
-"@eclipse-glsp-examples/workflow-glsp@next":
-  version "0.10.0-next.ab6a367.154"
-  resolved "https://registry.yarnpkg.com/@eclipse-glsp-examples/workflow-glsp/-/workflow-glsp-0.10.0-next.ab6a367.154.tgz#53999eaf93b57f83aa3db50352cd37af6bc3c422"
-  integrity sha512-v/lBr/1SdGnm7e4H7gmI3MiiUyxlRdCtXRQy8LWLmJptrZ5nrUXGyOQ5Bpt62jPvIhuFsy7P/fWAHTXKm54fTA==
-  dependencies:
-    "@eclipse-glsp/client" "0.10.0-next.ab6a367.154+ab6a367"
-    balloon-css "^0.5.0"
-
-"@eclipse-glsp/client@0.10.0-next.ab6a367.154+ab6a367", "@eclipse-glsp/client@next":
+"@eclipse-glsp/client@next":
   version "0.10.0-next.ab6a367.154"
   resolved "https://registry.yarnpkg.com/@eclipse-glsp/client/-/client-0.10.0-next.ab6a367.154.tgz#3a027c9864348049a3135aa212402a924a74fde1"
   integrity sha512-TGFPaOoEWJZVWWTcHmQWr46XXgC9ap3PBeQvQ3rGbvUxvAOM7pu9MNVOFwTc+x+Hp/hA8hz5xrC/1FprYKgqSA==
@@ -3700,11 +3692,6 @@ balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
-
-balloon-css@^0.5.0:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/balloon-css/-/balloon-css-0.5.2.tgz#9e2163565a136c9d4aa20e8400772ce3b738d3ff"
-  integrity sha512-zheJpzwyNrG4t39vusA67v3BYg1HTVXOF8cErPEHzWK88PEOFwgo6Ea9VHOgOWNMgeuOtFVtB73NE2NWl9uDyQ==
 
 base64-arraybuffer@^0.1.5:
   version "0.1.5"

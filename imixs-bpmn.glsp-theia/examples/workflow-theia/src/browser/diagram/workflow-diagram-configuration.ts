@@ -15,7 +15,7 @@
  ********************************************************************************/
 import 'sprotty-theia/css/theia-sprotty.css';
 
-import { createWorkflowDiagramContainer } from '@eclipse-glsp-examples/workflow-glsp/lib';
+import { createWorkflowDiagramContainer } from '@imixs-bpmn/bpmn-glsp/lib';
 import { configureDiagramServer, GLSPDiagramConfiguration } from '@eclipse-glsp/theia-integration';
 import { Container, injectable } from '@theia/core/shared/inversify';
 
