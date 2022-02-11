@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,9 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createWorkflowDiagramContainer from './di.config';
+import { ApplyTaskEditOperation } from '@imixs-bpmn/bpmn-glsp/lib/direct-task-editing/direct-task-editor';
+import { ActionHandlerRegistry } from '@eclipse-glsp/client';
+import { GLSPTheiaDiagramServer } from '@eclipse-glsp/theia-integration/lib/browser';
+import { injectable } from 'inversify';
 
-export * from './model';
-export * from './workflow-views';
-export * from './direct-task-editing/direct-task-editor';
-export { createWorkflowDiagramContainer };
+@injectable()
+export class WorkflowDiagramServer extends GLSPTheiaDiagramServer {
+    initialize(registry: ActionHandlerRegistry): void {
+        super.initialize(registry);
+        registry.register('editTask', this);
+        registry.register(ApplyTaskEditOperation.KIND, this);
+    }
+}

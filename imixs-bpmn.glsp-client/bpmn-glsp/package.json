@@ -1,35 +1,37 @@
 {
   "name": "@imixs-bpmn/bpmn-glsp",
-  "version": "0.0.1",
-  "description": "GLSP diagrams for the BPMN2 DSL",
-  "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
+  "private": "true",
+  "version": "0.8.0",
+  "description": "GLSP BPMN diagrams for the DSL",
+  "license": "(GPL-3.0)",
   "keywords": [
     "glsp",
-    "bpmn2",
-    "diagram"
+    "workflow",
+    "diagram",
+    "example"
   ],
   "author": {
-    "name": "imixs.org"
+    "name": "Imixs"
   },
-  "homepage": "https://www.imixs.org",
+  "homepage": "https://www./",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imixs/imixs-bpmn.glsp.git"
+    "url": "https://"
   },
-  "bugs": "https://github.com/imixs/imixs-bpmn.glsp/issues",
+  "bugs": "https:/",
   "contributors": [
     {
-      "name": "Imixs Workflow Project",
+      "name": "Imixs",
       "email": "info@imixs.org",
-      "url": "https://www.imixs.org"
+      "url": "https://"
     }
   ],
   "dependencies": {
-    "@eclipse-glsp/client": "0.9.0",
+    "@eclipse-glsp/client": "0.8.1",
     "balloon-css": "^0.5.0"
   },
   "devDependencies": {
-    "mvn-artifact-download": "5.1.0",
+    "@eclipse-glsp/config": "0.9.0",
     "rimraf": "^2.6.1",
     "typescript": "^3.9.2"
   },
@@ -37,15 +39,14 @@
     "prepare": "yarn clean && yarn build && yarn lint",
     "clean": "rimraf lib",
     "build": "tsc",
-    "lint": "eslint -c ./.eslintrc.js --ext .ts,.tsx ./src",
+    "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
     "watch": "tsc -w"
   },
   "files": [
     "lib",
     "src",
     "build",
-    "css",
-    "scripts"
+    "css"
   ],
   "main": "lib/index",
   "types": "lib/index",

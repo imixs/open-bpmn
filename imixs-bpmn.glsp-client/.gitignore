@@ -35,8 +35,7 @@ buildNumber.properties
 node_modules
 node_modules/.yarn-integrity
 .browser_modules
-bundle.js
-bundle.js.map
+
 lib
 
 *.log

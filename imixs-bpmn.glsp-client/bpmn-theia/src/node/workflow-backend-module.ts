@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2019-2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,9 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createWorkflowDiagramContainer from './di.config';
+import { GLSPServerContribution } from '@eclipse-glsp/theia-integration/lib/node';
+import { BackendApplicationContribution } from '@theia/core/lib/node';
+import { ContainerModule } from 'inversify';
+import { WorkflowServerLauncher } from './server-launcher';
+import { WorkflowGLServerContribution } from './workflow-glsp-server-contribution';
 
-export * from './model';
-export * from './workflow-views';
-export * from './direct-task-editing/direct-task-editor';
-export { createWorkflowDiagramContainer };
+export default new ContainerModule(bind => {
+    bind(GLSPServerContribution).to(WorkflowGLServerContribution).inSingletonScope();
+    bind(BackendApplicationContribution).to(WorkflowServerLauncher);
+});

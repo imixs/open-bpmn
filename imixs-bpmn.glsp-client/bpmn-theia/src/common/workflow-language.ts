@@ -13,9 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createWorkflowDiagramContainer from './di.config';
-
-export * from './model';
-export * from './workflow-views';
-export * from './direct-task-editing/direct-task-editor';
-export { createWorkflowDiagramContainer };
+export namespace WorkflowLanguage {
+    export const Id = 'Workflow';
+    export const Name = 'Workflow';
+    export const Label = 'Workflow diagram';
+    export const DiagramType = 'workflow-diagram';
+    export const FileExtension = '.wf';
+}

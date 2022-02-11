@@ -13,9 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createWorkflowDiagramContainer from './di.config';
+import { BaseGLSPClientContribution } from '@eclipse-glsp/theia-integration/lib/browser';
+import { injectable } from 'inversify';
 
-export * from './model';
-export * from './workflow-views';
-export * from './direct-task-editing/direct-task-editor';
-export { createWorkflowDiagramContainer };
+import { WorkflowLanguage } from '../../common/workflow-language';
+
+export interface WorkflowInitializeOptions {
+    timestamp: Date;
+    message: string;
+}
+
+@injectable()
+export class WorkflowGLSPClientContribution extends BaseGLSPClientContribution {
+    readonly id = WorkflowLanguage.Id;
+    readonly name = WorkflowLanguage.Name;
+    readonly fileExtensions = [WorkflowLanguage.FileExtension];
+
+    protected createInitializeOptions(): WorkflowInitializeOptions {
+        return {
+            timestamp: new Date(),
+            message: 'Custom Options Available'
+        };
+    }
+}

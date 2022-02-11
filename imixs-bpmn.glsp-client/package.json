@@ -1,24 +1,36 @@
 {
   "private": true,
   "name": "parent",
-  "version": "0.0.1",
+  "version": "0.8.0",
   "engines": {
     "yarn": ">=1.7.0 <2.x.x",
-    "node": ">=12.14.1"
+    "node": ">= 12.14.1"
   },
+  "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
+  "author": {
+    "name": "Eclipse GLSP"
+  },
+  "homepage": "https://www.eclipse.org/glsp/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-glsp/glsp-examples.git"
+  },
+  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "contributors": [
+    {
+      "name": "Eclipse GLSP Project",
+      "email": "glsp-dev@eclipse.org",
+      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+    }
+  ],
   "scripts": {
     "prepare": "lerna run prepare",
     "watch": "lerna run --parallel watch",
     "build": "yarn install --ignore-scripts && lerna run build",
     "lint": "lerna run lint --",
-    "test": "lerna run test",
-    "test:ci": "lerna run test:ci",
-    "publish:prepare": "lerna version minor --exact --ignore-scripts --yes --no-push",
-    "publish:latest": "lerna publish from-git --no-git-reset --no-verify-access --no-push",
-    "publish:next": "SHA=$(git rev-parse --short HEAD) && lerna publish preminor --exact --canary --preid next.${SHA} --dist-tag next --no-git-reset --no-git-tag-version --no-push --ignore-scripts --yes --no-verify-access",
-    "upgrade:next": "yarn upgrade -p \"sprotty|sprotty-theia|@eclipse-glsp.*\" --next ",
-    
-    "download:exampleServer": "ts-node examples/workflow-glsp/scripts/download.ts"
+    "rebuild:browser": "theia rebuild:browser",
+    "start": "yarn rebuild:browser && yarn --cwd workflow-browser-app start",
+    "start:external": "yarn rebuild:browser && yarn --cwd workflow-browser-app start:external"
   },
   "devDependencies": {
     "@eclipse-glsp/config": "0.9.0",
@@ -26,9 +38,28 @@
     "typescript": "^3.9.2"
   },
   "workspaces": [
-    "packages/*",
-    "./bpmn-glsp",
-    "./bpmn-standalone"
-  ]
-  
+    "bpmn-glsp",
+    "bpmn-theia",
+    "bpmn-browser-app"
+  ],
+  "resolutions": {
+    "**/@theia/core": "1.4.0",
+    "**/@theia/editor": "1.4.0",
+    "**/@theia/filesystem": "1.4.0",
+    "**/@theia/languages": "1.4.0",
+    "**/@theia/markers": "1.4.0",
+    "**/@theia/messages": "1.4.0",
+    "**/@theia/monaco": "1.4.0",
+    "**/@theia/navigator": "1.4.0",
+    "**/@theia/outline-view": "1.4.0",
+    "**/@theia/preferences": "1.4.0",
+    "**/@theia/process": "1.4.0",
+    "**/@theia/terminal": "1.4.0",
+    "**/@theia/variable-resolver": "1.4.0",
+    "**/@theia/userstorage": "1.4.0",
+    "**/@theia/workspace": "1.4.0",
+    "**/@theia/cli": "1.4.0",
+    "**/inversify": "5.0.1",
+    "**/vscode-languageserver-protocol": "3.15.3"
+  }
 }

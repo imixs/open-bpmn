@@ -1,0 +1,54 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Workflow example",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "command": "yarn ",
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch Workflow example",
+      "type": "shell",
+      "group": "build",
+      "command": "yarn watch",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Workflow Theia Backend (Embedded GLSP Server)",
+      "type": "shell",
+      "group": "test",
+      "command": "yarn start",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Workflow Backend (External GLSP Server)",
+      "type": "shell",
+      "group": "test",
+      "command": "yarn start:external",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

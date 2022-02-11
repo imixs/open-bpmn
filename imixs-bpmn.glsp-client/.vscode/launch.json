@@ -1,0 +1,74 @@
+{
+  // Use IntelliSense to learn about possible Node.js debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Workflow Theia Backend (Embedded GLSP Server)",
+      "program": "${workspaceRoot}/workflow-browser-app/src-gen/backend/main.js",
+      "args": [
+        "--port=3000",
+        "--no-cluster",
+        "--WF_GLSP=5014",
+        "--app-project-path=${workspaceRoot}/workflow-browser-app",
+        "--root-dir=${workspaceRoot}/workspace"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
+        "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
+        "${workspaceRoot}/workflow-browser-app/lib/**/*.js",
+        "${workspaceRoot}/workflow-theia/lib/**/*.js",
+        "${workspaceRoot}/workflow-glsp/lib/**/*.js",
+        "${workspaceRoot}/workflow-browser-app/src-gen/**/*.js"
+      ],
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "outputCapture": "std"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Workflow Theia Backend (External GLSP Server)",
+      "program": "${workspaceRoot}/workflow-browser-app/src-gen/backend/main.js",
+      "args": [
+        "--loglevel=debug",
+        "--port=3000",
+        "--no-cluster",
+        "--WF_GLSP=5014",
+        "--DEBUG",
+        "--app-project-path=${workspaceRoot}/workflow-browser-app",
+        "--root-dir=${workspaceRoot}/workspace"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "sourceMaps": true,
+      "outFiles": [
+        "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
+        "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
+        "${workspaceRoot}/workflow-browser-app/lib/**/*.js",
+        "${workspaceRoot}/workflow-theia/lib/**/*.js",
+        "${workspaceRoot}/workflow-glsp/lib/**/*.js",
+        "${workspaceRoot}/workflow-browser-app/src-gen/**/*.js"
+      ],
+      "smartStep": true,
+      "internalConsoleOptions": "openOnSessionStart",
+      "outputCapture": "std"
+    },
+    {
+      "name": "Launch Workflow Theia Frontend",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000/",
+      "sourceMaps": true,
+      "webRoot": "${workspaceRoot}/workflow-browser-app"
+    }
+  ]
+}

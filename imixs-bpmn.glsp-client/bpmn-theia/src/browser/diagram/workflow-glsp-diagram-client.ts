@@ -13,9 +13,18 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createWorkflowDiagramContainer from './di.config';
+import { GLSPDiagramClient } from '@eclipse-glsp/theia-integration/lib/browser';
+import { EditorManager } from '@theia/editor/lib/browser';
+import { inject, injectable } from 'inversify';
 
-export * from './model';
-export * from './workflow-views';
-export * from './direct-task-editing/direct-task-editor';
-export { createWorkflowDiagramContainer };
+import { WorkflowGLSPClientContribution } from '../language/workflow-glsp-client-contribution';
+
+@injectable()
+export class WorkflowGLSPDiagramClient extends GLSPDiagramClient {
+    constructor(
+        @inject(WorkflowGLSPClientContribution) glspCLientContribution: WorkflowGLSPClientContribution,
+        @inject(EditorManager) editorManager: EditorManager
+    ) {
+        super(glspCLientContribution, editorManager);
+    }
+}
