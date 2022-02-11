@@ -24,7 +24,7 @@ import { inject, injectable } from 'inversify';
 import { join, resolve } from 'path';
 
 const jarPath = resolve(
-    join(__dirname, '..', '..', '..', '..', 'glsp-server', 'target', 'org.imixs.bpmn.glsp.server-0.0.1-SNAPSHOT-glsp.jar')
+    join(__dirname, '..', '..', '..', '..', 'imixs-bpmn.glsp-server', 'target', 'org.imixs.bpmn.glsp.server-0.0.1-SNAPSHOT-glsp.jar')
 );
 const serverPort = getPort('WF_GLSP');
 

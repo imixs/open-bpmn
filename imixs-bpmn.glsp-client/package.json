@@ -29,8 +29,8 @@
     "build": "yarn install --ignore-scripts && lerna run build",
     "lint": "lerna run lint --",
     "rebuild:browser": "theia rebuild:browser",
-    "start": "yarn rebuild:browser && yarn --cwd workflow-browser-app start",
-    "start:external": "yarn rebuild:browser && yarn --cwd workflow-browser-app start:external"
+    "start": "yarn rebuild:browser && yarn --cwd bpmn-browser-app start",
+    "start:external": "yarn rebuild:browser && yarn --cwd bpmn-browser-app start:external"
   },
   "devDependencies": {
     "@eclipse-glsp/config": "0.9.0",
