@@ -19,7 +19,9 @@ import { injectable } from '@theia/core/shared/inversify';
 import { join, resolve } from 'path';
 import { MinimalLanguage } from '../common/minimal-language';
 
+export const DEFAULT_PORT = 5007;
 export const PORT_ARG_KEY = 'MINIMAL_GLSP';
+export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
     join(__dirname, '..', '..', '..', '..', 'glsp-server', 'target', 'org.eclipse.glsp.example.minimal-0.9.0-glsp.jar')
 );
@@ -31,10 +33,11 @@ export class MinimalGLSPServerContribution extends JavaSocketServerContribution 
     createLaunchOptions(): Partial<JavaSocketServerLaunchOptions> {
         return {
             jarPath: JAR_FILE,
-            additionalArgs: ['--consoleLog', 'true'],
+            additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],
             socketConnectionOptions: {
-                port: getPort(PORT_ARG_KEY)
+                port: getPort(PORT_ARG_KEY, DEFAULT_PORT)
             }
         };
     }
 }
+
