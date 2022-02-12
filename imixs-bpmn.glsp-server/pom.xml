@@ -13,17 +13,34 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.source>11</java.source>
 		<java.target>11</java.target>
-		<checkstyle>8.44</checkstyle>
+		
 		<package-type>eclipse-plugin</package-type>
 		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
 	</properties>
 
-
-	<dependencies>
+<dependencies>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
-			<artifactId>org.eclipse.glsp.server</artifactId>
+			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
 			<version>0.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.glsp</groupId>
+			<artifactId>org.eclipse.glsp.layout</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.elk</groupId>
+			<artifactId>org.eclipse.elk.alg.layered</artifactId>
+			<version>0.7.1</version>
+			<!-- Can be removed once https://github.com/eclipse-glsp/glsp/issues/265 
+				is resolved -->
+			<exclusions>
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
