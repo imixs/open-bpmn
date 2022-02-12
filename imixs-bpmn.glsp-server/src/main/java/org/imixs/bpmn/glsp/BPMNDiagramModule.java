@@ -18,13 +18,26 @@ package org.imixs.bpmn.glsp;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
+import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
+import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.imixs.bpmn.glsp.handler.CreateManualTaskHandler;
 import org.imixs.bpmn.glsp.handler.MinimalCreateNodeOperationHandler;
+import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 
-public class MinimalDiagramModule extends GModelJsonDiagramModule {
+/**
+ * The DiagramModule contains the bindings in dedicated methods. Imixs BPMN extends this module and customize it by
+ * overriding dedicated binding methods.
+ *
+ *
+ * @author rsoika
+ *
+ */
+public class BPMNDiagramModule extends GModelJsonDiagramModule {
 
    @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
@@ -35,12 +48,26 @@ public class MinimalDiagramModule extends GModelJsonDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
       super.configureOperationHandlers(binding);
       binding.add(MinimalCreateNodeOperationHandler.class);
+      binding.add(CreateManualTaskHandler.class);
       binding.remove(LayoutOperationHandler.class);
    }
 
    @Override
    protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
       return JsonFileGModelLoader.class;
+   }
+
+   @Override
+   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+      return FileWatcher.class;
+   }
+
+   /**
+    * Add Palette options by providing the BPMN PaletteActionProvider
+    */
+   @Override
+   protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
+      return BPMNCommandPaletteActionProvider.class;
    }
 
    @Override

@@ -25,10 +25,10 @@ import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.glsp.utils.BpmnBuilder.TaskNodeBuilder;
+import org.imixs.bpmn.glsp.utils.BPMNBuilder.TaskNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public abstract class CreateTaskHandler extends CreateWorkflowNodeOperationHandler {
+public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
    private final Function<Integer, String> labelProvider;
    private final String elementTypeId;

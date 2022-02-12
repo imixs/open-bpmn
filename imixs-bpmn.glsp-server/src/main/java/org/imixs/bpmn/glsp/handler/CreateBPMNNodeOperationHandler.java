@@ -22,9 +22,9 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 
-public abstract class CreateWorkflowNodeOperationHandler extends CreateNodeOperationHandler {
+public abstract class CreateBPMNNodeOperationHandler extends CreateNodeOperationHandler {
 
-   public CreateWorkflowNodeOperationHandler(final String elementTypeId) {
+   public CreateBPMNNodeOperationHandler(final String elementTypeId) {
       super(elementTypeId);
    }
 

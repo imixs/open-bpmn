@@ -34,7 +34,7 @@ public final class MinimalServerLauncher {
          LaunchUtil.configure(cliParser);
          int port = cliParser.parsePort();
 
-         ServerModule serverModule = new ServerModule().configureDiagramModule(new MinimalDiagramModule());
+         ServerModule serverModule = new ServerModule().configureDiagramModule(new BPMNDiagramModule());
          GLSPServerLauncher launcher = new SocketGLSPServerLauncher(serverModule);
          launcher.start("localhost", port);
       } catch (ParseException | IOException e) {

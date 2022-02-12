@@ -21,10 +21,10 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.BpmnBuilder.ActivityNodeBuilder;
+import org.imixs.bpmn.glsp.utils.BPMNBuilder.ActivityNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public abstract class CreateActivityNodeHandler extends CreateWorkflowNodeOperationHandler {
+public abstract class CreateActivityNodeHandler extends CreateBPMNNodeOperationHandler {
 
    private final String label;
    private final String elementTypeId;

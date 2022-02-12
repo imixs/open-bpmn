@@ -27,7 +27,7 @@ import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.bpmngraph.TaskNode;
 import org.imixs.bpmn.bpmngraph.WeightedEdge;
 
-public final class BpmnBuilder {
+public final class BPMNBuilder {
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
@@ -152,5 +152,5 @@ public final class BpmnBuilder {
 
    }
 
-   private BpmnBuilder() {}
+   private BPMNBuilder() {}
 }

@@ -19,7 +19,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.BpmnBuilder.TaskNodeBuilder;
+import org.imixs.bpmn.glsp.utils.BPMNBuilder.TaskNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class CreateManualTaskHandler extends CreateTaskHandler {
