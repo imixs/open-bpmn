@@ -1,0 +1,52 @@
+{
+  "private": "true",
+  "name": "@eclipse-glsp-examples/minimal-theia",
+  "version": "0.9.0",
+  "description": "Theia extension for the Minimal GLSP example",
+  "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
+  "keywords": [
+    "theia-extension"
+  ],
+  "author": {
+    "name": "Eclipse GLSP"
+  },
+  "homepage": "https://www.eclipse.org/glsp/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-glsp/glsp-examples.git"
+  },
+  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "contributors": [
+    {
+      "name": "Eclipse GLSP Project",
+      "email": "glsp-dev@eclipse.org",
+      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+    }
+  ],
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "@eclipse-glsp-examples/minimal-glsp": "0.9.0",
+    "@eclipse-glsp/theia-integration": "0.9.0",
+    "@eclipse-glsp/client": "0.9.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1",
+    "typescript": "3.9.2"
+  },
+  "scripts": {
+    "prepare": "yarn  clean && yarn build && yarn lint",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
+    "watch": "tsc -w"
+  },
+  "theiaExtensions": [
+    {
+      "frontend": "lib/browser/frontend-module",
+      "backend": "lib/node/backend-module"
+    }
+  ]
+}

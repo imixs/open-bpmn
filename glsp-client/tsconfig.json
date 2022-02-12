@@ -1,0 +1,7 @@
+{
+  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": ["minimal-glsp/src", "minimal-theia/src", "minimal-standalone"]
+}

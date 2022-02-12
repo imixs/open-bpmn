@@ -1,0 +1,32 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Minimal GLSP Server",
+      "type": "shell",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "command": "mvn clean verify ",
+      "problemMatcher": []
+    },
+    {
+      "label": "Start Minimal GLSP Server",
+      "type": "shell",
+      "group": "test",
+      "command": "java -jar target/org.eclipse.glsp.example.minimal-0.9.0-glsp.jar",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "private": "true",
+  "name": "@eclipse-glsp-examples/minimal-glsp",
+  "version": "0.9.0",
+  "description": "GLSP sprotty diagrams for the Minimal DSL",
+  "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
+  "keywords": [
+    "glsp",
+    "minimal",
+    "diagram"
+  ],
+  "author": {
+    "name": "Eclipse GLSP"
+  },
+  "homepage": "https://www.eclipse.org/glsp/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eclipse-glsp/glsp-examples.git"
+  },
+  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "contributors": [
+    {
+      "name": "Eclipse GLSP Project",
+      "email": "glsp-dev@eclipse.org",
+      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+    }
+  ],
+  "files": [
+    "lib",
+    "src",
+    "css"
+  ],
+  "dependencies": {
+    "@eclipse-glsp/client": "0.9.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.1",
+    "typescript": "3.9.2"
+  },
+  "scripts": {
+    "prepare": "yarn clean && yarn build && yarn lint",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
+    "watch": "tsc -w"
+  },
+  "main": "lib/index",
+  "types": "lib/index"
+}
