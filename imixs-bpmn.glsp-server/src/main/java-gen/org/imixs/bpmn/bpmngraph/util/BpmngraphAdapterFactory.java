@@ -82,6 +82,10 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
             return createActivityNodeAdapter();
          }
          @Override
+         public Adapter caseTaskNode(TaskNode object) {
+            return createTaskNodeAdapter();
+         }
+         @Override
          public Adapter caseIcon(Icon object) {
             return createIconAdapter();
          }
@@ -156,6 +160,20 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createActivityNodeAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.TaskNode <em>Task Node</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.TaskNode
+    * @generated
+    */
+   public Adapter createTaskNodeAdapter() {
       return null;
    }
 

@@ -89,6 +89,20 @@ public class BpmngraphSwitch<T> extends Switch<T> {
             if (result == null) result = defaultCase(theEObject);
             return result;
          }
+         case BpmngraphPackage.TASK_NODE: {
+            TaskNode taskNode = (TaskNode)theEObject;
+            T result = caseTaskNode(taskNode);
+            if (result == null) result = caseActivityNode(taskNode);
+            if (result == null) result = caseGNode(taskNode);
+            if (result == null) result = caseGShapeElement(taskNode);
+            if (result == null) result = caseGEdgeLayoutable(taskNode);
+            if (result == null) result = caseGLayouting(taskNode);
+            if (result == null) result = caseGModelElement(taskNode);
+            if (result == null) result = caseGBoundsAware(taskNode);
+            if (result == null) result = caseGArgumentable(taskNode);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+         }
          case BpmngraphPackage.ICON: {
             Icon icon = (Icon)theEObject;
             T result = caseIcon(icon);
@@ -126,6 +140,21 @@ public class BpmngraphSwitch<T> extends Switch<T> {
     * @generated
     */
    public T caseActivityNode(ActivityNode object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>Task Node</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>Task Node</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseTaskNode(TaskNode object) {
       return null;
    }
 

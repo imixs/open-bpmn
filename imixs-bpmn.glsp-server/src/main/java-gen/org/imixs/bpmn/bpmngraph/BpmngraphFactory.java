@@ -31,6 +31,15 @@ public interface BpmngraphFactory extends EFactory {
    ActivityNode createActivityNode();
 
    /**
+    * Returns a new object of class '<em>Task Node</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>Task Node</em>'.
+    * @generated
+    */
+   TaskNode createTaskNode();
+
+   /**
     * Returns a new object of class '<em>Icon</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->

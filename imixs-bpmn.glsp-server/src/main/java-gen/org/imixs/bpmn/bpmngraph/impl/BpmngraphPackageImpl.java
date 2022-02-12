@@ -16,6 +16,7 @@ import org.imixs.bpmn.bpmngraph.ActivityNode;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
 import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.bpmngraph.TaskNode;
 import org.imixs.bpmn.bpmngraph.WeightedEdge;
 
 /**
@@ -31,6 +32,13 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * @generated
     */
    private EClass activityNodeEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass taskNodeEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -136,6 +144,33 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
+   public EClass getTaskNode() {
+      return taskNodeEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getTaskNode_Name() {
+      return (EAttribute)taskNodeEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getTaskNode_TaskType() {
+      return (EAttribute)taskNodeEClass.getEStructuralFeatures().get(1);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public EClass getIcon() {
       return iconEClass;
    }
@@ -189,6 +224,10 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
       activityNodeEClass = createEClass(ACTIVITY_NODE);
       createEAttribute(activityNodeEClass, ACTIVITY_NODE__NODE_TYPE);
 
+      taskNodeEClass = createEClass(TASK_NODE);
+      createEAttribute(taskNodeEClass, TASK_NODE__NAME);
+      createEAttribute(taskNodeEClass, TASK_NODE__TASK_TYPE);
+
       iconEClass = createEClass(ICON);
 
       weightedEdgeEClass = createEClass(WEIGHTED_EDGE);
@@ -227,12 +266,17 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       // Add supertypes to classes
       activityNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
+      taskNodeEClass.getESuperTypes().add(this.getActivityNode());
       iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
       weightedEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(activityNodeEClass, ActivityNode.class, "ActivityNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getActivityNode_NodeType(), ecorePackage.getEString(), "nodeType", null, 0, 1, ActivityNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(taskNodeEClass, TaskNode.class, "TaskNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getTaskNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, TaskNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEAttribute(getTaskNode_TaskType(), ecorePackage.getEString(), "taskType", null, 0, 1, TaskNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

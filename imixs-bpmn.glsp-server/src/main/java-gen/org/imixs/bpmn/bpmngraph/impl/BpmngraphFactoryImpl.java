@@ -57,6 +57,7 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
    public EObject create(EClass eClass) {
       switch (eClass.getClassifierID()) {
          case BpmngraphPackage.ACTIVITY_NODE: return createActivityNode();
+         case BpmngraphPackage.TASK_NODE: return createTaskNode();
          case BpmngraphPackage.ICON: return createIcon();
          case BpmngraphPackage.WEIGHTED_EDGE: return createWeightedEdge();
          default:
@@ -72,6 +73,16 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
    public ActivityNode createActivityNode() {
       ActivityNodeImpl activityNode = new ActivityNodeImpl();
       return activityNode;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public TaskNode createTaskNode() {
+      TaskNodeImpl taskNode = new TaskNodeImpl();
+      return taskNode;
    }
 
    /**

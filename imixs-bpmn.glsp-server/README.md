@@ -79,7 +79,7 @@ Next choose the root element of you glsp graph model. In the property view chang
 
 Click on the root element of the genfile and choose ‘Generate Model Code’. This will create the class files in the predefined package. 
 
-Change the tag `modelDirectory` to `/imixs-bpmn.glsp-server/src-gen` - this will be the source locateion for the files
+Change the tag `modelDirectory` to `/imixs-bpmn.glsp-server/src/main/java-gen` - this will be the source location for the files
 
 
 Finally you can now generate the code of your model. Select again only the root element of your model and Choose *Generate Model Code*. This will now generate all necessary classes referencing the GLSP core model types. 

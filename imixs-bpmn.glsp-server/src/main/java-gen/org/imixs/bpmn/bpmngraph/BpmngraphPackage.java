@@ -203,6 +203,169 @@ public interface BpmngraphPackage extends EPackage {
    int ACTIVITY_NODE_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
 
    /**
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl <em>Task Node</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getTaskNode()
+    * @generated
+    */
+   int TASK_NODE = 1;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__ARGS = ACTIVITY_NODE__ARGS;
+
+   /**
+    * The feature id for the '<em><b>Id</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__ID = ACTIVITY_NODE__ID;
+
+   /**
+    * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+
+   /**
+    * The feature id for the '<em><b>Children</b></em>' containment reference list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__CHILDREN = ACTIVITY_NODE__CHILDREN;
+
+   /**
+    * The feature id for the '<em><b>Parent</b></em>' container reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__PARENT = ACTIVITY_NODE__PARENT;
+
+   /**
+    * The feature id for the '<em><b>Trace</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__TRACE = ACTIVITY_NODE__TRACE;
+
+   /**
+    * The feature id for the '<em><b>Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__TYPE = ACTIVITY_NODE__TYPE;
+
+   /**
+    * The feature id for the '<em><b>Position</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__POSITION = ACTIVITY_NODE__POSITION;
+
+   /**
+    * The feature id for the '<em><b>Size</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__SIZE = ACTIVITY_NODE__SIZE;
+
+   /**
+    * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+
+   /**
+    * The feature id for the '<em><b>Layout</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__LAYOUT = ACTIVITY_NODE__LAYOUT;
+
+   /**
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
+
+   /**
+    * The feature id for the '<em><b>Node Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+
+   /**
+    * The feature id for the '<em><b>Name</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+
+   /**
+    * The feature id for the '<em><b>Task Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__TASK_TYPE = ACTIVITY_NODE_FEATURE_COUNT + 1;
+
+   /**
+    * The number of structural features of the '<em>Task Node</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 2;
+
+   /**
+    * The number of operations of the '<em>Task Node</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+
+   /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -210,7 +373,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getIcon()
     * @generated
     */
-   int ICON = 1;
+   int ICON = 2;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -338,7 +501,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getWeightedEdge()
     * @generated
     */
-   int WEIGHTED_EDGE = 2;
+   int WEIGHTED_EDGE = 3;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -507,6 +670,38 @@ public interface BpmngraphPackage extends EPackage {
    EAttribute getActivityNode_NodeType();
 
    /**
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.TaskNode <em>Task Node</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>Task Node</em>'.
+    * @see org.imixs.bpmn.bpmngraph.TaskNode
+    * @generated
+    */
+   EClass getTaskNode();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.TaskNode#getName <em>Name</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.TaskNode#getName()
+    * @see #getTaskNode()
+    * @generated
+    */
+   EAttribute getTaskNode_Name();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.TaskNode#getTaskType <em>Task Type</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Task Type</em>'.
+    * @see org.imixs.bpmn.bpmngraph.TaskNode#getTaskType()
+    * @see #getTaskNode()
+    * @generated
+    */
+   EAttribute getTaskNode_TaskType();
+
+   /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Icon <em>Icon</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -577,6 +772,32 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EAttribute ACTIVITY_NODE__NODE_TYPE = eINSTANCE.getActivityNode_NodeType();
+
+      /**
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl <em>Task Node</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getTaskNode()
+       * @generated
+       */
+      EClass TASK_NODE = eINSTANCE.getTaskNode();
+
+      /**
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute TASK_NODE__NAME = eINSTANCE.getTaskNode_Name();
+
+      /**
+       * The meta object literal for the '<em><b>Task Type</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute TASK_NODE__TASK_TYPE = eINSTANCE.getTaskNode_TaskType();
 
       /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.

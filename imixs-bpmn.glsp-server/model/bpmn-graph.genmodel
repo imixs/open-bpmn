@@ -10,6 +10,10 @@
     <genClasses ecoreClass="bpmn-graph.ecore#//ActivityNode">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//ActivityNode/nodeType"/>
     </genClasses>
+    <genClasses ecoreClass="bpmn-graph.ecore#//TaskNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//TaskNode/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//TaskNode/taskType"/>
+    </genClasses>
     <genClasses ecoreClass="bpmn-graph.ecore#//Icon"/>
     <genClasses ecoreClass="bpmn-graph.ecore#//WeightedEdge">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//WeightedEdge/probability"/>
