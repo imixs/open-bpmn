@@ -13,9 +13,8 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.example.minimal;
+package org.imixs.bpmn.glsp;
 
-import org.eclipse.glsp.example.minimal.handler.MinimalCreateNodeOperationHandler;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
@@ -23,6 +22,7 @@ import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.imixs.bpmn.glsp.handler.MinimalCreateNodeOperationHandler;
 
 public class MinimalDiagramModule extends GModelJsonDiagramModule {
 

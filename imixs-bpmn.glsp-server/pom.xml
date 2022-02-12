@@ -100,7 +100,7 @@
 							<transformers>
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>org.eclipse.glsp.example.minimal.MinimalServerLauncher</mainClass>
+									<mainClass>org.imixs.bpmn.glsp.MinimalServerLauncher</mainClass>
 								</transformer>
 							</transformers>
 							<filters>

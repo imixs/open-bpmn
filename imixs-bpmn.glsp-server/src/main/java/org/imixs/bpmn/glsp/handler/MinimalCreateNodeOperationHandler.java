@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.eclipse.glsp.example.minimal.handler;
+package org.imixs.bpmn.glsp.handler;
 
 import java.util.Map;
 import java.util.Optional;
