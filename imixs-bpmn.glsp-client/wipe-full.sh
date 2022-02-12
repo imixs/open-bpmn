@@ -11,7 +11,7 @@ rm -R ./bpmn-browser-app/node_modules
 rm -R ./bpmn-browser-app/src-gen
 rm -R ./bpmn-browser-app/gen-webpack*
 rm -R ./bpmn-browser-app/webpack*
-
+rm -R ./bpmn-browser-app/logs
 
 
 
