@@ -39,7 +39,7 @@
   },
   "workspaces": [
     "bpmn-glsp",
-    "minimal-theia",
+    "bpmn-theia",
     "minimal-browser-app"
   ],
 

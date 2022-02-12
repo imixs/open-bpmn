@@ -24,7 +24,7 @@
         "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
         "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/lib/**/*.js",
-        "${workspaceRoot}/minimal-theia/lib/**/*.js",
+        "${workspaceRoot}/bpmn-theia/lib/**/*.js",
         "${workspaceRoot}/bpmn-glsp/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/src-gen/**/*.js"
       ],
@@ -53,7 +53,7 @@
         "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
         "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/lib/**/*.js",
-        "${workspaceRoot}/minimal-theia/lib/**/*.js",
+        "${workspaceRoot}/bpmn-theia/lib/**/*.js",
         "${workspaceRoot}/bpmn-glsp/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/src-gen/**/*.js"
       ],

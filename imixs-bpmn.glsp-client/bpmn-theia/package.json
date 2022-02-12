@@ -1,9 +1,9 @@
 {
   "private": "true",
-  "name": "@eclipse-glsp-examples/minimal-theia",
+  "name": "@imixs-bpmn/bpmn-theia",
   "version": "0.9.0",
-  "description": "Theia extension for the Minimal GLSP example",
-  "license": "(EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0)",
+  "description": "Theia extension for the BPMN GLSP Client",
+  "license": "(GPL-3.0)",
   "keywords": [
     "theia-extension"
   ],
