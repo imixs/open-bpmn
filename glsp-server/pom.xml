@@ -1,55 +1,23 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.eclipse.glsp.example</groupId>
-	<version>0.9.0</version>
-	<artifactId>org.eclipse.glsp.example.minimal</artifactId>
-	<description>Server component for the Minimal GLSP example</description>
-	<url>https://github.com/eclipse/glsp-examples</url>
+	<parent>
+		<groupId>org.imixs.bpmn</groupId>
+		<artifactId>org.imixs.bpmn.glsp</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>org.imixs.bpmn.glsp.server</artifactId>
+	<name>Imixs BPMN GLSP Server</name>
 
-	<licenses>
-		<license>
-			<name>Eclipse Public License - v 2.0</name>
-			<url>http://www.eclipse.org/legal/epl-v20.html</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<name>Eclipse GLSP Project</name>
-			<email>glsp-dev@eclipse.org</email>
-			<organization>Eclipse GLSP</organization>
-			<organizationUrl>https://projects.eclipse.org/projects/ecd.glsp</organizationUrl>
-		</developer>
-	</developers>
-
-	<scm>
-		<url>https://github.com/eclipse-glsp/glsp-examples</url>
-		<connection>scm:git@github.com:eclipse-glsp/glsp-examples.git</connection>
-		<developerConnection>scm:git@github.com:eclipse-glsp/glsp-examples.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>sonatype</id>
-			<name>Sonatype</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
-		</pluginRepository>
-	</pluginRepositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.source>11</java.source>
 		<java.target>11</java.target>
 		<checkstyle>8.44</checkstyle>
-		<checkstyle.plugin>3.1.2</checkstyle.plugin>
-
+		<package-type>eclipse-plugin</package-type>
+		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
 	</properties>
+
 
 	<dependencies>
 		<dependency>
@@ -111,38 +79,7 @@
 				<artifactId>versions-maven-plugin</artifactId>
 				<version>2.7</version>
 			</plugin>
-			<!-- to disable use -Dcheckstyle.skip -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>${checkstyle.plugin}</version>
-				<configuration>
-					<configLocation>emfcloud-checkstyle-8.44.xml</configLocation>
-					<consoleOutput>true</consoleOutput>
-					<excludes>**/src-gen/**/*.java</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<?m2e execute onConfiguration?>
-						<phase>validate</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>org.eclipse.emfcloud</groupId>
-						<artifactId>org.eclipse.emfcloud.checkstyle</artifactId>
-						<version>0.1.0-SNAPSHOT</version>
-					</dependency>
-					<dependency>
-						<groupId>com.puppycrawl.tools</groupId>
-						<artifactId>checkstyle</artifactId>
-						<version>${checkstyle}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+			
 		</plugins>
 	</build>
 
