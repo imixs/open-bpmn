@@ -3,5 +3,5 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": ["minimal-glsp/src", "minimal-theia/src", "minimal-standalone"]
+  "include": ["bpmn-glsp/src", "minimal-theia/src", "minimal-standalone"]
 }

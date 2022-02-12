@@ -8,19 +8,18 @@
     "theia-extension"
   ],
   "author": {
-    "name": "Eclipse GLSP"
+    "name": "Imixs Workflow"
   },
-  "homepage": "https://www.eclipse.org/glsp/",
+  "homepage": "https://www.imixs.org/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/eclipse-glsp/glsp-examples.git"
+    "url": "https://github.com/imixs/imixs-bpmn.glsp.git"
   },
-  "bugs": "https://github.com/eclipse-glsp/glsp/issues",
+  "bugs": "https://github.com/imixs/imixs-bpmn.glsp/issues",
   "contributors": [
     {
-      "name": "Eclipse GLSP Project",
-      "email": "glsp-dev@eclipse.org",
-      "url": "https://projects.eclipse.org/projects/ecd.glsp"
+      "name": "Ralph Soika",
+      "email": "ralph.soika@imixs.com"
     }
   ],
   "files": [
@@ -28,7 +27,7 @@
     "src"
   ],
   "dependencies": {
-    "@eclipse-glsp-examples/minimal-glsp": "0.9.0",
+    "@imixs-bpmn/bpmn-glsp": "0.9.0",
     "@eclipse-glsp/theia-integration": "0.9.0",
     "@eclipse-glsp/client": "0.9.0"
   },

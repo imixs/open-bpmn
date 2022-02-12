@@ -25,7 +25,7 @@
         "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/lib/**/*.js",
         "${workspaceRoot}/minimal-theia/lib/**/*.js",
-        "${workspaceRoot}/minimal-glsp/lib/**/*.js",
+        "${workspaceRoot}/bpmn-glsp/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/src-gen/**/*.js"
       ],
       "smartStep": true,
@@ -54,7 +54,7 @@
         "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/lib/**/*.js",
         "${workspaceRoot}/minimal-theia/lib/**/*.js",
-        "${workspaceRoot}/minimal-glsp/lib/**/*.js",
+        "${workspaceRoot}/bpmn-glsp/lib/**/*.js",
         "${workspaceRoot}/minimal-browser-app/src-gen/**/*.js"
       ],
       "smartStep": true,

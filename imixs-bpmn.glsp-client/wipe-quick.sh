@@ -15,8 +15,8 @@ rm -R ./minimal-browser-app/webpack*
 
 
 
-rm -R ./minimal-glsp/lib
-rm -R ./minimal-glsp/node_modules
+rm -R ./bpmn-glsp/lib
+rm -R ./bpmn-glsp/node_modules
 
 rm -R ./minimal-theia/lib
 rm -R ./minimal-theia/node_modules

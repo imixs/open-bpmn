@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { createMinimalDiagramContainer } from '@eclipse-glsp-examples/minimal-glsp';
+import { createMinimalDiagramContainer } from '@imixs-bpmn/bpmn-glsp';
 import {
     configureDiagramServer,
     GLSPDiagramConfiguration,
