@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.imixs.bpmn</groupId>
+	<artifactId>org.imixs.bpmn.glsp</artifactId>
+	<description>Imxs BPMN GLSP</description>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Imixs BPMN GLSP</name>
+
+	<organization>
+		<name>Imixs Software Solutions GmbH</name>
+		<url>http://www.imixs.com</url>
+	</organization>
+	<inceptionYear>2006</inceptionYear>
+	<developers>
+		<developer>
+			<id>rsoika</id>
+			<name>Ralph Soika</name>
+			<email>ralph.soika@imixs.com</email>
+			<url>http://blog.imixs.org/</url>
+			<organization>Imixs Software Solutions GmbH</organization>
+			<organizationUrl>http://www.imixs.com</organizationUrl>
+			<roles>
+				<role>developer</role>
+				<role>testing</role>
+			</roles>
+			<timezone>2</timezone>
+		</developer>
+		<developer>
+			<id>gaheinle</id>
+			<name>Gaby Heinle</name>
+			<email />
+			<url />
+			<organization>Imixs Software Solutions GmbH</organization>
+			<organizationUrl>http://www.imixs.com</organizationUrl>
+			<roles>
+				<role>developer</role>
+				<role>testing</role>
+			</roles>
+			<timezone>2</timezone>
+		</developer>
+	</developers>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License</name>
+			<url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>
+			All the results of the imixs workflow project are subject to the GPL licensing model.
+			</comments>
+		</license>
+	</licenses>
+
+
+
+
+</project>
+
