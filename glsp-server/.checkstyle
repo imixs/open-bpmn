@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
+  <local-check-config name="EMF.cloud Checkstyle (8.39)" location="https://raw.githubusercontent.com/eclipse-emfcloud/emfcloud/master/codestyle/org.eclipse.emfcloud.checkstyle/src/main/resources/emfcloud-checkstyle-8.39.xml" type="remote" description="The central checkstyle configuration for EMF.cloud Checkstyle Version 8.39">
+    <additional-data name="cache-props-file-location" value="EMF.cloud Checkstyle (8.39)_1638214328569_cache.properties"/>
+    <additional-data name="cache-file-location" value="EMF.cloud Checkstyle (8.39)_1638214328569_cache.xml"/>
+    <additional-data name="cache-file" value="true"/>
+  </local-check-config>
+  <local-check-config name="EMF.cloud Checkstyle (8.44)" location="https://raw.githubusercontent.com/eclipse-emfcloud/emfcloud/master/codestyle/org.eclipse.emfcloud.checkstyle/src/main/resources/emfcloud-checkstyle-8.44.xml" type="remote" description="The central checkstyle configuration for EMF.cloud Checkstyle Version 8.44">
+    <additional-data name="cache-props-file-location" value="EMF.cloud Checkstyle (8.44)_1638214295838_cache.properties"/>
+    <additional-data name="cache-file-location" value="EMF.cloud Checkstyle (8.44)_1638214295838_cache.xml"/>
+    <additional-data name="cache-file" value="true"/>
+  </local-check-config>
+  <fileset name="java-sources-default" enabled="true" check-config-name="EMF.cloud Checkstyle (8.44)" local="true">
+    <file-match-pattern match-pattern="^src/main/java/.*\/.*\.java" include-pattern="true"/>
+    <file-match-pattern match-pattern="^src/main/java.*.*src-gen/.*\.java" include-pattern="false"/>
+    <file-match-pattern match-pattern="^src/main/resources.*\.properties" include-pattern="true"/>
+    <file-match-pattern match-pattern="^src/test/resources.*\.properties" include-pattern="true"/>
+  </fileset>
+</fileset-config>
