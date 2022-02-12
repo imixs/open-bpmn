@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/imixs-bpmn.glsp-server/src-gen" modelPluginID="imixs-bpmn.glsp-server"
+    modelName="Bpmn-graph" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>bpmn-graph.ecore</foreignModel>
+  <genPackages prefix="Bpmngraph" basePackage="org.imixs.bpmn" disposableProviderFactory="true"
+      ecorePackage="bpmn-graph.ecore#/">
+    <genClasses ecoreClass="bpmn-graph.ecore#//ActivityNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//ActivityNode/nodeType"/>
+    </genClasses>
+    <genClasses ecoreClass="bpmn-graph.ecore#//Icon"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//WeightedEdge">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//WeightedEdge/probability"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
+      ecorePackage="glsp-graph.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="glsp-graph.ecore#//GSeverity">
+      <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/error"/>
+      <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/warning"/>
+      <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/info"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GModelElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/cssClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GModelElement/children"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference glsp-graph.ecore#//GModelElement/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/trace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GShapeElement"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GGraph">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GGraph/layoutOptions"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GModelRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GModelRoot/canvasBounds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelRoot/revision"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GNode"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GEdge">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdge/routingPoints"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdge/sourceId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdge/targetId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdge/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdge/routerKind"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GCompartment"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GLabel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLabel/text"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GIssueMarker">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GIssueMarker/issues"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GPort"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GButton">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GButton/enabled"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GBoundsAware">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GBoundsAware/position"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GBoundsAware/size"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GPoint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPoint/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPoint/y"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GDimension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GDimension/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GDimension/height"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GEdgeLayoutable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdgeLayoutable/edgePlacement"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GEdgePlacement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/position"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/offset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/side"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/rotate"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GLayouting">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayouting/layout"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GLayouting/layoutOptions"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GBounds">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/height"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GAlignable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GAlignable/alignment"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GArgumentable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GArgumentable/args"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GIssue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GIssue/severity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GIssue/message"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GHtmlRoot">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GHtmlRoot/classes"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GPreRenderedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPreRenderedElement/code"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//StringToObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
