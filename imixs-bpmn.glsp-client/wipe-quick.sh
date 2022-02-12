@@ -6,11 +6,11 @@ echo "***************************************"
 echo "* Wipe out quick mode.....            *"
 echo "***************************************"
 
-rm -R ./minimal-browser-app/lib
-rm -R ./minimal-browser-app/node_modules
-rm -R ./minimal-browser-app/src-gen
-rm -R ./minimal-browser-app/gen-webpack*
-rm -R ./minimal-browser-app/webpack*
+rm -R ./bpmn-browser-app/lib
+rm -R ./bpmn-browser-app/node_modules
+rm -R ./bpmn-browser-app/src-gen
+rm -R ./bpmn-browser-app/gen-webpack*
+rm -R ./bpmn-browser-app/webpack*
 
 
 
