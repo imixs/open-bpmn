@@ -8,8 +8,6 @@ echo "***************************************"
 
 cd imixs-bpmn.glsp-server && mvn clean verify && cd ..
 
-cd glsp-client && yarn
-
-cd glsp-client
+cd imixs-bpmn.glsp-client && yarn
 
 yarn start
