@@ -1,6 +1,6 @@
-# Server
+# Imixs BPMN - GLSP Server
 
-
+This is the Imixs BPMN GLSP Server module used by the Imixs BPMN Client modules. 
 
 ## Building the Workflow Diagram example server
 
@@ -14,14 +14,4 @@ From the /target/ folder you can now start the server by executing the following
 
 	$ cd target
 	$ java -jar org.imixs.bpmn.glsp.server-0.0.1-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
-
-For the HTML5 client you need to run the server on port 8081
-
-	$ java -jar org.imixs.bpmn.glsp.server-0.0.1-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher --port=8081 --websocket
-
-To start the example server from within your IDE, run the main method of the class `BPMN2ServerLauncher.java` in the module `org.imixs.bpmn.glsp.server.launch` 
-
-Once the server is running, choose a diagram client integration (such as Eclipse Theia, VSCode, Eclipse, or Standalone).
-
-
 
