@@ -6,7 +6,7 @@ echo "***************************************"
 echo "* Build quick mode.....            *"
 echo "***************************************"
 
-cd glsp-server && mvn clean verify && cd ..
+cd imixs-bpmn.glsp-server && mvn clean verify && cd ..
 
 cd glsp-client && yarn
 
