@@ -24,12 +24,6 @@
       "email": "ralph.soika@imixs.com"
     }
   ],
-  "files": [
-    "lib",
-    "src",
-    "build",
-    "css"
-  ],
   "dependencies": {
     "@eclipse-glsp/client": "0.9.0",
     "balloon-css": "^0.5.0"
@@ -46,6 +40,12 @@
     "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
     "watch": "tsc -w"
   },
+  "files": [
+    "lib",
+    "src",
+    "build",
+    "css"
+  ],
   "main": "lib/index",
   "types": "lib/index"
 }

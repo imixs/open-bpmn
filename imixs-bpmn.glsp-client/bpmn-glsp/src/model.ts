@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -22,6 +22,8 @@ import {
     fadeFeature,
     hoverFeedbackFeature,
     isEditableLabel,
+    layoutableChildFeature,
+    LayoutContainer,
     layoutContainerFeature,
     moveFeature,
     Nameable,
@@ -29,8 +31,10 @@ import {
     popupFeature,
     RectangularNode,
     SChildElement,
+    SEdge,
     selectFeature,
     SModelElement,
+    SShapeElement,
     WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
@@ -49,25 +53,30 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
         nameFeature,
         withEditLabelFeature
     ];
-    name = '';
     duration?: number;
     taskType?: string;
     reference?: string;
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const headerComp = this.children.find(element => element.type === 'comp:header');
-        if (headerComp) {
-            const label = headerComp.children.find(element => element.type === 'label:heading');
-            if (label && isEditableLabel(label)) {
-                return label;
-            }
+        const label = this.children.find(element => element.type === 'label:heading');
+        if (label && isEditableLabel(label)) {
+            return label;
         }
         return undefined;
+    }
+
+    get name(): string {
+        const labelText = this.editableLabel?.text;
+        return labelText ? labelText : '<unknown>';
     }
 }
 
 export function isTaskNode(element: SModelElement): element is TaskNode {
     return element instanceof TaskNode || false;
+}
+
+export class WeightedEdge extends SEdge {
+    probability?: string;
 }
 
 export class ActivityNode extends DiamondNode {
@@ -88,5 +97,41 @@ export namespace ActivityNode {
         export const JOIN = 'joinNode';
         export const FORK = 'forkNode';
         export const UNDEFINED = 'undefined';
+    }
+}
+
+export class Icon extends SShapeElement implements LayoutContainer {
+    static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
+
+    layout: string;
+    layoutOptions?: { [key: string]: string | number | boolean };
+    size = {
+        width: 32,
+        height: 32
+    };
+}
+
+export class CategoryNode extends RectangularNode implements Nameable, WithEditableLabel {
+    static readonly DEFAULT_FEATURES = [
+        deletableFeature,
+        selectFeature,
+        boundsFeature,
+        moveFeature,
+        layoutContainerFeature,
+        fadeFeature,
+        hoverFeedbackFeature,
+        popupFeature,
+        nameFeature,
+        withEditLabelFeature
+    ];
+
+    name = '';
+
+    get editableLabel(): (SChildElement & EditableLabel) | undefined {
+        const label = this.children.find(element => element.type === 'label:heading');
+        if (label && isEditableLabel(label)) {
+            return label;
+        }
+        return undefined;
     }
 }

@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2019-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -14,16 +14,15 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-svg {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #bbb;
-}
-
 .sprotty-graph {
     font-size: 15pt;
     border: none;
     height: 100%;
+}
+
+.sprotty-text {
+    font-size: 12pt;
+    text-anchor: middle;
 }
 
 .sprotty-node {
@@ -31,31 +30,77 @@ svg {
     font-weight: bold;
 }
 
-.sprotty-node {
-    fill: inherit;
+.sprotty-label {
+    stroke-width: 0;
+    fill: #000;
+    font-weight: inherit;
+    text-align: inherit;
+    font-size: 100%;
 }
 
-.minimal-node {
-    fill: lightsalmon;
+.sprotty-label.heading {
+    font-weight: normal;
+    font-size: 0.7em;
+    fill: #f0f3f8;
 }
 
-.sprotty-node.mouseover:not(.selected) {
-    stroke-width: 3;
+.icon path {
+    stroke-width: 0;
+    fill: #f0f3f8;
 }
 
-.sprotty-node:not(.selected) {
-    stroke-width: 1px;
+.icon .icon-background {
+    fill: transparent;
 }
 
-.sprotty-node.selected {
-    stroke-width: 3px;
-    stroke: var(--theia-menu-selectionBackground);
+.task.automated > .sprotty-node {
+    fill: #5b9fa8;
 }
 
-.sprotty-missing {
-    stroke-width: 1;
-    stroke: #f00;
-    fill: #f00;
-    font-size: 14pt;
-    text-anchor: middle;
+.task.manual > .sprotty-node {
+    fill: #db8651;
+}
+
+.category > .sprotty-node {
+    fill: #5c87bd;
+}
+
+.sprotty-edge.weighted.low:not(.selected),
+.sprotty-edge.weighted.low:not(.selected) .arrow {
+    stroke: rgb(128, 90, 233);
+}
+
+.sprotty-edge.weighted.low:not(.selected) .arrow {
+    fill: rgb(128, 90, 233);
+}
+
+.sprotty-edge.weighted:not(.selected),
+.sprotty-edge.weighted:not(.selected) .arrow,
+.sprotty-edge.weighted.medium:not(.selected),
+.sprotty-edge.weighted.medium:not(.selected) .arrow {
+    stroke: rgb(98, 60, 193);
+}
+
+.sprotty-edge.weighted:not(.selected) .arrow,
+.sprotty-edge.weighted.medium:not(.selected) .arrow {
+    fill: rgb(98, 60, 193);
+}
+
+.sprotty-edge.weighted.high:not(.selected),
+.sprotty-edge.weighted.high:not(.selected) .arrow {
+    stroke: rgb(68, 30, 163);
+}
+
+.sprotty-edge.weighted.high:not(.selected) .arrow {
+    fill: rgb(68, 30, 163);
+}
+
+.sprotty-comp {
+    stroke: transparent;
+    fill: transparent;
+}
+
+.label-edit input {
+    margin-top: -3px;
+    margin-left: -3px;
 }
