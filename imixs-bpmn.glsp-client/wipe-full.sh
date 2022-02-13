@@ -3,7 +3,7 @@
 # Wipe out all node.js packages
 #
 echo "***************************************"
-echo "* Wipe out full mode.....            *"
+echo "* Wipe Out - full mode.....           *"
 echo "***************************************"
 
 rm -R ./bpmn-browser-app/lib

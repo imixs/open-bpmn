@@ -3,7 +3,7 @@
 # build the server
 #
 echo "***************************************"
-echo "* build sever....                     *"
+echo "* Build sever....                     *"
 echo "***************************************"
 
-mvn clean verify -Pm2 -Pfatjar
+mvn clean verify

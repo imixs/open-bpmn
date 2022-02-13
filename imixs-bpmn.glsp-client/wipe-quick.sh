@@ -3,7 +3,7 @@
 # Wipe out all node.js packages
 #
 echo "***************************************"
-echo "* Wipe out quick mode.....            *"
+echo "* Wipe Out - quick mode.....          *"
 echo "***************************************"
 
 rm -R ./bpmn-browser-app/lib
