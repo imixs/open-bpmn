@@ -22,19 +22,33 @@ import {
     overrideViewerOptions,
     RectangularNode,
     RectangularNodeView,
+    RoundedCornerNodeView,
     SGraphView,
     TYPES
 } from '@eclipse-glsp/client';
 import { DefaultTypes } from '@eclipse-glsp/protocol';
+import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import '../css/diagram.css';
 
+// import model elements ActivityNode, Icon
+import {  TaskNode} from './model';
+
+// import views IconView, WorkflowEdgeView
+//import { IconView } from './workflow-views';
+
 const minimalDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
-    rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
+    // set loglevel warn | info
+    rebind(TYPES.LogLevel).toConstantValue(LogLevel.info);
     const context = { bind, unbind, isBound, rebind };
     configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, SGraphView);
     configureModelElement(context, DefaultTypes.NODE, RectangularNode, RectangularNodeView);
+
+    // Task
+    configureModelElement(context, 'task:manual', TaskNode, RoundedCornerNodeView);
+   // configureModelElement(context, 'icon', Icon, IconView);
+
 });
 
 export default function createContainer(widgetId: string): Container {

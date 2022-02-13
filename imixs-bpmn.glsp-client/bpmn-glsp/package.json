@@ -27,14 +27,17 @@
   "files": [
     "lib",
     "src",
+    "build",
     "css"
   ],
   "dependencies": {
-    "@eclipse-glsp/client": "0.9.0"
+    "@eclipse-glsp/client": "0.9.0",
+    "balloon-css": "^0.5.0"
   },
   "devDependencies": {
+    "@eclipse-glsp/config": "0.9.0",
     "rimraf": "^2.6.1",
-    "typescript": "3.9.2"
+    "typescript": "^3.9.2"
   },
   "scripts": {
     "prepare": "yarn clean && yarn build && yarn lint",
