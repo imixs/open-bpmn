@@ -26,6 +26,8 @@ import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.handler.CreateManualTaskHandler;
+import org.imixs.bpmn.glsp.handler.CreateSendTaskHandler;
+import org.imixs.bpmn.glsp.handler.CreateServiceTaskHandler;
 import org.imixs.bpmn.glsp.handler.MinimalCreateNodeOperationHandler;
 import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 
@@ -47,8 +49,14 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
    @Override
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
       super.configureOperationHandlers(binding);
+
       binding.add(MinimalCreateNodeOperationHandler.class);
+
+      // Add Task types
       binding.add(CreateManualTaskHandler.class);
+      binding.add(CreateServiceTaskHandler.class);
+      binding.add(CreateSendTaskHandler.class);
+
       binding.remove(LayoutOperationHandler.class);
    }
 

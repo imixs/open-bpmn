@@ -2,14 +2,14 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "id": "811d39c9-e3f6-404e-8306-79c10f0a3e6b",
+      "id": "f326a97c-f5e6-4ce6-b3bb-7d07be9ebb96",
       "cssClasses": [
         "minimal-node"
       ],
       "type": "node",
       "position": {
-        "x": 175.00570678710938,
-        "y": 68.0227279663086
+        "x": 50.0,
+        "y": 30.0
       },
       "size": {
         "width": 40.0,
@@ -17,16 +17,16 @@
       }
     },
     {
-      "name": "SendTask0",
-      "taskType": "task:send",
-      "id": "a4876aa2-edb0-4b1b-becd-c97b5ed78a55",
+      "name": "ManualTask0",
+      "taskType": "unknown",
+      "id": "76b7b8f8-414b-4aa2-b63a-fa6398d8086d",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "a4876aa2-edb0-4b1b-becd-c97b5ed78a55_icon",
+          "id": "76b7b8f8-414b-4aa2-b63a-fa6398d8086d_icon",
           "type": "icon",
           "position": {
             "x": 5.0,
@@ -38,30 +38,30 @@
           }
         },
         {
-          "id": "a4876aa2-edb0-4b1b-becd-c97b5ed78a55_classname",
+          "id": "76b7b8f8-414b-4aa2-b63a-fa6398d8086d_classname",
           "type": "label:heading",
           "position": {
             "x": 31.0,
             "y": 7.0
           },
           "size": {
-            "width": 69.484375,
+            "width": 82.703125,
             "height": 16.0
           },
-          "text": "SendTask0",
+          "text": "ManualTask0",
           "alignment": {
             "x": 0.0,
             "y": 13.0
           }
         }
       ],
-      "type": "task:send",
+      "type": "task:manual",
       "position": {
-        "x": 200.0,
-        "y": 150.0
+        "x": 70.0,
+        "y": 90.0
       },
       "size": {
-        "width": 110.484375,
+        "width": 123.703125,
         "height": 30.0
       },
       "layout": "hbox",
@@ -69,13 +69,13 @@
         "paddingRight": 10
       },
       "args": {
-        "radiusBottomLeft": 5.0,
         "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
     }
   ],
   "type": "graph",
-  "revision": 1
+  "revision": 2
 }

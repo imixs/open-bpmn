@@ -54,7 +54,12 @@ const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
 
     configureDefaultModelElements(context);
     configureModelElement(context, 'task:automated', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'task:manual', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'task:manual', TaskNode, RoundedCornerNodeView);    
+    configureModelElement(context, 'task:service', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'task:user', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'task:send', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'task:script', TaskNode, RoundedCornerNodeView);
+
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);

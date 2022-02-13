@@ -58,6 +58,18 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
       actions.addAll(Sets.newHashSet(
          new LabeledAction("Create Manual Task",
             Lists.newArrayList(new CreateNodeOperation(ModelTypes.MANUAL_TASK, lastMousePosition.orElse(point(0, 0)),
+               "fa-plus-square"))),
+         new LabeledAction("Create User Task",
+            Lists.newArrayList(new CreateNodeOperation(ModelTypes.USER_TASK, lastMousePosition.orElse(point(0, 0)),
+               "fa-plus-square"))),
+         new LabeledAction("Create Send Task",
+            Lists.newArrayList(new CreateNodeOperation(ModelTypes.SEND_TASK, lastMousePosition.orElse(point(0, 0)),
+               "fa-plus-square"))),
+         new LabeledAction("Create Service Task",
+            Lists.newArrayList(new CreateNodeOperation(ModelTypes.SERVICE_TASK, lastMousePosition.orElse(point(0, 0)),
+               "fa-plus-square"))),
+         new LabeledAction("Create Script Task",
+            Lists.newArrayList(new CreateNodeOperation(ModelTypes.SCRIPT_TASK, lastMousePosition.orElse(point(0, 0)),
                "fa-plus-square")))
 
       // add , separated additional entries

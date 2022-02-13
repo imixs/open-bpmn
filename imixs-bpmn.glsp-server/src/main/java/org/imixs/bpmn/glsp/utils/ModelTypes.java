@@ -31,6 +31,11 @@ public final class ModelTypes {
    // public static final String JOIN_NODE = ACTIVITY_NODE + ":join";
    public static final String TASK = "task";
    public static final String MANUAL_TASK = TASK + ":manual";
+   public static final String USER_TASK = TASK + ":user";
+   public static final String SEND_TASK = TASK + ":send";
+   public static final String SERVICE_TASK = TASK + ":service";
+   public static final String SCRIPT_TASK = TASK + ":script";
+
    // public static final String AUTOMATED_TASK = TASK + ":automated";
    public static final String CATEGORY = "category";
    // public static final String STRUCTURE = "struct";

@@ -1,0 +1,36 @@
+{
+  "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
+  "children": [
+    {
+      "id": "811d39c9-e3f6-404e-8306-79c10f0a3e6b",
+      "cssClasses": [
+        "minimal-node"
+      ],
+      "type": "node",
+      "position": {
+        "x": 175.00570678710938,
+        "y": 68.0227279663086
+      },
+      "size": {
+        "width": 40.0,
+        "height": 20.0
+      }
+    },
+    {
+      "id": "36c79c6a-1d71-411c-ad5a-7051145f9b78",
+      "cssClasses": [
+        "minimal-node"
+      ],
+      "type": "node",
+      "position": {
+        "x": 265.0057067871094,
+        "y": 141.0227279663086
+      },
+      "size": {
+        "width": 40.0,
+        "height": 20.0
+      }
+    }
+  ],
+  "type": "graph"
+}

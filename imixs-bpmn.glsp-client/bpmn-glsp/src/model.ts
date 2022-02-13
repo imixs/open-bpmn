@@ -53,9 +53,7 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
         nameFeature,
         withEditLabelFeature
     ];
-    duration?: number;
     taskType?: string;
-    reference?: string;
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const label = this.children.find(element => element.type === 'label:heading');
