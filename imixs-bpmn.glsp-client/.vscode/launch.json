@@ -7,12 +7,12 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Minimal Theia Backend (Embedded GLSP Server)",
+      "name": "Launch BPMN Theia Backend (Embedded GLSP Server)",
       "program": "${workspaceRoot}/bpmn-browser-app/src-gen/backend/main.js",
       "args": [
         "--port=3000",
         "--no-cluster",
-        "--MINIMAL_GLSP=5007",
+        "--GLSP_PORT=5007",
         "--app-project-path=${workspaceRoot}/bpmn-browser-app",
         "--root-dir=${workspaceRoot}/workspace"
       ],
@@ -35,12 +35,12 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Minimal Theia Backend (External GLSP Server)",
+      "name": "Launch BPMN Theia Backend (External GLSP Server)",
       "program": "${workspaceRoot}/bpmn-browser-app/src-gen/backend/main.js",
       "args": [
         "--port=3000",
         "--no-cluster",
-        "--MINIMAL_GLSP=5007",
+        "--GLSP_PORT=5007",
         "--debug",
         "--app-project-path=${workspaceRoot}/bpmn-browser-app",
         "--root-dir=${workspaceRoot}/workspace"
@@ -62,7 +62,7 @@
       "outputCapture": "std"
     },
     {
-      "name": "Launch Minimal Theia Frontend",
+      "name": "Launch BPMN Theia Frontend",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000/",

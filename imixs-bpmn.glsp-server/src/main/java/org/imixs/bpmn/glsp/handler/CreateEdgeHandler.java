@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2019 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,31 +15,30 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.handler;
 
-import java.util.Map;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
-import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
+import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
+import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
 
-public class MinimalCreateNodeOperationHandler extends CreateNodeOperationHandler {
+public class CreateEdgeHandler extends CreateEdgeOperationHandler {
 
-   public MinimalCreateNodeOperationHandler() {
-      super(DefaultTypes.NODE);
+   public CreateEdgeHandler() {
+      super(DefaultTypes.EDGE, "Edge");
    }
 
    @Override
-   protected GNode createNode(Optional<GPoint> relativeLocation, Map<String, String> args) {
-      GNodeBuilder builder = new GNodeBuilder(DefaultTypes.NODE)
-         .size(40, 20)
-         .addCssClass("minimal-node");
-      relativeLocation.ifPresent(builder::position);
-      return builder.build();
+   protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
+      final GModelState modelState) {
+      return Optional.of(new GEdgeBuilder() //
+         .source(source) //
+         .target(target) //
+         .addArgument(GArguments.edgePadding(10)) //
+         .build());
    }
-
-   @Override
-   public String getLabel() { return "Minimal Node"; }
 
 }

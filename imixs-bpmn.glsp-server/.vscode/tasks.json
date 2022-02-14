@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build Minimal GLSP Server",
+      "label": "Build BPMN GLSP Server",
       "type": "shell",
       "group": {
         "kind": "build",
@@ -18,7 +18,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Start Minimal GLSP Server",
+      "label": "Start BPMN GLSP Server",
       "type": "shell",
       "group": "test",
       "command": "java -jar target/org.imixs.bpmn.glsp.server-0.0.2-SNAPSHOT-glsp.jar",
