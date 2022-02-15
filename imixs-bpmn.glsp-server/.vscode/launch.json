@@ -6,9 +6,9 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch BPMN GLSP Server",
+      "name": "Launch Minimal GLSP Server",
       "request": "launch",
-      "mainClass": "org.imixs.bpmn.glsp.BPMNServerLauncher",
+      "mainClass": "org.imixs.bpmn.glsp.MinimalServerLauncher",
       "projectName": "org.imixs.bpmn.glsp",
       "args": ["--port", "5007"],
       "console": "internalConsole",

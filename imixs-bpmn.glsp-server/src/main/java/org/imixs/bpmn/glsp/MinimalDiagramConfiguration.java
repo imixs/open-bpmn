@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -15,25 +15,27 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp;
 
-import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.layout.ElkLayoutEngine;
-import org.eclipse.glsp.layout.GLSPLayoutConfigurator;
-import org.eclipse.glsp.server.model.GModelState;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
-import com.google.inject.Inject;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.glsp.graph.DefaultTypes;
+import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
+import org.eclipse.glsp.server.types.EdgeTypeHint;
+import org.eclipse.glsp.server.types.ShapeTypeHint;
 
-public class BPMNLayoutEngine extends ElkLayoutEngine {
-
-   @Inject
-   protected GModelState modelState;
+public class MinimalDiagramConfiguration extends BaseDiagramConfiguration {
 
    @Override
-   public void layout() {
-      if (modelState.getRoot() instanceof GGraph) {
-         GLSPLayoutConfigurator configurator = new GLSPLayoutConfigurator();
-         configurator.configureByType("graph");
-         this.layout((GGraph) modelState.getRoot(), configurator);
-      }
+   public Map<String, EClass> getTypeMappings() { return DefaultTypes.getDefaultTypeMappings(); }
+
+   @Override
+   public List<ShapeTypeHint> getShapeTypeHints() {
+      return List.of(new ShapeTypeHint(DefaultTypes.NODE, true, true, true, false));
    }
+
+   @Override
+   public List<EdgeTypeHint> getEdgeTypeHints() { return Collections.emptyList(); }
 
 }

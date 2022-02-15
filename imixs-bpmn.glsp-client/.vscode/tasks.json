@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build BPMN Modeler",
+      "label": "Build Minimal example",
       "type": "shell",
       "group": {
         "kind": "build",
@@ -18,7 +18,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Watch BPMN Modeler",
+      "label": "Watch Minimal example",
       "type": "shell",
       "group": "build",
       "command": "yarn watch",
@@ -29,7 +29,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Start BPMN Modeler Theia Backend (Embedded GLSP Server)",
+      "label": "Start Minimal Example Theia Backend (Embedded GLSP Server)",
       "type": "shell",
       "group": "test",
       "command": "yarn start",
@@ -40,7 +40,7 @@
       "problemMatcher": []
     },
     {
-      "label": "Start BPMN Modeler Backend (External GLSP Server)",
+      "label": "Start Minimal Example Backend (External GLSP Server)",
       "type": "shell",
       "group": "test",
       "command": "yarn start:external",
