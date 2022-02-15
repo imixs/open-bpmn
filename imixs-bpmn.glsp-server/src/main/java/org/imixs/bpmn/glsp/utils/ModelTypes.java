@@ -19,9 +19,9 @@ public final class ModelTypes {
    private ModelTypes() {}
 
    public static final String LABEL_HEADING = "label:heading";
-   // public static final String LABEL_TEXT = "label:text";
-   // public static final String COMP_HEADER = "comp:header";
-   // public static final String LABEL_ICON = "label:icon";
+   public static final String LABEL_TEXT = "label:text";
+   public static final String COMP_HEADER = "comp:header";
+   public static final String LABEL_ICON = "label:icon";
    public static final String WEIGHTED_EDGE = "edge:weighted";
    public static final String ICON = "icon";
    public static final String ACTIVITY_NODE = "activityNode";
@@ -38,7 +38,7 @@ public final class ModelTypes {
 
    // public static final String AUTOMATED_TASK = TASK + ":automated";
    public static final String CATEGORY = "category";
-   // public static final String STRUCTURE = "struct";
+   public static final String STRUCTURE = "struct";
 
    public static String toNodeType(final String type) {
       switch (type) {

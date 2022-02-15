@@ -43,7 +43,7 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
 
    @Override
    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-      return MinimalDiagramConfiguration.class;
+      return BPMNDiagramConfiguration.class;
    }
 
    @Override

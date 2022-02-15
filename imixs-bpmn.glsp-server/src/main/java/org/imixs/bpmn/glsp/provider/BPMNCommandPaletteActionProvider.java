@@ -15,8 +15,10 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.provider;
 
+import static org.eclipse.glsp.graph.DefaultTypes.EDGE;
 import static org.eclipse.glsp.graph.util.GraphUtil.point;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -28,7 +30,9 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.directediting.LabeledAction;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.imixs.bpmn.bpmngraph.TaskNode;
 import org.imixs.bpmn.glsp.handler.GridSnapper;
@@ -75,8 +79,47 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
       // add , separated additional entries
       ));
 
-      // more palette options - see workflow example
+      // Create edge actions between two nodes
+      if (selectedElements.size() == 1) {
+         GModelElement element = selectedElements.iterator().next();
+         if (element instanceof GNode) {
+            actions.addAll(createEdgeActions((GNode) element, index.getAllByClass(TaskNode.class)));
+         }
+      } else if (selectedElements.size() == 2) {
+         Iterator<GModelElement> iterator = selectedElements.iterator();
+         GModelElement firstElement = iterator.next();
+         GModelElement secondElement = iterator.next();
+         if (firstElement instanceof TaskNode && secondElement instanceof TaskNode) {
+            GNode firstNode = (GNode) firstElement;
+            GNode secondNode = (GNode) secondElement;
+            actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
+            // actions.add(createWeightedEdgeAction("Connect with Weighted Edge", firstNode, secondNode));
+         }
+      }
 
+      // Delete action
+      if (selectedElements.size() == 1) {
+         actions
+            .add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)), "fa-minus-square"));
+      } else if (selectedElements.size() > 1) {
+         actions.add(
+            new LabeledAction("Delete All", Lists.newArrayList(new DeleteOperation(selectedIds)), "fa-minus-square"));
+      }
+
+      return actions;
+   }
+
+   private LabeledAction createEdgeAction(final String label, final GNode source, final GNode node) {
+      return new LabeledAction(label, Lists.newArrayList(
+         new CreateEdgeOperation(EDGE, source.getId(), node.getId())), "fa-plus-square");
+   }
+
+   private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
+      Set<LabeledAction> actions = Sets.newLinkedHashSet();
+      // add first all edge, then all weighted edge actions to keep a nice order
+      targets.forEach(node -> actions.add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
+      // targets.forEach(node -> actions
+      // .add(createWeightedEdgeAction("Create Weighted Edge to " + getLabel(node), source, node)));
       return actions;
    }
 
