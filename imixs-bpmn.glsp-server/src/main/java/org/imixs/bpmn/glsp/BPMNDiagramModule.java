@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp;
 
+import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
@@ -25,10 +26,10 @@ import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.imixs.bpmn.glsp.handler.CreateEdgeHandler;
 import org.imixs.bpmn.glsp.handler.CreateManualTaskHandler;
 import org.imixs.bpmn.glsp.handler.CreateSendTaskHandler;
 import org.imixs.bpmn.glsp.handler.CreateServiceTaskHandler;
-import org.imixs.bpmn.glsp.handler.MinimalCreateNodeOperationHandler;
 import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 
 /**
@@ -47,20 +48,6 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
    }
 
    @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
-      super.configureOperationHandlers(binding);
-
-      binding.add(MinimalCreateNodeOperationHandler.class);
-
-      // Add Task types
-      binding.add(CreateManualTaskHandler.class);
-      binding.add(CreateServiceTaskHandler.class);
-      binding.add(CreateSendTaskHandler.class);
-
-      binding.remove(LayoutOperationHandler.class);
-   }
-
-   @Override
    protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
       return JsonFileGModelLoader.class;
    }
@@ -68,6 +55,27 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
    @Override
    protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
       return FileWatcher.class;
+   }
+
+   @Override
+   protected Class<? extends GraphExtension> bindGraphExtension() {
+      return BPMNGraphExtension.class;
+   }
+
+   @Override
+   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+      super.configureOperationHandlers(binding);
+
+      // binding.add(MinimalCreateNodeOperationHandler.class);
+
+      // Add Task types
+      binding.add(CreateManualTaskHandler.class);
+      binding.add(CreateServiceTaskHandler.class);
+      binding.add(CreateSendTaskHandler.class);
+
+      binding.add(CreateEdgeHandler.class);
+
+      binding.remove(LayoutOperationHandler.class);
    }
 
    /**
