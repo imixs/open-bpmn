@@ -43,7 +43,7 @@
       "type": "task:manual",
       "position": {
         "x": 170.0,
-        "y": 70.0
+        "y": 50.0
       },
       "size": {
         "width": 123.703125,
@@ -63,16 +63,16 @@
       }
     },
     {
-      "name": "ManualTask1",
+      "name": "SendTask4",
       "taskType": "unknown",
-      "id": "c80eeb6a-9d34-4b4a-98a8-875cb07d8c75",
+      "id": "22ca3b8b-9052-4b21-9958-0662d6a02c2b",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "c80eeb6a-9d34-4b4a-98a8-875cb07d8c75_icon",
+          "id": "22ca3b8b-9052-4b21-9958-0662d6a02c2b_icon",
           "type": "icon",
           "position": {
             "x": 5.0,
@@ -84,127 +84,7 @@
           }
         },
         {
-          "id": "c80eeb6a-9d34-4b4a-98a8-875cb07d8c75_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 31.0,
-            "y": 7.0
-          },
-          "size": {
-            "width": 82.703125,
-            "height": 16.0
-          },
-          "text": "ManualTask1",
-          "alignment": {
-            "x": 0.0,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:manual",
-      "position": {
-        "x": 420.0,
-        "y": 90.0
-      },
-      "size": {
-        "width": 123.703125,
-        "height": 30.0
-      },
-      "layout": "hbox",
-      "layoutOptions": {
-        "paddingRight": 10.0,
-        "prefWidth": 123.703125,
-        "prefHeight": 30.0
-      },
-      "args": {
-        "radiusBottomLeft": 5.0,
-        "radiusTopLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "name": "ManualTask2",
-      "taskType": "unknown",
-      "id": "6a8c94bf-a20b-4ffa-bd88-b1b4977e71d5",
-      "cssClasses": [
-        "task",
-        "manual"
-      ],
-      "children": [
-        {
-          "id": "6a8c94bf-a20b-4ffa-bd88-b1b4977e71d5_icon",
-          "type": "icon",
-          "position": {
-            "x": 5.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "6a8c94bf-a20b-4ffa-bd88-b1b4977e71d5_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 31.0,
-            "y": 7.0
-          },
-          "size": {
-            "width": 82.703125,
-            "height": 16.0
-          },
-          "text": "ManualTask2",
-          "alignment": {
-            "x": 0.0,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:manual",
-      "position": {
-        "x": 240.0,
-        "y": 180.0
-      },
-      "size": {
-        "width": 123.703125,
-        "height": 30.0
-      },
-      "layout": "hbox",
-      "layoutOptions": {
-        "paddingRight": 10.0
-      },
-      "args": {
-        "radiusBottomLeft": 5.0,
-        "radiusTopLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "name": "SendTask3",
-      "taskType": "unknown",
-      "id": "ae657ce1-c325-4ad3-9f39-3c52f6a8d3d4",
-      "cssClasses": [
-        "task",
-        "manual"
-      ],
-      "children": [
-        {
-          "id": "ae657ce1-c325-4ad3-9f39-3c52f6a8d3d4_icon",
-          "type": "icon",
-          "position": {
-            "x": 5.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "ae657ce1-c325-4ad3-9f39-3c52f6a8d3d4_classname",
+          "id": "22ca3b8b-9052-4b21-9958-0662d6a02c2b_classname",
           "type": "label:heading",
           "position": {
             "x": 31.0,
@@ -214,7 +94,7 @@
             "width": 69.484375,
             "height": 16.0
           },
-          "text": "SendTask3",
+          "text": "SendTask4",
           "alignment": {
             "x": 0.0,
             "y": 13.0
@@ -223,8 +103,8 @@
       ],
       "type": "task:send",
       "position": {
-        "x": 360.0,
-        "y": 310.0
+        "x": 440.0,
+        "y": 50.0
       },
       "size": {
         "width": 110.484375,
@@ -232,18 +112,97 @@
       },
       "layout": "hbox",
       "layoutOptions": {
-        "paddingRight": 10,
+        "paddingRight": 10.0,
         "prefWidth": 110.484375,
         "prefHeight": 30.0
       },
       "args": {
-        "radiusBottomLeft": 5.0,
         "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ServiceTask5",
+      "taskType": "unknown",
+      "id": "52b00536-45a3-4853-9956-fcdddac39759",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "52b00536-45a3-4853-9956-fcdddac39759_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "52b00536-45a3-4853-9956-fcdddac39759_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 83.46875,
+            "height": 16.0
+          },
+          "text": "ServiceTask5",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:service",
+      "position": {
+        "x": 440.0,
+        "y": 250.0
+      },
+      "size": {
+        "width": 124.46875,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "paddingRight": 10.0,
+        "prefWidth": 124.46875,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "b742868a-6e16-4a4a-b9bd-a84c0441a132",
+      "type": "edge",
+      "sourceId": "22ca3b8b-9052-4b21-9958-0662d6a02c2b",
+      "targetId": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "7a2df377-c724-43b3-8512-2114b334feea",
+      "type": "edge",
+      "sourceId": "22ca3b8b-9052-4b21-9958-0662d6a02c2b",
+      "targetId": "52b00536-45a3-4853-9956-fcdddac39759",
+      "args": {
+        "edgePadding": 10.0
       }
     }
   ],
   "type": "graph",
-  "revision": 2
+  "revision": 5
 }
