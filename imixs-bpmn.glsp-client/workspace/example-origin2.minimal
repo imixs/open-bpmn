@@ -119,11 +119,11 @@
       "layoutOptions": {
         "vGrab": false,
         "prefWidth": 160.0,
-        "minWidth": 160,
+        "minWidth": 160.0,
         "hGrab": false,
-        "minHeight": 60,
+        "minHeight": 60.0,
         "prefHeight": 60.0,
-        "paddingRight": 10,
+        "paddingRight": 10.0,
         "hAlign": "center"
       },
       "args": {
@@ -158,14 +158,14 @@
           "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80_classname",
           "type": "label:heading",
           "position": {
-            "x": 35.765625,
+            "x": 20.125,
             "y": 26.0
           },
           "size": {
-            "width": 83.46875,
+            "width": 114.75,
             "height": 16.0
           },
-          "text": "ServiceTask2",
+          "text": "Freigabe Manager",
           "alignment": {
             "x": 0.0,
             "y": 13.0
@@ -185,11 +185,11 @@
       "layoutOptions": {
         "vGrab": false,
         "prefWidth": 160.0,
-        "minWidth": 160,
+        "minWidth": 160.0,
         "hGrab": false,
-        "minHeight": 60,
+        "minHeight": 60.0,
         "prefHeight": 60.0,
-        "paddingRight": 10,
+        "paddingRight": 10.0,
         "hAlign": "center"
       },
       "args": {
@@ -200,7 +200,6 @@
       }
     },
     {
-      "condition": "medium",
       "id": "a304ee77-0578-4555-9585-a9ccdd590382",
       "cssClasses": [
         "medium"
@@ -211,7 +210,6 @@
       "routerKind": "manhattan"
     },
     {
-      "condition": "medium",
       "id": "e1af0705-1807-4797-8422-cb6f9211e8f2",
       "cssClasses": [
         "medium"
@@ -229,5 +227,5 @@
     }
   ],
   "type": "graph",
-  "revision": 25
+  "revision": 1
 }

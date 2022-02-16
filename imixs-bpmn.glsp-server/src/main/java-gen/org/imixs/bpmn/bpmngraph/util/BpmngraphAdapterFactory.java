@@ -98,6 +98,10 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
             return createPoolAdapter();
          }
          @Override
+         public Adapter caseGateway(Gateway object) {
+            return createGatewayAdapter();
+         }
+         @Override
          public Adapter caseGArgumentable(GArgumentable object) {
             return createGArgumentableAdapter();
          }
@@ -220,6 +224,20 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createPoolAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Gateway <em>Gateway</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.Gateway
+    * @generated
+    */
+   public Adapter createGatewayAdapter() {
       return null;
    }
 

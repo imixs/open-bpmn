@@ -21,6 +21,7 @@ import {
     DeleteElementContextMenuItemProvider,
     editLabelFeature,
     GridSnapper,
+    DiamondNodeView,
     LogLevel,
     overrideViewerOptions,
     RevealNamedElementActionProvider,
@@ -39,7 +40,7 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
-import { PoolNode, Icon, TaskNode, SequenceFlow } from './model';
+import { ActivityNode, PoolNode, Icon, TaskNode, SequenceFlow } from './model';
 import { IconView, WorkflowEdgeView } from './workflow-views';
 
 const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -64,10 +65,11 @@ const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
     configureModelElement(context, DefaultTypes.EDGE, SEdge, WorkflowEdgeView);
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, WorkflowEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
-    //configureModelElement(context, 'activityNode:merge', ActivityNode, DiamondNodeView);
-    //configureModelElement(context, 'activityNode:decision', ActivityNode, DiamondNodeView);
-    //configureModelElement(context, 'activityNode:fork', ActivityNode, RectangularNodeView);
-    //configureModelElement(context, 'activityNode:join', ActivityNode, RectangularNodeView);
+
+    configureModelElement(context, 'gateway:exclusive', ActivityNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:inclusive', ActivityNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:parallel', ActivityNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:complex', ActivityNode, DiamondNodeView);
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);

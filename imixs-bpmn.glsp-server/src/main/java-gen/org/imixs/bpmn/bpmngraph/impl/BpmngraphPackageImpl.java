@@ -15,6 +15,7 @@ import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 import org.imixs.bpmn.bpmngraph.ActivityNode;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
+import org.imixs.bpmn.bpmngraph.Gateway;
 import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.bpmngraph.Pool;
 import org.imixs.bpmn.bpmngraph.SequenceFlow;
@@ -61,6 +62,13 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * @generated
     */
    private EClass poolEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass gatewayEClass = null;
 
    /**
     * Creates an instance of the model <b>Package</b>, registered with
@@ -224,6 +232,33 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
+   public EClass getGateway() {
+      return gatewayEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getGateway_Name() {
+      return (EAttribute)gatewayEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getGateway_GatewayType() {
+      return (EAttribute)gatewayEClass.getEStructuralFeatures().get(1);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public BpmngraphFactory getBpmngraphFactory() {
       return (BpmngraphFactory)getEFactoryInstance();
    }
@@ -261,6 +296,10 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       poolEClass = createEClass(POOL);
       createEAttribute(poolEClass, POOL__NAME);
+
+      gatewayEClass = createEClass(GATEWAY);
+      createEAttribute(gatewayEClass, GATEWAY__NAME);
+      createEAttribute(gatewayEClass, GATEWAY__GATEWAY_TYPE);
    }
 
    /**
@@ -299,6 +338,7 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
       iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
       sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
       poolEClass.getESuperTypes().add(this.getActivityNode());
+      gatewayEClass.getESuperTypes().add(this.getActivityNode());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(activityNodeEClass, ActivityNode.class, "ActivityNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -315,6 +355,10 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getPool_Name(), ecorePackage.getEString(), "name", null, 0, 1, Pool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(gatewayEClass, Gateway.class, "Gateway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getGateway_Name(), ecorePackage.getEString(), "name", null, 0, 1, Gateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEAttribute(getGateway_GatewayType(), ecorePackage.getEString(), "gatewayType", null, 0, 1, Gateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

@@ -28,6 +28,7 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.ActivityNode;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
+import org.imixs.bpmn.bpmngraph.Gateway;
 import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.bpmngraph.Pool;
 import org.imixs.bpmn.bpmngraph.SequenceFlow;
@@ -245,6 +246,37 @@ public final class BPMNBuilder {
             .layoutOptions(layoutOptions);
          return structCompartmentBuilder //
             .build();
+      }
+   }
+
+   public static class GatewayNodeBuilder extends AbstractGNodeBuilder<Gateway, GatewayNodeBuilder> {
+      private final String name;
+      private final String gatewayType;
+
+      public GatewayNodeBuilder(final String type, final String name, final String gatewayType) {
+         super(type);
+         this.name = name;
+         this.gatewayType = gatewayType;
+
+      }
+
+      @Override
+      protected Gateway instantiate() {
+         return BpmngraphFactory.eINSTANCE.createGateway();
+      }
+
+      @Override
+      protected void setProperties(final Gateway node) {
+         super.setProperties(node);
+
+         node.setName(name);
+         node.setGatewayType(gatewayType);
+
+      }
+
+      @Override
+      protected GatewayNodeBuilder self() {
+         return this;
       }
    }
 

@@ -21,6 +21,10 @@
     <genClasses ecoreClass="bpmn-graph.ecore#//Pool">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//Pool/name"/>
     </genClasses>
+    <genClasses ecoreClass="bpmn-graph.ecore#//Gateway">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//Gateway/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//Gateway/gatewayType"/>
+    </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
       ecorePackage="glsp-graph.ecore#/">

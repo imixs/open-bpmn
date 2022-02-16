@@ -25,15 +25,15 @@ import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.glsp.utils.BPMNBuilder.TaskNodeBuilder;
+import org.imixs.bpmn.glsp.utils.BPMNBuilder.GatewayNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
+public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandler {
 
    private final Function<Integer, String> labelProvider;
    private final String elementTypeId;
 
-   public CreateTaskHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
+   public CreateGatewayHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
       super(elementTypeId);
       this.elementTypeId = elementTypeId;
       this.labelProvider = labelProvider;
@@ -46,14 +46,14 @@ public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
       return builder(point, modelState).build();
    }
 
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.TASK_NODE, "task", modelState);
+   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.GATEWAY, "gateway", modelState);
       String name = labelProvider.apply(nodeCounter);
       String taskType = ModelTypes.toNodeType(getElementTypeId());
-      return new TaskNodeBuilder(getElementTypeId(), name, taskType) //
+      return new GatewayNodeBuilder(getElementTypeId(), name, taskType) //
          .position(point.orElse(null))
          .addArguments(GArguments.cornerRadius(5))
-         .addCssClass("task");
+         .addCssClass("gateway");
    }
 
 }

@@ -61,6 +61,7 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
          case BpmngraphPackage.ICON: return createIcon();
          case BpmngraphPackage.SEQUENCE_FLOW: return createSequenceFlow();
          case BpmngraphPackage.POOL: return createPool();
+         case BpmngraphPackage.GATEWAY: return createGateway();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -114,6 +115,16 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
    public Pool createPool() {
       PoolImpl pool = new PoolImpl();
       return pool;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public Gateway createGateway() {
+      GatewayImpl gateway = new GatewayImpl();
+      return gateway;
    }
 
    /**

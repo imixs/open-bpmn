@@ -2,34 +2,19 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "id": "f326a97c-f5e6-4ce6-b3bb-7d07be9ebb96",
-      "cssClasses": [
-        "minimal-node"
-      ],
-      "type": "node",
-      "position": {
-        "x": 50.0,
-        "y": 30.0
-      },
-      "size": {
-        "width": 40.0,
-        "height": 20.0
-      }
-    },
-    {
-      "name": "ManualTask0",
-      "taskType": "unknown",
-      "id": "76b7b8f8-414b-4aa2-b63a-fa6398d8086d",
+      "name": "SendTask1",
+      "taskType": "send",
+      "id": "639cc6d1-10f9-4f45-93f9-855333086d2e",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "76b7b8f8-414b-4aa2-b63a-fa6398d8086d_icon",
+          "id": "639cc6d1-10f9-4f45-93f9-855333086d2e_icon",
           "type": "icon",
           "position": {
-            "x": 5.0,
+            "x": 65.0,
             "y": 5.0
           },
           "size": {
@@ -38,17 +23,149 @@
           }
         },
         {
-          "id": "76b7b8f8-414b-4aa2-b63a-fa6398d8086d_classname",
+          "id": "639cc6d1-10f9-4f45-93f9-855333086d2e_classname",
           "type": "label:heading",
           "position": {
-            "x": 31.0,
-            "y": 7.0
+            "x": 42.7578125,
+            "y": 26.0
+          },
+          "size": {
+            "width": 69.484375,
+            "height": 16.0
+          },
+          "text": "SendTask1",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:send",
+      "position": {
+        "x": 350.0,
+        "y": 50.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160.0,
+        "hGrab": false,
+        "minHeight": 60.0,
+        "prefHeight": 60.0,
+        "paddingRight": 10.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ServiceTask2",
+      "taskType": "unknown",
+      "id": "ea2c7c17-17be-4249-93a6-a705785b3264",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "ea2c7c17-17be-4249-93a6-a705785b3264_icon",
+          "type": "icon",
+          "position": {
+            "x": 65.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "ea2c7c17-17be-4249-93a6-a705785b3264_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 35.765625,
+            "y": 26.0
+          },
+          "size": {
+            "width": 83.46875,
+            "height": 16.0
+          },
+          "text": "ServiceTask2",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:service",
+      "position": {
+        "x": 350.0,
+        "y": 180.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160.0,
+        "hGrab": false,
+        "minHeight": 60.0,
+        "prefHeight": 60.0,
+        "paddingRight": 10.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ManualTask2",
+      "taskType": "manual",
+      "id": "e2e5bc11-8eda-4300-b958-2bae05b389a3",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "e2e5bc11-8eda-4300-b958-2bae05b389a3_icon",
+          "type": "icon",
+          "position": {
+            "x": 65.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "e2e5bc11-8eda-4300-b958-2bae05b389a3_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 36.1484375,
+            "y": 26.0
           },
           "size": {
             "width": 82.703125,
             "height": 16.0
           },
-          "text": "ManualTask0",
+          "text": "ManualTask2",
           "alignment": {
             "x": 0.0,
             "y": 13.0
@@ -58,24 +175,150 @@
       "type": "task:manual",
       "position": {
         "x": 70.0,
-        "y": 90.0
+        "y": 50.0
       },
       "size": {
-        "width": 123.703125,
-        "height": 30.0
+        "width": 160.0,
+        "height": 60.0
       },
-      "layout": "hbox",
+      "layout": "vbox",
       "layoutOptions": {
-        "paddingRight": 10
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160.0,
+        "hGrab": false,
+        "minHeight": 60.0,
+        "prefHeight": 60.0,
+        "paddingRight": 10.0,
+        "hAlign": "center"
       },
       "args": {
-        "radiusTopLeft": 5.0,
         "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
+    },
+    {
+      "id": "2cff47e1-9763-46f0-a781-7a000e44bdf6",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "e2e5bc11-8eda-4300-b958-2bae05b389a3",
+      "targetId": "639cc6d1-10f9-4f45-93f9-855333086d2e",
+      "routerKind": "manhattan"
+    },
+    {
+      "id": "f92ce5ea-afdf-4e0c-85ff-f754ead06d6f",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 150.0,
+          "y": 210.0
+        }
+      ],
+      "sourceId": "e2e5bc11-8eda-4300-b958-2bae05b389a3",
+      "targetId": "ea2c7c17-17be-4249-93a6-a705785b3264",
+      "routerKind": "manhattan"
+    },
+    {
+      "name": "ExclusiveGateway3",
+      "id": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d",
+      "cssClasses": [
+        "task",
+        "exclusive"
+      ],
+      "children": [
+        {
+          "id": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d_icon",
+          "type": "icon",
+          "position": {
+            "x": 61.5,
+            "y": 5.0
+          },
+          "size": {
+            "width": 32.0,
+            "height": 32.0
+          }
+        },
+        {
+          "id": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 16.3046875,
+            "y": 38.0
+          },
+          "size": {
+            "width": 122.390625,
+            "height": 16.0
+          },
+          "text": "ExclusiveGateway3",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "gateway:exclusive",
+      "position": {
+        "x": 600.0,
+        "y": 180.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160.0,
+        "hGrab": false,
+        "minHeight": 60.0,
+        "prefHeight": 60.0,
+        "paddingRight": 10.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "condition": "medium",
+      "id": "726a626a-01d9-4462-8656-6d9f27af92b6",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 677.0,
+          "y": 80.0
+        }
+      ],
+      "sourceId": "639cc6d1-10f9-4f45-93f9-855333086d2e",
+      "targetId": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d",
+      "routerKind": "manhattan"
+    },
+    {
+      "condition": "medium",
+      "id": "eb00a2d9-48a1-4290-9c23-91395b5f53d1",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "ea2c7c17-17be-4249-93a6-a705785b3264",
+      "targetId": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d",
+      "routerKind": "manhattan"
     }
   ],
   "type": "graph",
-  "revision": 2
+  "revision": 4
 }

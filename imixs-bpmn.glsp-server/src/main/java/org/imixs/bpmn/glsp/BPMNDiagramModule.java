@@ -27,6 +27,7 @@ import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.handler.CreateEdgeHandler;
+import org.imixs.bpmn.glsp.handler.CreateExclusiveGatewayHandler;
 import org.imixs.bpmn.glsp.handler.CreateManualTaskHandler;
 import org.imixs.bpmn.glsp.handler.CreatePoolHandler;
 import org.imixs.bpmn.glsp.handler.CreateSendTaskHandler;
@@ -75,8 +76,12 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
       binding.add(CreateServiceTaskHandler.class);
       binding.add(CreateSendTaskHandler.class);
 
+      // Flows
       binding.add(CreateSequenceFlowHandler.class);
       binding.add(CreateEdgeHandler.class);
+
+      // Gateways
+      binding.add(CreateExclusiveGatewayHandler.class);
 
       binding.add(CreatePoolHandler.class);
 

@@ -803,6 +803,170 @@ public interface BpmngraphPackage extends EPackage {
 
 
    /**
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayImpl <em>Gateway</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.imixs.bpmn.bpmngraph.impl.GatewayImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGateway()
+    * @generated
+    */
+   int GATEWAY = 5;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__ARGS = ACTIVITY_NODE__ARGS;
+
+   /**
+    * The feature id for the '<em><b>Id</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__ID = ACTIVITY_NODE__ID;
+
+   /**
+    * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+
+   /**
+    * The feature id for the '<em><b>Children</b></em>' containment reference list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__CHILDREN = ACTIVITY_NODE__CHILDREN;
+
+   /**
+    * The feature id for the '<em><b>Parent</b></em>' container reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__PARENT = ACTIVITY_NODE__PARENT;
+
+   /**
+    * The feature id for the '<em><b>Trace</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__TRACE = ACTIVITY_NODE__TRACE;
+
+   /**
+    * The feature id for the '<em><b>Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__TYPE = ACTIVITY_NODE__TYPE;
+
+   /**
+    * The feature id for the '<em><b>Position</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__POSITION = ACTIVITY_NODE__POSITION;
+
+   /**
+    * The feature id for the '<em><b>Size</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__SIZE = ACTIVITY_NODE__SIZE;
+
+   /**
+    * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+
+   /**
+    * The feature id for the '<em><b>Layout</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__LAYOUT = ACTIVITY_NODE__LAYOUT;
+
+   /**
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
+
+   /**
+    * The feature id for the '<em><b>Node Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+
+   /**
+    * The feature id for the '<em><b>Name</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+
+   /**
+    * The feature id for the '<em><b>Gateway Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY__GATEWAY_TYPE = ACTIVITY_NODE_FEATURE_COUNT + 1;
+
+   /**
+    * The number of structural features of the '<em>Gateway</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 2;
+
+   /**
+    * The number of operations of the '<em>Gateway</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+
+
+   /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.ActivityNode <em>Activity Node</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -906,6 +1070,38 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     */
    EAttribute getPool_Name();
+
+   /**
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Gateway <em>Gateway</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>Gateway</em>'.
+    * @see org.imixs.bpmn.bpmngraph.Gateway
+    * @generated
+    */
+   EClass getGateway();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Gateway#getName <em>Name</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.Gateway#getName()
+    * @see #getGateway()
+    * @generated
+    */
+   EAttribute getGateway_Name();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Gateway#getGatewayType <em>Gateway Type</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Gateway Type</em>'.
+    * @see org.imixs.bpmn.bpmngraph.Gateway#getGatewayType()
+    * @see #getGateway()
+    * @generated
+    */
+   EAttribute getGateway_GatewayType();
 
    /**
     * Returns the factory that creates the instances of the model.
@@ -1019,6 +1215,32 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EAttribute POOL__NAME = eINSTANCE.getPool_Name();
+
+      /**
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayImpl <em>Gateway</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.imixs.bpmn.bpmngraph.impl.GatewayImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGateway()
+       * @generated
+       */
+      EClass GATEWAY = eINSTANCE.getGateway();
+
+      /**
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute GATEWAY__NAME = eINSTANCE.getGateway_Name();
+
+      /**
+       * The meta object literal for the '<em><b>Gateway Type</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute GATEWAY__GATEWAY_TYPE = eINSTANCE.getGateway_GatewayType();
 
    }
 

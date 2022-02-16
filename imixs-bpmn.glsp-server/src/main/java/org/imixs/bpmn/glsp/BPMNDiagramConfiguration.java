@@ -55,6 +55,9 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
       mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
       mappings.put(ModelTypes.ACTIVITY_NODE, BpmngraphPackage.Literals.ACTIVITY_NODE);
+
+      mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY);
+
       mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK_NODE);
       mappings.put(ModelTypes.POOL, BpmngraphPackage.Literals.POOL);
       mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
@@ -89,7 +92,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       catHint.setContainableElementTypeIds(
          Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SCRIPT_TASK));
       nodeHints.add(catHint);
-      // nodeHints.add(createDefaultShapeTypeHint(FORK_NODE));
+
+      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY));
+      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY));
+      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.PARALLEL_GATEWAY));
+      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.COMPLEX_GATEWAY));
       // nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
       // nodeHints.add(createDefaultShapeTypeHint(DECISION_NODE));
       // nodeHints.add(createDefaultShapeTypeHint(MERGE_NODE));
@@ -115,9 +122,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       edgeHints.add(createDefaultEdgeTypeHint(EDGE));
       EdgeTypeHint sequenceFlowHint = super.createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
       sequenceFlowHint.setSourceElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK));
+         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
+            ModelTypes.EXCLUSIVE_GATEWAY));
       sequenceFlowHint.setTargetElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK));
+         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
+            ModelTypes.EXCLUSIVE_GATEWAY));
       edgeHints.add(sequenceFlowHint);
       return edgeHints;
    }
@@ -131,10 +140,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       // Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
       hint.setSourceElementTypeIds(
          Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.POOL));
+            ModelTypes.POOL, ModelTypes.EXCLUSIVE_GATEWAY));
       hint.setTargetElementTypeIds(
          Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.POOL));
+            ModelTypes.POOL, ModelTypes.EXCLUSIVE_GATEWAY));
       return hint;
    }
 
