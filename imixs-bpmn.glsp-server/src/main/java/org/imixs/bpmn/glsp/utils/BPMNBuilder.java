@@ -86,14 +86,25 @@ public final class BPMNBuilder {
       }
 
       @Override
-      public void setProperties(final TaskNode taskNode) {
-         super.setProperties(taskNode);
-         taskNode.setName(name);
-         taskNode.setTaskType(taskType);
-         taskNode.setLayout(GConstants.Layout.HBOX);
-         taskNode.getLayoutOptions().put("paddingRight", 10);
-         taskNode.getChildren().add(createCompartmentIcon(taskNode));
-         taskNode.getChildren().add(createCompartmentHeader(taskNode));
+      public void setProperties(final TaskNode node) {
+         super.setProperties(node);
+         node.setName(name);
+         node.setTaskType(taskType);
+         // node.setLayout(GConstants.Layout.HBOX);
+         node.setLayout(GConstants.Layout.VBOX);
+         node.getLayoutOptions().put("paddingRight", 10);
+
+         // Set min width/height
+         node.getLayoutOptions().put("minWidth", 160);
+         node.getLayoutOptions().put("minHeight", 60);
+
+         node.getLayoutOptions().put(H_ALIGN, "center");
+         node.getLayoutOptions().put(H_GRAB, false);
+         node.getLayoutOptions().put(V_GRAB, false);
+
+         node.getChildren().add(createCompartmentIcon(node));
+         node.getChildren().add(createCompartmentHeader(node));
+
       }
 
       private Icon createCompartmentIcon(final TaskNode taskNode) {
@@ -150,6 +161,8 @@ public final class BPMNBuilder {
       protected void setProperties(final SequenceFlow edge) {
          super.setProperties(edge);
          edge.setCondition(condition);
+
+         edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
       }
 
       @Override
@@ -198,7 +211,7 @@ public final class BPMNBuilder {
          node.getLayoutOptions().put(H_ALIGN, "center");
          node.getLayoutOptions().put(H_GRAB, false);
          node.getLayoutOptions().put(V_GRAB, false);
-         node.getCssClasses().add("category");
+         node.getCssClasses().add("pool");
          node.getChildren().add(createLabelCompartment(node));
          node.getChildren().add(createStructCompartment(node));
       }

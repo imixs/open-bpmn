@@ -18,6 +18,15 @@
     font-size: 15pt;
     border: none;
     height: 100%;
+    background-size: 10px 10px;
+
+	background-image: linear-gradient(to right, #E4E4E4 1px, transparent 1px), linear-gradient(to bottom, #E4E4E4 1px, transparent 1px);
+    
+}
+
+.vs-dark .sprotty-graph { 
+    /* vs-dark dark-theia theia-dark    vs light-theia theia-light  */
+	background-image: linear-gradient(to right, #2A2A2A 1px, transparent 1px), linear-gradient(to bottom, #2A2A2A 1px, transparent 1px);
 }
 
 .sprotty-text {

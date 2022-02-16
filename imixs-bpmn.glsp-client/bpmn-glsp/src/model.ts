@@ -39,6 +39,31 @@ import {
     withEditLabelFeature
 } from '@eclipse-glsp/client';
 
+export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
+    static readonly DEFAULT_FEATURES = [
+        deletableFeature,
+        selectFeature,
+        boundsFeature,
+        moveFeature,
+        layoutContainerFeature,
+        fadeFeature,
+        hoverFeedbackFeature,
+        popupFeature,
+        nameFeature,
+        withEditLabelFeature
+    ];
+
+    name = '';
+
+    get editableLabel(): (SChildElement & EditableLabel) | undefined {
+        const label = this.children.find(element => element.type === 'label:heading');
+        if (label && isEditableLabel(label)) {
+            return label;
+        }
+        return undefined;
+    }
+}
+
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
     static readonly DEFAULT_FEATURES = [
         connectableFeature,
@@ -109,27 +134,4 @@ export class Icon extends SShapeElement implements LayoutContainer {
     };
 }
 
-export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
-    static readonly DEFAULT_FEATURES = [
-        deletableFeature,
-        selectFeature,
-        boundsFeature,
-        moveFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        hoverFeedbackFeature,
-        popupFeature,
-        nameFeature,
-        withEditLabelFeature
-    ];
 
-    name = '';
-
-    get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const label = this.children.find(element => element.type === 'label:heading');
-        if (label && isEditableLabel(label)) {
-            return label;
-        }
-        return undefined;
-    }
-}

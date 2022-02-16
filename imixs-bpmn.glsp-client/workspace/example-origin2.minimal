@@ -2,80 +2,19 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "name": "ManualTask0",
-      "taskType": "unknown",
-      "id": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
-      "cssClasses": [
-        "task",
-        "manual"
-      ],
-      "children": [
-        {
-          "id": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4_icon",
-          "type": "icon",
-          "position": {
-            "x": 5.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 31.0,
-            "y": 7.0
-          },
-          "size": {
-            "width": 82.703125,
-            "height": 16.0
-          },
-          "text": "ManualTask0",
-          "alignment": {
-            "x": 0.0,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:manual",
-      "position": {
-        "x": 50.0,
-        "y": 20.0
-      },
-      "size": {
-        "width": 123.703125,
-        "height": 30.0
-      },
-      "layout": "hbox",
-      "layoutOptions": {
-        "paddingRight": 10.0,
-        "prefWidth": 123.703125,
-        "prefHeight": 30.0
-      },
-      "args": {
-        "radiusBottomLeft": 5.0,
-        "radiusTopLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
       "name": "SendTask4",
       "taskType": "unknown",
-      "id": "22ca3b8b-9052-4b21-9958-0662d6a02c2b",
+      "id": "ec3647b9-2e66-4d2f-9f30-695b11f28adf",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "22ca3b8b-9052-4b21-9958-0662d6a02c2b_icon",
+          "id": "ec3647b9-2e66-4d2f-9f30-695b11f28adf_icon",
           "type": "icon",
           "position": {
-            "x": 5.0,
+            "x": 100.0,
             "y": 5.0
           },
           "size": {
@@ -84,11 +23,11 @@
           }
         },
         {
-          "id": "22ca3b8b-9052-4b21-9958-0662d6a02c2b_classname",
+          "id": "ec3647b9-2e66-4d2f-9f30-695b11f28adf_classname",
           "type": "label:heading",
           "position": {
-            "x": 31.0,
-            "y": 7.0
+            "x": 77.7578125,
+            "y": 26.0
           },
           "size": {
             "width": 69.484375,
@@ -103,18 +42,23 @@
       ],
       "type": "task:send",
       "position": {
-        "x": 280.0,
-        "y": 20.0
+        "x": 50.0,
+        "y": 60.0
       },
       "size": {
-        "width": 110.484375,
-        "height": 30.0
+        "width": 230.0,
+        "height": 60.0
       },
-      "layout": "hbox",
+      "layout": "vbox",
       "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 230.0,
+        "minWidth": 160.0,
+        "hGrab": false,
+        "minHeight": 60.0,
+        "prefHeight": 60.0,
         "paddingRight": 10.0,
-        "prefWidth": 110.484375,
-        "prefHeight": 30.0
+        "hAlign": "center"
       },
       "args": {
         "radiusTopLeft": 5.0,
@@ -124,19 +68,19 @@
       }
     },
     {
-      "name": "ServiceTask5",
+      "name": "ManualTask1",
       "taskType": "unknown",
-      "id": "52b00536-45a3-4853-9956-fcdddac39759",
+      "id": "906448a2-cdb3-4cf2-b749-0d3ad31a114a",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "52b00536-45a3-4853-9956-fcdddac39759_icon",
+          "id": "906448a2-cdb3-4cf2-b749-0d3ad31a114a_icon",
           "type": "icon",
           "position": {
-            "x": 5.0,
+            "x": 65.0,
             "y": 5.0
           },
           "size": {
@@ -145,17 +89,83 @@
           }
         },
         {
-          "id": "52b00536-45a3-4853-9956-fcdddac39759_classname",
+          "id": "906448a2-cdb3-4cf2-b749-0d3ad31a114a_classname",
           "type": "label:heading",
           "position": {
-            "x": 31.0,
-            "y": 7.0
+            "x": 36.1484375,
+            "y": 26.0
           },
           "size": {
-            "width": 268.703125,
+            "width": 82.703125,
             "height": 16.0
           },
-          "text": "ServiceTasdfasdf asdföa djsföa sdf asdfsk5",
+          "text": "ManualTask1",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:manual",
+      "position": {
+        "x": 430.0,
+        "y": 60.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160,
+        "hGrab": false,
+        "minHeight": 60,
+        "prefHeight": 60.0,
+        "paddingRight": 10,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ServiceTask2",
+      "taskType": "unknown",
+      "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80_icon",
+          "type": "icon",
+          "position": {
+            "x": 65.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 35.765625,
+            "y": 26.0
+          },
+          "size": {
+            "width": 83.46875,
+            "height": 16.0
+          },
+          "text": "ServiceTask2",
           "alignment": {
             "x": 0.0,
             "y": 13.0
@@ -164,18 +174,23 @@
       ],
       "type": "task:service",
       "position": {
-        "x": 360.0,
-        "y": 20.0
+        "x": 440.0,
+        "y": 190.0
       },
       "size": {
-        "width": 309.703125,
-        "height": 30.0
+        "width": 160.0,
+        "height": 60.0
       },
-      "layout": "hbox",
+      "layout": "vbox",
       "layoutOptions": {
-        "paddingRight": 10.0,
-        "prefWidth": 309.703125,
-        "prefHeight": 30.0
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160,
+        "hGrab": false,
+        "minHeight": 60,
+        "prefHeight": 60.0,
+        "paddingRight": 10,
+        "hAlign": "center"
       },
       "args": {
         "radiusTopLeft": 5.0,
@@ -185,190 +200,34 @@
       }
     },
     {
-      "id": "b742868a-6e16-4a4a-b9bd-a84c0441a132",
-      "type": "edge",
-      "sourceId": "22ca3b8b-9052-4b21-9958-0662d6a02c2b",
-      "targetId": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
-      "args": {
-        "edgePadding": 10.0
-      }
+      "condition": "medium",
+      "id": "a304ee77-0578-4555-9585-a9ccdd590382",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "ec3647b9-2e66-4d2f-9f30-695b11f28adf",
+      "targetId": "906448a2-cdb3-4cf2-b749-0d3ad31a114a",
+      "routerKind": "manhattan"
     },
     {
-      "id": "7a2df377-c724-43b3-8512-2114b334feea",
-      "type": "edge",
-      "sourceId": "22ca3b8b-9052-4b21-9958-0662d6a02c2b",
-      "targetId": "52b00536-45a3-4853-9956-fcdddac39759",
-      "args": {
-        "edgePadding": 10.0
-      }
-    },
-    {
-      "id": "2ecc424d-a75b-49c8-9934-f4e4a319b177",
+      "condition": "medium",
+      "id": "e1af0705-1807-4797-8422-cb6f9211e8f2",
       "cssClasses": [
         "medium"
       ],
       "type": "edge:sequenceflow",
       "routingPoints": [
         {
-          "x": 113.04296875,
-          "y": 150.0
+          "x": 165.0,
+          "y": 220.0
         }
       ],
-      "sourceId": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
-      "targetId": "52b00536-45a3-4853-9956-fcdddac39759"
-    },
-    {
-      "condition": "medium",
-      "id": "dfdf524b-a9f2-4112-89c7-cab0f526f526",
-      "cssClasses": [
-        "medium"
-      ],
-      "type": "edge:sequenceflow",
-      "sourceId": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
-      "targetId": "52b00536-45a3-4853-9956-fcdddac39759"
-    },
-    {
-      "name": "Pool 0",
-      "id": "276f0571-1e33-4718-8b93-5f9a38608e38",
-      "cssClasses": [
-        "category"
-      ],
-      "children": [
-        {
-          "id": "276f0571-1e33-4718-8b93-5f9a38608e38_header",
-          "children": [
-            {
-              "id": "276f0571-1e33-4718-8b93-5f9a38608e38_classname",
-              "type": "label:heading",
-              "position": {
-                "x": 5.0,
-                "y": 5.0
-              },
-              "size": {
-                "width": 39.921875,
-                "height": 16.0
-              },
-              "text": "Pool 0",
-              "alignment": {
-                "x": 0.0,
-                "y": 13.0
-              }
-            }
-          ],
-          "type": "comp:header",
-          "position": {
-            "x": 325.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 49.921875,
-            "height": 26.0
-          },
-          "layout": "hbox"
-        },
-        {
-          "id": "276f0571-1e33-4718-8b93-5f9a38608e38_struct",
-          "type": "struct",
-          "position": {
-            "x": 5.0,
-            "y": 32.0
-          },
-          "size": {
-            "width": 689.921875,
-            "height": 140.0
-          },
-          "layout": "freeform",
-          "layoutOptions": {
-            "vGrab": true,
-            "hGrab": true,
-            "hAlign": "left"
-          }
-        },
-        {
-          "name": "ManualTask3",
-          "taskType": "unknown",
-          "id": "3154e3a0-b394-40b2-8552-44f0f1765679",
-          "cssClasses": [
-            "task",
-            "manual"
-          ],
-          "children": [
-            {
-              "id": "3154e3a0-b394-40b2-8552-44f0f1765679_icon",
-              "type": "icon",
-              "position": {
-                "x": 5.0,
-                "y": 5.0
-              },
-              "size": {
-                "width": 25.0,
-                "height": 20.0
-              }
-            },
-            {
-              "id": "3154e3a0-b394-40b2-8552-44f0f1765679_classname",
-              "type": "label:heading",
-              "position": {
-                "x": 31.0,
-                "y": 7.0
-              },
-              "size": {
-                "width": 82.703125,
-                "height": 16.0
-              },
-              "text": "ManualTask3",
-              "alignment": {
-                "x": 0.0,
-                "y": 13.0
-              }
-            }
-          ],
-          "type": "task:manual",
-          "position": {
-            "x": 110.0,
-            "y": 60.0
-          },
-          "size": {
-            "width": 123.703125,
-            "height": 30.0
-          },
-          "layout": "hbox",
-          "layoutOptions": {
-            "paddingRight": 10
-          },
-          "args": {
-            "radiusBottomLeft": 5.0,
-            "radiusTopLeft": 5.0,
-            "radiusTopRight": 5.0,
-            "radiusBottomRight": 5.0
-          }
-        }
-      ],
-      "type": "pool",
-      "position": {
-        "x": -10.0,
-        "y": 190.0
-      },
-      "size": {
-        "width": 699.921875,
-        "height": 177.0
-      },
-      "layout": "vbox",
-      "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 699.921875,
-        "hGrab": false,
-        "prefHeight": 177.0,
-        "hAlign": "center"
-      },
-      "args": {
-        "radiusBottomLeft": 5.0,
-        "radiusTopLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
+      "sourceId": "ec3647b9-2e66-4d2f-9f30-695b11f28adf",
+      "targetId": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80",
+      "routerKind": "manhattan"
     }
   ],
   "type": "graph",
-  "revision": 21
+  "revision": 25
 }
