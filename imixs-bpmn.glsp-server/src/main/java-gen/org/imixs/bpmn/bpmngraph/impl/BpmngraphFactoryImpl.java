@@ -59,7 +59,8 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
          case BpmngraphPackage.ACTIVITY_NODE: return createActivityNode();
          case BpmngraphPackage.TASK_NODE: return createTaskNode();
          case BpmngraphPackage.ICON: return createIcon();
-         case BpmngraphPackage.WEIGHTED_EDGE: return createWeightedEdge();
+         case BpmngraphPackage.SEQUENCE_FLOW: return createSequenceFlow();
+         case BpmngraphPackage.POOL: return createPool();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -100,9 +101,19 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
     * <!-- end-user-doc -->
     * @generated
     */
-   public WeightedEdge createWeightedEdge() {
-      WeightedEdgeImpl weightedEdge = new WeightedEdgeImpl();
-      return weightedEdge;
+   public SequenceFlow createSequenceFlow() {
+      SequenceFlowImpl sequenceFlow = new SequenceFlowImpl();
+      return sequenceFlow;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public Pool createPool() {
+      PoolImpl pool = new PoolImpl();
+      return pool;
    }
 
    /**

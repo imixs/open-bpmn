@@ -19,12 +19,10 @@ import {
     ConsoleLogger,
     createClientContainer,
     DeleteElementContextMenuItemProvider,
-    DiamondNodeView,
     editLabelFeature,
     GridSnapper,
     LogLevel,
     overrideViewerOptions,
-    RectangularNodeView,
     RevealNamedElementActionProvider,
     RoundedCornerNodeView,
     SCompartment,
@@ -41,7 +39,7 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
-import { ActivityNode, CategoryNode, Icon, TaskNode, WeightedEdge } from './model';
+import { PoolNode, Icon, TaskNode, SequenceFlow } from './model';
 import { IconView, WorkflowEdgeView } from './workflow-views';
 
 const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -65,14 +63,14 @@ const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'label:icon', SLabel, SLabelView);
     configureModelElement(context, DefaultTypes.EDGE, SEdge, WorkflowEdgeView);
-    configureModelElement(context, 'edge:weighted', WeightedEdge, WorkflowEdgeView);
+    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, WorkflowEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
-    configureModelElement(context, 'activityNode:merge', ActivityNode, DiamondNodeView);
-    configureModelElement(context, 'activityNode:decision', ActivityNode, DiamondNodeView);
-    configureModelElement(context, 'activityNode:fork', ActivityNode, RectangularNodeView);
-    configureModelElement(context, 'activityNode:join', ActivityNode, RectangularNodeView);
+    //configureModelElement(context, 'activityNode:merge', ActivityNode, DiamondNodeView);
+    //configureModelElement(context, 'activityNode:decision', ActivityNode, DiamondNodeView);
+    //configureModelElement(context, 'activityNode:fork', ActivityNode, RectangularNodeView);
+    //configureModelElement(context, 'activityNode:join', ActivityNode, RectangularNodeView);
 
-    configureModelElement(context, 'category', CategoryNode, RoundedCornerNodeView);
+    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 });
 

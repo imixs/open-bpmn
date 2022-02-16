@@ -11,48 +11,48 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.glsp.graph.impl.GEdgeImpl;
 
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.bpmngraph.WeightedEdge;
+import org.imixs.bpmn.bpmngraph.SequenceFlow;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Weighted Edge</b></em>'.
+ * An implementation of the model object '<em><b>Sequence Flow</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.imixs.bpmn.bpmngraph.impl.WeightedEdgeImpl#getProbability <em>Probability</em>}</li>
+ *   <li>{@link org.imixs.bpmn.bpmngraph.impl.SequenceFlowImpl#getCondition <em>Condition</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
+public class SequenceFlowImpl extends GEdgeImpl implements SequenceFlow {
    /**
-    * The default value of the '{@link #getProbability() <em>Probability</em>}' attribute.
+    * The default value of the '{@link #getCondition() <em>Condition</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getProbability()
+    * @see #getCondition()
     * @generated
     * @ordered
     */
-   protected static final String PROBABILITY_EDEFAULT = null;
+   protected static final String CONDITION_EDEFAULT = null;
 
    /**
-    * The cached value of the '{@link #getProbability() <em>Probability</em>}' attribute.
+    * The cached value of the '{@link #getCondition() <em>Condition</em>}' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see #getProbability()
+    * @see #getCondition()
     * @generated
     * @ordered
     */
-   protected String probability = PROBABILITY_EDEFAULT;
+   protected String condition = CONDITION_EDEFAULT;
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     */
-   protected WeightedEdgeImpl() {
+   protected SequenceFlowImpl() {
       super();
    }
 
@@ -63,7 +63,7 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
     */
    @Override
    protected EClass eStaticClass() {
-      return BpmngraphPackage.Literals.WEIGHTED_EDGE;
+      return BpmngraphPackage.Literals.SEQUENCE_FLOW;
    }
 
    /**
@@ -71,8 +71,8 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
     * <!-- end-user-doc -->
     * @generated
     */
-   public String getProbability() {
-      return probability;
+   public String getCondition() {
+      return condition;
    }
 
    /**
@@ -80,11 +80,11 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
     * <!-- end-user-doc -->
     * @generated
     */
-   public void setProbability(String newProbability) {
-      String oldProbability = probability;
-      probability = newProbability;
+   public void setCondition(String newCondition) {
+      String oldCondition = condition;
+      condition = newCondition;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, BpmngraphPackage.WEIGHTED_EDGE__PROBABILITY, oldProbability, probability));
+         eNotify(new ENotificationImpl(this, Notification.SET, BpmngraphPackage.SEQUENCE_FLOW__CONDITION, oldCondition, condition));
    }
 
    /**
@@ -95,8 +95,8 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case BpmngraphPackage.WEIGHTED_EDGE__PROBABILITY:
-            return getProbability();
+         case BpmngraphPackage.SEQUENCE_FLOW__CONDITION:
+            return getCondition();
       }
       return super.eGet(featureID, resolve, coreType);
    }
@@ -109,8 +109,8 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case BpmngraphPackage.WEIGHTED_EDGE__PROBABILITY:
-            setProbability((String)newValue);
+         case BpmngraphPackage.SEQUENCE_FLOW__CONDITION:
+            setCondition((String)newValue);
             return;
       }
       super.eSet(featureID, newValue);
@@ -124,8 +124,8 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case BpmngraphPackage.WEIGHTED_EDGE__PROBABILITY:
-            setProbability(PROBABILITY_EDEFAULT);
+         case BpmngraphPackage.SEQUENCE_FLOW__CONDITION:
+            setCondition(CONDITION_EDEFAULT);
             return;
       }
       super.eUnset(featureID);
@@ -139,8 +139,8 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case BpmngraphPackage.WEIGHTED_EDGE__PROBABILITY:
-            return PROBABILITY_EDEFAULT == null ? probability != null : !PROBABILITY_EDEFAULT.equals(probability);
+         case BpmngraphPackage.SEQUENCE_FLOW__CONDITION:
+            return CONDITION_EDEFAULT == null ? condition != null : !CONDITION_EDEFAULT.equals(condition);
       }
       return super.eIsSet(featureID);
    }
@@ -155,10 +155,10 @@ public class WeightedEdgeImpl extends GEdgeImpl implements WeightedEdge {
       if (eIsProxy()) return super.toString();
 
       StringBuilder result = new StringBuilder(super.toString());
-      result.append(" (probability: ");
-      result.append(probability);
+      result.append(" (condition: ");
+      result.append(condition);
       result.append(')');
       return result.toString();
    }
 
-} //WeightedEdgeImpl
+} //SequenceFlowImpl

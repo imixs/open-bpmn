@@ -90,8 +90,12 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
             return createIconAdapter();
          }
          @Override
-         public Adapter caseWeightedEdge(WeightedEdge object) {
-            return createWeightedEdgeAdapter();
+         public Adapter caseSequenceFlow(SequenceFlow object) {
+            return createSequenceFlowAdapter();
+         }
+         @Override
+         public Adapter casePool(Pool object) {
+            return createPoolAdapter();
          }
          @Override
          public Adapter caseGArgumentable(GArgumentable object) {
@@ -192,16 +196,30 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.WeightedEdge <em>Weighted Edge</em>}'.
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.SequenceFlow <em>Sequence Flow</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.WeightedEdge
+    * @see org.imixs.bpmn.bpmngraph.SequenceFlow
     * @generated
     */
-   public Adapter createWeightedEdgeAdapter() {
+   public Adapter createSequenceFlowAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.Pool
+    * @generated
+    */
+   public Adapter createPoolAdapter() {
       return null;
    }
 

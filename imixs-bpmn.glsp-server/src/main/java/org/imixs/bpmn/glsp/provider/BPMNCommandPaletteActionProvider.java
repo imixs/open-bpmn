@@ -74,9 +74,12 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                "fa-plus-square"))),
          new LabeledAction("Create Script Task",
             Lists.newArrayList(new CreateNodeOperation(ModelTypes.SCRIPT_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square")))
+               "fa-plus-square"))),
 
-      // add , separated additional entries
+         // Pool
+         new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(
+            ModelTypes.POOL, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))
+
       ));
 
       // Create edge actions between two nodes
@@ -93,7 +96,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
             GNode firstNode = (GNode) firstElement;
             GNode secondNode = (GNode) secondElement;
             actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
-            // actions.add(createWeightedEdgeAction("Connect with Weighted Edge", firstNode, secondNode));
+            actions.add(createSequenceFlowAction("Connect with Sequence Flow", firstNode, secondNode));
          }
       }
 
@@ -114,12 +117,17 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
          new CreateEdgeOperation(EDGE, source.getId(), node.getId())), "fa-plus-square");
    }
 
+   private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {
+      return new LabeledAction(label, Lists.newArrayList(
+         new CreateEdgeOperation(ModelTypes.SEQUENCE_FLOW, source.getId(), node.getId())), "fa-plus-square");
+   }
+
    private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
       Set<LabeledAction> actions = Sets.newLinkedHashSet();
       // add first all edge, then all weighted edge actions to keep a nice order
       targets.forEach(node -> actions.add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
-      // targets.forEach(node -> actions
-      // .add(createWeightedEdgeAction("Create Weighted Edge to " + getLabel(node), source, node)));
+      targets.forEach(node -> actions
+         .add(createSequenceFlowAction("Create Sequence Flow to " + getLabel(node), source, node)));
       return actions;
    }
 

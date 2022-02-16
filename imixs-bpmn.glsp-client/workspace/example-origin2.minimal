@@ -42,8 +42,8 @@
       ],
       "type": "task:manual",
       "position": {
-        "x": 170.0,
-        "y": 50.0
+        "x": 50.0,
+        "y": 20.0
       },
       "size": {
         "width": 123.703125,
@@ -103,8 +103,8 @@
       ],
       "type": "task:send",
       "position": {
-        "x": 440.0,
-        "y": 50.0
+        "x": 280.0,
+        "y": 20.0
       },
       "size": {
         "width": 110.484375,
@@ -152,10 +152,10 @@
             "y": 7.0
           },
           "size": {
-            "width": 83.46875,
+            "width": 268.703125,
             "height": 16.0
           },
-          "text": "ServiceTask5",
+          "text": "ServiceTasdfasdf asdföa djsföa sdf asdfsk5",
           "alignment": {
             "x": 0.0,
             "y": 13.0
@@ -164,17 +164,17 @@
       ],
       "type": "task:service",
       "position": {
-        "x": 440.0,
-        "y": 250.0
+        "x": 360.0,
+        "y": 20.0
       },
       "size": {
-        "width": 124.46875,
+        "width": 309.703125,
         "height": 30.0
       },
       "layout": "hbox",
       "layoutOptions": {
         "paddingRight": 10.0,
-        "prefWidth": 124.46875,
+        "prefWidth": 309.703125,
         "prefHeight": 30.0
       },
       "args": {
@@ -201,8 +201,174 @@
       "args": {
         "edgePadding": 10.0
       }
+    },
+    {
+      "id": "2ecc424d-a75b-49c8-9934-f4e4a319b177",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 113.04296875,
+          "y": 150.0
+        }
+      ],
+      "sourceId": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
+      "targetId": "52b00536-45a3-4853-9956-fcdddac39759"
+    },
+    {
+      "condition": "medium",
+      "id": "dfdf524b-a9f2-4112-89c7-cab0f526f526",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "262b9a87-b511-4f9b-8c7e-2ca8ee6eaed4",
+      "targetId": "52b00536-45a3-4853-9956-fcdddac39759"
+    },
+    {
+      "name": "Pool 0",
+      "id": "276f0571-1e33-4718-8b93-5f9a38608e38",
+      "cssClasses": [
+        "category"
+      ],
+      "children": [
+        {
+          "id": "276f0571-1e33-4718-8b93-5f9a38608e38_header",
+          "children": [
+            {
+              "id": "276f0571-1e33-4718-8b93-5f9a38608e38_classname",
+              "type": "label:heading",
+              "position": {
+                "x": 5.0,
+                "y": 5.0
+              },
+              "size": {
+                "width": 39.921875,
+                "height": 16.0
+              },
+              "text": "Pool 0",
+              "alignment": {
+                "x": 0.0,
+                "y": 13.0
+              }
+            }
+          ],
+          "type": "comp:header",
+          "position": {
+            "x": 325.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 49.921875,
+            "height": 26.0
+          },
+          "layout": "hbox"
+        },
+        {
+          "id": "276f0571-1e33-4718-8b93-5f9a38608e38_struct",
+          "type": "struct",
+          "position": {
+            "x": 5.0,
+            "y": 32.0
+          },
+          "size": {
+            "width": 689.921875,
+            "height": 140.0
+          },
+          "layout": "freeform",
+          "layoutOptions": {
+            "vGrab": true,
+            "hGrab": true,
+            "hAlign": "left"
+          }
+        },
+        {
+          "name": "ManualTask3",
+          "taskType": "unknown",
+          "id": "3154e3a0-b394-40b2-8552-44f0f1765679",
+          "cssClasses": [
+            "task",
+            "manual"
+          ],
+          "children": [
+            {
+              "id": "3154e3a0-b394-40b2-8552-44f0f1765679_icon",
+              "type": "icon",
+              "position": {
+                "x": 5.0,
+                "y": 5.0
+              },
+              "size": {
+                "width": 25.0,
+                "height": 20.0
+              }
+            },
+            {
+              "id": "3154e3a0-b394-40b2-8552-44f0f1765679_classname",
+              "type": "label:heading",
+              "position": {
+                "x": 31.0,
+                "y": 7.0
+              },
+              "size": {
+                "width": 82.703125,
+                "height": 16.0
+              },
+              "text": "ManualTask3",
+              "alignment": {
+                "x": 0.0,
+                "y": 13.0
+              }
+            }
+          ],
+          "type": "task:manual",
+          "position": {
+            "x": 110.0,
+            "y": 60.0
+          },
+          "size": {
+            "width": 123.703125,
+            "height": 30.0
+          },
+          "layout": "hbox",
+          "layoutOptions": {
+            "paddingRight": 10
+          },
+          "args": {
+            "radiusBottomLeft": 5.0,
+            "radiusTopLeft": 5.0,
+            "radiusTopRight": 5.0,
+            "radiusBottomRight": 5.0
+          }
+        }
+      ],
+      "type": "pool",
+      "position": {
+        "x": -10.0,
+        "y": 190.0
+      },
+      "size": {
+        "width": 699.921875,
+        "height": 177.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 699.921875,
+        "hGrab": false,
+        "prefHeight": 177.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
     }
   ],
   "type": "graph",
-  "revision": 5
+  "revision": 21
 }

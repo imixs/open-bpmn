@@ -16,8 +16,9 @@ import org.imixs.bpmn.bpmngraph.ActivityNode;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
 import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.bpmngraph.Pool;
+import org.imixs.bpmn.bpmngraph.SequenceFlow;
 import org.imixs.bpmn.bpmngraph.TaskNode;
-import org.imixs.bpmn.bpmngraph.WeightedEdge;
 
 /**
  * <!-- begin-user-doc -->
@@ -52,7 +53,14 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass weightedEdgeEClass = null;
+   private EClass sequenceFlowEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass poolEClass = null;
 
    /**
     * Creates an instance of the model <b>Package</b>, registered with
@@ -180,8 +188,8 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   public EClass getWeightedEdge() {
-      return weightedEdgeEClass;
+   public EClass getSequenceFlow() {
+      return sequenceFlowEClass;
    }
 
    /**
@@ -189,8 +197,26 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   public EAttribute getWeightedEdge_Probability() {
-      return (EAttribute)weightedEdgeEClass.getEStructuralFeatures().get(0);
+   public EAttribute getSequenceFlow_Condition() {
+      return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EClass getPool() {
+      return poolEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getPool_Name() {
+      return (EAttribute)poolEClass.getEStructuralFeatures().get(0);
    }
 
    /**
@@ -230,8 +256,11 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       iconEClass = createEClass(ICON);
 
-      weightedEdgeEClass = createEClass(WEIGHTED_EDGE);
-      createEAttribute(weightedEdgeEClass, WEIGHTED_EDGE__PROBABILITY);
+      sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
+      createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION);
+
+      poolEClass = createEClass(POOL);
+      createEAttribute(poolEClass, POOL__NAME);
    }
 
    /**
@@ -268,7 +297,8 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
       activityNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
       taskNodeEClass.getESuperTypes().add(this.getActivityNode());
       iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
-      weightedEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+      sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+      poolEClass.getESuperTypes().add(this.getActivityNode());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(activityNodeEClass, ActivityNode.class, "ActivityNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -280,8 +310,11 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-      initEClass(weightedEdgeEClass, WeightedEdge.class, "WeightedEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getWeightedEdge_Probability(), ecorePackage.getEString(), "probability", null, 0, 1, WeightedEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getSequenceFlow_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getPool_Name(), ecorePackage.getEString(), "name", null, 0, 1, Pool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

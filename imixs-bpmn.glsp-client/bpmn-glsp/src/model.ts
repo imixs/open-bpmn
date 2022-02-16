@@ -73,8 +73,8 @@ export function isTaskNode(element: SModelElement): element is TaskNode {
     return element instanceof TaskNode || false;
 }
 
-export class WeightedEdge extends SEdge {
-    probability?: string;
+export class SequenceFlow extends SEdge {
+    condition?: string;
 }
 
 export class ActivityNode extends DiamondNode {
@@ -109,7 +109,7 @@ export class Icon extends SShapeElement implements LayoutContainer {
     };
 }
 
-export class CategoryNode extends RectangularNode implements Nameable, WithEditableLabel {
+export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
     static readonly DEFAULT_FEATURES = [
         deletableFeature,
         selectFeature,

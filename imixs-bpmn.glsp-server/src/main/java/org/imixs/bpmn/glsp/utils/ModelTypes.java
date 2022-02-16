@@ -22,7 +22,7 @@ public final class ModelTypes {
    public static final String LABEL_TEXT = "label:text";
    public static final String COMP_HEADER = "comp:header";
    public static final String LABEL_ICON = "label:icon";
-   public static final String WEIGHTED_EDGE = "edge:weighted";
+   public static final String SEQUENCE_FLOW = "edge:sequenceflow";
    public static final String ICON = "icon";
    public static final String ACTIVITY_NODE = "activityNode";
    // public static final String DECISION_NODE = ACTIVITY_NODE + ":decision";
@@ -37,14 +37,14 @@ public final class ModelTypes {
    public static final String SCRIPT_TASK = TASK + ":script";
 
    // public static final String AUTOMATED_TASK = TASK + ":automated";
-   public static final String CATEGORY = "category";
+   public static final String POOL = "pool";
    public static final String STRUCTURE = "struct";
 
    public static String toNodeType(final String type) {
       switch (type) {
 
-         case CATEGORY:
-            return "category";
+         case POOL:
+            return "pool";
          default:
             return "unknown";
       }
