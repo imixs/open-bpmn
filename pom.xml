@@ -4,7 +4,7 @@
 	<groupId>org.imixs.bpmn</groupId>
 	<artifactId>org.imixs.bpmn.glsp</artifactId>
 	<description>Imxs BPMN GLSP</description>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Imixs BPMN GLSP</name>

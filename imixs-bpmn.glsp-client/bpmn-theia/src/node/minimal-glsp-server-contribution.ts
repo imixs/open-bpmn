@@ -23,7 +23,7 @@ export const DEFAULT_PORT = 5007;
 export const PORT_ARG_KEY = 'MINIMAL_GLSP';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
-    join(__dirname, '..', '..', '..', '..', 'imixs-bpmn.glsp-server', 'target', 'org.imixs.bpmn.glsp.server-0.0.3-SNAPSHOT-glsp.jar')
+    join(__dirname, '..', '..', '..', '..', 'imixs-bpmn.glsp-server', 'target', 'org.imixs.bpmn.glsp.server-0.0.4-SNAPSHOT-glsp.jar')
 );
 
 @injectable()
