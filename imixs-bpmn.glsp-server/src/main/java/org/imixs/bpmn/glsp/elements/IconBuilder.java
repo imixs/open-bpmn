@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,27 +13,36 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.handler;
+package org.imixs.bpmn.glsp.elements;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.BPMNBuilder.TaskNodeBuilder;
+import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
+import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
+import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.glsp.elements.gateway.GatewayNodeBuilder;
+import org.imixs.bpmn.glsp.elements.task.TaskNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public class CreateManualTaskHandler extends CreateTaskHandler {
+/**
+ * The IconBuilder is used to add icons into different elements like Taks or Gateways
+ *
+ * @See {@link TaskNodeBuilder}, {@link GatewayNodeBuilder}
+ * @author rsoika
+ *
+ */
+public class IconBuilder extends AbstractGCompartmentBuilder<Icon, IconBuilder> {
 
-   public CreateManualTaskHandler() {
-      super(ModelTypes.MANUAL_TASK, i -> "ManualTask" + i);
+   public IconBuilder() {
+      super(ModelTypes.ICON);
    }
 
    @Override
-   public String getLabel() { return "Manual Task"; }
+   protected Icon instantiate() {
+      return BpmngraphFactory.eINSTANCE.createIcon();
+   }
 
    @Override
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("manual");
+   protected IconBuilder self() {
+      return this;
    }
+
 }

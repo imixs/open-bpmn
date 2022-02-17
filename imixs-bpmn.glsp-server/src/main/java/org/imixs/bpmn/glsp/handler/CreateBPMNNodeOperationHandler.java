@@ -17,11 +17,20 @@ package org.imixs.bpmn.glsp.handler;
 
 import java.util.Optional;
 
+import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
+import org.imixs.bpmn.bpmngraph.Pool;
+import org.imixs.bpmn.glsp.utils.ModelTypes;
 
+/**
+ * The CreateBPMNNodeOperationHandler is used to detect the node within compartments
+ *
+ * @author rsoika
+ *
+ */
 public abstract class CreateBPMNNodeOperationHandler extends CreateNodeOperationHandler {
 
    public CreateBPMNNodeOperationHandler(final String elementTypeId) {
@@ -36,18 +45,15 @@ public abstract class CreateBPMNNodeOperationHandler extends CreateNodeOperation
    @Override
    protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
       Optional<GModelElement> container = super.getContainer(operation);
-
-      return container;
-
-      // If the container is a Category node, find its structure compartment
-      // Optional<GModelElement> structCompt = container.filter(Category.class::isInstance).map(Category.class::cast)
-      // .flatMap(this::getCategoryCompartment);
-      // return structCompt.isPresent() ? structCompt : container;
+      // If the container is a Pool node, find its structure compartment
+      Optional<GModelElement> structCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
+         .flatMap(this::getPoolCompartment);
+      return structCompt.isPresent() ? structCompt : container;
    }
 
-   // protected Optional<GCompartment> getCategoryCompartment(final Category category) {
-   // return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-   // .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
-   // }
+   protected Optional<GCompartment> getPoolCompartment(final Pool pool) {
+      return pool.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
+         .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
+   }
 
 }

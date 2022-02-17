@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.handler;
+package org.imixs.bpmn.glsp.elements.flow;
 
 import java.util.Optional;
 
@@ -21,7 +21,6 @@ import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
-import org.imixs.bpmn.glsp.utils.BPMNBuilder.SequenceFlowBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class CreateSequenceFlowHandler extends CreateEdgeOperationHandler {

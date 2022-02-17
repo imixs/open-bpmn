@@ -13,27 +13,26 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.handler;
+package org.imixs.bpmn.glsp.elements.task;
 
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.BPMNBuilder.TaskNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public class CreateExclusiveGatewayHandler extends CreateTaskHandler {
+public class CreateServiceTaskHandler extends CreateTaskHandler {
 
-   public CreateExclusiveGatewayHandler() {
-      super(ModelTypes.EXCLUSIVE_GATEWAY, i -> "ExclusiveGateway" + i);
+   public CreateServiceTaskHandler() {
+      super(ModelTypes.SERVICE_TASK, i -> "ServiceTask" + i);
    }
 
    @Override
-   public String getLabel() { return "Exclusive Gateway"; }
+   public String getLabel() { return "Service Task"; }
 
    @Override
    protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
       return super.builder(point, modelState)
-         .addCssClass("exclusive");
+         .addCssClass("service");
    }
 }

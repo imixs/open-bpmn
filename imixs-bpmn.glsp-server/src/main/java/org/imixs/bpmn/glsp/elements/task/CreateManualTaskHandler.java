@@ -13,23 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.handler;
+package org.imixs.bpmn.glsp.elements.task;
 
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.BPMNBuilder.TaskNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public class CreateServiceTaskHandler extends CreateTaskHandler {
+public class CreateManualTaskHandler extends CreateTaskHandler {
 
-   public CreateServiceTaskHandler() {
-      super(ModelTypes.SERVICE_TASK, i -> "ServiceTask" + i);
+   public CreateManualTaskHandler() {
+      super(ModelTypes.MANUAL_TASK, i -> "ManualTask" + i);
    }
 
    @Override
-   public String getLabel() { return "Service Task"; }
+   public String getLabel() { return "Manual Task"; }
 
    @Override
    protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {

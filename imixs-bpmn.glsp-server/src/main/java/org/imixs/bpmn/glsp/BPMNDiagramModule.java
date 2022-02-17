@@ -26,13 +26,13 @@ import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
+import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
+import org.imixs.bpmn.glsp.elements.pool.CreatePoolHandler;
+import org.imixs.bpmn.glsp.elements.task.CreateManualTaskHandler;
+import org.imixs.bpmn.glsp.elements.task.CreateSendTaskHandler;
+import org.imixs.bpmn.glsp.elements.task.CreateServiceTaskHandler;
 import org.imixs.bpmn.glsp.handler.CreateEdgeHandler;
-import org.imixs.bpmn.glsp.handler.CreateExclusiveGatewayHandler;
-import org.imixs.bpmn.glsp.handler.CreateManualTaskHandler;
-import org.imixs.bpmn.glsp.handler.CreatePoolHandler;
-import org.imixs.bpmn.glsp.handler.CreateSendTaskHandler;
-import org.imixs.bpmn.glsp.handler.CreateSequenceFlowHandler;
-import org.imixs.bpmn.glsp.handler.CreateServiceTaskHandler;
 import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 
 /**
