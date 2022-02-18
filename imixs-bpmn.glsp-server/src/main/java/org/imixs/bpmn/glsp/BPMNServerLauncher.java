@@ -24,13 +24,13 @@ import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
-public final class MinimalServerLauncher {
-   private MinimalServerLauncher() {}
+public final class BPMNServerLauncher {
+   private BPMNServerLauncher() {}
 
    @SuppressWarnings("uncommentedmain")
    public static void main(final String[] args) {
       try {
-         DefaultCLIParser cliParser = new DefaultCLIParser(args, "minimal server");
+         DefaultCLIParser cliParser = new DefaultCLIParser(args, "bpmn server");
          LaunchUtil.configure(cliParser);
          int port = cliParser.parsePort();
 

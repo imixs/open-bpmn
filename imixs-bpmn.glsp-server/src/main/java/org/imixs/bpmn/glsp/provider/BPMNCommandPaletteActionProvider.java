@@ -35,7 +35,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.imixs.bpmn.bpmngraph.TaskNode;
-import org.imixs.bpmn.glsp.handler.GridSnapper;
+import org.imixs.bpmn.glsp.utils.GridSnapper;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;

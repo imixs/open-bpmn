@@ -56,8 +56,8 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
       super.setProperties(node);
       node.setName(name);
       node.setTaskType(taskType);
+
       node.setLayout(GConstants.Layout.HBOX);
-      // node.setLayout(GConstants.Layout.VBOX);
       node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height

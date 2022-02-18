@@ -21,7 +21,6 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.handler.CreateBPMNNodeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public abstract class CreateActivityNodeHandler extends CreateBPMNNodeOperationHandler {

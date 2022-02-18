@@ -2,129 +2,21 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "name": "SendTask1",
-      "taskType": "send",
-      "id": "639cc6d1-10f9-4f45-93f9-855333086d2e",
+      "name": "ExclusiveGateway0",
+      "gatewayType": "exclusive",
+      "id": "5745eb77-df2b-48f5-9397-e4e5258aedd4",
       "cssClasses": [
-        "task",
-        "manual"
+        "gateway",
+        "exclusive"
       ],
-      "children": [
-        {
-          "id": "639cc6d1-10f9-4f45-93f9-855333086d2e_icon",
-          "type": "icon",
-          "position": {
-            "x": 65.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "639cc6d1-10f9-4f45-93f9-855333086d2e_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 42.7578125,
-            "y": 26.0
-          },
-          "size": {
-            "width": 69.484375,
-            "height": 16.0
-          },
-          "text": "SendTask1",
-          "alignment": {
-            "x": 0.0,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:send",
+      "type": "gateway:exclusive",
       "position": {
-        "x": 350.0,
-        "y": 50.0
+        "x": 620.0,
+        "y": 140.0
       },
       "size": {
-        "width": 160.0,
-        "height": 60.0
-      },
-      "layout": "vbox",
-      "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 160.0,
-        "minWidth": 160.0,
-        "hGrab": false,
-        "minHeight": 60.0,
-        "prefHeight": 60.0,
-        "paddingRight": 10.0,
-        "hAlign": "center"
-      },
-      "args": {
-        "radiusBottomLeft": 5.0,
-        "radiusTopLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "name": "ServiceTask2",
-      "taskType": "unknown",
-      "id": "ea2c7c17-17be-4249-93a6-a705785b3264",
-      "cssClasses": [
-        "task",
-        "manual"
-      ],
-      "children": [
-        {
-          "id": "ea2c7c17-17be-4249-93a6-a705785b3264_icon",
-          "type": "icon",
-          "position": {
-            "x": 65.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "ea2c7c17-17be-4249-93a6-a705785b3264_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 35.765625,
-            "y": 26.0
-          },
-          "size": {
-            "width": 83.46875,
-            "height": 16.0
-          },
-          "text": "ServiceTask2",
-          "alignment": {
-            "x": 0.0,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:service",
-      "position": {
-        "x": 350.0,
-        "y": 180.0
-      },
-      "size": {
-        "width": 160.0,
-        "height": 60.0
-      },
-      "layout": "vbox",
-      "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 160.0,
-        "minWidth": 160.0,
-        "hGrab": false,
-        "minHeight": 60.0,
-        "prefHeight": 60.0,
-        "paddingRight": 10.0,
-        "hAlign": "center"
+        "width": 42.0,
+        "height": 42.0
       },
       "args": {
         "radiusBottomLeft": 5.0,
@@ -136,17 +28,17 @@
     {
       "name": "ManualTask2",
       "taskType": "manual",
-      "id": "e2e5bc11-8eda-4300-b958-2bae05b389a3",
+      "id": "3f47a258-b94b-41d4-a046-213ef151c3dc",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "e2e5bc11-8eda-4300-b958-2bae05b389a3_icon",
+          "id": "3f47a258-b94b-41d4-a046-213ef151c3dc_icon",
           "type": "icon",
           "position": {
-            "x": 65.0,
+            "x": 5.0,
             "y": 5.0
           },
           "size": {
@@ -155,11 +47,11 @@
           }
         },
         {
-          "id": "e2e5bc11-8eda-4300-b958-2bae05b389a3_classname",
+          "id": "3f47a258-b94b-41d4-a046-213ef151c3dc_classname",
           "type": "label:heading",
           "position": {
-            "x": 36.1484375,
-            "y": 26.0
+            "x": 31.0,
+            "y": 7.0
           },
           "size": {
             "width": 82.703125,
@@ -174,22 +66,22 @@
       ],
       "type": "task:manual",
       "position": {
-        "x": 70.0,
+        "x": 90.0,
         "y": 50.0
       },
       "size": {
         "width": 160.0,
         "height": 60.0
       },
-      "layout": "vbox",
+      "layout": "hbox",
       "layoutOptions": {
         "vGrab": false,
         "prefWidth": 160.0,
-        "minWidth": 160.0,
+        "minWidth": 160,
         "hGrab": false,
-        "minHeight": 60.0,
+        "minHeight": 60,
         "prefHeight": 60.0,
-        "paddingRight": 10.0,
+        "paddingRight": 10,
         "hAlign": "center"
       },
       "args": {
@@ -200,87 +92,128 @@
       }
     },
     {
-      "id": "2cff47e1-9763-46f0-a781-7a000e44bdf6",
-      "cssClasses": [
-        "medium"
-      ],
-      "type": "edge:sequenceflow",
-      "sourceId": "e2e5bc11-8eda-4300-b958-2bae05b389a3",
-      "targetId": "639cc6d1-10f9-4f45-93f9-855333086d2e",
-      "routerKind": "manhattan"
-    },
-    {
-      "id": "f92ce5ea-afdf-4e0c-85ff-f754ead06d6f",
-      "cssClasses": [
-        "medium"
-      ],
-      "type": "edge:sequenceflow",
-      "routingPoints": [
-        {
-          "x": 150.0,
-          "y": 210.0
-        }
-      ],
-      "sourceId": "e2e5bc11-8eda-4300-b958-2bae05b389a3",
-      "targetId": "ea2c7c17-17be-4249-93a6-a705785b3264",
-      "routerKind": "manhattan"
-    },
-    {
-      "name": "ExclusiveGateway3",
-      "id": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d",
+      "name": "SendTask2",
+      "taskType": "send",
+      "id": "8af93d8e-e8d3-4a4c-bf60-62a617ba6cf8",
       "cssClasses": [
         "task",
-        "exclusive"
+        "send"
       ],
       "children": [
         {
-          "id": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d_icon",
+          "id": "8af93d8e-e8d3-4a4c-bf60-62a617ba6cf8_icon",
           "type": "icon",
           "position": {
-            "x": 61.5,
+            "x": 5.0,
             "y": 5.0
           },
           "size": {
-            "width": 32.0,
-            "height": 32.0
+            "width": 25.0,
+            "height": 20.0
           }
         },
         {
-          "id": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d_classname",
+          "id": "8af93d8e-e8d3-4a4c-bf60-62a617ba6cf8_classname",
           "type": "label:heading",
           "position": {
-            "x": 16.3046875,
-            "y": 38.0
+            "x": 31.0,
+            "y": 7.0
           },
           "size": {
-            "width": 122.390625,
+            "width": 69.484375,
             "height": 16.0
           },
-          "text": "ExclusiveGateway3",
+          "text": "SendTask2",
           "alignment": {
             "x": 0.0,
             "y": 13.0
           }
         }
       ],
-      "type": "gateway:exclusive",
+      "type": "task:send",
       "position": {
-        "x": 600.0,
-        "y": 180.0
+        "x": 380.0,
+        "y": 50.0
       },
       "size": {
         "width": 160.0,
         "height": 60.0
       },
-      "layout": "vbox",
+      "layout": "hbox",
       "layoutOptions": {
         "vGrab": false,
         "prefWidth": 160.0,
-        "minWidth": 160.0,
+        "minWidth": 160,
         "hGrab": false,
-        "minHeight": 60.0,
+        "minHeight": 60,
         "prefHeight": 60.0,
-        "paddingRight": 10.0,
+        "paddingRight": 10,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ServiceTask2",
+      "taskType": "unknown",
+      "id": "72ce6bf4-3fab-4917-9a93-d7dedff08442",
+      "cssClasses": [
+        "task",
+        "service"
+      ],
+      "children": [
+        {
+          "id": "72ce6bf4-3fab-4917-9a93-d7dedff08442_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "72ce6bf4-3fab-4917-9a93-d7dedff08442_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 83.46875,
+            "height": 16.0
+          },
+          "text": "ServiceTask2",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:service",
+      "position": {
+        "x": 390.0,
+        "y": 200.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160,
+        "hGrab": false,
+        "minHeight": 60,
+        "prefHeight": 60.0,
+        "paddingRight": 10,
         "hAlign": "center"
       },
       "args": {
@@ -292,33 +225,144 @@
     },
     {
       "condition": "medium",
-      "id": "726a626a-01d9-4462-8656-6d9f27af92b6",
+      "id": "f35a49ed-a7d2-41ee-8041-1894dade961e",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "3f47a258-b94b-41d4-a046-213ef151c3dc",
+      "targetId": "8af93d8e-e8d3-4a4c-bf60-62a617ba6cf8",
+      "routerKind": "manhattan"
+    },
+    {
+      "condition": "medium",
+      "id": "9a5ed7d4-8f21-4e0b-8e66-c81c3fc49666",
       "cssClasses": [
         "medium"
       ],
       "type": "edge:sequenceflow",
       "routingPoints": [
         {
-          "x": 677.0,
-          "y": 80.0
+          "x": 162.0,
+          "y": 230.0
         }
       ],
-      "sourceId": "639cc6d1-10f9-4f45-93f9-855333086d2e",
-      "targetId": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d",
+      "sourceId": "3f47a258-b94b-41d4-a046-213ef151c3dc",
+      "targetId": "72ce6bf4-3fab-4917-9a93-d7dedff08442",
       "routerKind": "manhattan"
     },
     {
       "condition": "medium",
-      "id": "eb00a2d9-48a1-4290-9c23-91395b5f53d1",
+      "id": "238c564b-08af-4967-aeeb-4714d257cdcf",
       "cssClasses": [
         "medium"
       ],
       "type": "edge:sequenceflow",
-      "sourceId": "ea2c7c17-17be-4249-93a6-a705785b3264",
-      "targetId": "0ca3e7b7-36a6-4050-b8b9-a01c64935b3d",
+      "routingPoints": [
+        {
+          "x": 642.0,
+          "y": 80.0
+        }
+      ],
+      "sourceId": "8af93d8e-e8d3-4a4c-bf60-62a617ba6cf8",
+      "targetId": "5745eb77-df2b-48f5-9397-e4e5258aedd4",
+      "routerKind": "manhattan"
+    },
+    {
+      "condition": "medium",
+      "id": "17143cd3-e4ea-4c1b-8dfc-857fe0c5e931",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 642.0,
+          "y": 230.0
+        }
+      ],
+      "sourceId": "72ce6bf4-3fab-4917-9a93-d7dedff08442",
+      "targetId": "5745eb77-df2b-48f5-9397-e4e5258aedd4",
+      "routerKind": "manhattan"
+    },
+    {
+      "name": "ManualTask3",
+      "taskType": "manual",
+      "id": "47e2383b-3c38-458f-b635-893edf9db819",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "47e2383b-3c38-458f-b635-893edf9db819_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "47e2383b-3c38-458f-b635-893edf9db819_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 82.703125,
+            "height": 16.0
+          },
+          "text": "ManualTask3",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:manual",
+      "position": {
+        "x": 720.0,
+        "y": 130.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 160.0,
+        "minWidth": 160,
+        "hGrab": false,
+        "minHeight": 60,
+        "prefHeight": 60.0,
+        "paddingRight": 10,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "condition": "medium",
+      "id": "3fda3ff5-ce63-46b8-aeaf-d41d3fdfc3bd",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "5745eb77-df2b-48f5-9397-e4e5258aedd4",
+      "targetId": "47e2383b-3c38-458f-b635-893edf9db819",
       "routerKind": "manhattan"
     }
   ],
   "type": "graph",
-  "revision": 4
+  "revision": 21
 }

@@ -15,16 +15,16 @@
  ********************************************************************************/
 import { ContainerContext, GLSPTheiaFrontendModule } from '@eclipse-glsp/theia-integration/lib/browser';
 import { DiagramConfiguration } from 'sprotty-theia';
-import { MinimalLanguage } from '../common/minimal-language';
-import { MinimalDiagramConfiguration } from './diagram/minimal-diagram-configuration';
+import { BPMNLanguage } from '../common/bpmn-language';
+import { BPMNDiagramConfiguration } from './diagram/bpmn-diagram-configuration';
 
-export class MinimalTheiaFrontendModule extends GLSPTheiaFrontendModule {
+export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
     protected enableCopyPaste = true;
-    readonly diagramLanguage = MinimalLanguage;
+    readonly diagramLanguage = BPMNLanguage;
 
     bindDiagramConfiguration(context: ContainerContext): void {
-        context.bind(DiagramConfiguration).to(MinimalDiagramConfiguration);
+        context.bind(DiagramConfiguration).to(BPMNDiagramConfiguration);
     }
 }
 
-export default new MinimalTheiaFrontendModule();
+export default new BPMNTheiaFrontendModule();

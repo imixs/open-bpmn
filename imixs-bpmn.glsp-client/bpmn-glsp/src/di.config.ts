@@ -41,7 +41,7 @@ import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
 import { ActivityNode, PoolNode, Icon, TaskNode, SequenceFlow } from './model';
-import { IconView, WorkflowEdgeView } from './workflow-views';
+import { IconView, WorkflowEdgeView } from './bpmn-views';
 
 const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();

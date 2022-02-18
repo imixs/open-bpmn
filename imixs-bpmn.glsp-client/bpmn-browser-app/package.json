@@ -22,8 +22,8 @@
   "scripts": {
     "prepare": "yarn build",
     "build": "theia build --mode development",
-    "start": "theia start --MINIMAL_GLSP=5007 --root-dir=../workspace",
-    "start:external": "theia start --MINIMAL_GLSP=5007 --root-dir=../workspace --debug",
+    "start": "theia start --GLSP_PORT=5007 --root-dir=../workspace",
+    "start:external": "theia start --GLSP_PORT=5007 --root-dir=../workspace --debug",
     "watch": "yarn build --mode development"
   },
   "theia": {

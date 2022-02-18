@@ -13,9 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createMinimalDiagramContainer from './di.config';
+import createBPMNDiagramContainer from './di.config';
 
 export * from './model';
-export * from './workflow-views';
+export * from './bpmn-views';
 export * from './direct-task-editing/direct-task-editor';
-export { createMinimalDiagramContainer };
+export { createBPMNDiagramContainer };

@@ -18,7 +18,15 @@ package org.imixs.bpmn.glsp.elements.gateway;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.Gateway;
+import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.glsp.elements.IconBuilder;
 
+/**
+ * The GatewayNodeBuilder defines the layout of BPMN gateways
+ *
+ * @author rsoika
+ *
+ */
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<Gateway, GatewayNodeBuilder> {
    private final String name;
    private final String gatewayType;
@@ -35,6 +43,9 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<Gateway, GatewayNod
       return BpmngraphFactory.eINSTANCE.createGateway();
    }
 
+   /**
+    * Define layout properties
+    */
    @Override
    protected void setProperties(final Gateway node) {
       super.setProperties(node);
@@ -42,6 +53,12 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<Gateway, GatewayNod
       node.setName(name);
       node.setGatewayType(gatewayType);
 
+      node.getChildren().add(createCompartmentIcon(node));
+
+   }
+
+   private Icon createCompartmentIcon(final Gateway gatewayNode) {
+      return new IconBuilder().id(gatewayNode.getId() + "_icon").build();
    }
 
    @Override

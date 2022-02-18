@@ -15,9 +15,9 @@
  ********************************************************************************/
 import { GLSPDiagramLanguage } from '@eclipse-glsp/theia-integration/lib/common';
 
-export const MinimalLanguage: GLSPDiagramLanguage = {
-    contributionId: 'Minimal',
-    label: 'Minimal diagram',
-    diagramType: 'minimal-diagram',
+export const BPMNLanguage: GLSPDiagramLanguage = {
+    contributionId: 'Bpmn',
+    label: 'BPMN 2.0 diagram',
+    diagramType: 'bpmn-diagram',
     fileExtensions: ['.minimal']
 };

@@ -17,18 +17,18 @@ import { getPort } from '@eclipse-glsp/protocol';
 import { JavaSocketServerContribution, JavaSocketServerLaunchOptions } from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from '@theia/core/shared/inversify';
 import { join, resolve } from 'path';
-import { MinimalLanguage } from '../common/minimal-language';
+import { BPMNLanguage } from '../common/bpmn-language';
 
 export const DEFAULT_PORT = 5007;
-export const PORT_ARG_KEY = 'MINIMAL_GLSP';
+export const PORT_ARG_KEY = 'GLSP_PORT';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
     join(__dirname, '..', '..', '..', '..', 'imixs-bpmn.glsp-server', 'target', 'org.imixs.bpmn.glsp.server-0.0.4-SNAPSHOT-glsp.jar')
 );
 
 @injectable()
-export class MinimalGLSPServerContribution extends JavaSocketServerContribution {
-    readonly id = MinimalLanguage.contributionId;
+export class BPMNGLSPServerContribution extends JavaSocketServerContribution {
+    readonly id = BPMNLanguage.contributionId;
 
     createLaunchOptions(): Partial<JavaSocketServerLaunchOptions> {
         return {

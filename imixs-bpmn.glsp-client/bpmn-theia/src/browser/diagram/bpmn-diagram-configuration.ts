@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { createMinimalDiagramContainer } from '@imixs-bpmn/bpmn-glsp';
+import { createBPMNDiagramContainer } from '@imixs-bpmn/bpmn-glsp';
 import {
     configureDiagramServer,
     GLSPDiagramConfiguration,
@@ -22,14 +22,14 @@ import {
 } from '@eclipse-glsp/theia-integration/lib/browser';
 import { Container, injectable } from 'inversify';
 import 'sprotty-theia/css/theia-sprotty.css';
-import { MinimalLanguage } from '../../common/minimal-language';
+import { BPMNLanguage } from '../../common/bpmn-language';
 
 @injectable()
-export class MinimalDiagramConfiguration extends GLSPDiagramConfiguration {
-    diagramType: string = MinimalLanguage.diagramType;
+export class BPMNDiagramConfiguration extends GLSPDiagramConfiguration {
+    diagramType: string = BPMNLanguage.diagramType;
 
     doCreateContainer(widgetId: string): Container {
-        const container = createMinimalDiagramContainer(widgetId);
+        const container = createBPMNDiagramContainer(widgetId);
         configureDiagramServer(container, GLSPTheiaDiagramServer);
         container.bind(TheiaDiagramServer).toService(GLSPTheiaDiagramServer);
         return container;

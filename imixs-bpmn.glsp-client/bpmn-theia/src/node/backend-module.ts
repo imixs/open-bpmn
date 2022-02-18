@@ -15,9 +15,9 @@
  ********************************************************************************/
 import { GLSPServerContribution } from '@eclipse-glsp/theia-integration/lib/node';
 import { ContainerModule } from '@theia/core/shared/inversify';
-import { MinimalGLSPServerContribution } from './minimal-glsp-server-contribution';
+import { BPMNGLSPServerContribution } from './bpmn-glsp-server-contribution';
 
 export default new ContainerModule(bind => {
-    bind(MinimalGLSPServerContribution).toSelf().inSingletonScope();
-    bind(GLSPServerContribution).toService(MinimalGLSPServerContribution);
+    bind(BPMNGLSPServerContribution).toSelf().inSingletonScope();
+    bind(GLSPServerContribution).toService(BPMNGLSPServerContribution);
 });

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.handler;
+package org.imixs.bpmn.glsp.elements;
 
 import java.util.Optional;
 
@@ -23,6 +23,7 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.imixs.bpmn.bpmngraph.Pool;
+import org.imixs.bpmn.glsp.utils.GridSnapper;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 /**
@@ -37,11 +38,23 @@ public abstract class CreateBPMNNodeOperationHandler extends CreateNodeOperation
       super(elementTypeId);
    }
 
+   /**
+    * Return the absolute location where the element should be created.
+    * <p>
+    * We use a GirdSnapper to snap into a predefined lyout
+    *
+    * @param operation
+    * @return
+    *         the absolute location where the element should be created.
+    */
    @Override
    protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
       return GridSnapper.snap(operation.getLocation());
    }
 
+   /**
+    * Find the optional container element the node is part of.
+    */
    @Override
    protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
       Optional<GModelElement> container = super.getContainer(operation);

@@ -23,9 +23,11 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.glsp.handler.CreateBPMNNodeOperationHandler;
+import org.imixs.bpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandler {
@@ -41,6 +43,16 @@ public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandle
 
    protected String getElementTypeId() { return elementTypeId; }
 
+   /**
+    * Create and return the new GatewayNode at the specified (optional) location. The location
+    * is given in coordinates relative to the {@link CreateNodeOperationHandler#getContainer(CreateNodeOperation)}
+    * container.
+    *
+    * @param relativeLocation
+    * @param args
+    * @return
+    *         The created {@link GNode Node}.
+    */
    @Override
    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
       return builder(point, modelState).build();
@@ -49,8 +61,8 @@ public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandle
    protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
       int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.GATEWAY, "gateway", modelState);
       String name = labelProvider.apply(nodeCounter);
-      String taskType = ModelTypes.toNodeType(getElementTypeId());
-      return new GatewayNodeBuilder(getElementTypeId(), name, taskType) //
+      String gatewayType = ModelTypes.toNodeType(getElementTypeId());
+      return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //
          .position(point.orElse(null))
          .addArguments(GArguments.cornerRadius(5))
          .addCssClass("gateway");

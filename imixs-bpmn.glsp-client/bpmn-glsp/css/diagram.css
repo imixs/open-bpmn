@@ -62,45 +62,43 @@
     fill: transparent;
 }
 
-.task.automated > .sprotty-node {
-    fill: #5b9fa8;
-}
 
-.task.manual > .sprotty-node {
+.task > .sprotty-node {
     fill: #6f89ad;
 }
 
-.category > .sprotty-node {
-    fill: #5c87bd;
+
+.pool > .sprotty-node {
+    fill: #3a4654;
 }
 
-.sprotty-edge.weighted.low:not(.selected),
-.sprotty-edge.weighted.low:not(.selected) .arrow {
+.sprotty-edge.sequenceflow.low:not(.selected),
+.sprotty-edge.sequenceflow.low:not(.selected) .arrow {
     stroke: rgb(128, 90, 233);
 }
 
-.sprotty-edge.weighted.low:not(.selected) .arrow {
+.sprotty-edge.sequenceflow.low:not(.selected) .arrow {
     fill: rgb(128, 90, 233);
 }
 
-.sprotty-edge.weighted:not(.selected),
-.sprotty-edge.weighted:not(.selected) .arrow,
-.sprotty-edge.weighted.medium:not(.selected),
-.sprotty-edge.weighted.medium:not(.selected) .arrow {
+.sprotty-edge.sequenceflow:not(.selected),
+.sprotty-edge.sequenceflow:not(.selected) .arrow,
+.sprotty-edge.sequenceflow.medium:not(.selected),
+.sprotty-edge.sequenceflow.medium:not(.selected) .arrow {
     stroke: rgb(98, 60, 193);
 }
 
-.sprotty-edge.weighted:not(.selected) .arrow,
-.sprotty-edge.weighted.medium:not(.selected) .arrow {
+.sprotty-edge.sequenceflow:not(.selected) .arrow,
+.sprotty-edge.sequenceflow.medium:not(.selected) .arrow {
     fill: rgb(98, 60, 193);
 }
 
-.sprotty-edge.weighted.high:not(.selected),
-.sprotty-edge.weighted.high:not(.selected) .arrow {
+.sprotty-edge.sequenceflow.high:not(.selected),
+.sprotty-edge.sequenceflow.high:not(.selected) .arrow {
     stroke: rgb(68, 30, 163);
 }
 
-.sprotty-edge.weighted.high:not(.selected) .arrow {
+.sprotty-edge.sequenceflow.high:not(.selected) .arrow {
     fill: rgb(68, 30, 163);
 }
 

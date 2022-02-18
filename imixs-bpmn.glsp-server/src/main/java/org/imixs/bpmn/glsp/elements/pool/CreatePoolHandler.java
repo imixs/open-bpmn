@@ -24,7 +24,7 @@ import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.glsp.handler.CreateBPMNNodeOperationHandler;
+import org.imixs.bpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
