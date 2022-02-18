@@ -32,7 +32,7 @@ import { Icon, isTaskNode } from './model';
 const JSX = { createElement: svg };
 
 @injectable()
-export class WorkflowEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
+export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
     protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
         const additionals = super.renderAdditionals(edge, segments, context);
         const p1 = segments[segments.length - 2];
@@ -41,7 +41,7 @@ export class WorkflowEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
             <path
                 class-sprotty-edge={true}
                 class-arrow={true}
-                d='M 1,0 L 10,-4 L 10,4 Z'
+                d='M 1,0 L 14,-4 L 14,4 Z'
                 transform={`rotate(${toDegrees(angleOfPoint({ x: p1.x - p2.x, y: p1.y - p2.y }))} ${p2.x} ${p2.y}) translate(${p2.x} ${
                     p2.y
                 })`}

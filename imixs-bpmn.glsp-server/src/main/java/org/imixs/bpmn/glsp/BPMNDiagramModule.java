@@ -26,13 +26,18 @@ import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
+import org.imixs.bpmn.glsp.elements.event.CreateStartEventHandler;
 import org.imixs.bpmn.glsp.elements.flow.CreateEdgeHandler;
 import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
+import org.imixs.bpmn.glsp.elements.gateway.CreateInclusiveGatewayHandler;
 import org.imixs.bpmn.glsp.elements.pool.CreatePoolHandler;
 import org.imixs.bpmn.glsp.elements.task.CreateManualTaskHandler;
+import org.imixs.bpmn.glsp.elements.task.CreateScriptTaskHandler;
 import org.imixs.bpmn.glsp.elements.task.CreateSendTaskHandler;
 import org.imixs.bpmn.glsp.elements.task.CreateServiceTaskHandler;
+import org.imixs.bpmn.glsp.elements.task.CreateUserTaskHandler;
 import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 
 /**
@@ -69,11 +74,16 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
       super.configureOperationHandlers(binding);
 
-    
-      // Add Task types
+      // Tasks
       binding.add(CreateManualTaskHandler.class);
       binding.add(CreateServiceTaskHandler.class);
       binding.add(CreateSendTaskHandler.class);
+      binding.add(CreateScriptTaskHandler.class);
+      binding.add(CreateUserTaskHandler.class);
+
+      // Events
+      binding.add(CreateStartEventHandler.class);
+      binding.add(CreateEndEventHandler.class);
 
       // Flows
       binding.add(CreateSequenceFlowHandler.class);
@@ -81,7 +91,9 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
 
       // Gateways
       binding.add(CreateExclusiveGatewayHandler.class);
+      binding.add(CreateInclusiveGatewayHandler.class);
 
+      // Pools
       binding.add(CreatePoolHandler.class);
 
       binding.remove(LayoutOperationHandler.class);

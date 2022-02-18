@@ -103,6 +103,48 @@ public class BpmngraphSwitch<T> extends Switch<T> {
             if (result == null) result = defaultCase(theEObject);
             return result;
          }
+         case BpmngraphPackage.GATEWAY_NODE: {
+            GatewayNode gatewayNode = (GatewayNode)theEObject;
+            T result = caseGatewayNode(gatewayNode);
+            if (result == null) result = caseActivityNode(gatewayNode);
+            if (result == null) result = caseGNode(gatewayNode);
+            if (result == null) result = caseGShapeElement(gatewayNode);
+            if (result == null) result = caseGEdgeLayoutable(gatewayNode);
+            if (result == null) result = caseGLayouting(gatewayNode);
+            if (result == null) result = caseGModelElement(gatewayNode);
+            if (result == null) result = caseGBoundsAware(gatewayNode);
+            if (result == null) result = caseGArgumentable(gatewayNode);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+         }
+         case BpmngraphPackage.EVENT_NODE: {
+            EventNode eventNode = (EventNode)theEObject;
+            T result = caseEventNode(eventNode);
+            if (result == null) result = caseActivityNode(eventNode);
+            if (result == null) result = caseGNode(eventNode);
+            if (result == null) result = caseGShapeElement(eventNode);
+            if (result == null) result = caseGEdgeLayoutable(eventNode);
+            if (result == null) result = caseGLayouting(eventNode);
+            if (result == null) result = caseGModelElement(eventNode);
+            if (result == null) result = caseGBoundsAware(eventNode);
+            if (result == null) result = caseGArgumentable(eventNode);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+         }
+         case BpmngraphPackage.POOL: {
+            Pool pool = (Pool)theEObject;
+            T result = casePool(pool);
+            if (result == null) result = caseActivityNode(pool);
+            if (result == null) result = caseGNode(pool);
+            if (result == null) result = caseGShapeElement(pool);
+            if (result == null) result = caseGEdgeLayoutable(pool);
+            if (result == null) result = caseGLayouting(pool);
+            if (result == null) result = caseGModelElement(pool);
+            if (result == null) result = caseGBoundsAware(pool);
+            if (result == null) result = caseGArgumentable(pool);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+         }
          case BpmngraphPackage.ICON: {
             Icon icon = (Icon)theEObject;
             T result = caseIcon(icon);
@@ -121,34 +163,6 @@ public class BpmngraphSwitch<T> extends Switch<T> {
             if (result == null) result = caseGEdge(sequenceFlow);
             if (result == null) result = caseGModelElement(sequenceFlow);
             if (result == null) result = caseGArgumentable(sequenceFlow);
-            if (result == null) result = defaultCase(theEObject);
-            return result;
-         }
-         case BpmngraphPackage.POOL: {
-            Pool pool = (Pool)theEObject;
-            T result = casePool(pool);
-            if (result == null) result = caseActivityNode(pool);
-            if (result == null) result = caseGNode(pool);
-            if (result == null) result = caseGShapeElement(pool);
-            if (result == null) result = caseGEdgeLayoutable(pool);
-            if (result == null) result = caseGLayouting(pool);
-            if (result == null) result = caseGModelElement(pool);
-            if (result == null) result = caseGBoundsAware(pool);
-            if (result == null) result = caseGArgumentable(pool);
-            if (result == null) result = defaultCase(theEObject);
-            return result;
-         }
-         case BpmngraphPackage.GATEWAY: {
-            Gateway gateway = (Gateway)theEObject;
-            T result = caseGateway(gateway);
-            if (result == null) result = caseActivityNode(gateway);
-            if (result == null) result = caseGNode(gateway);
-            if (result == null) result = caseGShapeElement(gateway);
-            if (result == null) result = caseGEdgeLayoutable(gateway);
-            if (result == null) result = caseGLayouting(gateway);
-            if (result == null) result = caseGModelElement(gateway);
-            if (result == null) result = caseGBoundsAware(gateway);
-            if (result == null) result = caseGArgumentable(gateway);
             if (result == null) result = defaultCase(theEObject);
             return result;
          }
@@ -187,6 +201,51 @@ public class BpmngraphSwitch<T> extends Switch<T> {
    }
 
    /**
+    * Returns the result of interpreting the object as an instance of '<em>Gateway Node</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>Gateway Node</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseGatewayNode(GatewayNode object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>Event Node</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>Event Node</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseEventNode(EventNode object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>Pool</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>Pool</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T casePool(Pool object) {
+      return null;
+   }
+
+   /**
     * Returns the result of interpreting the object as an instance of '<em>Icon</em>'.
     * <!-- begin-user-doc -->
     * This implementation returns null;
@@ -213,36 +272,6 @@ public class BpmngraphSwitch<T> extends Switch<T> {
     * @generated
     */
    public T caseSequenceFlow(SequenceFlow object) {
-      return null;
-   }
-
-   /**
-    * Returns the result of interpreting the object as an instance of '<em>Pool</em>'.
-    * <!-- begin-user-doc -->
-    * This implementation returns null;
-    * returning a non-null result will terminate the switch.
-    * <!-- end-user-doc -->
-    * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Pool</em>'.
-    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-    * @generated
-    */
-   public T casePool(Pool object) {
-      return null;
-   }
-
-   /**
-    * Returns the result of interpreting the object as an instance of '<em>Gateway</em>'.
-    * <!-- begin-user-doc -->
-    * This implementation returns null;
-    * returning a non-null result will terminate the switch.
-    * <!-- end-user-doc -->
-    * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Gateway</em>'.
-    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-    * @generated
-    */
-   public T caseGateway(Gateway object) {
       return null;
    }
 

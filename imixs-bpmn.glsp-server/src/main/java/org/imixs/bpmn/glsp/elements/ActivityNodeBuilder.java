@@ -20,7 +20,7 @@ import org.imixs.bpmn.bpmngraph.ActivityNode;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 
 /**
- * The ActivityNodeBuilder is a base clse used by CreateActivityNodeHandler
+ * The ActivityNodeBuilder is a base class used by CreateActivityNodeHandler
  *
  * @author rsoika
  *

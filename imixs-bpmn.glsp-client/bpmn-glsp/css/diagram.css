@@ -72,35 +72,62 @@
     fill: #3a4654;
 }
 
-.sprotty-edge.sequenceflow.low:not(.selected),
-.sprotty-edge.sequenceflow.low:not(.selected) .arrow {
+.sprotty-edge.xxsequenceflow.low:not(.selected),
+.sprotty-edge.sxxequenceflow.low:not(.selected) .arrow {
     stroke: rgb(128, 90, 233);
 }
 
-.sprotty-edge.sequenceflow.low:not(.selected) .arrow {
+.sprotty-edge.xxxsequenceflow.low:not(.selected) .arrow {
     fill: rgb(128, 90, 233);
 }
 
+/* sequence flow */
 .sprotty-edge.sequenceflow:not(.selected),
 .sprotty-edge.sequenceflow:not(.selected) .arrow,
 .sprotty-edge.sequenceflow.medium:not(.selected),
 .sprotty-edge.sequenceflow.medium:not(.selected) .arrow {
-    stroke: rgb(98, 60, 193);
+    stroke: rgb(174 190 243);
 }
+
+/* selected sequence flow */
+.sprotty-edge.sequenceflow.selected,
+.sprotty-edge.sequenceflow.selected .arrow,
+.sprotty-edge.sequenceflow.medium.selected,
+.sprotty-edge.sequenceflow.medium.selected .arrow {
+    stroke: #ffdf8b;
+}
+
+
+
+/* arrow */
 
 .sprotty-edge.sequenceflow:not(.selected) .arrow,
 .sprotty-edge.sequenceflow.medium:not(.selected) .arrow {
-    fill: rgb(98, 60, 193);
+    fill: rgb(174 190 243);
 }
 
 .sprotty-edge.sequenceflow.high:not(.selected),
 .sprotty-edge.sequenceflow.high:not(.selected) .arrow {
-    stroke: rgb(68, 30, 163);
+    stroke: rgb(174 190 243);
 }
 
 .sprotty-edge.sequenceflow.high:not(.selected) .arrow {
-    fill: rgb(68, 30, 163);
+    fill: rgb(174 190 243);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .sprotty-comp {
     stroke: transparent;

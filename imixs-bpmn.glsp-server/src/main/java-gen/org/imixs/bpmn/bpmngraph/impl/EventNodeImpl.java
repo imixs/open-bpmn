@@ -9,22 +9,22 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.bpmngraph.TaskNode;
+import org.imixs.bpmn.bpmngraph.EventNode;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Task Node</b></em>'.
+ * An implementation of the model object '<em><b>Event Node</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.imixs.bpmn.bpmngraph.impl.EventNodeImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
+public class EventNodeImpl extends ActivityNodeImpl implements EventNode {
    /**
     * The default value of the '{@link #getName() <em>Name</em>}' attribute.
     * <!-- begin-user-doc -->
@@ -50,7 +50,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
     * <!-- end-user-doc -->
     * @generated
     */
-   protected TaskNodeImpl() {
+   protected EventNodeImpl() {
       super();
    }
 
@@ -61,7 +61,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
     */
    @Override
    protected EClass eStaticClass() {
-      return BpmngraphPackage.Literals.TASK_NODE;
+      return BpmngraphPackage.Literals.EVENT_NODE;
    }
 
    /**
@@ -82,7 +82,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
       String oldName = name;
       name = newName;
       if (eNotificationRequired())
-         eNotify(new ENotificationImpl(this, Notification.SET, BpmngraphPackage.TASK_NODE__NAME, oldName, name));
+         eNotify(new ENotificationImpl(this, Notification.SET, BpmngraphPackage.EVENT_NODE__NAME, oldName, name));
    }
 
    /**
@@ -93,7 +93,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
    @Override
    public Object eGet(int featureID, boolean resolve, boolean coreType) {
       switch (featureID) {
-         case BpmngraphPackage.TASK_NODE__NAME:
+         case BpmngraphPackage.EVENT_NODE__NAME:
             return getName();
       }
       return super.eGet(featureID, resolve, coreType);
@@ -107,7 +107,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
    @Override
    public void eSet(int featureID, Object newValue) {
       switch (featureID) {
-         case BpmngraphPackage.TASK_NODE__NAME:
+         case BpmngraphPackage.EVENT_NODE__NAME:
             setName((String)newValue);
             return;
       }
@@ -122,7 +122,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
    @Override
    public void eUnset(int featureID) {
       switch (featureID) {
-         case BpmngraphPackage.TASK_NODE__NAME:
+         case BpmngraphPackage.EVENT_NODE__NAME:
             setName(NAME_EDEFAULT);
             return;
       }
@@ -137,7 +137,7 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
    @Override
    public boolean eIsSet(int featureID) {
       switch (featureID) {
-         case BpmngraphPackage.TASK_NODE__NAME:
+         case BpmngraphPackage.EVENT_NODE__NAME:
             return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       }
       return super.eIsSet(featureID);
@@ -159,4 +159,4 @@ public class TaskNodeImpl extends ActivityNodeImpl implements TaskNode {
       return result.toString();
    }
 
-} //TaskNodeImpl
+} //EventNodeImpl

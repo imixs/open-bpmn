@@ -17,7 +17,7 @@ package org.imixs.bpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.Gateway;
+import org.imixs.bpmn.bpmngraph.GatewayNode;
 import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.glsp.elements.IconBuilder;
 
@@ -27,37 +27,41 @@ import org.imixs.bpmn.glsp.elements.IconBuilder;
  * @author rsoika
  *
  */
-public class GatewayNodeBuilder extends AbstractGNodeBuilder<Gateway, GatewayNodeBuilder> {
+public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
    private final String name;
-   private final String gatewayType;
+   private final String nodeType;
 
-   public GatewayNodeBuilder(final String type, final String name, final String gatewayType) {
+   public GatewayNodeBuilder(final String type, final String name, final String nodeType) {
       super(type);
       this.name = name;
-      this.gatewayType = gatewayType;
+      this.nodeType = nodeType;
 
    }
 
    @Override
-   protected Gateway instantiate() {
-      return BpmngraphFactory.eINSTANCE.createGateway();
+   protected GatewayNode instantiate() {
+      return BpmngraphFactory.eINSTANCE.createGatewayNode();
    }
 
    /**
     * Define layout properties
     */
    @Override
-   protected void setProperties(final Gateway node) {
+   protected void setProperties(final GatewayNode node) {
       super.setProperties(node);
 
       node.setName(name);
-      node.setGatewayType(gatewayType);
+      node.setNodeType(nodeType);
+
+      // Set min width/height
+      node.getLayoutOptions().put("minWidth", 40);
+      node.getLayoutOptions().put("minHeight", 40);
 
       node.getChildren().add(createCompartmentIcon(node));
 
    }
 
-   private Icon createCompartmentIcon(final Gateway gatewayNode) {
+   private Icon createCompartmentIcon(final GatewayNode gatewayNode) {
       return new IconBuilder().id(gatewayNode.getId() + "_icon").build();
    }
 

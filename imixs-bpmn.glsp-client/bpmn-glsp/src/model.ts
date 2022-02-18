@@ -94,6 +94,40 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
     }
 }
 
+
+
+export class EventNode extends RectangularNode implements Nameable, WithEditableLabel {
+    static readonly DEFAULT_FEATURES = [
+        connectableFeature,
+        deletableFeature,
+        selectFeature,
+        boundsFeature,
+        moveFeature,
+        layoutContainerFeature,
+        fadeFeature,
+        hoverFeedbackFeature,
+        popupFeature,
+        nameFeature,
+        withEditLabelFeature
+    ];
+    eventType?: string;
+
+    get editableLabel(): (SChildElement & EditableLabel) | undefined {
+        const label = this.children.find(element => element.type === 'label:heading');
+        if (label && isEditableLabel(label)) {
+            return label;
+        }
+        return undefined;
+    }
+
+    get name(): string {
+        const labelText = this.editableLabel?.text;
+        return labelText ? labelText : '<unknown>';
+    }
+}
+
+
+
 export function isTaskNode(element: SModelElement): element is TaskNode {
     return element instanceof TaskNode || false;
 }

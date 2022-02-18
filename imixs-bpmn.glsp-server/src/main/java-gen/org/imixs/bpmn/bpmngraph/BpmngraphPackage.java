@@ -339,22 +339,13 @@ public interface BpmngraphPackage extends EPackage {
    int TASK_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
 
    /**
-    * The feature id for the '<em><b>Task Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int TASK_NODE__TASK_TYPE = ACTIVITY_NODE_FEATURE_COUNT + 1;
-
-   /**
     * The number of structural features of the '<em>Task Node</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int TASK_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 2;
+   int TASK_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
 
    /**
     * The number of operations of the '<em>Task Node</em>' class.
@@ -366,14 +357,14 @@ public interface BpmngraphPackage extends EPackage {
    int TASK_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
 
    /**
-    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see org.imixs.bpmn.bpmngraph.impl.IconImpl
-    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getIcon()
+    * @see org.imixs.bpmn.bpmngraph.impl.GatewayNodeImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGatewayNode()
     * @generated
     */
-   int ICON = 2;
+   int GATEWAY_NODE = 2;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -382,7 +373,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__ARGS = GraphPackage.GCOMPARTMENT__ARGS;
+   int GATEWAY_NODE__ARGS = ACTIVITY_NODE__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -391,7 +382,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__ID = GraphPackage.GCOMPARTMENT__ID;
+   int GATEWAY_NODE__ID = ACTIVITY_NODE__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -400,7 +391,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__CSS_CLASSES = GraphPackage.GCOMPARTMENT__CSS_CLASSES;
+   int GATEWAY_NODE__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -409,7 +400,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__CHILDREN = GraphPackage.GCOMPARTMENT__CHILDREN;
+   int GATEWAY_NODE__CHILDREN = ACTIVITY_NODE__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -418,7 +409,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__PARENT = GraphPackage.GCOMPARTMENT__PARENT;
+   int GATEWAY_NODE__PARENT = ACTIVITY_NODE__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -427,7 +418,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__TRACE = GraphPackage.GCOMPARTMENT__TRACE;
+   int GATEWAY_NODE__TRACE = ACTIVITY_NODE__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -436,7 +427,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__TYPE = GraphPackage.GCOMPARTMENT__TYPE;
+   int GATEWAY_NODE__TYPE = ACTIVITY_NODE__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -445,7 +436,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__POSITION = GraphPackage.GCOMPARTMENT__POSITION;
+   int GATEWAY_NODE__POSITION = ACTIVITY_NODE__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -454,7 +445,16 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__SIZE = GraphPackage.GCOMPARTMENT__SIZE;
+   int GATEWAY_NODE__SIZE = ACTIVITY_NODE__SIZE;
+
+   /**
+    * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_NODE__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -463,7 +463,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__LAYOUT = GraphPackage.GCOMPARTMENT__LAYOUT;
+   int GATEWAY_NODE__LAYOUT = ACTIVITY_NODE__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -472,35 +472,53 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ICON__LAYOUT_OPTIONS = GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
+   int GATEWAY_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
 
    /**
-    * The number of structural features of the '<em>Icon</em>' class.
+    * The feature id for the '<em><b>Node Type</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int ICON_FEATURE_COUNT = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 0;
+   int GATEWAY_NODE__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
 
    /**
-    * The number of operations of the '<em>Icon</em>' class.
+    * The feature id for the '<em><b>Name</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int ICON_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
+   int GATEWAY_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
 
    /**
-    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
+    * The number of structural features of the '<em>Gateway Node</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see org.imixs.bpmn.bpmngraph.impl.SequenceFlowImpl
-    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getSequenceFlow()
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
+
+   /**
+    * The number of operations of the '<em>Gateway Node</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+
+   /**
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.EventNodeImpl <em>Event Node</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.imixs.bpmn.bpmngraph.impl.EventNodeImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getEventNode()
     * @generated
     */
-   int SEQUENCE_FLOW = 3;
+   int EVENT_NODE = 3;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -509,7 +527,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__ARGS = GraphPackage.GEDGE__ARGS;
+   int EVENT_NODE__ARGS = ACTIVITY_NODE__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -518,7 +536,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__ID = GraphPackage.GEDGE__ID;
+   int EVENT_NODE__ID = ACTIVITY_NODE__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -527,7 +545,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
+   int EVENT_NODE__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -536,7 +554,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__CHILDREN = GraphPackage.GEDGE__CHILDREN;
+   int EVENT_NODE__CHILDREN = ACTIVITY_NODE__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -545,7 +563,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__PARENT = GraphPackage.GEDGE__PARENT;
+   int EVENT_NODE__PARENT = ACTIVITY_NODE__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -554,7 +572,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__TRACE = GraphPackage.GEDGE__TRACE;
+   int EVENT_NODE__TRACE = ACTIVITY_NODE__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -563,89 +581,88 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__TYPE = GraphPackage.GEDGE__TYPE;
+   int EVENT_NODE__TYPE = ACTIVITY_NODE__TYPE;
 
    /**
-    * The feature id for the '<em><b>Routing Points</b></em>' containment reference list.
+    * The feature id for the '<em><b>Position</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
+   int EVENT_NODE__POSITION = ACTIVITY_NODE__POSITION;
 
    /**
-    * The feature id for the '<em><b>Source Id</b></em>' attribute.
+    * The feature id for the '<em><b>Size</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
+   int EVENT_NODE__SIZE = ACTIVITY_NODE__SIZE;
 
    /**
-    * The feature id for the '<em><b>Target Id</b></em>' attribute.
+    * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
+   int EVENT_NODE__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
 
    /**
-    * The feature id for the '<em><b>Source</b></em>' reference.
+    * The feature id for the '<em><b>Layout</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__SOURCE = GraphPackage.GEDGE__SOURCE;
+   int EVENT_NODE__LAYOUT = ACTIVITY_NODE__LAYOUT;
 
    /**
-    * The feature id for the '<em><b>Target</b></em>' reference.
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__TARGET = GraphPackage.GEDGE__TARGET;
+   int EVENT_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
 
    /**
-    * The feature id for the '<em><b>Router Kind</b></em>' attribute.
+    * The feature id for the '<em><b>Node Type</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
+   int EVENT_NODE__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
 
    /**
-    * The feature id for the '<em><b>Condition</b></em>' attribute.
+    * The feature id for the '<em><b>Name</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+   int EVENT_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
 
    /**
-    * The number of structural features of the '<em>Sequence Flow</em>' class.
+    * The number of structural features of the '<em>Event Node</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+   int EVENT_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
 
    /**
-    * The number of operations of the '<em>Sequence Flow</em>' class.
+    * The number of operations of the '<em>Event Node</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
-
+   int EVENT_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.PoolImpl <em>Pool</em>}' class.
@@ -801,16 +818,15 @@ public interface BpmngraphPackage extends EPackage {
     */
    int POOL_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
 
-
    /**
-    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayImpl <em>Gateway</em>}' class.
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see org.imixs.bpmn.bpmngraph.impl.GatewayImpl
-    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGateway()
+    * @see org.imixs.bpmn.bpmngraph.impl.IconImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getIcon()
     * @generated
     */
-   int GATEWAY = 5;
+   int ICON = 5;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -819,7 +835,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__ARGS = ACTIVITY_NODE__ARGS;
+   int ICON__ARGS = GraphPackage.GCOMPARTMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -828,7 +844,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__ID = ACTIVITY_NODE__ID;
+   int ICON__ID = GraphPackage.GCOMPARTMENT__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -837,7 +853,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+   int ICON__CSS_CLASSES = GraphPackage.GCOMPARTMENT__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -846,7 +862,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__CHILDREN = ACTIVITY_NODE__CHILDREN;
+   int ICON__CHILDREN = GraphPackage.GCOMPARTMENT__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -855,7 +871,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__PARENT = ACTIVITY_NODE__PARENT;
+   int ICON__PARENT = GraphPackage.GCOMPARTMENT__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -864,7 +880,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__TRACE = ACTIVITY_NODE__TRACE;
+   int ICON__TRACE = GraphPackage.GCOMPARTMENT__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -873,7 +889,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__TYPE = ACTIVITY_NODE__TYPE;
+   int ICON__TYPE = GraphPackage.GCOMPARTMENT__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -882,7 +898,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__POSITION = ACTIVITY_NODE__POSITION;
+   int ICON__POSITION = GraphPackage.GCOMPARTMENT__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -891,16 +907,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__SIZE = ACTIVITY_NODE__SIZE;
-
-   /**
-    * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GATEWAY__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+   int ICON__SIZE = GraphPackage.GCOMPARTMENT__SIZE;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -909,7 +916,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__LAYOUT = ACTIVITY_NODE__LAYOUT;
+   int ICON__LAYOUT = GraphPackage.GCOMPARTMENT__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -918,52 +925,179 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
+   int ICON__LAYOUT_OPTIONS = GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
 
    /**
-    * The feature id for the '<em><b>Node Type</b></em>' attribute.
+    * The number of structural features of the '<em>Icon</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GATEWAY__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+   int ICON_FEATURE_COUNT = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 0;
 
    /**
-    * The feature id for the '<em><b>Name</b></em>' attribute.
+    * The number of operations of the '<em>Icon</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GATEWAY__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+   int ICON_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
 
    /**
-    * The feature id for the '<em><b>Gateway Type</b></em>' attribute.
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.imixs.bpmn.bpmngraph.impl.SequenceFlowImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getSequenceFlow()
+    * @generated
+    */
+   int SEQUENCE_FLOW = 6;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GATEWAY__GATEWAY_TYPE = ACTIVITY_NODE_FEATURE_COUNT + 1;
+   int SEQUENCE_FLOW__ARGS = GraphPackage.GEDGE__ARGS;
 
    /**
-    * The number of structural features of the '<em>Gateway</em>' class.
+    * The feature id for the '<em><b>Id</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GATEWAY_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 2;
+   int SEQUENCE_FLOW__ID = GraphPackage.GEDGE__ID;
 
    /**
-    * The number of operations of the '<em>Gateway</em>' class.
+    * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int GATEWAY_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+   int SEQUENCE_FLOW__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
+
+   /**
+    * The feature id for the '<em><b>Children</b></em>' containment reference list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__CHILDREN = GraphPackage.GEDGE__CHILDREN;
+
+   /**
+    * The feature id for the '<em><b>Parent</b></em>' container reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__PARENT = GraphPackage.GEDGE__PARENT;
+
+   /**
+    * The feature id for the '<em><b>Trace</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__TRACE = GraphPackage.GEDGE__TRACE;
+
+   /**
+    * The feature id for the '<em><b>Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__TYPE = GraphPackage.GEDGE__TYPE;
+
+   /**
+    * The feature id for the '<em><b>Routing Points</b></em>' containment reference list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
+
+   /**
+    * The feature id for the '<em><b>Source Id</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
+
+   /**
+    * The feature id for the '<em><b>Target Id</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
+
+   /**
+    * The feature id for the '<em><b>Source</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__SOURCE = GraphPackage.GEDGE__SOURCE;
+
+   /**
+    * The feature id for the '<em><b>Target</b></em>' reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__TARGET = GraphPackage.GEDGE__TARGET;
+
+   /**
+    * The feature id for the '<em><b>Router Kind</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
+
+   /**
+    * The feature id for the '<em><b>Condition</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+
+   /**
+    * The number of structural features of the '<em>Sequence Flow</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+
+   /**
+    * The number of operations of the '<em>Sequence Flow</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
 
 
    /**
@@ -1009,15 +1143,67 @@ public interface BpmngraphPackage extends EPackage {
    EAttribute getTaskNode_Name();
 
    /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.TaskNode#getTaskType <em>Task Type</em>}'.
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.GatewayNode <em>Gateway Node</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Task Type</em>'.
-    * @see org.imixs.bpmn.bpmngraph.TaskNode#getTaskType()
-    * @see #getTaskNode()
+    * @return the meta object for class '<em>Gateway Node</em>'.
+    * @see org.imixs.bpmn.bpmngraph.GatewayNode
     * @generated
     */
-   EAttribute getTaskNode_TaskType();
+   EClass getGatewayNode();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.GatewayNode#getName <em>Name</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.GatewayNode#getName()
+    * @see #getGatewayNode()
+    * @generated
+    */
+   EAttribute getGatewayNode_Name();
+
+   /**
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.EventNode <em>Event Node</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>Event Node</em>'.
+    * @see org.imixs.bpmn.bpmngraph.EventNode
+    * @generated
+    */
+   EClass getEventNode();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.EventNode#getName <em>Name</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.EventNode#getName()
+    * @see #getEventNode()
+    * @generated
+    */
+   EAttribute getEventNode_Name();
+
+   /**
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>Pool</em>'.
+    * @see org.imixs.bpmn.bpmngraph.Pool
+    * @generated
+    */
+   EClass getPool();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Pool#getName <em>Name</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.Pool#getName()
+    * @see #getPool()
+    * @generated
+    */
+   EAttribute getPool_Name();
 
    /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Icon <em>Icon</em>}'.
@@ -1049,59 +1235,6 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     */
    EAttribute getSequenceFlow_Condition();
-
-   /**
-    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for class '<em>Pool</em>'.
-    * @see org.imixs.bpmn.bpmngraph.Pool
-    * @generated
-    */
-   EClass getPool();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Pool#getName <em>Name</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Name</em>'.
-    * @see org.imixs.bpmn.bpmngraph.Pool#getName()
-    * @see #getPool()
-    * @generated
-    */
-   EAttribute getPool_Name();
-
-   /**
-    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Gateway <em>Gateway</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for class '<em>Gateway</em>'.
-    * @see org.imixs.bpmn.bpmngraph.Gateway
-    * @generated
-    */
-   EClass getGateway();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Gateway#getName <em>Name</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Name</em>'.
-    * @see org.imixs.bpmn.bpmngraph.Gateway#getName()
-    * @see #getGateway()
-    * @generated
-    */
-   EAttribute getGateway_Name();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Gateway#getGatewayType <em>Gateway Type</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Gateway Type</em>'.
-    * @see org.imixs.bpmn.bpmngraph.Gateway#getGatewayType()
-    * @see #getGateway()
-    * @generated
-    */
-   EAttribute getGateway_GatewayType();
 
    /**
     * Returns the factory that creates the instances of the model.
@@ -1163,12 +1296,58 @@ public interface BpmngraphPackage extends EPackage {
       EAttribute TASK_NODE__NAME = eINSTANCE.getTaskNode_Name();
 
       /**
-       * The meta object literal for the '<em><b>Task Type</b></em>' attribute feature.
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.imixs.bpmn.bpmngraph.impl.GatewayNodeImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGatewayNode()
+       * @generated
+       */
+      EClass GATEWAY_NODE = eINSTANCE.getGatewayNode();
+
+      /**
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
        */
-      EAttribute TASK_NODE__TASK_TYPE = eINSTANCE.getTaskNode_TaskType();
+      EAttribute GATEWAY_NODE__NAME = eINSTANCE.getGatewayNode_Name();
+
+      /**
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.EventNodeImpl <em>Event Node</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.imixs.bpmn.bpmngraph.impl.EventNodeImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getEventNode()
+       * @generated
+       */
+      EClass EVENT_NODE = eINSTANCE.getEventNode();
+
+      /**
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute EVENT_NODE__NAME = eINSTANCE.getEventNode_Name();
+
+      /**
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.PoolImpl <em>Pool</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.imixs.bpmn.bpmngraph.impl.PoolImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getPool()
+       * @generated
+       */
+      EClass POOL = eINSTANCE.getPool();
+
+      /**
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute POOL__NAME = eINSTANCE.getPool_Name();
 
       /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.
@@ -1197,50 +1376,6 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EAttribute SEQUENCE_FLOW__CONDITION = eINSTANCE.getSequenceFlow_Condition();
-
-      /**
-       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.PoolImpl <em>Pool</em>}' class.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @see org.imixs.bpmn.bpmngraph.impl.PoolImpl
-       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getPool()
-       * @generated
-       */
-      EClass POOL = eINSTANCE.getPool();
-
-      /**
-       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute POOL__NAME = eINSTANCE.getPool_Name();
-
-      /**
-       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayImpl <em>Gateway</em>}' class.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @see org.imixs.bpmn.bpmngraph.impl.GatewayImpl
-       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGateway()
-       * @generated
-       */
-      EClass GATEWAY = eINSTANCE.getGateway();
-
-      /**
-       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GATEWAY__NAME = eINSTANCE.getGateway_Name();
-
-      /**
-       * The meta object literal for the '<em><b>Gateway Type</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GATEWAY__GATEWAY_TYPE = eINSTANCE.getGateway_GatewayType();
 
    }
 

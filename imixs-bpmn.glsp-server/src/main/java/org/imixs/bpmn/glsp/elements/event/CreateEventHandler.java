@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.elements.gateway;
+package org.imixs.bpmn.glsp.elements.event;
 
 import java.util.Map;
 import java.util.Optional;
@@ -23,19 +23,17 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
 import org.imixs.bpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandler {
+public abstract class CreateEventHandler extends CreateBPMNNodeOperationHandler {
 
    private final Function<Integer, String> labelProvider;
    private final String elementTypeId;
 
-   public CreateGatewayHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
+   public CreateEventHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
       super(elementTypeId);
       this.elementTypeId = elementTypeId;
       this.labelProvider = labelProvider;
@@ -43,29 +41,19 @@ public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandle
 
    protected String getElementTypeId() { return elementTypeId; }
 
-   /**
-    * Create and return the new GatewayNode at the specified (optional) location. The location
-    * is given in coordinates relative to the {@link CreateNodeOperationHandler#getContainer(CreateNodeOperation)}
-    * container.
-    *
-    * @param relativeLocation
-    * @param args
-    * @return
-    *         The created {@link GNode Node}.
-    */
    @Override
    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
       return builder(point, modelState).build();
    }
 
-   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.GATEWAY_NODE, "gateway", modelState);
+   protected EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.EVENT_NODE, "event", modelState);
       String name = labelProvider.apply(nodeCounter);
-      String gatewayType = ModelTypes.toNodeType(getElementTypeId());
-      return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //
+      String eventType = ModelTypes.toNodeType(getElementTypeId());
+      return new EventNodeBuilder(getElementTypeId(), name, eventType) //
          .position(point.orElse(null))
          .addArguments(GArguments.cornerRadius(5))
-         .addCssClass("gateway");
+         .addCssClass("event");
    }
 
 }

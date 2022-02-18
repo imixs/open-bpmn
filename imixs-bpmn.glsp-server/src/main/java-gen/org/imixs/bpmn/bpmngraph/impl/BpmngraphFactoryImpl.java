@@ -58,10 +58,11 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
       switch (eClass.getClassifierID()) {
          case BpmngraphPackage.ACTIVITY_NODE: return createActivityNode();
          case BpmngraphPackage.TASK_NODE: return createTaskNode();
+         case BpmngraphPackage.GATEWAY_NODE: return createGatewayNode();
+         case BpmngraphPackage.EVENT_NODE: return createEventNode();
+         case BpmngraphPackage.POOL: return createPool();
          case BpmngraphPackage.ICON: return createIcon();
          case BpmngraphPackage.SEQUENCE_FLOW: return createSequenceFlow();
-         case BpmngraphPackage.POOL: return createPool();
-         case BpmngraphPackage.GATEWAY: return createGateway();
          default:
             throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
       }
@@ -92,9 +93,9 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
     * <!-- end-user-doc -->
     * @generated
     */
-   public Icon createIcon() {
-      IconImpl icon = new IconImpl();
-      return icon;
+   public GatewayNode createGatewayNode() {
+      GatewayNodeImpl gatewayNode = new GatewayNodeImpl();
+      return gatewayNode;
    }
 
    /**
@@ -102,9 +103,9 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
     * <!-- end-user-doc -->
     * @generated
     */
-   public SequenceFlow createSequenceFlow() {
-      SequenceFlowImpl sequenceFlow = new SequenceFlowImpl();
-      return sequenceFlow;
+   public EventNode createEventNode() {
+      EventNodeImpl eventNode = new EventNodeImpl();
+      return eventNode;
    }
 
    /**
@@ -122,9 +123,19 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
     * <!-- end-user-doc -->
     * @generated
     */
-   public Gateway createGateway() {
-      GatewayImpl gateway = new GatewayImpl();
-      return gateway;
+   public Icon createIcon() {
+      IconImpl icon = new IconImpl();
+      return icon;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public SequenceFlow createSequenceFlow() {
+      SequenceFlowImpl sequenceFlow = new SequenceFlowImpl();
+      return sequenceFlow;
    }
 
    /**

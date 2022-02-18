@@ -34,6 +34,8 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
+import org.imixs.bpmn.bpmngraph.EventNode;
+import org.imixs.bpmn.bpmngraph.GatewayNode;
 import org.imixs.bpmn.bpmngraph.TaskNode;
 import org.imixs.bpmn.glsp.utils.GridSnapper;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
@@ -75,6 +77,22 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
          new LabeledAction("Create Script Task",
             Lists.newArrayList(new CreateNodeOperation(ModelTypes.SCRIPT_TASK, lastMousePosition.orElse(point(0, 0)),
                "fa-plus-square"))),
+
+         new LabeledAction("Create Start Event",
+            Lists.newArrayList(new CreateNodeOperation(ModelTypes.START_EVENT, lastMousePosition.orElse(point(0, 0)),
+               "fa-plus-square"))),
+         new LabeledAction("Create End Event",
+            Lists.newArrayList(new CreateNodeOperation(ModelTypes.END_EVENT, lastMousePosition.orElse(point(0, 0)),
+               "fa-plus-square"))),
+
+         new LabeledAction("Create Exclusive Gateway",
+            Lists.newArrayList(
+               new CreateNodeOperation(ModelTypes.EXCLUSIVE_GATEWAY, lastMousePosition.orElse(point(0, 0)),
+                  "fa-plus-square"))),
+         new LabeledAction("Create Inclusive Gateway",
+            Lists.newArrayList(
+               new CreateNodeOperation(ModelTypes.INCLUSIVE_GATEWAY, lastMousePosition.orElse(point(0, 0)),
+                  "fa-plus-square"))),
 
          // Pool
          new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(
@@ -134,6 +152,14 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
    private String getLabel(final GNode node) {
       if (node instanceof TaskNode) {
          return ((TaskNode) node).getName();
+      }
+
+      if (node instanceof EventNode) {
+         return ((EventNode) node).getName();
+      }
+
+      if (node instanceof GatewayNode) {
+         return ((GatewayNode) node).getName();
       }
       return node.getId();
    }

@@ -56,9 +56,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
       mappings.put(ModelTypes.ACTIVITY_NODE, BpmngraphPackage.Literals.ACTIVITY_NODE);
 
-      mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY);
+      mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY_NODE);
 
       mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK_NODE);
+      mappings.put(ModelTypes.EVENT, BpmngraphPackage.Literals.EVENT_NODE);
       mappings.put(ModelTypes.POOL, BpmngraphPackage.Literals.POOL);
       mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
       return mappings;
@@ -88,26 +89,34 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       nodeHints.add(new ShapeTypeHint(ModelTypes.SEND_TASK, true, true, true, true));
       nodeHints.add(new ShapeTypeHint(ModelTypes.SERVICE_TASK, true, true, true, true));
 
+      nodeHints.add(new ShapeTypeHint(ModelTypes.START_EVENT, true, true, false, true));
+      nodeHints.add(new ShapeTypeHint(ModelTypes.END_EVENT, true, true, false, true));
+
       ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
       catHint.setContainableElementTypeIds(
          Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SCRIPT_TASK));
       nodeHints.add(catHint);
 
-      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY));
-      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY));
-      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.PARALLEL_GATEWAY));
-      nodeHints.add(createDefaultShapeTypeHint(ModelTypes.COMPLEX_GATEWAY));
+      nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
+      nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));
+
+      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY));
+      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY));
+      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.PARALLEL_GATEWAY));
+      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.COMPLEX_GATEWAY));
       // nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
       // nodeHints.add(createDefaultShapeTypeHint(DECISION_NODE));
       // nodeHints.add(createDefaultShapeTypeHint(MERGE_NODE));
       return nodeHints;
    }
 
+   /**
+    * Set the default shape hints.
+    */
    @Override
    public ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {
-      // Override the default-default: for the Workflow example, we want all nodes
-      // to be reparentable
-      return new ShapeTypeHint(elementId, true, true, true, true);
+      // Override the default-default
+      return new ShapeTypeHint(elementId, true, true, false, true);
    }
 
    /**

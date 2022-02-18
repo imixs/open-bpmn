@@ -13,19 +13,19 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.elements.task;
+package org.imixs.bpmn.glsp.elements.event;
 
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
+import org.imixs.bpmn.bpmngraph.EventNode;
 import org.imixs.bpmn.bpmngraph.Icon;
-import org.imixs.bpmn.bpmngraph.TaskNode;
 import org.imixs.bpmn.glsp.elements.IconBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
-public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
+public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
@@ -34,50 +34,50 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
    private final String name;
    private final String nodeType;
 
-   public TaskNodeBuilder(final String type, final String name, final String nodeType) {
+   public EventNodeBuilder(final String type, final String name, final String eventType) {
       super(type);
       this.name = name;
-      this.nodeType = nodeType;
+      this.nodeType = eventType;
 
    }
 
    @Override
-   protected TaskNode instantiate() {
-      return BpmngraphFactory.eINSTANCE.createTaskNode();
+   protected EventNode instantiate() {
+      return BpmngraphFactory.eINSTANCE.createEventNode();
    }
 
    @Override
-   protected TaskNodeBuilder self() {
+   protected EventNodeBuilder self() {
       return this;
    }
 
    @Override
-   public void setProperties(final TaskNode node) {
+   public void setProperties(final EventNode node) {
       super.setProperties(node);
       node.setName(name);
       node.setNodeType(nodeType);
 
-      node.setLayout(GConstants.Layout.HBOX);
+      node.setLayout(GConstants.Layout.STACK);
       node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height
-      node.getLayoutOptions().put("minWidth", 160);
-      node.getLayoutOptions().put("minHeight", 60);
+      node.getLayoutOptions().put("minWidth", 40);
+      node.getLayoutOptions().put("minHeight", 40);
 
       node.getLayoutOptions().put(H_ALIGN, "center");
       node.getLayoutOptions().put(H_GRAB, false);
       node.getLayoutOptions().put(V_GRAB, false);
 
       node.getChildren().add(createCompartmentIcon(node));
-      node.getChildren().add(createCompartmentHeader(node));
+      // node.getChildren().add(createCompartmentHeader(node));
 
    }
 
-   private Icon createCompartmentIcon(final TaskNode taskNode) {
-      return new IconBuilder().id(taskNode.getId() + "_icon").build();
+   private Icon createCompartmentIcon(final EventNode node) {
+      return new IconBuilder().id(node.getId() + "_icon").build();
    }
 
-   private GLabel createCompartmentHeader(final TaskNode taskNode) {
+   private GLabel createCompartmentHeader(final EventNode taskNode) {
       return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
          .id(taskNode.getId() + "_classname") //
          .text(taskNode.getName()) //

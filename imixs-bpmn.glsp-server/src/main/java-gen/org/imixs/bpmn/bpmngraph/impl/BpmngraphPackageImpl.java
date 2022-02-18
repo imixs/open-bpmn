@@ -15,7 +15,8 @@ import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 import org.imixs.bpmn.bpmngraph.ActivityNode;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.bpmngraph.Gateway;
+import org.imixs.bpmn.bpmngraph.EventNode;
+import org.imixs.bpmn.bpmngraph.GatewayNode;
 import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.bpmngraph.Pool;
 import org.imixs.bpmn.bpmngraph.SequenceFlow;
@@ -47,14 +48,14 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass iconEClass = null;
+   private EClass gatewayNodeEClass = null;
 
    /**
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass sequenceFlowEClass = null;
+   private EClass eventNodeEClass = null;
 
    /**
     * <!-- begin-user-doc -->
@@ -68,7 +69,14 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   private EClass gatewayEClass = null;
+   private EClass iconEClass = null;
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   private EClass sequenceFlowEClass = null;
 
    /**
     * Creates an instance of the model <b>Package</b>, registered with
@@ -178,8 +186,53 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
-   public EAttribute getTaskNode_TaskType() {
-      return (EAttribute)taskNodeEClass.getEStructuralFeatures().get(1);
+   public EClass getGatewayNode() {
+      return gatewayNodeEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getGatewayNode_Name() {
+      return (EAttribute)gatewayNodeEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EClass getEventNode() {
+      return eventNodeEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getEventNode_Name() {
+      return (EAttribute)eventNodeEClass.getEStructuralFeatures().get(0);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EClass getPool() {
+      return poolEClass;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public EAttribute getPool_Name() {
+      return (EAttribute)poolEClass.getEStructuralFeatures().get(0);
    }
 
    /**
@@ -207,51 +260,6 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     */
    public EAttribute getSequenceFlow_Condition() {
       return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getPool() {
-      return poolEClass;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getPool_Name() {
-      return (EAttribute)poolEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getGateway() {
-      return gatewayEClass;
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getGateway_Name() {
-      return (EAttribute)gatewayEClass.getEStructuralFeatures().get(0);
-   }
-
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getGateway_GatewayType() {
-      return (EAttribute)gatewayEClass.getEStructuralFeatures().get(1);
    }
 
    /**
@@ -287,19 +295,20 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       taskNodeEClass = createEClass(TASK_NODE);
       createEAttribute(taskNodeEClass, TASK_NODE__NAME);
-      createEAttribute(taskNodeEClass, TASK_NODE__TASK_TYPE);
+
+      gatewayNodeEClass = createEClass(GATEWAY_NODE);
+      createEAttribute(gatewayNodeEClass, GATEWAY_NODE__NAME);
+
+      eventNodeEClass = createEClass(EVENT_NODE);
+      createEAttribute(eventNodeEClass, EVENT_NODE__NAME);
+
+      poolEClass = createEClass(POOL);
+      createEAttribute(poolEClass, POOL__NAME);
 
       iconEClass = createEClass(ICON);
 
       sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
       createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION);
-
-      poolEClass = createEClass(POOL);
-      createEAttribute(poolEClass, POOL__NAME);
-
-      gatewayEClass = createEClass(GATEWAY);
-      createEAttribute(gatewayEClass, GATEWAY__NAME);
-      createEAttribute(gatewayEClass, GATEWAY__GATEWAY_TYPE);
    }
 
    /**
@@ -335,10 +344,11 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
       // Add supertypes to classes
       activityNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
       taskNodeEClass.getESuperTypes().add(this.getActivityNode());
+      gatewayNodeEClass.getESuperTypes().add(this.getActivityNode());
+      eventNodeEClass.getESuperTypes().add(this.getActivityNode());
+      poolEClass.getESuperTypes().add(this.getActivityNode());
       iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
       sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
-      poolEClass.getESuperTypes().add(this.getActivityNode());
-      gatewayEClass.getESuperTypes().add(this.getActivityNode());
 
       // Initialize classes, features, and operations; add parameters
       initEClass(activityNodeEClass, ActivityNode.class, "ActivityNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -346,19 +356,20 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
 
       initEClass(taskNodeEClass, TaskNode.class, "TaskNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getTaskNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, TaskNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getTaskNode_TaskType(), ecorePackage.getEString(), "taskType", null, 0, 1, TaskNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(gatewayNodeEClass, GatewayNode.class, "GatewayNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getGatewayNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, GatewayNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(eventNodeEClass, EventNode.class, "EventNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getEventNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, EventNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+      initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+      initEAttribute(getPool_Name(), ecorePackage.getEString(), "name", null, 0, 1, Pool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
       initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getSequenceFlow_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-      initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getPool_Name(), ecorePackage.getEString(), "name", null, 0, 1, Pool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-      initEClass(gatewayEClass, Gateway.class, "Gateway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getGateway_Name(), ecorePackage.getEString(), "name", null, 0, 1, Gateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getGateway_GatewayType(), ecorePackage.getEString(), "gatewayType", null, 0, 1, Gateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

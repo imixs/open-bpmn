@@ -14,6 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+    CircularNodeView,
     configureDefaultModelElements,
     configureModelElement,
     ConsoleLogger,
@@ -40,10 +41,10 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
-import { ActivityNode, PoolNode, Icon, TaskNode, SequenceFlow } from './model';
-import { IconView, WorkflowEdgeView } from './bpmn-views';
+import { ActivityNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
+import { IconView, BPMNEdgeView } from './bpmn-views';
 
-const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
     bind(TYPES.ISnapper).to(GridSnapper);
@@ -58,12 +59,15 @@ const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
     configureModelElement(context, 'task:service', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'task:script', TaskNode, RoundedCornerNodeView);
 
+    configureModelElement(context, 'event:start', EventNode, CircularNodeView);
+    configureModelElement(context, 'event:end', EventNode, CircularNodeView);
+
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'label:icon', SLabel, SLabelView);
-    configureModelElement(context, DefaultTypes.EDGE, SEdge, WorkflowEdgeView);
-    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, WorkflowEdgeView);
+    configureModelElement(context, DefaultTypes.EDGE, SEdge, BPMNEdgeView);
+    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
 
     configureModelElement(context, 'gateway:exclusive', ActivityNode, DiamondNodeView);
@@ -76,7 +80,7 @@ const workflowDiagramModule = new ContainerModule((bind, unbind, isBound, rebind
 });
 
 export default function createContainer(widgetId: string): Container {
-    const container = createClientContainer(workflowDiagramModule, directTaskEditor);
+    const container = createClientContainer(bpmnDiagramModule, directTaskEditor);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
         hiddenDiv: widgetId + '_hidden'

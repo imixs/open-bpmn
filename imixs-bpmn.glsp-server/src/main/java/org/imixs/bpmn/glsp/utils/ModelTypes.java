@@ -26,16 +26,16 @@ public final class ModelTypes {
    public static final String ICON = "icon";
    public static final String ACTIVITY_NODE = "activityNode";
 
-   // public static final String DECISION_NODE = ACTIVITY_NODE + ":decision";
-   // public static final String MERGE_NODE = ACTIVITY_NODE + ":merge";
-   // public static final String FORK_NODE = ACTIVITY_NODE + ":fork";
-   // public static final String JOIN_NODE = ACTIVITY_NODE + ":join";
    public static final String TASK = "task";
    public static final String MANUAL_TASK = TASK + ":manual";
    public static final String USER_TASK = TASK + ":user";
    public static final String SEND_TASK = TASK + ":send";
    public static final String SERVICE_TASK = TASK + ":service";
    public static final String SCRIPT_TASK = TASK + ":script";
+
+   public static final String EVENT = "event";
+   public static final String START_EVENT = EVENT + ":start";
+   public static final String END_EVENT = EVENT + ":end";
 
    public static final String GATEWAY = "gateway";
    public static final String EXCLUSIVE_GATEWAY = GATEWAY + ":exclusive";
@@ -58,6 +58,11 @@ public final class ModelTypes {
             return "send";
          case SCRIPT_TASK:
             return "script";
+
+         case START_EVENT:
+            return "start";
+         case END_EVENT:
+            return "end";
 
          case EXCLUSIVE_GATEWAY:
             return "exclusive";

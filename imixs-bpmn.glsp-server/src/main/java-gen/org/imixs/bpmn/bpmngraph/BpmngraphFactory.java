@@ -40,6 +40,33 @@ public interface BpmngraphFactory extends EFactory {
    TaskNode createTaskNode();
 
    /**
+    * Returns a new object of class '<em>Gateway Node</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>Gateway Node</em>'.
+    * @generated
+    */
+   GatewayNode createGatewayNode();
+
+   /**
+    * Returns a new object of class '<em>Event Node</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>Event Node</em>'.
+    * @generated
+    */
+   EventNode createEventNode();
+
+   /**
+    * Returns a new object of class '<em>Pool</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>Pool</em>'.
+    * @generated
+    */
+   Pool createPool();
+
+   /**
     * Returns a new object of class '<em>Icon</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -56,24 +83,6 @@ public interface BpmngraphFactory extends EFactory {
     * @generated
     */
    SequenceFlow createSequenceFlow();
-
-   /**
-    * Returns a new object of class '<em>Pool</em>'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return a new object of class '<em>Pool</em>'.
-    * @generated
-    */
-   Pool createPool();
-
-   /**
-    * Returns a new object of class '<em>Gateway</em>'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return a new object of class '<em>Gateway</em>'.
-    * @generated
-    */
-   Gateway createGateway();
 
    /**
     * Returns the package supported by this factory.

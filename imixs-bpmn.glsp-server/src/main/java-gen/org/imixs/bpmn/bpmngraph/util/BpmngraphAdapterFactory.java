@@ -86,20 +86,24 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
             return createTaskNodeAdapter();
          }
          @Override
-         public Adapter caseIcon(Icon object) {
-            return createIconAdapter();
+         public Adapter caseGatewayNode(GatewayNode object) {
+            return createGatewayNodeAdapter();
          }
          @Override
-         public Adapter caseSequenceFlow(SequenceFlow object) {
-            return createSequenceFlowAdapter();
+         public Adapter caseEventNode(EventNode object) {
+            return createEventNodeAdapter();
          }
          @Override
          public Adapter casePool(Pool object) {
             return createPoolAdapter();
          }
          @Override
-         public Adapter caseGateway(Gateway object) {
-            return createGatewayAdapter();
+         public Adapter caseIcon(Icon object) {
+            return createIconAdapter();
+         }
+         @Override
+         public Adapter caseSequenceFlow(SequenceFlow object) {
+            return createSequenceFlowAdapter();
          }
          @Override
          public Adapter caseGArgumentable(GArgumentable object) {
@@ -186,6 +190,48 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
    }
 
    /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.GatewayNode <em>Gateway Node</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.GatewayNode
+    * @generated
+    */
+   public Adapter createGatewayNodeAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.EventNode <em>Event Node</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.EventNode
+    * @generated
+    */
+   public Adapter createEventNodeAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.Pool
+    * @generated
+    */
+   public Adapter createPoolAdapter() {
+      return null;
+   }
+
+   /**
     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Icon <em>Icon</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
@@ -210,34 +256,6 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
     * @generated
     */
    public Adapter createSequenceFlowAdapter() {
-      return null;
-   }
-
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.Pool
-    * @generated
-    */
-   public Adapter createPoolAdapter() {
-      return null;
-   }
-
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Gateway <em>Gateway</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.Gateway
-    * @generated
-    */
-   public Adapter createGatewayAdapter() {
       return null;
    }
 
