@@ -68,6 +68,15 @@
 }
 
 
+.event.start > .sprotty-node {
+	fill: #78ea89;
+}
+
+.event.end > .sprotty-node {
+	fill: #e26c6e;
+}
+
+
 .pool > .sprotty-node {
     fill: #3a4654;
 }

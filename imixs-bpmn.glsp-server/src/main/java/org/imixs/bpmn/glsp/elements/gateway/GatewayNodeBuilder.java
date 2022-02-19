@@ -16,6 +16,7 @@
 package org.imixs.bpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
+import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.GatewayNode;
 import org.imixs.bpmn.bpmngraph.Icon;
@@ -28,6 +29,10 @@ import org.imixs.bpmn.glsp.elements.IconBuilder;
  *
  */
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
+   private static final String V_GRAB = "vGrab";
+   private static final String H_GRAB = "hGrab";
+   private static final String H_ALIGN = "hAlign";
+
    private final String name;
    private final String nodeType;
 
@@ -43,19 +48,30 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
       return BpmngraphFactory.eINSTANCE.createGatewayNode();
    }
 
+   @Override
+   protected GatewayNodeBuilder self() {
+      return this;
+   }
+
    /**
     * Define layout properties
     */
    @Override
    protected void setProperties(final GatewayNode node) {
       super.setProperties(node);
-
       node.setName(name);
       node.setNodeType(nodeType);
+
+      node.setLayout(GConstants.Layout.STACK);
+      node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height
       node.getLayoutOptions().put("minWidth", 40);
       node.getLayoutOptions().put("minHeight", 40);
+
+      node.getLayoutOptions().put(H_ALIGN, "center");
+      node.getLayoutOptions().put(H_GRAB, false);
+      node.getLayoutOptions().put(V_GRAB, false);
 
       node.getChildren().add(createCompartmentIcon(node));
 
@@ -65,8 +81,4 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
       return new IconBuilder().id(gatewayNode.getId() + "_icon").build();
    }
 
-   @Override
-   protected GatewayNodeBuilder self() {
-      return this;
-   }
 }
