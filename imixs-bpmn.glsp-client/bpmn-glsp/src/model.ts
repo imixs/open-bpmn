@@ -69,8 +69,6 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
     }
 }
 
-
-
 export class EventNode extends RectangularNode implements Nameable, WithEditableLabel {
     static readonly DEFAULT_FEATURES = [
         connectableFeature,
@@ -101,33 +99,40 @@ export class EventNode extends RectangularNode implements Nameable, WithEditable
     }
 }
 
-
-
+/*
+ * Helper Methods to determind if a ModelElemtn is of a specific type
+ * The methods return the corresponding node
+ */
 export function isTaskNode(element: SModelElement): element is TaskNode {
     return element instanceof TaskNode || false;
+}
+
+export function isEventNode(element: SModelElement): element is EventNode {
+    return element instanceof EventNode || false;
+}
+
+export function isGatewayNode(element: SModelElement): element is GatewayNode {
+    return element instanceof GatewayNode || false;
 }
 
 export class SequenceFlow extends SEdge {
     condition?: string;
 }
 
-export class ActivityNode extends DiamondNode {
-    nodeType: string = ActivityNode.Type.UNDEFINED;
+export class GatewayNode extends DiamondNode {
+    nodeType: string = GatewayNode.Type.UNDEFINED;
     size = {
-        width: 32,
-        height: 32
+        width: 122,
+        height: 62
     };
     strokeWidth = 1;
 }
 
-export namespace ActivityNode {
+export namespace GatewayNode {
     export namespace Type {
-        export const INITIAL = 'initalNode';
-        export const FINAL = 'finalNode';
-        export const DECISION = 'decisionNode';
-        export const MERGE = 'mergeNode';
-        export const JOIN = 'joinNode';
-        export const FORK = 'forkNode';
+        export const EXLUSIVE = 'exclusiveNode';
+        export const INCLUSIVE = 'inclusiveNode';
+        export const PARALLEL = 'parallelNode';
         export const UNDEFINED = 'undefined';
     }
 }
@@ -142,8 +147,6 @@ export class Icon extends SShapeElement implements LayoutContainer {
         height: 32
     };
 }
-
-
 
 export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
     static readonly DEFAULT_FEATURES = [
@@ -169,5 +172,4 @@ export class PoolNode extends RectangularNode implements Nameable, WithEditableL
         return undefined;
     }
 }
-
 

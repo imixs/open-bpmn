@@ -41,7 +41,7 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
-import { ActivityNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
+import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
 import { IconView, BPMNEdgeView } from './bpmn-views';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -70,10 +70,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
 
-    configureModelElement(context, 'gateway:exclusive', ActivityNode, DiamondNodeView);
-    configureModelElement(context, 'gateway:inclusive', ActivityNode, DiamondNodeView);
-    configureModelElement(context, 'gateway:parallel', ActivityNode, DiamondNodeView);
-    configureModelElement(context, 'gateway:complex', ActivityNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:exclusive', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:inclusive', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:parallel', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:complex', GatewayNode, DiamondNodeView);
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);

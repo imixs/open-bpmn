@@ -66,8 +66,8 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
       node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height
-      node.getLayoutOptions().put("minWidth", 40);
-      node.getLayoutOptions().put("minHeight", 40);
+      // node.getLayoutOptions().put("minWidth", 40);
+      // node.getLayoutOptions().put("minHeight", 40);
 
       node.getLayoutOptions().put(H_ALIGN, "center");
       node.getLayoutOptions().put(H_GRAB, false);
