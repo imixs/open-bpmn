@@ -53,6 +53,10 @@
     fill: #f0f3f8;
 }
 
+.sprotty-resize-handle.selected {
+    fill: #47699B;
+}
+
 .icon path {
     stroke-width: 0;
     fill: #f0f3f8;
@@ -64,22 +68,30 @@
 
 
 .task > .sprotty-node {
-    fill: #6f89ad;
+    fill: #425C81;
 }
 
+.gateway > .sprotty-node {
+    fill: #C39D5C;
+}
 
+.gateway .icon path  {
+    fill: #000;
+}
 .event.start > .sprotty-node {
-	fill: #78ea89;
+	fill: #57A14C;
 }
 
 .event.end > .sprotty-node {
-	fill: #e26c6e;
+	fill: #BE5961;
 }
 
 
 .pool > .sprotty-node {
-    fill: #3a4654;
+    fill: #34466199;
 }
+
+
 
 .sprotty-edge.xxsequenceflow.low:not(.selected),
 .sprotty-edge.sxxequenceflow.low:not(.selected) .arrow {

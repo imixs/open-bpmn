@@ -14,7 +14,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    CircularNodeView,
     configureDefaultModelElements,
     configureModelElement,
     ConsoleLogger,
@@ -42,7 +41,7 @@ import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
 import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
-import { IconView, BPMNEdgeView } from './bpmn-views';
+import { IconView, BPMNEdgeView, ExclusiveGatewayView, EventNodeView } from './bpmn-views';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
@@ -59,8 +58,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'task:service', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'task:script', TaskNode, RoundedCornerNodeView);
 
-    configureModelElement(context, 'event:start', EventNode, CircularNodeView);
-    configureModelElement(context, 'event:end', EventNode, CircularNodeView);
+    configureModelElement(context, 'event:start', EventNode, EventNodeView);
+    configureModelElement(context, 'event:end', EventNode, EventNodeView);
 
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
@@ -70,7 +69,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
 
-    configureModelElement(context, 'gateway:exclusive', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:exclusive', GatewayNode, ExclusiveGatewayView);
     configureModelElement(context, 'gateway:inclusive', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'gateway:parallel', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'gateway:complex', GatewayNode, DiamondNodeView);

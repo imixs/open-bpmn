@@ -57,7 +57,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       node.setName(name);
       node.setNodeType(nodeType);
 
-      node.setLayout(GConstants.Layout.STACK);
+      node.setLayout(GConstants.Layout.VBOX);
       node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height
@@ -69,7 +69,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       node.getLayoutOptions().put(V_GRAB, false);
 
       node.getChildren().add(createCompartmentIcon(node));
-      // node.getChildren().add(createCompartmentHeader(node));
+      node.getChildren().add(createCompartmentHeader(node));
 
    }
 
@@ -78,9 +78,10 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
    }
 
    private GLabel createCompartmentHeader(final EventNode taskNode) {
+
       return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
          .id(taskNode.getId() + "_classname") //
-         .text(taskNode.getName()) //
+         .text(taskNode.getName())
          .build();
    }
 

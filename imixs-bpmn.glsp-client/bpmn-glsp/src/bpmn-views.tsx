@@ -26,7 +26,7 @@ import {
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
-import { Icon, isTaskNode, isEventNode, isGatewayNode } from './model';
+import { Icon, EventNode, isTaskNode, isEventNode, isGatewayNode } from './model';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -161,5 +161,73 @@ export class IconView extends ShapeView {
 		return vnode;
 	}
 }
+
+
+
+
+
+/**
+ * This hould be a exclusive gateway...
+ */
+@injectable()
+export class ExclusiveGatewayView extends ShapeView {
+	render(element: Icon, context: RenderingContext): VNode | undefined {
+
+		if (!this.isVisible(element, context)) {
+			return undefined;
+		}
+
+
+		const vnode = (
+			<g>
+				<g transform={'matrix(-0.69 0.69 0.69 0.69 70.84 69.57)'}>
+					<path d={'M -50 -50 L 50 -50 L 50 50 L -50 50 z'} />
+				</g>
+				<g transform={'matrix(1.02 0 0 1 70 70)'}>
+					<path transform={'translate(-40, -40)'}
+						d={'M 80 52.5 L 52.5 52.5 L 52.5 80 L 27.5 80 L 27.5 52.5 L 0 52.5 L 0 27.5 L 27.5 27.5 L 27.5 0 L 52.5 0 L 52.5 27.5 L 80 27.5 L 80 52.5 z'} />
+				</g>
+
+			</g>
+		);
+
+		const subType = getSubType(element);
+		if (subType) {
+			setAttr(vnode, 'class', subType);
+		}
+		return vnode;
+	}
+}
+
+
+
+
+@injectable()
+export class EventNodeView extends ShapeView {
+	render(element: EventNode, context: RenderingContext): VNode | undefined {
+		if (!this.isVisible(element, context)) {
+			return undefined;
+		}
+		const vnode = (
+			<g transform={'scale(1) translate(74,52)'}>
+					<circle r="23.5" cx="23.5" cy="23.5" class-sprotty-node={true}></circle>
+					<text transform={'translate(15,52) translate(-40, 13)'} class-heading={true} class-sprotty-label={true}>{element.name}</text>
+			</g>
+		);
+		const subType = getSubType(element);
+		if (subType) {
+			setAttr(vnode, 'class', subType);
+		}
+		return vnode;
+	}
+}
+
+
+
+
+
+
+
+
 
 

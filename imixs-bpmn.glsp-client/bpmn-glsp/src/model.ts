@@ -16,6 +16,7 @@
 import {
     boundsFeature,
     connectableFeature,
+    CircularNode,
     deletableFeature,
     DiamondNode,
     EditableLabel,
@@ -69,7 +70,8 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
     }
 }
 
-export class EventNode extends RectangularNode implements Nameable, WithEditableLabel {
+/* CircularNode RectangularNode */
+export class EventNode extends CircularNode implements Nameable, WithEditableLabel {
     static readonly DEFAULT_FEATURES = [
         connectableFeature,
         deletableFeature,

@@ -38,6 +38,11 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
+   public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
+      ModelTypes.SEND_TASK,
+      ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.END_EVENT,
+      ModelTypes.START_EVENT, ModelTypes.EXCLUSIVE_GATEWAY);
+
    /**
     * Returns the type mappings for the diagram implementation. Type mappings are used by GSON to construct the correct
     * {@link EClass} based on the "type" property of the JSON object.
@@ -93,20 +98,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       nodeHints.add(new ShapeTypeHint(ModelTypes.END_EVENT, true, true, false, true));
 
       ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
-      catHint.setContainableElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SCRIPT_TASK));
+      catHint.setContainableElementTypeIds(ALL_BPMN_ACTIVITIES);
       nodeHints.add(catHint);
 
       nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
       nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));
 
-      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY));
-      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY));
-      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.PARALLEL_GATEWAY));
-      // nodeHints.add(createDefaultShapeTypeHint(ModelTypes.COMPLEX_GATEWAY));
-      // nodeHints.add(createDefaultShapeTypeHint(JOIN_NODE));
-      // nodeHints.add(createDefaultShapeTypeHint(DECISION_NODE));
-      // nodeHints.add(createDefaultShapeTypeHint(MERGE_NODE));
       return nodeHints;
    }
 
@@ -130,12 +127,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       List<EdgeTypeHint> edgeHints = new ArrayList<>();
       edgeHints.add(createDefaultEdgeTypeHint(EDGE));
       EdgeTypeHint sequenceFlowHint = super.createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
-      sequenceFlowHint.setSourceElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.EXCLUSIVE_GATEWAY));
-      sequenceFlowHint.setTargetElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.EXCLUSIVE_GATEWAY));
+
+      // allow all elements
+      sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
+      sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
       edgeHints.add(sequenceFlowHint);
       return edgeHints;
    }
@@ -143,16 +138,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
       EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
-      // hint.setSourceElementTypeIds(
-      // Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
-      // hint.setTargetElementTypeIds(
-      // Arrays.asList(MANUAL_TASK, AUTOMATED_TASK, DECISION_NODE, MERGE_NODE, FORK_NODE, JOIN_NODE, CATEGORY));
-      hint.setSourceElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.POOL, ModelTypes.EXCLUSIVE_GATEWAY));
-      hint.setTargetElementTypeIds(
-         Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.POOL, ModelTypes.EXCLUSIVE_GATEWAY));
+
+      // allow all
+      hint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
+      hint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
       return hint;
    }
 
