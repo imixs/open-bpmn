@@ -15,12 +15,15 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.elements.gateway;
 
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.GatewayNode;
 import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.glsp.elements.IconBuilder;
+import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 /**
  * The GatewayNodeBuilder defines the layout of BPMN gateways
@@ -62,23 +65,32 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
       node.setName(name);
       node.setNodeType(nodeType);
 
-      node.setLayout(GConstants.Layout.STACK);
+      node.setLayout(GConstants.Layout.VBOX);
       node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height
-      // node.getLayoutOptions().put("minWidth", 40);
-      // node.getLayoutOptions().put("minHeight", 40);
+      node.getLayoutOptions().put("minWidth", 40);
+      node.getLayoutOptions().put("minHeight", 40);
 
       node.getLayoutOptions().put(H_ALIGN, "center");
       node.getLayoutOptions().put(H_GRAB, false);
       node.getLayoutOptions().put(V_GRAB, false);
 
       node.getChildren().add(createCompartmentIcon(node));
+      node.getChildren().add(createCompartmentHeader(node));
 
    }
 
-   private Icon createCompartmentIcon(final GatewayNode gatewayNode) {
-      return new IconBuilder().id(gatewayNode.getId() + "_icon").build();
+   private Icon createCompartmentIcon(final GatewayNode node) {
+      return new IconBuilder().id(node.getId() + "_icon").build();
+   }
+
+   private GLabel createCompartmentHeader(final GatewayNode taskNode) {
+
+      return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+         .id(taskNode.getId() + "_classname") //
+         .text(taskNode.getName())
+         .build();
    }
 
 }

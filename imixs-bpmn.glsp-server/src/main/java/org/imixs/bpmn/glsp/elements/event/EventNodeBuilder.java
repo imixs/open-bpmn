@@ -60,6 +60,8 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       node.setLayout(GConstants.Layout.VBOX);
       node.getLayoutOptions().put("paddingRight", 10);
 
+      // node.getLayoutOptions().put("paddingBottom", 40);
+
       // Set min width/height
       node.getLayoutOptions().put("minWidth", 40);
       node.getLayoutOptions().put("minHeight", 40);

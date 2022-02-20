@@ -183,11 +183,9 @@ export class ExclusiveGatewayView extends ShapeView {
 				<g transform={'matrix(-0.69 0.69 0.69 0.69 70.84 69.57)'}>
 					<path d={'M -50 -50 L 50 -50 L 50 50 L -50 50 z'} />
 				</g>
-				<g transform={'matrix(1.02 0 0 1 70 70)'}>
-					<path transform={'translate(-40, -40)'}
-						d={'M 80 52.5 L 52.5 52.5 L 52.5 80 L 27.5 80 L 27.5 52.5 L 0 52.5 L 0 27.5 L 27.5 27.5 L 27.5 0 L 52.5 0 L 52.5 27.5 L 80 27.5 L 80 52.5 z'} />
+				<g transform={'translate(4,130)'}>
+					{context.renderChildren(element)}
 				</g>
-
 			</g>
 		);
 
@@ -208,10 +206,15 @@ export class EventNodeView extends ShapeView {
 		if (!this.isVisible(element, context)) {
 			return undefined;
 		}
+
+
 		const vnode = (
 			<g transform={'scale(1) translate(74,52)'}>
-					<circle r="23.5" cx="23.5" cy="23.5" class-sprotty-node={true}></circle>
-					<text transform={'translate(15,52) translate(-40, 13)'} class-heading={true} class-sprotty-label={true}>{element.name}</text>
+				<circle r="23.5" cx="23.5" cy="23.5" class-sprotty-node={true}></circle>
+				<text transform={'translate(15,52) translate(-40, 13)'} class-heading={true} class-sprotty-label={true}>{element.name}</text>
+				<g transform={'translate(4,30)'}>
+					{context.renderChildren(element)}
+				</g>
 			</g>
 		);
 		const subType = getSubType(element);

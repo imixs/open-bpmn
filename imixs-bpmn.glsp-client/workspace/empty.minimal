@@ -2,43 +2,62 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "name": "ExclusiveGateway0",
-      "nodeType": "exclusive",
-      "id": "eef23b71-9eeb-448f-9f04-54e2cca45131",
+      "name": "StartEvent0",
+      "nodeType": "start",
+      "id": "0e39032c-48d3-4861-8224-54a2536c3200",
       "cssClasses": [
-        "gateway",
-        "exclusive"
+        "event",
+        "start"
       ],
       "children": [
         {
-          "id": "eef23b71-9eeb-448f-9f04-54e2cca45131_icon",
+          "id": "0e39032c-48d3-4861-8224-54a2536c3200_icon",
           "type": "icon",
           "position": {
-            "x": 5.0,
+            "x": 66.4296875,
             "y": 5.0
           },
           "size": {
-            "width": 32.0,
-            "height": 32.0
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "0e39032c-48d3-4861-8224-54a2536c3200_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 5.0,
+            "y": 26.0
+          },
+          "size": {
+            "width": 147.859375,
+            "height": 16.0
+          },
+          "text": "StartEvent0 sgs gsdfg s",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
           }
         }
       ],
-      "type": "gateway:exclusive",
+      "type": "event:start",
       "position": {
-        "x": 110.0,
-        "y": 110.0
+        "x": 140.0,
+        "y": 20.0
       },
       "size": {
-        "width": 47.0,
-        "height": 42.0
+        "width": 162.859375,
+        "height": 47.0
       },
-      "layout": "stack",
+      "layout": "vbox",
       "layoutOptions": {
         "vGrab": false,
-        "paddingRight": 10,
-        "prefWidth": 47.0,
+        "prefWidth": 162.859375,
+        "minWidth": 40,
         "hGrab": false,
-        "prefHeight": 42.0,
+        "minHeight": 40,
+        "prefHeight": 47.0,
+        "paddingRight": 10,
         "hAlign": "center"
       },
       "args": {
@@ -50,5 +69,5 @@
     }
   ],
   "type": "graph",
-  "revision": 14
+  "revision": 9
 }

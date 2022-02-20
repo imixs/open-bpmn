@@ -41,6 +41,16 @@ public abstract class CreateEventHandler extends CreateBPMNNodeOperationHandler 
 
    protected String getElementTypeId() { return elementTypeId; }
 
+   /**
+    * Create and return the new GatewayNode at the specified (optional) location. The location
+    * is given in coordinates relative to the {@link CreateNodeOperationHandler#getContainer(CreateNodeOperation)}
+    * container.
+    *
+    * @param relativeLocation
+    * @param args
+    * @return
+    *         The created {@link GNode Node}.
+    */
    @Override
    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
       return builder(point, modelState).build();

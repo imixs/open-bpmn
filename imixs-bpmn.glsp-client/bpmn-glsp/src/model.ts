@@ -121,13 +121,34 @@ export class SequenceFlow extends SEdge {
     condition?: string;
 }
 
-export class GatewayNode extends DiamondNode {
-    nodeType: string = GatewayNode.Type.UNDEFINED;
-    size = {
-        width: 122,
-        height: 62
-    };
-    strokeWidth = 1;
+export class GatewayNode extends DiamondNode implements Nameable, WithEditableLabel {
+	static readonly DEFAULT_FEATURES = [
+        connectableFeature,
+        deletableFeature,
+        selectFeature,
+        boundsFeature,
+        moveFeature,
+        layoutContainerFeature,
+        fadeFeature,
+        hoverFeedbackFeature,
+        popupFeature,
+        nameFeature,
+        withEditLabelFeature
+    ];
+    eventType?: string;
+
+    get editableLabel(): (SChildElement & EditableLabel) | undefined {
+        const label = this.children.find(element => element.type === 'label:heading');
+        if (label && isEditableLabel(label)) {
+            return label;
+        }
+        return undefined;
+    }
+
+    get name(): string {
+        const labelText = this.editableLabel?.text;
+        return labelText ? labelText : '<unknown>';
+    }
 }
 
 export namespace GatewayNode {
