@@ -58,19 +58,19 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       node.setNodeType(nodeType);
 
       node.setLayout(GConstants.Layout.VBOX);
-      node.getLayoutOptions().put("paddingRight", 10);
+      // node.getLayoutOptions().put("paddingRight", 10);
 
       // node.getLayoutOptions().put("paddingBottom", 40);
 
       // Set min width/height
-      node.getLayoutOptions().put("minWidth", 40);
-      node.getLayoutOptions().put("minHeight", 40);
+      // node.getLayoutOptions().put("minWidth", 40);
+      // node.getLayoutOptions().put("minHeight", 40);
 
       node.getLayoutOptions().put(H_ALIGN, "center");
-      node.getLayoutOptions().put(H_GRAB, false);
-      node.getLayoutOptions().put(V_GRAB, false);
+      node.getLayoutOptions().put(H_GRAB, true);
+      node.getLayoutOptions().put(V_GRAB, true);
 
-      node.getChildren().add(createCompartmentIcon(node));
+      // node.getChildren().add(createCompartmentIcon(node));
       node.getChildren().add(createCompartmentHeader(node));
 
    }
