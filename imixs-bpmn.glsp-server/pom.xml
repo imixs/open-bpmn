@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.imixs.bpmn</groupId>
 		<artifactId>org.imixs.bpmn.glsp</artifactId>
-		<version>0.0.4-SNAPSHOT</version>
+		<version>0.0.5-SNAPSHOT</version>
 	</parent>
 	<artifactId>org.imixs.bpmn.glsp.server</artifactId>
 	<name>Imixs BPMN GLSP Server</name>
