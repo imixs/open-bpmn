@@ -4,11 +4,13 @@ GLSP provides different ways to provide command actions in the modeling pane to 
 
 ## The ToolPaletteItemProvider
 
-THe ToolPalette is a graphical elements shown all nodes and edges the user could place into a model. If you do not specify a custom Tool PaletteItemProvider, GLSP will automatically create a default item palette for you listing all your nodes and edges defined in your server model.
+The ToolPalette is a graphical element shown all nodes and edges the user could place into a model. If you do not specify a custom Tool PaletteItemProvider, GLSP will automatically create a default Tool Palette for you, listing all your nodes and edges defined in your server model.
 
 <img src="ToolPaletteItemProvider-01.png" />
 
-The items will be sorted in alphanumeric order.  Of course you can define your own ToolPaletteItemProvider, for example to group your different CreationActions in  a custom order. To do so you need to implement a `ToolPaletteItemProvider`. 
+The items will be sorted in alphanumeric order and grouped by 'Nodes' and 'Edges'.  Of course you can define your own ToolPaletteItemProvider, for example to group your different CreationActions in  a custom order. To do so you need to implement a `ToolPaletteItemProvider` and overwrite at least the method `getItems`. 
+
+The following example shows how to implement a custom ToolPaletteItemProvider:
 
 ```java
 public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
@@ -96,9 +98,9 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 }
 ```
 	
-In this example we create three palette groups 'Tasks', 'Events' and 'Edges'. The implementation first adds the custom palette groups 'Tasks' and 'Events' and than creates a default Group with all Edges defined by the server model.
+In this example we create three palette groups '*Tasks*', '*Events*' and '*Edges*'. The implementation first adds the custom palette groups '*Tasks*' and '*Events*' which define a custom order of actions. Than the example creates a default Group with all Edges defined by the server model in a generic way.
  
-The method `PaletteItem.createPaletteGroup` expects a an unique ID, a label and the list of PaletteItem elements shown in this group. You can also provide a sorting hint for each group.
+The method `PaletteItem.createPaletteGroup` expects a an unique ID, a label and the list of PaletteItem elements shown in this group. You can also provide a sorting hint for each group. For more information see also the implementation of [DefaultToolPaletteItemProvider](https://github.com/eclipse-glsp/glsp-server/blob/master/plugins/org.eclipse.glsp.server/src/org/eclipse/glsp/server/internal/toolpalette/DefaultToolPaletteItemProvider.java). 
 
 
 
