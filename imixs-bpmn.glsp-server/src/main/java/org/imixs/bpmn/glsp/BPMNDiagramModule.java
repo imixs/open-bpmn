@@ -24,6 +24,7 @@ import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
+import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
@@ -39,6 +40,7 @@ import org.imixs.bpmn.glsp.elements.task.CreateSendTaskHandler;
 import org.imixs.bpmn.glsp.elements.task.CreateServiceTaskHandler;
 import org.imixs.bpmn.glsp.elements.task.CreateUserTaskHandler;
 import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
+import org.imixs.bpmn.glsp.provider.BPMNToolPaletteItemProvider;
 
 /**
  * The DiagramModule contains the bindings in dedicated methods. Imixs BPMN extends this module and customize it by
@@ -100,11 +102,16 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
    }
 
    /**
-    * Add Palette options by providing the BPMN PaletteActionProvider
+    * Add Create actions to the palette that opens up on Ctrl+Space
     */
    @Override
    protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
       return BPMNCommandPaletteActionProvider.class;
+   }
+
+   @Override
+   protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
+      return BPMNToolPaletteItemProvider.class;
    }
 
    @Override
