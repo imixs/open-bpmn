@@ -21,7 +21,6 @@ import {
     DeleteElementContextMenuItemProvider,
     editLabelFeature,
     GridSnapper,
-    DiamondNodeView,
     LogLevel,
     overrideViewerOptions,
     RevealNamedElementActionProvider,
@@ -41,7 +40,7 @@ import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
 import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
-import { IconView, BPMNEdgeView, ExclusiveGatewayView, EventNodeView } from './bpmn-views';
+import { IconView, BPMNEdgeView, GatewayNodeView, EventNodeView } from './bpmn-views';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
@@ -69,10 +68,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
 
-    configureModelElement(context, 'gateway:exclusive', GatewayNode, ExclusiveGatewayView);
-    configureModelElement(context, 'gateway:inclusive', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'gateway:parallel', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'gateway:complex', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'gateway:inclusive', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'gateway:parallel', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'gateway:complex', GatewayNode, GatewayNodeView);
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);

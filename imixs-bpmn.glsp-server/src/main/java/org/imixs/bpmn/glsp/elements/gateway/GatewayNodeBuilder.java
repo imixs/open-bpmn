@@ -21,8 +21,6 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.GatewayNode;
-import org.imixs.bpmn.bpmngraph.Icon;
-import org.imixs.bpmn.glsp.elements.IconBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 /**
@@ -66,23 +64,12 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
       node.setNodeType(nodeType);
 
       node.setLayout(GConstants.Layout.VBOX);
-      node.getLayoutOptions().put("paddingRight", 10);
-
-      // Set min width/height
-      node.getLayoutOptions().put("minWidth", 40);
-      node.getLayoutOptions().put("minHeight", 40);
-
-      node.getLayoutOptions().put(H_ALIGN, "center");
+      node.getLayoutOptions().put("vAlign", "center");
       node.getLayoutOptions().put(H_GRAB, false);
       node.getLayoutOptions().put(V_GRAB, false);
 
-      node.getChildren().add(createCompartmentIcon(node));
       node.getChildren().add(createCompartmentHeader(node));
 
-   }
-
-   private Icon createCompartmentIcon(final GatewayNode node) {
-      return new IconBuilder().id(node.getId() + "_icon").build();
    }
 
    private GLabel createCompartmentHeader(final GatewayNode taskNode) {

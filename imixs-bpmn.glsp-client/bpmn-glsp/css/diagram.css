@@ -71,20 +71,30 @@
     fill: #425C81;
 }
 
-.gateway > .sprotty-node {
-    fill: #C39D5C;
+
+.sprotty-node.event > text.heading {
+	text-anchor:middle; 
 }
 
-.gateway .icon path  {
-    fill: #000;
-}
-.event.start > .sprotty-node {
+.sprotty-node.event.start > circle {
 	fill: #57A14C;
 }
 
-.event.end > .sprotty-node {
+.sprotty-node.event.end > circle {
 	fill: #BE5961;
 }
+
+
+
+.sprotty-node.gateway > text.heading {
+	text-anchor:middle; 
+}
+.sprotty-node.gateway > rect {
+    fill: #C39D5C;
+}
+
+
+
 
 
 .pool > .sprotty-node {

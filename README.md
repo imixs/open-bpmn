@@ -22,6 +22,20 @@ The Application can be started from a Web Browser
 <img src="./doc/imixs-bpmn-001.png" />
 
 
+## Locally build backend/frontend
+
+If you want only build the backend (and not the front-end), run:
+
+	$ ./build.sh -b
+
+If you just want to build the frontend, run:
+
+	$ ./build.sh -f
+
+With the option `-ff` you can force a full rebuild of the client components. This option will remove the yarn.lock file. 
+
+	$ ./build.sh -ff
+
 # BPMN 2.0
 
 The following section gives a short overview of the BPMN specification. Imixs BPMN is based on version 2.0.2. You can find the full specification [here](https://www.omg.org/spec/BPMN/2.0.2/PDF).

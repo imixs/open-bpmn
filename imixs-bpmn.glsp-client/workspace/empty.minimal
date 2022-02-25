@@ -2,62 +2,47 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "name": "StartEvent0",
-      "nodeType": "start",
-      "id": "0e39032c-48d3-4861-8224-54a2536c3200",
+      "name": "EndEvent1",
+      "nodeType": "end",
+      "id": "4793a0dc-4fa9-4a1a-9c1b-ed6dd1a8a287",
       "cssClasses": [
         "event",
-        "start"
+        "end"
       ],
       "children": [
         {
-          "id": "0e39032c-48d3-4861-8224-54a2536c3200_icon",
-          "type": "icon",
-          "position": {
-            "x": 66.4296875,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "0e39032c-48d3-4861-8224-54a2536c3200_classname",
+          "id": "4793a0dc-4fa9-4a1a-9c1b-ed6dd1a8a287_classname",
           "type": "label:heading",
           "position": {
             "x": 5.0,
-            "y": 26.0
+            "y": 5.0
           },
           "size": {
-            "width": 147.859375,
+            "width": 68.71875,
             "height": 16.0
           },
-          "text": "StartEvent0 sgs gsdfg s",
+          "text": "EndEvent1",
           "alignment": {
-            "x": 0.0,
+            "x": 34.25,
             "y": 13.0
           }
         }
       ],
-      "type": "event:start",
+      "type": "event:end",
       "position": {
-        "x": 140.0,
-        "y": 20.0
+        "x": 220.0,
+        "y": 40.0
       },
       "size": {
-        "width": 162.859375,
-        "height": 47.0
+        "width": 78.71875,
+        "height": 26.0
       },
       "layout": "vbox",
       "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 162.859375,
-        "minWidth": 40,
-        "hGrab": false,
-        "minHeight": 40,
-        "prefHeight": 47.0,
-        "paddingRight": 10,
+        "vGrab": true,
+        "prefWidth": 78.71875,
+        "hGrab": true,
+        "prefHeight": 26.0,
         "hAlign": "center"
       },
       "args": {
@@ -66,8 +51,125 @@
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
+    },
+    {
+      "name": "StartEvent1",
+      "nodeType": "start",
+      "id": "b60ee1e6-ebdf-4d67-b758-4c7cfd05f8eb",
+      "cssClasses": [
+        "event",
+        "start"
+      ],
+      "children": [
+        {
+          "id": "b60ee1e6-ebdf-4d67-b758-4c7cfd05f8eb_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 73.375,
+            "height": 16.0
+          },
+          "text": "StartEvent1",
+          "alignment": {
+            "x": 36.578125,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "event:start",
+      "position": {
+        "x": 90.0,
+        "y": 40.0
+      },
+      "size": {
+        "width": 83.375,
+        "height": 26.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": true,
+        "prefWidth": 83.375,
+        "hGrab": true,
+        "prefHeight": 26.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ExclusiveGateway0",
+      "nodeType": "exclusive",
+      "id": "58ec8697-3130-42bc-b5b8-6bf223661d36",
+      "cssClasses": [
+        "gateway",
+        "exclusive"
+      ],
+      "children": [
+        {
+          "id": "58ec8697-3130-42bc-b5b8-6bf223661d36_icon",
+          "type": "icon",
+          "position": {
+            "x": 50.1953125,
+            "y": 5.0
+          },
+          "size": {
+            "width": 32.0,
+            "height": 32.0
+          }
+        },
+        {
+          "id": "58ec8697-3130-42bc-b5b8-6bf223661d36_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 5.0,
+            "y": 38.0
+          },
+          "size": {
+            "width": 122.390625,
+            "height": 16.0
+          },
+          "text": "ExclusiveGateway0",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "gateway:exclusive",
+      "position": {
+        "x": 350.0,
+        "y": 20.0
+      },
+      "size": {
+        "width": 137.390625,
+        "height": 59.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "prefWidth": 137.390625,
+        "minWidth": 40.0,
+        "hGrab": false,
+        "minHeight": 40.0,
+        "prefHeight": 59.0,
+        "paddingRight": 10.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
     }
   ],
   "type": "graph",
-  "revision": 9
+  "revision": 3
 }

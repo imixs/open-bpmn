@@ -27,7 +27,7 @@ import {
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
-import { Icon, EventNode, isTaskNode, isEventNode, isGatewayNode } from './model';
+import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from './model';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -113,19 +113,7 @@ export class IconView extends ShapeView {
 			}
 		}
 
-		if (gatewayNode) {
-			if (gatewayNode.type === 'gateway:exclusive') {
-				// From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/chrome-close.svg
-				icon =
-					// eslint-disable-next-line max-len
-					'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
-			} else if (gatewayNode.type === 'gateway:parallel') {
-				// From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/add.svg
-				icon =
-					// eslint-disable-next-line max-len
-					'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
-			}
-		}
+		
 
 
 		// did we have now a icon?
@@ -159,28 +147,57 @@ export class IconView extends ShapeView {
 
 
 /**
- * This hould be a exclusive gateway...
+ * This  gateway...
  */
 @injectable()
-export class ExclusiveGatewayView extends ShapeView {
-	render(element: Icon, context: RenderingContext): VNode | undefined {
-
+export class GatewayNodeView extends ShapeView {
+	render(element: GatewayNode, context: RenderingContext): VNode | undefined {
 		if (!this.isVisible(element, context)) {
 			return undefined;
 		}
 
+		// first we compute the gateway symbol based on the gateway type
+		let gatewaySymbol = undefined;
+		if (element.type === "gateway:exclusive") {
+			// eslint-disable-next-line max-len
+			gatewaySymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
+		} else {
+			// default symbol
+			gatewaySymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
+		}
+		// find the label:heading
+		let header = undefined;
+		for (const entry of element.children) {
+			if (entry instanceof SLabel && entry.type === "label:heading") {
+				header = entry;
+				// adjust allignment and position
+				header.alignment = { x: 0, y: 0 };
+				header.position = { x: 0, y: 75 };
+			}
+		}
 
-		const vnode = (
-			<g>
-				<g transform={'matrix(-0.69 0.69 0.69 0.69 70.84 69.57)'}>
-					<path d={'M -50 -50 L 50 -50 L 50 50 L -50 50 z'} />
+		/*  text-anchor="middle"  waere die lösung */
+		let vnode = undefined;
+		if (header) {
+			vnode = (
+				// render circle with a event symbol and the label:heading
+				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
+					<rect x="0" y="0" width="40" height="40" transform={'rotate(45)'} ></rect>
+					<g class-icon={true}>
+						<path transform={'scale(2.0) translate(-7.5,6.5)'}
+							d={gatewaySymbol} />
+					</g>
+					{context.renderElement(header)}
 				</g>
-				<g transform={'translate(4,130)'}>
-					{context.renderChildren(element)}
+			);
+		} else {
+			// we do not found a header so simply draw a circle...
+			vnode = (
+				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
+					<rect x="0" y="0" ></rect>
 				</g>
-			</g>
-		);
-
+			);
+		}
 		const subType = getSubType(element);
 		if (subType) {
 			setAttr(vnode, 'class', subType);
@@ -215,30 +232,29 @@ export class EventNodeView extends ShapeView {
 				header = entry;
 				// adjust allignment and position
 				header.alignment = { x: 0, y: 0 };
-				header.position = { x: 0, y: 60 };
+				header.position = { x: 0, y: 40 };
 			}
 		}
 
+		/*  text-anchor="middle"  waere die lösung */
 		let vnode = undefined;
 		if (header) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
-				<g transform={'scale(1) translate(0,0)'}>
-					<circle r="20" cx="20" cy="20" class-sprotty-node={true}></circle>
+				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
+					<circle r="20" cx="0" cy="0" ></circle>
 					<g class-icon={true}>
-					  <path transform={'scale(2.0),translate(1.75,1.75)'}
-						d={eventSymbol} />
-					</g>	
-					<g transform={'translate(0, 0) translate(0, 0)'}>
-						{context.renderElement(header)}
+						<path transform={'scale(2.0) translate(-7.5,-7.5)'}
+							d={eventSymbol} />
 					</g>
+					{context.renderElement(header)}
 				</g>
 			);
 		} else {
 			// we do not found a header so simply draw a circle...
 			vnode = (
-				<g transform={'scale(1) translate(0,0)'}>
-					<circle r="20" cx="20" cy="20" class-sprotty-node={true}></circle>
+				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
+					<circle r="20" cx="0" cy="0"></circle>
 				</g>
 			);
 		}

@@ -1,0 +1,58 @@
+{
+  "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
+  "children": [
+    {
+      "name": "EndEvent1",
+      "nodeType": "end",
+      "id": "4793a0dc-4fa9-4a1a-9c1b-ed6dd1a8a287",
+      "cssClasses": [
+        "event",
+        "end"
+      ],
+      "children": [
+        {
+          "id": "4793a0dc-4fa9-4a1a-9c1b-ed6dd1a8a287_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 68.71875,
+            "height": 16.0
+          },
+          "text": "EndEvent1",
+          "alignment": {
+            "x": 0.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "event:end",
+      "position": {
+        "x": 270.0,
+        "y": 40.0
+      },
+      "size": {
+        "width": 78.71875,
+        "height": 26.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": true,
+        "prefWidth": 78.71875,
+        "hGrab": true,
+        "prefHeight": 26.0,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    }
+  ],
+  "type": "graph",
+  "revision": 6
+}

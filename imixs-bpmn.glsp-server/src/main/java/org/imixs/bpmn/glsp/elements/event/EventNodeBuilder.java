@@ -21,15 +21,12 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.EventNode;
-import org.imixs.bpmn.bpmngraph.Icon;
-import org.imixs.bpmn.glsp.elements.IconBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
 
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
-   private static final String H_ALIGN = "hAlign";
 
    private final String name;
    private final String nodeType;
@@ -66,17 +63,13 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       // node.getLayoutOptions().put("minWidth", 40);
       // node.getLayoutOptions().put("minHeight", 40);
 
-      node.getLayoutOptions().put(H_ALIGN, "center");
-      node.getLayoutOptions().put(H_GRAB, true);
-      node.getLayoutOptions().put(V_GRAB, true);
+      node.getLayoutOptions().put("hAlign", "center");
+      node.getLayoutOptions().put("vAlign", "center");
+      node.getLayoutOptions().put("vGrab", true);
+      node.getLayoutOptions().put("hGrab", true);
 
-      // node.getChildren().add(createCompartmentIcon(node));
       node.getChildren().add(createCompartmentHeader(node));
 
-   }
-
-   private Icon createCompartmentIcon(final EventNode node) {
-      return new IconBuilder().id(node.getId() + "_icon").build();
    }
 
    private GLabel createCompartmentHeader(final EventNode taskNode) {
