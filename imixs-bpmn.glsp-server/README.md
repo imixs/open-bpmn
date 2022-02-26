@@ -13,7 +13,7 @@ This will generate a sever jar including your EMF model and all necessary compon
 From the /target/ folder you can now start the server by executing the following commands (whereas X.X.X is the current version):
 
 	$ cd target
-	$ java -jar org.imixs.bpmn.glsp.server-0.0.5-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
+	$ java -jar org.imixs.bpmn.glsp.server-0.0.6-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
 
 ## Build the Imxis BPMN EMF Model
 
