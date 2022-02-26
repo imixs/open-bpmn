@@ -15,6 +15,7 @@ import org.eclipse.glsp.graph.GEdge;
  * <ul>
  *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getName <em>Name</em>}</li>
  *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#isDefaultFlow <em>Default Flow</em>}</li>
  * </ul>
  *
  * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow()
@@ -65,5 +66,27 @@ public interface SequenceFlow extends GEdge {
     * @generated
     */
    void setCondition(String value);
+
+   /**
+    * Returns the value of the '<em><b>Default Flow</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the value of the '<em>Default Flow</em>' attribute.
+    * @see #setDefaultFlow(boolean)
+    * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_DefaultFlow()
+    * @model
+    * @generated
+    */
+   boolean isDefaultFlow();
+
+   /**
+    * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#isDefaultFlow <em>Default Flow</em>}' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @param value the new value of the '<em>Default Flow</em>' attribute.
+    * @see #isDefaultFlow()
+    * @generated
+    */
+   void setDefaultFlow(boolean value);
 
 } // SequenceFlow

@@ -275,6 +275,15 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
     * <!-- end-user-doc -->
     * @generated
     */
+   public EAttribute getSequenceFlow_DefaultFlow() {
+      return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(2);
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
    public BpmngraphFactory getBpmngraphFactory() {
       return (BpmngraphFactory)getEFactoryInstance();
    }
@@ -318,6 +327,7 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
       sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
       createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__NAME);
       createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION);
+      createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__DEFAULT_FLOW);
    }
 
    /**
@@ -381,6 +391,7 @@ public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPacka
       initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
       initEAttribute(getSequenceFlow_Name(), ecorePackage.getEString(), "name", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
       initEAttribute(getSequenceFlow_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+      initEAttribute(getSequenceFlow_DefaultFlow(), ecorePackage.getEBoolean(), "defaultFlow", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
       // Create resource
       createResource(eNS_URI);

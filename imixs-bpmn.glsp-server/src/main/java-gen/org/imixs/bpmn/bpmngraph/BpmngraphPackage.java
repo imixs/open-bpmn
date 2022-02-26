@@ -1290,13 +1290,22 @@ public interface BpmngraphPackage extends EPackage {
    int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 1;
 
    /**
+    * The feature id for the '<em><b>Default Flow</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__DEFAULT_FLOW = GraphPackage.GEDGE_FEATURE_COUNT + 2;
+
+   /**
     * The number of structural features of the '<em>Sequence Flow</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 2;
+   int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 3;
 
    /**
     * The number of operations of the '<em>Sequence Flow</em>' class.
@@ -1444,6 +1453,17 @@ public interface BpmngraphPackage extends EPackage {
    EAttribute getSequenceFlow_Condition();
 
    /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#isDefaultFlow <em>Default Flow</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Default Flow</em>'.
+    * @see org.imixs.bpmn.bpmngraph.SequenceFlow#isDefaultFlow()
+    * @see #getSequenceFlow()
+    * @generated
+    */
+   EAttribute getSequenceFlow_DefaultFlow();
+
+   /**
     * Returns the factory that creates the instances of the model.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1585,6 +1605,14 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EAttribute SEQUENCE_FLOW__CONDITION = eINSTANCE.getSequenceFlow_Condition();
+
+      /**
+       * The meta object literal for the '<em><b>Default Flow</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute SEQUENCE_FLOW__DEFAULT_FLOW = eINSTANCE.getSequenceFlow_DefaultFlow();
 
    }
 

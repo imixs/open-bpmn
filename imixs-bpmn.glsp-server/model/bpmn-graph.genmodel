@@ -22,6 +22,7 @@
     <genClasses ecoreClass="bpmn-graph.ecore#//SequenceFlow">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/defaultFlow"/>
     </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"

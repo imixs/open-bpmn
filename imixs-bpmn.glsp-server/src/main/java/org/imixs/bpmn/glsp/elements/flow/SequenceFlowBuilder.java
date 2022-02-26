@@ -35,7 +35,7 @@ public class SequenceFlowBuilder extends AbstractGEdgeBuilder<SequenceFlow, Sequ
       super(ModelTypes.SEQUENCE_FLOW);
    }
 
-   public SequenceFlowBuilder probability(final String condition) {
+   public SequenceFlowBuilder condition(final String condition) {
       this.condition = condition;
       return self();
    }

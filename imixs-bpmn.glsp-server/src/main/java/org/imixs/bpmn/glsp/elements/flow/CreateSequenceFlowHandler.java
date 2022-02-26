@@ -35,7 +35,6 @@ public class CreateSequenceFlowHandler extends CreateEdgeOperationHandler {
       return Optional.of(new SequenceFlowBuilder() //
          .source(source) //
          .target(target) //
-         .probability("medium") //
          .addCssClass("medium") //
          .build());
    }
