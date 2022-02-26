@@ -56,7 +56,8 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
    @Override
    public EObject create(EClass eClass) {
       switch (eClass.getClassifierID()) {
-         case BpmngraphPackage.ACTIVITY_NODE: return createActivityNode();
+         case BpmngraphPackage.BASE_ELEMENT: return createBaseElement();
+         case BpmngraphPackage.FLOW_ELEMENT: return createFlowElement();
          case BpmngraphPackage.TASK_NODE: return createTaskNode();
          case BpmngraphPackage.GATEWAY_NODE: return createGatewayNode();
          case BpmngraphPackage.EVENT_NODE: return createEventNode();
@@ -73,9 +74,19 @@ public class BpmngraphFactoryImpl extends EFactoryImpl implements BpmngraphFacto
     * <!-- end-user-doc -->
     * @generated
     */
-   public ActivityNode createActivityNode() {
-      ActivityNodeImpl activityNode = new ActivityNodeImpl();
-      return activityNode;
+   public BaseElement createBaseElement() {
+      BaseElementImpl baseElement = new BaseElementImpl();
+      return baseElement;
+   }
+
+   /**
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    */
+   public FlowElement createFlowElement() {
+      FlowElementImpl flowElement = new FlowElementImpl();
+      return flowElement;
    }
 
    /**

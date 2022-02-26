@@ -76,23 +76,38 @@ public class BpmngraphSwitch<T> extends Switch<T> {
    @Override
    protected T doSwitch(int classifierID, EObject theEObject) {
       switch (classifierID) {
-         case BpmngraphPackage.ACTIVITY_NODE: {
-            ActivityNode activityNode = (ActivityNode)theEObject;
-            T result = caseActivityNode(activityNode);
-            if (result == null) result = caseGNode(activityNode);
-            if (result == null) result = caseGShapeElement(activityNode);
-            if (result == null) result = caseGEdgeLayoutable(activityNode);
-            if (result == null) result = caseGLayouting(activityNode);
-            if (result == null) result = caseGModelElement(activityNode);
-            if (result == null) result = caseGBoundsAware(activityNode);
-            if (result == null) result = caseGArgumentable(activityNode);
+         case BpmngraphPackage.BASE_ELEMENT: {
+            BaseElement baseElement = (BaseElement)theEObject;
+            T result = caseBaseElement(baseElement);
+            if (result == null) result = caseGNode(baseElement);
+            if (result == null) result = caseGShapeElement(baseElement);
+            if (result == null) result = caseGEdgeLayoutable(baseElement);
+            if (result == null) result = caseGLayouting(baseElement);
+            if (result == null) result = caseGModelElement(baseElement);
+            if (result == null) result = caseGBoundsAware(baseElement);
+            if (result == null) result = caseGArgumentable(baseElement);
+            if (result == null) result = defaultCase(theEObject);
+            return result;
+         }
+         case BpmngraphPackage.FLOW_ELEMENT: {
+            FlowElement flowElement = (FlowElement)theEObject;
+            T result = caseFlowElement(flowElement);
+            if (result == null) result = caseBaseElement(flowElement);
+            if (result == null) result = caseGNode(flowElement);
+            if (result == null) result = caseGShapeElement(flowElement);
+            if (result == null) result = caseGEdgeLayoutable(flowElement);
+            if (result == null) result = caseGLayouting(flowElement);
+            if (result == null) result = caseGModelElement(flowElement);
+            if (result == null) result = caseGBoundsAware(flowElement);
+            if (result == null) result = caseGArgumentable(flowElement);
             if (result == null) result = defaultCase(theEObject);
             return result;
          }
          case BpmngraphPackage.TASK_NODE: {
             TaskNode taskNode = (TaskNode)theEObject;
             T result = caseTaskNode(taskNode);
-            if (result == null) result = caseActivityNode(taskNode);
+            if (result == null) result = caseFlowElement(taskNode);
+            if (result == null) result = caseBaseElement(taskNode);
             if (result == null) result = caseGNode(taskNode);
             if (result == null) result = caseGShapeElement(taskNode);
             if (result == null) result = caseGEdgeLayoutable(taskNode);
@@ -106,7 +121,8 @@ public class BpmngraphSwitch<T> extends Switch<T> {
          case BpmngraphPackage.GATEWAY_NODE: {
             GatewayNode gatewayNode = (GatewayNode)theEObject;
             T result = caseGatewayNode(gatewayNode);
-            if (result == null) result = caseActivityNode(gatewayNode);
+            if (result == null) result = caseFlowElement(gatewayNode);
+            if (result == null) result = caseBaseElement(gatewayNode);
             if (result == null) result = caseGNode(gatewayNode);
             if (result == null) result = caseGShapeElement(gatewayNode);
             if (result == null) result = caseGEdgeLayoutable(gatewayNode);
@@ -120,7 +136,8 @@ public class BpmngraphSwitch<T> extends Switch<T> {
          case BpmngraphPackage.EVENT_NODE: {
             EventNode eventNode = (EventNode)theEObject;
             T result = caseEventNode(eventNode);
-            if (result == null) result = caseActivityNode(eventNode);
+            if (result == null) result = caseFlowElement(eventNode);
+            if (result == null) result = caseBaseElement(eventNode);
             if (result == null) result = caseGNode(eventNode);
             if (result == null) result = caseGShapeElement(eventNode);
             if (result == null) result = caseGEdgeLayoutable(eventNode);
@@ -134,7 +151,7 @@ public class BpmngraphSwitch<T> extends Switch<T> {
          case BpmngraphPackage.POOL: {
             Pool pool = (Pool)theEObject;
             T result = casePool(pool);
-            if (result == null) result = caseActivityNode(pool);
+            if (result == null) result = caseBaseElement(pool);
             if (result == null) result = caseGNode(pool);
             if (result == null) result = caseGShapeElement(pool);
             if (result == null) result = caseGEdgeLayoutable(pool);
@@ -171,17 +188,32 @@ public class BpmngraphSwitch<T> extends Switch<T> {
    }
 
    /**
-    * Returns the result of interpreting the object as an instance of '<em>Activity Node</em>'.
+    * Returns the result of interpreting the object as an instance of '<em>Base Element</em>'.
     * <!-- begin-user-doc -->
     * This implementation returns null;
     * returning a non-null result will terminate the switch.
     * <!-- end-user-doc -->
     * @param object the target of the switch.
-    * @return the result of interpreting the object as an instance of '<em>Activity Node</em>'.
+    * @return the result of interpreting the object as an instance of '<em>Base Element</em>'.
     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
     * @generated
     */
-   public T caseActivityNode(ActivityNode object) {
+   public T caseBaseElement(BaseElement object) {
+      return null;
+   }
+
+   /**
+    * Returns the result of interpreting the object as an instance of '<em>Flow Element</em>'.
+    * <!-- begin-user-doc -->
+    * This implementation returns null;
+    * returning a non-null result will terminate the switch.
+    * <!-- end-user-doc -->
+    * @param object the target of the switch.
+    * @return the result of interpreting the object as an instance of '<em>Flow Element</em>'.
+    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+    * @generated
+    */
+   public T caseFlowElement(FlowElement object) {
       return null;
    }
 

@@ -32,12 +32,12 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
    private static final String H_ALIGN = "hAlign";
 
    private final String name;
-   private final String nodeType;
+   private final String taskType;
 
-   public TaskNodeBuilder(final String type, final String name, final String nodeType) {
+   public TaskNodeBuilder(final String type, final String name, final String taskType) {
       super(type);
       this.name = name;
-      this.nodeType = nodeType;
+      this.taskType = taskType;
 
    }
 
@@ -55,7 +55,7 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
    public void setProperties(final TaskNode node) {
       super.setProperties(node);
       node.setName(name);
-      node.setNodeType(nodeType);
+      node.getCategory().add(taskType);
 
       node.setLayout(GConstants.Layout.HBOX);
       node.getLayoutOptions().put("paddingRight", 10);

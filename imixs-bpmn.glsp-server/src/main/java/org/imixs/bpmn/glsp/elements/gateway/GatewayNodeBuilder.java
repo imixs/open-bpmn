@@ -32,15 +32,14 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
    private static final String V_GRAB = "vGrab";
    private static final String H_GRAB = "hGrab";
-   private static final String H_ALIGN = "hAlign";
 
    private final String name;
-   private final String nodeType;
+   private final String gatewayType;
 
-   public GatewayNodeBuilder(final String type, final String name, final String nodeType) {
+   public GatewayNodeBuilder(final String type, final String name, final String gatewayType) {
       super(type);
       this.name = name;
-      this.nodeType = nodeType;
+      this.gatewayType = gatewayType;
 
    }
 
@@ -61,7 +60,7 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
    protected void setProperties(final GatewayNode node) {
       super.setProperties(node);
       node.setName(name);
-      node.setNodeType(nodeType);
+      node.getCategory().add(gatewayType);
 
       node.setLayout(GConstants.Layout.VBOX);
       node.getLayoutOptions().put("vAlign", "center");

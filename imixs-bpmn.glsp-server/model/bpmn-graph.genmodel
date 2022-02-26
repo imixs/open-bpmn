@@ -7,21 +7,17 @@
   <foreignModel>bpmn-graph.ecore</foreignModel>
   <genPackages prefix="Bpmngraph" basePackage="org.imixs.bpmn" disposableProviderFactory="true"
       ecorePackage="bpmn-graph.ecore#/">
-    <genClasses ecoreClass="bpmn-graph.ecore#//ActivityNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//ActivityNode/nodeType"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//BaseElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//BaseElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//BaseElement/documentation"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-graph.ecore#//TaskNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//TaskNode/name"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//FlowElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//FlowElement/category"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-graph.ecore#//GatewayNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//GatewayNode/name"/>
-    </genClasses>
-    <genClasses ecoreClass="bpmn-graph.ecore#//EventNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//EventNode/name"/>
-    </genClasses>
-    <genClasses ecoreClass="bpmn-graph.ecore#//Pool">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//Pool/name"/>
-    </genClasses>
+    <genClasses ecoreClass="bpmn-graph.ecore#//TaskNode"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//GatewayNode"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//EventNode"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//Pool"/>
     <genClasses ecoreClass="bpmn-graph.ecore#//Icon"/>
     <genClasses ecoreClass="bpmn-graph.ecore#//SequenceFlow">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/condition"/>

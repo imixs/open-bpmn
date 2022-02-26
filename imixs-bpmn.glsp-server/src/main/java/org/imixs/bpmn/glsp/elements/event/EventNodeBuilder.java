@@ -25,16 +25,13 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
 
-   private static final String V_GRAB = "vGrab";
-   private static final String H_GRAB = "hGrab";
-
    private final String name;
-   private final String nodeType;
+   private final String eventType;
 
    public EventNodeBuilder(final String type, final String name, final String eventType) {
       super(type);
       this.name = name;
-      this.nodeType = eventType;
+      this.eventType = eventType;
 
    }
 
@@ -52,7 +49,8 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
    public void setProperties(final EventNode node) {
       super.setProperties(node);
       node.setName(name);
-      node.setNodeType(nodeType);
+      node.getCategory().add(eventType);
+      // .setNodeType(nodeType);
 
       node.setLayout(GConstants.Layout.VBOX);
       // node.getLayoutOptions().put("paddingRight", 10);

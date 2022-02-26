@@ -2,16 +2,70 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
+      "category": [
+        "start"
+      ],
+      "name": "StartEvent0",
+      "id": "801cbd6a-f9dc-49de-8186-92853e166642",
+      "cssClasses": [
+        "event",
+        "start"
+      ],
+      "children": [
+        {
+          "id": "801cbd6a-f9dc-49de-8186-92853e166642_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 73.375,
+            "height": 16.0
+          },
+          "text": "StartEvent0",
+          "alignment": {
+            "x": 36.578125,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "event:start",
+      "position": {
+        "x": 110.0,
+        "y": 80.0
+      },
+      "size": {
+        "width": 83.375,
+        "height": 26.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": true,
+        "vAlign": "center",
+        "hGrab": true,
+        "hAlign": "center"
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "category": [
+        "end"
+      ],
       "name": "EndEvent1",
-      "nodeType": "end",
-      "id": "4793a0dc-4fa9-4a1a-9c1b-ed6dd1a8a287",
+      "id": "53c1b0f7-ea31-4757-99c3-99fd51a504f0",
       "cssClasses": [
         "event",
         "end"
       ],
       "children": [
         {
-          "id": "4793a0dc-4fa9-4a1a-9c1b-ed6dd1a8a287_classname",
+          "id": "53c1b0f7-ea31-4757-99c3-99fd51a504f0_classname",
           "type": "label:heading",
           "position": {
             "x": 5.0,
@@ -30,8 +84,8 @@
       ],
       "type": "event:end",
       "position": {
-        "x": 220.0,
-        "y": 40.0
+        "x": 490.0,
+        "y": 80.0
       },
       "size": {
         "width": 78.71875,
@@ -40,125 +94,75 @@
       "layout": "vbox",
       "layoutOptions": {
         "vGrab": true,
-        "prefWidth": 78.71875,
+        "vAlign": "center",
         "hGrab": true,
-        "prefHeight": 26.0,
         "hAlign": "center"
       },
       "args": {
-        "radiusTopLeft": 5.0,
         "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
     },
     {
-      "name": "StartEvent1",
-      "nodeType": "start",
-      "id": "b60ee1e6-ebdf-4d67-b758-4c7cfd05f8eb",
+      "category": [
+        "manual"
+      ],
+      "name": "ManualTask0",
+      "id": "7b7ae21e-0512-43db-8342-f53d69c537ea",
       "cssClasses": [
-        "event",
-        "start"
+        "task",
+        "manual"
       ],
       "children": [
         {
-          "id": "b60ee1e6-ebdf-4d67-b758-4c7cfd05f8eb_classname",
-          "type": "label:heading",
+          "id": "7b7ae21e-0512-43db-8342-f53d69c537ea_icon",
+          "type": "icon",
           "position": {
             "x": 5.0,
             "y": 5.0
           },
           "size": {
-            "width": 73.375,
-            "height": 16.0
-          },
-          "text": "StartEvent1",
-          "alignment": {
-            "x": 36.578125,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "event:start",
-      "position": {
-        "x": 90.0,
-        "y": 40.0
-      },
-      "size": {
-        "width": 83.375,
-        "height": 26.0
-      },
-      "layout": "vbox",
-      "layoutOptions": {
-        "vGrab": true,
-        "prefWidth": 83.375,
-        "hGrab": true,
-        "prefHeight": 26.0,
-        "hAlign": "center"
-      },
-      "args": {
-        "radiusTopLeft": 5.0,
-        "radiusBottomLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "name": "ExclusiveGateway0",
-      "nodeType": "exclusive",
-      "id": "58ec8697-3130-42bc-b5b8-6bf223661d36",
-      "cssClasses": [
-        "gateway",
-        "exclusive"
-      ],
-      "children": [
-        {
-          "id": "58ec8697-3130-42bc-b5b8-6bf223661d36_icon",
-          "type": "icon",
-          "position": {
-            "x": 50.1953125,
-            "y": 5.0
-          },
-          "size": {
-            "width": 32.0,
-            "height": 32.0
+            "width": 25.0,
+            "height": 20.0
           }
         },
         {
-          "id": "58ec8697-3130-42bc-b5b8-6bf223661d36_classname",
+          "id": "7b7ae21e-0512-43db-8342-f53d69c537ea_classname",
           "type": "label:heading",
           "position": {
-            "x": 5.0,
-            "y": 38.0
+            "x": 31.0,
+            "y": 7.0
           },
           "size": {
-            "width": 122.390625,
+            "width": 82.703125,
             "height": 16.0
           },
-          "text": "ExclusiveGateway0",
+          "text": "ManualTask0",
           "alignment": {
             "x": 0.0,
             "y": 13.0
           }
         }
       ],
-      "type": "gateway:exclusive",
+      "type": "task:manual",
       "position": {
-        "x": 350.0,
-        "y": 20.0
+        "x": 220.0,
+        "y": 50.0
       },
       "size": {
-        "width": 137.390625,
-        "height": 59.0
+        "width": 160.0,
+        "height": 60.0
       },
-      "layout": "vbox",
+      "layout": "hbox",
       "layoutOptions": {
         "vGrab": false,
-        "prefWidth": 137.390625,
-        "minWidth": 40.0,
+        "prefWidth": 160.0,
+        "minWidth": 160.0,
         "hGrab": false,
-        "minHeight": 40.0,
-        "prefHeight": 59.0,
+        "minHeight": 60.0,
+        "prefHeight": 60.0,
         "paddingRight": 10.0,
         "hAlign": "center"
       },
@@ -168,6 +172,104 @@
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
+    },
+    {
+      "id": "077e3136-db21-4204-a1eb-d36fa8553f15",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "801cbd6a-f9dc-49de-8186-92853e166642",
+      "targetId": "7b7ae21e-0512-43db-8342-f53d69c537ea",
+      "routerKind": "manhattan"
+    },
+    {
+      "id": "828e0400-9ab4-4e5b-a65e-f51035e6c5bc",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "53c1b0f7-ea31-4757-99c3-99fd51a504f0",
+      "targetId": "7b7ae21e-0512-43db-8342-f53d69c537ea",
+      "routerKind": "manhattan"
+    },
+    {
+      "category": [
+        "exclusive"
+      ],
+      "name": "ExclusiveGateway0",
+      "id": "56dadcbb-d5a6-4ab4-8c4b-9bf399c7fc62",
+      "cssClasses": [
+        "gateway",
+        "exclusive"
+      ],
+      "children": [
+        {
+          "id": "56dadcbb-d5a6-4ab4-8c4b-9bf399c7fc62_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 122.390625,
+            "height": 16.0
+          },
+          "text": "ExclusiveGateway0",
+          "alignment": {
+            "x": 61.09375,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "gateway:exclusive",
+      "position": {
+        "x": 600.0,
+        "y": 240.0
+      },
+      "size": {
+        "width": 132.390625,
+        "height": 26.0
+      },
+      "layout": "vbox",
+      "layoutOptions": {
+        "vGrab": false,
+        "vAlign": "center",
+        "prefWidth": 132.390625,
+        "hGrab": false,
+        "prefHeight": 26.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "condition": "medium",
+      "id": "e724d524-6663-4391-9a0d-f8310181e98a",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 300.0,
+          "y": 155.0
+        },
+        {
+          "x": 366.1953125,
+          "y": 155.0
+        },
+        {
+          "x": 366.1953125,
+          "y": 253.0
+        }
+      ],
+      "sourceId": "7b7ae21e-0512-43db-8342-f53d69c537ea",
+      "targetId": "56dadcbb-d5a6-4ab4-8c4b-9bf399c7fc62",
+      "routerKind": "manhattan"
     }
   ],
   "type": "graph",

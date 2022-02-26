@@ -22,13 +22,22 @@ public interface BpmngraphFactory extends EFactory {
    BpmngraphFactory eINSTANCE = org.imixs.bpmn.bpmngraph.impl.BpmngraphFactoryImpl.init();
 
    /**
-    * Returns a new object of class '<em>Activity Node</em>'.
+    * Returns a new object of class '<em>Base Element</em>'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return a new object of class '<em>Activity Node</em>'.
+    * @return a new object of class '<em>Base Element</em>'.
     * @generated
     */
-   ActivityNode createActivityNode();
+   BaseElement createBaseElement();
+
+   /**
+    * Returns a new object of class '<em>Flow Element</em>'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return a new object of class '<em>Flow Element</em>'.
+    * @generated
+    */
+   FlowElement createFlowElement();
 
    /**
     * Returns a new object of class '<em>Task Node</em>'.

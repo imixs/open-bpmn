@@ -58,14 +58,14 @@ public interface BpmngraphPackage extends EPackage {
    BpmngraphPackage eINSTANCE = org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl.init();
 
    /**
-    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.ActivityNodeImpl <em>Activity Node</em>}' class.
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.BaseElementImpl <em>Base Element</em>}' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @see org.imixs.bpmn.bpmngraph.impl.ActivityNodeImpl
-    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getActivityNode()
+    * @see org.imixs.bpmn.bpmngraph.impl.BaseElementImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getBaseElement()
     * @generated
     */
-   int ACTIVITY_NODE = 0;
+   int BASE_ELEMENT = 0;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -74,7 +74,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__ARGS = GraphPackage.GNODE__ARGS;
+   int BASE_ELEMENT__ARGS = GraphPackage.GNODE__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -83,7 +83,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__ID = GraphPackage.GNODE__ID;
+   int BASE_ELEMENT__ID = GraphPackage.GNODE__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -92,7 +92,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__CSS_CLASSES = GraphPackage.GNODE__CSS_CLASSES;
+   int BASE_ELEMENT__CSS_CLASSES = GraphPackage.GNODE__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -101,7 +101,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__CHILDREN = GraphPackage.GNODE__CHILDREN;
+   int BASE_ELEMENT__CHILDREN = GraphPackage.GNODE__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -110,7 +110,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__PARENT = GraphPackage.GNODE__PARENT;
+   int BASE_ELEMENT__PARENT = GraphPackage.GNODE__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -119,7 +119,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__TRACE = GraphPackage.GNODE__TRACE;
+   int BASE_ELEMENT__TRACE = GraphPackage.GNODE__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -128,7 +128,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__TYPE = GraphPackage.GNODE__TYPE;
+   int BASE_ELEMENT__TYPE = GraphPackage.GNODE__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -137,7 +137,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__POSITION = GraphPackage.GNODE__POSITION;
+   int BASE_ELEMENT__POSITION = GraphPackage.GNODE__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -146,7 +146,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__SIZE = GraphPackage.GNODE__SIZE;
+   int BASE_ELEMENT__SIZE = GraphPackage.GNODE__SIZE;
 
    /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -155,7 +155,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__EDGE_PLACEMENT = GraphPackage.GNODE__EDGE_PLACEMENT;
+   int BASE_ELEMENT__EDGE_PLACEMENT = GraphPackage.GNODE__EDGE_PLACEMENT;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -164,7 +164,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__LAYOUT = GraphPackage.GNODE__LAYOUT;
+   int BASE_ELEMENT__LAYOUT = GraphPackage.GNODE__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -173,34 +173,206 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__LAYOUT_OPTIONS = GraphPackage.GNODE__LAYOUT_OPTIONS;
+   int BASE_ELEMENT__LAYOUT_OPTIONS = GraphPackage.GNODE__LAYOUT_OPTIONS;
 
    /**
-    * The feature id for the '<em><b>Node Type</b></em>' attribute.
+    * The feature id for the '<em><b>Name</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE__NODE_TYPE = GraphPackage.GNODE_FEATURE_COUNT + 0;
+   int BASE_ELEMENT__NAME = GraphPackage.GNODE_FEATURE_COUNT + 0;
 
    /**
-    * The number of structural features of the '<em>Activity Node</em>' class.
+    * The feature id for the '<em><b>Documentation</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE_FEATURE_COUNT = GraphPackage.GNODE_FEATURE_COUNT + 1;
+   int BASE_ELEMENT__DOCUMENTATION = GraphPackage.GNODE_FEATURE_COUNT + 1;
 
    /**
-    * The number of operations of the '<em>Activity Node</em>' class.
+    * The number of structural features of the '<em>Base Element</em>' class.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int ACTIVITY_NODE_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
+   int BASE_ELEMENT_FEATURE_COUNT = GraphPackage.GNODE_FEATURE_COUNT + 2;
+
+   /**
+    * The number of operations of the '<em>Base Element</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int BASE_ELEMENT_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
+
+   /**
+    * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.FlowElementImpl <em>Flow Element</em>}' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @see org.imixs.bpmn.bpmngraph.impl.FlowElementImpl
+    * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getFlowElement()
+    * @generated
+    */
+   int FLOW_ELEMENT = 1;
+
+   /**
+    * The feature id for the '<em><b>Args</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__ARGS = BASE_ELEMENT__ARGS;
+
+   /**
+    * The feature id for the '<em><b>Id</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__ID = BASE_ELEMENT__ID;
+
+   /**
+    * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+   /**
+    * The feature id for the '<em><b>Children</b></em>' containment reference list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+   /**
+    * The feature id for the '<em><b>Parent</b></em>' container reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__PARENT = BASE_ELEMENT__PARENT;
+
+   /**
+    * The feature id for the '<em><b>Trace</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__TRACE = BASE_ELEMENT__TRACE;
+
+   /**
+    * The feature id for the '<em><b>Type</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__TYPE = BASE_ELEMENT__TYPE;
+
+   /**
+    * The feature id for the '<em><b>Position</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__POSITION = BASE_ELEMENT__POSITION;
+
+   /**
+    * The feature id for the '<em><b>Size</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__SIZE = BASE_ELEMENT__SIZE;
+
+   /**
+    * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+   /**
+    * The feature id for the '<em><b>Layout</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+   /**
+    * The feature id for the '<em><b>Layout Options</b></em>' map.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+   /**
+    * The feature id for the '<em><b>Name</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__NAME = BASE_ELEMENT__NAME;
+
+   /**
+    * The feature id for the '<em><b>Documentation</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
+
+   /**
+    * The feature id for the '<em><b>Category</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT__CATEGORY = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+   /**
+    * The number of structural features of the '<em>Flow Element</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 1;
+
+   /**
+    * The number of operations of the '<em>Flow Element</em>' class.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int FLOW_ELEMENT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl <em>Task Node</em>}' class.
@@ -210,7 +382,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getTaskNode()
     * @generated
     */
-   int TASK_NODE = 1;
+   int TASK_NODE = 2;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -219,7 +391,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__ARGS = ACTIVITY_NODE__ARGS;
+   int TASK_NODE__ARGS = FLOW_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -228,7 +400,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__ID = ACTIVITY_NODE__ID;
+   int TASK_NODE__ID = FLOW_ELEMENT__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -237,7 +409,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+   int TASK_NODE__CSS_CLASSES = FLOW_ELEMENT__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -246,7 +418,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__CHILDREN = ACTIVITY_NODE__CHILDREN;
+   int TASK_NODE__CHILDREN = FLOW_ELEMENT__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -255,7 +427,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__PARENT = ACTIVITY_NODE__PARENT;
+   int TASK_NODE__PARENT = FLOW_ELEMENT__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -264,7 +436,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__TRACE = ACTIVITY_NODE__TRACE;
+   int TASK_NODE__TRACE = FLOW_ELEMENT__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -273,7 +445,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__TYPE = ACTIVITY_NODE__TYPE;
+   int TASK_NODE__TYPE = FLOW_ELEMENT__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -282,7 +454,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__POSITION = ACTIVITY_NODE__POSITION;
+   int TASK_NODE__POSITION = FLOW_ELEMENT__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -291,7 +463,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__SIZE = ACTIVITY_NODE__SIZE;
+   int TASK_NODE__SIZE = FLOW_ELEMENT__SIZE;
 
    /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -300,7 +472,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+   int TASK_NODE__EDGE_PLACEMENT = FLOW_ELEMENT__EDGE_PLACEMENT;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -309,7 +481,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__LAYOUT = ACTIVITY_NODE__LAYOUT;
+   int TASK_NODE__LAYOUT = FLOW_ELEMENT__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -318,16 +490,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Node Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int TASK_NODE__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+   int TASK_NODE__LAYOUT_OPTIONS = FLOW_ELEMENT__LAYOUT_OPTIONS;
 
    /**
     * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -336,7 +499,25 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+   int TASK_NODE__NAME = FLOW_ELEMENT__NAME;
+
+   /**
+    * The feature id for the '<em><b>Documentation</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__DOCUMENTATION = FLOW_ELEMENT__DOCUMENTATION;
+
+   /**
+    * The feature id for the '<em><b>Category</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int TASK_NODE__CATEGORY = FLOW_ELEMENT__CATEGORY;
 
    /**
     * The number of structural features of the '<em>Task Node</em>' class.
@@ -345,7 +526,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
+   int TASK_NODE_FEATURE_COUNT = FLOW_ELEMENT_FEATURE_COUNT + 0;
 
    /**
     * The number of operations of the '<em>Task Node</em>' class.
@@ -354,7 +535,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int TASK_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+   int TASK_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
@@ -364,7 +545,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getGatewayNode()
     * @generated
     */
-   int GATEWAY_NODE = 2;
+   int GATEWAY_NODE = 3;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -373,7 +554,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__ARGS = ACTIVITY_NODE__ARGS;
+   int GATEWAY_NODE__ARGS = FLOW_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -382,7 +563,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__ID = ACTIVITY_NODE__ID;
+   int GATEWAY_NODE__ID = FLOW_ELEMENT__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -391,7 +572,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+   int GATEWAY_NODE__CSS_CLASSES = FLOW_ELEMENT__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -400,7 +581,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__CHILDREN = ACTIVITY_NODE__CHILDREN;
+   int GATEWAY_NODE__CHILDREN = FLOW_ELEMENT__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -409,7 +590,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__PARENT = ACTIVITY_NODE__PARENT;
+   int GATEWAY_NODE__PARENT = FLOW_ELEMENT__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -418,7 +599,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__TRACE = ACTIVITY_NODE__TRACE;
+   int GATEWAY_NODE__TRACE = FLOW_ELEMENT__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -427,7 +608,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__TYPE = ACTIVITY_NODE__TYPE;
+   int GATEWAY_NODE__TYPE = FLOW_ELEMENT__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -436,7 +617,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__POSITION = ACTIVITY_NODE__POSITION;
+   int GATEWAY_NODE__POSITION = FLOW_ELEMENT__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -445,7 +626,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__SIZE = ACTIVITY_NODE__SIZE;
+   int GATEWAY_NODE__SIZE = FLOW_ELEMENT__SIZE;
 
    /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -454,7 +635,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+   int GATEWAY_NODE__EDGE_PLACEMENT = FLOW_ELEMENT__EDGE_PLACEMENT;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -463,7 +644,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__LAYOUT = ACTIVITY_NODE__LAYOUT;
+   int GATEWAY_NODE__LAYOUT = FLOW_ELEMENT__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -472,16 +653,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Node Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int GATEWAY_NODE__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+   int GATEWAY_NODE__LAYOUT_OPTIONS = FLOW_ELEMENT__LAYOUT_OPTIONS;
 
    /**
     * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -490,7 +662,25 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+   int GATEWAY_NODE__NAME = FLOW_ELEMENT__NAME;
+
+   /**
+    * The feature id for the '<em><b>Documentation</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_NODE__DOCUMENTATION = FLOW_ELEMENT__DOCUMENTATION;
+
+   /**
+    * The feature id for the '<em><b>Category</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int GATEWAY_NODE__CATEGORY = FLOW_ELEMENT__CATEGORY;
 
    /**
     * The number of structural features of the '<em>Gateway Node</em>' class.
@@ -499,7 +689,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
+   int GATEWAY_NODE_FEATURE_COUNT = FLOW_ELEMENT_FEATURE_COUNT + 0;
 
    /**
     * The number of operations of the '<em>Gateway Node</em>' class.
@@ -508,7 +698,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int GATEWAY_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+   int GATEWAY_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.EventNodeImpl <em>Event Node</em>}' class.
@@ -518,7 +708,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getEventNode()
     * @generated
     */
-   int EVENT_NODE = 3;
+   int EVENT_NODE = 4;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -527,7 +717,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__ARGS = ACTIVITY_NODE__ARGS;
+   int EVENT_NODE__ARGS = FLOW_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -536,7 +726,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__ID = ACTIVITY_NODE__ID;
+   int EVENT_NODE__ID = FLOW_ELEMENT__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -545,7 +735,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+   int EVENT_NODE__CSS_CLASSES = FLOW_ELEMENT__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -554,7 +744,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__CHILDREN = ACTIVITY_NODE__CHILDREN;
+   int EVENT_NODE__CHILDREN = FLOW_ELEMENT__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -563,7 +753,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__PARENT = ACTIVITY_NODE__PARENT;
+   int EVENT_NODE__PARENT = FLOW_ELEMENT__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -572,7 +762,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__TRACE = ACTIVITY_NODE__TRACE;
+   int EVENT_NODE__TRACE = FLOW_ELEMENT__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -581,7 +771,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__TYPE = ACTIVITY_NODE__TYPE;
+   int EVENT_NODE__TYPE = FLOW_ELEMENT__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -590,7 +780,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__POSITION = ACTIVITY_NODE__POSITION;
+   int EVENT_NODE__POSITION = FLOW_ELEMENT__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -599,7 +789,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__SIZE = ACTIVITY_NODE__SIZE;
+   int EVENT_NODE__SIZE = FLOW_ELEMENT__SIZE;
 
    /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -608,7 +798,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+   int EVENT_NODE__EDGE_PLACEMENT = FLOW_ELEMENT__EDGE_PLACEMENT;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -617,7 +807,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__LAYOUT = ACTIVITY_NODE__LAYOUT;
+   int EVENT_NODE__LAYOUT = FLOW_ELEMENT__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -626,16 +816,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Node Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int EVENT_NODE__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+   int EVENT_NODE__LAYOUT_OPTIONS = FLOW_ELEMENT__LAYOUT_OPTIONS;
 
    /**
     * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -644,7 +825,25 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+   int EVENT_NODE__NAME = FLOW_ELEMENT__NAME;
+
+   /**
+    * The feature id for the '<em><b>Documentation</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int EVENT_NODE__DOCUMENTATION = FLOW_ELEMENT__DOCUMENTATION;
+
+   /**
+    * The feature id for the '<em><b>Category</b></em>' attribute list.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int EVENT_NODE__CATEGORY = FLOW_ELEMENT__CATEGORY;
 
    /**
     * The number of structural features of the '<em>Event Node</em>' class.
@@ -653,7 +852,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
+   int EVENT_NODE_FEATURE_COUNT = FLOW_ELEMENT_FEATURE_COUNT + 0;
 
    /**
     * The number of operations of the '<em>Event Node</em>' class.
@@ -662,7 +861,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int EVENT_NODE_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+   int EVENT_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.PoolImpl <em>Pool</em>}' class.
@@ -672,7 +871,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getPool()
     * @generated
     */
-   int POOL = 4;
+   int POOL = 5;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -681,7 +880,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__ARGS = ACTIVITY_NODE__ARGS;
+   int POOL__ARGS = BASE_ELEMENT__ARGS;
 
    /**
     * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -690,7 +889,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__ID = ACTIVITY_NODE__ID;
+   int POOL__ID = BASE_ELEMENT__ID;
 
    /**
     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -699,7 +898,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__CSS_CLASSES = ACTIVITY_NODE__CSS_CLASSES;
+   int POOL__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
 
    /**
     * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -708,7 +907,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__CHILDREN = ACTIVITY_NODE__CHILDREN;
+   int POOL__CHILDREN = BASE_ELEMENT__CHILDREN;
 
    /**
     * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -717,7 +916,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__PARENT = ACTIVITY_NODE__PARENT;
+   int POOL__PARENT = BASE_ELEMENT__PARENT;
 
    /**
     * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -726,7 +925,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__TRACE = ACTIVITY_NODE__TRACE;
+   int POOL__TRACE = BASE_ELEMENT__TRACE;
 
    /**
     * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -735,7 +934,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__TYPE = ACTIVITY_NODE__TYPE;
+   int POOL__TYPE = BASE_ELEMENT__TYPE;
 
    /**
     * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -744,7 +943,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__POSITION = ACTIVITY_NODE__POSITION;
+   int POOL__POSITION = BASE_ELEMENT__POSITION;
 
    /**
     * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -753,7 +952,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__SIZE = ACTIVITY_NODE__SIZE;
+   int POOL__SIZE = BASE_ELEMENT__SIZE;
 
    /**
     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -762,7 +961,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__EDGE_PLACEMENT = ACTIVITY_NODE__EDGE_PLACEMENT;
+   int POOL__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
 
    /**
     * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -771,7 +970,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__LAYOUT = ACTIVITY_NODE__LAYOUT;
+   int POOL__LAYOUT = BASE_ELEMENT__LAYOUT;
 
    /**
     * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -780,16 +979,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__LAYOUT_OPTIONS = ACTIVITY_NODE__LAYOUT_OPTIONS;
-
-   /**
-    * The feature id for the '<em><b>Node Type</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    * @ordered
-    */
-   int POOL__NODE_TYPE = ACTIVITY_NODE__NODE_TYPE;
+   int POOL__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
 
    /**
     * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -798,7 +988,16 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL__NAME = ACTIVITY_NODE_FEATURE_COUNT + 0;
+   int POOL__NAME = BASE_ELEMENT__NAME;
+
+   /**
+    * The feature id for the '<em><b>Documentation</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int POOL__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
 
    /**
     * The number of structural features of the '<em>Pool</em>' class.
@@ -807,7 +1006,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL_FEATURE_COUNT = ACTIVITY_NODE_FEATURE_COUNT + 1;
+   int POOL_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
 
    /**
     * The number of operations of the '<em>Pool</em>' class.
@@ -816,7 +1015,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int POOL_OPERATION_COUNT = ACTIVITY_NODE_OPERATION_COUNT + 0;
+   int POOL_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
    /**
     * The meta object id for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.
@@ -826,7 +1025,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getIcon()
     * @generated
     */
-   int ICON = 5;
+   int ICON = 6;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -953,7 +1152,7 @@ public interface BpmngraphPackage extends EPackage {
     * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getSequenceFlow()
     * @generated
     */
-   int SEQUENCE_FLOW = 6;
+   int SEQUENCE_FLOW = 7;
 
    /**
     * The feature id for the '<em><b>Args</b></em>' map.
@@ -1101,25 +1300,57 @@ public interface BpmngraphPackage extends EPackage {
 
 
    /**
-    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.ActivityNode <em>Activity Node</em>}'.
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.BaseElement <em>Base Element</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for class '<em>Activity Node</em>'.
-    * @see org.imixs.bpmn.bpmngraph.ActivityNode
+    * @return the meta object for class '<em>Base Element</em>'.
+    * @see org.imixs.bpmn.bpmngraph.BaseElement
     * @generated
     */
-   EClass getActivityNode();
+   EClass getBaseElement();
 
    /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.ActivityNode#getNodeType <em>Node Type</em>}'.
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.BaseElement#getName <em>Name</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Node Type</em>'.
-    * @see org.imixs.bpmn.bpmngraph.ActivityNode#getNodeType()
-    * @see #getActivityNode()
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.BaseElement#getName()
+    * @see #getBaseElement()
     * @generated
     */
-   EAttribute getActivityNode_NodeType();
+   EAttribute getBaseElement_Name();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.BaseElement#getDocumentation <em>Documentation</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Documentation</em>'.
+    * @see org.imixs.bpmn.bpmngraph.BaseElement#getDocumentation()
+    * @see #getBaseElement()
+    * @generated
+    */
+   EAttribute getBaseElement_Documentation();
+
+   /**
+    * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.FlowElement <em>Flow Element</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for class '<em>Flow Element</em>'.
+    * @see org.imixs.bpmn.bpmngraph.FlowElement
+    * @generated
+    */
+   EClass getFlowElement();
+
+   /**
+    * Returns the meta object for the attribute list '{@link org.imixs.bpmn.bpmngraph.FlowElement#getCategory <em>Category</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute list '<em>Category</em>'.
+    * @see org.imixs.bpmn.bpmngraph.FlowElement#getCategory()
+    * @see #getFlowElement()
+    * @generated
+    */
+   EAttribute getFlowElement_Category();
 
    /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.TaskNode <em>Task Node</em>}'.
@@ -1132,17 +1363,6 @@ public interface BpmngraphPackage extends EPackage {
    EClass getTaskNode();
 
    /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.TaskNode#getName <em>Name</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Name</em>'.
-    * @see org.imixs.bpmn.bpmngraph.TaskNode#getName()
-    * @see #getTaskNode()
-    * @generated
-    */
-   EAttribute getTaskNode_Name();
-
-   /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.GatewayNode <em>Gateway Node</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1151,17 +1371,6 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     */
    EClass getGatewayNode();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.GatewayNode#getName <em>Name</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Name</em>'.
-    * @see org.imixs.bpmn.bpmngraph.GatewayNode#getName()
-    * @see #getGatewayNode()
-    * @generated
-    */
-   EAttribute getGatewayNode_Name();
 
    /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.EventNode <em>Event Node</em>}'.
@@ -1174,17 +1383,6 @@ public interface BpmngraphPackage extends EPackage {
    EClass getEventNode();
 
    /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.EventNode#getName <em>Name</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Name</em>'.
-    * @see org.imixs.bpmn.bpmngraph.EventNode#getName()
-    * @see #getEventNode()
-    * @generated
-    */
-   EAttribute getEventNode_Name();
-
-   /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
@@ -1193,17 +1391,6 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     */
    EClass getPool();
-
-   /**
-    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.Pool#getName <em>Name</em>}'.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the meta object for the attribute '<em>Name</em>'.
-    * @see org.imixs.bpmn.bpmngraph.Pool#getName()
-    * @see #getPool()
-    * @generated
-    */
-   EAttribute getPool_Name();
 
    /**
     * Returns the meta object for class '{@link org.imixs.bpmn.bpmngraph.Icon <em>Icon</em>}'.
@@ -1260,22 +1447,48 @@ public interface BpmngraphPackage extends EPackage {
     */
    interface Literals {
       /**
-       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.ActivityNodeImpl <em>Activity Node</em>}' class.
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.BaseElementImpl <em>Base Element</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
-       * @see org.imixs.bpmn.bpmngraph.impl.ActivityNodeImpl
-       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getActivityNode()
+       * @see org.imixs.bpmn.bpmngraph.impl.BaseElementImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getBaseElement()
        * @generated
        */
-      EClass ACTIVITY_NODE = eINSTANCE.getActivityNode();
+      EClass BASE_ELEMENT = eINSTANCE.getBaseElement();
 
       /**
-       * The meta object literal for the '<em><b>Node Type</b></em>' attribute feature.
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
        * @generated
        */
-      EAttribute ACTIVITY_NODE__NODE_TYPE = eINSTANCE.getActivityNode_NodeType();
+      EAttribute BASE_ELEMENT__NAME = eINSTANCE.getBaseElement_Name();
+
+      /**
+       * The meta object literal for the '<em><b>Documentation</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute BASE_ELEMENT__DOCUMENTATION = eINSTANCE.getBaseElement_Documentation();
+
+      /**
+       * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.FlowElementImpl <em>Flow Element</em>}' class.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @see org.imixs.bpmn.bpmngraph.impl.FlowElementImpl
+       * @see org.imixs.bpmn.bpmngraph.impl.BpmngraphPackageImpl#getFlowElement()
+       * @generated
+       */
+      EClass FLOW_ELEMENT = eINSTANCE.getFlowElement();
+
+      /**
+       * The meta object literal for the '<em><b>Category</b></em>' attribute list feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute FLOW_ELEMENT__CATEGORY = eINSTANCE.getFlowElement_Category();
 
       /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.TaskNodeImpl <em>Task Node</em>}' class.
@@ -1288,14 +1501,6 @@ public interface BpmngraphPackage extends EPackage {
       EClass TASK_NODE = eINSTANCE.getTaskNode();
 
       /**
-       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute TASK_NODE__NAME = eINSTANCE.getTaskNode_Name();
-
-      /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
@@ -1304,14 +1509,6 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EClass GATEWAY_NODE = eINSTANCE.getGatewayNode();
-
-      /**
-       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute GATEWAY_NODE__NAME = eINSTANCE.getGatewayNode_Name();
 
       /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.EventNodeImpl <em>Event Node</em>}' class.
@@ -1324,14 +1521,6 @@ public interface BpmngraphPackage extends EPackage {
       EClass EVENT_NODE = eINSTANCE.getEventNode();
 
       /**
-       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute EVENT_NODE__NAME = eINSTANCE.getEventNode_Name();
-
-      /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.PoolImpl <em>Pool</em>}' class.
        * <!-- begin-user-doc -->
        * <!-- end-user-doc -->
@@ -1340,14 +1529,6 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EClass POOL = eINSTANCE.getPool();
-
-      /**
-       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-       * <!-- begin-user-doc -->
-       * <!-- end-user-doc -->
-       * @generated
-       */
-      EAttribute POOL__NAME = eINSTANCE.getPool_Name();
 
       /**
        * The meta object literal for the '{@link org.imixs.bpmn.bpmngraph.impl.IconImpl <em>Icon</em>}' class.

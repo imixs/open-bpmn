@@ -78,8 +78,12 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
    protected BpmngraphSwitch<Adapter> modelSwitch =
       new BpmngraphSwitch<Adapter>() {
          @Override
-         public Adapter caseActivityNode(ActivityNode object) {
-            return createActivityNodeAdapter();
+         public Adapter caseBaseElement(BaseElement object) {
+            return createBaseElementAdapter();
+         }
+         @Override
+         public Adapter caseFlowElement(FlowElement object) {
+            return createFlowElementAdapter();
          }
          @Override
          public Adapter caseTaskNode(TaskNode object) {
@@ -162,16 +166,30 @@ public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
 
 
    /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.ActivityNode <em>Activity Node</em>}'.
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.BaseElement <em>Base Element</em>}'.
     * <!-- begin-user-doc -->
     * This default implementation returns null so that we can easily ignore cases;
     * it's useful to ignore a case when inheritance will catch all the cases anyway.
     * <!-- end-user-doc -->
     * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.ActivityNode
+    * @see org.imixs.bpmn.bpmngraph.BaseElement
     * @generated
     */
-   public Adapter createActivityNodeAdapter() {
+   public Adapter createBaseElementAdapter() {
+      return null;
+   }
+
+   /**
+    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.FlowElement <em>Flow Element</em>}'.
+    * <!-- begin-user-doc -->
+    * This default implementation returns null so that we can easily ignore cases;
+    * it's useful to ignore a case when inheritance will catch all the cases anyway.
+    * <!-- end-user-doc -->
+    * @return the new adapter.
+    * @see org.imixs.bpmn.bpmngraph.FlowElement
+    * @generated
+    */
+   public Adapter createFlowElementAdapter() {
       return null;
    }
 

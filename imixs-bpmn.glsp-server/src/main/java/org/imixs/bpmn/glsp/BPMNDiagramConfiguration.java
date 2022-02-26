@@ -41,7 +41,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
    public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
       ModelTypes.SEND_TASK,
       ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.END_EVENT,
-      ModelTypes.START_EVENT, ModelTypes.EXCLUSIVE_GATEWAY);
+      ModelTypes.START_EVENT);
 
    /**
     * Returns the type mappings for the diagram implementation. Type mappings are used by GSON to construct the correct
@@ -59,7 +59,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       mappings.put(ModelTypes.LABEL_ICON, GraphPackage.Literals.GLABEL);
       mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
       mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
-      mappings.put(ModelTypes.ACTIVITY_NODE, BpmngraphPackage.Literals.ACTIVITY_NODE);
+      // mappings.put(ModelTypes.ACTIVITY_NODE, BpmngraphPackage.Literals.ACTIVITY_NODE);
 
       mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY_NODE);
 
