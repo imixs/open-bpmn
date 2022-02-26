@@ -1272,13 +1272,22 @@ public interface BpmngraphPackage extends EPackage {
    int SEQUENCE_FLOW__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
 
    /**
+    * The feature id for the '<em><b>Name</b></em>' attribute.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @generated
+    * @ordered
+    */
+   int SEQUENCE_FLOW__NAME = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+
+   /**
     * The feature id for the '<em><b>Condition</b></em>' attribute.
     * <!-- begin-user-doc -->
     * <!-- end-user-doc -->
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+   int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 1;
 
    /**
     * The number of structural features of the '<em>Sequence Flow</em>' class.
@@ -1287,7 +1296,7 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     * @ordered
     */
-   int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+   int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 2;
 
    /**
     * The number of operations of the '<em>Sequence Flow</em>' class.
@@ -1411,6 +1420,17 @@ public interface BpmngraphPackage extends EPackage {
     * @generated
     */
    EClass getSequenceFlow();
+
+   /**
+    * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getName <em>Name</em>}'.
+    * <!-- begin-user-doc -->
+    * <!-- end-user-doc -->
+    * @return the meta object for the attribute '<em>Name</em>'.
+    * @see org.imixs.bpmn.bpmngraph.SequenceFlow#getName()
+    * @see #getSequenceFlow()
+    * @generated
+    */
+   EAttribute getSequenceFlow_Name();
 
    /**
     * Returns the meta object for the attribute '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getCondition <em>Condition</em>}'.
@@ -1549,6 +1569,14 @@ public interface BpmngraphPackage extends EPackage {
        * @generated
        */
       EClass SEQUENCE_FLOW = eINSTANCE.getSequenceFlow();
+
+      /**
+       * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      EAttribute SEQUENCE_FLOW__NAME = eINSTANCE.getSequenceFlow_Name();
 
       /**
        * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
