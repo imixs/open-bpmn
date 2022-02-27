@@ -15,33 +15,66 @@ https://vectr.com/editor/
 
 
 
-## Example
+## SVG Examples
 
 Circle:
 
 	 <circle cx="100" cy="90" r="50" stroke="#5cb85c" stroke-width="6" fill="#5cb85c"></circle>
 	 
 
-Route:
 
-	<g  >
-	  <path stroke="#5cb85c" d="M 20,20 L 20,66 M 20,72 L 20,39.5 L 95.0250628144669,39.5"></path>
-	  <path stroke="#5cb85c" d="M 1,0 L 14,-4 L 14,4 Z" transform="rotate(180 395.0250628144669 239.5) translate(395.0250628144669 239.5)" </path>
-	  </g>
+Route with corners
+
+NW
+
+	<svg width="12cm" height="5.25cm" viewBox="0 0 1200 400"
+	     xmlns="http://www.w3.org/2000/svg" version="1.1">
+	   <path stroke="red" fill="none" stroke-width="4"
+	      d="M100,250 L100,100  L250 100" />
+	  <path fill="none" stroke="#000000" stroke-width="4"
+	      d="M 100,250   L100,200 Q100,100 200,100     L250 100">
+	  </path>
+	</svg>
 
 
+NE
 
-Eine Eckige Linie
-
-	<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" version="1.1">
-		<g  >
-		  <path fill="#ffffff" stroke="#5cb85c" d="M 30,10 L 145,10 L 145,65"></path>
-		  </g>
+	<svg width="12cm" height="5.25cm" viewBox="0 0 1200 400"
+	     xmlns="http://www.w3.org/2000/svg" version="1.1">
+	   <path stroke="red" fill="none" stroke-width="4"
+	      d="M100,100 L250,100  L250 250" />
+	  <path fill="none" stroke="#000000" stroke-width="4"
+	      d="M 100,100   L200,100 Q250,100 250,200     L250 250">
+	  </path>
 	</svg>
 
 
 
-Hand:
+SW
+
+	<svg width="12cm" height="5.25cm" viewBox="0 0 1200 400"
+	     xmlns="http://www.w3.org/2000/svg" version="1.1">
+	   <path stroke="red" fill="none" stroke-width="4"
+	      d="M100,100   L100,250  L250 250" />
+	  <path fill="none" stroke="#000000" stroke-width="4"
+	      d="M 100,100   L100,200 Q100,250 150,250     L250 250">
+	  </path>
+	</svg>
+
+
+SE
+
+	<svg width="12cm" height="5.25cm" viewBox="0 0 1200 400"
+	     xmlns="http://www.w3.org/2000/svg" version="1.1">
+	   <path stroke="red" fill="none" stroke-width="4"
+	      d="M100,250   L250,250  L250 100" />
+	  <path fill="none" stroke="#000000" stroke-width="4"
+	      d="M 100,250   L200,250 Q250,250 250,200     L250 100">
+	  </path>
+	</svg>
+
+
+Symbol:
 
 
 	<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" version="1.1">
