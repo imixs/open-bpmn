@@ -25,6 +25,8 @@ import {
     overrideViewerOptions,
     RevealNamedElementActionProvider,
     RoundedCornerNodeView,
+    CircularPort,
+    CircularNodeView,
     SCompartment,
     SCompartmentView,
     SEdge,
@@ -75,6 +77,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
+
+    configureModelElement(context, 'port', CircularPort, CircularNodeView);
 });
 
 export default function createContainer(widgetId: string): Container {

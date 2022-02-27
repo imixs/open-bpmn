@@ -71,20 +71,37 @@
     fill: #425C81;
 }
 
+/*** Events ***/
 
 .sprotty-node.event > text.heading {
 	text-anchor:middle; 
 }
-
 .sprotty-node.event.start > circle {
 	fill: #57A14C;
 }
-
 .sprotty-node.event.end > circle {
 	fill: #BE5961;
 }
 
+/*** Ports ***/
+.sprotty-node .sprotty-port {
+	stroke-width: 1;
+	stroke: transparent;
+	fill: transparent;
+}
+.sprotty-graph.edge-modification-not-allowed-mode .sprotty-node.event:hover .sprotty-port,
+.sprotty-graph.edge-creation-select-target-mode .sprotty-node.event:hover .sprotty-port,
+.sprotty-graph.edge-reconnect-select-target-mode .sprotty-node.event:hover .sprotty-port {
+	fill: #d4d4d478;	
+}
+.sprotty-graph.edge-creation-select-target-mode .sprotty-node.event .sprotty-port.mouseover,
+.sprotty-graph.edge-reconnect-select-target-mode .sprotty-node.event .sprotty-port.mouseover {
+	fill: rgb(85, 87, 83);
+	stroke: #f57900;
+} 
 
+
+/*** Gateways ***/
 
 .sprotty-node.gateway > text.heading {
 	text-anchor:middle; 
@@ -103,14 +120,7 @@
 
 
 
-.sprotty-edge.xxsequenceflow.low:not(.selected),
-.sprotty-edge.sxxequenceflow.low:not(.selected) .arrow {
-    stroke: rgb(128, 90, 233);
-}
 
-.sprotty-edge.xxxsequenceflow.low:not(.selected) .arrow {
-    fill: rgb(128, 90, 233);
-}
 
 /* sequence flow */
 .sprotty-edge.sequenceflow:not(.selected),

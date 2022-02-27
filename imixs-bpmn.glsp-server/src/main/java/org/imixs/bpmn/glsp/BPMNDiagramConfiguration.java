@@ -38,10 +38,18 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
-   public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
+   public final static List<String> ALL_BPMN_ACTIVITIESXXXX = Arrays.asList(ModelTypes.MANUAL_TASK,
+      ModelTypes.SCRIPT_TASK,
       ModelTypes.SEND_TASK,
       ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.END_EVENT,
       ModelTypes.START_EVENT);
+
+   public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
+      ModelTypes.SEND_TASK,
+      ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY, "port");
+
+   public final static List<String> ALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
+      ModelTypes.SEND_TASK, DefaultTypes.PORT);
 
    /**
     * Returns the type mappings for the diagram implementation. Type mappings are used by GSON to construct the correct
@@ -126,11 +134,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
    public List<EdgeTypeHint> getEdgeTypeHints() {
       List<EdgeTypeHint> edgeHints = new ArrayList<>();
       edgeHints.add(createDefaultEdgeTypeHint(EDGE));
-      EdgeTypeHint sequenceFlowHint = super.createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
+      EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
 
       // allow all elements
-      sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-      sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
+      // sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
+      // sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
       edgeHints.add(sequenceFlowHint);
       return edgeHints;
    }

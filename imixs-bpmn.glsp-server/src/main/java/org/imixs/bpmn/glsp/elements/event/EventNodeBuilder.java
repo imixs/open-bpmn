@@ -16,8 +16,10 @@
 package org.imixs.bpmn.glsp.elements.event;
 
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.EventNode;
@@ -50,32 +52,37 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       super.setProperties(node);
       node.setName(name);
       node.getCategory().add(eventType);
-      // .setNodeType(nodeType);
-
-      node.setLayout(GConstants.Layout.VBOX);
-      // node.getLayoutOptions().put("paddingRight", 10);
-
-      // node.getLayoutOptions().put("paddingBottom", 40);
-
-      // Set min width/height
-      // node.getLayoutOptions().put("minWidth", 40);
-      // node.getLayoutOptions().put("minHeight", 40);
-
-      node.getLayoutOptions().put("hAlign", "center");
-      node.getLayoutOptions().put("vAlign", "center");
-      node.getLayoutOptions().put("vGrab", true);
-      node.getLayoutOptions().put("hGrab", true);
+      node.setLayout(GConstants.Layout.FREEFORM);
 
       node.getChildren().add(createCompartmentHeader(node));
-
+      node.getChildren().add(createPort(node, -5.0, -25.0, "_north"));
+      node.getChildren().add(createPort(node, -25.0, -5.0, "_west"));
+      node.getChildren().add(createPort(node, 15.0, -5.0, "_east"));
+      node.getChildren().add(createPort(node, -5.0, 15.0, "_south"));
    }
 
-   private GLabel createCompartmentHeader(final EventNode taskNode) {
-
+   private GLabel createCompartmentHeader(final EventNode node) {
       return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-         .id(taskNode.getId() + "_classname") //
-         .text(taskNode.getName())
+         .id(node.getId() + "_classname") //
+         .text(node.getName())
          .build();
    }
 
+   /**
+    *
+    * See:
+    * https://github.com/eclipse-glsp/glsp/issues/264
+    *
+    * @param node
+    * @param x
+    * @param y
+    * @return
+    */
+   private GPort createPort(final EventNode node, final Double x, final Double y, final String subId) {
+      return new GPortBuilder()
+         .id(node.getId() + subId)
+         .position(x, y)
+         .size(10.0, 10.0)
+         .build();
+   }
 }

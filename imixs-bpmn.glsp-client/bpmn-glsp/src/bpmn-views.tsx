@@ -33,7 +33,7 @@ import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } 
 const JSX = { createElement: svg };
 
 /*
- * Layout for the bpmn sequence flow 
+ * Layout for the bpmn sequence flow
  */
 @injectable()
 export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
@@ -113,9 +113,6 @@ export class IconView extends ShapeView {
 			}
 		}
 
-		
-
-
 		// did we have now a icon?
 		if (!icon) {
 			return undefined;
@@ -160,10 +157,11 @@ export class GatewayNodeView extends ShapeView {
 		let gatewaySymbol = undefined;
 		if (element.type === "gateway:exclusive") {
 			// eslint-disable-next-line max-len
-			gatewaySymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
+			gatewaySymbol = "M14 7v1H8v6H7V8H1V7h6V1h1v6h6z";
 		} else {
 			// default symbol
-			gatewaySymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
+			// eslint-disable-next-line max-len
+			gatewaySymbol = "M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z";
 		}
 		// find the label:heading
 		let header = undefined;
@@ -206,9 +204,6 @@ export class GatewayNodeView extends ShapeView {
 	}
 }
 
-
-
-
 @injectable()
 export class EventNodeView extends ShapeView {
 	render(element: EventNode, context: RenderingContext): VNode | undefined {
@@ -226,28 +221,37 @@ export class EventNodeView extends ShapeView {
 			eventSymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
 		}
 		// find the label:heading
-		let header = undefined;
+		//let header = undefined;
+		//let port = undefined;
 		for (const entry of element.children) {
 			if (entry instanceof SLabel && entry.type === "label:heading") {
-				header = entry;
+				//header = entry;
 				// adjust allignment and position
-				header.alignment = { x: 0, y: 0 };
-				header.position = { x: 0, y: 40 };
+				//header.alignment = { x: 0, y: 0 };
+				//header.position = { x: 0, y: 40 };
+				entry.alignment = { x: 0, y: 0 };
+				entry.position = { x: 0, y: 40 };
 			}
+			
+			//if (entry instanceof SPort) {
+			//	console.log("!!!!!!! We found a Pport !");
+			//	console.log("... type="+entry.type + " position=" +entry.position.x + ","+entry.position.y);
+			//	port = entry;
+			//}
 		}
 
 		/*  text-anchor="middle"  waere die lösung */
 		let vnode = undefined;
-		if (header) {
+		if (eventSymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
-				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
+				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
 					<circle r="20" cx="0" cy="0" ></circle>
 					<g class-icon={true}>
 						<path transform={'scale(2.0) translate(-7.5,-7.5)'}
 							d={eventSymbol} />
 					</g>
-					{context.renderElement(header)}
+					{context.renderChildren(element)}
 				</g>
 			);
 		} else {
@@ -265,13 +269,4 @@ export class EventNodeView extends ShapeView {
 		return vnode;
 	}
 }
-
-
-
-
-
-
-
-
-
 
