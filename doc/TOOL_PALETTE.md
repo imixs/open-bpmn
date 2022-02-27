@@ -6,7 +6,7 @@ GLSP provides different ways to provide command actions in the modeling pane to 
 
 The ToolPalette is a graphical element shown all nodes and edges the user could place into a model. If you do not specify a custom Tool PaletteItemProvider, GLSP will automatically create a default Tool Palette for you, listing all your nodes and edges defined in your server model.
 
-<img src="ToolPaletteItemProvider-01.png" />
+<img src="./images/ToolPaletteItemProvider-01.png" />
 
 The items will be sorted in alphanumeric order and grouped by 'Nodes' and 'Edges'.  Of course you can define your own ToolPaletteItemProvider, for example to group your different CreationActions in  a custom order. To do so you need to implement a `ToolPaletteItemProvider` and overwrite at least the method `getItems`. 
 
@@ -116,10 +116,10 @@ Finally you need to bind your custom ToolPaletteItemProvider in your server Diag
    }
 ```
 
-<img src="ToolPaletteItemProvider-02.png" /> 
+<img src="./images/ToolPaletteItemProvider-02.png" /> 
 
 ## The CommandPaletteActionProvider
 
 Another Palette Feature is the CommandPalette. This command palette opens up on `Ctrl+Space` and shows actions in a specific context.
 
-<img src="CommandPaletteItemProvider-01.png" /> 
+<img src="./images/CommandPaletteItemProvider-01.png" /> 

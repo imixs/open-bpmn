@@ -1,6 +1,6 @@
-# BPMN 2.0 ecore
+# BPMN 2.0 EMF
 
-The *bpmn-graph.ecore* file defines the graphical model of BPMN 2.0 used in Open BPMN. The adapted node and edge elements within this model are designed to meet the requirements for the graphical modeling of a BPMN diagram. This includes the *Common Executable Conformance Sub-Class*. This conformance sub-class is intended for modeling tools that can emit executable models, which is the main purpose of Open BPMN. More details can be found in the [BPMN 2.0.2 specification](https://www.omg.org/spec/BPMN).
+The *bpmn-graph.ecore* file defines the graphical model of BPMN 2.0 used in Open BPMN. An .ecore file is a concept of the Eclispe Modeling Framework (EMF) and is used to describe model elements  The adapted node and edge elements of Open BPMN described within this model are designed to meet the requirements for the graphical modeling of a BPMN diagram. This includes the *Common Executable Conformance Sub-Class*. This conformance sub-class is intended for modeling tools that can emit executable models, which is the main purpose of Open BPMN. More details can be found in the [BPMN 2.0.2 specification](https://www.omg.org/spec/BPMN).
 
 
 
@@ -70,13 +70,13 @@ After the EMF file is defined you can need to recreate the genmodel file. Choose
 
 and create a new file ‘bpmn.genmodel’. Choose the importer ‘ecoremodel’. 
 
-<img src="./doc/emf-generator-01.png" />
+<img src="./images/emf-generator-01.png" />
 
 Click on load will verify the EMF model file created before.
 
 Next select both packages in the 'Package Selection' (the glsp-graph package includes the core elements form the GLSP project)
 
-<img src="./doc/emf-generator-02.png" />
+<img src="./images/emf-generator-02.png" />
 
 Click on 'Finish' to generate the *.genmodel* file.
 
@@ -84,11 +84,11 @@ Click on 'Finish' to generate the *.genmodel* file.
 
 Now you can generate the java classes. Before you can start, you need to change some of the details of the new *.genfile*.  Open the *.genfile* and choose the root element of the bpmnGraph. In the property view change the package name into `org.imixs.bpmn`:
 
-<img src="./doc/emf-generator-03.png" />
+<img src="./images/emf-generator-03.png" />
 
 Next choose the root element of you glsp graph model. In the property view change the package name to `org.eclipse.glsp`. 
 
-<img src="./doc/emf-generator-04.png" />
+<img src="./images/emf-generator-04.png" />
 
 Click on the root element of the genfile and choose ‘Generate Model Code’. This will create the class files in the predefined package. 
 

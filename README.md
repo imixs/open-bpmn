@@ -85,3 +85,15 @@ the engine can interpret. When the Task is ready to start, the engine will execu
 the Task will also be completed
 
 
+# Development
+
+Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts the different concepts in various ways. The following sections provide details about the development with Eclipse GLSP and the solutions used in Open BPMN.
+
+ - [Build your Own EMF Model](./doc/BPMN_EMF.md)
+ - [Tool Palette](./doc/TOOL_PALETTE.md)
+ - [Custom Element Views](./doc/CUSTOM_VIEWS.md)
+ - [Ports](./doc/PORTS.md)
+ 
+ 
+ 
+ 
