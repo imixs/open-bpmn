@@ -163,29 +163,28 @@ export class GatewayNodeView extends ShapeView {
 			// eslint-disable-next-line max-len
 			gatewaySymbol = "M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z";
 		}
-		// find the label:heading
-		let header = undefined;
+		
+		// find the label:heading and adust position
 		for (const entry of element.children) {
 			if (entry instanceof SLabel && entry.type === "label:heading") {
-				header = entry;
 				// adjust allignment and position
-				header.alignment = { x: 0, y: 0 };
-				header.position = { x: 0, y: 75 };
+				entry.alignment = { x: 0, y: 0 };
+				entry.position = { x: 0, y: 75 };
 			}
 		}
-
+		
 		/*  text-anchor="middle"  waere die lösung */
 		let vnode = undefined;
-		if (header) {
+		if (gatewaySymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
-				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
-					<rect x="0" y="0" width="40" height="40" transform={'rotate(45)'} ></rect>
+				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
+					<rect x="0" y="0" width="42" height="42" transform={'rotate(45)'} ></rect>
 					<g class-icon={true}>
 						<path transform={'scale(2.0) translate(-7.5,6.5)'}
 							d={gatewaySymbol} />
 					</g>
-					{context.renderElement(header)}
+					{context.renderChildren(element)}
 				</g>
 			);
 		} else {
@@ -220,24 +219,13 @@ export class EventNodeView extends ShapeView {
 			// default symbol
 			eventSymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
 		}
-		// find the label:heading
-		//let header = undefined;
-		//let port = undefined;
+		// find the label:heading and adust position
 		for (const entry of element.children) {
 			if (entry instanceof SLabel && entry.type === "label:heading") {
-				//header = entry;
 				// adjust allignment and position
-				//header.alignment = { x: 0, y: 0 };
-				//header.position = { x: 0, y: 40 };
 				entry.alignment = { x: 0, y: 0 };
 				entry.position = { x: 0, y: 40 };
 			}
-			
-			//if (entry instanceof SPort) {
-			//	console.log("!!!!!!! We found a Pport !");
-			//	console.log("... type="+entry.type + " position=" +entry.position.x + ","+entry.position.y);
-			//	port = entry;
-			//}
 		}
 
 		/*  text-anchor="middle"  waere die lösung */

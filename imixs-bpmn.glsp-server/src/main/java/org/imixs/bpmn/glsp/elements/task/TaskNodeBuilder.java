@@ -27,10 +27,6 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
-   private static final String V_GRAB = "vGrab";
-   private static final String H_GRAB = "hGrab";
-   private static final String H_ALIGN = "hAlign";
-
    private final String name;
    private final String taskType;
 
@@ -58,17 +54,10 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
       node.getCategory().add(taskType);
 
       node.setLayout(GConstants.Layout.HBOX);
-      // node.getLayoutOptions().put("paddingRight", 10);
 
       // Set min width/height
       node.getLayoutOptions().put("minWidth", 160);
       node.getLayoutOptions().put("minHeight", 60);
-
-      // node.getLayoutOptions().put("paddingTop", 80);
-
-      // node.getLayoutOptions().put(H_ALIGN, "center");
-      // node.getLayoutOptions().put(H_GRAB, false);
-      // node.getLayoutOptions().put(V_GRAB, false);
 
       node.getLayoutOptions().put("hGap", 10);
       node.getLayoutOptions().put("vAlign", "center");

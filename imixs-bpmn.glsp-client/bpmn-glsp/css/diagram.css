@@ -89,13 +89,13 @@
 	stroke: transparent;
 	fill: transparent;
 }
-.sprotty-graph.edge-modification-not-allowed-mode .sprotty-node.event:hover .sprotty-port,
-.sprotty-graph.edge-creation-select-target-mode .sprotty-node.event:hover .sprotty-port,
-.sprotty-graph.edge-reconnect-select-target-mode .sprotty-node.event:hover .sprotty-port {
+.sprotty-graph.edge-modification-not-allowed-mode .sprotty-node:hover .sprotty-port,
+.sprotty-graph.edge-creation-select-target-mode .sprotty-node:hover .sprotty-port,
+.sprotty-graph.edge-reconnect-select-target-mode .sprotty-node:hover .sprotty-port {
 	fill: #d4d4d478;	
 }
-.sprotty-graph.edge-creation-select-target-mode .sprotty-node.event .sprotty-port.mouseover,
-.sprotty-graph.edge-reconnect-select-target-mode .sprotty-node.event .sprotty-port.mouseover {
+.sprotty-graph.edge-creation-select-target-mode .sprotty-node .sprotty-port.mouseover,
+.sprotty-graph.edge-reconnect-select-target-mode .sprotty-node .sprotty-port.mouseover {
 	fill: rgb(85, 87, 83);
 	stroke: #f57900;
 } 

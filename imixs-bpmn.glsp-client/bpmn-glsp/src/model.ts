@@ -101,26 +101,6 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
     }
 }
 
-/*
- * Helper Methods to determind if a ModelElemtn is of a specific type
- * The methods return the corresponding node
- */
-export function isTaskNode(element: SModelElement): element is TaskNode {
-    return element instanceof TaskNode || false;
-}
-
-export function isEventNode(element: SModelElement): element is EventNode {
-    return element instanceof EventNode || false;
-}
-
-export function isGatewayNode(element: SModelElement): element is GatewayNode {
-    return element instanceof GatewayNode || false;
-}
-
-export class SequenceFlow extends SEdge {
-    condition?: string;
-}
-
 export class GatewayNode extends DiamondNode implements Nameable, WithEditableLabel {
 	static readonly DEFAULT_FEATURES = [
         connectableFeature,
@@ -159,6 +139,28 @@ export namespace GatewayNode {
         export const UNDEFINED = 'undefined';
     }
 }
+
+
+/*
+ * Helper Methods to determind if a ModelElemtn is of a specific type
+ * The methods return the corresponding node
+ */
+export function isTaskNode(element: SModelElement): element is TaskNode {
+    return element instanceof TaskNode || false;
+}
+
+export function isEventNode(element: SModelElement): element is EventNode {
+    return element instanceof EventNode || false;
+}
+
+export function isGatewayNode(element: SModelElement): element is GatewayNode {
+    return element instanceof GatewayNode || false;
+}
+
+export class SequenceFlow extends SEdge {
+    condition?: string;
+}
+
 
 export class Icon extends SShapeElement implements LayoutContainer {
     static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
