@@ -60,12 +60,15 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
       // Create custom Palette Groups
       List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
       return Lists.newArrayList(
-         PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(), "symbol-property", "A"),
-         PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(), "symbol-property", "B"),
+
+         PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(), "symbol-property", "A"),
+
+         PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(), "symbol-property", "B"),
+         PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(), "symbol-property", "C"),
          PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(), "symbol-property",
-            "c"),
+            "D"),
          // show all edges
-         PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "d"));
+         PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "E"));
 
    }
 
@@ -79,13 +82,14 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
       List<PaletteItem> result = new ArrayList<>();
       result.add(new PaletteItem("manual-task", "Manual Task", new TriggerNodeCreationAction(ModelTypes.MANUAL_TASK)));
       result
+         .add(new PaletteItem("user-task", "User Task", new TriggerNodeCreationAction(ModelTypes.USER_TASK)));
+
+      result
          .add(new PaletteItem("service-task", "Service Task", new TriggerNodeCreationAction(ModelTypes.SERVICE_TASK)));
       result
-         .add(new PaletteItem("send-task", "Send Task", new TriggerNodeCreationAction(ModelTypes.SERVICE_TASK)));
+         .add(new PaletteItem("send-task", "Send Task", new TriggerNodeCreationAction(ModelTypes.SEND_TASK)));
       result
          .add(new PaletteItem("script-task", "Script Task", new TriggerNodeCreationAction(ModelTypes.SCRIPT_TASK)));
-      result
-         .add(new PaletteItem("user-task", "User Task", new TriggerNodeCreationAction(ModelTypes.USER_TASK)));
 
       return result;
    }
@@ -102,6 +106,18 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
       result
          .add(new PaletteItem("end-event", "End Event", new TriggerNodeCreationAction(ModelTypes.END_EVENT)));
 
+      return result;
+   }
+
+   /**
+    * Create a palette Item Group with Pools and Lanes
+    *
+    * @return
+    */
+   protected List<PaletteItem> createPalettePools() {
+
+      List<PaletteItem> result = new ArrayList<>();
+      result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(ModelTypes.POOL)));
       return result;
    }
 

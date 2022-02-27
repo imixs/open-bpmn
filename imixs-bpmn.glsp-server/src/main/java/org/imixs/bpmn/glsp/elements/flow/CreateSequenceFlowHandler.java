@@ -19,6 +19,7 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
@@ -35,7 +36,8 @@ public class CreateSequenceFlowHandler extends CreateEdgeOperationHandler {
       return Optional.of(new SequenceFlowBuilder() //
          .source(source) //
          .target(target) //
-         .addCssClass("medium") //
+         .addArgument(GArguments.edgePadding(10)) //
+         .addCssClass("sequenceflow") //
          .build());
    }
 

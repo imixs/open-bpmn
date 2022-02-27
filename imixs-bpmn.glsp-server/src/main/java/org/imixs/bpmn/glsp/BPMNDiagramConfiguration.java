@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp;
 
-import static org.eclipse.glsp.graph.DefaultTypes.EDGE;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -133,7 +131,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
    @Override
    public List<EdgeTypeHint> getEdgeTypeHints() {
       List<EdgeTypeHint> edgeHints = new ArrayList<>();
-      edgeHints.add(createDefaultEdgeTypeHint(EDGE));
+      // edgeHints.add(createDefaultEdgeTypeHint(EDGE));
       EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
 
       // allow all elements

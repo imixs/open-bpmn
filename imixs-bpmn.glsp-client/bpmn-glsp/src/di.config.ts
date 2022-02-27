@@ -29,7 +29,6 @@ import {
     CircularNodeView,
     SCompartment,
     SCompartmentView,
-    SEdge,
     SLabel,
     SLabelView,
     StructureCompartmentView,
@@ -66,7 +65,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'label:icon', SLabel, SLabelView);
-    configureModelElement(context, DefaultTypes.EDGE, SEdge, BPMNEdgeView);
+    //configureModelElement(context, DefaultTypes.EDGE, SEdge, BPMNEdgeView);
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNEdgeView);
     configureModelElement(context, 'icon', Icon, IconView);
 
@@ -78,7 +77,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
-    configureModelElement(context, 'port', CircularPort, CircularNodeView);
+    configureModelElement(context, DefaultTypes.PORT, CircularPort, CircularNodeView);
 });
 
 export default function createContainer(widgetId: string): Container {
