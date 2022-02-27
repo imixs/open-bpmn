@@ -14,46 +14,26 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-	angleOfPoint,
 	getSubType,
-	Point,
-	PolylineEdgeViewWithGapsOnIntersections,
 	RenderingContext,
-	SEdge,
 	SLabel,
-	setAttr,
-	toDegrees
+	setAttr
 } from '@eclipse-glsp/client';
+
+//import { IViewArgs, IView, RenderingContext } from "../base/views/view";
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
 import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from './model';
 
+/****************************************************************************
+ * This module provides BPMN element views like Gateways, or Events
+ *
+ ****************************************************************************/
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
-/*
- * Layout for the bpmn sequence flow
- */
-@injectable()
-export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
-	protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
-		const additionals = super.renderAdditionals(edge, segments, context);
-		const p1 = segments[segments.length - 2];
-		const p2 = segments[segments.length - 1];
-		const arrow = (
-			<path
-				class-sprotty-edge={true}
-				class-arrow={true}
-				d='M 1,0 L 14,-4 L 14,4 Z'
-				transform={`rotate(${toDegrees(angleOfPoint({ x: p1.x - p2.x, y: p1.y - p2.y }))} ${p2.x} ${p2.y}) translate(${p2.x} ${p2.y
-					})`}
-			/>
-		);
-		additionals.push(arrow);
-		return additionals;
-	}
-}
+
 
 /*
  * The IconView shows a icon within a TaskNode
@@ -163,7 +143,7 @@ export class GatewayNodeView extends ShapeView {
 			// eslint-disable-next-line max-len
 			gatewaySymbol = "M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z";
 		}
-		
+
 		// find the label:heading and adust position
 		for (const entry of element.children) {
 			if (entry instanceof SLabel && entry.type === "label:heading") {
@@ -172,7 +152,7 @@ export class GatewayNodeView extends ShapeView {
 				entry.position = { x: 0, y: 75 };
 			}
 		}
-		
+
 		/*  text-anchor="middle"  waere die lösung */
 		let vnode = undefined;
 		if (gatewaySymbol) {

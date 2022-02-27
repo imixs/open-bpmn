@@ -41,7 +41,8 @@ import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import { directTaskEditor } from './direct-task-editing/di.config';
 import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
-import { IconView, BPMNEdgeView, GatewayNodeView, EventNodeView } from './bpmn-views';
+import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
+import { BPMNSequenceFlowView } from './bpmn-routing-views';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
@@ -65,8 +66,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'label:icon', SLabel, SLabelView);
-    //configureModelElement(context, DefaultTypes.EDGE, SEdge, BPMNEdgeView);
-    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNEdgeView);
+    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
     configureModelElement(context, 'icon', Icon, IconView);
 
     configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);

@@ -36,18 +36,19 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
-   public final static List<String> ALL_BPMN_ACTIVITIESXXXX = Arrays.asList(ModelTypes.MANUAL_TASK,
-      ModelTypes.SCRIPT_TASK,
-      ModelTypes.SEND_TASK,
-      ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.END_EVENT,
-      ModelTypes.START_EVENT);
-
    public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
       ModelTypes.SEND_TASK,
-      ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY, "port");
+      ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
+      ModelTypes.START_EVENT, ModelTypes.END_EVENT);
+
+   public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(ModelTypes.MANUAL_TASK,
+      ModelTypes.SCRIPT_TASK,
+      ModelTypes.SEND_TASK,
+      ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
+      ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEQUENCE_FLOW);
 
    public final static List<String> ALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
-      ModelTypes.SEND_TASK, DefaultTypes.PORT);
+      ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, DefaultTypes.PORT);
 
    /**
     * Returns the type mappings for the diagram implementation. Type mappings are used by GSON to construct the correct
@@ -104,7 +105,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       nodeHints.add(new ShapeTypeHint(ModelTypes.END_EVENT, true, true, false, true));
 
       ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
-      catHint.setContainableElementTypeIds(ALL_BPMN_ACTIVITIES);
+      catHint.setContainableElementTypeIds(ALL_BPMN_FLOWELEMENTS);
       nodeHints.add(catHint);
 
       nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
@@ -146,8 +147,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
       EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
 
       // allow all
-      hint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-      hint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
+      hint.setSourceElementTypeIds(ALL_PORTS);
+      hint.setTargetElementTypeIds(ALL_PORTS);
       return hint;
    }
 
