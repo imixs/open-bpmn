@@ -66,8 +66,7 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 	 */
 	protected renderLine(edge: SEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
 		let path = '';
-		const radius=10;
-		console.log('*** === ich bin in ner irren methode ! wir haben ' + segments.length + ' segmente');
+		const radius = 10;
 		for (let i = 0; i < segments.length; i++) {
 			const p = segments[i];
 			// start point?
@@ -78,41 +77,48 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 				path += this.intersectionPath(edge, segments, p, args);
 			}
 			// line...
-			if (i !== 0) {
+			if (i > 0) {
 				// compute the direction of the next line...
 				if (i < segments.length - 1) {
 					const plast = segments[i - 1];
 					const pnext = segments[i + 1];
-					const direction = this.computeDirection(plast, p, pnext);
-					if (direction) {
-						console.log("...direction = " + direction);
-						// rounded corner...
-						if ('NE' === direction) {
-							// M 100,100   L200,100 Q250,100 250,200
-							path += ` L ${p.x - radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y + radius}`;
-						} else if ('SW' === direction) {
-							// M 100,100   L100,200 Q100,250 150,250
-							path += ` L ${p.x},${p.y - radius}  Q ${p.x},${p.y} ${p.x + radius},${p.y}`;
-						} else if ('SE' === direction) {
-							//M 100,250   L200,250 Q250,250 250,200
-							path += ` L ${p.x - radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y - radius}`;
-						} else if ('NW' === direction) {
-							//M100,250 L100,100  L250 100
-							path += ` L ${p.x},${p.y+radius}  Q ${p.x},${p.y} ${p.x+radius},${p.y}`;
-						} else {
-							path += ` L ${p.x},${p.y}`;
-						}
-
+					// draw lines ending with rounded corners...
+					// right-down  ↴
+					if (plast.x < p.x && p.y < pnext.y) {
+						path += ` L ${p.x - radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y + radius}`;
+						// down-right  ↳
+					} else if (plast.y < p.y && p.x < pnext.x) {
+						path += ` L ${p.x},${p.y - radius}  Q ${p.x},${p.y} ${p.x + radius},${p.y}`;
+						// right-up  _↑
+					} else if (plast.x < p.x && p.y > pnext.y) {
+						path += ` L ${p.x - radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y - radius}`;
+						// up-right  ↱
+					} else if (plast.y > p.y && p.x < pnext.x) {
+						path += ` L ${p.x},${p.y + radius}  Q ${p.x},${p.y} ${p.x + radius},${p.y}`;
+						// down-left  ↲
+					} else if (plast.y < p.y && p.x > pnext.x) {
+						path += ` L ${p.x},${p.y - radius}  Q ${p.x},${p.y} ${p.x - radius},${p.y}`;
+						// left-down  ↓-
+					} else if (plast.x > p.x && p.y < pnext.y) {
+						path += ` L ${p.x+ radius},${p.y }  Q ${p.x},${p.y} ${p.x },${p.y + radius}`;
+						// up-left  ↰
+					} else if (plast.y > p.y && p.x > pnext.x) {
+						path += ` L ${p.x},${p.y+ radius }  Q ${p.x},${p.y} ${p.x- radius },${p.y}`;
+						// left-up ↑_
+					} else if (plast.x > p.x && p.y > pnext.y) {
+						path += ` L ${p.x + radius},${p.y }  Q ${p.x},${p.y} ${p.x},${p.y - radius }`;
+					} else {
+						// default
+						path += ` L ${p.x},${p.y}`;
 					}
+
 				} else {
 					// default behaviour 
 					path += ` L ${p.x},${p.y}`;
 				}
 			}
 
-
 		}
-		console.log('*** ende');
 		return <path d={path} />;
 	}
 
