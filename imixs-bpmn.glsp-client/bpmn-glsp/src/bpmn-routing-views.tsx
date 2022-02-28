@@ -30,16 +30,14 @@ import { svg } from 'sprotty';
 /****************************************************************************
  * This module provides BPMN Routings views for sequence flows
  *
+ * Layout for the bpmn sequence flow. The View extends the `PolylineEdgeView` that renders gaps on intersections,
+ * and the `JumpingPolylineEdgeView` that renders jumps over intersections.
+ * In addition the view render rounded corners for a manhattan routing and an arrow on the edge end point
  ****************************************************************************/
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
-/*
- * Layout for the bpmn sequence flow. The View extends the `PolylineEdgeView` that renders gaps on intersections,
- * and the `JumpingPolylineEdgeView` that renders jumps over intersections.
- *
- */
 @injectable()
 export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersections {
 	protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
@@ -113,46 +111,11 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 					}
 
 				} else {
-					// default behaviour 
+					// default behaviour
 					path += ` L ${p.x},${p.y}`;
 				}
 			}
-
 		}
 		return <path d={path} />;
 	}
-
-	/*
-	 * compute corner segment for next point
-	 */
-	protected computeDirection(plast: Point, p: Point, pnext: Point) {
-		console.log('compute direction.... plast=' + plast.x + ',' + plast.y + ' P=' + p.x + ',' + p.y + ' pnext=' + pnext.x + ',' + pnext.y);
-		/*  plast  p       pnext
-		 *  0,0    10,0    10,10  = NE  
-		 *  0,0    0,10,   10,10  = SW
-		 *  0,10   10,10,  10,0   = SE
-		 *
-		 *  0,10   0,0     10,0   = NW
-		 */
-		if (plast.x < p.x && p.x === pnext.x && plast.y === p.y && p.y < pnext.y) {
-			return 'NE';
-		}
-		if (plast.x === p.x && p.x < pnext.x && plast.y < p.y && p.y === pnext.y) {
-			return 'SW';
-		}
-		if (plast.x < p.x && p.x === pnext.x && plast.y === p.y && p.y > pnext.y) {
-			return 'SE';
-		}
-
-		if (plast.x === p.x && p.x < pnext.x && plast.y > p.y && p.y === pnext.y) {
-			return 'NW';
-		}
-
-		//M100,250 L100,100  L250 100
-
-
-		return '';
-	}
 }
-
-
