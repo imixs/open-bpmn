@@ -57,6 +57,7 @@ public class BPMNBuilderHelper {
          .id(node.getId() + subId)
          .position(x, y)
          .size(10.0, 10.0)
+         .addCssClass("bpmn-port")
          .build();
    }
 }

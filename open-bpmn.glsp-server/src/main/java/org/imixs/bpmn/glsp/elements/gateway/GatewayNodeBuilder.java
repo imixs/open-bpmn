@@ -63,7 +63,7 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
       node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, -5.0, "_north"));
       node.getChildren().add(BPMNBuilderHelper.createPort(node, -35.0, 25.0, "_west"));
       node.getChildren().add(BPMNBuilderHelper.createPort(node, 25.0, 25.0, "_east"));
-      node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, 50.0, "_south"));
+      node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, 55.0, "_south"));
    }
 
 }

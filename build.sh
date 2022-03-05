@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "***************************************"
-echo "* Build - Open BPMN.....             *"
+echo "* Build - Open BPMN.....              *"
 buildBackend='false'
 buildFrontend='false'
 forceFrontend='false'
@@ -8,9 +8,9 @@ forceFrontend='false'
 if [[ $1 == "-h" ]]; then
   printf "Usage: build.sh [-h] [-b] [-ff] [-f]\n\n"
   echo "Options:"
-  echo "  -b   Build Backend"
-  echo "  -ff  Remove yarn.lock"
-  echo "  -f   Build Frontend"
+  echo "  -b   building Backend..."
+  echo "  -ff  remove yarn.lock..."
+  echo "  -f   building Frontend..."
   exit 0
 fi
 echo "***************************************"
@@ -44,9 +44,9 @@ while [ "$1" != "" ]; do
   shift
 done
 
-[[ "$buildBackend" == "true" ]] && echo "  Build Backend (-b)"
-[[ "$forceFrontend" == "true" ]] && echo "  Remove yarn.lock (-ff)"
-[[ "$buildFrontend" == "true" ]] && echo "  Build Frontend (-f)"
+[[ "$buildBackend" == "true" ]] && echo "  building Backend (-b)"
+[[ "$forceFrontend" == "true" ]] && echo "  remove yarn.lock (-ff)"
+[[ "$buildFrontend" == "true" ]] && echo "  building Frontend (-f)"
 
 if [ "$buildBackend" == "true" ]; then
   echo "$(date +"[%T.%3N]") Build backend products"

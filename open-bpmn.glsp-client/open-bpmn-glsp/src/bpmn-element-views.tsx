@@ -20,7 +20,6 @@ import {
 	setAttr
 } from '@eclipse-glsp/client';
 
-//import { IViewArgs, IView, RenderingContext } from "../base/views/view";
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
@@ -32,8 +31,6 @@ import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } 
  ****************************************************************************/
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
-
-
 
 /*
  * The IconView shows a icon within a TaskNode
@@ -119,10 +116,6 @@ export class IconView extends ShapeView {
 	}
 }
 
-
-
-
-
 /**
  * This  gateway...
  */
@@ -135,18 +128,18 @@ export class GatewayNodeView extends ShapeView {
 
 		// first we compute the gateway symbol based on the gateway type
 		let gatewaySymbol = undefined;
-		if (element.type === "gateway:exclusive") {
+		if (element.type === 'gateway:exclusive') {
 			// eslint-disable-next-line max-len
-			gatewaySymbol = "M14 7v1H8v6H7V8H1V7h6V1h1v6h6z";
+			gatewaySymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
 		} else {
 			// default symbol
 			// eslint-disable-next-line max-len
-			gatewaySymbol = "M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z";
+			gatewaySymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
 		}
 
 		// find the label:heading and adust position
 		for (const entry of element.children) {
-			if (entry instanceof SLabel && entry.type === "label:heading") {
+			if (entry instanceof SLabel && entry.type === 'label:heading') {
 				// adjust allignment and position
 				entry.alignment = { x: 0, y: 0 };
 				entry.position = { x: 0, y: 75 };
@@ -159,8 +152,8 @@ export class GatewayNodeView extends ShapeView {
 			vnode = (
 				// render circle with a event symbol and the label:heading
 				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<rect x="0" y="0" width="42.5" height="42.5" transform={'rotate(45)'} ></rect>
-					<g class-icon={true}>
+					<rect x="0" y="0" width="42.5" height="42.5" transform={'rotate(45)'}></rect>
+					<g class-bpmn-symbol={true}>
 						<path transform={'scale(2.0) translate(-7.5,6.5)'}
 							d={gatewaySymbol} />
 					</g>
@@ -201,7 +194,7 @@ export class EventNodeView extends ShapeView {
 		}
 		// find the label:heading and adust position
 		for (const entry of element.children) {
-			if (entry instanceof SLabel && entry.type === "label:heading") {
+			if (entry instanceof SLabel && entry.type === 'label:heading') {
 				// adjust allignment and position
 				entry.alignment = { x: 0, y: 0 };
 				entry.position = { x: 0, y: 40 };
@@ -214,8 +207,8 @@ export class EventNodeView extends ShapeView {
 			vnode = (
 				// render circle with a event symbol and the label:heading
 				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r="20" cx="0" cy="0" ></circle>
-					<g class-icon={true}>
+					<circle r='20' cx='0' cy='0' ></circle>
+					<g class-bpmn-symbol={true}>
 						<path transform={'scale(2.0) translate(-7.5,-7.5)'}
 							d={eventSymbol} />
 					</g>
