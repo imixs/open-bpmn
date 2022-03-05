@@ -62,7 +62,7 @@ if [ "$forceFrontend" == "true" ]; then
 fi
 
 if [ "$buildFrontend" == "true" ]; then
-  cd imixs-bpmn.glsp-client/
+  cd open-bpmn.glsp-client/
   yarn
   yarn start
   cd ..

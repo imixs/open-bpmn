@@ -1,4 +1,4 @@
-# Imixs-BPMN (GLSP)
+# Open-BPMN 
 
 BPMN Modeler based on Eclipse Graphical Language Server Platform
 

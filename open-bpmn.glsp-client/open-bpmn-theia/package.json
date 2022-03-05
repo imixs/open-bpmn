@@ -1,6 +1,6 @@
 {
   "private": "true",
-  "name": "@imixs-bpmn/bpmn-theia",
+  "name": "@open-bpmn/open-bpmn-theia",
   "version": "0.0.6",
   "description": "Theia extension for the BPMN GLSP Client",
   "license": "(GPL-3.0)",
@@ -27,7 +27,7 @@
     "src"
   ],
   "dependencies": {
-    "@imixs-bpmn/bpmn-glsp": "0.0.6",
+    "@open-bpmn/open-bpmn-glsp": "0.0.6",
     "@eclipse-glsp/theia-integration": "0.9.0",
     "@eclipse-glsp/client": "0.9.0"
   },

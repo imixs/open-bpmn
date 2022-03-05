@@ -1,6 +1,6 @@
 {
   "private": "true",
-  "name": "@imixs-bpmn/bpmn-glsp",
+  "name": "@open-bpmn/open-bpmn-glsp",
   "version": "0.0.6",
   "description": "GLSP sprotty diagrams for the BPMN DSL",
   "license": "(GPL-3.0)",
