@@ -29,8 +29,8 @@
     "lint": "lerna run lint --",
     "simpleInstall": "yarn install --ignore-scripts",
     "rebuild:browser": "theia rebuild:browser",
-    "start": "yarn rebuild:browser && yarn --cwd bpmn-browser-app start",
-    "start:external": "yarn rebuild:browser && yarn --cwd bpmn-browser-app start:external"
+    "start": "yarn rebuild:browser && yarn --cwd open-bpmn-app start",
+    "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
   },
   "devDependencies": {
     "@eclipse-glsp/config": "0.9.0",
@@ -38,9 +38,9 @@
     "typescript": "^3.9.2"
   },
   "workspaces": [
-    "bpmn-glsp",
-    "bpmn-theia",
-    "bpmn-browser-app"
+    "open-bpmn-glsp",
+    "open-bpmn-theia",
+    "open-bpmn-app"
   ],
 
   "resolutions": {

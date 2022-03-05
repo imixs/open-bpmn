@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "bpmn-browser-app",
+  "name": "open-bpmn-app",
   "version": "0.1.0",
   "dependencies": {
     "@theia/core": "1.20.0",

@@ -39,8 +39,8 @@ lib
 
 *.log
 
-**/*-browser-app/**
-!**/*-browser-app/package.json
+**/*-app/**
+!**/*-app/package.json
 
 
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "***************************************"
-echo "* Build - Imixs BPMN.....             *"
+echo "* Build - Open BPMN.....             *"
 buildBackend='false'
 buildFrontend='false'
 forceFrontend='false'

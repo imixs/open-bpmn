@@ -8,12 +8,12 @@
       "type": "node",
       "request": "launch",
       "name": "Launch BPMN Theia Backend (Embedded GLSP Server)",
-      "program": "${workspaceRoot}/bpmn-browser-app/src-gen/backend/main.js",
+      "program": "${workspaceRoot}/open-bpmn-app/src-gen/backend/main.js",
       "args": [
         "--port=3000",
         "--no-cluster",
         "--GLSP_PORT=5007",
-        "--app-project-path=${workspaceRoot}/bpmn-browser-app",
+        "--app-project-path=${workspaceRoot}/open-bpmn-app",
         "--root-dir=${workspaceRoot}/workspace"
       ],
       "env": {
@@ -23,10 +23,10 @@
       "outFiles": [
         "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
         "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
-        "${workspaceRoot}/bpmn-browser-app/lib/**/*.js",
-        "${workspaceRoot}/bpmn-theia/lib/**/*.js",
-        "${workspaceRoot}/bpmn-glsp/lib/**/*.js",
-        "${workspaceRoot}/bpmn-browser-app/src-gen/**/*.js"
+        "${workspaceRoot}/open-bpmn-app/lib/**/*.js",
+        "${workspaceRoot}/open-bpmn-theia/lib/**/*.js",
+        "${workspaceRoot}/open-bpmn-glsp/lib/**/*.js",
+        "${workspaceRoot}/open-bpmn-app/src-gen/**/*.js"
       ],
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
@@ -36,13 +36,13 @@
       "type": "node",
       "request": "launch",
       "name": "Launch BPMN Theia Backend (External GLSP Server)",
-      "program": "${workspaceRoot}/bpmn-browser-app/src-gen/backend/main.js",
+      "program": "${workspaceRoot}/open-bpmn-app/src-gen/backend/main.js",
       "args": [
         "--port=3000",
         "--no-cluster",
         "--GLSP_PORT=5007",
         "--debug",
-        "--app-project-path=${workspaceRoot}/bpmn-browser-app",
+        "--app-project-path=${workspaceRoot}/open-bpmn-app",
         "--root-dir=${workspaceRoot}/workspace"
       ],
       "env": {
@@ -52,10 +52,10 @@
       "outFiles": [
         "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
         "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
-        "${workspaceRoot}/bpmn-browser-app/lib/**/*.js",
-        "${workspaceRoot}/bpmn-theia/lib/**/*.js",
-        "${workspaceRoot}/bpmn-glsp/lib/**/*.js",
-        "${workspaceRoot}/bpmn-browser-app/src-gen/**/*.js"
+        "${workspaceRoot}/open-bpmn-app/lib/**/*.js",
+        "${workspaceRoot}/open-bpmn-theia/lib/**/*.js",
+        "${workspaceRoot}/open-bpmn-glsp/lib/**/*.js",
+        "${workspaceRoot}/open-bpmn-app/src-gen/**/*.js"
       ],
       "smartStep": true,
       "internalConsoleOptions": "openOnSessionStart",
@@ -67,7 +67,7 @@
       "request": "launch",
       "url": "http://localhost:3000/",
       "sourceMaps": true,
-      "webRoot": "${workspaceRoot}/bpmn-browser-app"
+      "webRoot": "${workspaceRoot}/open-bpmn-app"
     }
   ]
 }

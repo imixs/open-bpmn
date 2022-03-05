@@ -3,5 +3,5 @@
   "compilerOptions": {
     "baseUrl": "."
   },
-  "include": ["bpmn-glsp/src", "bpmn-theia/src", "bpmn-browser-app"]
+  "include": ["open-bpmn-glsp/src", "open-bpmn-theia/src", "open-bpmn-app"]
 }
