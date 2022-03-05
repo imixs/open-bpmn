@@ -2,11 +2,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.imixs.bpmn</groupId>
-		<artifactId>org.imixs.bpmn.glsp</artifactId>
+		<artifactId>org.imixs.open-bpmn</artifactId>
 		<version>0.0.6-SNAPSHOT</version>
 	</parent>
-	<artifactId>org.imixs.bpmn.glsp.server</artifactId>
-	<name>Imixs BPMN GLSP Server</name>
+	<artifactId>org.imixs.open-bpmn.server</artifactId>
+	<name>Imixs Open BPMN GLSP Server</name>
 
 
 	<properties>
