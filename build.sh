@@ -50,13 +50,13 @@ done
 
 if [ "$buildBackend" == "true" ]; then
   echo "$(date +"[%T.%3N]") Build backend products"
-  cd imixs-bpmn.glsp-server/
+  cd open-bpmn.glsp-server/
   mvn clean install
   cd ../
 fi
 
 if [ "$forceFrontend" == "true" ]; then
-  cd imixs-bpmn.glsp-client/
+  cd open-bpmn.glsp-client/
   rm -f ./yarn.lock
   cd ..
 fi

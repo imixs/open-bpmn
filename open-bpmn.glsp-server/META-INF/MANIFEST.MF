@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: imixs-bpmn.glsp-server;singleton:=true
-Automatic-Module-Name: imixs-bpmn.glsp-server
+Bundle-SymbolicName: open-bpmn.glsp-server;singleton:=true
+Automatic-Module-Name: open-bpmn.glsp-server
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName

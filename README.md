@@ -2,8 +2,8 @@
 
 BPMN Modeler based on Eclipse Graphical Language Server Platform
 
- - [imixs-bpmn.glsp-server](./imixs-bpmn.glsp-server/README.md) - contains the GLSP sever implementation
- - [imixs-bpmn.glsp-client](./imixs-bpmn.glsp-client/README.md) - contains the GLSP Client components and Theia integration
+ - [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) - contains the GLSP sever implementation
+ - [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) - contains the GLSP Client components and Theia integration
 
 
 ## Build and Run

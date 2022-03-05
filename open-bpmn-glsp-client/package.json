@@ -13,9 +13,9 @@
   "homepage": "https://www.imixs.org/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imixs/imixs-bpmn.glsp.git"
+    "url": "https://github.com/imixs/open-bpmn.git"
   },
-  "bugs": "https://github.com/imixs/imixs-bpmn.glsp/issues",
+  "bugs": "https://github.com/imixs/open-bpmn/issues",
   "contributors": [
     {
       "name": "Ralph Soika",
