@@ -25,9 +25,9 @@ import org.eclipse.glsp.graph.builder.impl.GEdgeBuilder;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.gmodel.CreateEdgeOperationHandler;
 
-public class CreateEdgeHandler extends CreateEdgeOperationHandler {
+public class XXCreateEdgeHandler extends CreateEdgeOperationHandler {
 
-   public CreateEdgeHandler() {
+   public XXCreateEdgeHandler() {
       super(DefaultTypes.EDGE, "Edge");
    }
 

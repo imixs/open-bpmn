@@ -34,10 +34,12 @@ buildNumber.properties
 node_modules
 node_modules/.yarn-integrity
 .browser_modules
-
+yarn.lock
 lib
 
 *.log
 
 **/*-browser-app/**
 !**/*-browser-app/package.json
+
+
