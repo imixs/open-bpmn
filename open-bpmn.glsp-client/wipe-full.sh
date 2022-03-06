@@ -21,6 +21,9 @@ rm -R ./open-bpmn-glsp/node_modules
 rm -R ./open-bpmn-theia/lib
 rm -R ./open-bpmn-theia/node_modules
 
+rm -R ./open-bpmn-welcome-page/lib
+rm -R ./open-bpmn-welcome-page/node_modules
+
 rm -R node_modules
 
 rm yarn.lock

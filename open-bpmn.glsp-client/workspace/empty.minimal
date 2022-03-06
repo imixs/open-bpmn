@@ -81,107 +81,17 @@
       "type": "event:start",
       "position": {
         "x": 100.0,
-        "y": 70.0
+        "y": 90.0
       },
       "size": {
         "width": 73.375,
         "height": 56.0
       },
       "layout": "freeform",
-      "args": {
-        "radiusBottomLeft": 5.0,
-        "radiusTopLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "category": [
-        "start"
-      ],
-      "name": "StartEvent1",
-      "id": "94ef1abb-f007-496f-a111-c99d1b26abf7",
-      "cssClasses": [
-        "event",
-        "start"
-      ],
-      "children": [
-        {
-          "id": "94ef1abb-f007-496f-a111-c99d1b26abf7_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 0.0,
-            "y": 40.0
-          },
-          "size": {
-            "width": 73.375,
-            "height": 16.0
-          },
-          "text": "StartEvent1",
-          "alignment": {
-            "x": 36.578125,
-            "y": 13.0
-          }
-        },
-        {
-          "id": "94ef1abb-f007-496f-a111-c99d1b26abf7_north",
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": -25.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "94ef1abb-f007-496f-a111-c99d1b26abf7_west",
-          "type": "port",
-          "position": {
-            "x": -25.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "94ef1abb-f007-496f-a111-c99d1b26abf7_east",
-          "type": "port",
-          "position": {
-            "x": 15.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "94ef1abb-f007-496f-a111-c99d1b26abf7_south",
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": 15.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        }
-      ],
-      "type": "event:start",
-      "position": {
-        "x": 90.0,
-        "y": 190.0
+      "layoutOptions": {
+        "prefWidth": 73.375,
+        "prefHeight": 56.0
       },
-      "size": {
-        "width": 73.375,
-        "height": 56.0
-      },
-      "layout": "freeform",
       "args": {
         "radiusBottomLeft": 5.0,
         "radiusTopLeft": 5.0,
@@ -232,8 +142,8 @@
       ],
       "type": "task:manual",
       "position": {
-        "x": 240.0,
-        "y": 60.0
+        "x": 290.0,
+        "y": 210.0
       },
       "size": {
         "width": 160.0,
@@ -241,10 +151,10 @@
       },
       "layout": "hbox",
       "layoutOptions": {
-        "minWidth": 160,
-        "hGap": 10,
+        "minWidth": 160.0,
+        "hGap": 10.0,
         "vAlign": "center",
-        "minHeight": 60,
+        "minHeight": 60.0,
         "prefWidth": 160.0,
         "prefHeight": 60.0
       },
@@ -254,8 +164,141 @@
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
+    },
+    {
+      "category": [
+        "exclusive"
+      ],
+      "name": "ExclusiveGateway0",
+      "id": "8220e226-0822-42cf-9d5f-477ccf2dc361",
+      "cssClasses": [
+        "gateway",
+        "exclusive"
+      ],
+      "children": [
+        {
+          "id": "8220e226-0822-42cf-9d5f-477ccf2dc361_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 0.0,
+            "y": 75.0
+          },
+          "size": {
+            "width": 122.390625,
+            "height": 16.0
+          },
+          "text": "ExclusiveGateway0",
+          "alignment": {
+            "x": 61.09375,
+            "y": 13.0
+          }
+        },
+        {
+          "id": "8220e226-0822-42cf-9d5f-477ccf2dc361_north",
+          "cssClasses": [
+            "bpmn-port"
+          ],
+          "type": "port",
+          "position": {
+            "x": -5.0,
+            "y": -5.0
+          },
+          "size": {
+            "width": 10.0,
+            "height": 10.0
+          }
+        },
+        {
+          "id": "8220e226-0822-42cf-9d5f-477ccf2dc361_west",
+          "cssClasses": [
+            "bpmn-port"
+          ],
+          "type": "port",
+          "position": {
+            "x": -35.0,
+            "y": 25.0
+          },
+          "size": {
+            "width": 10.0,
+            "height": 10.0
+          }
+        },
+        {
+          "id": "8220e226-0822-42cf-9d5f-477ccf2dc361_east",
+          "cssClasses": [
+            "bpmn-port"
+          ],
+          "type": "port",
+          "position": {
+            "x": 25.0,
+            "y": 25.0
+          },
+          "size": {
+            "width": 10.0,
+            "height": 10.0
+          }
+        },
+        {
+          "id": "8220e226-0822-42cf-9d5f-477ccf2dc361_south",
+          "cssClasses": [
+            "bpmn-port"
+          ],
+          "type": "port",
+          "position": {
+            "x": -5.0,
+            "y": 50.0
+          },
+          "size": {
+            "width": 10.0,
+            "height": 10.0
+          }
+        }
+      ],
+      "type": "gateway:exclusive",
+      "position": {
+        "x": 390.0,
+        "y": 60.0
+      },
+      "size": {
+        "width": 122.390625,
+        "height": 91.0
+      },
+      "layout": "freeform",
+      "layoutOptions": {
+        "prefWidth": 122.390625,
+        "prefHeight": 91.0
+      },
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "5ed1678e-5ebe-4b0f-b845-2806c345dad6",
+      "cssClasses": [
+        "sequenceflow"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 226.0,
+          "y": 240.0
+        },
+        {
+          "x": 226.0,
+          "y": 90.0
+        }
+      ],
+      "sourceId": "02a29046-a398-4079-8c50-013690f44a25",
+      "targetId": "8220e226-0822-42cf-9d5f-477ccf2dc361_west",
+      "routerKind": "manhattan",
+      "args": {
+        "edgePadding": 10.0
+      }
     }
   ],
   "type": "graph",
-  "revision": 4
+  "revision": 10
 }

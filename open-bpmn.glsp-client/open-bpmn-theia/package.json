@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "rimraf": "^2.6.1",
-    "typescript": "3.9.2"
+    "typescript": "^3.9.3"
   },
   "scripts": {
     "prepare": "yarn  clean && yarn build && yarn lint",
