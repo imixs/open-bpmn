@@ -29,6 +29,6 @@ export default new ContainerModule((bind: interfaces.Bind) => {
     bind(WidgetFactory).toDynamicValue(context => ({
         id: GettingStartedWidget.ID, // Re-use the pre-existing `GettingStartedWidget` ID.
         // On creation, create the `CustomGettingStartedWidget` instead.
-        createWidget: () => context.container.get<CustomGettingStartedWidget>(CustomGettingStartedWidget),
+        createWidget: () => context.container.get<CustomGettingStartedWidget>(CustomGettingStartedWidget)
     })).inSingletonScope();
 });

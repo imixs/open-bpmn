@@ -140,7 +140,6 @@ export namespace GatewayNode {
     }
 }
 
-
 /*
  * Helper Methods to determind if a ModelElemtn is of a specific type
  * The methods return the corresponding node
@@ -160,7 +159,6 @@ export function isGatewayNode(element: SModelElement): element is GatewayNode {
 export class SequenceFlow extends SEdge {
     condition?: string;
 }
-
 
 export class Icon extends SShapeElement implements LayoutContainer {
     static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
