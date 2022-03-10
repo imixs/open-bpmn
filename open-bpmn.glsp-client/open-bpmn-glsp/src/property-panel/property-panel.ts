@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { SetContextActions, isSetContextActionsAction, RequestContextActions} from '@eclipse-glsp/protocol';
+import { isSetContextActionsAction, RequestContextActions} from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import {
     AbstractUIExtension,
@@ -36,9 +36,6 @@ import {
 } from '@eclipse-glsp/client';
 import { FormSection } from './form-section';
 
-const CLICKED_CSS_CLASS = 'clicked';
-const PALETTE_HEIGHT = '500px';
-
 @injectable()
 export class EnablePropertyPanelAction implements Action {
     static readonly KIND = 'enableToolPalette';
@@ -50,7 +47,6 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
     static readonly ID = 'bpmn-property-panel';
 
     @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: GLSPActionDispatcher;
-    // @inject(TYPES.IToolManager) protected readonly toolManager: IToolManager;
     @inject(EditorContextService) protected readonly editorContext: EditorContextService;
 
     protected paletteItems: FormSection[];
@@ -62,7 +58,6 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
     modelRootId: string;
 
     id(): string {
-		console.log('.......jemand will meine id');
         return PropertyPanel.ID;
     }
     containerClass(): string {
@@ -75,43 +70,20 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
     }
 
     initialize(): boolean {
-		console.log('.......bin in inizalize');
         return super.initialize();
     }
 
+	/*
+	 * Initalize the elemnts of property panel
+	 */
     protected initializeContents(_containerElement: HTMLElement): void {
-		console.log('.......bin in inizalizeContents der uebergebne container='+_containerElement.id);
         this.createHeader();
         this.createBody();
         this.lastActivebutton = this.defaultToolsButton;
     }
 
     protected onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
-		console.log('...bin in onBeforeShow die conainerElementid='+_containerElement.id);
         this.modelRootId = root.id;
-        this.containerElement.style.maxHeight = PALETTE_HEIGHT;
-        console.log('...bin in onBeforeShow fertig. Meine ID= '+this.containerElement.id);
-    }
-
-    protected updateMinimizePaletteButtonTooltip(button: HTMLDivElement): void {
-        if (this.isPaletteMaximized()) {
-            button.title = 'Minimize palette';
-        } else {
-            button.title = 'Maximize palette';
-        }
-    }
-
-    protected isPaletteMaximized(): boolean {
-        return this.containerElement && this.containerElement.style.maxHeight !== '0px';
-    }
-
-    protected createBody(): void {
-		console.log('...ich bin in create body containerElement ID='+this.containerElement.id);
-        const bodyDiv = document.createElement('div');
-        bodyDiv.classList.add('properties-body');
-        this.containerElement.appendChild(bodyDiv);
-        this.bodyDiv = bodyDiv;
-		console.log('...bin mit create body fertig');
     }
 
     protected createHeader(): void {
@@ -122,29 +94,46 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
         this.containerElement.appendChild(headerCompartment);
     }
 
-    private createHeaderTools(): HTMLElement {
-        const headerTools = document.createElement('div');
-        headerTools.classList.add('header-tools');
-		// add something
-		this.defaultToolsButton = this.createDefaultToolButton();
-        headerTools.appendChild(this.defaultToolsButton);
-
-        return headerTools;
-    }
-
-    protected createDefaultToolButton(): HTMLElement {
-        const button = document.createElement('button');
-        button.id = 'btn_default_tools';
-        button.title = 'Enable selection tool';
-		// button.onclick = this.onClickStaticToolButton(this.defaultToolsButton);
-        return button;
+    protected createBody(): void {
+        const bodyDiv = document.createElement('div');
+        bodyDiv.classList.add('properties-body');
+        this.containerElement.appendChild(bodyDiv);
+        this.bodyDiv = bodyDiv;
     }
 
     protected createHeaderTitle(): HTMLElement {
         const header = document.createElement('div');
         header.classList.add('header-icon');
-        header.insertAdjacentText('beforeend', 'Ich bin der Properties Header');
+        header.appendChild(createIcon('layers'));
+        header.insertAdjacentText('beforeend', 'BPMN Properties');
         return header;
+    }
+
+	/*
+	 * This method creads the header tool buttons to controle the size of the panel
+	 * Icons can be found here:
+	 * https://microsoft.github.io/vscode-codicons/dist/codicon.html
+	 */
+    private createHeaderTools(): HTMLElement {
+        const headerTools = document.createElement('div');
+        headerTools.classList.add('header-tools');
+
+        const hideToolButton = createIcon('chrome-minimize');
+        hideToolButton.title = 'Hide Property Panel';
+        hideToolButton.onclick = this.onClickStaticToolButton(hideToolButton,'TOOL_COMMAND_HIDE');
+        headerTools.appendChild(hideToolButton);
+
+        const minimizeToolButton = createIcon('chevron-down');
+        minimizeToolButton.title = 'Minimize Property Panel';
+        minimizeToolButton.onclick = this.onClickStaticToolButton(minimizeToolButton,'TOOL_COMMAND_MINIMIZE');
+        headerTools.appendChild(minimizeToolButton);
+
+        const maximizeToolButton = createIcon('chevron-up');
+        maximizeToolButton.title = 'Maximize Property Panel';
+        maximizeToolButton.onclick = this.onClickStaticToolButton(maximizeToolButton,'TOOL_COMMAND_MAXIMIZE');
+        headerTools.appendChild(maximizeToolButton);
+
+        return headerTools;
     }
 
     protected onClickStaticToolButton(button: HTMLElement, toolId?: string) {
@@ -152,23 +141,19 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
             if (!this.editorContext.isReadonly) {
                 const action = toolId ? new EnableToolsAction([toolId]) : new EnableDefaultToolsAction();
                 this.actionDispatcher.dispatch(action);
-                this.changeActiveButton(button);
-                button.focus();
+                if (toolId === 'TOOL_COMMAND_MINIMIZE') {
+					this.containerElement.style.height='33.333%';
+				}
+                if (toolId === 'TOOL_COMMAND_MAXIMIZE') {
+					this.containerElement.style.height='50%';
+				}
+				if (toolId === 'TOOL_COMMAND_HIDE') {
+					this.containerElement.style.height='25px';
+				}
+				// restore the defautl actions in the diagram panel (like move elements)
+				this.actionDispatcher.dispatch(new EnableDefaultToolsAction());
             }
         };
-    }
-
-    changeActiveButton(button?: HTMLElement): void {
-        if (this.lastActivebutton) {
-            this.lastActivebutton.classList.remove(CLICKED_CSS_CLASS);
-        }
-        if (button) {
-            button.classList.add(CLICKED_CSS_CLASS);
-            this.lastActivebutton = button;
-        } else {
-            this.defaultToolsButton.classList.add(CLICKED_CSS_CLASS);
-            this.lastActivebutton = this.defaultToolsButton;
-        }
     }
 
     handle(action: Action): ICommand | Action | void {
@@ -185,9 +170,7 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
                 }
             });
         } else if (action instanceof EnableDefaultToolsAction) {
-            this.changeActiveButton();
             this.restoreFocus();
-            console.log('..habe gehandeld');
         }
     }
 
@@ -202,12 +185,6 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
         }
     }
 
-    protected handleSetContextActions(action: SetContextActions): void {
-		console.log('...bin in handelSetContextActions');
-        // this.paletteItems = action.actions.map(e => e as PaletteItem);
-        this.createBody();
-    }
-
 }
 
 export function createToolGroup(item: FormSection): HTMLElement {
@@ -219,6 +196,12 @@ export function createToolGroup(item: FormSection): HTMLElement {
 
     group.appendChild(header);
     return group;
+}
+
+export function createIcon(codiconId: string): HTMLElement {
+    const icon = document.createElement('i');
+    icon.classList.add(...codiconCSSClasses(codiconId));
+    return icon;
 }
 
 export function changeCSSClass(element: Element, css: string): void {

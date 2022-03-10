@@ -1,5 +1,5 @@
 
-/* Property Panel */
+/* Property Panel inherites from toolpalette */
 
 .tool-palette { 
 	z-index: 10;
@@ -10,13 +10,45 @@
 	bottom: 0px;
 	z-index: 20;
 	width: 100%;
-	min-height: 200px;
 	background: var(--theia-editor-background);
     color: var(--theia-foreground);
+    height: 25px;
 }
 
 
 .bpmn-property-header {
+	padding-left: 8px;
 	background: var(--theia-menu-background);
     color: var(--theia-titleBar-activeForeground);
+    border: 0;
+    font-weight: normal;
+    overflow: hidden;
+    padding: 0.2em;
+    line-height: 1.5em;
+    box-shadow: none;
+    border-top: 1px solid var(--theia-focusBorder);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
+
+.bpmn-property-header .header-icon i {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.bpmn-property-header .header-tools i {
+    border: none;
+}
+
+.bpmn-property-header .header-tools i:hover:not(.clicked) {
+    background: var(--theia-menubar-selectionBackground);
+}
+
+.bpmn-property-header .header-tools .clicked, .bpmn-property-header .header-tools i:hover {
+    background: none;
+    border: none;
+}
+
+

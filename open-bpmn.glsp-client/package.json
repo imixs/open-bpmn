@@ -40,8 +40,7 @@
   "workspaces": [
     "open-bpmn-glsp",
     "open-bpmn-theia",
-    "open-bpmn-app",
-    "open-bpmn-welcome-page"
+    "open-bpmn-app"
   ],
 
   "resolutions": {

@@ -51,13 +51,9 @@ import { propertyViewModule } from './property-panel/di.config';
 // import {PropertyPanel} from './property-panel/property-panel';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
-	console.log('.......ich bin hier ind er haupt di.config');
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
     bind(TYPES.ISnapper).to(GridSnapper);
-
-    // bind(TYPES.IUIExtension).to(PropertyPanel);
-
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
     const context = { bind, unbind, isBound, rebind };
@@ -91,7 +87,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 });
 
 export default function createContainer(widgetId: string): Container {
-    // const container = createClientContainer(bpmnDiagramModule, directTaskEditor);
+    // add the BPMN propertyViewModule...
     const container = createClientContainer(bpmnDiagramModule, directTaskEditor,propertyViewModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
