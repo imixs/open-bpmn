@@ -39,15 +39,25 @@ import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
-import { directTaskEditor } from './direct-task-editing/di.config';
+import '../css/property-panel.css';
+
 import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 
+import { directTaskEditor } from './direct-task-editing/di.config';
+// import { propertyViewModule } from './property-panel/di.config';
+
+import {PropertyPanel} from './property-panel/property-panel';
+
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+	console.log('.......ich bin hier ind er haupt di.config');
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
     bind(TYPES.ISnapper).to(GridSnapper);
+
+    bind(TYPES.IUIExtension).to(PropertyPanel);
+
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
     const context = { bind, unbind, isBound, rebind };

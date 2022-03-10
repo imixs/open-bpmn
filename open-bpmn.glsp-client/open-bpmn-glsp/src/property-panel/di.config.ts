@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2020-2021 EclipseSource and others.
+ * Copyright (c) 2019 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,11 +13,21 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createBPMNDiagramContainer from './di.config';
+import { ContainerModule } from 'inversify';
+import { 
+	configureActionHandler,
+	// EnableDefaultToolsAction,
+	TYPES } from 'sprotty';
+import '../../css/property-panel.css';
+import { PropertyPanel,EnablePropertyPanelAction } from './property-panel';
 
-export * from './model';
-export * from './bpmn-element-views';
-export * from './bpmn-routing-views';
-export * from './direct-task-editing/direct-task-editor';
-export * from './property-panel/property-panel';
-export { createBPMNDiagramContainer };
+export const propertyViewModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
+	console.log('.......ich bin hier ind er property di.config');
+
+    bind(PropertyPanel).toSelf().inSingletonScope();
+    bind(TYPES.IUIExtension).toService(PropertyPanel);
+    configureActionHandler({ bind, isBound }, EnablePropertyPanelAction.KIND, PropertyPanel);
+    // configureActionHandler({ bind, isBound }, EnableDefaultToolsAction.KIND, PropertyPanel);
+});
+
+
