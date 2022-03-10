@@ -46,9 +46,9 @@ import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 
 import { directTaskEditor } from './direct-task-editing/di.config';
-// import { propertyViewModule } from './property-panel/di.config';
+import { propertyViewModule } from './property-panel/di.config';
 
-import {PropertyPanel} from './property-panel/property-panel';
+// import {PropertyPanel} from './property-panel/property-panel';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
 	console.log('.......ich bin hier ind er haupt di.config');
@@ -56,7 +56,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
     bind(TYPES.ISnapper).to(GridSnapper);
 
-    bind(TYPES.IUIExtension).to(PropertyPanel);
+    // bind(TYPES.IUIExtension).to(PropertyPanel);
 
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
@@ -91,7 +91,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 });
 
 export default function createContainer(widgetId: string): Container {
-    const container = createClientContainer(bpmnDiagramModule, directTaskEditor);
+    // const container = createClientContainer(bpmnDiagramModule, directTaskEditor);
+    const container = createClientContainer(bpmnDiagramModule, directTaskEditor,propertyViewModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
         hiddenDiv: widgetId + '_hidden'

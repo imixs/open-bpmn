@@ -14,20 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { ContainerModule } from 'inversify';
-import { 
-	configureActionHandler,
-	// EnableDefaultToolsAction,
+import {
 	TYPES } from 'sprotty';
-import '../../css/property-panel.css';
-import { PropertyPanel,EnablePropertyPanelAction } from './property-panel';
+import {
+	PropertyPanel
+ } from './property-panel';
 
-export const propertyViewModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
-	console.log('.......ich bin hier ind er property di.config');
-
+export const propertyViewModule = new ContainerModule((bind, _unbind, isBound) => {
     bind(PropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(PropertyPanel);
-    configureActionHandler({ bind, isBound }, EnablePropertyPanelAction.KIND, PropertyPanel);
-    // configureActionHandler({ bind, isBound }, EnableDefaultToolsAction.KIND, PropertyPanel);
 });
-
 

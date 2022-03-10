@@ -50,7 +50,7 @@
 .sprotty-label.heading {
     font-weight: normal;
     font-size: 0.7em;
-    fill: #f0f3f8;
+    fill: var(--theia-titleBar-activeForeground);
 }
 
 .sprotty-resize-handle.selected {
