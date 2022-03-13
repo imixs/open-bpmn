@@ -16,14 +16,11 @@
 import { inject, injectable, postConstruct } from 'inversify';
 import {
     AbstractUIExtension,
-    EnableDefaultToolsAction,
-    EnableToolsAction,
     SetUIExtensionVisibilityAction,
     ActionDispatcher,
     SModelRoot,
     TYPES
 } from 'sprotty';
-import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 import {
     Action,
 	EditModeListener,
@@ -80,82 +77,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements  EditModeL
         const div = document.createElement('div');
         div.innerHTML = 'hello world';
         containerElement.appendChild(div);
-        //this.createHeader();
-        //this.createBody();
-    }
-
-    protected onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
-        this.modelRootId = root.id;
-    }
-
-    protected createHeader(): void {
-        const headerCompartment = document.createElement('div');
-        headerCompartment.classList.add('bpmn-property-header');
-        headerCompartment.append(this.createHeaderTitle());
-        headerCompartment.appendChild(this.createHeaderTools());
-        this.containerElement.appendChild(headerCompartment);
-    }
-
-    protected createBody(): void {
-        const bodyDiv = document.createElement('div');
-        bodyDiv.classList.add('properties-body');
-        this.containerElement.appendChild(bodyDiv);
-        this.bodyDiv = bodyDiv;
-    }
-
-    protected createHeaderTitle(): HTMLElement {
-        const header = document.createElement('div');
-        header.classList.add('header-icon');
-        header.appendChild(createIcon('layers'));
-        header.insertAdjacentText('beforeend', 'BPMN Properties');
-        return header;
-    }
-
-	/*
-	 * This method creads the header tool buttons to controle the size of the panel
-	 * Icons can be found here:
-	 * https://microsoft.github.io/vscode-codicons/dist/codicon.html
-	 */
-    private createHeaderTools(): HTMLElement {
-        const headerTools = document.createElement('div');
-        headerTools.classList.add('header-tools');
-
-        const hideToolButton = createIcon('chrome-minimize');
-        hideToolButton.title = 'Hide Property Panel';
-        hideToolButton.onclick = this.onClickResizePanel(hideToolButton,'TOOL_COMMAND_HIDE');
-        headerTools.appendChild(hideToolButton);
-
-        const minimizeToolButton = createIcon('chevron-down');
-        minimizeToolButton.title = 'Minimize Property Panel';
-        minimizeToolButton.onclick = this.onClickResizePanel(minimizeToolButton,'TOOL_COMMAND_MINIMIZE');
-        headerTools.appendChild(minimizeToolButton);
-
-        const maximizeToolButton = createIcon('chevron-up');
-        maximizeToolButton.title = 'Maximize Property Panel';
-        maximizeToolButton.onclick = this.onClickResizePanel(maximizeToolButton,'TOOL_COMMAND_MAXIMIZE');
-        headerTools.appendChild(maximizeToolButton);
-
-        return headerTools;
-    }
-
-    protected onClickResizePanel(button: HTMLElement, toolId?: string) {
-        return (_ev: MouseEvent) => {
-            if (!this.editorContext.isReadonly) {
-                const action = toolId ? new EnableToolsAction([toolId]) : new EnableDefaultToolsAction();
-                this.actionDispatcher.dispatch(action);
-                if (toolId === 'TOOL_COMMAND_MINIMIZE') {
-					this.containerElement.style.height='33.333%';
-				}
-                if (toolId === 'TOOL_COMMAND_MAXIMIZE') {
-					this.containerElement.style.height='50%';
-				}
-				if (toolId === 'TOOL_COMMAND_HIDE') {
-					this.containerElement.style.height='25px';
-				}
-				// restore the defautl actions in the diagram panel (like move elements)
-				this.actionDispatcher.dispatch(new EnableDefaultToolsAction());
-            }
-        };
     }
 
     editModeChanged(_oldValue: string, _newValue: string): void {
@@ -168,11 +89,4 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements  EditModeL
     }
 
 }
-
-export function createIcon(codiconId: string): HTMLElement {
-    const icon = document.createElement('i');
-    icon.classList.add(...codiconCSSClasses(codiconId));
-    return icon;
-}
-
 
