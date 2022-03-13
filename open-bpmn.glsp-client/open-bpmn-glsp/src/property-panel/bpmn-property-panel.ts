@@ -34,6 +34,8 @@ import {
 	SelectionService
 } from '@eclipse-glsp/client/lib/features/select/selection-service';
 
+import {TaskNode,GatewayNode,EventNode} from '../model';
+
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
     static readonly KIND = 'enableBPMNPropertyPanel';
@@ -160,8 +162,28 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements  EditModeL
         this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
     }
 
+	/*
+	 * This mehtod reacts on the selection of a BPMN element
+	 * and updates the property panel input fields
+	 */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
         console.log('selection change  received:', root, selectedElements);
+		if (this.selectionService.isSingleSelection()) {
+			const element=root.index.getById(selectedElements[0]);
+			if (element instanceof TaskNode) {
+				console.log('...Wir haben eine Task');
+				const task: TaskNode=element;
+				console.log('...dn='+task.taskType + ' und nochwas '+task.type);
+			}
+			if (element instanceof GatewayNode) {
+				console.log('...Wir haben ein Gateway');
+			}
+			if (element instanceof EventNode) {
+				console.log('...Wir haben ein Event');
+				const event: EventNode=element;
+				console.log('...eventtype='+event.eventType);
+			}
+		}
     }
 
 }

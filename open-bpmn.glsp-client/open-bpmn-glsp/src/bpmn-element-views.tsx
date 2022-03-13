@@ -57,8 +57,9 @@ export class IconView extends ShapeView {
 		*/
 
 		let icon;
-
+		
 		if (taskNode) {
+			
 			if (taskNode.type === 'task:manual') {
 				// From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
 				icon =

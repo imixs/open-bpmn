@@ -26,9 +26,12 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
    private final String name;
    private final String eventType;
 
-   public EventNodeBuilder(final String type, final String name, final String eventType) {
+   public EventNodeBuilder(final String type, final String name, String eventType) {
       super(type);
       this.name = name;
+      if (eventType == null || eventType.isEmpty()) {
+         eventType = "soeineventalso";
+      }
       this.eventType = eventType;
 
    }
