@@ -76,12 +76,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements  EditModeL
 	/*
 	 * Initalize the elemnts of property panel
 	 */
-    protected initializeContents(containerElement: HTMLElement): void {
-        const div = document.createElement('div');
-        div.innerHTML = 'hello world';
-        containerElement.appendChild(div);
-        //this.createHeader();
-        //this.createBody();
+    protected initializeContents(_containerElement: HTMLElement): void {
+        this.createHeader();
+        this.createBody();
     }
 
     protected onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
@@ -174,5 +171,4 @@ export function createIcon(codiconId: string): HTMLElement {
     icon.classList.add(...codiconCSSClasses(codiconId));
     return icon;
 }
-
 
