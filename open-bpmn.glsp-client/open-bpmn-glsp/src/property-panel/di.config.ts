@@ -13,15 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import {
-	TYPES } from 'sprotty';
-import {
-	PropertyPanel
- } from './property-panel';
-
-export const propertyViewModule = new ContainerModule((bind, _unbind, isBound) => {
-    bind(PropertyPanel).toSelf().inSingletonScope();
-    bind(TYPES.IUIExtension).toService(PropertyPanel);
+import { BPMNPropertyPanel } from './bpmn-property-panel';
+export const bpmnPropertyModule = new ContainerModule((bind, _unbind, isBound,rebind) => {
+    bind(BPMNPropertyPanel).toSelf().inSingletonScope();
+    bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
 });
-

@@ -46,7 +46,7 @@ import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 
 import { directTaskEditor } from './direct-task-editing/di.config';
-import { propertyViewModule } from './property-panel/di.config';
+import { bpmnPropertyModule } from './property-panel/di.config';
 
 // import {PropertyPanel} from './property-panel/property-panel';
 
@@ -84,11 +84,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
     configureModelElement(context, DefaultTypes.PORT, CircularPort, CircularNodeView);
+
 });
 
 export default function createContainer(widgetId: string): Container {
     // add the BPMN propertyViewModule...
-    const container = createClientContainer(bpmnDiagramModule, directTaskEditor,propertyViewModule);
+    const container = createClientContainer(bpmnDiagramModule, directTaskEditor,bpmnPropertyModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
         hiddenDiv: widgetId + '_hidden'

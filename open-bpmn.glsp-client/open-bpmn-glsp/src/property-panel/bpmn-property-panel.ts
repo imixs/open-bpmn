@@ -13,60 +13,60 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { isSetContextActionsAction, RequestContextActions} from '@eclipse-glsp/protocol';
 import { inject, injectable, postConstruct } from 'inversify';
 import {
     AbstractUIExtension,
-    Action,
     EnableDefaultToolsAction,
     EnableToolsAction,
-    IActionHandler,
-    ICommand,
-    // IToolManager,
     SetUIExtensionVisibilityAction,
+    ActionDispatcher,
     SModelRoot,
     TYPES
 } from 'sprotty';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
-import { matchesKeystroke } from 'sprotty/lib/utils/keyboard';
 import {
-	GLSPActionDispatcher,
+    Action,
 	EditModeListener,
 	EditorContextService
 } from '@eclipse-glsp/client';
-import { FormSection } from './form-section';
+import {
+	SelectionListener,
+	SelectionService
+} from '@eclipse-glsp/client/lib/features/select/selection-service';
 
 @injectable()
-export class EnablePropertyPanelAction implements Action {
-    static readonly KIND = 'enableToolPalette';
-    readonly kind = EnablePropertyPanelAction.KIND;
+export class EnableBPMNPropertyPanelAction implements Action {
+    static readonly KIND = 'enableBPMNPropertyPanel';
+    readonly kind = EnableBPMNPropertyPanelAction.KIND;
 }
 
 @injectable()
-export class PropertyPanel extends AbstractUIExtension implements IActionHandler, EditModeListener {
+export class BPMNPropertyPanel extends AbstractUIExtension implements  EditModeListener, SelectionListener {
     static readonly ID = 'bpmn-property-panel';
 
-    @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: GLSPActionDispatcher;
-    @inject(EditorContextService) protected readonly editorContext: EditorContextService;
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: ActionDispatcher;
 
-    protected paletteItems: FormSection[];
-    protected paletteItemsCopy: FormSection[] = [];
+    @inject(EditorContextService)
+    protected readonly editorContext: EditorContextService;
+
+    @inject(SelectionService)
+    protected selectionService: SelectionService;
+
     protected bodyDiv?: HTMLElement;
-    protected lastActivebutton?: HTMLElement;
-    protected defaultToolsButton: HTMLElement;
-    protected searchField: HTMLInputElement;
     modelRootId: string;
-
-    id(): string {
-        return PropertyPanel.ID;
-    }
-    containerClass(): string {
-        return PropertyPanel.ID;
-    }
 
     @postConstruct()
     postConstruct(): void {
         this.editorContext.register(this);
+        this.selectionService.register(this);
+    }
+
+    id(): string {
+        return BPMNPropertyPanel.ID;
+    }
+    containerClass(): string {
+        return BPMNPropertyPanel.ID;
     }
 
     initialize(): boolean {
@@ -76,10 +76,12 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
 	/*
 	 * Initalize the elemnts of property panel
 	 */
-    protected initializeContents(_containerElement: HTMLElement): void {
-        this.createHeader();
-        this.createBody();
-        this.lastActivebutton = this.defaultToolsButton;
+    protected initializeContents(containerElement: HTMLElement): void {
+        const div = document.createElement('div');
+        div.innerHTML = 'hello world';
+        containerElement.appendChild(div);
+        //this.createHeader();
+        //this.createBody();
     }
 
     protected onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
@@ -120,23 +122,23 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
 
         const hideToolButton = createIcon('chrome-minimize');
         hideToolButton.title = 'Hide Property Panel';
-        hideToolButton.onclick = this.onClickStaticToolButton(hideToolButton,'TOOL_COMMAND_HIDE');
+        hideToolButton.onclick = this.onClickResizePanel(hideToolButton,'TOOL_COMMAND_HIDE');
         headerTools.appendChild(hideToolButton);
 
         const minimizeToolButton = createIcon('chevron-down');
         minimizeToolButton.title = 'Minimize Property Panel';
-        minimizeToolButton.onclick = this.onClickStaticToolButton(minimizeToolButton,'TOOL_COMMAND_MINIMIZE');
+        minimizeToolButton.onclick = this.onClickResizePanel(minimizeToolButton,'TOOL_COMMAND_MINIMIZE');
         headerTools.appendChild(minimizeToolButton);
 
         const maximizeToolButton = createIcon('chevron-up');
         maximizeToolButton.title = 'Maximize Property Panel';
-        maximizeToolButton.onclick = this.onClickStaticToolButton(maximizeToolButton,'TOOL_COMMAND_MAXIMIZE');
+        maximizeToolButton.onclick = this.onClickResizePanel(maximizeToolButton,'TOOL_COMMAND_MAXIMIZE');
         headerTools.appendChild(maximizeToolButton);
 
         return headerTools;
     }
 
-    protected onClickStaticToolButton(button: HTMLElement, toolId?: string) {
+    protected onClickResizePanel(button: HTMLElement, toolId?: string) {
         return (_ev: MouseEvent) => {
             if (!this.editorContext.isReadonly) {
                 const action = toolId ? new EnableToolsAction([toolId]) : new EnableDefaultToolsAction();
@@ -156,46 +158,15 @@ export class PropertyPanel extends AbstractUIExtension implements IActionHandler
         };
     }
 
-    handle(action: Action): ICommand | Action | void {
-		console.log('...bin in der handle methode');
-        if (action.kind === EnablePropertyPanelAction.KIND) {
-			console.log('...bin in handle - EnablePropertyPanelAction');
-            const requestAction = new RequestContextActions(PropertyPanel.ID, {
-                selectedElementIds: []
-            });
-            this.actionDispatcher.requestUntil(requestAction).then(response => {
-                if (isSetContextActionsAction(response)) {
-                    this.paletteItems = response.actions.map(e => e as FormSection);
-                    this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(PropertyPanel.ID, !this.editorContext.isReadonly));
-                }
-            });
-        } else if (action instanceof EnableDefaultToolsAction) {
-            this.restoreFocus();
-        }
-    }
-
     editModeChanged(_oldValue: string, _newValue: string): void {
-		console.log('bin in editModeChanged: '+_newValue);
-        this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(PropertyPanel.ID, !this.editorContext.isReadonly));
+		console.log('...bin in editModeChanged: '+_newValue);
+        this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
     }
 
-    protected clearToolOnEscape(event: KeyboardEvent): void {
-        if (matchesKeystroke(event, 'Escape')) {
-            this.actionDispatcher.dispatch(new EnableDefaultToolsAction());
-        }
+    selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
+        console.log('selection change  received:', root, selectedElements);
     }
 
-}
-
-export function createToolGroup(item: FormSection): HTMLElement {
-    const group = document.createElement('div');
-    group.classList.add('tool-group');
-    group.id = item.id;
-    const header = document.createElement('div');
-    header.classList.add('group-header');
-
-    group.appendChild(header);
-    return group;
 }
 
 export function createIcon(codiconId: string): HTMLElement {
@@ -204,12 +175,4 @@ export function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
-export function changeCSSClass(element: Element, css: string): void {
-    element.classList.contains(css) ? element.classList.remove(css) : element.classList.add(css);
-}
 
-export function changeCodiconClass(element: Element, codiconId: string): void {
-    element.classList.contains(codiconCSSClasses(codiconId)[1])
-        ? element.classList.remove(codiconCSSClasses(codiconId)[1])
-        : element.classList.add(codiconCSSClasses(codiconId)[1]);
-}
