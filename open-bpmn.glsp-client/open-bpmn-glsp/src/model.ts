@@ -54,7 +54,8 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
         nameFeature,
         withEditLabelFeature
     ];
-    taskType?: string;
+    category?: string;
+    documentation?: string;
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const label = this.children.find(element => element.type === 'label:heading');
@@ -85,7 +86,8 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
         nameFeature,
         withEditLabelFeature
     ];
-    eventType?: string;
+    category?: string;
+    documentation?: string;
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const label = this.children.find(element => element.type === 'label:heading');
@@ -115,7 +117,8 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
         nameFeature,
         withEditLabelFeature
     ];
-    eventType?: string;
+    category?: string;
+    documentation?: string;
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const label = this.children.find(element => element.type === 'label:heading');

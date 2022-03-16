@@ -52,6 +52,7 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
       super.setProperties(node);
       node.setName(name);
       node.getCategory().add(taskType);
+      node.setDocumentation("...some documentation....");
 
       node.setLayout(GConstants.Layout.HBOX);
 

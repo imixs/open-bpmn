@@ -173,15 +173,29 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements  EditModeL
 			if (element instanceof TaskNode) {
 				console.log('...Wir haben eine Task');
 				const task: TaskNode=element;
-				console.log('...dn='+task.taskType + ' und nochwas '+task.type);
+				console.log('...category='+task.category + ' documentation '+task.documentation);
+
+				const documentationInput = document.createElement('input');
+				documentationInput.insertAdjacentText('beforeend', ''+task.documentation);
+
+				documentationInput.onchange = function (this) {
+					// const _newValue = this.getvalue;
+					console.log('...irgendwas ist passiert: ');
+				};
+				// addEventListener('input', inputHandler)
+				this.bodyDiv?.appendChild(documentationInput);
+				console.log('...habe die docu angefuegt');
+
 			}
 			if (element instanceof GatewayNode) {
 				console.log('...Wir haben ein Gateway');
+				const gateway: GatewayNode=element;
+				console.log('...eventtype='+gateway.category);
 			}
 			if (element instanceof EventNode) {
 				console.log('...Wir haben ein Event');
 				const event: EventNode=element;
-				console.log('...eventtype='+event.eventType);
+				console.log('...eventtype='+event.category);
 			}
 		}
     }
