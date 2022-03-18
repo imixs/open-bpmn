@@ -45,7 +45,7 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 		const p1 = segments[segments.length - 2];
 		const p2 = segments[segments.length - 1];
 
-		const arrow = (
+		const arrow: any = (
 			<path
 				class-sprotty-edge={true}
 				class-arrow={true}
@@ -98,13 +98,13 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 						path += ` L ${p.x},${p.y - radius}  Q ${p.x},${p.y} ${p.x - radius},${p.y}`;
 						// left-down  ↓-
 					} else if (plast.x > p.x && p.y < pnext.y) {
-						path += ` L ${p.x+ radius},${p.y }  Q ${p.x},${p.y} ${p.x },${p.y + radius}`;
+						path += ` L ${p.x + radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y + radius}`;
 						// up-left  ↰
 					} else if (plast.y > p.y && p.x > pnext.x) {
-						path += ` L ${p.x},${p.y+ radius }  Q ${p.x},${p.y} ${p.x- radius },${p.y}`;
+						path += ` L ${p.x},${p.y + radius}  Q ${p.x},${p.y} ${p.x - radius},${p.y}`;
 						// left-up ↑_
 					} else if (plast.x > p.x && p.y > pnext.y) {
-						path += ` L ${p.x + radius},${p.y }  Q ${p.x},${p.y} ${p.x},${p.y - radius }`;
+						path += ` L ${p.x + radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y - radius}`;
 					} else {
 						// default
 						path += ` L ${p.x},${p.y}`;
@@ -116,6 +116,11 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 				}
 			}
 		}
-		return <path d={path} />;
+
+		const vnode: any = (
+			<path d={path} />
+		);
+		return vnode;
+		// return <path d={path} />;
 	}
 }

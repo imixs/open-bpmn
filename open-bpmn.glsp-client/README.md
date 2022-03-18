@@ -29,3 +29,10 @@ For a full wipe includind the yarn.lock file run:
 	$ ./wipe-full.sh
 
 After a wipe you can rebuild the project with `yarn install`
+
+
+
+## Dependencies
+
+The open-bpmn-glsp client module depends on the following nodejs versions:
+

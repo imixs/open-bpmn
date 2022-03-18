@@ -57,9 +57,7 @@ export class IconView extends ShapeView {
 		*/
 
 		let icon;
-		
 		if (taskNode) {
-			
 			if (taskNode.type === 'task:manual') {
 				// From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
 				icon =
@@ -92,7 +90,7 @@ export class IconView extends ShapeView {
 			return undefined;
 		}
 
-		const vnode = (
+		const vnode: any = (
 			<g>
 				<path
 					transform={'scale(1.15),translate(0.75,0.75)'}
@@ -110,6 +108,7 @@ export class IconView extends ShapeView {
 			setAttr(vnode, 'class', subType);
 		}
 		return vnode;
+
 	}
 }
 
@@ -144,7 +143,7 @@ export class GatewayNodeView extends ShapeView {
 		}
 
 		/*  text-anchor="middle"  waere die lösung */
-		let vnode = undefined;
+		let vnode: any = undefined;
 		if (gatewaySymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
@@ -200,7 +199,7 @@ export class EventNodeView extends ShapeView {
 		}
 
 		/*  text-anchor="middle"  waere die lösung */
-		let vnode = undefined;
+		let vnode: any = undefined;
 		if (eventSymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading

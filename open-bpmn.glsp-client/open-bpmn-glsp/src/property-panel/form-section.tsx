@@ -14,6 +14,14 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { isLabeledAction, isTriggerElementTypeCreationAction, LabeledAction, TriggerElementCreationAction } from '@eclipse-glsp/protocol';
+// import * as React from 'react';
+/*import * as ReactDOM from 'react-dom';
+// import { svg } from 'sprotty';
+import {JsonForms} from '@jsonforms/react';
+import {
+    vanillaCells,
+    vanillaRenderers
+} from '@jsonforms/vanilla-renderers';*/
 
 /*
  * Defines a single form section containing input fields and buttons
@@ -39,3 +47,29 @@ export namespace FormSection {
         return undefined;
     }
 }
+/*
+export function renderEmptyForm(node: HTMLElement): void {
+	console.log('Debug 1');
+	const elementDataAsJson={};
+
+	ReactDOM.render(
+    <JsonForms
+        data={elementDataAsJson}
+        cells={vanillaCells}
+        renderers={vanillaRenderers}
+        readonly
+    />,
+    node
+);
+console.log('Debug END');
+}
+*/
+/*
+export function renderEmptyForm2(): void {
+	console.log('Debug 1');
+	ReactDOM.render(<div/>, document.getElementById('bpmn-diagram_0_bpmn-property-panel'));
+	console.log('Ich bin fertig');
+}
+*/
+
+
