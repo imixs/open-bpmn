@@ -6,7 +6,6 @@
   "include": [
 	"open-bpmn-glsp/src", 
 	"open-bpmn-theia/src", 
-	"open-bpmn-app",
-	"open-bpmn-welcome-page/src"
+	"open-bpmn-app"
    ]
 }

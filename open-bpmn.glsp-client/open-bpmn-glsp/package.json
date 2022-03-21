@@ -1,7 +1,7 @@
 {
   "private": "true",
   "name": "@open-bpmn/open-bpmn-glsp",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "GLSP sprotty diagrams for the BPMN DSL",
   "license": "(GPL-3.0)",
   "keywords": [
