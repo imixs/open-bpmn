@@ -47,6 +47,9 @@ import {
 	vanillaRenderers
 } from '@jsonforms/vanilla-renderers';
 
+// import * as loggerModule from '../../../dummy-sub1';
+import * as loggerModule from '@open-bpmn/dummy-sub1';
+
 // import { JsonFormsCore, JsonSchema, UISchemaElement } from '@jsonforms/core';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -186,6 +189,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		if (this.selectionService.isSingleSelection()) {
 			const element = root.index.getById(selectedElements[0]);
 			if (element instanceof TaskNode) {
+				loggerModule.log('===============> some message');
 				console.log('...Task selected');
 				const task: TaskNode = element;
 				console.log('...category=' + task.category + ' documentation ' + task.documentation);
