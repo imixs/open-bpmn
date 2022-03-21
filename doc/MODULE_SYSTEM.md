@@ -111,21 +111,21 @@ The module source code is simply exporting some functionallity:
 
 
 ````javascript
-	// export a function
-	export function log (message: string) {
-		console.log(message);
+// export a function
+export function log (message: string) {
+	console.log(message);
+}
+
+// export a class
+export class logger {
+	name?: string;
+	constructor (name: string) {
+		this.name = name;
 	}
-	
-	// export a class
-	export class logger {
-		name?: string;
-		constructor (name: string) {
-			this.name = name;
-		}
-		log (message: string) {
-			console.log('[${this.name}] ${message}')
-		}
-	}	
+	log (message: string) {
+		console.log('[${this.name}] ${message}')
+	}
+}	
 ````
 
 
@@ -143,7 +143,7 @@ To import functionality from your sub module now you can now add the module into
 
 In your main module code you are now able to add a import declaration like this:
 
-
-	import * as loggerModule from '@open-bpmn/sub1';
-	
+````javascript
+import * as loggerModule from '@open-bpmn/sub1';
+````	
 	
