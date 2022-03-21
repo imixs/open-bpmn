@@ -39,7 +39,6 @@ import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
-import '../css/property-panel.css';
 
 import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';

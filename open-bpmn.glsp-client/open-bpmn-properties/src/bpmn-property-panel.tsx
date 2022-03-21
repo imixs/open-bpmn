@@ -109,7 +109,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 	protected createBody(): void {
 		const bodyDiv = document.createElement('div');
-		bodyDiv.classList.add('properties-body');
+		bodyDiv.classList.add('properties-body', 'jsonforms-property-view');
 		this.containerElement.appendChild(bodyDiv);
 		this.bodyDiv = bodyDiv;
 	}
@@ -190,7 +190,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				console.log('...category=' + task.category + ' documentation ' + task.documentation);
 				const documentationInput = document.createElement('input');
 				documentationInput.insertAdjacentText('beforeend', '' + task.documentation);
-				documentationInput.onchange = function (this) {
+				documentationInput.onchange = function(this) {
 					console.log('...do something... ');
 				};
 				this.bodyDiv?.appendChild(documentationInput);
@@ -199,13 +199,27 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			if (element instanceof GatewayNode) {
 				console.log('...Gateway selected');
 				const gateway: GatewayNode = element;
-				const elementDataAsJson = {};
+				// const elementDataAsJson = {};
+
+				const elementDataAsJson = {
+					"firstName": "Jane",
+					"lastName": "Doe",
+					"registered": true,
+					"birthDate": "1998-12-24",
+					"nationality": "SRB",
+					"personalId": 4428,
+					"email": [
+						"john.doe@gmail.com",
+						"john.doe2@sk"
+					],
+					"hobbies": []
+				}
+
 				ReactDOM.render(
 					<JsonForms
 						data={elementDataAsJson}
 						cells={vanillaCells}
 						renderers={vanillaRenderers}
-						readonly
 					/>,
 					this.bodyDiv
 				);
@@ -216,13 +230,31 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				console.log('...Event selected....');
 				const event: EventNode = element;
 				ReactDOM.render(
-					<React.Fragment><h1>Please select an element </h1></React.Fragment>,
+					<React.Fragment><h1>You have selected an event element! </h1></React.Fragment>,
 					this.bodyDiv
 				);
 				console.log('...eventtype=' + event.category);
 			}
 		}
 	}
+
+
+	/*    protected renderForms(properties: Object | undefined, typeSchema: JsonSchema | undefined, uiSchema: UISchemaElement | undefined): void {
+			ReactDOM.render(
+				<JsonFormsStyleContext.Provider value={this.getStyleContext()}>
+					<JsonForms
+						data={properties}
+						schema={typeSchema}
+						uischema={uiSchema}
+						cells={vanillaCells}
+						renderers={vanillaRenderers}
+						onChange={this.jsonFormsOnChange}
+					/>
+				</JsonFormsStyleContext.Provider>,
+				this.node
+			);
+		}*/
+
 
 }
 

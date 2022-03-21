@@ -16,6 +16,9 @@
 import { TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 import { BPMNPropertyPanel } from './bpmn-property-panel';
+// css styles
+import '../css/property-panel.css';
+import '../css/jsonforms-property-view.css';
 
 export const bpmnPropertyModule = new ContainerModule((bind, _unbind, isBound,rebind) => {
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();

@@ -4,6 +4,7 @@
     "rootDir": "src",
     "outDir": "lib",
     "baseUrl": ".",
+    "jsx": "react",
     "skipLibCheck": true
   },
   "include": ["src"]

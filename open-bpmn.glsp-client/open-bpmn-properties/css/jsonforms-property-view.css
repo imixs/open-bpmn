@@ -1,0 +1,173 @@
+/********************************************************************************
+ * Copyright (c) 2021 EclipseSource and others.
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
+ * available at https://opensource.org/licenses/MIT.
+ *
+ * SPDX-License-Identifier: EPL-2.0 OR MIT
+ ********************************************************************************/
+
+:root {
+    --jsonforms-property-view-label-width: 250px;
+    --jsonforms-property-view-line-height: 28px;
+    --jsonforms-property-view-margin: 4px;
+    --jsonforms-property-view-padding: 8px;
+}
+
+#jsonforms-property-view>div.theia-widget-noInfo {
+    padding: var(--theia-empty-property-view-widget-padding);
+}
+
+#property-view {
+    overflow-y: auto;
+}
+
+#jsonforms-property-view {
+    padding: var(--jsonforms-property-view-padding);
+}
+
+.jsonforms-property-view .vertical-layout {
+    display: table !important;
+    table-layout: auto;
+    width: 100%;
+    padding-right: 0;
+}
+
+.jsonforms-property-view .vertical-layout>* {
+    display: table-row;
+    width: 100%;
+}
+
+.jsonforms-property-view .vertical-layout-item .control {
+    margin: var(--jsonforms-property-view-margin);
+    display: flex;
+    flex-direction: row;
+    margin-right: var(--jsonforms-property-view-padding)
+}
+
+.jsonforms-property-view .vertical-layout-item>label {
+    flex: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.jsonforms-property-view .array-table-layout table {
+    border-spacing: 0;
+    width: 100%;
+}
+
+.jsonforms-property-view .control>label, .jsonforms-property-view .array-table-layout.control>header>label {
+    flex: none;
+    display: flex;
+    width: var(--jsonforms-property-view-label-width);
+    align-items: center;
+}
+
+.jsonforms-property-view .control>input, .jsonforms-property-view .control>select, .jsonforms-property-view .array-table-layout td input, .jsonforms-property-view .array-table-layout td select {
+    display: flex;
+    height: var(--jsonforms-property-view-line-height);
+    padding: 0 5px;
+    background: var(--theia-editorWidget-background) !important;
+    flex-basis: 100% !important;
+    flex-shrink: 1 !important;
+    flex-grow: 0 !important;
+    color: var(--theia-input-foreground);
+    border: var(--theia-border-width) solid var(--theia-input-border);
+}
+
+.jsonforms-property-view .control>input[type="date"]::-webkit-calendar-picker-indicator {
+    /* filter to invert calendar icon of date input field is visible in both themes */
+    filter: invert(0.5);
+}
+
+.jsonforms-property-view .control>select {
+    padding: 0 !important;
+    border: none;
+}
+
+.jsonforms-property-view .control>input[type="checkbox"] {
+    display: flex !important;
+    flex: none !important;
+    outline: none !important;
+    margin: 0;
+}
+
+.jsonforms-property-view .control>input[disabled], .jsonforms-property-view .array-table-layout td input[disabled], .jsonforms-property-view .array-table-layout td select[disabled] {
+    opacity: 0.5;
+}
+
+.jsonforms-property-view .control>.validation {
+    font-size: var(--theia-ui-font-size0);
+    text-align: left;
+    font-family: var(--theia-ui-font-family);
+    padding-left: 3px;
+    order: 2;
+}
+
+.jsonforms-property-view .control>.validation_error, .jsonforms-property-view .control>.validate.invalid {
+    color: var(--theia-editorError-foreground);
+}
+
+.jsonforms-property-view .array-table-layout.control>header {
+    margin-top: 10px;
+    display: flex;
+    width: var(--jsonforms-property-view-label-width);
+    flex: none;
+    flex-direction: column;
+}
+
+.jsonforms-property-view .array-table-layout.control>header>button {
+    margin: 10px 10px 0 0;
+    align-self: flex-start;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>thead {
+    display: none;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>input {
+    width: 100%;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>span {
+    /* .validation error */
+    font-size: var(--theia-ui-font-size0);
+    text-align: left;
+    font-family: var(--theia-ui-font-family);
+    padding-left: 3px;
+    order: 2;
+    color: var(--theia-editorError-foreground);
+    margin-left: 12px;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>button {
+    /* theia-button */
+    border: none;
+    color: var(--theia-button-foreground);
+    background-color: var(--theia-button-background);
+    min-width: 65px;
+    outline: none;
+    cursor: pointer;
+    padding: 4px 9px;
+    margin-left: calc(var(--theia-ui-padding)*2);
+    border-radius: 1px;
+    box-shadow: 0px 1px 5px 0px rgb(0 0 0 / 20%), 0px 1px 2px 0px rgb(0 0 0 / 14%), 0px 1px 1px -2px rgb(0 0 0 / 12%);
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td:nth-child(2) {
+    width: 12%;
+    white-space: break-spaces;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td:last-child {
+    width: 1%;
+}
+
+.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>button:focus {
+    background-color: var(--theia-button-hoverBackground);
+}
