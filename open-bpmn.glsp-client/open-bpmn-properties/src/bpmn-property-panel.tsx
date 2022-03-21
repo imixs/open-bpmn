@@ -21,7 +21,6 @@ import {
 	SetUIExtensionVisibilityAction,
 	ActionDispatcher,
 	SModelRoot,
-	svg,
 	TYPES
 } from 'sprotty';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
@@ -36,7 +35,7 @@ import {
 	SelectionService
 } from '@eclipse-glsp/client/lib/features/select/selection-service';
 
-import { TaskNode, GatewayNode, EventNode } from '../model';
+import { TaskNode, GatewayNode, EventNode } from '@open-bpmn/open-bpmn-glsp';
 
 // Import Instruction sReact and JsonForms
 import * as React from 'react';
@@ -47,12 +46,7 @@ import {
 	vanillaRenderers
 } from '@jsonforms/vanilla-renderers';
 
-// import * as loggerModule from '../../../dummy-sub1';
 import * as loggerModule from '@open-bpmn/dummy-sub1';
-
-// import { JsonFormsCore, JsonSchema, UISchemaElement } from '@jsonforms/core';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const JSX = { createElement: svg };
 
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
@@ -190,6 +184,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			const element = root.index.getById(selectedElements[0]);
 			if (element instanceof TaskNode) {
 				loggerModule.log('===============> some message');
+
 				console.log('...Task selected');
 				const task: TaskNode = element;
 				console.log('...category=' + task.category + ' documentation ' + task.documentation);
@@ -221,7 +216,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				console.log('...Event selected....');
 				const event: EventNode = element;
 				ReactDOM.render(
-					<React.Fragment>Please select an element </React.Fragment>,
+					<React.Fragment><h1>Please select an element </h1></React.Fragment>,
 					this.bodyDiv
 				);
 				console.log('...eventtype=' + event.category);

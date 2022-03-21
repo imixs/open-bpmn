@@ -44,11 +44,9 @@ import '../css/property-panel.css';
 import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-
 import { directTaskEditor } from './direct-task-editing/di.config';
-import { bpmnPropertyModule } from './property-panel/di.config';
 
-// import {PropertyPanel} from './property-panel/property-panel';
+import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
@@ -89,6 +87,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 export default function createContainer(widgetId: string): Container {
     // add the BPMN propertyViewModule...
+    // const container = createClientContainer(bpmnDiagramModule, directTaskEditor);
     const container = createClientContainer(bpmnDiagramModule, directTaskEditor,bpmnPropertyModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,

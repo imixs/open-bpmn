@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020-2021 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -16,6 +16,7 @@
 import { TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 import { BPMNPropertyPanel } from './bpmn-property-panel';
+
 export const bpmnPropertyModule = new ContainerModule((bind, _unbind, isBound,rebind) => {
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);

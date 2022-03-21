@@ -1,0 +1,33 @@
+{
+  "private": "true",
+  "name": "@open-bpmn/open-bpmn-properties",
+  "version": "0.0.7",
+  "dependencies": {
+    "@eclipse-glsp/client": "0.9.0",
+    "@open-bpmn/open-bpmn-glsp": "0.0.7",
+    "@open-bpmn/dummy-sub1": "0.0.7",
+    "@jsonforms/core": "3.0.0-beta.0",
+    "@jsonforms/react": "3.0.0-beta.0",
+    "@jsonforms/vanilla-renderers": "3.0.0-beta.0",
+    "balloon-css": "^0.5.0"
+  },  
+    "peerDependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },  
+  "scripts": {
+    "prepare": "yarn clean && yarn build && yarn lint",
+    "clean": "rimraf lib",
+    "build": "tsc",
+    "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
+    "watch": "tsc -w"
+  },
+  "files": [
+    "lib",
+    "src",
+    "build",
+    "css"
+  ],
+  "main": "lib/index",
+  "types": "lib/index"
+}

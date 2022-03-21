@@ -109,7 +109,7 @@ export * from './dummy1';
 
 ### The module code
 
-The module source code is simply exporting some functionallity:
+The module source code is simply exporting some functionality:
 
 
 ````javascript

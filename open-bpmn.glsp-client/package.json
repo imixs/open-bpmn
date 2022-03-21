@@ -45,6 +45,7 @@
   "workspaces": [
     "open-bpmn-glsp",
     "dummy-sub1",
+    "open-bpmn-properties",
     "open-bpmn-theia",
     "open-bpmn-app"
   ],
