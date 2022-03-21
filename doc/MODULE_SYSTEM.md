@@ -109,6 +109,8 @@ Beside the module sources your sub module must include the file `index.ts`. This
 
 The module source code is simply exporting some functionallity:
 
+
+````javascript
 	// export a function
 	export function log (message: string) {
 		console.log(message);
@@ -124,6 +126,8 @@ The module source code is simply exporting some functionallity:
 			console.log('[${this.name}] ${message}')
 		}
 	}	
+````
+
 
 ## Import from a Sub Module
 
