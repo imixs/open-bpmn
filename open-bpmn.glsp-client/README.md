@@ -36,3 +36,5 @@ After a wipe you can rebuild the project with `yarn install`
 
 The open-bpmn-glsp client module depends on the following nodejs versions:
 
+
+https://stackoverflow.com/questions/56838735/how-to-import-a-common-module-in-cra-using-yarn-workspaces
