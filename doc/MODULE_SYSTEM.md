@@ -98,11 +98,13 @@ The file `tsconfig.json` can look like this:
 
 Beside the module sources your sub module must include the file `index.ts`. This file is refered in the `package.json` file and need to resolve the imports. At least this file exports all functionallity provided by the module source files:
 
-	/********************************************************************************
-	 * LCopyright (c) 
-	 ********************************************************************************/
-	export * from './dummy1';
 
+````javascript
+/********************************************************************************
+ * LCopyright (c) 
+ ********************************************************************************/
+export * from './dummy1';
+````
 
 
 ### The module code
