@@ -69,6 +69,18 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
         const labelText = this.editableLabel?.text;
         return labelText ? labelText : '<unknown>';
     }
+
+	/*
+	 * Method that returns a json data structure including all
+	 * editable element properties
+	 */
+    get propetriesData(): any {
+		return {
+			'name':this.name,
+			'category':this.category,
+			'documentation':this.documentation ? this.documentation : ''
+		};
+    }
 }
 
 /* CircularNode RectangularNode */
@@ -101,6 +113,18 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
         const labelText = this.editableLabel?.text;
         return labelText ? labelText : '<unknown>';
     }
+
+	/*
+	 * Method that returns a json data structure including all
+	 * editable element properties
+	 */
+    get propetriesData(): any {
+		return {
+			'name':this.name,
+			'category':this.category,
+			'documentation':this.documentation ? this.documentation : ''
+		};
+    }
 }
 
 export class GatewayNode extends DiamondNode implements Nameable, WithEditableLabel {
@@ -118,7 +142,7 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
         withEditLabelFeature
     ];
     category?: string;
-    documentation?: string;
+    documentation: string;
 
     get editableLabel(): (SChildElement & EditableLabel) | undefined {
         const label = this.children.find(element => element.type === 'label:heading');
@@ -131,6 +155,18 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
     get name(): string {
         const labelText = this.editableLabel?.text;
         return labelText ? labelText : '<unknown>';
+    }
+
+	/*
+	 * Method that returns a json data structure including all
+	 * editable element properties
+	 */
+    get propetriesData(): any {
+		return {
+			'name':this.name,
+			'category':this.category,
+			'documentation':this.documentation ? this.documentation : ''
+		};
     }
 }
 

@@ -187,13 +187,22 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 				console.log('...Task selected');
 				const task: TaskNode = element;
-				console.log('...category=' + task.category + ' documentation ' + task.documentation);
+				ReactDOM.render(
+					<JsonForms
+						data={task.propetriesData}
+						cells={vanillaCells}
+						renderers={vanillaRenderers}
+					/>,
+					this.bodyDiv
+				);
+				
+				/*console.log('...category=' + task.category + ' documentation ' + task.documentation);
 				const documentationInput = document.createElement('input');
 				documentationInput.insertAdjacentText('beforeend', '' + task.documentation);
 				documentationInput.onchange = function(this) {
 					console.log('...do something... ');
 				};
-				this.bodyDiv?.appendChild(documentationInput);
+				this.bodyDiv?.appendChild(documentationInput);*/
 			}
 
 			if (element instanceof GatewayNode) {
@@ -201,7 +210,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				const gateway: GatewayNode = element;
 				// const elementDataAsJson = {};
 
-				const elementDataAsJson = {
+				/*const elementDataAsJson = {
 					"firstName": "Jane",
 					"lastName": "Doe",
 					"registered": true,
@@ -213,11 +222,17 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						"john.doe2@sk"
 					],
 					"hobbies": []
-				}
+				}*/
 
+				/*const elementDataAsJson= {"category":gateway.category,
+				"documentation":gateway.documentation
+				}*/
+				
+				//const elementDataAs
+				
 				ReactDOM.render(
 					<JsonForms
-						data={elementDataAsJson}
+						data={gateway.propetriesData}
 						cells={vanillaCells}
 						renderers={vanillaRenderers}
 					/>,
@@ -230,7 +245,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				console.log('...Event selected....');
 				const event: EventNode = element;
 				ReactDOM.render(
-					<React.Fragment><h1>You have selected an event element! </h1></React.Fragment>,
+					<JsonForms
+						data={event.propetriesData}
+						cells={vanillaCells}
+						renderers={vanillaRenderers}
+					/>,
 					this.bodyDiv
 				);
 				console.log('...eventtype=' + event.category);
