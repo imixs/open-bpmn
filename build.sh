@@ -1,6 +1,7 @@
 #!/bin/bash
 echo "***************************************"
 echo "* Build - Open BPMN.....              *"
+buildAll='false'
 buildBackend='false'
 buildFrontend='false'
 forceFrontend='false'
@@ -16,8 +17,7 @@ fi
 echo "***************************************"
 
 if [[ "$1" == "" ]]; then
-  buildBackend='true'
-  buildFrontend='true'
+  buildAll='true'
 fi
 
 if [[ ${#1} -gt 2 ]]; then
@@ -44,14 +44,24 @@ while [ "$1" != "" ]; do
   shift
 done
 
-[[ "$buildBackend" == "true" ]] && echo "  building Backend (-b)"
-[[ "$forceFrontend" == "true" ]] && echo "  remove yarn.lock (-ff)"
-[[ "$buildFrontend" == "true" ]] && echo "  building Frontend (-f)"
+[[ "$buildAll" == "true" ]] && echo "  building Backend and Frontend"
+[[ "$buildBackend" == "true" ]] && echo "  building Backend Only (-b)"
+[[ "$buildFrontend" == "true" ]] && echo "  building Frontend Only (-f)"
+[[ "$forceFrontend" == "true" ]] && echo "  building Frontend only and remove yarn.lock (-ff)"
+
+if [ "$buildAll" == "true" ]; then
+  echo "$(date +"[%T.%3N]") Build backend products"
+  cd open-bpmn.glsp-server/
+  mvn clean install
+  cd ../
+fi
 
 if [ "$buildBackend" == "true" ]; then
   echo "$(date +"[%T.%3N]") Build backend products"
   cd open-bpmn.glsp-server/
   mvn clean install
+  cd ./target
+  java -jar open-bpmn.server-0.0.7-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.BPMNServerLauncher
   cd ../
 fi
 
@@ -64,8 +74,15 @@ fi
 if [ "$buildFrontend" == "true" ]; then
   cd open-bpmn.glsp-client/
   yarn
-  yarn start
+  yarn start:external
   cd ..
 fi
 
+
+if [ "$buildAll" == "true" ]; then
+  cd open-bpmn.glsp-client/
+  yarn
+  yarn start
+  cd ..
+fi
 

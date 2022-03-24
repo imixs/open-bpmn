@@ -22,13 +22,15 @@ The Application can be started from a Web Browser
 <img src="./doc/imixs-bpmn-001.png" />
 
 
-## Locally build backend/frontend
+## Locally build for Development
 
-If you want only build the backend (and not the front-end), run:
+Durign development you can run the frontend and backend in separate tasks. This gives you more control over the CLient and the Backend Component. 
+
+To start the GLSP Server only, run:
 
 	$ ./build.sh -b
 
-If you just want to build the frontend, run:
+To start the GLSP Client only, run:
 
 	$ ./build.sh -f
 
@@ -108,21 +110,5 @@ For development with Eclipse Theia the expected version is ">=10.11.0 <13". For 
 	16.13.2
 	
 	 
- 
-# Debug
-
-During development it will be more easy to start the GLSP Server and the Client in separate threads to see what is happening on the server. 
-
-First start the GLSP Client without the server:
-
-	$ ./start.sh	
-	
-Next start the glsp server manually with:
-
-	$ cd open-bpmn.glsp-server
-	$ ./launch.sh
-
-The server is starting on Port 5007.
-
 
 	
