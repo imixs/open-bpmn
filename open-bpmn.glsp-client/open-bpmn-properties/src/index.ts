@@ -20,7 +20,9 @@ import { BPMNPropertyPanel } from './bpmn-property-panel';
 import '../css/property-panel.css';
 import '../css/jsonforms-property-view.css';
 
-export const bpmnPropertyModule = new ContainerModule((bind, _unbind, isBound,rebind) => {
+export const bpmnPropertyModule = new ContainerModule((bind, unbind, isBound,rebind) => {
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
+    // const context = { bind, unbind, isBound, rebind };
+    // configureActionHandler(context, SelectAction.KIND, MySelectResponseActionHandler);
 });

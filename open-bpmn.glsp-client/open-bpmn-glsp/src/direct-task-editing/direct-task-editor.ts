@@ -147,7 +147,9 @@ export class TaskEditor extends AbstractUIExtension {
     }
 
     protected executeFromTextOnlyInput(input: string): void {
+		console.log('....... TextOnlyInput: ' + input);
         const action = new ApplyTaskEditOperation(this.task.id, input);
+		console.log('....... dispatch action: ', action);
         this.actionDispatcher.dispatch(action);
     }
 

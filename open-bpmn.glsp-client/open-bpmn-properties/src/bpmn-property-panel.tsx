@@ -16,19 +16,21 @@
 import { inject, injectable, postConstruct } from 'inversify';
 import {
 	AbstractUIExtension,
+	Action,
 	EnableDefaultToolsAction,
-	EnableToolsAction,
 	SetUIExtensionVisibilityAction,
 	ActionDispatcher,
-	SModelRoot,
-	TYPES
-} from 'sprotty';
-import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
-import {
-	Action,
+	EnableToolsAction,
+	EditorContextService,
 	EditModeListener,
-	EditorContextService
+	TYPES,
+	SModelRoot
 } from '@eclipse-glsp/client';
+import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
+
+/*import {
+	TYPES
+} from 'sprotty';*/
 
 import {
 	SelectionListener,
@@ -46,13 +48,13 @@ import {
 	vanillaRenderers
 } from '@jsonforms/vanilla-renderers';
 
-import * as loggerModule from '@open-bpmn/dummy-sub1';
-
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
 	static readonly KIND = 'enableBPMNPropertyPanel';
 	readonly kind = EnableBPMNPropertyPanelAction.KIND;
 }
+
+
 
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener {
@@ -69,6 +71,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 	protected bodyDiv: HTMLElement;
 	modelRootId: string;
+	selectedElementId: string;
 
 	@postConstruct()
 	postConstruct(): void {
@@ -179,102 +182,92 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	 * and updates the property panel input fields
 	 */
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-		console.log('selection change  received:', root, selectedElements);
 		if (this.selectionService.isSingleSelection()) {
+			console.log('======== > selection change  received:', root, selectedElements);
 			const element = root.index.getById(selectedElements[0]);
-			if (element instanceof TaskNode) {
-				loggerModule.log('===============> some message');
+			if (element) {
+				// did we have a change?
+				// avoid message loop...
+				if (element.id === this.selectedElementId) {
+					// skip this event!
+					return;
+				}
+				// set new selectionId
+				this.selectedElementId = element.id;
+				console.log('======== > new selection ID=' + element.id);
 
-				console.log('...Task selected');
-				const task: TaskNode = element;
-				ReactDOM.render(
-					<JsonForms
-						data={task.propetriesData}
-						cells={vanillaCells}
-						renderers={vanillaRenderers}
-					/>,
-					this.bodyDiv
-				);
-				
-				/*console.log('...category=' + task.category + ' documentation ' + task.documentation);
-				const documentationInput = document.createElement('input');
-				documentationInput.insertAdjacentText('beforeend', '' + task.documentation);
-				documentationInput.onchange = function(this) {
-					console.log('...do something... ');
-				};
-				this.bodyDiv?.appendChild(documentationInput);*/
+				if (element instanceof TaskNode) {
+
+					console.log('...Task selected');
+					const task: TaskNode = element;
+					ReactDOM.render(
+						<JsonForms
+							data={task.propetriesData}
+							cells={vanillaCells}
+							renderers={vanillaRenderers}
+						/>,
+						this.bodyDiv
+					);
+				}
+
+				if (element instanceof GatewayNode) {
+					console.log('...Gateway selected');
+					const gateway: GatewayNode = element;
+					ReactDOM.render(
+						<JsonForms
+							data={gateway.propetriesData}
+							cells={vanillaCells}
+							renderers={vanillaRenderers}
+						/>,
+						this.bodyDiv
+					);
+					console.log('...eventtype=' + gateway.category);
+				}
+
+				if (element instanceof EventNode) {
+					console.log('...Event selected....');
+					const event: EventNode = element;
+					ReactDOM.render(
+						<JsonForms
+							data={event.propetriesData}
+							cells={vanillaCells}
+							renderers={vanillaRenderers}
+							onChange={({ errors, data }) => this.setState({ data })}
+						/>,
+						this.bodyDiv
+					);
+					console.log('...eventtype=' + event.category);
+				}
+			} else {
+				// element not defined!
+				this.selectedElementId='';
 			}
-
-			if (element instanceof GatewayNode) {
-				console.log('...Gateway selected');
-				const gateway: GatewayNode = element;
-				// const elementDataAsJson = {};
-
-				/*const elementDataAsJson = {
-					"firstName": "Jane",
-					"lastName": "Doe",
-					"registered": true,
-					"birthDate": "1998-12-24",
-					"nationality": "SRB",
-					"personalId": 4428,
-					"email": [
-						"john.doe@gmail.com",
-						"john.doe2@sk"
-					],
-					"hobbies": []
-				}*/
-
-				/*const elementDataAsJson= {"category":gateway.category,
-				"documentation":gateway.documentation
-				}*/
-				
-				//const elementDataAs
-				
-				ReactDOM.render(
-					<JsonForms
-						data={gateway.propetriesData}
-						cells={vanillaCells}
-						renderers={vanillaRenderers}
-					/>,
-					this.bodyDiv
-				);
-				console.log('...eventtype=' + gateway.category);
-			}
-
-			if (element instanceof EventNode) {
-				console.log('...Event selected....');
-				const event: EventNode = element;
-				ReactDOM.render(
-					<JsonForms
-						data={event.propetriesData}
-						cells={vanillaCells}
-						renderers={vanillaRenderers}
-					/>,
-					this.bodyDiv
-				);
-				console.log('...eventtype=' + event.category);
-			}
+		} else {
+			// no single element selected!
+			this.selectedElementId='';
 		}
 	}
 
+	/*
+	 * Send a ApplyEditOperation Action....
+	 */
+	setState(_newData: any): void {
+		console.log('...entered setState with new event data: ' + _newData.data.name);
+		//this.currentEventNode.name= _newData.data.name;
+		console.log('...die current id=' + this.selectedElementId);
 
-	/*    protected renderForms(properties: Object | undefined, typeSchema: JsonSchema | undefined, uiSchema: UISchemaElement | undefined): void {
-			ReactDOM.render(
-				<JsonFormsStyleContext.Provider value={this.getStyleContext()}>
-					<JsonForms
-						data={properties}
-						schema={typeSchema}
-						uischema={uiSchema}
-						cells={vanillaCells}
-						renderers={vanillaRenderers}
-						onChange={this.jsonFormsOnChange}
-					/>
-				</JsonFormsStyleContext.Provider>,
-				this.node
-			);
-		}*/
+		const action = new ApplyEventEditOperation(this.selectedElementId, 'name:' + _newData.data.name);
+		this.actionDispatcher.dispatch(action);
 
+		console.log('...name updated');
+	}
 
+}
+
+export class ApplyEventEditOperation implements Action {
+	static readonly KIND = 'applyEventEdit';
+	readonly kind = ApplyEventEditOperation.KIND;
+	constructor(readonly taskId: string, readonly expression: string) { }
 }
 
 export function createIcon(codiconId: string): HTMLElement {

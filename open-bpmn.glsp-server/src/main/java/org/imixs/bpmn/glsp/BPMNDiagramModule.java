@@ -29,6 +29,8 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateStartEventHandler;
+import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventEditOperationHandler;
+import org.imixs.bpmn.glsp.elements.event.edit.EditEventOperationHandler;
 import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateInclusiveGatewayHandler;
@@ -42,8 +44,8 @@ import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.imixs.bpmn.glsp.provider.BPMNToolPaletteItemProvider;
 
 /**
- * The DiagramModule contains the bindings in dedicated methods. Imixs BPMN extends this module and customize it by
- * overriding dedicated binding methods.
+ * The DiagramModule contains the bindings in dedicated methods. Imixs BPMN
+ * extends this module and customize it by overriding dedicated binding methods.
  *
  *
  * @author rsoika
@@ -51,69 +53,78 @@ import org.imixs.bpmn.glsp.provider.BPMNToolPaletteItemProvider;
  */
 public class BPMNDiagramModule extends GModelJsonDiagramModule {
 
-   @Override
-   protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-      return BPMNDiagramConfiguration.class;
-   }
+    @Override
+    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
+        return BPMNDiagramConfiguration.class;
+    }
 
-   @Override
-   protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-      return JsonFileGModelLoader.class;
-   }
+    @Override
+    protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
+        return JsonFileGModelLoader.class;
+    }
 
-   @Override
-   protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
-      return FileWatcher.class;
-   }
+    @Override
+    protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
+        return FileWatcher.class;
+    }
 
-   @Override
-   protected Class<? extends GraphExtension> bindGraphExtension() {
-      return BPMNGraphExtension.class;
-   }
+    @Override
+    protected Class<? extends GraphExtension> bindGraphExtension() {
+        return BPMNGraphExtension.class;
+    }
 
-   @Override
-   protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
-      super.configureOperationHandlers(binding);
+    @Override
+    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+        super.configureOperationHandlers(binding);
 
-      // Tasks
-      binding.add(CreateManualTaskHandler.class);
-      binding.add(CreateServiceTaskHandler.class);
-      binding.add(CreateSendTaskHandler.class);
-      binding.add(CreateScriptTaskHandler.class);
-      binding.add(CreateUserTaskHandler.class);
+        // Tasks
+        binding.add(CreateManualTaskHandler.class);
+        binding.add(CreateServiceTaskHandler.class);
+        binding.add(CreateSendTaskHandler.class);
+        binding.add(CreateScriptTaskHandler.class);
+        binding.add(CreateUserTaskHandler.class);
 
-      // Events
-      binding.add(CreateStartEventHandler.class);
-      binding.add(CreateEndEventHandler.class);
+        // Events
+        binding.add(CreateStartEventHandler.class);
+        binding.add(CreateEndEventHandler.class);
 
-      // Flows
-      binding.add(CreateSequenceFlowHandler.class);
-      // binding.add(XXCreateEdgeHandler.class);
+        // Flows
+        binding.add(CreateSequenceFlowHandler.class);
+        // binding.add(XXCreateEdgeHandler.class);
 
-      // Gateways
-      binding.add(CreateExclusiveGatewayHandler.class);
-      binding.add(CreateInclusiveGatewayHandler.class);
+        // Gateways
+        binding.add(CreateExclusiveGatewayHandler.class);
+        binding.add(CreateInclusiveGatewayHandler.class);
 
-      // Pools
-      binding.add(CreatePoolHandler.class);
+        // Pools
+        binding.add(CreatePoolHandler.class);
 
-      binding.remove(LayoutOperationHandler.class);
-   }
+        binding.remove(LayoutOperationHandler.class);
 
-   /**
-    * Add Create actions to the palette that opens up on Ctrl+Space
-    */
-   @Override
-   protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
-      return BPMNCommandPaletteActionProvider.class;
-   }
+        // WICHTIG:
 
-   @Override
-   protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
-      return BPMNToolPaletteItemProvider.class;
-   }
+        // bind Edit Operatio Handler
+        binding.add(EditEventOperationHandler.class);
+        // register apply operations send from the client
+        binding.add(ApplyEventEditOperationHandler.class);
+    }
 
-   @Override
-   public String getDiagramType() { return "bpmn-diagram"; }
+    /**
+     * Add Create actions to the palette that opens up on Ctrl+Space
+     */
+    @Override
+    protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
+        return BPMNCommandPaletteActionProvider.class;
+    }
+
+    @Override
+    protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
+        return BPMNToolPaletteItemProvider.class;
+    }
+
+    @Override
+    public String getDiagramType() {
+        return "bpmn-diagram";
+    }
 
 }

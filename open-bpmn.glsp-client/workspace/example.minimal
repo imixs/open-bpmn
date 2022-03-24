@@ -130,12 +130,12 @@
             "y": 40.0
           },
           "size": {
-            "width": 68.71875,
+            "width": 40.4375,
             "height": 16.0
           },
-          "text": "EndEvent2",
+          "text": "iiiiiiiiiiiii",
           "alignment": {
-            "x": 34.25,
+            "x": 20.21875,
             "y": 13.0
           }
         },
@@ -206,7 +206,7 @@
         "y": 40.0
       },
       "size": {
-        "width": 68.71875,
+        "width": 40.4375,
         "height": 56.0
       },
       "layout": "freeform",
@@ -419,5 +419,5 @@
     }
   ],
   "type": "graph",
-  "revision": 3
+  "revision": 8
 }
