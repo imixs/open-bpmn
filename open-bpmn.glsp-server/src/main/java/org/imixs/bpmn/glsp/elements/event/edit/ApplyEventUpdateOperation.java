@@ -5,20 +5,21 @@ import org.eclipse.glsp.server.operations.Operation;
 
 /**
  * The ApplyEventEditOperation is an {@link Action} that directly manipulates
- * the EventNode model representation on server side.
+ * the EventNode model representation on server side. The action is send from
+ * the client to the server.
  * <p>
  * Each operation is uniquely defined by its KIND
  * <p>
- * The Operations are handled by the {@link ApplyEventEditOperationHandler}. The
- * operation handler is responsible of processing the operation and updates the
- * model representation accordingly.
+ * The Operations are handled by the {@link ApplyEventUpdateOperationHandler}.
+ * The operation handler is responsible of processing the operation and updates
+ * the model representation accordingly.
  * <p>
  * The expression is a string that describes with attribute should be updated:
  * <p>
  * ATTRIBUTE_NAME:NEW_VALUE
  *
  */
-public class ApplyEventEditOperation extends Operation {
+public class ApplyEventUpdateOperation extends Operation {
 
     public static final String DOCUMENTATION_PREFIX = "documentation:";
     public static final String NAME_PREFIX = "name:";
@@ -26,11 +27,11 @@ public class ApplyEventEditOperation extends Operation {
     private String id;
     private String expression;
 
-    public ApplyEventEditOperation() {
-        super("applyEventEdit");
+    public ApplyEventUpdateOperation() {
+        super("applyEventUpdate");
     }
 
-    public ApplyEventEditOperation(final String nodeId, final String expression) {
+    public ApplyEventUpdateOperation(final String nodeId, final String expression) {
         this();
         this.id = nodeId;
         this.expression = expression;

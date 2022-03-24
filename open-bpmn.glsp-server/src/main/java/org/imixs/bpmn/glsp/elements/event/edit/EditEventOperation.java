@@ -15,31 +15,46 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.elements.event.edit;
 
+import java.util.logging.Logger;
+
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.operations.Operation;
 
-public class EventEditOperation extends Operation {
+/**
+ * The EditEventOperation is an {@link Action} that directly manipulates the
+ * EventNode model representation on server side. The action is created from the
+ * {@link ApplyEventUpdateOperationHandler}
+ * <p>
+ *
+ * @author rsoika
+ *
+ */
+public class EditEventOperation extends Operation {
 
-    private String taskId;
+    private static Logger logger = Logger.getLogger(EditEventOperation.class.getName());
+
+    private String id;
     private String feature;
     private String value;
 
-    public EventEditOperation() {
-        super("editTask");
+    public EditEventOperation() {
+        super("editEvent");
     }
 
-    public EventEditOperation(final String taskId, final String feature, final String value) {
+    public EditEventOperation(final String id, final String feature, final String value) {
         this();
-        this.taskId = taskId;
+        logger.info("...create new EventEditOperation - ID=" + id + " feature=" + feature + " value=" + value);
+        this.id = id;
         this.feature = feature;
         this.value = value;
     }
 
-    public String getTaskId() {
-        return taskId;
+    public String getId() {
+        return id;
     }
 
-    public void setTaskId(final String taskId) {
-        this.taskId = taskId;
+    public void setId(final String id) {
+        this.id = id;
     }
 
     public String getFeature() {

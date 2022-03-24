@@ -256,7 +256,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		//this.currentEventNode.name= _newData.data.name;
 		console.log('...die current id=' + this.selectedElementId);
 
-		const action = new ApplyEventEditOperation(this.selectedElementId, 'name:' + _newData.data.name);
+		const action = new ApplyEventUpdateOperation(this.selectedElementId, 'name:' + _newData.data.name);
+		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'documentation:' + _newData.data.documentation);
 		this.actionDispatcher.dispatch(action);
 
 		console.log('...name updated');
@@ -264,11 +265,16 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 }
 
-export class ApplyEventEditOperation implements Action {
-	static readonly KIND = 'applyEventEdit';
-	readonly kind = ApplyEventEditOperation.KIND;
-	constructor(readonly taskId: string, readonly expression: string) { }
+/**
+ * This action is send after a property change to the backend providing the ID and the new value
+ */
+export class ApplyEventUpdateOperation implements Action {
+	static readonly KIND = 'applyEventUpdate';
+	readonly kind = ApplyEventUpdateOperation.KIND;
+	constructor(readonly id: string, readonly expression: string) { }
 }
+
+
 
 export function createIcon(codiconId: string): HTMLElement {
 	const icon = document.createElement('i');

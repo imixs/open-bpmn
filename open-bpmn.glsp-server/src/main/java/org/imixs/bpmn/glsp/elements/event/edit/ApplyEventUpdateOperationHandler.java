@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.elements.event.edit;
 
+import java.util.logging.Logger;
+
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
@@ -30,7 +32,8 @@ import com.google.inject.Inject;
  * Finally the OperationHandler sends out a EventEditOperation
  *
  */
-public class ApplyEventEditOperationHandler extends AbstractOperationHandler<ApplyEventEditOperation> {
+public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<ApplyEventUpdateOperation> {
+    private static Logger logger = Logger.getLogger(ApplyEventUpdateOperationHandler.class.getName());
 
     @Inject
     protected ActionDispatcher actionDispatcher;
@@ -42,17 +45,21 @@ public class ApplyEventEditOperationHandler extends AbstractOperationHandler<App
      *
      */
     @Override
-    protected void executeOperation(final ApplyEventEditOperation operation) {
+    protected void executeOperation(final ApplyEventUpdateOperation operation) {
+        logger.info("....execute UpdateEvent Operation id: " + operation.getId());
         String expression = operation.getExpression();
-        if (expression.startsWith(ApplyEventEditOperation.DOCUMENTATION_PREFIX)) {
-            String value = expression.substring(ApplyEventEditOperation.DOCUMENTATION_PREFIX.length());
-            actionDispatcher.dispatch(new EventEditOperation(operation.getId(), "documentation", value));
-        } else if (expression.startsWith(ApplyEventEditOperation.NAME_PREFIX)) {
-            String value = expression.substring(ApplyEventEditOperation.NAME_PREFIX.length());
-            actionDispatcher.dispatch(new EventEditOperation(operation.getId(), "name", value));
+
+        logger.info("....expression= " + expression);
+        if (expression.startsWith(ApplyEventUpdateOperation.DOCUMENTATION_PREFIX)) {
+            String value = expression.substring(ApplyEventUpdateOperation.DOCUMENTATION_PREFIX.length());
+            actionDispatcher.dispatch(new EditEventOperation(operation.getId(), "documentation", value));
+        } else if (expression.startsWith(ApplyEventUpdateOperation.NAME_PREFIX)) {
+            String value = expression.substring(ApplyEventUpdateOperation.NAME_PREFIX.length());
+            logger.info("...create EventEditOperation name=" + value);
+            actionDispatcher.dispatch(new EditEventOperation(operation.getId(), "name", value));
         } else {
             throw new GLSPServerException(
-                    "Cannot process 'ApplyEventEditOperation' expression unnown: " + operation.getExpression());
+                    "Cannot process 'UpdateEventOperation' expression unnown: " + operation.getExpression());
         }
     }
 

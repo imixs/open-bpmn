@@ -29,7 +29,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateStartEventHandler;
-import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventEditOperationHandler;
+import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
 import org.imixs.bpmn.glsp.elements.event.edit.EditEventOperationHandler;
 import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
@@ -106,7 +106,7 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
         // bind Edit Operatio Handler
         binding.add(EditEventOperationHandler.class);
         // register apply operations send from the client
-        binding.add(ApplyEventEditOperationHandler.class);
+        binding.add(ApplyEventUpdateOperationHandler.class);
     }
 
     /**

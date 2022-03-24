@@ -225,7 +225,8 @@
       "category": [
         "start"
       ],
-      "name": "StartEvent3",
+      "name": "Start",
+      "documentation": "Sepp",
       "id": "664bb14d-53cf-4e55-8716-eb37ae852676",
       "cssClasses": [
         "event",
@@ -240,12 +241,12 @@
             "y": 40.0
           },
           "size": {
-            "width": 73.375,
+            "width": 29.703125,
             "height": 16.0
           },
-          "text": "StartEvent3",
+          "text": "Start",
           "alignment": {
-            "x": 36.578125,
+            "x": 14.796875,
             "y": 13.0
           }
         },
@@ -316,7 +317,7 @@
         "y": 40.0
       },
       "size": {
-        "width": 73.375,
+        "width": 29.703125,
         "height": 56.0
       },
       "layout": "freeform",
@@ -419,5 +420,5 @@
     }
   ],
   "type": "graph",
-  "revision": 8
+  "revision": 62
 }
