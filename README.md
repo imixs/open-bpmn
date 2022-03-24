@@ -109,4 +109,20 @@ For development with Eclipse Theia the expected version is ">=10.11.0 <13". For 
 	
 	 
  
- 
+# Debug
+
+During development it will be more easy to start the GLSP Server and the Client in separate threads to see what is happening on the server. 
+
+First start the GLSP Client without the server:
+
+	$ ./start.sh	
+	
+Next start the glsp server manually with:
+
+	$ cd open-bpmn.glsp-server
+	$ ./launch.sh
+
+The server is starting on Port 5007.
+
+
+	
