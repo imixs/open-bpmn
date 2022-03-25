@@ -15,12 +15,18 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.elements.event.edit;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.types.GLSPServerException;
+import org.imixs.bpmn.bpmngraph.EventNode;
+import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
 
@@ -48,19 +54,39 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
     protected void executeOperation(final ApplyEventUpdateOperation operation) {
         logger.info("....execute UpdateEvent Operation id: " + operation.getId());
         String expression = operation.getExpression();
-
         logger.info("....expression= " + expression);
-        if (expression.startsWith(ApplyEventUpdateOperation.DOCUMENTATION_PREFIX)) {
-            String value = expression.substring(ApplyEventUpdateOperation.DOCUMENTATION_PREFIX.length());
-            actionDispatcher.dispatch(new EditEventOperation(operation.getId(), "documentation", value));
-        } else if (expression.startsWith(ApplyEventUpdateOperation.NAME_PREFIX)) {
-            String value = expression.substring(ApplyEventUpdateOperation.NAME_PREFIX.length());
-            logger.info("...create EventEditOperation name=" + value);
-            actionDispatcher.dispatch(new EditEventOperation(operation.getId(), "name", value));
-        } else {
-            throw new GLSPServerException(
-                    "Cannot process 'UpdateEventOperation' expression unnown: " + operation.getExpression());
+
+        Optional<EventNode> element = modelState.getIndex().findElementByClass(operation.getId(), EventNode.class);
+        if (element.isEmpty()) {
+            throw new RuntimeException("Cannot find element with id '" + operation.getId() + "'");
         }
+
+        String feature = expression.substring(0, expression.indexOf(':'));
+        String value = expression.substring(expression.indexOf(':') + 1);
+        logger.info("...feature = " + feature + " - value = " + value);
+        switch (feature) {
+        case "name":
+            // element.get().setName(value);
+            logger.info("........only update the LABLE_HEANDING..");
+            // Update also the text of the GLabel element
+            EList<GModelElement> childs = element.get().getChildren();
+            for (GModelElement child : childs) {
+                if (ModelTypes.LABEL_HEADING.equals(child.getType())) {
+                    GLabel gLabel = (GLabel) child;
+                    gLabel.setText(value);
+                    break;
+                }
+            }
+
+            break;
+
+        case "documentation":
+            element.get().setDocumentation(value);
+            break;
+        default:
+            throw new GLSPServerException("Cannot edit element at feature '" + feature + "'");
+        }
+
     }
 
 }

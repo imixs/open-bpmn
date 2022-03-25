@@ -18,5 +18,5 @@ import createBPMNDiagramContainer from './di.config';
 export * from './model';
 export * from './bpmn-element-views';
 export * from './bpmn-routing-views';
-export * from './direct-task-editing/direct-task-editor';
+
 export { createBPMNDiagramContainer };

@@ -115,7 +115,7 @@
       "category": [
         "end"
       ],
-      "name": "End",
+      "name": "EndEvent2",
       "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff",
       "cssClasses": [
         "event",
@@ -130,12 +130,12 @@
             "y": 40.0
           },
           "size": {
-            "width": 24.9375,
+            "width": 40.4375,
             "height": 16.0
           },
-          "text": "End",
+          "text": "iiiiiiiiiiiii",
           "alignment": {
-            "x": 12.46875,
+            "x": 20.21875,
             "y": 13.0
           }
         },
@@ -206,7 +206,7 @@
         "y": 40.0
       },
       "size": {
-        "width": 25.0,
+        "width": 40.4375,
         "height": 56.0
       },
       "layout": "freeform",
@@ -241,12 +241,12 @@
             "y": 40.0
           },
           "size": {
-            "width": 45.375,
+            "width": 29.703125,
             "height": 16.0
           },
-          "text": "Start22",
+          "text": "Start",
           "alignment": {
-            "x": 22.578125,
+            "x": 14.796875,
             "y": 13.0
           }
         },
@@ -317,7 +317,7 @@
         "y": 40.0
       },
       "size": {
-        "width": 45.375,
+        "width": 29.703125,
         "height": 56.0
       },
       "layout": "freeform",
@@ -420,5 +420,5 @@
     }
   ],
   "type": "graph",
-  "revision": 5
+  "revision": 62
 }

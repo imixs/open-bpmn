@@ -22,15 +22,17 @@ import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
+import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
+import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateStartEventHandler;
 import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.imixs.bpmn.glsp.elements.event.edit.EditEventOperationHandler;
+import org.imixs.bpmn.glsp.elements.event.edit.EventEditValidator;
 import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateInclusiveGatewayHandler;
@@ -73,6 +75,20 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
         return BPMNGraphExtension.class;
     }
 
+    /**
+     * Register validator classes
+     */
+    @Override
+    protected Class<? extends ModelValidator> bindModelValidator() {
+        return BPMNModelValidator.class;
+    }
+
+    @Override
+    protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
+        super.configureContextEditValidators(binding);
+        binding.add(EventEditValidator.class);
+    }
+
     @Override
     protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
         super.configureOperationHandlers(binding);
@@ -103,8 +119,6 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
 
         // WICHTIG:
 
-        // bind Edit Operatio Handler
-        binding.add(EditEventOperationHandler.class);
         // register apply operations send from the client
         binding.add(ApplyEventUpdateOperationHandler.class);
     }

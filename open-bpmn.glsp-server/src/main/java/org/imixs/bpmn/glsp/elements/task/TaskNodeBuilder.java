@@ -27,58 +27,59 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
-   private final String name;
-   private final String taskType;
+    private final String name;
+    private final String taskType;
 
-   public TaskNodeBuilder(final String type, final String name, final String taskType) {
-      super(type);
-      this.name = name;
-      this.taskType = taskType;
+    public TaskNodeBuilder(final String type, final String name, final String taskType) {
+        super(type);
+        this.name = name;
+        this.taskType = taskType;
 
-   }
+    }
 
-   @Override
-   protected TaskNode instantiate() {
-      return BpmngraphFactory.eINSTANCE.createTaskNode();
-   }
+    @Override
+    protected TaskNode instantiate() {
+        return BpmngraphFactory.eINSTANCE.createTaskNode();
+    }
 
-   @Override
-   protected TaskNodeBuilder self() {
-      return this;
-   }
+    @Override
+    protected TaskNodeBuilder self() {
+        return this;
+    }
 
-   @Override
-   public void setProperties(final TaskNode node) {
-      super.setProperties(node);
-      node.setName(name);
-      node.getCategory().add(taskType);
-      node.setDocumentation("...some documentation....");
+    @Override
+    public void setProperties(final TaskNode node) {
+        super.setProperties(node);
+        node.setName(name);
+        node.getCategory().add(taskType);
+        node.setDocumentation("...some documentation....");
 
-      node.setLayout(GConstants.Layout.HBOX);
+        node.setLayout(GConstants.Layout.HBOX);
 
-      // Set min width/height
-      node.getLayoutOptions().put("minWidth", 160);
-      node.getLayoutOptions().put("minHeight", 60);
+        // Set min width/height
+        node.getLayoutOptions().put("minWidth", 160);
+        node.getLayoutOptions().put("minHeight", 60);
 
-      node.getLayoutOptions().put("hGap", 10);
-      node.getLayoutOptions().put("vAlign", "center");
-      node.getChildren().add(createCompartmentIcon(node));
-      node.getChildren().add(createCompartmentHeader(node));
+        node.getLayoutOptions().put("hGap", 10);
+        node.getLayoutOptions().put("vAlign", "center");
+        node.getChildren().add(createCompartmentIcon(node));
 
-   }
+        GLabel glabel = createCompartmentHeader(node);
+        node.getChildren().add(glabel);
 
-   private Icon createCompartmentIcon(final TaskNode taskNode) {
-      return new IconBuilder()
-         .id(taskNode.getId() + "_icon")
-         // .position(-10, -10)
-         .build();
-   }
+    }
 
-   private GLabel createCompartmentHeader(final TaskNode taskNode) {
-      return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-         .id(taskNode.getId() + "_classname") //
-         .text(taskNode.getName()) //
-         .build();
-   }
+    private Icon createCompartmentIcon(final TaskNode taskNode) {
+        return new IconBuilder().id(taskNode.getId() + "_icon")
+                // .position(-10, -10)
+                .build();
+    }
+
+    private GLabel createCompartmentHeader(final TaskNode taskNode) {
+        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+                .id(taskNode.getId() + "_classname") //
+                .text(taskNode.getName()) //
+                .build();
+    }
 
 }

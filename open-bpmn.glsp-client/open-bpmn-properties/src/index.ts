@@ -16,6 +16,7 @@
 import { TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 import { BPMNPropertyPanel } from './bpmn-property-panel';
+import { BPMNPropertyEditor } from './bpmn-property-inline-editor';
 // css styles
 import '../css/property-panel.css';
 import '../css/jsonforms-property-view.css';
@@ -25,4 +26,8 @@ export const bpmnPropertyModule = new ContainerModule((bind, unbind, isBound,reb
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     // const context = { bind, unbind, isBound, rebind };
     // configureActionHandler(context, SelectAction.KIND, MySelectResponseActionHandler);
+
+    bind(BPMNPropertyEditor).toSelf().inSingletonScope();
+    bind(TYPES.IUIExtension).toService(BPMNPropertyEditor);
+
 });
