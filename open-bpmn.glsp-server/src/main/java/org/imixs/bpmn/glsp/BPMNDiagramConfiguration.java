@@ -108,12 +108,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(new ShapeTypeHint(ModelTypes.START_EVENT, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(ModelTypes.END_EVENT, true, true, false, true));
 
+        nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));
+
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
         catHint.setContainableElementTypeIds(ALL_BPMN_FLOWELEMENTS);
         nodeHints.add(catHint);
-
-        nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));
 
         return nodeHints;
     }
@@ -141,8 +141,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
 
         // allow all elements
-        // sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-        // sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
+        sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
+        sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
         edgeHints.add(sequenceFlowHint);
         return edgeHints;
     }
@@ -152,7 +152,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
 
         // allow all
-        hint.setSourceElementTypeIds(ALL_PORTS);
+        hint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
         hint.setTargetElementTypeIds(ALL_PORTS);
         return hint;
     }
