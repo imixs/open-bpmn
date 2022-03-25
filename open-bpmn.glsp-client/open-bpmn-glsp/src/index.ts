@@ -15,7 +15,6 @@
  ********************************************************************************/
 import createBPMNDiagramContainer from './di.config';
 
-export * from './model';
 export * from './bpmn-element-views';
 export * from './bpmn-routing-views';
 

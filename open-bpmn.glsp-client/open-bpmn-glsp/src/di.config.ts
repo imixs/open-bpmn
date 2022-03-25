@@ -40,10 +40,9 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 
-import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from './model';
+import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-// import { directTaskEditor } from './direct-task-editing/di.config';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 

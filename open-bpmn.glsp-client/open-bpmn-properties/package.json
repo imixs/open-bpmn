@@ -4,8 +4,7 @@
   "version": "0.0.8",
   "dependencies": {
     "@eclipse-glsp/client": "0.9.0",
-    "@open-bpmn/open-bpmn-glsp": "0.0.8",
-    "@open-bpmn/dummy-sub1": "0.0.8",
+    "@open-bpmn/open-bpmn-model": "0.0.8",
     "@jsonforms/core": "3.0.0-beta.0",
     "@jsonforms/react": "3.0.0-beta.0",
     "@jsonforms/vanilla-renderers": "3.0.0-beta.0",

@@ -28,16 +28,12 @@ import {
 } from '@eclipse-glsp/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 
-/*import {
-	TYPES
-} from 'sprotty';*/
-
 import {
 	SelectionListener,
 	SelectionService
 } from '@eclipse-glsp/client/lib/features/select/selection-service';
 
-import { TaskNode, GatewayNode, EventNode } from '@open-bpmn/open-bpmn-glsp';
+import { TaskNode, GatewayNode, EventNode } from '@open-bpmn/open-bpmn-model';
 
 // Import Instruction sReact and JsonForms
 import * as React from 'react';
@@ -53,8 +49,6 @@ export class EnableBPMNPropertyPanelAction implements Action {
 	static readonly KIND = 'enableBPMNPropertyPanel';
 	readonly kind = EnableBPMNPropertyPanelAction.KIND;
 }
-
-
 
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener {
@@ -229,9 +223,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 				if (element instanceof EventNode) {
 					console.log('...Event selected....');
-					
 					const event: EventNode = element;
-					
 					ReactDOM.render(
 						<JsonForms
 							data={event.propetriesData}
@@ -262,9 +254,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			// see https://jsonforms.io/docs/integrations/react/#onchange
 			this.initForm=false;
 			return;
-		} 
+		}
 		console.log('...entered setState with new event data: ' + _newData.data.name);
-		//this.currentEventNode.name= _newData.data.name;
 		console.log('...die current id=' + this.selectedElementId);
 
 		const action = new ApplyEventUpdateOperation(this.selectedElementId, 'name:' + _newData.data.name);
@@ -285,11 +276,8 @@ export class ApplyEventUpdateOperation implements Action {
 	constructor(readonly id: string, readonly expression: string) { }
 }
 
-
-
 export function createIcon(codiconId: string): HTMLElement {
 	const icon = document.createElement('i');
 	icon.classList.add(...codiconCSSClasses(codiconId));
 	return icon;
 }
-

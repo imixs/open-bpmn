@@ -4,8 +4,8 @@
     "baseUrl": "."
   },
   "include": [
+	"open-bpmn-model/src",
 	"open-bpmn-glsp/src", 
-	"dummy-sub1/src",
 	"open-bpmn-properties/src",
 	"open-bpmn-theia/src", 
 	"open-bpmn-app"

@@ -23,7 +23,7 @@ import {
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
-import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from './model';
+import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from '@open-bpmn/open-bpmn-model';
 
 /****************************************************************************
  * This module provides BPMN element views like Gateways, or Events

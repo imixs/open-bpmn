@@ -27,15 +27,11 @@ import {
 import { inject, injectable } from 'inversify';
 import { TYPES } from 'sprotty/lib';
 import { DOMHelper } from 'sprotty/lib/base/views/dom-helper';
-
-import { TaskNode, isTaskNode } from '@open-bpmn/open-bpmn-glsp';
-
-
+import { TaskNode, isTaskNode } from '@open-bpmn/open-bpmn-model';
 
 @injectable()
 export class BPMNPropertyEditor extends AbstractUIExtension {
     static readonly ID = 'bpmn-property-editor';
-
 
     @inject(TYPES.IActionDispatcher)
     protected actionDispatcher: GLSPActionDispatcher;
@@ -63,8 +59,7 @@ export class BPMNPropertyEditor extends AbstractUIExtension {
     }
 
     protected initializeContents(containerElement: HTMLElement): void {
-		console.log('.... BPMNPropertyEditor - initializeContents')
-
+		console.log('.... BPMNPropertyEditor - initializeContents');
     }
 
     show(root: Readonly<SModelRoot>, ...contextElementIds: string[]): void {
