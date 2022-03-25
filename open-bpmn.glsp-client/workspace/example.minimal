@@ -92,7 +92,7 @@
       ],
       "type": "gateway:exclusive",
       "position": {
-        "x": 340.0,
+        "x": 490.0,
         "y": 10.0
       },
       "size": {
@@ -202,7 +202,7 @@
       ],
       "type": "event:end",
       "position": {
-        "x": 200.0,
+        "x": 650.0,
         "y": 40.0
       },
       "size": {
@@ -211,7 +211,7 @@
       },
       "layout": "freeform",
       "layoutOptions": {
-        "prefWidth": 68.71875,
+        "prefWidth": 25.0,
         "prefHeight": 56.0
       },
       "args": {
@@ -376,8 +376,8 @@
       ],
       "type": "task:manual",
       "position": {
-        "x": 50.0,
-        "y": 140.0
+        "x": 210.0,
+        "y": 10.0
       },
       "size": {
         "width": 160.0,
@@ -405,14 +405,34 @@
         "sequenceflow"
       ],
       "type": "edge:sequenceflow",
-      "routingPoints": [
-        {
-          "x": 339.5,
-          "y": 170.0
-        }
-      ],
       "sourceId": "7c40a8d0-8df5-4b73-bfc9-41dde1a9bb39",
-      "targetId": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_south",
+      "targetId": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_west",
+      "routerKind": "manhattan",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "b6e2d4bf-440f-48de-a68a-badd3d80580a",
+      "cssClasses": [
+        "sequenceflow"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "664bb14d-53cf-4e55-8716-eb37ae852676_east",
+      "targetId": "7c40a8d0-8df5-4b73-bfc9-41dde1a9bb39",
+      "routerKind": "manhattan",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "ea2bdd04-8ec5-4faa-a51e-6662d6f6c607",
+      "cssClasses": [
+        "sequenceflow"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_east",
+      "targetId": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_west",
       "routerKind": "manhattan",
       "args": {
         "edgePadding": 10.0
@@ -420,5 +440,5 @@
     }
   ],
   "type": "graph",
-  "revision": 9
+  "revision": 14
 }
