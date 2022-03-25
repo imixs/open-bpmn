@@ -1,6 +1,6 @@
 # Open-BPMN 
 
-BPMN Modeler based on Eclipse Graphical Language Server Platform
+Open BPMN is a BPMN Modeler based on Eclipse Graphical Language Server Platform
 
  - [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) - contains the GLSP sever implementation
  - [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) - contains the GLSP Client components and Theia integration
@@ -19,7 +19,7 @@ The Application can be started from a Web Browser
 	http://localhost:3000/
 
 	
-<img src="./doc/imixs-bpmn-001.png" />
+<img src="./doc/images/imixs-bpmn-001.png" />
 
 
 ## Locally build for Development
@@ -100,14 +100,10 @@ Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts t
  
 # NodeJS
 
-We use nodejs on Linux debian during develpment.
+We use nodejs on Linux Debian during development. To manage version of node js see: https://phoenixnap.com/kb/update-node-js-version
 
-To manage version of node js see: https://phoenixnap.com/kb/update-node-js-version
+For development with Eclipse Theia the expected version is ">=10.11.0 <13". For that reason we tested with following version 12.22.10.
 
-For development with Eclipse Theia the expected version is ">=10.11.0 <13". For that reason we tested with following versions:
-
-	12.22.10
-	16.13.2
 	
 	 
 

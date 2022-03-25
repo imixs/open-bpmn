@@ -19,7 +19,51 @@ The bpmn-graph.ecore file includes of the following diagram elements:
  - Annotation, 
  - Sequence Flow (including conditional and default flows),
  - Message Flow
+
+## The Elements used in Open BPMN
+
+Within the ecore model of Open BPMN we are using the following elements which build on each other. You can find the Java classes under
+
+	/open-bpmn.glsp-server/src/main/java-gen/
+
+### BaseElement
+
+The BaseElement extends the glsp GNode and provides the core properties of each BPMN element
+
+ - name - used in the graphical view to label the element
+ - documentation - an optional documentation for the element
  
+### FlowElement
+
+The FlowElement extends the BaseElement and introduces the concept of categories for a element class which is a core concept of BPMN
+
+ - categories - a list of categories to specify the element - e.g. task:manaual, task:script, event:start, event:stop....
+  
+
+### TaskElement
+
+The TaskNode extends the FlowElement and is used for all types of BPMN Tasks
+
+
+### EventNode
+
+The EventNode extends the FlowElement and is used for all types of BPMN Events
+
+### GatewayNode
+
+The GatewayNode extends the FlowElement and is used for all types of BPMN Gateways
+
+### SequenceFlow
+
+The SequenceFlow extends the FlowElement and is used for all types of BPMN Sequence Flows
+
+ - condition - optional condition of a flow
+
+
+### Pool
+
+The Pool is a container for FlowElements
+
 ## Visual Appearance - GLSP
 
 A key element of BPMN is the choice of shapes and icons used for the graphical elements identified in this International
