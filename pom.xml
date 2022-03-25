@@ -4,7 +4,7 @@
 	<groupId>org.imixs.bpmn</groupId>
 	<artifactId>open-bpmn</artifactId>
 	<description>Imixs Open BPMN</description>
-	<version>0.0.7-SNAPSHOT</version>
+	<version>0.0.8-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Imixs Open BPMN</name>

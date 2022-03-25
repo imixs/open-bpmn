@@ -60,7 +60,7 @@ Within the module the file `package.json` can be quite simple but should contain
 	{
 	  "private": "true",
 	  "name": "@open-bpmn/sub1",
-	  "version": "0.0.7",
+	  "version": "0.0.8",
 	  "dependencies": {
 	    "@eclipse-glsp/client": "0.9.0"
 	  },
@@ -138,7 +138,7 @@ To import functionality from your sub module now you can now add the module into
 	  ....
 	  "dependencies": {
 	    ....
-	    "@open-bpmn/sub1": "0.0.7",
+	    "@open-bpmn/sub1": "0.0.8",
 	    ....
 	  },
 
