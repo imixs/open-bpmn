@@ -52,9 +52,9 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
      */
     @Override
     protected void executeOperation(final ApplyEventUpdateOperation operation) {
-        logger.info("....execute UpdateEvent Operation id: " + operation.getId());
+        logger.fine("....execute UpdateEvent Operation id: " + operation.getId());
         String expression = operation.getExpression();
-        logger.info("....expression= " + expression);
+        logger.fine("....expression= " + expression);
 
         Optional<EventNode> element = modelState.getIndex().findElementByClass(operation.getId(), EventNode.class);
         if (element.isEmpty()) {
@@ -63,11 +63,14 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
 
         String feature = expression.substring(0, expression.indexOf(':'));
         String value = expression.substring(expression.indexOf(':') + 1);
-        logger.info("...feature = " + feature + " - value = " + value);
+        logger.fine("...feature = " + feature + " - value = " + value);
         switch (feature) {
         case "name":
+            // in case the name was updated, we update the LABEL_HEADING
+            // from the element. This will automatically update the name
+            // via the EventEditValidator
             // element.get().setName(value);
-            logger.info("........only update the LABLE_HEANDING..");
+            logger.fine("....update LABLE_HEANDING..");
             // Update also the text of the GLabel element
             EList<GModelElement> childs = element.get().getChildren();
             for (GModelElement child : childs) {

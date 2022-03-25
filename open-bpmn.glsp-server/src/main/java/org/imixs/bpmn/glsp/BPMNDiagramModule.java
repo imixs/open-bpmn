@@ -32,7 +32,6 @@ import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
 import org.imixs.bpmn.glsp.elements.event.CreateStartEventHandler;
 import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.imixs.bpmn.glsp.elements.event.edit.EventEditValidator;
 import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateInclusiveGatewayHandler;
@@ -44,6 +43,8 @@ import org.imixs.bpmn.glsp.elements.task.CreateServiceTaskHandler;
 import org.imixs.bpmn.glsp.elements.task.CreateUserTaskHandler;
 import org.imixs.bpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.imixs.bpmn.glsp.provider.BPMNToolPaletteItemProvider;
+import org.imixs.bpmn.glsp.validators.BPMNModelValidator;
+import org.imixs.bpmn.glsp.validators.LabelEditValidator;
 
 /**
  * The DiagramModule contains the bindings in dedicated methods. Imixs BPMN
@@ -86,7 +87,7 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
     @Override
     protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
         super.configureContextEditValidators(binding);
-        binding.add(EventEditValidator.class);
+        binding.add(LabelEditValidator.class);
     }
 
     @Override

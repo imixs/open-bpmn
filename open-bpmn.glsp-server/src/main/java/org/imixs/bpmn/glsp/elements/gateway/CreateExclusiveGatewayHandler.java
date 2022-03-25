@@ -23,16 +23,17 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class CreateExclusiveGatewayHandler extends CreateGatewayHandler {
 
-   public CreateExclusiveGatewayHandler() {
-      super(ModelTypes.EXCLUSIVE_GATEWAY, i -> "ExclusiveGateway" + i);
-   }
+    public CreateExclusiveGatewayHandler() {
+        super(ModelTypes.EXCLUSIVE_GATEWAY, i -> "ExclusiveGateway" + i);
+    }
 
-   @Override
-   public String getLabel() { return "Exclusive Gateway"; }
+    @Override
+    public String getLabel() {
+        return "Exclusive Gateway";
+    }
 
-   @Override
-   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("exclusive");
-   }
+    @Override
+    protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+        return super.builder(point, modelState).addCssClass("exclusive");
+    }
 }

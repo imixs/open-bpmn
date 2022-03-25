@@ -68,7 +68,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
-    configureModelElement(context, 'label:icon', SLabel, SLabelView);
+    // configureModelElement(context, 'label:icon', SLabel, SLabelView);
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
     configureModelElement(context, 'icon', Icon, IconView);
 

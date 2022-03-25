@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.elements.event.edit;
+package org.imixs.bpmn.glsp.validators;
 
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -36,8 +36,8 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class EventEditValidator implements ContextEditValidator {
-    private static Logger logger = Logger.getLogger(EventEditValidator.class.getName());
+public class LabelEditValidator implements ContextEditValidator {
+    private static Logger logger = Logger.getLogger(LabelEditValidator.class.getName());
 
     @Override
     public String getContextId() {
@@ -56,7 +56,7 @@ public class EventEditValidator implements ContextEditValidator {
         // test if this element is a BaseElement with the property 'name'
         Optional<BaseElement> element = modelState.getIndex().findElementByClass(id, BaseElement.class);
         if (!element.isEmpty()) {
-            // update name attribute
+            // We have a BaseElemtn, update the name attribute
             element.get().setName(text);
         }
         // no further validation needed

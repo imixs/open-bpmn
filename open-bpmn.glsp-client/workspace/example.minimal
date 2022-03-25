@@ -225,7 +225,7 @@
       "category": [
         "start"
       ],
-      "name": "Start",
+      "name": "Start Workflow",
       "documentation": "Sepp",
       "id": "664bb14d-53cf-4e55-8716-eb37ae852676",
       "cssClasses": [
@@ -241,12 +241,12 @@
             "y": 40.0
           },
           "size": {
-            "width": 45.375,
+            "width": 91.671875,
             "height": 16.0
           },
-          "text": "Start22",
+          "text": "Start Workflow",
           "alignment": {
-            "x": 22.578125,
+            "x": 45.390625,
             "y": 13.0
           }
         },
@@ -317,7 +317,7 @@
         "y": 40.0
       },
       "size": {
-        "width": 45.375,
+        "width": 91.671875,
         "height": 56.0
       },
       "layout": "freeform",
@@ -336,7 +336,7 @@
       "category": [
         "manual"
       ],
-      "name": "ManualTask0",
+      "name": "Rechnung Prüfen",
       "documentation": "...some documentation....",
       "id": "7c40a8d0-8df5-4b73-bfc9-41dde1a9bb39",
       "cssClasses": [
@@ -364,10 +364,10 @@
             "y": 7.0
           },
           "size": {
-            "width": 82.703125,
+            "width": 108.96875,
             "height": 16.0
           },
-          "text": "ManualTask0",
+          "text": "Rechnung Prüfen",
           "alignment": {
             "x": 0.0,
             "y": 13.0
@@ -420,5 +420,5 @@
     }
   ],
   "type": "graph",
-  "revision": 5
+  "revision": 9
 }
