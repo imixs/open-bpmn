@@ -72,6 +72,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	protected bodyDiv: HTMLElement;
 	modelRootId: string;
 	selectedElementId: string;
+	initForm: boolean;
 
 	@postConstruct()
 	postConstruct(): void {
@@ -183,6 +184,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	 */
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
 		if (this.selectionService.isSingleSelection()) {
+			// because the jsonFomrs send a onchange event after init we mark this state here
+			this.initForm=true;
 			console.log('======== > selection change  received:', root, selectedElements);
 			const element = root.index.getById(selectedElements[0]);
 			if (element) {
@@ -226,7 +229,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 				if (element instanceof EventNode) {
 					console.log('...Event selected....');
+					
 					const event: EventNode = element;
+					
 					ReactDOM.render(
 						<JsonForms
 							data={event.propetriesData}
@@ -252,6 +257,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	 * Send a ApplyEditOperation Action....
 	 */
 	setState(_newData: any): void {
+		if (this.initForm) {
+			// we ignore the first onChange event
+			// see https://jsonforms.io/docs/integrations/react/#onchange
+			this.initForm=false;
+			return;
+		} 
 		console.log('...entered setState with new event data: ' + _newData.data.name);
 		//this.currentEventNode.name= _newData.data.name;
 		console.log('...die current id=' + this.selectedElementId);
