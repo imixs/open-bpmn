@@ -233,6 +233,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						/>,
 						this.bodyDiv
 					);
+					
 					console.log('...eventtype=' + event.category);
 				}
 			} else {
@@ -242,6 +243,22 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		} else {
 			// no single element selected!
 			this.selectedElementId='';
+			if (!this.selectionService.hasSelectedElements()) {
+				// show an empty pane (or later the process panel)
+				console.log('.... no element selected');
+				ReactDOM.render(
+					<React.Fragment>Please select an element </React.Fragment>,
+					this.bodyDiv
+				);
+			} else {
+				// multi selection - we can not show a property panel
+				console.log('.... multiple elements selected');
+				ReactDOM.render(
+					<React.Fragment>Please select a single element </React.Fragment>,
+					this.bodyDiv
+				);
+				
+			}
 		}
 	}
 
@@ -258,7 +275,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		console.log('...entered setState with new event data: ' + _newData.data.name);
 		console.log('...die current id=' + this.selectedElementId);
 
-		const action = new ApplyEventUpdateOperation(this.selectedElementId, 'name:' + _newData.data.name);
+		const newJsonData=JSON.stringify(_newData.data);
+		console.log('...json='+newJsonData);
+		const action = new ApplyEventUpdateOperation(this.selectedElementId, newJsonData);
+		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'name:' + _newData.data.name);
 		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'documentation:' + _newData.data.documentation);
 		this.actionDispatcher.dispatch(action);
 
@@ -273,7 +293,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 export class ApplyEventUpdateOperation implements Action {
 	static readonly KIND = 'applyEventUpdate';
 	readonly kind = ApplyEventUpdateOperation.KIND;
-	constructor(readonly id: string, readonly expression: string) { }
+	constructor(readonly id: string, readonly jsonData: string) { }
 }
 
 export function createIcon(codiconId: string): HTMLElement {

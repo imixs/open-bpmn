@@ -25,16 +25,16 @@ public class ApplyEventUpdateOperation extends Operation {
     public static final String NAME_PREFIX = "name:";
 
     private String id;
-    private String expression;
+    private String jsonData;
 
     public ApplyEventUpdateOperation() {
         super("applyEventUpdate");
     }
 
-    public ApplyEventUpdateOperation(final String nodeId, final String expression) {
+    public ApplyEventUpdateOperation(final String nodeId, final String jsonData) {
         this();
         this.id = nodeId;
-        this.expression = expression;
+        this.jsonData = jsonData;
     }
 
     public String getId() {
@@ -45,12 +45,12 @@ public class ApplyEventUpdateOperation extends Operation {
         this.id = nodeId;
     }
 
-    public String getExpression() {
-        return expression;
+    public String getJsonData() {
+        return jsonData;
     }
 
-    public void setExpression(final String expression) {
-        this.expression = expression;
+    public void setJsonData(final String jsonData) {
+        this.jsonData = jsonData;
     }
 
 }
