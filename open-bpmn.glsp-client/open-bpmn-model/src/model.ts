@@ -18,7 +18,7 @@ import {
     connectableFeature,
     CircularNode,
     deletableFeature,
-    DiamondNode,
+    SNode,
     EditableLabel,
     fadeFeature,
     hoverFeedbackFeature,
@@ -39,6 +39,8 @@ import {
     WithEditableLabel,
     withEditLabelFeature
 } from '@eclipse-glsp/client';
+
+import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
     static readonly DEFAULT_FEATURES = [
@@ -80,6 +82,13 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 			'category':this.category,
 			'documentation':this.documentation ? this.documentation : ''
 		};
+    }
+
+    /*
+     * Returns the BPMN anchorCompute Kind for GatewayNodes
+     */
+     get anchorKind(): string {
+        return BPMN_ELEMENT_ANCHOR_KIND;
     }
 }
 
@@ -125,9 +134,16 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 			'documentation':this.documentation ? this.documentation : ''
 		};
     }
+    /*
+     * Returns the BPMN anchorCompute Kind for BPMN Elements
+     */
+     get anchorKind(): string {
+        return BPMN_ELEMENT_ANCHOR_KIND;
+    }
 }
 
-export class GatewayNode extends DiamondNode implements Nameable, WithEditableLabel {
+// DiamondNode
+export class GatewayNode extends SNode implements Nameable, WithEditableLabel {
 	static readonly DEFAULT_FEATURES = [
         connectableFeature,
         deletableFeature,
@@ -168,6 +184,13 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
 			'documentation':this.documentation ? this.documentation : ''
 		};
     }
+
+    /*
+     * Returns the BPMN anchorCompute Kind for BPMN Elements
+     */
+     get anchorKind(): string {
+        return BPMN_ELEMENT_ANCHOR_KIND;
+    }
 }
 
 export namespace GatewayNode {
@@ -197,6 +220,13 @@ export function isGatewayNode(element: SModelElement): element is GatewayNode {
 
 export class SequenceFlow extends SEdge {
     condition?: string;
+
+     /*
+     * Returns the BPMN anchorCompute Kind for BPMN Elements
+     */
+     get anchorKind(): string {
+        return BPMN_ELEMENT_ANCHOR_KIND;
+    }
 }
 
 export class Icon extends SShapeElement implements LayoutContainer {
@@ -234,4 +264,3 @@ export class PoolNode extends RectangularNode implements Nameable, WithEditableL
         return undefined;
     }
 }
-

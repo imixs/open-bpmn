@@ -29,41 +29,41 @@ import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
  */
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
 
-   private final String name;
-   private final String gatewayType;
+    private final String name;
+    private final String gatewayType;
 
-   public GatewayNodeBuilder(final String type, final String name, final String gatewayType) {
-      super(type);
-      this.name = name;
-      this.gatewayType = gatewayType;
+    public GatewayNodeBuilder(final String type, final String name, final String gatewayType) {
+        super(type);
+        this.name = name;
+        this.gatewayType = gatewayType;
 
-   }
+    }
 
-   @Override
-   protected GatewayNode instantiate() {
-      return BpmngraphFactory.eINSTANCE.createGatewayNode();
-   }
+    @Override
+    protected GatewayNode instantiate() {
+        return BpmngraphFactory.eINSTANCE.createGatewayNode();
+    }
 
-   @Override
-   protected GatewayNodeBuilder self() {
-      return this;
-   }
+    @Override
+    protected GatewayNodeBuilder self() {
+        return this;
+    }
 
-   /**
-    * Define layout properties
-    */
-   @Override
-   protected void setProperties(final GatewayNode node) {
-      super.setProperties(node);
-      node.setName(name);
-      node.getCategory().add(gatewayType);
-      node.setLayout(GConstants.Layout.FREEFORM);
+    /**
+     * Define layout properties
+     */
+    @Override
+    protected void setProperties(final GatewayNode node) {
+        super.setProperties(node);
+        node.setName(name);
+        node.getCategory().add(gatewayType);
+        node.setLayout(GConstants.Layout.FREEFORM);
 
-      node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-      node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, -5.0, "_north"));
-      node.getChildren().add(BPMNBuilderHelper.createPort(node, -35.0, 25.0, "_west"));
-      node.getChildren().add(BPMNBuilderHelper.createPort(node, 25.0, 25.0, "_east"));
-      node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, 55.0, "_south"));
-   }
+        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+//      node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, -5.0, "_north"));
+//      node.getChildren().add(BPMNBuilderHelper.createPort(node, -35.0, 25.0, "_west"));
+//      node.getChildren().add(BPMNBuilderHelper.createPort(node, 25.0, 25.0, "_east"));
+//      node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, 55.0, "_south"));
+    }
 
 }

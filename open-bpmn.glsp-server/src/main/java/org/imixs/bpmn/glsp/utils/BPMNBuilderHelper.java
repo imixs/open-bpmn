@@ -16,9 +16,7 @@
 package org.imixs.bpmn.glsp.utils;
 
 import org.eclipse.glsp.graph.GLabel;
-import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
 import org.imixs.bpmn.bpmngraph.BaseElement;
 
 /**
@@ -29,35 +27,33 @@ import org.imixs.bpmn.bpmngraph.BaseElement;
  */
 public class BPMNBuilderHelper {
 
-   /**
-    * Creates a GLabel for the name of a BaseElement
-    *
-    * @param node
-    * @return GPort
-    */
-   public static GLabel createCompartmentHeader(final BaseElement node) {
-      return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-         .id(node.getId() + "_classname") //
-         .text(node.getName())
-         .build();
-   }
+    /**
+     * Creates a GLabel for the name of a BaseElement
+     *
+     * @param node
+     * @return GPort
+     */
+    public static GLabel createCompartmentHeader(final BaseElement node) {
+        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+                .id(node.getId() + "_classname") //
+                .text(node.getName()).build();
+    }
 
-   /**
-    * Creates a GPort for a BaseElement
-    * See:
-    * https://github.com/eclipse-glsp/glsp/issues/264
-    *
-    * @param node
-    * @param x
-    * @param y
-    * @return GPort
-    */
-   public static GPort createPort(final BaseElement node, final Double x, final Double y, final String subId) {
-      return new GPortBuilder()
-         .id(node.getId() + subId)
-         .position(x, y)
-         .size(10.0, 10.0)
-         .addCssClass("bpmn-port")
-         .build();
-   }
+    /**
+     * Creates a GPort for a BaseElement See:
+     * https://github.com/eclipse-glsp/glsp/issues/264
+     *
+     * @param node
+     * @param x
+     * @param y
+     * @return GPort
+     */
+//   public static GPort createPort(final BaseElement node, final Double x, final Double y, final String subId) {
+//      return new GPortBuilder()
+//         .id(node.getId() + subId)
+//         .position(x, y)
+//         .size(10.0, 10.0)
+//         .addCssClass("bpmn-port")
+//         .build();
+//   }
 }

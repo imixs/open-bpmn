@@ -233,7 +233,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						/>,
 						this.bodyDiv
 					);
-					
 					console.log('...eventtype=' + event.category);
 				}
 			} else {
@@ -257,7 +256,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					<React.Fragment>Please select a single element </React.Fragment>,
 					this.bodyDiv
 				);
-				
 			}
 		}
 	}

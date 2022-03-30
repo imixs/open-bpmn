@@ -39,8 +39,16 @@ import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
-
-import { GatewayNode, PoolNode, Icon, TaskNode, EventNode, SequenceFlow } from '@open-bpmn/open-bpmn-model';
+import {
+	GatewayNode,
+	PoolNode,
+	Icon,
+	TaskNode,
+	EventNode,
+	SequenceFlow,
+	BPMNSequenceFlowAnchor,
+	BPMNElementAnchor
+} from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 
@@ -52,6 +60,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.ISnapper).to(GridSnapper);
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
+
+    // bind the BPMN AnchorComputer
+    bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
+    bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
+
     const context = { bind, unbind, isBound, rebind };
 
     configureDefaultModelElements(context);
@@ -80,6 +93,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
     configureModelElement(context, DefaultTypes.PORT, CircularPort, CircularNodeView);
+
+    // BPMN router?
+  /*  bind(BPMNEdgeRouter).toSelf().inSingletonScope();
+    bind(TYPES.IEdgeRouter).toService(BPMNEdgeRouter);*/
 
 });
 

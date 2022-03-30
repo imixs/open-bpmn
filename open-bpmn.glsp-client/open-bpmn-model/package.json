@@ -17,6 +17,6 @@
     "src",
     "build"
   ],
-  "main": "lib/model",
-  "types": "lib/model"  
+  "main": "lib/index",
+  "types": "lib/index"  
 }

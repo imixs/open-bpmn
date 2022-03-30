@@ -29,33 +29,34 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class SequenceFlowBuilder extends AbstractGEdgeBuilder<SequenceFlow, SequenceFlowBuilder> {
 
-   private String condition;
+    private String condition;
 
-   public SequenceFlowBuilder() {
-      super(ModelTypes.SEQUENCE_FLOW);
-   }
+    public SequenceFlowBuilder() {
+        super(ModelTypes.SEQUENCE_FLOW);
+    }
 
-   public SequenceFlowBuilder condition(final String condition) {
-      this.condition = condition;
-      return self();
-   }
+    public SequenceFlowBuilder condition(final String condition) {
+        this.condition = condition;
+        return self();
+    }
 
-   @Override
-   protected void setProperties(final SequenceFlow edge) {
-      super.setProperties(edge);
-      edge.setCondition(condition);
+    @Override
+    protected void setProperties(final SequenceFlow edge) {
+        super.setProperties(edge);
+        edge.setCondition(condition);
 
-      edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
-   }
+        edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
+        // edge.setRouterKind("bpmn");
+    }
 
-   @Override
-   protected SequenceFlow instantiate() {
-      return BpmngraphFactory.eINSTANCE.createSequenceFlow();
-   }
+    @Override
+    protected SequenceFlow instantiate() {
+        return BpmngraphFactory.eINSTANCE.createSequenceFlow();
+    }
 
-   @Override
-   protected SequenceFlowBuilder self() {
-      return this;
-   }
+    @Override
+    protected SequenceFlowBuilder self() {
+        return this;
+    }
 
 }

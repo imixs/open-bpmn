@@ -90,6 +90,8 @@
 	fill: transparent;
 }
 
+
+/*
 .sprotty-graph.edge-modification-not-allowed-mode .sprotty-node.mouseover .sprotty-port,
 .sprotty-graph.edge-creation-select-target-mode .sprotty-node:hover .sprotty-port,
 .sprotty-graph.edge-reconnect-select-target-mode .sprotty-node:hover .sprotty-port {
@@ -100,7 +102,7 @@
 	fill: rgb(85, 87, 83);
 	stroke: #f57900;
 } 
-
+*/
 
 
 /*** Gateways ***/

@@ -3,337 +3,6 @@
   "children": [
     {
       "category": [
-        "exclusive"
-      ],
-      "name": "ExclusiveGateway0",
-      "id": "8b0407a7-fd00-4ed1-8a24-08f179ffd156",
-      "cssClasses": [
-        "gateway",
-        "exclusive"
-      ],
-      "children": [
-        {
-          "id": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 0.0,
-            "y": 75.0
-          },
-          "size": {
-            "width": 122.390625,
-            "height": 16.0
-          },
-          "text": "ExclusiveGateway0",
-          "alignment": {
-            "x": 61.09375,
-            "y": 13.0
-          }
-        },
-        {
-          "id": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_north",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_west",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -35.0,
-            "y": 25.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_east",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": 25.0,
-            "y": 25.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_south",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": 55.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        }
-      ],
-      "type": "gateway:exclusive",
-      "position": {
-        "x": 490.0,
-        "y": 10.0
-      },
-      "size": {
-        "width": 122.390625,
-        "height": 91.0
-      },
-      "layout": "freeform",
-      "layoutOptions": {
-        "prefWidth": 122.390625,
-        "prefHeight": 91.0
-      },
-      "args": {
-        "radiusTopLeft": 5.0,
-        "radiusBottomLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "category": [
-        "end"
-      ],
-      "name": "End",
-      "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff",
-      "cssClasses": [
-        "event",
-        "end"
-      ],
-      "children": [
-        {
-          "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 0.0,
-            "y": 40.0
-          },
-          "size": {
-            "width": 24.9375,
-            "height": 16.0
-          },
-          "text": "End",
-          "alignment": {
-            "x": 12.46875,
-            "y": 13.0
-          }
-        },
-        {
-          "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_north",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": -25.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_west",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -25.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_east",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": 15.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_south",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": 15.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        }
-      ],
-      "type": "event:end",
-      "position": {
-        "x": 650.0,
-        "y": 40.0
-      },
-      "size": {
-        "width": 25.0,
-        "height": 56.0
-      },
-      "layout": "freeform",
-      "layoutOptions": {
-        "prefWidth": 25.0,
-        "prefHeight": 56.0
-      },
-      "args": {
-        "radiusTopLeft": 5.0,
-        "radiusBottomLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "category": [
-        "start"
-      ],
-      "name": "Start Workflow",
-      "documentation": "Sepp",
-      "id": "664bb14d-53cf-4e55-8716-eb37ae852676",
-      "cssClasses": [
-        "event",
-        "start"
-      ],
-      "children": [
-        {
-          "id": "664bb14d-53cf-4e55-8716-eb37ae852676_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 0.0,
-            "y": 40.0
-          },
-          "size": {
-            "width": 91.671875,
-            "height": 16.0
-          },
-          "text": "Start Workflow",
-          "alignment": {
-            "x": 45.390625,
-            "y": 13.0
-          }
-        },
-        {
-          "id": "664bb14d-53cf-4e55-8716-eb37ae852676_north",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": -25.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "664bb14d-53cf-4e55-8716-eb37ae852676_west",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -25.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "664bb14d-53cf-4e55-8716-eb37ae852676_east",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": 15.0,
-            "y": -5.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        },
-        {
-          "id": "664bb14d-53cf-4e55-8716-eb37ae852676_south",
-          "cssClasses": [
-            "bpmn-port"
-          ],
-          "type": "port",
-          "position": {
-            "x": -5.0,
-            "y": 15.0
-          },
-          "size": {
-            "width": 10.0,
-            "height": 10.0
-          }
-        }
-      ],
-      "type": "event:start",
-      "position": {
-        "x": 70.0,
-        "y": 40.0
-      },
-      "size": {
-        "width": 91.671875,
-        "height": 56.0
-      },
-      "layout": "freeform",
-      "layoutOptions": {
-        "prefWidth": 73.375,
-        "prefHeight": 56.0
-      },
-      "args": {
-        "radiusTopLeft": 5.0,
-        "radiusBottomLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "category": [
         "manual"
       ],
       "name": "Rechnung Prüfen",
@@ -376,8 +45,8 @@
       ],
       "type": "task:manual",
       "position": {
-        "x": 210.0,
-        "y": 10.0
+        "x": 130.0,
+        "y": 90.0
       },
       "size": {
         "width": 160.0,
@@ -400,25 +69,174 @@
       }
     },
     {
-      "id": "767f5494-f0ef-4a63-bad3-399f7b60f947",
-      "cssClasses": [
-        "sequenceflow"
+      "category": [
+        "end"
       ],
-      "type": "edge:sequenceflow",
-      "sourceId": "7c40a8d0-8df5-4b73-bfc9-41dde1a9bb39",
-      "targetId": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_west",
-      "routerKind": "manhattan",
+      "name": "EndEvent0",
+      "documentation": "",
+      "id": "bbe98f20-c325-4dd1-9dd5-76ae5514a746",
+      "cssClasses": [
+        "event",
+        "end"
+      ],
+      "children": [
+        {
+          "id": "bbe98f20-c325-4dd1-9dd5-76ae5514a746_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 0.0,
+            "y": 40.0
+          },
+          "size": {
+            "width": 60.828125,
+            "height": 16.0
+          },
+          "text": "EndEvent",
+          "alignment": {
+            "x": 30.359375,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "event:end",
+      "position": {
+        "x": 630.0,
+        "y": 260.0
+      },
+      "size": {
+        "width": 60.828125,
+        "height": 56.0
+      },
+      "layout": "freeform",
+      "layoutOptions": {
+        "prefWidth": 68.71875,
+        "prefHeight": 56.0
+      },
       "args": {
-        "edgePadding": 10.0
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
       }
     },
     {
-      "id": "b6e2d4bf-440f-48de-a68a-badd3d80580a",
+      "category": [
+        "start"
+      ],
+      "name": "StartEvent1",
+      "documentation": "",
+      "id": "45177c96-71bd-455d-a0e0-4378f334be0a",
+      "cssClasses": [
+        "event",
+        "start"
+      ],
+      "children": [
+        {
+          "id": "45177c96-71bd-455d-a0e0-4378f334be0a_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 0.0,
+            "y": 40.0
+          },
+          "size": {
+            "width": 65.484375,
+            "height": 16.0
+          },
+          "text": "StartEvent",
+          "alignment": {
+            "x": 32.6875,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "event:start",
+      "position": {
+        "x": -10.0,
+        "y": 50.0
+      },
+      "size": {
+        "width": 65.484375,
+        "height": 56.0
+      },
+      "layout": "freeform",
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "category": [
+        "exclusive"
+      ],
+      "name": "ExclusiveGateway0",
+      "id": "d17919e8-f2c8-489b-a1bb-ee41f9df1156",
+      "cssClasses": [
+        "gateway",
+        "exclusive"
+      ],
+      "children": [
+        {
+          "id": "d17919e8-f2c8-489b-a1bb-ee41f9df1156_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 0.0,
+            "y": 75.0
+          },
+          "size": {
+            "width": 122.390625,
+            "height": 16.0
+          },
+          "text": "ExclusiveGateway0",
+          "alignment": {
+            "x": 61.09375,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "gateway:exclusive",
+      "position": {
+        "x": 430.0,
+        "y": 20.0
+      },
+      "size": {
+        "width": 122.390625,
+        "height": 91.0
+      },
+      "layout": "freeform",
+      "layoutOptions": {
+        "prefWidth": 122.390625,
+        "prefHeight": 91.0
+      },
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "9c8c6b7c-1928-4f22-ae04-b738af90576b",
       "cssClasses": [
         "sequenceflow"
       ],
       "type": "edge:sequenceflow",
-      "sourceId": "664bb14d-53cf-4e55-8716-eb37ae852676_east",
+      "routingPoints": [
+        {
+          "x": 101.6875,
+          "y": 78.0
+        },
+        {
+          "x": 101.6875,
+          "y": 50.0
+        },
+        {
+          "x": 210.0,
+          "y": 50.0
+        }
+      ],
+      "sourceId": "45177c96-71bd-455d-a0e0-4378f334be0a",
       "targetId": "7c40a8d0-8df5-4b73-bfc9-41dde1a9bb39",
       "routerKind": "manhattan",
       "args": {
@@ -426,13 +244,46 @@
       }
     },
     {
-      "id": "ea2bdd04-8ec5-4faa-a51e-6662d6f6c607",
+      "id": "1fb31abb-299c-498b-9b79-4670334b4a33",
       "cssClasses": [
         "sequenceflow"
       ],
       "type": "edge:sequenceflow",
-      "sourceId": "8b0407a7-fd00-4ed1-8a24-08f179ffd156_east",
-      "targetId": "1a8aa932-ee06-4b63-a6f5-d9859ee523ff_west",
+      "routingPoints": [
+        {
+          "x": 210.0,
+          "y": 202.0
+        },
+        {
+          "x": 360.0,
+          "y": 202.0
+        },
+        {
+          "x": 360.0,
+          "y": 65.5
+        }
+      ],
+      "sourceId": "7c40a8d0-8df5-4b73-bfc9-41dde1a9bb39",
+      "targetId": "d17919e8-f2c8-489b-a1bb-ee41f9df1156",
+      "routerKind": "manhattan",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "bdd7d68e-f58b-4a04-b529-7211fe358849",
+      "cssClasses": [
+        "sequenceflow"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 664.359375,
+          "y": 50.5
+        }
+      ],
+      "sourceId": "d17919e8-f2c8-489b-a1bb-ee41f9df1156",
+      "targetId": "bbe98f20-c325-4dd1-9dd5-76ae5514a746",
       "routerKind": "manhattan",
       "args": {
         "edgePadding": 10.0
@@ -440,5 +291,5 @@
     }
   ],
   "type": "graph",
-  "revision": 1
+  "revision": 2
 }
