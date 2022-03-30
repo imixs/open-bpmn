@@ -1,5 +1,92 @@
-# Ports
+# Anchors & Ports
 
+Sprotty provides different Routing algorithm to connect nodes with a edge. 
+
+<img src="./images/sprotty-router.gif" />
+
+The end of an edge is connected to your node element. The connection point can be controlled by either an Anchor Computer or by defining Ports. Both concepts will be introduced in the following sections.
+
+
+## AnchorComputers
+
+Each Router algorithm provided by Sprotty defines so called AncohrComputers which are responsible to compute the exact position the end of a edge is connected with the node element. If you do not define a custom implementation the edge will end at the boundaries of the node element. 
+
+You can implement you own Anchor computing the exact position an edge should target you Node Element.
+
+### The Interface IAnchorComputer
+
+For a custom implementation you simple need to implement the Interface `IAnchorComputer`:
+
+````javascript
+import { injectable } from 'inversify';
+import {
+	Bounds,
+	Point,
+	ManhattanEdgeRouter,
+	SConnectableElement,
+	IAnchorComputer
+} from 'sprotty';
+
+export const CUSTOM_TASK_ANCHOR_KIND = 'custom-task';
+
+/**
+ * This CustomTaskAnchor computes a custom anchor point for a task element.
+ */
+@injectable()
+export class CustomTaskAnchor implements IAnchorComputer {
+
+	static KIND = ManhattanEdgeRouter.KIND + ':' + CUSTOM_TASK_ANCHOR_KIND;
+
+	get kind(): string {
+		return CustomTaskAnchor.KIND;
+	}
+
+	getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
+		// compute an custom anchor point 
+       .....
+		return { x: customXPos, y: customYPos };
+	}
+}
+````
+
+You need to provide a unique AnchorKind so that the Router algorithm can choose the correct AnchorComputer.
+In the Method getAnchor you can now compute the x/y position within your element which is provide in the parameter `connectable`. The parameter `refPoint` defines the position from where the edge is entering you element and the `offset` defines an optional offset. 
+
+Next you need to overwrite the method `get anchorKind()` in you SNode implementation to give the router algorithm a hint which AnchorComputer to choose. It is possibel to implement different Anchorcomputers for different router algorithim. In the example above we define a CustomTaskAnchor for the ManhattanEdgeRouter with the name 'custom-task'. This name is retunred by the CustomTaksNode implementation:
+
+
+````javascript
+export class CustomTaskNode extends RectangularNode {
+     ....
+
+    /*
+     * Returns the anchorComputer Kind for CustomTaskNode
+     */
+     get anchorKind(): string {
+        return CUSTOM_TASK_ANCHOR_KIND;
+    }
+}
+````
+
+Finally you need to bind your CustomAnchor in your ContainerModule:
+
+
+````javascript
+const myDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    ....
+
+    // bind the Custom AnchorComputer
+    bind(TYPES.IAnchorComputer).to(CustomTaskAnchor).inSingletonScope();
+    ....
+}
+  .....
+````
+
+That's it. Now each time you connect an edge with your CustomTask the CustomTaskAnchor computer will be choosen to compute the exact position to connnect the edge with your node element. 
+
+## Ports
+
+Another way how you can define how edges are connected with our node elements are Ports. 
 Ports in GLSP are a way to describe docking points for a graphical node element to connect edges. Ports are a concept of [Eclipse Sprotty](https://github.com/eclipse/sprotty) and are adapted by GLSP. Ports are optional. This means that if you do not define explicit ports you can connect an edge on any border of your graphical element.
 
 
@@ -11,11 +98,11 @@ If you define ports, edges can only be placed on specific docking positions with
 
 <img src="./images/ports-02.png" />
 
-## How to Define Ports
+### How to Define Ports
 
 Ports are part of your model. This means first of all you have to define ports along with your node builder class
 
-### GLSP Server
+#### GLSP Server
 
 ```java
 public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
@@ -79,7 +166,7 @@ DefaultTypes.PORT
 }
 ```
 
-### GLSP Client 
+#### GLSP Client 
 
 Now you server model provides additional port information to the client. To render the ports on you client, you have to provide the port element within your diagram configuration:
 
@@ -117,7 +204,7 @@ export class EventNodeView extends ShapeView {
 ```
 
 
-### Layout
+#### Layout
 
 The ports can be designed in various ways by just providing CSS definitions. See the following example which highlights the ports only if a edge modification is recognized:
 
