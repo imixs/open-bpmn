@@ -1,10 +1,10 @@
 # Anchors & Ports
 
-Sprotty provides different Routing algorithm to connect nodes with a edge. 
+[Eclipse Sprotty](https://github.com/eclipse/sprotty) provides different Routing algorithm to connect nodes with a edge. 
 
-<img src="./images/sprotty-router.gif" />
+<img src="./images/ports-01.png" />
 
-The end of an edge is connected to your node element. The connection point can be controlled by either an Anchor Computer or by defining Ports. Both concepts will be introduced in the following sections.
+The start and the end point of an edge is connected to your node element. The connection point can be controlled by either an *Anchor Compute*r or by defining *Ports*. Both concepts will be introduced in the following sections.
 
 
 ## AnchorComputers
@@ -86,31 +86,26 @@ That's it. Now each time you connect an edge with your CustomTask the CustomTask
 
 ## Ports
 
-Another way how you can define how edges are connected with our node elements are Ports. 
-Ports in GLSP are a way to describe docking points for a graphical node element to connect edges. Ports are a concept of [Eclipse Sprotty](https://github.com/eclipse/sprotty) and are adapted by GLSP. Ports are optional. This means that if you do not define explicit ports you can connect an edge on any border of your graphical element.
+Another way to define how edges are connected with our node elements are Ports. 
+Ports describe additional docking points for a graphical node element to connect edges. If you do not define explicit ports, the endpoint is computed by a AnchorComputers.
 
 
-If you have more complex model elements ports are a good solution to define where edges can be placed to connect your nodes.
-
-<img src="./images/ports-01.png" />
-
-If you define ports, edges can only be placed on specific docking positions within your node element. This gives you more control about the design and layout of your diagrams.
+If you define ports, edges can only be placed on specific docking positions within your node element. This gives you more control about the design and layout of your diagrams. And the port will also become part of your model. 
 
 <img src="./images/ports-02.png" />
 
-### How to Define Ports
 
-Ports are part of your model. This means first of all you have to define ports along with your node builder class
+### The GLSP Server
 
-#### GLSP Server
+First of all you have to define ports along with your node builder class
 
 ```java
-public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
+public class CustomTaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
 	....
 
    @Override
-   public void setProperties(final EventNode node) {
+   public void setProperties(final TaskNode node) {
       super.setProperties(node);
       .....
       node.getChildren().add(createPort(node, -5.0, -25.0, "_north"));
@@ -119,7 +114,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
       node.getChildren().add(createPort(node, -5.0, 15.0, "_south"));
    }
 
-   private GPort createPort(final EventNode node, final Double x, final Double y, final String subID) {
+   private GPort createPort(final TaskNode node, final Double x, final Double y, final String subID) {
       return new GPortBuilder()
          .id(node.getId() + subID)
          .position(x, y)
@@ -133,7 +128,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
 Next you need to extend your DiagramConfiguration by providing the EdgeHints:
 
 ```java
-public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
+public class MyDiagramConfiguration extends BaseDiagramConfiguration {
 
    ....
 DefaultTypes.PORT
@@ -166,13 +161,13 @@ DefaultTypes.PORT
 }
 ```
 
-#### GLSP Client 
+#### The GLSP Client 
 
-Now you server model provides additional port information to the client. To render the ports on you client, you have to provide the port element within your diagram configuration:
+Now your server model provides additional port information to the client. To render the ports on you client, you have to provide the port element within your diagram configuration:
 
 
 ```javascript
-const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+const myDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
   
     .....
     configureModelElement(context, 'port', RectangularPort, RectangularNodeView);
@@ -184,8 +179,8 @@ In case you have defined custom views you need to ensure that your ports are ren
 
 ```javascript
 @injectable()
-export class EventNodeView extends ShapeView {
-	render(element: EventNode, context: RenderingContext): VNode | undefined {
+export class CustomTaskNodeView extends ShapeView {
+	render(element: TaskNode, context: RenderingContext): VNode | undefined {
 
 	....
 	
