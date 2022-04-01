@@ -118,6 +118,7 @@ export class IconView extends ShapeView {
 @injectable()
 export class GatewayNodeView extends ShapeView {
 	render(element: GatewayNode, context: RenderingContext): VNode | undefined {
+
 		if (!this.isVisible(element, context)) {
 			return undefined;
 		}
@@ -174,6 +175,9 @@ export class GatewayNodeView extends ShapeView {
 
 @injectable()
 export class EventNodeView extends ShapeView {
+	
+	// render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+ 
 	render(element: EventNode, context: RenderingContext): VNode | undefined {
 		if (!this.isVisible(element, context)) {
 			return undefined;
@@ -203,10 +207,10 @@ export class EventNodeView extends ShapeView {
 		if (eventSymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
-				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
+				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
 					<circle r='20' cx='0' cy='0' ></circle>
 					<g class-bpmn-symbol={true}>
-						<path transform={'scale(2.0) translate(-7.5,-7.5)'}
+						<path
 							d={eventSymbol} />
 					</g>
 					{context.renderChildren(element)}
@@ -215,7 +219,7 @@ export class EventNodeView extends ShapeView {
 		} else {
 			// we do not found a header so simply draw a circle...
 			vnode = (
-				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
+				<g class-sprotty-node={true}>
 					<circle r="20" cx="0" cy="0"></circle>
 				</g>
 			);

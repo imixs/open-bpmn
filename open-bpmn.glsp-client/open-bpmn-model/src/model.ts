@@ -14,192 +14,203 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    boundsFeature,
-    connectableFeature,
-    CircularNode,
-    deletableFeature,
-    SNode,
-    EditableLabel,
-    fadeFeature,
-    hoverFeedbackFeature,
-    isEditableLabel,
-    layoutableChildFeature,
-    LayoutContainer,
-    layoutContainerFeature,
-    moveFeature,
-    Nameable,
-    nameFeature,
-    popupFeature,
-    RectangularNode,
-    SChildElement,
-    SEdge,
-    selectFeature,
-    SModelElement,
-    SShapeElement,
-    WithEditableLabel,
-    withEditLabelFeature
+	boundsFeature,
+	connectableFeature,
+	CircularNode,
+	deletableFeature,
+	SNode,
+	EditableLabel,
+	fadeFeature,
+	hoverFeedbackFeature,
+	isEditableLabel,
+	layoutableChildFeature,
+	LayoutContainer,
+	layoutContainerFeature,
+	moveFeature,
+	Nameable,
+	nameFeature,
+	popupFeature,
+	RectangularNode,
+	SChildElement,
+	SEdge,
+	selectFeature,
+	SModelElement,
+	SShapeElement,
+	WithEditableLabel,
+	withEditLabelFeature
 } from '@eclipse-glsp/client';
 
-import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
+import { BPMN_ELEMENT_ANCHOR_KIND, BPMN_EVENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
-    static readonly DEFAULT_FEATURES = [
-        connectableFeature,
-        deletableFeature,
-        selectFeature,
-        boundsFeature,
-        moveFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        hoverFeedbackFeature,
-        popupFeature,
-        nameFeature,
-        withEditLabelFeature
-    ];
-    category?: string;
-    documentation?: string;
+	static readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+	category?: string;
+	documentation?: string;
 
-    get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const label = this.children.find(element => element.type === 'label:heading');
-        if (label && isEditableLabel(label)) {
-            return label;
-        }
-        return undefined;
-    }
+	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+		const label = this.children.find(element => element.type === 'label:heading');
+		if (label && isEditableLabel(label)) {
+			return label;
+		}
+		return undefined;
+	}
 
-    get name(): string {
-        const labelText = this.editableLabel?.text;
-        return labelText ? labelText : '<unknown>';
-    }
+	get name(): string {
+		const labelText = this.editableLabel?.text;
+		return labelText ? labelText : '<unknown>';
+	}
 
 	/*
 	 * Method that returns a json data structure including all
 	 * editable element properties
 	 */
-    get propetriesData(): any {
+	get propetriesData(): any {
 		return {
-			'name':this.name,
-			'category':this.category,
-			'documentation':this.documentation ? this.documentation : ''
+			'name': this.name,
+			'category': this.category,
+			'documentation': this.documentation ? this.documentation : ''
 		};
-    }
+	}
 
-    /*
-     * Returns the BPMN anchorCompute Kind for GatewayNodes
-     */
-     get anchorKind(): string {
-        return BPMN_ELEMENT_ANCHOR_KIND;
-    }
+	/*
+	 * Returns the BPMN anchorCompute Kind for GatewayNodes
+	 */
+	get anchorKind(): string {
+		return BPMN_ELEMENT_ANCHOR_KIND;
+	}
 }
 
 /* CircularNode RectangularNode */
 export class EventNode extends CircularNode implements Nameable, WithEditableLabel {
-    static readonly DEFAULT_FEATURES = [
-        connectableFeature,
-        deletableFeature,
-        selectFeature,
-        boundsFeature,
-        moveFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        hoverFeedbackFeature,
-        popupFeature,
-        nameFeature,
-        withEditLabelFeature
-    ];
-    category?: string;
-    documentation?: string;
+	static readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+	category?: string;
+	documentation?: string;
 
-    get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const label = this.children.find(element => element.type === 'label:heading');
-        if (label && isEditableLabel(label)) {
-            return label;
-        }
-        return undefined;
-    }
+	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+		const label = this.children.find(element => element.type === 'label:heading');
+		if (label && isEditableLabel(label)) {
+			return label;
+		}
+		return undefined;
+	}
 
-    get name(): string {
-        const labelText = this.editableLabel?.text;
-        return labelText ? labelText : '<unknown>';
-    }
+	get name(): string {
+		const labelText = this.editableLabel?.text;
+		return labelText ? labelText : '<unknown>';
+	}
+
+	/*get bounds(): any {
+		const bounds = {
+			x: this.position.x-20,
+			y: this.position.y-20,
+			width: 40,
+			height: 40
+		};
+		// console.log('.. new bounds x=' + bounds.x);
+		return bounds;
+	}*/
 
 	/*
 	 * Method that returns a json data structure including all
 	 * editable element properties
 	 */
-    get propetriesData(): any {
+	get propetriesData(): any {
 		return {
-			'name':this.name,
-			'category':this.category,
-			'documentation':this.documentation ? this.documentation : ''
+			'name': this.name,
+			'category': this.category,
+			'documentation': this.documentation ? this.documentation : ''
 		};
-    }
-    /*
-     * Returns the BPMN anchorCompute Kind for BPMN Elements
-     */
-     get anchorKind(): string {
-        return BPMN_ELEMENT_ANCHOR_KIND;
-    }
+	}
+	/*
+	 * Returns the BPMN anchorCompute Kind for BPMN Elements
+	 */
+	get anchorKind(): string {
+		return BPMN_EVENT_ANCHOR_KIND;
+	}
 }
 
 // DiamondNode
 export class GatewayNode extends SNode implements Nameable, WithEditableLabel {
 	static readonly DEFAULT_FEATURES = [
-        connectableFeature,
-        deletableFeature,
-        selectFeature,
-        boundsFeature,
-        moveFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        hoverFeedbackFeature,
-        popupFeature,
-        nameFeature,
-        withEditLabelFeature
-    ];
-    category?: string;
-    documentation: string;
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+	category?: string;
+	documentation: string;
 
-    get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const label = this.children.find(element => element.type === 'label:heading');
-        if (label && isEditableLabel(label)) {
-            return label;
-        }
-        return undefined;
-    }
+	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+		const label = this.children.find(element => element.type === 'label:heading');
+		if (label && isEditableLabel(label)) {
+			return label;
+		}
+		return undefined;
+	}
 
-    get name(): string {
-        const labelText = this.editableLabel?.text;
-        return labelText ? labelText : '<unknown>';
-    }
+	get name(): string {
+		const labelText = this.editableLabel?.text;
+		return labelText ? labelText : '<unknown>';
+	}
 
 	/*
 	 * Method that returns a json data structure including all
 	 * editable element properties
 	 */
-    get propetriesData(): any {
+	get propetriesData(): any {
 		return {
-			'name':this.name,
-			'category':this.category,
-			'documentation':this.documentation ? this.documentation : ''
+			'name': this.name,
+			'category': this.category,
+			'documentation': this.documentation ? this.documentation : ''
 		};
-    }
+	}
 
-    /*
-     * Returns the BPMN anchorCompute Kind for BPMN Elements
-     */
-     get anchorKind(): string {
-        return BPMN_ELEMENT_ANCHOR_KIND;
-    }
+	/*
+	 * Returns the BPMN anchorCompute Kind for BPMN Elements
+	 */
+	get anchorKind(): string {
+		return BPMN_ELEMENT_ANCHOR_KIND;
+	}
 }
 
 export namespace GatewayNode {
-    export namespace Type {
-        export const EXLUSIVE = 'exclusiveNode';
-        export const INCLUSIVE = 'inclusiveNode';
-        export const PARALLEL = 'parallelNode';
-        export const UNDEFINED = 'undefined';
-    }
+	export namespace Type {
+		export const EXLUSIVE = 'exclusiveNode';
+		export const INCLUSIVE = 'inclusiveNode';
+		export const PARALLEL = 'parallelNode';
+		export const UNDEFINED = 'undefined';
+	}
 }
 
 /*
@@ -207,60 +218,60 @@ export namespace GatewayNode {
  * The methods return the corresponding node
  */
 export function isTaskNode(element: SModelElement): element is TaskNode {
-    return element instanceof TaskNode || false;
+	return element instanceof TaskNode || false;
 }
 
 export function isEventNode(element: SModelElement): element is EventNode {
-    return element instanceof EventNode || false;
+	return element instanceof EventNode || false;
 }
 
 export function isGatewayNode(element: SModelElement): element is GatewayNode {
-    return element instanceof GatewayNode || false;
+	return element instanceof GatewayNode || false;
 }
 
 export class SequenceFlow extends SEdge {
-    condition?: string;
+	condition?: string;
 
-     /*
-     * Returns the BPMN anchorCompute Kind for BPMN Elements
-     */
-     get anchorKind(): string {
-        return BPMN_ELEMENT_ANCHOR_KIND;
-    }
+	/*
+	* Returns the BPMN anchorCompute Kind for BPMN Elements
+	*/
+	get anchorKind(): string {
+		return BPMN_ELEMENT_ANCHOR_KIND;
+	}
 }
 
 export class Icon extends SShapeElement implements LayoutContainer {
-    static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
+	static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
 
-    layout: string;
-    layoutOptions?: { [key: string]: string | number | boolean };
-    size = {
-        width: 32,
-        height: 32
-    };
+	layout: string;
+	layoutOptions?: { [key: string]: string | number | boolean };
+	size = {
+		width: 32,
+		height: 32
+	};
 }
 
 export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
-    static readonly DEFAULT_FEATURES = [
-        deletableFeature,
-        selectFeature,
-        boundsFeature,
-        moveFeature,
-        layoutContainerFeature,
-        fadeFeature,
-        hoverFeedbackFeature,
-        popupFeature,
-        nameFeature,
-        withEditLabelFeature
-    ];
+	static readonly DEFAULT_FEATURES = [
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
 
-    name = '';
+	name = '';
 
-    get editableLabel(): (SChildElement & EditableLabel) | undefined {
-        const label = this.children.find(element => element.type === 'label:heading');
-        if (label && isEditableLabel(label)) {
-            return label;
-        }
-        return undefined;
-    }
+	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+		const label = this.children.find(element => element.type === 'label:heading');
+		if (label && isEditableLabel(label)) {
+			return label;
+		}
+		return undefined;
+	}
 }
