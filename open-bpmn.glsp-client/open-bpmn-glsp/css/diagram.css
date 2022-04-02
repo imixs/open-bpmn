@@ -83,6 +83,10 @@
 	fill: #BE5961;
 }
 
+.sprotty-node.event > .bpmn-port {
+	fill: blue;
+}
+
 /*** Ports ***/
 .sprotty-node .sprotty-port {
 	stroke-width: 1;

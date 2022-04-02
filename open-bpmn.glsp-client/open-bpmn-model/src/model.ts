@@ -123,17 +123,6 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 		return labelText ? labelText : '<unknown>';
 	}
 
-	/*get bounds(): any {
-		const bounds = {
-			x: this.position.x-20,
-			y: this.position.y-20,
-			width: 40,
-			height: 40
-		};
-		// console.log('.. new bounds x=' + bounds.x);
-		return bounds;
-	}*/
-
 	/*
 	 * Method that returns a json data structure including all
 	 * editable element properties

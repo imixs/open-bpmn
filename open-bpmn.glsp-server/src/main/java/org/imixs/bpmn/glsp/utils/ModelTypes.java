@@ -47,6 +47,7 @@ public final class ModelTypes {
 
     // public static final String AUTOMATED_TASK = TASK + ":automated";
     public static final String POOL = "pool";
+    public static final String PORT = "port";
     public static final String STRUCTURE = "struct";
 
     public static String toNodeType(final String type) {

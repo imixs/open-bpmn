@@ -37,16 +37,21 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
+//    public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
+//            ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
+//            ModelTypes.START_EVENT, ModelTypes.END_EVENT);
+
     public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
             ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
-            ModelTypes.START_EVENT, ModelTypes.END_EVENT);
+            ModelTypes.PORT);
 
     public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(ModelTypes.MANUAL_TASK,
             ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY,
             ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEQUENCE_FLOW);
 
     public final static List<String> ALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
-            ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, DefaultTypes.PORT);
+            ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
+            ModelTypes.PORT);
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
@@ -60,6 +65,9 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
+
+        // TODO ??
+        mappings.put(ModelTypes.PORT, GraphPackage.Literals.GPORT);
         // mappings.put(ModelTypes.LABEL_TEXT, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         // mappings.put(ModelTypes.LABEL_ICON, GraphPackage.Literals.GLABEL);
@@ -111,7 +119,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));
 
+        // TODO ??
+        // nodeHints.add(new ShapeTypeHint(ModelTypes.PORT, false, false, false,
+        // false));
+
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
+
         catHint.setContainableElementTypeIds(ALL_BPMN_FLOWELEMENTS);
         nodeHints.add(catHint);
 

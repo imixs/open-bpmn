@@ -176,8 +176,6 @@ export class GatewayNodeView extends ShapeView {
 @injectable()
 export class EventNodeView extends ShapeView {
 	
-	// render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
- 
 	render(element: EventNode, context: RenderingContext): VNode | undefined {
 		if (!this.isVisible(element, context)) {
 			return undefined;
@@ -202,25 +200,28 @@ export class EventNodeView extends ShapeView {
 			}
 		}
 
-		/*  text-anchor="middle"  waere die lösung */
 		let vnode: any = undefined;
 		if (eventSymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
+				// the second circle is a workarround for moveing the node
+				// https://github.com/eclipse-glsp/glsp/discussions/608
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
 					<circle r='20' cx='0' cy='0' ></circle>
-					<g class-bpmn-symbol={true}>
-						<path
-							d={eventSymbol} />
-					</g>
 					{context.renderChildren(element)}
+					<circle r='12' cx='0' cy='0' ></circle>
+					<g class-bpmn-symbol={true} transform="translate(-11 -11),scale(1.5)">
+						<path d={eventSymbol} />
+					</g>
 				</g>
 			);
 		} else {
-			// we do not found a header so simply draw a circle...
+			// we do not found a symbol so simply draw an empty circle...
 			vnode = (
-				<g class-sprotty-node={true}>
-					<circle r="20" cx="0" cy="0"></circle>
+				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
+					<circle r='20' cx='0' cy='0' ></circle>
+					{context.renderChildren(element)}
+					<circle r='12' cx='0' cy='0' ></circle>
 				</g>
 			);
 		}

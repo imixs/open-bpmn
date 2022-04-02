@@ -15,15 +15,11 @@
  ********************************************************************************/
 package org.imixs.bpmn.glsp.elements.task;
 
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.bpmngraph.TaskNode;
-import org.imixs.bpmn.glsp.elements.IconBuilder;
-import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
 
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
@@ -62,24 +58,9 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
 
         node.getLayoutOptions().put("hGap", 10);
         node.getLayoutOptions().put("vAlign", "center");
-        node.getChildren().add(createCompartmentIcon(node));
 
-        GLabel glabel = createCompartmentHeader(node);
-        node.getChildren().add(glabel);
+        node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
+        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
 
     }
-
-    private Icon createCompartmentIcon(final TaskNode taskNode) {
-        return new IconBuilder().id(taskNode.getId() + "_icon")
-                // .position(-10, -10)
-                .build();
-    }
-
-    private GLabel createCompartmentHeader(final TaskNode taskNode) {
-        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-                .id(taskNode.getId() + "_classname") //
-                .text(taskNode.getName()) //
-                .build();
-    }
-
 }

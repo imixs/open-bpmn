@@ -54,10 +54,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-//        node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, -25.0, "_north"));
-//        node.getChildren().add(BPMNBuilderHelper.createPort(node, -25.0, -5.0, "_west"));
-//        node.getChildren().add(BPMNBuilderHelper.createPort(node, 15.0, -5.0, "_east"));
-//        node.getChildren().add(BPMNBuilderHelper.createPort(node, -5.0, 15.0, "_south"));
+        node.getChildren().add(BPMNBuilderHelper.createPort(node, -20.0, -20.0, "_north"));
     }
 
 }

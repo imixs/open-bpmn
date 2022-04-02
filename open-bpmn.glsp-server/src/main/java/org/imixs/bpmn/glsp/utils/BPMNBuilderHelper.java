@@ -16,8 +16,12 @@
 package org.imixs.bpmn.glsp.utils;
 
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
 import org.imixs.bpmn.bpmngraph.BaseElement;
+import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.glsp.elements.IconBuilder;
 
 /**
  * The GatewayNodeBuilder provides helper methods to create GNode Elements
@@ -26,6 +30,12 @@ import org.imixs.bpmn.bpmngraph.BaseElement;
  *
  */
 public class BPMNBuilderHelper {
+
+    public static Icon createCompartmentIcon(final BaseElement node) {
+        return new IconBuilder().id(node.getId() + "_icon")
+                // .position(-10, -10)
+                .build();
+    }
 
     /**
      * Creates a GLabel for the name of a BaseElement
@@ -48,12 +58,11 @@ public class BPMNBuilderHelper {
      * @param y
      * @return GPort
      */
-//   public static GPort createPort(final BaseElement node, final Double x, final Double y, final String subId) {
-//      return new GPortBuilder()
-//         .id(node.getId() + subId)
-//         .position(x, y)
-//         .size(10.0, 10.0)
-//         .addCssClass("bpmn-port")
-//         .build();
-//   }
+    public static GPort createPort(final BaseElement node, final Double x, final Double y, final String subId) {
+        return new GPortBuilder(ModelTypes.PORT) //
+                .id(node.getId() + subId) //
+                .position(x, y) //
+                .size(40.0, 40.0) //
+                .addCssClass("bpmn-port").build();
+    }
 }
