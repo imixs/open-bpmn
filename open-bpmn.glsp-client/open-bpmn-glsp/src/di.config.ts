@@ -25,16 +25,17 @@ import {
     overrideViewerOptions,
     RevealNamedElementActionProvider,
     RoundedCornerNodeView,
-    CircularPort,
     CircularNodeView,
     SCompartment,
     SCompartmentView,
     SLabel,
     SLabelView,
+    SPort,
+    selectFeature,
     StructureCompartmentView,
     TYPES
 } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
+// import { DefaultTypes } from '@eclipse-glsp/protocol';
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
@@ -81,35 +82,28 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'event:start', EventNode, EventNodeView);
     configureModelElement(context, 'event:end', EventNode, EventNodeView);
-
-    configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
-    configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
-    configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
-    // configureModelElement(context, 'label:icon', SLabel, SLabelView);
-    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
-    configureModelElement(context, 'icon', Icon, IconView);
+	configureModelElement(context, 'event:port', SPort, CircularNodeView, { disable: [selectFeature] });
 
     configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'gateway:inclusive', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'gateway:parallel', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'gateway:complex', GatewayNode, GatewayNodeView);
 
+    configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
+    configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
+    configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
+    configureModelElement(context, 'icon', Icon, IconView);
+
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
-    configureModelElement(context, DefaultTypes.PORT, CircularPort, CircularNodeView);
-
-    // BPMN router?
-  /*  bind(BPMNEdgeRouter).toSelf().inSingletonScope();
-    bind(TYPES.IEdgeRouter).toService(BPMNEdgeRouter);*/
+    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
 
 });
 
 export default function createContainer(widgetId: string): Container {
-    // add the BPMN propertyViewModule...
-    // const container = createClientContainer(bpmnDiagramModule, directTaskEditor);
-    // const container = createClientContainer(bpmnDiagramModule, directTaskEditor,bpmnPropertyModule);
-    const container = createClientContainer(bpmnDiagramModule,bpmnPropertyModule);
+    // Create the createClientContainer with the diagramModule and the BPMN bpmnPropertyModule...
+    const container = createClientContainer(bpmnDiagramModule, bpmnPropertyModule);
     overrideViewerOptions(container, {
         baseDiv: widgetId,
         hiddenDiv: widgetId + '_hidden'

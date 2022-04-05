@@ -59,10 +59,10 @@ public class BPMNBuilderHelper {
      * @return GPort
      */
     public static GPort createPort(final BaseElement node, final Double x, final Double y, final String subId) {
-        return new GPortBuilder(ModelTypes.PORT) //
+        return new GPortBuilder(ModelTypes.EVENT_PORT) //
                 .id(node.getId() + subId) //
                 .position(x, y) //
                 .size(40.0, 40.0) //
-                .addCssClass("bpmn-port").build();
+                .addCssClass("event-port").build();
     }
 }

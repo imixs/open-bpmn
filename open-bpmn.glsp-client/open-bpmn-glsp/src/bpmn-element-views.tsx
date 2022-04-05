@@ -208,11 +208,10 @@ export class EventNodeView extends ShapeView {
 				// https://github.com/eclipse-glsp/glsp/discussions/608
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
 					<circle r='20' cx='0' cy='0' ></circle>
-					{context.renderChildren(element)}
-					<circle r='12' cx='0' cy='0' ></circle>
 					<g class-bpmn-symbol={true} transform="translate(-11 -11),scale(1.5)">
 						<path d={eventSymbol} />
 					</g>
+					{context.renderChildren(element)}
 				</g>
 			);
 		} else {

@@ -37,21 +37,13 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
-//    public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
-//            ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
-//            ModelTypes.START_EVENT, ModelTypes.END_EVENT);
-
-    public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
-            ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
-            ModelTypes.PORT);
-
     public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(ModelTypes.MANUAL_TASK,
             ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY,
             ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEQUENCE_FLOW);
 
     public final static List<String> ALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
             ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.PORT);
+            ModelTypes.EVENT_PORT);
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
@@ -65,23 +57,20 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
-
-        // TODO ??
-        mappings.put(ModelTypes.PORT, GraphPackage.Literals.GPORT);
-        // mappings.put(ModelTypes.LABEL_TEXT, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-        // mappings.put(ModelTypes.LABEL_ICON, GraphPackage.Literals.GLABEL);
-        mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
         mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
-        // mappings.put(ModelTypes.ACTIVITY_NODE,
-        // BpmngraphPackage.Literals.ACTIVITY_NODE);
+
+        mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK_NODE);
 
         mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY_NODE);
 
-        mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK_NODE);
         mappings.put(ModelTypes.EVENT, BpmngraphPackage.Literals.EVENT_NODE);
+        mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
+
         mappings.put(ModelTypes.POOL, BpmngraphPackage.Literals.POOL);
         mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
+
+        mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
         return mappings;
 
     }
@@ -132,7 +121,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     }
 
     /**
-     * Set the default shape hints.
+     * Set the BPMN default shape hints.
+     * <ul>
+     * <li>repositionable=true
+     * <li>deletable = true
+     * <li>resizable = false
+     * <li>reparentable = true
+     * <p>
      */
     @Override
     public ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {
@@ -144,29 +139,55 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      * Returns the edge type hints for the diagram implementation. Edge type hints
      * are sent to the client and used to validate whether certain operations for
      * edges are allowed without having to query the server again.
+     * <p>
+     * TODO We need to define a EdgeTypeHint for all typs of flows in BPMN.
+     * Currently we only support the SequenceFlow
      *
      * @return List of all edge type hints for the diagram implementation.
      */
     @Override
     public List<EdgeTypeHint> getEdgeTypeHints() {
         List<EdgeTypeHint> edgeHints = new ArrayList<>();
-        // edgeHints.add(createDefaultEdgeTypeHint(EDGE));
+
+        // SequenceFLow
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
 
-        // allow all elements
-        sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-        sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
+        sequenceFlowHint.setSourceElementTypeIds(Arrays.asList(//
+                ModelTypes.MANUAL_TASK, //
+                ModelTypes.SCRIPT_TASK, //
+                ModelTypes.SEND_TASK, //
+                ModelTypes.SERVICE_TASK, //
+                ModelTypes.EXCLUSIVE_GATEWAY, //
+                ModelTypes.INCLUSIVE_GATEWAY, //
+                ModelTypes.EVENT_PORT));
+
+        sequenceFlowHint.setTargetElementTypeIds(Arrays.asList(//
+                ModelTypes.MANUAL_TASK, //
+                ModelTypes.SCRIPT_TASK, //
+                ModelTypes.SEND_TASK, //
+                ModelTypes.SERVICE_TASK, //
+                ModelTypes.EXCLUSIVE_GATEWAY, //
+                ModelTypes.INCLUSIVE_GATEWAY, //
+                ModelTypes.EVENT_PORT));
+
         edgeHints.add(sequenceFlowHint);
+
+        // TODO add other BPMN Flows
+
         return edgeHints;
     }
 
+    /**
+     * <ul>
+     * <li>repositionable=true
+     * <li>deletable = true
+     * <li>routeable = true
+     */
     @Override
     public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
         EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
 
-        // allow all
-        hint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-        hint.setTargetElementTypeIds(ALL_PORTS);
+        // TODO can we really define a default source/target here ?
         return hint;
     }
 

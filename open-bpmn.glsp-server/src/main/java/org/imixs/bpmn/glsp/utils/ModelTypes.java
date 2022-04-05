@@ -20,10 +20,7 @@ public final class ModelTypes {
     }
 
     public static final String LABEL_HEADING = "label:heading";
-    // public static final String LABEL_TEXT = "label:text";
     public static final String COMP_HEADER = "comp:header";
-    // public static final String LABEL_ICON = "label:icon";
-    public static final String SEQUENCE_FLOW = "edge:sequenceflow";
     public static final String ICON = "icon";
     public static final String ACTIVITY_NODE = "activityNode";
 
@@ -35,20 +32,22 @@ public final class ModelTypes {
     public static final String SCRIPT_TASK = TASK + ":script";
 
     public static final String EVENT = "event";
+    public static final String EVENT_PORT = "event:port";
     public static final String START_EVENT = EVENT + ":start";
     public static final String END_EVENT = EVENT + ":end";
 
     public static final String GATEWAY = "gateway";
+    public static final String GATEWAY_PORT = "gateway:port";
     public static final String EXCLUSIVE_GATEWAY = GATEWAY + ":exclusive";
     public static final String PARALLEL_GATEWAY = GATEWAY + ":parallel";
     public static final String EVENT_GATEWAY = GATEWAY + ":event";
     public static final String INCLUSIVE_GATEWAY = GATEWAY + ":inclusive";
     public static final String COMPLEX_GATEWAY = GATEWAY + ":complex";
 
-    // public static final String AUTOMATED_TASK = TASK + ":automated";
     public static final String POOL = "pool";
-    public static final String PORT = "port";
     public static final String STRUCTURE = "struct";
+
+    public static final String SEQUENCE_FLOW = "edge:sequenceflow";
 
     public static String toNodeType(final String type) {
         switch (type) {
