@@ -15,23 +15,23 @@ import org.imixs.bpmn.bpmngraph.TaskNode;
  * @generated
  */
 public class TaskNodeImpl extends FlowElementImpl implements TaskNode {
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   protected TaskNodeImpl() {
-      super();
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TaskNodeImpl() {
+        super();
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   protected EClass eStaticClass() {
-      return BpmngraphPackage.Literals.TASK_NODE;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BpmngraphPackage.Literals.TASK_NODE;
+    }
 
 } //TaskNodeImpl

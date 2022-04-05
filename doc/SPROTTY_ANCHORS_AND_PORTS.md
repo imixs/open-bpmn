@@ -161,7 +161,7 @@ DefaultTypes.PORT
 }
 ```
 
-#### The GLSP Client 
+### The GLSP Client 
 
 Now your server model provides additional port information to the client. To render the ports on you client, you have to provide the port element within your diagram configuration:
 
@@ -220,3 +220,42 @@ The ports can be designed in various ways by just providing CSS definitions. See
 	stroke: #f57900;
 } 
 ```
+
+
+#### Moveable Ports
+
+Sprotty Ports have the restriction that the can not be grabbed by the mouse to move the element they belong to. This is because the model defintion of a SPort did not provide the feature `moveFeature`. You can solve this feature be defining your own custom port extending the SPort and adding the moveableFeature:
+
+````javascript
+export class BPMNPort extends SPort  {
+    static readonly DEFAULT_FEATURES = [connectableFeature,boundsFeature,  moveFeature];
+
+}
+````
+
+Next you can define your own custom view for your new Port model:
+
+````javascript
+@injectable()
+export class BPMNPortView extends ShapeView {
+	
+	render(element: BPMNPortView, context: RenderingContext): VNode | undefined {
+		if (!this.isVisible(element, context)) {
+			return undefined;
+		}
+		const vnode: any = (
+			<g class-sprotty-port={true} class-mouseover={element.hoverFeedback}>
+				<circle r='10' cx='20' cy='20' ></circle>
+			</g>
+		);
+		return vnode;
+	}
+}
+````
+
+and finally you need to bind the custom port to your ContainerModule:
+
+````javascript
+    configureModelElement(context, 'port', BPMNPort, SymbolPortView);
+````
+

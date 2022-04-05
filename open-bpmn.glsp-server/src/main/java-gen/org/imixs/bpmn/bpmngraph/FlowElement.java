@@ -21,16 +21,16 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface FlowElement extends BaseElement {
-   /**
-    * Returns the value of the '<em><b>Category</b></em>' attribute list.
-    * The list contents are of type {@link java.lang.String}.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the value of the '<em>Category</em>' attribute list.
-    * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getFlowElement_Category()
-    * @model
-    * @generated
-    */
-   EList<String> getCategory();
+    /**
+     * Returns the value of the '<em><b>Category</b></em>' attribute list.
+     * The list contents are of type {@link java.lang.String}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Category</em>' attribute list.
+     * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getFlowElement_Category()
+     * @model
+     * @generated
+     */
+    EList<String> getCategory();
 
 } // FlowElement

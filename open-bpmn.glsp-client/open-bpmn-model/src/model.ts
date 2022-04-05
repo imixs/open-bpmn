@@ -33,6 +33,7 @@ import {
 	RectangularNode,
 	SChildElement,
 	SEdge,
+	SPort,
 	selectFeature,
 	SModelElement,
 	SShapeElement,
@@ -40,7 +41,7 @@ import {
 	withEditLabelFeature
 } from '@eclipse-glsp/client';
 
-import { BPMN_ELEMENT_ANCHOR_KIND, BPMN_EVENT_ANCHOR_KIND } from './bpmn-anchors';
+import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
 	static readonly DEFAULT_FEATURES = [
@@ -107,6 +108,7 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 		nameFeature,
 		withEditLabelFeature
 	];
+
 	category?: string;
 	documentation?: string;
 
@@ -137,9 +139,9 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 	/*
 	 * Returns the BPMN anchorCompute Kind for BPMN Elements
 	 */
-	get anchorKind(): string {
+	/*get anchorKind(): string {
 		return BPMN_EVENT_ANCHOR_KIND;
-	}
+	}*/
 }
 
 // DiamondNode
@@ -238,6 +240,36 @@ export class Icon extends SShapeElement implements LayoutContainer {
 		width: 32,
 		height: 32
 	};
+}
+
+export class SymbolSPort extends SPort implements LayoutContainer {
+	static readonly DEFAULT_FEATURES = [connectableFeature,boundsFeature, layoutContainerFeature, layoutableChildFeature, moveFeature];
+
+	layout: string;
+	layoutOptions?: { [key: string]: string | number | boolean };
+	radius: 40;
+}
+
+/**
+ * A BPMNport extends the SPort with the additioal moveFeature.
+ * A Sport is a connection point for edges. It should always be contained in an SNode.
+ */
+ // DIESE VARIANTE SPRINGT ETWAS HERUM
+export class BPMNPort extends SPort  {
+    static readonly DEFAULT_FEATURES = [connectableFeature,boundsFeature,hoverFeedbackFeature, moveFeature];
+
+}
+
+export class BPMNPortFunktioniert extends SPort implements LayoutContainer {
+    static readonly DEFAULT_FEATURES = [connectableFeature,boundsFeature, layoutContainerFeature, layoutableChildFeature, moveFeature];
+
+	layout: string;
+	layoutOptions?: { [key: string]: string | number | boolean };
+	radius: 40;
+}
+export class BPMNPort2 extends SPort {
+    static readonly DEFAULT_FEATURES = [connectableFeature, selectFeature, boundsFeature, fadeFeature,
+        hoverFeedbackFeature,layoutContainerFeature, layoutableChildFeature,moveFeature];
 }
 
 export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {

@@ -16,14 +16,15 @@
 import {
 	getSubType,
 	RenderingContext,
-	SLabel,
+	SLabel,CornerRadius,RoundedCornerWrapper,toClipPathId,
 	setAttr
 } from '@eclipse-glsp/client';
 
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
-import { findParentByFeature, ShapeView, svg } from 'sprotty';
-import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from '@open-bpmn/open-bpmn-model';
+import { VNode,Classes } from 'snabbdom';
+import { findParentByFeature, ShapeView, svg, IViewArgs,SShapeElement,SPort,
+Hoverable,Selectable,SNode,RectangularNodeView } from 'sprotty';
+import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode, SymbolSPort } from '@open-bpmn/open-bpmn-model';
 
 /****************************************************************************
  * This module provides BPMN element views like Gateways, or Events
@@ -31,6 +32,22 @@ import { Icon, EventNode, GatewayNode, isTaskNode, isEventNode, isGatewayNode } 
  ****************************************************************************/
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
+
+@injectable()
+export class SymbolPortView extends ShapeView {
+	
+	render(element: SymbolSPort, context: RenderingContext): VNode | undefined {
+		if (!this.isVisible(element, context)) {
+			return undefined;
+		}
+		const vnode: any = (
+			<g class-sprotty-port={true} class-mouseover={element.hoverFeedback}>
+				<circle r='10' cx='20' cy='20' ></circle>
+			</g>
+		);
+		return vnode;
+	}
+}
 
 /*
  * The IconView shows a icon within a TaskNode
@@ -174,7 +191,7 @@ export class GatewayNodeView extends ShapeView {
 }
 
 @injectable()
-export class EventNodeView extends ShapeView {
+export class EventNodeViewOld extends ShapeView {
 	
 	render(element: EventNode, context: RenderingContext): VNode | undefined {
 		if (!this.isVisible(element, context)) {
@@ -207,12 +224,7 @@ export class EventNodeView extends ShapeView {
 				// the second circle is a workarround for moveing the node
 				// https://github.com/eclipse-glsp/glsp/discussions/608
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='20' cx='0' cy='0' ></circle>
 					{context.renderChildren(element)}
-					<circle r='12' cx='0' cy='0' ></circle>
-					<g class-bpmn-symbol={true} transform="translate(-11 -11),scale(1.5)">
-						<path d={eventSymbol} />
-					</g>
 				</g>
 			);
 		} else {
@@ -233,3 +245,101 @@ export class EventNodeView extends ShapeView {
 	}
 }
 
+// New Try....
+@injectable()
+export class EventNodeViewFunktioniertNicht extends ShapeView {
+    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+        const radius = 20; // this.getRadius(node);
+        let vnode: any = undefined;
+        
+        vnode= <g>
+            <circle class-sprotty-node={node instanceof SNode} class-sprotty-port={true}
+                    class-mouseover={node.hoverFeedback} class-selected={node.selected}
+                    r={radius} cx={radius} cy={radius}></circle>
+            {context.renderChildren(node)}
+        </g>;
+        
+        return vnode;
+    }
+}
+
+@injectable()
+export class EventNodeView extends RectangularNodeView {
+    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext): VNode | undefined {
+        const cornerRadius = CornerRadius.from(node);
+        if (!cornerRadius) {
+            return this.renderWithoutRadius(node, context);
+        }
+
+        const wrapper = new RoundedCornerWrapper(node, cornerRadius);
+        let vnode: any = undefined;
+        vnode= (
+            <g class-node={true}>
+                <defs>
+                    <clipPath id={toClipPathId(node)}>
+                        <path d={this.renderPath(wrapper, context, this.getClipPathInsets() || 0)}></path>
+                    </clipPath>
+                </defs>
+                {this.renderPathNode(wrapper, context)}
+                {context.renderChildren(node)}
+            </g>
+        );
+        return vnode;
+    }
+
+    protected renderWithoutRadius(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext): VNode | undefined {
+        return super.render(node, context);
+    }
+
+    protected getClipPathInsets(): number | undefined {
+        return 2;
+    }
+
+    protected renderPathNode(wrapper: Readonly<RoundedCornerWrapper>, context: RenderingContext): VNode {
+        const vnode: any= (
+            <path
+                d={this.renderPath(wrapper, context, 0)}
+                class-sprotty-node={wrapper.element instanceof SNode}
+                class-sprotty-port={wrapper.element instanceof SPort}
+                class-mouseover={wrapper.element.hoverFeedback}
+                class-selected={wrapper.element.selected}
+                {...this.additionalClasses(wrapper.element, context)}
+            />
+        );
+        return vnode;
+    }
+
+    protected additionalClasses(_node: Readonly<SShapeElement & Hoverable & Selectable>, _context: RenderingContext): Classes {
+        return {};
+    }
+
+    protected renderPath(wrapper: Readonly<RoundedCornerWrapper>, _context: RenderingContext, inset: number): string {
+        // Calcualte length of straight line segments
+        const topLineLength = Math.max(0, wrapper.size.width - wrapper.cornerRadius.topLeft - wrapper.cornerRadius.topRight);
+        const rightLineLength = Math.max(0, wrapper.size.height - wrapper.cornerRadius.topRight - wrapper.cornerRadius.bottomRight);
+        const bottomLineLength = Math.max(0, wrapper.size.width - wrapper.cornerRadius.bottomLeft - wrapper.cornerRadius.bottomRight);
+
+        const path =
+            `M${0 + inset},${0 + wrapper.topLeftCorner.radiusY}` +
+            `q${0},${-(wrapper.topLeftCorner.radiusY - inset)} ${wrapper.topLeftCorner.radiusX - inset},${-(
+                wrapper.topLeftCorner.radiusY - inset
+            )}` +
+            `h${topLineLength}` +
+            `q${wrapper.topRightCorner.radiusX - inset},0 ${wrapper.topRightCorner.radiusX - inset},${
+                wrapper.topRightCorner.radiusY - inset
+            }` +
+            `v${rightLineLength}` +
+            `q0,${wrapper.bottomRightCorner.radiusY - inset} ${-(wrapper.bottomRightCorner.radiusX - inset)},${
+                wrapper.bottomRightCorner.radiusY - inset
+            }` +
+            `h${-bottomLineLength}` +
+            `q${-(wrapper.bottomLeftCorner.radiusX - inset)},0 ${-(wrapper.bottomLeftCorner.radiusX - inset)},${-(
+                wrapper.bottomLeftCorner.radiusY - inset
+            )}` +
+            'z ';
+        return path;
+    }
+}

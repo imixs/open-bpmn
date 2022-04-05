@@ -4,23 +4,25 @@ package org.imixs.bpmn.bpmngraph.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.glsp.graph.impl.GCompartmentImpl;
+
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.bpmngraph.EventNode;
+import org.imixs.bpmn.bpmngraph.Symbol;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Event Node</b></em>'.
+ * An implementation of the model object '<em><b>Symbol</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class EventNodeImpl extends FlowElementImpl implements EventNode {
+public class SymbolImpl extends GCompartmentImpl implements Symbol {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected EventNodeImpl() {
+    protected SymbolImpl() {
         super();
     }
 
@@ -31,7 +33,7 @@ public class EventNodeImpl extends FlowElementImpl implements EventNode {
      */
     @Override
     protected EClass eStaticClass() {
-        return BpmngraphPackage.Literals.EVENT_NODE;
+        return BpmngraphPackage.Literals.SYMBOL;
     }
 
-} //EventNodeImpl
+} //SymbolImpl

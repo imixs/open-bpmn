@@ -15,23 +15,23 @@ import org.imixs.bpmn.bpmngraph.GatewayNode;
  * @generated
  */
 public class GatewayNodeImpl extends FlowElementImpl implements GatewayNode {
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   protected GatewayNodeImpl() {
-      super();
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected GatewayNodeImpl() {
+        super();
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   protected EClass eStaticClass() {
-      return BpmngraphPackage.Literals.GATEWAY_NODE;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BpmngraphPackage.Literals.GATEWAY_NODE;
+    }
 
 } //GatewayNodeImpl

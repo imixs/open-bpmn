@@ -21,7 +21,9 @@ import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
 import org.imixs.bpmn.bpmngraph.BaseElement;
 import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.bpmngraph.Symbol;
 import org.imixs.bpmn.glsp.elements.IconBuilder;
+import org.imixs.bpmn.glsp.elements.SymbolBuilder;
 
 /**
  * The GatewayNodeBuilder provides helper methods to create GNode Elements
@@ -47,6 +49,15 @@ public class BPMNBuilderHelper {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_classname") //
                 .text(node.getName()).build();
+    }
+
+    public static Symbol createBPMNSymbol(final BaseElement node, final Double x, final Double y) {
+        return new SymbolBuilder() //
+                .id(node.getId() + "_port")
+                // .position(-10, -10)
+                .position(x, y) //
+                .size(40.0, 40.0) //
+                .build();
     }
 
     /**

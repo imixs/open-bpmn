@@ -51,10 +51,20 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         super.setProperties(node);
         node.setName(name);
         node.getCategory().add(eventType);
-        node.setLayout(GConstants.Layout.FREEFORM);
+        // node.setLayout(GConstants.Layout.FREEFORM);
 
+        node.setLayout(GConstants.Layout.HBOX);
+
+        // Set min width/height
+        node.getLayoutOptions().put("minWidth", 160);
+        node.getLayoutOptions().put("minHeight", 60);
+
+        node.getLayoutOptions().put("hGap", 10);
+        node.getLayoutOptions().put("vAlign", "center");
+
+        node.getChildren().add(BPMNBuilderHelper.createBPMNSymbol(node, 0.0, 0.0));
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-        node.getChildren().add(BPMNBuilderHelper.createPort(node, -20.0, -20.0, "_north"));
+        node.getChildren().add(BPMNBuilderHelper.createPort(node, 50.0, 20.0, "_north"));
     }
 
 }

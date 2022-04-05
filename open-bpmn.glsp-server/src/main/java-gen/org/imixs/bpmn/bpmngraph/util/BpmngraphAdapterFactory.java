@@ -30,389 +30,407 @@ import org.imixs.bpmn.bpmngraph.*;
  * @generated
  */
 public class BpmngraphAdapterFactory extends AdapterFactoryImpl {
-   /**
-    * The cached model package.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   protected static BpmngraphPackage modelPackage;
+    /**
+     * The cached model package.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected static BpmngraphPackage modelPackage;
 
-   /**
-    * Creates an instance of the adapter factory.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public BpmngraphAdapterFactory() {
-      if (modelPackage == null) {
-         modelPackage = BpmngraphPackage.eINSTANCE;
-      }
-   }
+    /**
+     * Creates an instance of the adapter factory.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public BpmngraphAdapterFactory() {
+        if (modelPackage == null) {
+            modelPackage = BpmngraphPackage.eINSTANCE;
+        }
+    }
 
-   /**
-    * Returns whether this factory is applicable for the type of the object.
-    * <!-- begin-user-doc -->
-    * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
-    * <!-- end-user-doc -->
-    * @return whether this factory is applicable for the type of the object.
-    * @generated
-    */
-   @Override
-   public boolean isFactoryForType(Object object) {
-      if (object == modelPackage) {
-         return true;
-      }
-      if (object instanceof EObject) {
-         return ((EObject)object).eClass().getEPackage() == modelPackage;
-      }
-      return false;
-   }
+    /**
+     * Returns whether this factory is applicable for the type of the object.
+     * <!-- begin-user-doc -->
+     * This implementation returns <code>true</code> if the object is either the model's package or is an instance object of the model.
+     * <!-- end-user-doc -->
+     * @return whether this factory is applicable for the type of the object.
+     * @generated
+     */
+    @Override
+    public boolean isFactoryForType(Object object) {
+        if (object == modelPackage) {
+            return true;
+        }
+        if (object instanceof EObject) {
+            return ((EObject)object).eClass().getEPackage() == modelPackage;
+        }
+        return false;
+    }
 
-   /**
-    * The switch that delegates to the <code>createXXX</code> methods.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   protected BpmngraphSwitch<Adapter> modelSwitch =
-      new BpmngraphSwitch<Adapter>() {
-         @Override
-         public Adapter caseBaseElement(BaseElement object) {
-            return createBaseElementAdapter();
-         }
-         @Override
-         public Adapter caseFlowElement(FlowElement object) {
-            return createFlowElementAdapter();
-         }
-         @Override
-         public Adapter caseTaskNode(TaskNode object) {
-            return createTaskNodeAdapter();
-         }
-         @Override
-         public Adapter caseGatewayNode(GatewayNode object) {
-            return createGatewayNodeAdapter();
-         }
-         @Override
-         public Adapter caseEventNode(EventNode object) {
-            return createEventNodeAdapter();
-         }
-         @Override
-         public Adapter casePool(Pool object) {
-            return createPoolAdapter();
-         }
-         @Override
-         public Adapter caseIcon(Icon object) {
-            return createIconAdapter();
-         }
-         @Override
-         public Adapter caseSequenceFlow(SequenceFlow object) {
-            return createSequenceFlowAdapter();
-         }
-         @Override
-         public Adapter caseGArgumentable(GArgumentable object) {
-            return createGArgumentableAdapter();
-         }
-         @Override
-         public Adapter caseGModelElement(GModelElement object) {
-            return createGModelElementAdapter();
-         }
-         @Override
-         public Adapter caseGBoundsAware(GBoundsAware object) {
-            return createGBoundsAwareAdapter();
-         }
-         @Override
-         public Adapter caseGShapeElement(GShapeElement object) {
-            return createGShapeElementAdapter();
-         }
-         @Override
-         public Adapter caseGEdgeLayoutable(GEdgeLayoutable object) {
-            return createGEdgeLayoutableAdapter();
-         }
-         @Override
-         public Adapter caseGLayouting(GLayouting object) {
-            return createGLayoutingAdapter();
-         }
-         @Override
-         public Adapter caseGNode(GNode object) {
-            return createGNodeAdapter();
-         }
-         @Override
-         public Adapter caseGCompartment(GCompartment object) {
-            return createGCompartmentAdapter();
-         }
-         @Override
-         public Adapter caseGEdge(GEdge object) {
-            return createGEdgeAdapter();
-         }
-         @Override
-         public Adapter defaultCase(EObject object) {
-            return createEObjectAdapter();
-         }
-      };
+    /**
+     * The switch that delegates to the <code>createXXX</code> methods.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected BpmngraphSwitch<Adapter> modelSwitch =
+        new BpmngraphSwitch<Adapter>() {
+            @Override
+            public Adapter caseBaseElement(BaseElement object) {
+                return createBaseElementAdapter();
+            }
+            @Override
+            public Adapter caseFlowElement(FlowElement object) {
+                return createFlowElementAdapter();
+            }
+            @Override
+            public Adapter caseTaskNode(TaskNode object) {
+                return createTaskNodeAdapter();
+            }
+            @Override
+            public Adapter caseGatewayNode(GatewayNode object) {
+                return createGatewayNodeAdapter();
+            }
+            @Override
+            public Adapter caseEventNode(EventNode object) {
+                return createEventNodeAdapter();
+            }
+            @Override
+            public Adapter casePool(Pool object) {
+                return createPoolAdapter();
+            }
+            @Override
+            public Adapter caseIcon(Icon object) {
+                return createIconAdapter();
+            }
+            @Override
+            public Adapter caseSymbol(Symbol object) {
+                return createSymbolAdapter();
+            }
+            @Override
+            public Adapter caseSequenceFlow(SequenceFlow object) {
+                return createSequenceFlowAdapter();
+            }
+            @Override
+            public Adapter caseGArgumentable(GArgumentable object) {
+                return createGArgumentableAdapter();
+            }
+            @Override
+            public Adapter caseGModelElement(GModelElement object) {
+                return createGModelElementAdapter();
+            }
+            @Override
+            public Adapter caseGBoundsAware(GBoundsAware object) {
+                return createGBoundsAwareAdapter();
+            }
+            @Override
+            public Adapter caseGShapeElement(GShapeElement object) {
+                return createGShapeElementAdapter();
+            }
+            @Override
+            public Adapter caseGEdgeLayoutable(GEdgeLayoutable object) {
+                return createGEdgeLayoutableAdapter();
+            }
+            @Override
+            public Adapter caseGLayouting(GLayouting object) {
+                return createGLayoutingAdapter();
+            }
+            @Override
+            public Adapter caseGNode(GNode object) {
+                return createGNodeAdapter();
+            }
+            @Override
+            public Adapter caseGCompartment(GCompartment object) {
+                return createGCompartmentAdapter();
+            }
+            @Override
+            public Adapter caseGEdge(GEdge object) {
+                return createGEdgeAdapter();
+            }
+            @Override
+            public Adapter defaultCase(EObject object) {
+                return createEObjectAdapter();
+            }
+        };
 
-   /**
-    * Creates an adapter for the <code>target</code>.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param target the object to adapt.
-    * @return the adapter for the <code>target</code>.
-    * @generated
-    */
-   @Override
-   public Adapter createAdapter(Notifier target) {
-      return modelSwitch.doSwitch((EObject)target);
-   }
+    /**
+     * Creates an adapter for the <code>target</code>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param target the object to adapt.
+     * @return the adapter for the <code>target</code>.
+     * @generated
+     */
+    @Override
+    public Adapter createAdapter(Notifier target) {
+        return modelSwitch.doSwitch((EObject)target);
+    }
 
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.BaseElement <em>Base Element</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.BaseElement
-    * @generated
-    */
-   public Adapter createBaseElementAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.BaseElement <em>Base Element</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.BaseElement
+     * @generated
+     */
+    public Adapter createBaseElementAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.FlowElement <em>Flow Element</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.FlowElement
-    * @generated
-    */
-   public Adapter createFlowElementAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.FlowElement <em>Flow Element</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.FlowElement
+     * @generated
+     */
+    public Adapter createFlowElementAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.TaskNode <em>Task Node</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.TaskNode
-    * @generated
-    */
-   public Adapter createTaskNodeAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.TaskNode <em>Task Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.TaskNode
+     * @generated
+     */
+    public Adapter createTaskNodeAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.GatewayNode <em>Gateway Node</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.GatewayNode
-    * @generated
-    */
-   public Adapter createGatewayNodeAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.GatewayNode <em>Gateway Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.GatewayNode
+     * @generated
+     */
+    public Adapter createGatewayNodeAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.EventNode <em>Event Node</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.EventNode
-    * @generated
-    */
-   public Adapter createEventNodeAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.EventNode <em>Event Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.EventNode
+     * @generated
+     */
+    public Adapter createEventNodeAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.Pool
-    * @generated
-    */
-   public Adapter createPoolAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Pool <em>Pool</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.Pool
+     * @generated
+     */
+    public Adapter createPoolAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Icon <em>Icon</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.Icon
-    * @generated
-    */
-   public Adapter createIconAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Icon <em>Icon</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.Icon
+     * @generated
+     */
+    public Adapter createIconAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.SequenceFlow <em>Sequence Flow</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.imixs.bpmn.bpmngraph.SequenceFlow
-    * @generated
-    */
-   public Adapter createSequenceFlowAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.Symbol <em>Symbol</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.Symbol
+     * @generated
+     */
+    public Adapter createSymbolAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GArgumentable <em>GArgumentable</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GArgumentable
-    * @generated
-    */
-   public Adapter createGArgumentableAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn.bpmngraph.SequenceFlow <em>Sequence Flow</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn.bpmngraph.SequenceFlow
+     * @generated
+     */
+    public Adapter createSequenceFlowAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GModelElement
-    * @generated
-    */
-   public Adapter createGModelElementAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GArgumentable <em>GArgumentable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GArgumentable
+     * @generated
+     */
+    public Adapter createGArgumentableAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GBoundsAware <em>GBounds Aware</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GBoundsAware
-    * @generated
-    */
-   public Adapter createGBoundsAwareAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GModelElement <em>GModel Element</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GModelElement
+     * @generated
+     */
+    public Adapter createGModelElementAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GShapeElement <em>GShape Element</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GShapeElement
-    * @generated
-    */
-   public Adapter createGShapeElementAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GBoundsAware <em>GBounds Aware</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GBoundsAware
+     * @generated
+     */
+    public Adapter createGBoundsAwareAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdgeLayoutable <em>GEdge Layoutable</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GEdgeLayoutable
-    * @generated
-    */
-   public Adapter createGEdgeLayoutableAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GShapeElement <em>GShape Element</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GShapeElement
+     * @generated
+     */
+    public Adapter createGShapeElementAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GLayouting <em>GLayouting</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GLayouting
-    * @generated
-    */
-   public Adapter createGLayoutingAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdgeLayoutable <em>GEdge Layoutable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GEdgeLayoutable
+     * @generated
+     */
+    public Adapter createGEdgeLayoutableAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GNode <em>GNode</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GNode
-    * @generated
-    */
-   public Adapter createGNodeAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GLayouting <em>GLayouting</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GLayouting
+     * @generated
+     */
+    public Adapter createGLayoutingAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GCompartment <em>GCompartment</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GCompartment
-    * @generated
-    */
-   public Adapter createGCompartmentAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GNode <em>GNode</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GNode
+     * @generated
+     */
+    public Adapter createGNodeAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdge <em>GEdge</em>}'.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null so that we can easily ignore cases;
-    * it's useful to ignore a case when inheritance will catch all the cases anyway.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @see org.eclipse.glsp.graph.GEdge
-    * @generated
-    */
-   public Adapter createGEdgeAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GCompartment <em>GCompartment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GCompartment
+     * @generated
+     */
+    public Adapter createGCompartmentAdapter() {
+        return null;
+    }
 
-   /**
-    * Creates a new adapter for the default case.
-    * <!-- begin-user-doc -->
-    * This default implementation returns null.
-    * <!-- end-user-doc -->
-    * @return the new adapter.
-    * @generated
-    */
-   public Adapter createEObjectAdapter() {
-      return null;
-   }
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdge <em>GEdge</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GEdge
+     * @generated
+     */
+    public Adapter createGEdgeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for the default case.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @generated
+     */
+    public Adapter createEObjectAdapter() {
+        return null;
+    }
 
 } //BpmngraphAdapterFactory

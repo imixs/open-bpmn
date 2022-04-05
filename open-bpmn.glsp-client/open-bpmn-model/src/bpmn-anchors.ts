@@ -123,18 +123,18 @@ export class BPMNEventElementAnchor implements IAnchorComputer {
 
 	getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
 		const b = connectable.bounds;
+		console.log(' .... BPMNEventElementAnchor....');
 		if (b.width <= 0 || b.height <= 0) {
 			return b;
 		}
 
-		console.log(' .... BPMNEventElementAnchor....');
-		/*const bounds = {
-			x: b.x - 20,
-			y: b.y - 20,
-			width: 40,
-			height: 40
-		};*/
-		const bounds=b;
+		const bounds = {
+			x: b.x + 20,
+			y: b.y + 20,
+			width: 20,
+			height: 20
+		};
+		//const bounds=b;
 
 		const c = center(bounds);
 		const dx = c.x - refPoint.x;

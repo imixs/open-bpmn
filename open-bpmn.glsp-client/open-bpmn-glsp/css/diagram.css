@@ -76,10 +76,10 @@
 .sprotty-node.event > text.heading {
 	text-anchor:middle; 
 }
-.sprotty-node.event.start > circle {
+.sprotty-node.event.start > g > circle {
 	fill: #57A14C;
 }
-.sprotty-node.event.end > circle {
+.sprotty-node.event.end .sprotty-port > circle {
 	fill: #BE5961;
 }
 

@@ -41,17 +41,17 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 //            ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
 //            ModelTypes.START_EVENT, ModelTypes.END_EVENT);
 
-    public final static List<String> ALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
-            ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY, ModelTypes.INCLUSIVE_GATEWAY,
-            ModelTypes.PORT);
+    public final static List<String> xALL_BPMN_ACTIVITIES = Arrays.asList(ModelTypes.MANUAL_TASK,
+            ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY,
+            ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SYMBOL);
 
-    public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(ModelTypes.MANUAL_TASK,
+    public final static List<String> xALL_BPMN_FLOWELEMENTS = Arrays.asList(ModelTypes.MANUAL_TASK,
             ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY,
             ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEQUENCE_FLOW);
 
-    public final static List<String> ALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
+    public final static List<String> xALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
             ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
-            ModelTypes.PORT);
+            ModelTypes.PORT, ModelTypes.SYMBOL);
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
@@ -73,6 +73,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         // mappings.put(ModelTypes.LABEL_ICON, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
         mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
+        mappings.put(ModelTypes.SYMBOL, BpmngraphPackage.Literals.SYMBOL);
+
         // mappings.put(ModelTypes.ACTIVITY_NODE,
         // BpmngraphPackage.Literals.ACTIVITY_NODE);
 
@@ -125,7 +127,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
 
-        catHint.setContainableElementTypeIds(ALL_BPMN_FLOWELEMENTS);
+        // catHint.setContainableElementTypeIds(ALL_BPMN_FLOWELEMENTS);
         nodeHints.add(catHint);
 
         return nodeHints;
@@ -152,10 +154,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         List<EdgeTypeHint> edgeHints = new ArrayList<>();
         // edgeHints.add(createDefaultEdgeTypeHint(EDGE));
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
-
-        // allow all elements
-        sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-        sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
+//        sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
+//        sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_ACTIVITIES);
         edgeHints.add(sequenceFlowHint);
         return edgeHints;
     }
@@ -164,9 +164,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     public EdgeTypeHint createDefaultEdgeTypeHint(final String elementId) {
         EdgeTypeHint hint = super.createDefaultEdgeTypeHint(elementId);
 
-        // allow all
-        hint.setSourceElementTypeIds(ALL_BPMN_ACTIVITIES);
-        hint.setTargetElementTypeIds(ALL_PORTS);
+        // allow manual and script Tasks and Events
+
+        List<String> list = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK, ModelTypes.SYMBOL,
+                ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.EXCLUSIVE_GATEWAY);
+
+        hint.setSourceElementTypeIds(list);
+        hint.setTargetElementTypeIds(list);
         return hint;
     }
 

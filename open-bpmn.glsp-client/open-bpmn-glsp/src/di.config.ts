@@ -25,8 +25,6 @@ import {
     overrideViewerOptions,
     RevealNamedElementActionProvider,
     RoundedCornerNodeView,
-    CircularPort,
-    CircularNodeView,
     SCompartment,
     SCompartmentView,
     SLabel,
@@ -34,7 +32,7 @@ import {
     StructureCompartmentView,
     TYPES
 } from '@eclipse-glsp/client';
-import { DefaultTypes } from '@eclipse-glsp/protocol';
+// import { DefaultTypes } from '@eclipse-glsp/protocol';
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
@@ -45,13 +43,15 @@ import {
 	Icon,
 	TaskNode,
 	EventNode,
+	SymbolSPort,
 	SequenceFlow,
 	BPMNSequenceFlowAnchor,
 	BPMNElementAnchor,
 	BPMNPolylineEventAnchor,
-	BPMNEventElementAnchor
+	BPMNEventElementAnchor,
+	BPMNPort
 } from '@open-bpmn/open-bpmn-model';
-import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
+import { IconView, SymbolPortView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
@@ -88,6 +88,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // configureModelElement(context, 'label:icon', SLabel, SLabelView);
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
     configureModelElement(context, 'icon', Icon, IconView);
+    configureModelElement(context, 'symbol', SymbolSPort, SymbolPortView);
+    configureModelElement(context, 'port', BPMNPort, SymbolPortView);
+
 
     configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'gateway:inclusive', GatewayNode, GatewayNodeView);
@@ -97,7 +100,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
-    configureModelElement(context, DefaultTypes.PORT, CircularPort, CircularNodeView);
+    // configureModelElement(context, DefaultTypes.PORT, CircularPort, CircularNodeView);
 
     // BPMN router?
   /*  bind(BPMNEdgeRouter).toSelf().inSingletonScope();
