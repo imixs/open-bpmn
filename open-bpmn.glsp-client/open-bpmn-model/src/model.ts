@@ -37,10 +37,11 @@ import {
 	SModelElement,
 	SShapeElement,
 	WithEditableLabel,
-	withEditLabelFeature
+	withEditLabelFeature,
+	Fadeable, Hoverable,SPort
 } from '@eclipse-glsp/client';
 
-import { BPMN_ELEMENT_ANCHOR_KIND, BPMN_EVENT_ANCHOR_KIND } from './bpmn-anchors';
+import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
 	static readonly DEFAULT_FEATURES = [
@@ -134,12 +135,6 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 			'documentation': this.documentation ? this.documentation : ''
 		};
 	}
-	/*
-	 * Returns the BPMN anchorCompute Kind for BPMN Elements
-	 */
-	get anchorKind(): string {
-		return BPMN_EVENT_ANCHOR_KIND;
-	}
 }
 
 // DiamondNode
@@ -184,13 +179,6 @@ export class GatewayNode extends SNode implements Nameable, WithEditableLabel {
 			'documentation': this.documentation ? this.documentation : ''
 		};
 	}
-
-	/*
-	 * Returns the BPMN anchorCompute Kind for BPMN Elements
-	 */
-	get anchorKind(): string {
-		return BPMN_ELEMENT_ANCHOR_KIND;
-	}
 }
 
 export namespace GatewayNode {
@@ -216,6 +204,27 @@ export function isEventNode(element: SModelElement): element is EventNode {
 
 export function isGatewayNode(element: SModelElement): element is GatewayNode {
 	return element instanceof GatewayNode || false;
+}
+
+/**
+ * The BPMNPort extends teh SPort and disables the selected feature and adds the
+ * BPMN_ELEMENT_ANCHOR_KIND.
+ * A Port is a connection point for edges. It should always be contained in an SNode.
+ */
+export class BPMNPort extends SPort implements Fadeable, Hoverable {
+    static readonly DEFAULT_FEATURES = [connectableFeature, boundsFeature, fadeFeature,
+        hoverFeedbackFeature];
+
+    // selected: boolean = false;
+    hoverFeedback = false;
+    opacity = 1;
+
+	/*
+	* Returns the BPMN anchorCompute Kind for BPMN Elements
+	*/
+	get anchorKind(): string {
+		return BPMN_ELEMENT_ANCHOR_KIND;
+	}
 }
 
 export class SequenceFlow extends SEdge {

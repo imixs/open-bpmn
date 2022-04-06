@@ -63,6 +63,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK_NODE);
 
         mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY_NODE);
+        mappings.put(ModelTypes.GATEWAY_PORT, GraphPackage.Literals.GPORT);
 
         mappings.put(ModelTypes.EVENT, BpmngraphPackage.Literals.EVENT_NODE);
         mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
@@ -107,10 +108,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));
-
-        // TODO ??
-        // nodeHints.add(new ShapeTypeHint(ModelTypes.PORT, false, false, false,
-        // false));
 
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
 
@@ -157,8 +154,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
                 ModelTypes.SCRIPT_TASK, //
                 ModelTypes.SEND_TASK, //
                 ModelTypes.SERVICE_TASK, //
-                ModelTypes.EXCLUSIVE_GATEWAY, //
-                ModelTypes.INCLUSIVE_GATEWAY, //
                 ModelTypes.EVENT_PORT));
 
         sequenceFlowHint.setTargetElementTypeIds(Arrays.asList(//
@@ -166,8 +161,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
                 ModelTypes.SCRIPT_TASK, //
                 ModelTypes.SEND_TASK, //
                 ModelTypes.SERVICE_TASK, //
-                ModelTypes.EXCLUSIVE_GATEWAY, //
-                ModelTypes.INCLUSIVE_GATEWAY, //
                 ModelTypes.EVENT_PORT));
 
         edgeHints.add(sequenceFlowHint);

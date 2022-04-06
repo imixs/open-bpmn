@@ -25,13 +25,11 @@ import {
     overrideViewerOptions,
     RevealNamedElementActionProvider,
     RoundedCornerNodeView,
-    CircularNodeView,
+    RectangularNodeView,
     SCompartment,
     SCompartmentView,
     SLabel,
     SLabelView,
-    SPort,
-    selectFeature,
     StructureCompartmentView,
     TYPES
 } from '@eclipse-glsp/client';
@@ -47,10 +45,9 @@ import {
 	TaskNode,
 	EventNode,
 	SequenceFlow,
-	BPMNSequenceFlowAnchor,
 	BPMNElementAnchor,
-	BPMNPolylineEventAnchor,
-	BPMNEventElementAnchor
+	BPMNPolylineElementAnchor,
+	BPMNPort
 } from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
@@ -66,10 +63,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
-    bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
+    bind(TYPES.IAnchorComputer).to(BPMNPolylineElementAnchor).inSingletonScope();
 
-    bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
-    bind(TYPES.IAnchorComputer).to(BPMNPolylineEventAnchor).inSingletonScope();
+    // bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
+    // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
 
     const context = { bind, unbind, isBound, rebind };
 
@@ -82,7 +79,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'event:start', EventNode, EventNodeView);
     configureModelElement(context, 'event:end', EventNode, EventNodeView);
-	configureModelElement(context, 'event:port', SPort, CircularNodeView, { disable: [selectFeature] });
+	configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
+	// configureModelElement(context, 'event:port', SPort, RectangularNodeView, { disable: [selectFeature] });
 
     configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'gateway:inclusive', GatewayNode, GatewayNodeView);
