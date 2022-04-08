@@ -1,9 +1,9 @@
 {
   "private": "true",
   "name": "@open-bpmn/open-bpmn-model",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
-    "@eclipse-glsp/client": "0.9.0"
+    "@eclipse-glsp/client": "0.10.0-next.385713d.170"
   },  
   "scripts": {
     "prepare": "yarn clean && yarn build && yarn lint",

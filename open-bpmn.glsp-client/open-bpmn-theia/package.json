@@ -1,7 +1,7 @@
 {
   "private": "true",
   "name": "@open-bpmn/open-bpmn-theia",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Theia extension for the BPMN GLSP Client",
   "license": "(GPL-3.0)",
   "keywords": [
@@ -27,9 +27,9 @@
     "src"
   ],
   "dependencies": {
-    "@open-bpmn/open-bpmn-glsp": "0.0.8",
-    "@eclipse-glsp/theia-integration": "0.9.0",
-    "@eclipse-glsp/client": "0.9.0"
+    "@open-bpmn/open-bpmn-glsp": "0.0.9",
+    "@eclipse-glsp/theia-integration": "0.10.0-next.a2c1ac1.122",
+    "@eclipse-glsp/client": "0.10.0-next.385713d.170"
   },
   "scripts": {
     "prepare": "yarn  clean && yarn build && yarn lint",

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { getPort } from '@eclipse-glsp/protocol';
+// import { getPort } from '@eclipse-glsp/protocol';
 import { JavaSocketServerContribution, JavaSocketServerLaunchOptions } from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from '@theia/core/shared/inversify';
 import { join, resolve } from 'path';
@@ -23,7 +23,7 @@ export const DEFAULT_PORT = 5007;
 export const PORT_ARG_KEY = 'GLSP_PORT';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
-    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-0.0.8-SNAPSHOT-glsp.jar')
+    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-0.0.9-SNAPSHOT-glsp.jar')
 );
 
 @injectable()
@@ -35,7 +35,7 @@ export class BPMNGLSPServerContribution extends JavaSocketServerContribution {
             jarPath: JAR_FILE,
             additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],
             socketConnectionOptions: {
-                port: getPort(PORT_ARG_KEY, DEFAULT_PORT)
+                port: 5007
             }
         };
     }

@@ -1,10 +1,10 @@
 {
   "private": "true",
   "name": "@open-bpmn/open-bpmn-properties",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "dependencies": {
-    "@eclipse-glsp/client": "0.9.0",
-    "@open-bpmn/open-bpmn-model": "0.0.8",
+    "@eclipse-glsp/client": "0.10.0-next.385713d.170",
+    "@open-bpmn/open-bpmn-model": "0.0.9",
     "@jsonforms/core": "3.0.0-beta.0",
     "@jsonforms/react": "3.0.0-beta.0",
     "@jsonforms/vanilla-renderers": "3.0.0-beta.0",

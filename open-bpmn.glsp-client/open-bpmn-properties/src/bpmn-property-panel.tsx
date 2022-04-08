@@ -150,7 +150,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	protected onClickResizePanel(button: HTMLElement, toolId?: string) {
 		return (_ev: MouseEvent) => {
 			if (!this.editorContext.isReadonly) {
-				const action = toolId ? new EnableToolsAction([toolId]) : new EnableDefaultToolsAction();
+				const action = toolId ? EnableToolsAction.create([toolId]) : EnableDefaultToolsAction.create();
 				this.actionDispatcher.dispatch(action);
 				if (toolId === 'TOOL_COMMAND_MINIMIZE') {
 					this.containerElement.style.height = '33.333%';
@@ -162,14 +162,15 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					this.containerElement.style.height = '25px';
 				}
 				// restore the defautl actions in the diagram panel (like move elements)
-				this.actionDispatcher.dispatch(new EnableDefaultToolsAction());
+				this.actionDispatcher.dispatch(EnableDefaultToolsAction.create());
 			}
 		};
 	}
 
 	editModeChanged(_oldValue: string, _newValue: string): void {
 		console.log('...bin in editModeChanged: ' + _newValue);
-		this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
+		// this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
+		this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({extensionId:BPMNPropertyPanel.ID, visible:!this.editorContext.isReadonly}));
 	}
 
 	/*
