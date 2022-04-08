@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-// import { getPort } from '@eclipse-glsp/protocol';
+import {getPort} from '@eclipse-glsp/theia-integration/lib/node';
 import { JavaSocketServerContribution, JavaSocketServerLaunchOptions } from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from '@theia/core/shared/inversify';
 import { join, resolve } from 'path';
@@ -35,7 +35,7 @@ export class BPMNGLSPServerContribution extends JavaSocketServerContribution {
             jarPath: JAR_FILE,
             additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],
             socketConnectionOptions: {
-                port: 5007
+                port: getPort(PORT_ARG_KEY, DEFAULT_PORT)
             }
         };
     }
