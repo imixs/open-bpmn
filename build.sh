@@ -47,7 +47,7 @@ done
 [[ "$buildAll" == "true" ]] && echo "  building Backend and Frontend"
 [[ "$buildBackend" == "true" ]] && echo "  building Backend Only (-b)"
 [[ "$buildFrontend" == "true" ]] && echo "  building Frontend Only (-f)"
-[[ "$forceFrontend" == "true" ]] && echo "  building Frontend only and remove yarn.lock (-ff)"
+[[ "$forceFrontend" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-ff)"
 
 if [ "$buildAll" == "true" ]; then
   echo "$(date +"[%T.%3N]") Build backend products"
@@ -66,9 +66,8 @@ if [ "$buildBackend" == "true" ]; then
 fi
 
 if [ "$forceFrontend" == "true" ]; then
-  cd open-bpmn.glsp-client/
-  rm -f ./yarn.lock
-  cd ..
+  # clean up gitignore files
+  git clean -xdf
 fi
 
 if [ "$buildFrontend" == "true" ]; then
