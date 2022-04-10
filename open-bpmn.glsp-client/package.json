@@ -51,6 +51,8 @@
   ],
 
   "resolutions": {
+    "**/@eclipse-glsp/theia-integration": "0.10.0-next.a2c1ac1.122",
+    "**/@eclipse-glsp/client": "0.10.0-next.385713d.170",  
     "**/@theia/core": "1.20.0",
     "**/@theia/editor": "1.20.0",
     "**/@theia/filesystem": "1.20.0",

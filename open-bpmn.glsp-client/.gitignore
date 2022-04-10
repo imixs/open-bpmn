@@ -34,7 +34,7 @@ buildNumber.properties
 node_modules
 node_modules/.yarn-integrity
 .browser_modules
-yarn.lock
+# yarn.lock - no good idea
 lib
 
 *.log
