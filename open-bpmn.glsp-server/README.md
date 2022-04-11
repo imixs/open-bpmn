@@ -2,9 +2,9 @@
 
 This is the Imixs BPMN GLSP Server module used by the Imixs BPMN Client modules. 
 
-## Building the Workflow Diagram example server
+## Building the Open BPMN server
 
-To build the server run 
+To build the server part of Open BPMN run the maven command:
 
 	$ mvn clean verify -Pm2 -Pfatjar
 
@@ -15,4 +15,10 @@ From the /target/ folder you can now start the server by executing the following
 	$ cd target
 	$ java -jar open-bpmn.server-0.0.9-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
 
+## Build & Run
 
+During development you can use the 'build' script to build & run the backend in a separat task. This gives you more control as the server can be rebuild and started independent from your Client components. 
+
+To build and start the GLSP Server only, run:
+
+	$ ./build.sh -b

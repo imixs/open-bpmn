@@ -24,7 +24,7 @@ The Application can be started from a Web Browser
 
 ## Locally build for Development
 
-Durign development you can run the frontend and backend in separate tasks. This gives you more control over the CLient and the Backend Component. 
+During development you can run the frontend and backend in separate tasks. This gives you more control over the CLient and the Backend Component. 
 
 To start the GLSP Server only, run:
 
@@ -37,6 +37,8 @@ To start the GLSP Client only, run:
 With the option `-ff` you can force a full rebuild of the client components. This option will remove the yarn.lock file. 
 
 	$ ./build.sh -ff
+	
+You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
 
 # BPMN 2.0
 
