@@ -51,7 +51,7 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-import { BPMNHelperLine, HelpLineNode, HelpLineView } from './bpmn-helperlines';
+import { BPMNMouseListener } from './bpmn-helperlines';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 
@@ -63,8 +63,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
 	// bpmn helper lines
-	bind(BPMNHelperLine).toSelf().inSingletonScope();
-    bind(TYPES.IUIExtension).toService(BPMNHelperLine);
+	// bind(BPMNHelperLine).toSelf().inSingletonScope();
+    // bind(TYPES.IUIExtension).toService(BPMNHelperLine);
+    bind(TYPES.MouseListener).to(BPMNMouseListener);
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
@@ -102,7 +103,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
 
-    configureModelElement(context, 'helpline', HelpLineNode, HelpLineView);
+    // configureModelElement(context, 'helpline', HelpLineNode, HelpLineView);
+
+    
+    /*this.bpmnMouseListener = new BPMNMouseListener();
+		this.mouseTool.register(this.bpmnMouseListener);*/
 
 });
 
