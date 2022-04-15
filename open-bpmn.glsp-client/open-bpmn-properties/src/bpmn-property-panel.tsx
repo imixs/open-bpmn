@@ -170,7 +170,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	editModeChanged(_oldValue: string, _newValue: string): void {
 		console.log('...bin in editModeChanged: ' + _newValue);
 		// this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
-		this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({extensionId:BPMNPropertyPanel.ID, visible:!this.editorContext.isReadonly}));
+		this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly }));
 	}
 
 	/*
@@ -180,7 +180,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
 		if (this.selectionService.isSingleSelection()) {
 			// because the jsonFomrs send a onchange event after init we mark this state here
-			this.initForm=true;
+			this.initForm = true;
 			console.log('======== > selection change  received:', root, selectedElements);
 			const element = root.index.getById(selectedElements[0]);
 			if (element) {
@@ -238,25 +238,29 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				}
 			} else {
 				// element not defined!
-				this.selectedElementId='';
+				this.selectedElementId = '';
 			}
 		} else {
 			// no single element selected!
-			this.selectedElementId='';
+			this.selectedElementId = '';
 			if (!this.selectionService.hasSelectedElements()) {
 				// show an empty pane (or later the process panel)
-				console.log('.... no element selected');
-				ReactDOM.render(
-					<React.Fragment>Please select an element </React.Fragment>,
-					this.bodyDiv
-				);
+				console.log('.... BPMNPropertyPanel - no element selected');
+				if (this.bodyDiv) {
+					ReactDOM.render(
+						<React.Fragment>Please select an element </React.Fragment>,
+						this.bodyDiv
+					);
+				}
 			} else {
 				// multi selection - we can not show a property panel
-				console.log('.... multiple elements selected');
-				ReactDOM.render(
-					<React.Fragment>Please select a single element </React.Fragment>,
-					this.bodyDiv
-				);
+				console.log('.... BPMNPropertyPanel - multiple elements selected');
+				if (this.bodyDiv) {
+					ReactDOM.render(
+						<React.Fragment>Please select a single element </React.Fragment>,
+						this.bodyDiv
+					);
+				}
 			}
 		}
 	}
@@ -268,14 +272,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		if (this.initForm) {
 			// we ignore the first onChange event
 			// see https://jsonforms.io/docs/integrations/react/#onchange
-			this.initForm=false;
+			this.initForm = false;
 			return;
 		}
 		console.log('...entered setState with new event data: ' + _newData.data.name);
 		console.log('...die current id=' + this.selectedElementId);
 
-		const newJsonData=JSON.stringify(_newData.data);
-		console.log('...json='+newJsonData);
+		const newJsonData = JSON.stringify(_newData.data);
+		console.log('...json=' + newJsonData);
 		const action = new ApplyEventUpdateOperation(this.selectedElementId, newJsonData);
 		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'name:' + _newData.data.name);
 		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'documentation:' + _newData.data.documentation);
