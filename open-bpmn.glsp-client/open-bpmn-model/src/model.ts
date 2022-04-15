@@ -41,7 +41,7 @@ import {
 	Fadeable, Hoverable,SPort
 } from '@eclipse-glsp/client';
 
-import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
+// import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
 	static readonly DEFAULT_FEATURES = [
@@ -88,9 +88,9 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 	/*
 	 * Returns the BPMN anchorCompute Kind for GatewayNodes
 	 */
-	get anchorKind(): string {
+	/*get anchorKind(): string {
 		return BPMN_ELEMENT_ANCHOR_KIND;
-	}
+	}*/
 }
 
 /* CircularNode RectangularNode */
@@ -222,9 +222,9 @@ export class BPMNPort extends SPort implements Fadeable, Hoverable {
 	/*
 	* Returns the BPMN anchorCompute Kind for BPMN Elements
 	*/
-	get anchorKind(): string {
+	/*get anchorKind(): string {
 		return BPMN_ELEMENT_ANCHOR_KIND;
-	}
+	}*/
 }
 
 export class SequenceFlow extends SEdge {
@@ -233,9 +233,9 @@ export class SequenceFlow extends SEdge {
 	/*
 	* Returns the BPMN anchorCompute Kind for BPMN Elements
 	*/
-	get anchorKind(): string {
+	/*get anchorKind(): string {
 		return BPMN_ELEMENT_ANCHOR_KIND;
-	}
+	}*/
 }
 
 export class Icon extends SShapeElement implements LayoutContainer {

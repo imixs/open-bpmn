@@ -20,13 +20,10 @@
  */
 import { injectable } from 'inversify';
 import {
-	Bounds,
-	Point,
-	center,includes,almostEquals,
-	ManhattanEdgeRouter,
-	SConnectableElement,RectangleAnchor,PolylineEdgeRouter,
-	IAnchorComputer
-} from 'sprotty';
+	ManhattanEdgeRouter,IAnchorComputer,SConnectableElement,PolylineEdgeRouter,
+	Bounds,almostEquals,
+	Point
+} from '@eclipse-glsp/client';
 
 export const BPMN_ELEMENT_ANCHOR_KIND = 'bpmn-element';
 
@@ -42,12 +39,11 @@ export class BPMNElementAnchor implements IAnchorComputer {
 
 	static KIND = ManhattanEdgeRouter.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
 
-	get kind(): string {
-		return BPMNElementAnchor.KIND;
-	}
+    get kind(): string {
+        return BPMNElementAnchor.KIND;
+    }
 
     getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
-		console.log('...bin in neuer BPMNElementAnchor methode..');
         const b = connectable.bounds;
         if (b.width <= 0 || b.height <= 0) {
             return b;
@@ -70,166 +66,22 @@ export class BPMNElementAnchor implements IAnchorComputer {
             else
             return { x: bounds.x + bounds.width, y: refPoint.y };
         }
-        return center(bounds);
+        return Bounds.center(bounds);
     }
 }
 
-@injectable()
-export class BPMNElementAnchorNew implements IAnchorComputer {
-
-	static KIND = ManhattanEdgeRouter.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
-
-	get kind(): string {
-		return BPMNElementAnchorNew.KIND;
-	}
-
-	getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
-		const b = connectable.bounds;
-		if (b.width <= 0 || b.height <= 0) {
-			return b;
-		}
-
-		const bounds: Bounds = {
-			x: b.x - offset,
-			y: b.y - offset,
-			width: b.width + 2 * offset,
-			height: b.height + 2 * offset
-		};
-		console.log('...BPMNElementAnchor refPoint= ' + refPoint.x + ',' + refPoint.y + ' bounds x=' + bounds.x + ' y=' + bounds.y + ' w=' + bounds.width + ' h=' + bounds.height);
-
-		/*
-		 * The refPoint is between west and east
-		 */
-		if (refPoint.x >= bounds.x && bounds.x + bounds.width >= refPoint.x) {
-			if (refPoint.y < bounds.y + 0.5 * bounds.height) {
-				// north
-				return { x: bounds.x + 0.5 * bounds.width, y: bounds.y };
-			}
-			else {
-				// south
-				return { x: bounds.x + 0.5 * bounds.width, y: bounds.y + bounds.height };
-			}
-		}
-		/*
-		 * The refPoint is between north and south
-		 */
-		if (refPoint.y >= bounds.y && bounds.y + bounds.height >= refPoint.y) {
-			if (refPoint.x < bounds.x + 0.5 * bounds.width) {
-				// west
-				return { x: bounds.x, y: bounds.y + 0.5 * bounds.height };
-			}
-			else {
-				// east
-				return { x: bounds.x + bounds.width, y: bounds.y + 0.5 * bounds.height };
-			}
-		}
-		// default....
-		console.warn('... -> default to center!');
-		return center(bounds);
-	}
-}
 
 @injectable()
 export class BPMNPolylineElementAnchor implements IAnchorComputer {
 
-	static readonly KIND = 'polyline';
-
-    get kind(): string {
-        return BPMNPolylineElementAnchor.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
-    }
-
-    /**
-     * Compute an anchor position for routing an edge towards this element.
-     *
-     * The default implementation returns the element's center point. If edges should be connected
-     * differently, e.g. to some point on the boundary of the element's view, the according computation
-     * should be implemented in a subclass by overriding this method.
-     *
-     * @param connectable The node or port an edge should be connected to.
-     * @param referencePoint The point from which the edge is routed towards this elemet, in the same
-     *                       coordintae system as the connectable.
-     * @param offset An optional offset value to be considered in the anchor computation;
-     *               positive values should shift the anchor away from this element, negative values
-     *               should shift the anchor more to the inside. Use this to adapt ot arrow heads.
-     */
-	getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
-		const b = connectable.bounds;
-		if (b.width <= 0 || b.height <= 0) {
-			console.warn('... bounds width is <=0!!!');
-			return b;
-		}
-
-		if (b.x === undefined || isNaN(b.x)) {
-			return refPoint;
-		}
-
-		console.log(' bound b.x='+b.x);
-
-		const bounds: Bounds = {
-			x: b.x - offset,
-			y: b.y - offset,
-			width: b.width + 2 * offset,
-			height: b.height + 2 * offset
-		};
-
-		if (isNaN(bounds.x )) {
-			console.warn('... case 1');
-			return refPoint;
-		}
-
-		console.log('...BPMNPolylineElementAnchor elementID=' + connectable.id + ' refPoint= ' + refPoint.x + ',' + refPoint.y + ' bounds x=' + bounds.x + ' y=' + bounds.y + ' w=' + bounds.width + ' h=' + bounds.height);
-
-        /*
-         * Checks whether the refPoint is included in the element bounds?
-         * Than we return the center of the element
-         */
-        if (includes(bounds,refPoint)) {
-			return center(bounds);
-		}
-
-		/*
-		 * The refPoint is between west and east
-		 */
-		if (refPoint.x >= bounds.x && bounds.x + bounds.width >= refPoint.x) {
-			if (refPoint.y < bounds.y + 0.5 * bounds.height) {
-				// north
-				return { x: bounds.x + 0.5 * bounds.width, y: bounds.y };
-			}
-			else {
-				// south
-				return { x: bounds.x + 0.5 * bounds.width, y: bounds.y + bounds.height };
-			}
-		}
-		/*
-		 * The refPoint is between north and south
-		 */
-		if (refPoint.y >= bounds.y && bounds.y + bounds.height >= refPoint.y) {
-			if (refPoint.x < bounds.x + 0.5 * bounds.width) {
-				// west
-				return { x: bounds.x, y: bounds.y + 0.5 * bounds.height };
-			}
-			else {
-				// east
-				return { x: bounds.x + bounds.width, y: bounds.y + 0.5 * bounds.height };
-			}
-		}
-		// default....
-		console.warn('... -> default to center!');
-		return center(bounds);
-	}
-}
-
-@injectable()
-export class BPMNPolylineElementAnchorNew extends  RectangleAnchor {
 
     get kind(): string {
         return PolylineEdgeRouter.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
     }
 
-    getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
-		console.log('...bin in neuer PolylineAnchor methode..');
-        const bounds: any= connectable.bounds;
-        const c: any = center(bounds);
+    getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number ): Point {
+        const bounds = connectable.bounds;
+        const c = Bounds.center(bounds);
         const finder = new NearestPointFinder(c, refPoint);
         if (!almostEquals(c.y, refPoint.y)) {
             const xTop = this.getXIntersection(bounds.y, c, refPoint);
@@ -259,6 +111,7 @@ export class BPMNPolylineElementAnchorNew extends  RectangleAnchor {
         const t = (xIntersection - centerPoint.x) / (point.x - centerPoint.x);
         return (point.y - centerPoint.y) * t + centerPoint.y;
     }
+
 }
 
 class NearestPointFinder {
