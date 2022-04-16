@@ -51,7 +51,7 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-import { BPMNMouseListener } from './bpmn-helperlines';
+import { BPMNHelperLineTool } from './bpmn-helperlines';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 
@@ -65,7 +65,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 	// bpmn helper lines
 	// bind(BPMNHelperLine).toSelf().inSingletonScope();
     // bind(TYPES.IUIExtension).toService(BPMNHelperLine);
-    bind(TYPES.MouseListener).to(BPMNMouseListener);
+    bind(TYPES.MouseListener).to(BPMNHelperLineTool);
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
