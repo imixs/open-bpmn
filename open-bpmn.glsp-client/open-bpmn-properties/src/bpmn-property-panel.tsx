@@ -245,7 +245,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			this.selectedElementId = '';
 			if (!this.selectionService.hasSelectedElements()) {
 				// show an empty pane (or later the process panel)
-				console.log('.... BPMNPropertyPanel - no element selected');
+				console.log('.... BPMNPropertyPanel - no element selected -');
 				if (this.bodyDiv) {
 					ReactDOM.render(
 						<React.Fragment>Please select an element </React.Fragment>,
@@ -254,7 +254,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				}
 			} else {
 				// multi selection - we can not show a property panel
-				console.log('.... BPMNPropertyPanel - multiple elements selected');
+				console.log('.... BPMNPropertyPanel - multiple elements selected -');
 				if (this.bodyDiv) {
 					ReactDOM.render(
 						<React.Fragment>Please select a single element </React.Fragment>,

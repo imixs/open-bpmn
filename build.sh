@@ -4,14 +4,16 @@ echo "* Build - Open BPMN.....              *"
 buildAll='false'
 buildBackend='false'
 buildFrontend='false'
+rebuildFrontend='false'
 forceFrontend='false'
 
 if [[ $1 == "-h" ]]; then
-  printf "Usage: build.sh [-h] [-b] [-ff] [-f]\n\n"
+  printf "Usage: build.sh [-h] [-b] [-ff] [-f] [-r]\n\n"
   echo "Options:"
   echo "  -b   building Backend..."
   echo "  -ff  remove yarn.lock..."
   echo "  -f   building Frontend..."
+  echo "  -r   rebuilding Frontend..."
   exit 0
 fi
 echo "***************************************"
@@ -27,6 +29,9 @@ if [[ ${#1} -gt 2 ]]; then
   if [[ "$1" == -*"f"* ]]; then
     buildFrontend='true'
   fi
+  if [[ "$1" == -*"r"* ]]; then
+    rebuildFrontend='true'
+  fi  
   if [[ "$1" == -*"ff"* ]]; then
     forceFrontend='true'
   fi
@@ -38,6 +43,8 @@ while [ "$1" != "" ]; do
                       ;;
     -f | --frontend ) buildFrontend='true'
                       ;;
+    -r | --frontend ) rebuildFrontend='true'
+                      ;;
     -ff | --forcefrontend ) forceFrontend='true'
                       ;;
   esac
@@ -47,6 +54,7 @@ done
 [[ "$buildAll" == "true" ]] && echo "  building Backend and Frontend"
 [[ "$buildBackend" == "true" ]] && echo "  building Backend Only (-b)"
 [[ "$buildFrontend" == "true" ]] && echo "  building Frontend Only (-f)"
+[[ "$rebuildFrontend" == "true" ]] && echo "  rebuilding Frontend (-r)"
 [[ "$forceFrontend" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-ff)"
 
 if [ "$buildAll" == "true" ]; then
@@ -72,11 +80,16 @@ fi
 
 if [ "$buildFrontend" == "true" ]; then
   cd open-bpmn.glsp-client/
-  yarn
   yarn start:external
   cd ..
 fi
 
+if [ "$rebuildFrontend" == "true" ]; then
+  cd open-bpmn.glsp-client/
+  yarn
+  yarn start:external
+  cd ..
+fi
 
 if [ "$buildAll" == "true" ]; then
   cd open-bpmn.glsp-client/

@@ -30,7 +30,8 @@
     "simpleInstall": "yarn install --ignore-scripts",
     "rebuild:browser": "theia rebuild:browser",
     "start": "yarn rebuild:browser && yarn --cwd open-bpmn-app start",
-    "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
+    "start:external": "yarn build && yarn --cwd open-bpmn-app start:external",
+    "rebuild:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
   },
   "dependencies": {
     "@eclipse-glsp/client": "0.10.0-next.385713d.170"
