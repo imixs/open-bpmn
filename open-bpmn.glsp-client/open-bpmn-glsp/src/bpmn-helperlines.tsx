@@ -15,120 +15,115 @@
  ********************************************************************************/
 
 import {
-	Action,
-	MouseListener, SModelElement, SModelRoot
+	Action,SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp
 } from '@eclipse-glsp/client';
-import { injectable } from 'inversify';
-import { getAbsoluteBounds, isBoundsAware } from 'sprotty';
+import { inject, injectable } from 'inversify';
+import {
+	isBoundsAware, isSelectable,
+	SNode,SChildElement,
+	CommandExecutionContext,
+	CommandReturn,
+	svg, IView, RenderingContext,
+	TYPES
+} from 'sprotty';
+import { VNode } from 'snabbdom';
 import { Bounds, Point } from 'sprotty-protocol';
-
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-// const JSX = { createElement: svg };
+const JSX = { createElement: svg };
+
 /****************************************************************************
  * This module extends the mouseListener to support helper lines. 
  * HelperLines are displayed when a element is selected and draged on the diagram pane.
  * 
- * If the moved element is alligned to the center of another elemen ton the diagram
- * the helper line is shown. There are two helperlines - north-south and west-east
+ * If the moved element is alligned to the center of another element on the diagram
+ * the helper line is shown. There are can be up to 4 helperlines be displayed
+ * - north -south -west -east
  ****************************************************************************/
 @injectable()
-export class BPMNHelperLineTool extends MouseListener {
-	private _isMouseDown = false;
-	private helperLineWestEast: any;
-	private helperLineNorthSouth: any;
+export class HelperLineListener extends MouseListener {
+	protected previouslySelected: string[];
+	protected isActive = false;
+	protected dreck: Point;
 
 	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
-		this._isMouseDown = true;
-		return [];
-	}
-	mouseUp(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
-		this._isMouseDown = false;
-		// remove old helper lines
-		this.deleteHelperLines();
+		// check if target is relevant....
+		if (isSelectable(target) && target instanceof SNode) {
+			// switch into active mode
+			this.isActive = true;
+		} else {
+			this.isActive = false;
+		}
 		return [];
 	}
 
 	/**
-	 * We are only interested in DragMode - mouseDown and element selected!
-	 **/
+	 * This method acts on a mouseMove if a element is selected (isActive==true).
+	 * The method computes alligned element in the diagram and fires the corresponding
+	 * command to show the helper lines.
+	 */
 	override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
-		if (this.isMouseDown && target) {
+		//this.marqueeUtil.updateCurrentPoint(getAbsolutePosition(target, event));
+		if (this.isActive && isBoundsAware(target)) {
+			// const nodeIdsSelected = this.nodes.filter(e => this.marqueeUtil.isNodeMarked(toAbsoluteBounds(e))).map(e => e.id);
+			// const selected = nodeIdsSelected.concat(edgeIdsSelected);
 
-			// do we have a node element selected...?
-			// TODO this question is not as exactly as it should be!
-			const targetBounds = getAbsoluteBounds(target);
-			if (targetBounds && targetBounds.x > 0) {
-				console.log('.... bounds target: x=' + targetBounds.x + " y=" + targetBounds.y + '  id=' + target.id);
-				const targetElement = document.querySelector('[id$="' + target.id + '"]')
-				// const targetElement = event.target instanceof SVGElement ? event.target : undefined;
-				const svgParentElement = targetElement?.closest('svg');
-				if (svgParentElement) {
-					// console.log('... svg Element found id=' + svgParentElement.id);
-
-					const allignedCenterPoint: Point | undefined = this.findFittingElement(target);
-					if (allignedCenterPoint) {
-						this.initHelperLines(svgParentElement);
-						const modelElementCenter = Bounds.center(targetBounds);
-						console.log(' model center point x='+modelElementCenter.x + ' y='+modelElementCenter.y);	
-						console.log(' allignment   point x='+allignedCenterPoint.x + ' y='+allignedCenterPoint.y);	
-						this.helperLineWestEast.setAttribute('id', svgParentElement.id + '_bpmn_helperline_west-east');
-						this.helperLineWestEast.setAttribute('x1', '' + modelElementCenter.x);
-						this.helperLineWestEast.setAttribute('y1', '' + modelElementCenter.y);
-						this.helperLineWestEast.setAttribute('x2', '' + allignedCenterPoint.x);
-						this.helperLineWestEast.setAttribute('y2', '' + allignedCenterPoint.y);
-						this.helperLineWestEast.setAttribute("stroke", "green");
-					} else {
-						this.deleteHelperLines();
-					}
-
-					console.log('line completed');
-				} else {
-					console.log('problem no svg element found');
-				}
+			// const targetBounds = getAbsoluteBounds(target);
+			// const elementCenter = Bounds.center(getAbsoluteBounds(target));
+			const elementCenter = Bounds.center(target.bounds);
+			console.log(' ===> mouseMove  target center bounds : x=' + elementCenter.x + " y=" + elementCenter.y + '  id=' + target.id);
+			const allignedCenterPoint: Point | undefined = this.findFittingElement(target);
+			if (allignedCenterPoint) {
+				console.log(' ===> found match x=' + allignedCenterPoint.x + ' y='+allignedCenterPoint.y);
+				return [DrawHelperLinesAction.create({ startPoint: elementCenter, endPoint: allignedCenterPoint })];
+			} else {
+				// now match! remove helper lines...
+				console.log('...create RemoveHelperLinesAction .....');
+				return [RemoveHelperLinesAction.create()];
 			}
 		}
 		return [];
 	}
 
-	get isMouseDown(): boolean {
-		return this._isMouseDown;
+	/*
+	 * On the mouseUp event we end the active mode and
+	 * remove the HelperLines from the model
+	 */
+	override mouseUp(target: SModelElement, event: MouseEvent): Action[] {
+		this.isActive = false;
+		return [RemoveHelperLinesAction.create()]; //  EnableDefaultToolsAction.create()
 	}
-
 
 	/*
 	 * This helper method searches the model for a model element
 	 * fitting the alligment of the given modelElement.
-	 * 
+	 *
 	 * A ModelElement is a alligned to another element if its center point
-	 * on the same x or y axis. 
+	 * on the same x or y axis.
+	 *
 	 * If more than one elment fits the alligment of the given Element
-	 * the method returns the neares one. 
+	 * the method returns the the farthest one.
 	 */
 	private findFittingElement(modelElement: SModelElement): Point | undefined {
 		const root: SModelRoot = modelElement.root;
 		if (root && isBoundsAware(modelElement)) {
-
-			//const modelElementCenter = Bounds.center(modelElement.bounds);
-			const modelElementCenter = Bounds.center(getAbsoluteBounds(modelElement));
-			
 			const childs = root.children;
-			// iterate over all model elements
-
+			const modelElementCenter = Bounds.center(modelElement.bounds);
+			console.log(' ===> findFitting dragedElement center x='+modelElementCenter.x + 'y='+modelElementCenter.y);
+			// In the following we iterate over all model elements
+			// and compare the x and y axis of the center points 
 			for (const element of childs) {
 				if (element.id !== modelElement.id) {
 					if (isBoundsAware(element)) {
-						//const elementCenter = Bounds.center(element.bounds);
-						const elementCenter = Bounds.center(getAbsoluteBounds(element));
-						
+						const elementCenter = Bounds.center(element.bounds);
+						console.log(' ===> findFitting check absolut ID=' + element.id + ' x='+elementCenter.x + " y="+elementCenter.y);
 						// test vertical alligment...
 						if (elementCenter.y === modelElementCenter.y) {
-							console.log('found y-center point x=' + elementCenter.x + ' y=' + elementCenter.y + ' (element x=' + element.bounds.x+' y='+element.bounds.y+')');
-							console.log('        modelElement x=' + modelElement.bounds.x + ' y=' + modelElement.bounds.y);
+							console.log(' ===> findFitting found y-center point x=' + elementCenter.x + ' y=' + elementCenter.y + ' (element x=' + element.bounds.x + ' y=' + element.bounds.y + ')');
 							return elementCenter;
 						}
 						// test horizontal alligment...
 						if (elementCenter.x === modelElementCenter.x) {
-							console.log('found x-center point x=' + elementCenter.x + ' y=' + elementCenter.y+ ' (element x=' + element.bounds.x+' y='+element.bounds.y+')');
+							console.log(' ===> findFitting found y-center point x=' + elementCenter.x + ' y=' + elementCenter.y + ' (element x=' + element.bounds.x + ' y=' + element.bounds.y + ')');
 							return elementCenter;
 						}
 					}
@@ -137,33 +132,118 @@ export class BPMNHelperLineTool extends MouseListener {
 		}
 		return undefined;
 	}
+}
 
-	/**
-	 * This is a helper method that initalizes the helper lines and 
-	 * adds the lines into the diagram panel
-	 */
-	private initHelperLines(svgParentElement: any) {
-		if (!this.helperLineWestEast) {
-			this.helperLineWestEast = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-			svgParentElement.appendChild(this.helperLineWestEast);
-		}
-		if (!this.helperLineNorthSouth) {
-			this.helperLineNorthSouth = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-			svgParentElement.appendChild(this.helperLineNorthSouth);
-		}
+export const HELPLINE = 'helpline';
+
+export function helpLineId(root: SModelRoot): string {
+	return root.id + '_' + HELPLINE;
+}
+
+/**
+ * DrawHelperLines Action
+ * 
+ */
+export interface DrawHelperLinesAction extends Action {
+	kind: typeof DrawHelperLinesAction.KIND;
+	startPoint: Point;
+	endPoint: Point;
+}
+export namespace DrawHelperLinesAction {
+	export const KIND = 'drawHelperLines';
+
+	export function is(object: any): object is DrawHelperLinesAction {
+		return Action.hasKind(object, KIND) && hasObjectProp(object, 'startPoint') && hasObjectProp(object, 'endPoint');
 	}
 
-	/**
-	 * This is a helper method that removes the helper lines from the diagram panel
-	 */
-	private deleteHelperLines() {
-		if (this.helperLineWestEast) {
-			document.removeChild(this.helperLineWestEast);
-			this.helperLineWestEast = undefined;
-		}
-		if (this.helperLineNorthSouth) {
-			document.removeChild(this.helperLineNorthSouth);
-			this.helperLineNorthSouth = undefined;
-		}
+	export function create(options: { startPoint: Point; endPoint: Point }): DrawHelperLinesAction {
+		return {
+			kind: KIND,
+			...options
+		};
+	}
+}
+
+/*
+ * The HelperLinesCommand creates the HelperLine schema element 
+ * and adds it to the model.
+ */
+@injectable()
+export class DrawHelperLinesCommand extends FeedbackCommand {
+	static readonly KIND = DrawHelperLinesAction.KIND;
+
+	constructor(@inject(TYPES.Action) protected action: DrawHelperLinesAction) {
+		super();
+	}
+	execute(context: CommandExecutionContext): CommandReturn {
+		const root = context.root;
+		removeHelperLines(root);
+		// create new model schema
+		const helperLinesSchema = {
+			type: HELPLINE,
+			id: helpLineId(root),
+			startPoint: this.action.startPoint,
+			endPoint: this.action.endPoint
+		};
+		const helperLines = context.modelFactory.createElement(helperLinesSchema);
+		root.add(helperLines);
+		return context.root;
+	}
+}
+
+export interface RemoveHelperLinesAction extends Action {
+	kind: typeof RemoveHelperLinesAction.KIND;
+}
+
+export namespace RemoveHelperLinesAction {
+	export const KIND = 'removeHelperLines';
+	export function is(object: any): object is RemoveHelperLinesAction {
+		return Action.hasKind(object, KIND);
+	}
+	export function create(): RemoveHelperLinesAction {
+		return { kind: KIND };
+	}
+}
+
+/*
+ * HelperLine Command to remove the helperline form the model
+ * called when mouse move event ended
+ */
+@injectable()
+export class RemoveHelperLinesCommand extends FeedbackCommand {
+	static readonly KIND = RemoveHelperLinesAction.KIND;
+	execute(context: CommandExecutionContext): CommandReturn {
+		removeHelperLines(context.root);
+		return context.root;
+	}
+}
+
+/*
+ * Helper method to remove the HelperLine element 
+ * from the model.
+ */
+export function removeHelperLines(root: SModelRoot): void {
+	const helperLines = root.index.getById(helpLineId(root));
+	if (helperLines instanceof SChildElement) {
+		root.remove(helperLines);
+	}
+}
+
+/*
+ * The HelperLineView shows the helper lines
+ */
+@injectable()
+export class HelperLineView implements IView {
+	render(model: Readonly<SModelElement>, context: RenderingContext): VNode {
+		const startPoint: Point = (model as any).startPoint ?? Point.ORIGIN;
+		const endPoint: Point = (model as any).endPoint ?? Point.ORIGIN;
+		
+		const root=model.root;
+		const canvasBounds=root.canvasBounds;
+		console.log('==> canvasBounds x='+canvasBounds.x + ' width='+canvasBounds.width + ' y='+canvasBounds.y + ' height='+canvasBounds.height);
+		const vnode: any = (			
+			<line x1={startPoint.x} y1={startPoint.y} x2={endPoint.x} y2={endPoint.y} class-helper-line />
+		);
+		return vnode;
 	}
 }

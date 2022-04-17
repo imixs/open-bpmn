@@ -29,8 +29,8 @@ import {
     SCompartment,
     SCompartmentView,
     SLabel,
-    SLabelView,
-    StructureCompartmentView,
+    SLabelView,configureView,
+    StructureCompartmentView,configureCommand,
     TYPES
 } from '@eclipse-glsp/client';
 // import { DefaultTypes } from '@eclipse-glsp/protocol';
@@ -51,11 +51,13 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-import { BPMNHelperLineTool } from './bpmn-helperlines';
+import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView } from './bpmn-helperlines';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
+
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
     bind(TYPES.ISnapper).to(GridSnapper);
@@ -63,9 +65,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
 	// bpmn helper lines
-	// bind(BPMNHelperLine).toSelf().inSingletonScope();
-    // bind(TYPES.IUIExtension).toService(BPMNHelperLine);
-    bind(TYPES.MouseListener).to(BPMNHelperLineTool);
+    bind(TYPES.MouseListener).to(HelperLineListener);
+    configureCommand({ bind, isBound }, DrawHelperLinesCommand);
+    configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
+    configureView({ bind, isBound }, 'helpline', HelperLineView);
+    // configureModelElement(context, 'helpline', EventNode, HelperLineView);
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
@@ -74,7 +78,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
 
-    const context = { bind, unbind, isBound, rebind };
 
     configureDefaultModelElements(context);
     configureModelElement(context, 'task:manual', TaskNode, RoundedCornerNodeView);
@@ -102,12 +105,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
     configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
-
-    // configureModelElement(context, 'helpline', HelpLineNode, HelpLineView);
-
-    
-    /*this.bpmnMouseListener = new BPMNMouseListener();
-		this.mouseTool.register(this.bpmnMouseListener);*/
 
 });
 
