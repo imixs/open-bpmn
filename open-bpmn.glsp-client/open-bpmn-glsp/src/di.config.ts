@@ -69,7 +69,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureCommand({ bind, isBound }, DrawHelperLinesCommand);
     configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
     configureView({ bind, isBound }, 'helpline', HelperLineView);
-    // configureModelElement(context, 'helpline', EventNode, HelperLineView);
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
@@ -77,7 +76,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     // bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
-
 
     configureDefaultModelElements(context);
     configureModelElement(context, 'task:manual', TaskNode, RoundedCornerNodeView);
@@ -89,7 +87,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'event:start', EventNode, EventNodeView);
     configureModelElement(context, 'event:end', EventNode, EventNodeView);
 	configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
-	// configureModelElement(context, 'event:port', SPort, RectangularNodeView, { disable: [selectFeature] });
 
     configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'gateway:inclusive', GatewayNode, GatewayNodeView);

@@ -175,7 +175,7 @@ export class GatewayNodeView extends ShapeView {
 
 @injectable()
 export class EventNodeView extends ShapeView {
-	
+
 	render(element: EventNode, context: RenderingContext): VNode | undefined {
 		if (!this.isVisible(element, context)) {
 			return undefined;
