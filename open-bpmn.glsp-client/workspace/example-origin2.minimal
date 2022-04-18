@@ -2,19 +2,22 @@
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
     {
-      "name": "SendTask4",
-      "taskType": "unknown",
-      "id": "ec3647b9-2e66-4d2f-9f30-695b11f28adf",
+      "category": [
+        "script"
+      ],
+      "name": "ScriptTask0",
+      "documentation": "...some documentation....",
+      "id": "2d31f847-23c0-4711-8127-a5336e88e374",
       "cssClasses": [
         "task",
-        "manual"
+        "script"
       ],
       "children": [
         {
-          "id": "ec3647b9-2e66-4d2f-9f30-695b11f28adf_icon",
+          "id": "2d31f847-23c0-4711-8127-a5336e88e374_icon",
           "type": "icon",
           "position": {
-            "x": 100.0,
+            "x": 5.0,
             "y": 5.0
           },
           "size": {
@@ -23,64 +26,63 @@
           }
         },
         {
-          "id": "ec3647b9-2e66-4d2f-9f30-695b11f28adf_classname",
+          "id": "2d31f847-23c0-4711-8127-a5336e88e374_classname",
           "type": "label:heading",
           "position": {
-            "x": 77.7578125,
-            "y": 26.0
+            "x": 40.0,
+            "y": 7.0
           },
           "size": {
-            "width": 69.484375,
+            "width": 72.59375,
             "height": 16.0
           },
-          "text": "SendTask4",
+          "text": "ScriptTask0",
           "alignment": {
-            "x": 0.0,
+            "x": 36.1875,
             "y": 13.0
           }
         }
       ],
-      "type": "task:send",
+      "type": "task:script",
       "position": {
-        "x": 50.0,
-        "y": 60.0
+        "x": 280.0,
+        "y": 160.0
       },
       "size": {
-        "width": 230.0,
+        "width": 160.0,
         "height": 60.0
       },
-      "layout": "vbox",
+      "layout": "hbox",
       "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 230.0,
-        "minWidth": 160.0,
-        "hGrab": false,
-        "minHeight": 60.0,
-        "prefHeight": 60.0,
-        "paddingRight": 10.0,
-        "hAlign": "center"
+        "minWidth": 160,
+        "hGap": 10,
+        "vAlign": "center",
+        "minHeight": 60
       },
       "args": {
-        "radiusTopLeft": 5.0,
         "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
     },
     {
+      "category": [
+        "manual"
+      ],
       "name": "ManualTask1",
-      "taskType": "unknown",
-      "id": "906448a2-cdb3-4cf2-b749-0d3ad31a114a",
+      "documentation": "...some documentation....",
+      "id": "ccc0339d-df23-4a9a-8391-f18b893e13ce",
       "cssClasses": [
         "task",
         "manual"
       ],
       "children": [
         {
-          "id": "906448a2-cdb3-4cf2-b749-0d3ad31a114a_icon",
+          "id": "ccc0339d-df23-4a9a-8391-f18b893e13ce_icon",
           "type": "icon",
           "position": {
-            "x": 65.0,
+            "x": 5.0,
             "y": 5.0
           },
           "size": {
@@ -89,143 +91,47 @@
           }
         },
         {
-          "id": "906448a2-cdb3-4cf2-b749-0d3ad31a114a_classname",
+          "id": "ccc0339d-df23-4a9a-8391-f18b893e13ce_classname",
           "type": "label:heading",
           "position": {
-            "x": 36.1484375,
-            "y": 26.0
+            "x": 40.0,
+            "y": 7.0
           },
           "size": {
-            "width": 82.703125,
+            "width": 82.71875,
             "height": 16.0
           },
           "text": "ManualTask1",
           "alignment": {
-            "x": 0.0,
+            "x": 41.25,
             "y": 13.0
           }
         }
       ],
       "type": "task:manual",
       "position": {
-        "x": 430.0,
-        "y": 60.0
+        "x": 530.0,
+        "y": 250.0
       },
       "size": {
         "width": 160.0,
         "height": 60.0
       },
-      "layout": "vbox",
+      "layout": "hbox",
       "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 160.0,
-        "minWidth": 160.0,
-        "hGrab": false,
-        "minHeight": 60.0,
-        "prefHeight": 60.0,
-        "paddingRight": 10.0,
-        "hAlign": "center"
+        "minWidth": 160,
+        "hGap": 10,
+        "vAlign": "center",
+        "minHeight": 60
       },
       "args": {
-        "radiusTopLeft": 5.0,
         "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
-    },
-    {
-      "name": "ServiceTask2",
-      "taskType": "unknown",
-      "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80",
-      "cssClasses": [
-        "task",
-        "manual"
-      ],
-      "children": [
-        {
-          "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80_icon",
-          "type": "icon",
-          "position": {
-            "x": 65.0,
-            "y": 5.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 20.125,
-            "y": 26.0
-          },
-          "size": {
-            "width": 114.75,
-            "height": 16.0
-          },
-          "text": "Freigabe Manager",
-          "alignment": {
-            "x": 0.0,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:service",
-      "position": {
-        "x": 440.0,
-        "y": 190.0
-      },
-      "size": {
-        "width": 160.0,
-        "height": 60.0
-      },
-      "layout": "vbox",
-      "layoutOptions": {
-        "vGrab": false,
-        "prefWidth": 160.0,
-        "minWidth": 160.0,
-        "hGrab": false,
-        "minHeight": 60.0,
-        "prefHeight": 60.0,
-        "paddingRight": 10.0,
-        "hAlign": "center"
-      },
-      "args": {
-        "radiusTopLeft": 5.0,
-        "radiusBottomLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "id": "a304ee77-0578-4555-9585-a9ccdd590382",
-      "cssClasses": [
-        "medium"
-      ],
-      "type": "edge:sequenceflow",
-      "sourceId": "ec3647b9-2e66-4d2f-9f30-695b11f28adf",
-      "targetId": "906448a2-cdb3-4cf2-b749-0d3ad31a114a",
-      "routerKind": "manhattan"
-    },
-    {
-      "id": "e1af0705-1807-4797-8422-cb6f9211e8f2",
-      "cssClasses": [
-        "medium"
-      ],
-      "type": "edge:sequenceflow",
-      "routingPoints": [
-        {
-          "x": 165.0,
-          "y": 220.0
-        }
-      ],
-      "sourceId": "ec3647b9-2e66-4d2f-9f30-695b11f28adf",
-      "targetId": "b11d7280-6fdf-4fc2-bf30-31e00db0ad80",
-      "routerKind": "manhattan"
     }
   ],
   "type": "graph",
-  "revision": 1
+  "revision": 7
 }

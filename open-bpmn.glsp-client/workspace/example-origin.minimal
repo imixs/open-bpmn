@@ -1,7 +1,141 @@
 {
   "id": "8e03a1d0-e5f7-4a79-916f-741e93cc0d10",
   "children": [
+    {
+      "category": [
+        "manual"
+      ],
+      "name": "ManualTask0",
+      "documentation": "...some documentation....",
+      "id": "843a4756-0147-4618-9ea3-e0d9dc7e31af",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "843a4756-0147-4618-9ea3-e0d9dc7e31af_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 20.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "843a4756-0147-4618-9ea3-e0d9dc7e31af_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 40.0,
+            "y": 22.0
+          },
+          "size": {
+            "width": 82.71875,
+            "height": 16.0
+          },
+          "text": "ManualTask0",
+          "alignment": {
+            "x": 41.25,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:manual",
+      "position": {
+        "x": 280.0,
+        "y": 340.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "minWidth": 160.0,
+        "hGap": 10.0,
+        "vAlign": "center",
+        "minHeight": 60.0,
+        "prefWidth": 160.0,
+        "prefHeight": 60.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "category": [
+        "script"
+      ],
+      "name": "ScriptTask1",
+      "documentation": "...some documentation....",
+      "id": "50a8312f-82ec-4833-92c0-285f2bbfdd57",
+      "cssClasses": [
+        "task",
+        "script"
+      ],
+      "children": [
+        {
+          "id": "50a8312f-82ec-4833-92c0-285f2bbfdd57_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 20.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "50a8312f-82ec-4833-92c0-285f2bbfdd57_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 40.0,
+            "y": 22.0
+          },
+          "size": {
+            "width": 72.59375,
+            "height": 16.0
+          },
+          "text": "ScriptTask1",
+          "alignment": {
+            "x": 36.1875,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:script",
+      "position": {
+        "x": 0.0,
+        "y": 220.0
+      },
+      "size": {
+        "width": 160.0,
+        "height": 60.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "minWidth": 160.0,
+        "hGap": 10.0,
+        "vAlign": "center",
+        "minHeight": 60.0,
+        "prefWidth": 160.0,
+        "prefHeight": 60.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    }
   ],
   "type": "graph",
-  "revision": 27
+  "revision": 2
 }
