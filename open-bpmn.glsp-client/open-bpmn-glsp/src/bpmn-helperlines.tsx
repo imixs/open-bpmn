@@ -15,7 +15,7 @@
  ********************************************************************************/
 
 import {
-	Action,SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp
+	Action,SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp,toAbsoluteBounds
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import {
@@ -23,7 +23,7 @@ import {
 	SNode,SChildElement,
 	CommandExecutionContext,
 	CommandReturn,
-	svg, IView, RenderingContext,
+	svg, IView, RenderingContext,getAbsoluteBounds,
 	TYPES
 } from 'sprotty';
 import { VNode } from 'snabbdom';
@@ -39,6 +39,14 @@ const JSX = { createElement: svg };
  * the helper line is shown. There are can be up to 4 helperlines be displayed
  * - north -south -west -east
  ****************************************************************************/
+ 
+ export interface Line {
+    readonly x1: number
+    readonly y1: number
+    readonly x2: number
+    readonly y2: number
+}
+
 @injectable()
 export class HelperLineListener extends MouseListener {
 	protected previouslySelected: string[];
@@ -71,10 +79,10 @@ export class HelperLineListener extends MouseListener {
 			// const elementCenter = Bounds.center(getAbsoluteBounds(target));
 			const elementCenter = Bounds.center(target.bounds);
 			console.log(' ===> mouseMove  target center bounds : x=' + elementCenter.x + " y=" + elementCenter.y + '  id=' + target.id);
-			const allignedCenterPoint: Point | undefined = this.findFittingElement(target);
-			if (allignedCenterPoint) {
-				console.log(' ===> found match x=' + allignedCenterPoint.x + ' y='+allignedCenterPoint.y);
-				return [DrawHelperLinesAction.create({ startPoint: elementCenter, endPoint: allignedCenterPoint })];
+			const superLine: Line | undefined = this.findFittingElement(target);
+			if (superLine) {
+				console.log(' ===> found match x=' + superLine.x1 + ' y='+superLine.y1);
+				return [DrawHelperLinesAction.create({ horizontalLine: superLine, verticalLine: superLine })];
 			} else {
 				// now match! remove helper lines...
 				console.log('...create RemoveHelperLinesAction .....');
@@ -103,12 +111,33 @@ export class HelperLineListener extends MouseListener {
 	 * If more than one elment fits the alligment of the given Element
 	 * the method returns the the farthest one.
 	 */
-	private findFittingElement(modelElement: SModelElement): Point | undefined {
+	private findFittingElement(modelElement: SModelElement): Line | undefined {
 		const root: SModelRoot = modelElement.root;
 		if (root && isBoundsAware(modelElement)) {
 			const childs = root.children;
+			
+			// absolute.....
+			const absolute=toAbsoluteBounds(modelElement);
+			if (absolute) {
+				console.log(' ===> findFitting dragedElement origin  x='+modelElement.bounds.x + 'y='+modelElement.bounds.y);
+				console.log(' ===> findFitting dragedElement absolut x='+absolute.x + 'y='+absolute.y);
+				
+				
+			}
+			const absolutSprottyCenterBounds=Bounds.center(getAbsoluteBounds(modelElement));
+			if (absolutSprottyCenterBounds) {
+				console.log(' ===> findFitting sprotty absolut centr x='+absolutSprottyCenterBounds.x + 'y='+absolutSprottyCenterBounds.y);
+				
+			}
+			
 			const modelElementCenter = Bounds.center(modelElement.bounds);
 			console.log(' ===> findFitting dragedElement center x='+modelElementCenter.x + 'y='+modelElementCenter.y);
+			
+			
+			
+			const canvasBounds=root.canvasBounds;
+			console.log('===> findFitting canvasBounds x='+canvasBounds.x + ' width='+canvasBounds.width + ' y='+canvasBounds.y + ' height='+canvasBounds.height);
+			
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points 
 			for (const element of childs) {
@@ -119,12 +148,44 @@ export class HelperLineListener extends MouseListener {
 						// test vertical alligment...
 						if (elementCenter.y === modelElementCenter.y) {
 							console.log(' ===> findFitting found y-center point x=' + elementCenter.x + ' y=' + elementCenter.y + ' (element x=' + element.bounds.x + ' y=' + element.bounds.y + ')');
-							return elementCenter;
+							
+							// berechne den Superpunkt
+							
+							const superEndPoint: Point = {
+								x:modelElementCenter.x-absolutSprottyCenterBounds.x+canvasBounds.width,
+								y:elementCenter.y
+							}
+							if (superEndPoint) {
+								console.log('==> das ideale ende wäre '+superEndPoint.x);
+							}
+							
+							const horizontalLine: Line = {
+								x1:modelElementCenter.x-absolutSprottyCenterBounds.x,
+								y1:elementCenter.y,
+								x2:modelElementCenter.x-absolutSprottyCenterBounds.x+canvasBounds.width,
+								y2:elementCenter.y
+							}
+							
+							
+							//return superPoint;
+							return horizontalLine;
+							
+							// return elementCenter;
 						}
 						// test horizontal alligment...
 						if (elementCenter.x === modelElementCenter.x) {
 							console.log(' ===> findFitting found y-center point x=' + elementCenter.x + ' y=' + elementCenter.y + ' (element x=' + element.bounds.x + ' y=' + element.bounds.y + ')');
-							return elementCenter;
+							
+							const verticalLine: Line = {
+								y1:modelElementCenter.y-absolutSprottyCenterBounds.y,
+								x1:elementCenter.x,
+								y2:modelElementCenter.y-absolutSprottyCenterBounds.y+canvasBounds.height,
+								x2:elementCenter.x
+							}
+							
+							return verticalLine;
+							
+							//return elementCenter;
 						}
 					}
 				}
@@ -146,8 +207,8 @@ export function helpLineId(root: SModelRoot): string {
  */
 export interface DrawHelperLinesAction extends Action {
 	kind: typeof DrawHelperLinesAction.KIND;
-	startPoint: Point;
-	endPoint: Point;
+	horizontalLine: Line;
+	verticalLine: Line;
 }
 export namespace DrawHelperLinesAction {
 	export const KIND = 'drawHelperLines';
@@ -156,7 +217,7 @@ export namespace DrawHelperLinesAction {
 		return Action.hasKind(object, KIND) && hasObjectProp(object, 'startPoint') && hasObjectProp(object, 'endPoint');
 	}
 
-	export function create(options: { startPoint: Point; endPoint: Point }): DrawHelperLinesAction {
+	export function create(options: { horizontalLine: Line; verticalLine: Line }): DrawHelperLinesAction {
 		return {
 			kind: KIND,
 			...options
@@ -182,8 +243,8 @@ export class DrawHelperLinesCommand extends FeedbackCommand {
 		const helperLinesSchema = {
 			type: HELPLINE,
 			id: helpLineId(root),
-			startPoint: this.action.startPoint,
-			endPoint: this.action.endPoint
+			horizontalLine: this.action.horizontalLine,
+			verticalLine: this.action.verticalLine
 		};
 		const helperLines = context.modelFactory.createElement(helperLinesSchema);
 		root.add(helperLines);
@@ -235,14 +296,15 @@ export function removeHelperLines(root: SModelRoot): void {
 @injectable()
 export class HelperLineView implements IView {
 	render(model: Readonly<SModelElement>, context: RenderingContext): VNode {
-		const startPoint: Point = (model as any).startPoint ?? Point.ORIGIN;
-		const endPoint: Point = (model as any).endPoint ?? Point.ORIGIN;
+		/*const startPoint: Point = (model as any).startPoint ?? Point.ORIGIN;
+		const endPoint: Point = (model as any).endPoint ?? Point.ORIGIN;*/
 		
-		const root=model.root;
+		const horizontalLine: Line = (model as any).horizontalLine ?? {x1:0,y1:0,x2:0,y2:0};
+		/*const root=model.root;
 		const canvasBounds=root.canvasBounds;
-		console.log('==> canvasBounds x='+canvasBounds.x + ' width='+canvasBounds.width + ' y='+canvasBounds.y + ' height='+canvasBounds.height);
+		console.log('==> canvasBounds x='+canvasBounds.x + ' width='+canvasBounds.width + ' y='+canvasBounds.y + ' height='+canvasBounds.height);*/
 		const vnode: any = (			
-			<line x1={startPoint.x} y1={startPoint.y} x2={endPoint.x} y2={endPoint.y} class-helper-line />
+			<line x1={horizontalLine.x1} y1={horizontalLine.y1} x2={horizontalLine.x2} y2={horizontalLine.y2} class-helper-line />
 		);
 		return vnode;
 	}
