@@ -35,70 +35,72 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  *
  */
 public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder> {
-   private String name;
+    private String name;
 
-   private static final String V_GRAB = "vGrab";
-   private static final String H_GRAB = "hGrab";
-   private static final String H_ALIGN = "hAlign";
+    private static final String V_GRAB = "vGrab";
+    private static final String H_GRAB = "hGrab";
+    private static final String H_ALIGN = "hAlign";
 
-   public PoolNodeBuilder(final String name) {
-      super(ModelTypes.POOL);
-      this.name = name;
-   }
+    public PoolNodeBuilder(final String name) {
+        super(ModelTypes.POOL);
+        this.name = name;
+    }
 
-   @Override
-   protected Pool instantiate() {
-      return BpmngraphFactory.eINSTANCE.createPool();
-   }
+    @Override
+    protected Pool instantiate() {
+        return BpmngraphFactory.eINSTANCE.createPool();
+    }
 
-   @Override
-   protected PoolNodeBuilder self() {
-      return this;
-   }
+    @Override
+    protected PoolNodeBuilder self() {
+        return this;
+    }
 
-   public void setName(final String name) { this.name = name; }
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-   @Override
-   protected void setProperties(final Pool node) {
-      super.setProperties(node);
-      node.setName(name);
-      node.setLayout(GConstants.Layout.VBOX);
-      node.getLayoutOptions().put(H_ALIGN, "center");
-      node.getLayoutOptions().put(H_GRAB, false);
-      node.getLayoutOptions().put(V_GRAB, false);
-      node.getCssClasses().add("pool");
-      node.getChildren().add(createLabelCompartment(node));
-      node.getChildren().add(createStructCompartment(node));
-   }
+    @Override
+    protected void setProperties(final Pool node) {
+        super.setProperties(node);
+        node.setName(name);
+        node.setLayout(GConstants.Layout.VBOX);
+        node.getLayoutOptions().put(H_ALIGN, "center");
+        node.getLayoutOptions().put(H_GRAB, false);
+        node.getLayoutOptions().put(V_GRAB, false);
+        node.getCssClasses().add("pool");
+        node.getChildren().add(createLabelCompartment(node));
+        node.getChildren().add(createStructCompartment(node));
+    }
 
-   private GCompartment createLabelCompartment(final Pool node) {
-      Map<String, Object> layoutOptions = new HashMap<>();
+    private GCompartment createLabelCompartment(final Pool node) {
+        Map<String, Object> layoutOptions = new HashMap<>();
 
-      return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
-         .id(node.getId() + "_header") //
-         .layout(GConstants.Layout.HBOX) //
-         .layoutOptions(layoutOptions) //
-         .add(createCompartmentHeader(node)) //
-         .build();
-   }
+        return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
+                .id(node.getId() + "_header") //
+                .layout(GConstants.Layout.HBOX) //
+                .layoutOptions(layoutOptions) //
+                .add(createCompartmentHeader(node)) //
+                .build();
+    }
 
-   private GLabel createCompartmentHeader(final Pool node) {
-      return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-         .id(node.getId() + "_classname") //
-         .text(node.getName()) //
-         .build();
-   }
+    private GLabel createCompartmentHeader(final Pool node) {
+        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+                .id(node.getId() + "_header") //
+                .text(node.getName()) //
+                .build();
+    }
 
-   private GCompartment createStructCompartment(final Pool node) {
-      Map<String, Object> layoutOptions = new HashMap<>();
-      layoutOptions.put(H_ALIGN, "left");
-      layoutOptions.put(H_GRAB, true);
-      layoutOptions.put(V_GRAB, true);
-      GCompartmentBuilder structCompartmentBuilder = new GCompartmentBuilder(ModelTypes.STRUCTURE) //
-         .id(node.getId() + "_struct") //
-         .layout(GConstants.Layout.FREEFORM) //
-         .layoutOptions(layoutOptions);
-      return structCompartmentBuilder //
-         .build();
-   }
+    private GCompartment createStructCompartment(final Pool node) {
+        Map<String, Object> layoutOptions = new HashMap<>();
+        layoutOptions.put(H_ALIGN, "left");
+        layoutOptions.put(H_GRAB, true);
+        layoutOptions.put(V_GRAB, true);
+        GCompartmentBuilder structCompartmentBuilder = new GCompartmentBuilder(ModelTypes.STRUCTURE) //
+                .id(node.getId() + "_struct") //
+                .layout(GConstants.Layout.FREEFORM) //
+                .layoutOptions(layoutOptions);
+        return structCompartmentBuilder //
+                .build();
+    }
 }

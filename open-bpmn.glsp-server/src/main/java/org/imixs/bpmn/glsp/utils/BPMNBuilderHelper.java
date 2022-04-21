@@ -45,7 +45,7 @@ public class BPMNBuilderHelper {
      */
     public static GLabel createCompartmentHeader(final BaseElement node) {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-                .id(node.getId() + "_classname") //
+                .id(node.getId() + "_header") //
                 .text(node.getName()).build();
     }
 
@@ -64,6 +64,6 @@ public class BPMNBuilderHelper {
                 .id(node.getId() + "bpmn-port") //
                 .position(x, y) //
                 .size(widht, height) //
-                .addCssClass("bpmn-port").build();
+                .addCssClass("_port").build();
     }
 }
