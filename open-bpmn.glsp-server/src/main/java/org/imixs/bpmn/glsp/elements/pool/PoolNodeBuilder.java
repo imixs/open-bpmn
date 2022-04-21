@@ -86,7 +86,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
 
     private GLabel createCompartmentHeader(final Pool node) {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-                .id(node.getId() + "_header") //
+                .id(node.getId() + "_header_label") //
                 .text(node.getName()) //
                 .build();
     }
