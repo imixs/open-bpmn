@@ -13,80 +13,87 @@ import org.eclipse.glsp.graph.GEdge;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getName <em>Name</em>}</li>
- *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#isDefaultFlow <em>Default Flow</em>}</li>
+ *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getConditionExpression <em>Condition Expression</em>}</li>
+ *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getSourceRef <em>Source Ref</em>}</li>
+ *   <li>{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getTargetRef <em>Target Ref</em>}</li>
  * </ul>
  *
  * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow()
  * @model
  * @generated
  */
-public interface SequenceFlow extends GEdge {
-   /**
-    * Returns the value of the '<em><b>Name</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the value of the '<em>Name</em>' attribute.
-    * @see #setName(String)
-    * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_Name()
-    * @model
-    * @generated
-    */
-   String getName();
+public interface SequenceFlow extends GEdge, FlowElement {
+    /**
+     * Returns the value of the '<em><b>Condition Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Condition Expression</em>' containment reference.
+     * @see #setConditionExpression(Expression)
+     * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_ConditionExpression()
+     * @model containment="true" ordered="false"
+     *        extendedMetaData="kind='element' name='conditionExpression'"
+     * @generated
+     */
+    Expression getConditionExpression();
 
-   /**
-    * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getName <em>Name</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Name</em>' attribute.
-    * @see #getName()
-    * @generated
-    */
-   void setName(String value);
+    /**
+     * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getConditionExpression <em>Condition Expression</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Condition Expression</em>' containment reference.
+     * @see #getConditionExpression()
+     * @generated
+     */
+    void setConditionExpression(Expression value);
 
-   /**
-    * Returns the value of the '<em><b>Condition</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the value of the '<em>Condition</em>' attribute.
-    * @see #setCondition(String)
-    * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_Condition()
-    * @model
-    * @generated
-    */
-   String getCondition();
+    /**
+     * Returns the value of the '<em><b>Source Ref</b></em>' reference.
+     * It is bidirectional and its opposite is '{@link org.imixs.bpmn.bpmngraph.FlowNode#getOutgoing <em>Outgoing</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Source Ref</em>' reference.
+     * @see #setSourceRef(FlowNode)
+     * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_SourceRef()
+     * @see org.imixs.bpmn.bpmngraph.FlowNode#getOutgoing
+     * @model opposite="outgoing" resolveProxies="false" required="true" ordered="false"
+     *        extendedMetaData="kind='attribute' name='sourceRef'"
+     * @generated
+     */
+    FlowNode getSourceRef();
 
-   /**
-    * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getCondition <em>Condition</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Condition</em>' attribute.
-    * @see #getCondition()
-    * @generated
-    */
-   void setCondition(String value);
+    /**
+     * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getSourceRef <em>Source Ref</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Source Ref</em>' reference.
+     * @see #getSourceRef()
+     * @generated
+     */
+    void setSourceRef(FlowNode value);
 
-   /**
-    * Returns the value of the '<em><b>Default Flow</b></em>' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @return the value of the '<em>Default Flow</em>' attribute.
-    * @see #setDefaultFlow(boolean)
-    * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_DefaultFlow()
-    * @model
-    * @generated
-    */
-   boolean isDefaultFlow();
+    /**
+     * Returns the value of the '<em><b>Target Ref</b></em>' reference.
+     * It is bidirectional and its opposite is '{@link org.imixs.bpmn.bpmngraph.FlowNode#getIncoming <em>Incoming</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Target Ref</em>' reference.
+     * @see #setTargetRef(FlowNode)
+     * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#getSequenceFlow_TargetRef()
+     * @see org.imixs.bpmn.bpmngraph.FlowNode#getIncoming
+     * @model opposite="incoming" resolveProxies="false" required="true" ordered="false"
+     *        extendedMetaData="kind='attribute' name='targetRef'"
+     * @generated
+     */
+    FlowNode getTargetRef();
 
-   /**
-    * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#isDefaultFlow <em>Default Flow</em>}' attribute.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @param value the new value of the '<em>Default Flow</em>' attribute.
-    * @see #isDefaultFlow()
-    * @generated
-    */
-   void setDefaultFlow(boolean value);
+    /**
+     * Sets the value of the '{@link org.imixs.bpmn.bpmngraph.SequenceFlow#getTargetRef <em>Target Ref</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Target Ref</em>' reference.
+     * @see #getTargetRef()
+     * @generated
+     */
+    void setTargetRef(FlowNode value);
 
 } // SequenceFlow

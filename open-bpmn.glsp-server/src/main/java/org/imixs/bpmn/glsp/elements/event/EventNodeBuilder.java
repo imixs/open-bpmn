@@ -18,10 +18,16 @@ package org.imixs.bpmn.glsp.elements.event;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.EventNode;
+import org.imixs.bpmn.bpmngraph.CatchEvent;
 import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
 
-public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
+/**
+ * The EventNodeBuilder defines the layout of BPMN events
+ *
+ * @author rsoika
+ *
+ */
+public class EventNodeBuilder extends AbstractGNodeBuilder<CatchEvent, EventNodeBuilder> {
 
     private final String name;
     private final String eventType;
@@ -37,8 +43,8 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     }
 
     @Override
-    protected EventNode instantiate() {
-        return BpmngraphFactory.eINSTANCE.createEventNode();
+    protected CatchEvent instantiate() {
+        return BpmngraphFactory.eINSTANCE.createCatchEvent();
     }
 
     @Override
@@ -47,7 +53,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     }
 
     @Override
-    public void setProperties(final EventNode node) {
+    public void setProperties(final CatchEvent node) {
         super.setProperties(node);
         node.setName(name);
         node.getCategory().add(eventType);

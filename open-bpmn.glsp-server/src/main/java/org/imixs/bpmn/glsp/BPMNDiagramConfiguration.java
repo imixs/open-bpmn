@@ -60,12 +60,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
 
-        mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK_NODE);
+        mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK);
 
-        mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY_NODE);
+        mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY);
         mappings.put(ModelTypes.GATEWAY_PORT, GraphPackage.Literals.GPORT);
 
-        mappings.put(ModelTypes.EVENT, BpmngraphPackage.Literals.EVENT_NODE);
+        mappings.put(ModelTypes.EVENT, BpmngraphPackage.Literals.EVENT);
         mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
 
         mappings.put(ModelTypes.POOL, BpmngraphPackage.Literals.POOL);

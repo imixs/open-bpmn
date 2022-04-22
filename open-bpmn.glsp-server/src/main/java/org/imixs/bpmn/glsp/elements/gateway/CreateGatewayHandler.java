@@ -32,40 +32,40 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandler {
 
-   private final Function<Integer, String> labelProvider;
-   private final String elementTypeId;
+    private final Function<Integer, String> labelProvider;
+    private final String elementTypeId;
 
-   public CreateGatewayHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
-      super(elementTypeId);
-      this.elementTypeId = elementTypeId;
-      this.labelProvider = labelProvider;
-   }
+    public CreateGatewayHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
+        super(elementTypeId);
+        this.elementTypeId = elementTypeId;
+        this.labelProvider = labelProvider;
+    }
 
-   protected String getElementTypeId() { return elementTypeId; }
+    protected String getElementTypeId() {
+        return elementTypeId;
+    }
 
-   /**
-    * Create and return the new GatewayNode at the specified (optional) location. The location
-    * is given in coordinates relative to the {@link CreateNodeOperationHandler#getContainer(CreateNodeOperation)}
-    * container.
-    *
-    * @param relativeLocation
-    * @param args
-    * @return
-    *         The created {@link GNode Node}.
-    */
-   @Override
-   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-      return builder(point, modelState).build();
-   }
+    /**
+     * Create and return the new GatewayNode at the specified (optional) location.
+     * The location is given in coordinates relative to the
+     * {@link CreateNodeOperationHandler#getContainer(CreateNodeOperation)}
+     * container.
+     *
+     * @param relativeLocation
+     * @param args
+     * @return The created {@link GNode Node}.
+     */
+    @Override
+    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
+        return builder(point, modelState).build();
+    }
 
-   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.GATEWAY_NODE, "gateway", modelState);
-      String name = labelProvider.apply(nodeCounter);
-      String gatewayType = ModelTypes.toNodeType(getElementTypeId());
-      return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //
-         .position(point.orElse(null))
-         .addArguments(GArguments.cornerRadius(5))
-         .addCssClass("gateway");
-   }
+    protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+        int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.GATEWAY, "gateway", modelState);
+        String name = labelProvider.apply(nodeCounter);
+        String gatewayType = ModelTypes.toNodeType(getElementTypeId());
+        return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //
+                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("gateway");
+    }
 
 }

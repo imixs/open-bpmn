@@ -26,19 +26,20 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public class CreateSequenceFlowHandler extends CreateEdgeOperationHandler {
 
-   public CreateSequenceFlowHandler() {
-      super(ModelTypes.SEQUENCE_FLOW, "Sequence Flow");
-   }
+    public CreateSequenceFlowHandler() {
+        super(ModelTypes.SEQUENCE_FLOW, "Sequence Flow");
+    }
 
-   @Override
-   protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
-      final GModelState modelState) {
-      return Optional.of(new SequenceFlowBuilder() //
-         .source(source) //
-         .target(target) //
-         .addArgument(GArguments.edgePadding(10)) //
-         .addCssClass("sequenceflow") //
-         .build());
-   }
+    @Override
+    protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
+            final GModelState modelState) {
+        return Optional.of(new SequenceFlowBuilder() //
+                .source(source) //
+                .target(target) //
+                .addArgument(GArguments.edgePadding(10)) //
+                .addCssClass("sequenceflow") //
+
+                .build());
+    }
 
 }

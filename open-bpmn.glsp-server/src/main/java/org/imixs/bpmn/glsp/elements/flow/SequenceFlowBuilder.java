@@ -43,7 +43,7 @@ public class SequenceFlowBuilder extends AbstractGEdgeBuilder<SequenceFlow, Sequ
     @Override
     protected void setProperties(final SequenceFlow edge) {
         super.setProperties(edge);
-        edge.setCondition(condition);
+        // edge.set.setCondition(condition);
 
         edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
         // edge.setRouterKind("bpmn");

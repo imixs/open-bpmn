@@ -14,6 +14,13 @@
             genModel="model/bpmn-graph.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated bpmn-graph -->
+      <parser
+            type="bpmngraph"
+            class="org.imixs.bpmn.bpmngraph.util.BpmngraphResourceFactoryImpl"/>
+   </extension>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated bpmn-graph -->
       <package

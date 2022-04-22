@@ -15,23 +15,23 @@ import org.imixs.bpmn.bpmngraph.Pool;
  * @generated
  */
 public class PoolImpl extends BaseElementImpl implements Pool {
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   protected PoolImpl() {
-      super();
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected PoolImpl() {
+        super();
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   protected EClass eStaticClass() {
-      return BpmngraphPackage.Literals.POOL;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BpmngraphPackage.Literals.POOL;
+    }
 
 } //PoolImpl

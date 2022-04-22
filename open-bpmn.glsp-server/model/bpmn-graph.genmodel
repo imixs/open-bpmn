@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/imixs-bpmn.glsp-server/src/main/java-gen" modelPluginID="imixs-bpmn.glsp-server"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/open-bpmn.glsp-server/src/main/java-gen" modelPluginID="open-bpmn.glsp-server"
     modelName="Bpmn-graph" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>bpmn-graph.ecore</foreignModel>
-  <genPackages prefix="Bpmngraph" basePackage="org.imixs.bpmn" disposableProviderFactory="true"
+  <genPackages prefix="Bpmngraph" basePackage="org.imixs.bpmn" resource="XML" disposableProviderFactory="true"
       ecorePackage="bpmn-graph.ecore#/">
-    <genClasses ecoreClass="bpmn-graph.ecore#//BaseElement">
+    <genClasses image="false" ecoreClass="bpmn-graph.ecore#//BaseElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//BaseElement/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//BaseElement/documentation"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-graph.ecore#//FlowElement">
+    <genClasses image="false" ecoreClass="bpmn-graph.ecore#//FlowElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//FlowElement/category"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-graph.ecore#//TaskNode"/>
-    <genClasses ecoreClass="bpmn-graph.ecore#//GatewayNode"/>
-    <genClasses ecoreClass="bpmn-graph.ecore#//EventNode"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//Expression"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//SequenceFlow">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//SequenceFlow/conditionExpression"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//SequenceFlow/sourceRef"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//SequenceFlow/targetRef"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="bpmn-graph.ecore#//FlowNode">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//FlowNode/incoming"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//FlowNode/outgoing"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="bpmn-graph.ecore#//Gateway"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//ParallelGateway"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//ExclusiveGateway">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//ExclusiveGateway/defaultSequenceFlow"/>
+    </genClasses>
+    <genClasses ecoreClass="bpmn-graph.ecore#//IncusiveGateway">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//IncusiveGateway/defaultSequenceFlow"/>
+    </genClasses>
+    <genClasses ecoreClass="bpmn-graph.ecore#//ComplexGateway">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference bpmn-graph.ecore#//ComplexGateway/defaultSequenceFlow"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="bpmn-graph.ecore#//Event"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//CatchEvent"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//ThrowEvent"/>
+    <genClasses image="false" ecoreClass="bpmn-graph.ecore#//Activity"/>
+    <genClasses ecoreClass="bpmn-graph.ecore#//Task"/>
     <genClasses ecoreClass="bpmn-graph.ecore#//Pool"/>
     <genClasses ecoreClass="bpmn-graph.ecore#//Icon"/>
-    <genClasses ecoreClass="bpmn-graph.ecore#//SequenceFlow">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-graph.ecore#//SequenceFlow/defaultFlow"/>
-    </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
       ecorePackage="glsp-graph.ecore#/">

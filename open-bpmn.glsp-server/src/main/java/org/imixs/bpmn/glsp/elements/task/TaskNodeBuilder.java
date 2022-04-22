@@ -18,10 +18,10 @@ package org.imixs.bpmn.glsp.elements.task;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.TaskNode;
+import org.imixs.bpmn.bpmngraph.Task;
 import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
 
-public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
+public class TaskNodeBuilder extends AbstractGNodeBuilder<Task, TaskNodeBuilder> {
 
     private final String name;
     private final String taskType;
@@ -34,8 +34,8 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
     }
 
     @Override
-    protected TaskNode instantiate() {
-        return BpmngraphFactory.eINSTANCE.createTaskNode();
+    protected Task instantiate() {
+        return BpmngraphFactory.eINSTANCE.createTask();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
     }
 
     @Override
-    public void setProperties(final TaskNode node) {
+    public void setProperties(final Task node) {
         super.setProperties(node);
         node.setName(name);
         node.getCategory().add(taskType);

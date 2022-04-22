@@ -30,30 +30,30 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
 
 public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
-   private final Function<Integer, String> labelProvider;
-   private final String elementTypeId;
+    private final Function<Integer, String> labelProvider;
+    private final String elementTypeId;
 
-   public CreateTaskHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
-      super(elementTypeId);
-      this.elementTypeId = elementTypeId;
-      this.labelProvider = labelProvider;
-   }
+    public CreateTaskHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
+        super(elementTypeId);
+        this.elementTypeId = elementTypeId;
+        this.labelProvider = labelProvider;
+    }
 
-   protected String getElementTypeId() { return elementTypeId; }
+    protected String getElementTypeId() {
+        return elementTypeId;
+    }
 
-   @Override
-   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-      return builder(point, modelState).build();
-   }
+    @Override
+    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
+        return builder(point, modelState).build();
+    }
 
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.TASK_NODE, "task", modelState);
-      String name = labelProvider.apply(nodeCounter);
-      String taskType = ModelTypes.toNodeType(getElementTypeId());
-      return new TaskNodeBuilder(getElementTypeId(), name, taskType) //
-         .position(point.orElse(null))
-         .addArguments(GArguments.cornerRadius(5))
-         .addCssClass("task");
-   }
+    protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+        int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.TASK, "task", modelState);
+        String name = labelProvider.apply(nodeCounter);
+        String taskType = ModelTypes.toNodeType(getElementTypeId());
+        return new TaskNodeBuilder(getElementTypeId(), name, taskType) //
+                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("task");
+    }
 
 }

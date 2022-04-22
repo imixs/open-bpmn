@@ -5,6 +5,7 @@ package org.imixs.bpmn.bpmngraph.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
@@ -12,16 +13,25 @@ import org.eclipse.glsp.graph.GraphPackage;
 
 import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 
+import org.imixs.bpmn.bpmngraph.Activity;
 import org.imixs.bpmn.bpmngraph.BaseElement;
 import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
 import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
-import org.imixs.bpmn.bpmngraph.EventNode;
+import org.imixs.bpmn.bpmngraph.CatchEvent;
+import org.imixs.bpmn.bpmngraph.ComplexGateway;
+import org.imixs.bpmn.bpmngraph.Event;
+import org.imixs.bpmn.bpmngraph.ExclusiveGateway;
+import org.imixs.bpmn.bpmngraph.Expression;
 import org.imixs.bpmn.bpmngraph.FlowElement;
-import org.imixs.bpmn.bpmngraph.GatewayNode;
+import org.imixs.bpmn.bpmngraph.FlowNode;
+import org.imixs.bpmn.bpmngraph.Gateway;
 import org.imixs.bpmn.bpmngraph.Icon;
+import org.imixs.bpmn.bpmngraph.IncusiveGateway;
+import org.imixs.bpmn.bpmngraph.ParallelGateway;
 import org.imixs.bpmn.bpmngraph.Pool;
 import org.imixs.bpmn.bpmngraph.SequenceFlow;
-import org.imixs.bpmn.bpmngraph.TaskNode;
+import org.imixs.bpmn.bpmngraph.Task;
+import org.imixs.bpmn.bpmngraph.ThrowEvent;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,371 +40,709 @@ import org.imixs.bpmn.bpmngraph.TaskNode;
  * @generated
  */
 public class BpmngraphPackageImpl extends EPackageImpl implements BpmngraphPackage {
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass baseElementEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass baseElementEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass flowElementEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass flowElementEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass taskNodeEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass expressionEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass gatewayNodeEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass sequenceFlowEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass eventNodeEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass flowNodeEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass poolEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass gatewayEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass iconEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass parallelGatewayEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private EClass sequenceFlowEClass = null;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass exclusiveGatewayEClass = null;
 
-   /**
-    * Creates an instance of the model <b>Package</b>, registered with
-    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-    * package URI value.
-    * <p>Note: the correct way to create the package is via the static
-    * factory method {@link #init init()}, which also performs
-    * initialization of the package, or returns the registered package,
-    * if one already exists.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see org.eclipse.emf.ecore.EPackage.Registry
-    * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#eNS_URI
-    * @see #init()
-    * @generated
-    */
-   private BpmngraphPackageImpl() {
-      super(eNS_URI, BpmngraphFactory.eINSTANCE);
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass incusiveGatewayEClass = null;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private static boolean isInited = false;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass complexGatewayEClass = null;
 
-   /**
-    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-    *
-    * <p>This method is used to initialize {@link BpmngraphPackage#eINSTANCE} when that field is accessed.
-    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @see #eNS_URI
-    * @see #createPackageContents()
-    * @see #initializePackageContents()
-    * @generated
-    */
-   public static BpmngraphPackage init() {
-      if (isInited) return (BpmngraphPackage)EPackage.Registry.INSTANCE.getEPackage(BpmngraphPackage.eNS_URI);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass eventEClass = null;
 
-      // Obtain or create and register package
-      Object registeredBpmngraphPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-      BpmngraphPackageImpl theBpmngraphPackage = registeredBpmngraphPackage instanceof BpmngraphPackageImpl ? (BpmngraphPackageImpl)registeredBpmngraphPackage : new BpmngraphPackageImpl();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass catchEventEClass = null;
 
-      isInited = true;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass throwEventEClass = null;
 
-      // Obtain or create and register interdependencies
-      Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
-      GraphPackageImpl theGraphPackage = (GraphPackageImpl)(registeredPackage instanceof GraphPackageImpl ? registeredPackage : GraphPackage.eINSTANCE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass activityEClass = null;
 
-      // Create package meta-data objects
-      theBpmngraphPackage.createPackageContents();
-      theGraphPackage.createPackageContents();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass taskEClass = null;
 
-      // Initialize created meta-data
-      theBpmngraphPackage.initializePackageContents();
-      theGraphPackage.initializePackageContents();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass poolEClass = null;
 
-      // Mark meta-data to indicate it can't be changed
-      theBpmngraphPackage.freeze();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iconEClass = null;
 
-      // Update the registry and return the package
-      EPackage.Registry.INSTANCE.put(BpmngraphPackage.eNS_URI, theBpmngraphPackage);
-      return theBpmngraphPackage;
-   }
+    /**
+     * Creates an instance of the model <b>Package</b>, registered with
+     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+     * package URI value.
+     * <p>Note: the correct way to create the package is via the static
+     * factory method {@link #init init()}, which also performs
+     * initialization of the package, or returns the registered package,
+     * if one already exists.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.ecore.EPackage.Registry
+     * @see org.imixs.bpmn.bpmngraph.BpmngraphPackage#eNS_URI
+     * @see #init()
+     * @generated
+     */
+    private BpmngraphPackageImpl() {
+        super(eNS_URI, BpmngraphFactory.eINSTANCE);
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getBaseElement() {
-      return baseElementEClass;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private static boolean isInited = false;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getBaseElement_Name() {
-      return (EAttribute)baseElementEClass.getEStructuralFeatures().get(0);
-   }
+    /**
+     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+     *
+     * <p>This method is used to initialize {@link BpmngraphPackage#eINSTANCE} when that field is accessed.
+     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #eNS_URI
+     * @see #createPackageContents()
+     * @see #initializePackageContents()
+     * @generated
+     */
+    public static BpmngraphPackage init() {
+        if (isInited) return (BpmngraphPackage)EPackage.Registry.INSTANCE.getEPackage(BpmngraphPackage.eNS_URI);
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getBaseElement_Documentation() {
-      return (EAttribute)baseElementEClass.getEStructuralFeatures().get(1);
-   }
+        // Obtain or create and register package
+        Object registeredBpmngraphPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        BpmngraphPackageImpl theBpmngraphPackage = registeredBpmngraphPackage instanceof BpmngraphPackageImpl ? (BpmngraphPackageImpl)registeredBpmngraphPackage : new BpmngraphPackageImpl();
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getFlowElement() {
-      return flowElementEClass;
-   }
+        isInited = true;
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getFlowElement_Category() {
-      return (EAttribute)flowElementEClass.getEStructuralFeatures().get(0);
-   }
+        // Obtain or create and register interdependencies
+        Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
+        GraphPackageImpl theGraphPackage = (GraphPackageImpl)(registeredPackage instanceof GraphPackageImpl ? registeredPackage : GraphPackage.eINSTANCE);
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getTaskNode() {
-      return taskNodeEClass;
-   }
+        // Create package meta-data objects
+        theBpmngraphPackage.createPackageContents();
+        theGraphPackage.createPackageContents();
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getGatewayNode() {
-      return gatewayNodeEClass;
-   }
+        // Initialize created meta-data
+        theBpmngraphPackage.initializePackageContents();
+        theGraphPackage.initializePackageContents();
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getEventNode() {
-      return eventNodeEClass;
-   }
+        // Mark meta-data to indicate it can't be changed
+        theBpmngraphPackage.freeze();
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getPool() {
-      return poolEClass;
-   }
+        // Update the registry and return the package
+        EPackage.Registry.INSTANCE.put(BpmngraphPackage.eNS_URI, theBpmngraphPackage);
+        return theBpmngraphPackage;
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getIcon() {
-      return iconEClass;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getBaseElement() {
+        return baseElementEClass;
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EClass getSequenceFlow() {
-      return sequenceFlowEClass;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBaseElement_Name() {
+        return (EAttribute)baseElementEClass.getEStructuralFeatures().get(0);
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getSequenceFlow_Name() {
-      return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(0);
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBaseElement_Documentation() {
+        return (EAttribute)baseElementEClass.getEStructuralFeatures().get(1);
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getSequenceFlow_Condition() {
-      return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(1);
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getFlowElement() {
+        return flowElementEClass;
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public EAttribute getSequenceFlow_DefaultFlow() {
-      return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(2);
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getFlowElement_Category() {
+        return (EAttribute)flowElementEClass.getEStructuralFeatures().get(0);
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public BpmngraphFactory getBpmngraphFactory() {
-      return (BpmngraphFactory)getEFactoryInstance();
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExpression() {
+        return expressionEClass;
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private boolean isCreated = false;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getSequenceFlow() {
+        return sequenceFlowEClass;
+    }
 
-   /**
-    * Creates the meta-model objects for the package.  This method is
-    * guarded to have no affect on any invocation but its first.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public void createPackageContents() {
-      if (isCreated) return;
-      isCreated = true;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSequenceFlow_ConditionExpression() {
+        return (EReference)sequenceFlowEClass.getEStructuralFeatures().get(0);
+    }
 
-      // Create classes and their features
-      baseElementEClass = createEClass(BASE_ELEMENT);
-      createEAttribute(baseElementEClass, BASE_ELEMENT__NAME);
-      createEAttribute(baseElementEClass, BASE_ELEMENT__DOCUMENTATION);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSequenceFlow_SourceRef() {
+        return (EReference)sequenceFlowEClass.getEStructuralFeatures().get(1);
+    }
 
-      flowElementEClass = createEClass(FLOW_ELEMENT);
-      createEAttribute(flowElementEClass, FLOW_ELEMENT__CATEGORY);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getSequenceFlow_TargetRef() {
+        return (EReference)sequenceFlowEClass.getEStructuralFeatures().get(2);
+    }
 
-      taskNodeEClass = createEClass(TASK_NODE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getFlowNode() {
+        return flowNodeEClass;
+    }
 
-      gatewayNodeEClass = createEClass(GATEWAY_NODE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getFlowNode_Incoming() {
+        return (EReference)flowNodeEClass.getEStructuralFeatures().get(0);
+    }
 
-      eventNodeEClass = createEClass(EVENT_NODE);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getFlowNode_Outgoing() {
+        return (EReference)flowNodeEClass.getEStructuralFeatures().get(1);
+    }
 
-      poolEClass = createEClass(POOL);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getGateway() {
+        return gatewayEClass;
+    }
 
-      iconEClass = createEClass(ICON);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getParallelGateway() {
+        return parallelGatewayEClass;
+    }
 
-      sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
-      createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__NAME);
-      createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION);
-      createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__DEFAULT_FLOW);
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExclusiveGateway() {
+        return exclusiveGatewayEClass;
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   private boolean isInitialized = false;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getExclusiveGateway_DefaultSequenceFlow() {
+        return (EReference)exclusiveGatewayEClass.getEStructuralFeatures().get(0);
+    }
 
-   /**
-    * Complete the initialization of the package and its meta-model.  This
-    * method is guarded to have no affect on any invocation but its first.
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   public void initializePackageContents() {
-      if (isInitialized) return;
-      isInitialized = true;
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIncusiveGateway() {
+        return incusiveGatewayEClass;
+    }
 
-      // Initialize package
-      setName(eNAME);
-      setNsPrefix(eNS_PREFIX);
-      setNsURI(eNS_URI);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getIncusiveGateway_DefaultSequenceFlow() {
+        return (EReference)incusiveGatewayEClass.getEStructuralFeatures().get(0);
+    }
 
-      // Obtain other dependent packages
-      GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getComplexGateway() {
+        return complexGatewayEClass;
+    }
 
-      // Create type parameters
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getComplexGateway_DefaultSequenceFlow() {
+        return (EReference)complexGatewayEClass.getEStructuralFeatures().get(0);
+    }
 
-      // Set bounds for type parameters
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getEvent() {
+        return eventEClass;
+    }
 
-      // Add supertypes to classes
-      baseElementEClass.getESuperTypes().add(theGraphPackage.getGNode());
-      flowElementEClass.getESuperTypes().add(this.getBaseElement());
-      taskNodeEClass.getESuperTypes().add(this.getFlowElement());
-      gatewayNodeEClass.getESuperTypes().add(this.getFlowElement());
-      eventNodeEClass.getESuperTypes().add(this.getFlowElement());
-      poolEClass.getESuperTypes().add(this.getBaseElement());
-      iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
-      sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getCatchEvent() {
+        return catchEventEClass;
+    }
 
-      // Initialize classes, features, and operations; add parameters
-      initEClass(baseElementEClass, BaseElement.class, "BaseElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getBaseElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getBaseElement_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getThrowEvent() {
+        return throwEventEClass;
+    }
 
-      initEClass(flowElementEClass, FlowElement.class, "FlowElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getFlowElement_Category(), ecorePackage.getEString(), "category", null, 0, -1, FlowElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getActivity() {
+        return activityEClass;
+    }
 
-      initEClass(taskNodeEClass, TaskNode.class, "TaskNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getTask() {
+        return taskEClass;
+    }
 
-      initEClass(gatewayNodeEClass, GatewayNode.class, "GatewayNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getPool() {
+        return poolEClass;
+    }
 
-      initEClass(eventNodeEClass, EventNode.class, "EventNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIcon() {
+        return iconEClass;
+    }
 
-      initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public BpmngraphFactory getBpmngraphFactory() {
+        return (BpmngraphFactory)getEFactoryInstance();
+    }
 
-      initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private boolean isCreated = false;
 
-      initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-      initEAttribute(getSequenceFlow_Name(), ecorePackage.getEString(), "name", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getSequenceFlow_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-      initEAttribute(getSequenceFlow_DefaultFlow(), ecorePackage.getEBoolean(), "defaultFlow", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    /**
+     * Creates the meta-model objects for the package.  This method is
+     * guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void createPackageContents() {
+        if (isCreated) return;
+        isCreated = true;
 
-      // Create resource
-      createResource(eNS_URI);
-   }
+        // Create classes and their features
+        baseElementEClass = createEClass(BASE_ELEMENT);
+        createEAttribute(baseElementEClass, BASE_ELEMENT__NAME);
+        createEAttribute(baseElementEClass, BASE_ELEMENT__DOCUMENTATION);
+
+        flowElementEClass = createEClass(FLOW_ELEMENT);
+        createEAttribute(flowElementEClass, FLOW_ELEMENT__CATEGORY);
+
+        expressionEClass = createEClass(EXPRESSION);
+
+        sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
+        createEReference(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION_EXPRESSION);
+        createEReference(sequenceFlowEClass, SEQUENCE_FLOW__SOURCE_REF);
+        createEReference(sequenceFlowEClass, SEQUENCE_FLOW__TARGET_REF);
+
+        flowNodeEClass = createEClass(FLOW_NODE);
+        createEReference(flowNodeEClass, FLOW_NODE__INCOMING);
+        createEReference(flowNodeEClass, FLOW_NODE__OUTGOING);
+
+        gatewayEClass = createEClass(GATEWAY);
+
+        parallelGatewayEClass = createEClass(PARALLEL_GATEWAY);
+
+        exclusiveGatewayEClass = createEClass(EXCLUSIVE_GATEWAY);
+        createEReference(exclusiveGatewayEClass, EXCLUSIVE_GATEWAY__DEFAULT_SEQUENCE_FLOW);
+
+        incusiveGatewayEClass = createEClass(INCUSIVE_GATEWAY);
+        createEReference(incusiveGatewayEClass, INCUSIVE_GATEWAY__DEFAULT_SEQUENCE_FLOW);
+
+        complexGatewayEClass = createEClass(COMPLEX_GATEWAY);
+        createEReference(complexGatewayEClass, COMPLEX_GATEWAY__DEFAULT_SEQUENCE_FLOW);
+
+        eventEClass = createEClass(EVENT);
+
+        catchEventEClass = createEClass(CATCH_EVENT);
+
+        throwEventEClass = createEClass(THROW_EVENT);
+
+        activityEClass = createEClass(ACTIVITY);
+
+        taskEClass = createEClass(TASK);
+
+        poolEClass = createEClass(POOL);
+
+        iconEClass = createEClass(ICON);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private boolean isInitialized = false;
+
+    /**
+     * Complete the initialization of the package and its meta-model.  This
+     * method is guarded to have no affect on any invocation but its first.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void initializePackageContents() {
+        if (isInitialized) return;
+        isInitialized = true;
+
+        // Initialize package
+        setName(eNAME);
+        setNsPrefix(eNS_PREFIX);
+        setNsURI(eNS_URI);
+
+        // Obtain other dependent packages
+        GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
+
+        // Create type parameters
+
+        // Set bounds for type parameters
+
+        // Add supertypes to classes
+        baseElementEClass.getESuperTypes().add(theGraphPackage.getGNode());
+        flowElementEClass.getESuperTypes().add(this.getBaseElement());
+        expressionEClass.getESuperTypes().add(this.getBaseElement());
+        sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        sequenceFlowEClass.getESuperTypes().add(this.getFlowElement());
+        flowNodeEClass.getESuperTypes().add(this.getFlowElement());
+        gatewayEClass.getESuperTypes().add(this.getFlowElement());
+        parallelGatewayEClass.getESuperTypes().add(this.getGateway());
+        exclusiveGatewayEClass.getESuperTypes().add(this.getGateway());
+        incusiveGatewayEClass.getESuperTypes().add(this.getGateway());
+        complexGatewayEClass.getESuperTypes().add(this.getGateway());
+        eventEClass.getESuperTypes().add(this.getFlowNode());
+        catchEventEClass.getESuperTypes().add(this.getEvent());
+        throwEventEClass.getESuperTypes().add(this.getEvent());
+        activityEClass.getESuperTypes().add(this.getFlowNode());
+        taskEClass.getESuperTypes().add(this.getActivity());
+        poolEClass.getESuperTypes().add(this.getBaseElement());
+        iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
+
+        // Initialize classes, features, and operations; add parameters
+        initEClass(baseElementEClass, BaseElement.class, "BaseElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBaseElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBaseElement_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(flowElementEClass, FlowElement.class, "FlowElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getFlowElement_Category(), ecorePackage.getEString(), "category", null, 0, -1, FlowElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getSequenceFlow_ConditionExpression(), this.getExpression(), null, "conditionExpression", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getSequenceFlow_SourceRef(), this.getFlowNode(), this.getFlowNode_Outgoing(), "sourceRef", null, 1, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getSequenceFlow_TargetRef(), this.getFlowNode(), this.getFlowNode_Incoming(), "targetRef", null, 1, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(flowNodeEClass, FlowNode.class, "FlowNode", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getFlowNode_Incoming(), this.getSequenceFlow(), this.getSequenceFlow_TargetRef(), "incoming", null, 0, -1, FlowNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getFlowNode_Outgoing(), this.getSequenceFlow(), this.getSequenceFlow_SourceRef(), "outgoing", null, 0, -1, FlowNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(gatewayEClass, Gateway.class, "Gateway", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(parallelGatewayEClass, ParallelGateway.class, "ParallelGateway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(exclusiveGatewayEClass, ExclusiveGateway.class, "ExclusiveGateway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getExclusiveGateway_DefaultSequenceFlow(), this.getSequenceFlow(), null, "defaultSequenceFlow", null, 0, 1, ExclusiveGateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(incusiveGatewayEClass, IncusiveGateway.class, "IncusiveGateway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getIncusiveGateway_DefaultSequenceFlow(), this.getSequenceFlow(), null, "defaultSequenceFlow", null, 0, 1, IncusiveGateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(complexGatewayEClass, ComplexGateway.class, "ComplexGateway", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getComplexGateway_DefaultSequenceFlow(), this.getSequenceFlow(), null, "defaultSequenceFlow", null, 0, 1, ComplexGateway.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(eventEClass, Event.class, "Event", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(catchEventEClass, CatchEvent.class, "CatchEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(throwEventEClass, ThrowEvent.class, "ThrowEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(activityEClass, Activity.class, "Activity", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        // Create resource
+        createResource(eNS_URI);
+
+        // Create annotations
+        // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+        createExtendedMetaDataAnnotations();
+    }
+
+    /**
+     * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void createExtendedMetaDataAnnotations() {
+        String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+        addAnnotation
+          (expressionEClass,
+           source,
+           new String[] {
+               "name", "tExpression",
+               "kind", "mixed"
+           });
+        addAnnotation
+          (getSequenceFlow_ConditionExpression(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "conditionExpression"
+           });
+        addAnnotation
+          (getSequenceFlow_SourceRef(),
+           source,
+           new String[] {
+               "kind", "attribute",
+               "name", "sourceRef"
+           });
+        addAnnotation
+          (getSequenceFlow_TargetRef(),
+           source,
+           new String[] {
+               "kind", "attribute",
+               "name", "targetRef"
+           });
+        addAnnotation
+          (flowNodeEClass,
+           source,
+           new String[] {
+               "name", "tFlowNode",
+               "kind", "elementOnly"
+           });
+        addAnnotation
+          (getFlowNode_Incoming(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "incoming",
+               "namespace", "http://www.omg.org/spec/BPMN/20100524/MODEL"
+           });
+        addAnnotation
+          (getFlowNode_Outgoing(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "outgoing",
+               "namespace", "http://www.omg.org/spec/BPMN/20100524/MODEL"
+           });
+        addAnnotation
+          (exclusiveGatewayEClass,
+           source,
+           new String[] {
+               "name", "tExclusiveGateway",
+               "kind", "elementOnly"
+           });
+        addAnnotation
+          (getExclusiveGateway_DefaultSequenceFlow(),
+           source,
+           new String[] {
+               "kind", "attribute",
+               "name", "defaultSequenceFlow"
+           });
+        addAnnotation
+          (getIncusiveGateway_DefaultSequenceFlow(),
+           source,
+           new String[] {
+               "kind", "attribute",
+               "name", "defaultSequenceFlow"
+           });
+        addAnnotation
+          (getComplexGateway_DefaultSequenceFlow(),
+           source,
+           new String[] {
+               "kind", "attribute",
+               "name", "defaultSequenceFlow"
+           });
+    }
 
 } //BpmngraphPackageImpl

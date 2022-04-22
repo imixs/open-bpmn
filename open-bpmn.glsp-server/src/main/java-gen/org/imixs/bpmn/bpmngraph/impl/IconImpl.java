@@ -17,23 +17,23 @@ import org.imixs.bpmn.bpmngraph.Icon;
  * @generated
  */
 public class IconImpl extends GCompartmentImpl implements Icon {
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   protected IconImpl() {
-      super();
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected IconImpl() {
+        super();
+    }
 
-   /**
-    * <!-- begin-user-doc -->
-    * <!-- end-user-doc -->
-    * @generated
-    */
-   @Override
-   protected EClass eStaticClass() {
-      return BpmngraphPackage.Literals.ICON;
-   }
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return BpmngraphPackage.Literals.ICON;
+    }
 
 } //IconImpl

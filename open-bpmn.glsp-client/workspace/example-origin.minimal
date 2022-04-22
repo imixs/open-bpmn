@@ -134,8 +134,101 @@
         "radiusTopRight": 5.0,
         "radiusBottomRight": 5.0
       }
+    },
+    {
+      "category": [
+        "exclusive"
+      ],
+      "name": "ExclusiveGateway0",
+      "id": "f92de7a0-e6ec-49dc-b8b9-9663892c288f",
+      "cssClasses": [
+        "gateway",
+        "exclusive"
+      ],
+      "children": [
+        {
+          "id": "f92de7a0-e6ec-49dc-b8b9-9663892c288f_header",
+          "type": "label:heading",
+          "position": {
+            "x": 0.0,
+            "y": 75.0
+          },
+          "size": {
+            "width": 122.390625,
+            "height": 16.0
+          },
+          "text": "ExclusiveGateway0",
+          "alignment": {
+            "x": 61.09375,
+            "y": 13.0
+          }
+        },
+        {
+          "id": "f92de7a0-e6ec-49dc-b8b9-9663892c288fbpmn-port",
+          "cssClasses": [
+            "_port"
+          ],
+          "type": "event:port",
+          "position": {
+            "x": -30.0,
+            "y": 0.0
+          },
+          "size": {
+            "width": 60.0,
+            "height": 60.0
+          }
+        }
+      ],
+      "type": "gateway:exclusive",
+      "position": {
+        "x": 80.0,
+        "y": 450.0
+      },
+      "size": {
+        "width": 122.390625,
+        "height": 91.0
+      },
+      "layout": "freeform",
+      "args": {
+        "radiusTopLeft": 5.0,
+        "radiusBottomLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "9e887079-a1a8-4639-8dc5-b5d602589762",
+      "cssClasses": [
+        "sequenceflow"
+      ],
+      "type": "edge:sequenceflow",
+      "sourceId": "50a8312f-82ec-4833-92c0-285f2bbfdd57",
+      "targetId": "f92de7a0-e6ec-49dc-b8b9-9663892c288fbpmn-port",
+      "routerKind": "manhattan",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "e78bca30-2ee0-4864-aec1-a6096c846994",
+      "cssClasses": [
+        "sequenceflow"
+      ],
+      "type": "edge:sequenceflow",
+      "routingPoints": [
+        {
+          "x": 355.0,
+          "y": 480.0
+        }
+      ],
+      "sourceId": "f92de7a0-e6ec-49dc-b8b9-9663892c288fbpmn-port",
+      "targetId": "843a4756-0147-4618-9ea3-e0d9dc7e31af",
+      "routerKind": "manhattan",
+      "args": {
+        "edgePadding": 10.0
+      }
     }
   ],
   "type": "graph",
-  "revision": 2
+  "revision": 4
 }

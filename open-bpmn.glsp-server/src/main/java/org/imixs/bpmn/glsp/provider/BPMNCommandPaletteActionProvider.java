@@ -34,9 +34,9 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
-import org.imixs.bpmn.bpmngraph.EventNode;
-import org.imixs.bpmn.bpmngraph.GatewayNode;
-import org.imixs.bpmn.bpmngraph.TaskNode;
+import org.imixs.bpmn.bpmngraph.Event;
+import org.imixs.bpmn.bpmngraph.Gateway;
+import org.imixs.bpmn.bpmngraph.Task;
 import org.imixs.bpmn.glsp.utils.GridSnapper;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
 
@@ -46,122 +46,121 @@ import com.google.inject.Inject;
 
 public class BPMNCommandPaletteActionProvider implements CommandPaletteActionProvider {
 
-   @Inject
-   protected GModelState modelState;
+    @Inject
+    protected GModelState modelState;
 
-   @Override
-   public List<LabeledAction> getActions(final EditorContext editorContext) {
-      List<LabeledAction> actions = Lists.newArrayList();
-      if (modelState.isReadonly()) {
-         return actions;
-      }
-      GModelIndex index = modelState.getIndex();
-      List<String> selectedIds = editorContext.getSelectedElementIds();
-      Optional<GPoint> lastMousePosition = GridSnapper.snap(editorContext.getLastMousePosition());
-      Set<GModelElement> selectedElements = index.getAll(selectedIds);
+    @Override
+    public List<LabeledAction> getActions(final EditorContext editorContext) {
+        List<LabeledAction> actions = Lists.newArrayList();
+        if (modelState.isReadonly()) {
+            return actions;
+        }
+        GModelIndex index = modelState.getIndex();
+        List<String> selectedIds = editorContext.getSelectedElementIds();
+        Optional<GPoint> lastMousePosition = GridSnapper.snap(editorContext.getLastMousePosition());
+        Set<GModelElement> selectedElements = index.getAll(selectedIds);
 
-      // Create node actions are always possible
-      actions.addAll(Sets.newHashSet(
-         new LabeledAction("Create Manual Task",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.MANUAL_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
-         new LabeledAction("Create User Task",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.USER_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
-         new LabeledAction("Create Send Task",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.SEND_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
-         new LabeledAction("Create Service Task",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.SERVICE_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
-         new LabeledAction("Create Script Task",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.SCRIPT_TASK, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
+        // Create node actions are always possible
+        actions.addAll(Sets.newHashSet(
+                new LabeledAction("Create Manual Task",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.MANUAL_TASK,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create User Task",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.USER_TASK,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create Send Task",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.SEND_TASK,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create Service Task",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.SERVICE_TASK,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create Script Task",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.SCRIPT_TASK,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
-         new LabeledAction("Create Start Event",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.START_EVENT, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
-         new LabeledAction("Create End Event",
-            Lists.newArrayList(new CreateNodeOperation(ModelTypes.END_EVENT, lastMousePosition.orElse(point(0, 0)),
-               "fa-plus-square"))),
+                new LabeledAction("Create Start Event",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.START_EVENT,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create End Event",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.END_EVENT,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
-         new LabeledAction("Create Exclusive Gateway",
-            Lists.newArrayList(
-               new CreateNodeOperation(ModelTypes.EXCLUSIVE_GATEWAY, lastMousePosition.orElse(point(0, 0)),
-                  "fa-plus-square"))),
-         new LabeledAction("Create Inclusive Gateway",
-            Lists.newArrayList(
-               new CreateNodeOperation(ModelTypes.INCLUSIVE_GATEWAY, lastMousePosition.orElse(point(0, 0)),
-                  "fa-plus-square"))),
+                new LabeledAction("Create Exclusive Gateway",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.EXCLUSIVE_GATEWAY,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create Inclusive Gateway",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.INCLUSIVE_GATEWAY,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
-         // Pool
-         new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(
-            ModelTypes.POOL, lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))
+                // Pool
+                new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(ModelTypes.POOL,
+                        lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))
 
-      ));
+        ));
 
-      // Create edge actions between two nodes
-      if (selectedElements.size() == 1) {
-         GModelElement element = selectedElements.iterator().next();
-         if (element instanceof GNode) {
-            actions.addAll(createEdgeActions((GNode) element, index.getAllByClass(TaskNode.class)));
-         }
-      } else if (selectedElements.size() == 2) {
-         Iterator<GModelElement> iterator = selectedElements.iterator();
-         GModelElement firstElement = iterator.next();
-         GModelElement secondElement = iterator.next();
-         if (firstElement instanceof TaskNode && secondElement instanceof TaskNode) {
-            GNode firstNode = (GNode) firstElement;
-            GNode secondNode = (GNode) secondElement;
-            actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
-            actions.add(createSequenceFlowAction("Connect with Sequence Flow", firstNode, secondNode));
-         }
-      }
+        // Create edge actions between two nodes
+        if (selectedElements.size() == 1) {
+            GModelElement element = selectedElements.iterator().next();
+            if (element instanceof GNode) {
+                actions.addAll(createEdgeActions((GNode) element, index.getAllByClass(Task.class)));
+            }
+        } else if (selectedElements.size() == 2) {
+            Iterator<GModelElement> iterator = selectedElements.iterator();
+            GModelElement firstElement = iterator.next();
+            GModelElement secondElement = iterator.next();
+            if (firstElement instanceof Task && secondElement instanceof Task) {
+                GNode firstNode = (GNode) firstElement;
+                GNode secondNode = (GNode) secondElement;
+                actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
+                actions.add(createSequenceFlowAction("Connect with Sequence Flow", firstNode, secondNode));
+            }
+        }
 
-      // Delete action
-      if (selectedElements.size() == 1) {
-         actions
-            .add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)), "fa-minus-square"));
-      } else if (selectedElements.size() > 1) {
-         actions.add(
-            new LabeledAction("Delete All", Lists.newArrayList(new DeleteOperation(selectedIds)), "fa-minus-square"));
-      }
+        // Delete action
+        if (selectedElements.size() == 1) {
+            actions.add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)),
+                    "fa-minus-square"));
+        } else if (selectedElements.size() > 1) {
+            actions.add(new LabeledAction("Delete All", Lists.newArrayList(new DeleteOperation(selectedIds)),
+                    "fa-minus-square"));
+        }
 
-      return actions;
-   }
+        return actions;
+    }
 
-   private LabeledAction createEdgeAction(final String label, final GNode source, final GNode node) {
-      return new LabeledAction(label, Lists.newArrayList(
-         new CreateEdgeOperation(EDGE, source.getId(), node.getId())), "fa-plus-square");
-   }
+    private LabeledAction createEdgeAction(final String label, final GNode source, final GNode node) {
+        return new LabeledAction(label, Lists.newArrayList(new CreateEdgeOperation(EDGE, source.getId(), node.getId())),
+                "fa-plus-square");
+    }
 
-   private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {
-      return new LabeledAction(label, Lists.newArrayList(
-         new CreateEdgeOperation(ModelTypes.SEQUENCE_FLOW, source.getId(), node.getId())), "fa-plus-square");
-   }
+    private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {
+        return new LabeledAction(label,
+                Lists.newArrayList(new CreateEdgeOperation(ModelTypes.SEQUENCE_FLOW, source.getId(), node.getId())),
+                "fa-plus-square");
+    }
 
-   private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
-      Set<LabeledAction> actions = Sets.newLinkedHashSet();
-      // add first all edge, then all weighted edge actions to keep a nice order
-      targets.forEach(node -> actions.add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
-      targets.forEach(node -> actions
-         .add(createSequenceFlowAction("Create Sequence Flow to " + getLabel(node), source, node)));
-      return actions;
-   }
+    private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
+        Set<LabeledAction> actions = Sets.newLinkedHashSet();
+        // add first all edge, then all weighted edge actions to keep a nice order
+        targets.forEach(node -> actions.add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
+        targets.forEach(node -> actions
+                .add(createSequenceFlowAction("Create Sequence Flow to " + getLabel(node), source, node)));
+        return actions;
+    }
 
-   private String getLabel(final GNode node) {
-      if (node instanceof TaskNode) {
-         return ((TaskNode) node).getName();
-      }
+    private String getLabel(final GNode node) {
+        if (node instanceof Task) {
+            return ((Task) node).getName();
+        }
 
-      if (node instanceof EventNode) {
-         return ((EventNode) node).getName();
-      }
+        if (node instanceof Event) {
+            return ((Event) node).getName();
+        }
 
-      if (node instanceof GatewayNode) {
-         return ((GatewayNode) node).getName();
-      }
-      return node.getId();
-   }
+        if (node instanceof Gateway) {
+            return ((Gateway) node).getName();
+        }
+        return node.getId();
+    }
 
 }
