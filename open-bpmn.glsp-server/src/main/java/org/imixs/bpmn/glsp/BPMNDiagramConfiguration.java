@@ -27,8 +27,8 @@ import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
-import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.Bpmn2Package;
 
 /**
  * Provides configuration constants for a specific diagram implementation (i.e.
@@ -39,7 +39,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
     public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(ModelTypes.MANUAL_TASK,
             ModelTypes.SCRIPT_TASK, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK, ModelTypes.EXCLUSIVE_GATEWAY,
-            ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEQUENCE_FLOW);
+            ModelTypes.INCLUSIVE_GATEWAY, ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.CATCH_EVENT,
+            ModelTypes.THROW_EVENT, ModelTypes.SEQUENCE_FLOW);
 
     public final static List<String> ALL_PORTS = Arrays.asList(ModelTypes.MANUAL_TASK, ModelTypes.SCRIPT_TASK,
             ModelTypes.START_EVENT, ModelTypes.END_EVENT, ModelTypes.SEND_TASK, ModelTypes.SERVICE_TASK,
@@ -58,17 +59,20 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-        mappings.put(ModelTypes.ICON, BpmngraphPackage.Literals.ICON);
+        mappings.put(ModelTypes.ICON, Bpmn2Package.Literals.ICON);
 
-        mappings.put(ModelTypes.TASK, BpmngraphPackage.Literals.TASK);
+        mappings.put(ModelTypes.TASK, Bpmn2Package.Literals.TASK);
 
-        mappings.put(ModelTypes.GATEWAY, BpmngraphPackage.Literals.GATEWAY);
+        mappings.put(ModelTypes.GATEWAY, Bpmn2Package.Literals.GATEWAY);
         mappings.put(ModelTypes.GATEWAY_PORT, GraphPackage.Literals.GPORT);
 
-        mappings.put(ModelTypes.EVENT, BpmngraphPackage.Literals.EVENT);
+        mappings.put(ModelTypes.CATCH_EVENT, Bpmn2Package.Literals.CATCH_EVENT);
+        mappings.put(ModelTypes.THROW_EVENT, Bpmn2Package.Literals.THROW_EVENT);
+        mappings.put(ModelTypes.START_EVENT, Bpmn2Package.Literals.START_EVENT);
+        mappings.put(ModelTypes.END_EVENT, Bpmn2Package.Literals.END_EVENT);
         mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
 
-        mappings.put(ModelTypes.POOL, BpmngraphPackage.Literals.POOL);
+        mappings.put(ModelTypes.POOL, Bpmn2Package.Literals.POOL);
         mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
 
         mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
@@ -105,6 +109,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         nodeHints.add(new ShapeTypeHint(ModelTypes.START_EVENT, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(ModelTypes.END_EVENT, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(ModelTypes.CATCH_EVENT, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(ModelTypes.THROW_EVENT, true, true, false, true));
 
         nodeHints.add(new ShapeTypeHint(ModelTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(ModelTypes.INCLUSIVE_GATEWAY, true, true, false, true));

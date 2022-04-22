@@ -17,9 +17,9 @@ package org.imixs.bpmn.glsp.elements.flow;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.SequenceFlow;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.Bpmn2Factory;
+import org.imixs.bpmn2.SequenceFlow;
 
 /**
  * BPMN SequenceFlow
@@ -51,7 +51,7 @@ public class SequenceFlowBuilder extends AbstractGEdgeBuilder<SequenceFlow, Sequ
 
     @Override
     protected SequenceFlow instantiate() {
-        return BpmngraphFactory.eINSTANCE.createSequenceFlow();
+        return Bpmn2Factory.eINSTANCE.createSequenceFlow();
     }
 
     @Override

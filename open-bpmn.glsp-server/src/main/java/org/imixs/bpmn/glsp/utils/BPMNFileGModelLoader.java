@@ -35,8 +35,8 @@ import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
-import org.imixs.bpmn.bpmngraph.Task;
-import org.imixs.bpmn.bpmngraph.impl.BpmngraphFactoryImpl;
+import org.imixs.bpmn2.Task;
+import org.imixs.bpmn2.impl.Bpmn2FactoryImpl;
 
 import com.google.inject.Inject;
 
@@ -109,7 +109,7 @@ public class BPMNFileGModelLoader implements ModelSourceLoader {
     protected Optional<GModelRoot> loadSourceModel(final File file, final GModelState modelState) {
         try (Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)) {
 
-            BpmngraphFactoryImpl bpmnGraphFactory = new BpmngraphFactoryImpl();
+            Bpmn2FactoryImpl bpmnGraphFactory = new Bpmn2FactoryImpl();
 
             // simulate something
             GModelRoot root = createNewEmptyRoot(modelState);

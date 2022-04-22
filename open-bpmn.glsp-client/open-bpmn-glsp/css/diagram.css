@@ -83,6 +83,13 @@
 	fill: #BE5961;
 }
 
+.sprotty-node.event.catch > circle {
+	fill: rgb(211, 215, 207);
+}
+.sprotty-node.event.throw > circle {
+	fill: rgb(211, 215, 207);
+}
+
 .sprotty-node.event > .bpmn-port {
 	fill: blue;
 }

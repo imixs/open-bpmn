@@ -26,9 +26,9 @@ import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.eclipse.glsp.server.utils.GModelUtil;
-import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
 import org.imixs.bpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.Bpmn2Package;
 
 public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandler {
 
@@ -61,7 +61,7 @@ public abstract class CreateGatewayHandler extends CreateBPMNNodeOperationHandle
     }
 
     protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-        int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.GATEWAY, "gateway", modelState);
+        int nodeCounter = GModelUtil.generateId(Bpmn2Package.Literals.GATEWAY, "gateway", modelState);
         String name = labelProvider.apply(nodeCounter);
         String gatewayType = ModelTypes.toNodeType(getElementTypeId());
         return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //

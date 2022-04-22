@@ -11,6 +11,12 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.glsp.graph,
  org.eclipse.glsp.graph.impl,
  org.eclipse.glsp.graph.util,
+ org.imixs.bpmn2,
+ org.imixs.bpmn2.impl,
+ org.imixs.bpmn2.util,
+ org.imixs.bpmn.bpmn2,
+ org.imixs.bpmn.bpmn2.impl,
+ org.imixs.bpmn.bpmn2.util,
  org.imixs.bpmn.bpmngraph,
  org.imixs.bpmn.bpmngraph.impl,
  org.imixs.bpmn.bpmngraph.util

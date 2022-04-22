@@ -18,8 +18,8 @@ package org.imixs.bpmn.glsp.utils;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
-import org.imixs.bpmn.bpmngraph.Event;
 import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
+import org.imixs.bpmn2.Event;
 import org.junit.Assert;
 import org.junit.Test;
 

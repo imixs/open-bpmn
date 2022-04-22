@@ -23,31 +23,32 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
-import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
 import org.imixs.bpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.Bpmn2Package;
 
 public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
 
-   public CreatePoolHandler() {
-      super(ModelTypes.POOL);
-   }
+    public CreatePoolHandler() {
+        super(ModelTypes.POOL);
+    }
 
-   protected PoolNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+    protected PoolNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
 
-      int nodeCounter = GModelUtil.generateId(BpmngraphPackage.Literals.POOL, "pool", modelState);
-      String name = "Pool " + nodeCounter;
+        int nodeCounter = GModelUtil.generateId(Bpmn2Package.Literals.POOL, "pool", modelState);
+        String name = "Pool " + nodeCounter;
 
-      return new PoolNodeBuilder(name) //
-         .position(point.orElse(null))
-         .addArguments(GArguments.cornerRadius(5));
-   }
+        return new PoolNodeBuilder(name) //
+                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5));
+    }
 
-   @Override
-   protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-      return builder(point, modelState).build();
-   }
+    @Override
+    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
+        return builder(point, modelState).build();
+    }
 
-   @Override
-   public String getLabel() { return "Pool"; }
+    @Override
+    public String getLabel() {
+        return "Pool";
+    }
 }

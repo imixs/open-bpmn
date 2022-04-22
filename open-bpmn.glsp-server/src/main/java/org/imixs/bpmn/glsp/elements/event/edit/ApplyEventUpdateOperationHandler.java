@@ -34,8 +34,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.imixs.bpmn.bpmngraph.Event;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.CatchEvent;
 
 import com.google.inject.Inject;
 
@@ -66,7 +66,7 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
         String jsonData = operation.getJsonData();
         logger.info("....expression= " + jsonData);
 
-        Optional<Event> element = modelState.getIndex().findElementByClass(operation.getId(), Event.class);
+        Optional<CatchEvent> element = modelState.getIndex().findElementByClass(operation.getId(), CatchEvent.class);
         if (element.isEmpty()) {
             throw new RuntimeException("Cannot find element with id '" + operation.getId() + "'");
         }
@@ -82,7 +82,7 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
 
         Set<String> features = json.keySet();
         String value = null;
-        Method[] methods = Event.class.getMethods();
+        Method[] methods = CatchEvent.class.getMethods();
         for (String feature : features) {
 
             logger.fine("...update feature = " + feature);

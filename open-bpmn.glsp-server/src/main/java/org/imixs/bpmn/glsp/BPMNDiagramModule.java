@@ -29,8 +29,10 @@ import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
-import org.imixs.bpmn.glsp.elements.event.CreateEndEventHandler;
-import org.imixs.bpmn.glsp.elements.event.CreateStartEventHandler;
+import org.imixs.bpmn.glsp.elements.event.CatchEventCreateHandler;
+import org.imixs.bpmn.glsp.elements.event.EndEventCreateHandler;
+import org.imixs.bpmn.glsp.elements.event.StartEventCreateHandler;
+import org.imixs.bpmn.glsp.elements.event.ThrowEventCreateHandler;
 import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
 import org.imixs.bpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.imixs.bpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
@@ -102,8 +104,10 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
         binding.add(CreateUserTaskHandler.class);
 
         // Events
-        binding.add(CreateStartEventHandler.class);
-        binding.add(CreateEndEventHandler.class);
+        binding.add(StartEventCreateHandler.class);
+        binding.add(EndEventCreateHandler.class);
+        binding.add(CatchEventCreateHandler.class);
+        binding.add(ThrowEventCreateHandler.class);
 
         // Flows
         binding.add(CreateSequenceFlowHandler.class);

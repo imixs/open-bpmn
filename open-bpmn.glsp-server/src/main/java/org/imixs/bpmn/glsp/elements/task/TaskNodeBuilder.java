@@ -17,9 +17,9 @@ package org.imixs.bpmn.glsp.elements.task;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.Task;
 import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
+import org.imixs.bpmn2.Bpmn2Factory;
+import org.imixs.bpmn2.Task;
 
 public class TaskNodeBuilder extends AbstractGNodeBuilder<Task, TaskNodeBuilder> {
 
@@ -35,7 +35,7 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<Task, TaskNodeBuilder>
 
     @Override
     protected Task instantiate() {
-        return BpmngraphFactory.eINSTANCE.createTask();
+        return Bpmn2Factory.eINSTANCE.createTask();
     }
 
     @Override

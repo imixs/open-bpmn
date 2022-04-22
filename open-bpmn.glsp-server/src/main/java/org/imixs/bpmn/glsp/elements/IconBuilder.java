@@ -16,14 +16,15 @@
 package org.imixs.bpmn.glsp.elements;
 
 import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
-import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.Icon;
 import org.imixs.bpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.imixs.bpmn.glsp.elements.task.TaskNodeBuilder;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.Bpmn2Factory;
+import org.imixs.bpmn2.Icon;
 
 /**
- * The IconBuilder is used to add icons into different elements like Taks or Gateways
+ * The IconBuilder is used to add icons into different elements like Taks or
+ * Gateways
  *
  * @See {@link TaskNodeBuilder}, {@link GatewayNodeBuilder}
  * @author rsoika
@@ -31,18 +32,18 @@ import org.imixs.bpmn.glsp.utils.ModelTypes;
  */
 public class IconBuilder extends AbstractGCompartmentBuilder<Icon, IconBuilder> {
 
-   public IconBuilder() {
-      super(ModelTypes.ICON);
-   }
+    public IconBuilder() {
+        super(ModelTypes.ICON);
+    }
 
-   @Override
-   protected Icon instantiate() {
-      return BpmngraphFactory.eINSTANCE.createIcon();
-   }
+    @Override
+    protected Icon instantiate() {
+        return Bpmn2Factory.eINSTANCE.createIcon();
+    }
 
-   @Override
-   protected IconBuilder self() {
-      return this;
-   }
+    @Override
+    protected IconBuilder self() {
+        return this;
+    }
 
 }

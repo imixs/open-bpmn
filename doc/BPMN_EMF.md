@@ -126,7 +126,7 @@ Click on 'Finish' to generate the *.genmodel* file.
 
 ### Generate java classes
 
-Now you can generate the java classes. Before you can start, you need to change some of the details of the new *.genfile*.  Open the *.genfile* and choose the root element of the bpmnGraph. In the property view change the package name into `org.imixs.bpmn`:
+Now you can generate the java classes. Before you can start, you need to change some of the details of the new *.genfile*.  Open the *.genfile* and choose the root element of the bpmnGraph. In the property view change the package name into `org.imixs`:
 
 <img src="./images/emf-generator-03.png" />
 

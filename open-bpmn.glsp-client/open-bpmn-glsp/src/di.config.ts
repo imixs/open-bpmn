@@ -86,6 +86,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'event:start', EventNode, EventNodeView);
     configureModelElement(context, 'event:end', EventNode, EventNodeView);
+    configureModelElement(context, 'event:catch', EventNode, EventNodeView);
+    configureModelElement(context, 'event:throw', EventNode, EventNodeView);
 	configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
 
     configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);

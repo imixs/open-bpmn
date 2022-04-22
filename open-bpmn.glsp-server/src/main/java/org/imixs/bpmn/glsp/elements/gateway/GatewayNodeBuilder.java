@@ -17,9 +17,9 @@ package org.imixs.bpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.ExclusiveGateway;
 import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
+import org.imixs.bpmn2.Bpmn2Factory;
+import org.imixs.bpmn2.ExclusiveGateway;
 
 /**
  * The GatewayNodeBuilder defines the layout of BPMN gateways
@@ -44,7 +44,7 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<ExclusiveGateway, G
 
     @Override
     protected ExclusiveGateway instantiate() {
-        return BpmngraphFactory.eINSTANCE.createExclusiveGateway();
+        return Bpmn2Factory.eINSTANCE.createExclusiveGateway();
     }
 
     @Override

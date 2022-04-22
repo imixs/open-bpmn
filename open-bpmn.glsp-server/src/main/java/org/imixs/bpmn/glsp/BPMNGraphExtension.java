@@ -18,15 +18,19 @@ package org.imixs.bpmn.glsp;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.glsp.graph.GraphExtension;
-import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.BpmngraphPackage;
+import org.imixs.bpmn2.Bpmn2Factory;
+import org.imixs.bpmn2.Bpmn2Package;
 
 public class BPMNGraphExtension implements GraphExtension {
 
-   @Override
-   public EPackage getEPackage() { return BpmngraphPackage.eINSTANCE; }
+    @Override
+    public EPackage getEPackage() {
+        return Bpmn2Package.eINSTANCE;
+    }
 
-   @Override
-   public EFactory getEFactory() { return BpmngraphFactory.eINSTANCE; }
+    @Override
+    public EFactory getEFactory() {
+        return Bpmn2Factory.eINSTANCE;
+    }
 
 }

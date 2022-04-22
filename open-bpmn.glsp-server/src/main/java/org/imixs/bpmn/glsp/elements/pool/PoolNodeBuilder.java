@@ -24,9 +24,9 @@ import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.imixs.bpmn.bpmngraph.BpmngraphFactory;
-import org.imixs.bpmn.bpmngraph.Pool;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.Bpmn2Factory;
+import org.imixs.bpmn2.Pool;
 
 /**
  * BPMN 2.0 Pool Element
@@ -48,7 +48,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
 
     @Override
     protected Pool instantiate() {
-        return BpmngraphFactory.eINSTANCE.createPool();
+        return Bpmn2Factory.eINSTANCE.createPool();
     }
 
     @Override

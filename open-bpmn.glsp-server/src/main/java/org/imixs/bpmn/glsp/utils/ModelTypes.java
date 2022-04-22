@@ -31,10 +31,12 @@ public final class ModelTypes {
     public static final String SERVICE_TASK = TASK + ":service";
     public static final String SCRIPT_TASK = TASK + ":script";
 
-    public static final String EVENT = "event";
-    public static final String EVENT_PORT = "event:port";
+    private static final String EVENT = "event";
+    public static final String CATCH_EVENT = EVENT + ":catch";
+    public static final String THROW_EVENT = EVENT + ":throw";
     public static final String START_EVENT = EVENT + ":start";
     public static final String END_EVENT = EVENT + ":end";
+    public static final String EVENT_PORT = "event:port";
 
     public static final String GATEWAY = "gateway";
     public static final String GATEWAY_PORT = "gateway:port";
@@ -64,6 +66,10 @@ public final class ModelTypes {
             return "start";
         case END_EVENT:
             return "end";
+        case CATCH_EVENT:
+            return "catch";
+        case THROW_EVENT:
+            return "throw";
 
         case EXCLUSIVE_GATEWAY:
             return "exclusive";

@@ -34,11 +34,11 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
-import org.imixs.bpmn.bpmngraph.Event;
-import org.imixs.bpmn.bpmngraph.Gateway;
-import org.imixs.bpmn.bpmngraph.Task;
 import org.imixs.bpmn.glsp.utils.GridSnapper;
 import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.imixs.bpmn2.CatchEvent;
+import org.imixs.bpmn2.Gateway;
+import org.imixs.bpmn2.Task;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -83,6 +83,12 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create End Event",
                         Lists.newArrayList(new CreateNodeOperation(ModelTypes.END_EVENT,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create Catch Event",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.CATCH_EVENT,
+                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                new LabeledAction("Create Throw Event",
+                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.THROW_EVENT,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
                 new LabeledAction("Create Exclusive Gateway",
@@ -153,8 +159,8 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
             return ((Task) node).getName();
         }
 
-        if (node instanceof Event) {
-            return ((Event) node).getName();
+        if (node instanceof CatchEvent) {
+            return ((CatchEvent) node).getName();
         }
 
         if (node instanceof Gateway) {
