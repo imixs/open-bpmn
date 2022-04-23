@@ -4,6 +4,7 @@ package org.imixs.bpmn2;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -213,6 +214,842 @@ public interface Bpmn2Package extends EPackage {
     int BASE_ELEMENT_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.ImportImpl <em>Import</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.ImportImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getImport()
+     * @generated
+     */
+    int IMPORT = 1;
+
+    /**
+     * The feature id for the '<em><b>Import Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORT__IMPORT_TYPE = 0;
+
+    /**
+     * The feature id for the '<em><b>Location</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORT__LOCATION = 1;
+
+    /**
+     * The feature id for the '<em><b>Namespace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORT__NAMESPACE = 2;
+
+    /**
+     * The number of structural features of the '<em>Import</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORT_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Import</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int IMPORT_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.ExtensionDefinitionImpl <em>Extension Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.ExtensionDefinitionImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtensionDefinition()
+     * @generated
+     */
+    int EXTENSION_DEFINITION = 2;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_DEFINITION__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Extension Attribute Definitions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_DEFINITION__EXTENSION_ATTRIBUTE_DEFINITIONS = 1;
+
+    /**
+     * The number of structural features of the '<em>Extension Definition</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_DEFINITION_FEATURE_COUNT = 2;
+
+    /**
+     * The number of operations of the '<em>Extension Definition</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_DEFINITION_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.ExtensionAttributeDefinitionImpl <em>Extension Attribute Definition</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.ExtensionAttributeDefinitionImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtensionAttributeDefinition()
+     * @generated
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION = 3;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION__NAME = 0;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION__TYPE = 1;
+
+    /**
+     * The feature id for the '<em><b>Is Reference</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION__IS_REFERENCE = 2;
+
+    /**
+     * The feature id for the '<em><b>Extension Definition</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION__EXTENSION_DEFINITION = 3;
+
+    /**
+     * The number of structural features of the '<em>Extension Attribute Definition</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION_FEATURE_COUNT = 4;
+
+    /**
+     * The number of operations of the '<em>Extension Attribute Definition</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_DEFINITION_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.ExtensionAttributeValueImpl <em>Extension Attribute Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.ExtensionAttributeValueImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtensionAttributeValue()
+     * @generated
+     */
+    int EXTENSION_ATTRIBUTE_VALUE = 4;
+
+    /**
+     * The feature id for the '<em><b>Value Ref</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_VALUE__VALUE_REF = 0;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_VALUE__VALUE = 1;
+
+    /**
+     * The feature id for the '<em><b>Extension Attribute Definition</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_VALUE__EXTENSION_ATTRIBUTE_DEFINITION = 2;
+
+    /**
+     * The number of structural features of the '<em>Extension Attribute Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_VALUE_FEATURE_COUNT = 3;
+
+    /**
+     * The number of operations of the '<em>Extension Attribute Value</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_ATTRIBUTE_VALUE_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.ExtensionImpl <em>Extension</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.ExtensionImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtension()
+     * @generated
+     */
+    int EXTENSION = 5;
+
+    /**
+     * The feature id for the '<em><b>Must Understand</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION__MUST_UNDERSTAND = 0;
+
+    /**
+     * The feature id for the '<em><b>Definition</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION__DEFINITION = 1;
+
+    /**
+     * The number of structural features of the '<em>Extension</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_FEATURE_COUNT = 2;
+
+    /**
+     * The number of operations of the '<em>Extension</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXTENSION_OPERATION_COUNT = 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.RelationshipImpl <em>Relationship</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.RelationshipImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getRelationship()
+     * @generated
+     */
+    int RELATIONSHIP = 6;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
+
+    /**
+     * The feature id for the '<em><b>Direction</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__DIRECTION = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Sources</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__SOURCES = BASE_ELEMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Targets</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP__TARGETS = BASE_ELEMENT_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Relationship</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 3;
+
+    /**
+     * The number of operations of the '<em>Relationship</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RELATIONSHIP_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.DefinitionsImpl <em>Definitions</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.DefinitionsImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getDefinitions()
+     * @generated
+     */
+    int DEFINITIONS = 7;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
+
+    /**
+     * The feature id for the '<em><b>Root Elements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__ROOT_ELEMENTS = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Imports</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__IMPORTS = BASE_ELEMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Relationships</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__RELATIONSHIPS = BASE_ELEMENT_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Extensions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__EXTENSIONS = BASE_ELEMENT_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Exporter</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__EXPORTER = BASE_ELEMENT_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Exporter Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__EXPORTER_VERSION = BASE_ELEMENT_FEATURE_COUNT + 5;
+
+    /**
+     * The feature id for the '<em><b>Target Namespace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__TARGET_NAMESPACE = BASE_ELEMENT_FEATURE_COUNT + 6;
+
+    /**
+     * The feature id for the '<em><b>Type Language</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__TYPE_LANGUAGE = BASE_ELEMENT_FEATURE_COUNT + 7;
+
+    /**
+     * The feature id for the '<em><b>Expression Language</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__EXPRESSION_LANGUAGE = BASE_ELEMENT_FEATURE_COUNT + 8;
+
+    /**
+     * The number of structural features of the '<em>Definitions</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 9;
+
+    /**
+     * The number of operations of the '<em>Definitions</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.impl.RootElementImpl <em>Root Element</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.impl.RootElementImpl
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getRootElement()
+     * @generated
+     */
+    int ROOT_ELEMENT = 8;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
+
+    /**
+     * The number of structural features of the '<em>Root Element</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Root Element</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link org.imixs.bpmn2.impl.FlowElementImpl <em>Flow Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -220,7 +1057,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getFlowElement()
      * @generated
      */
-    int FLOW_ELEMENT = 1;
+    int FLOW_ELEMENT = 9;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -383,7 +1220,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExpression()
      * @generated
      */
-    int EXPRESSION = 2;
+    int EXPRESSION = 10;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -537,7 +1374,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getSequenceFlow()
      * @generated
      */
-    int SEQUENCE_FLOW = 3;
+    int SEQUENCE_FLOW = 11;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -781,7 +1618,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getFlowNode()
      * @generated
      */
-    int FLOW_NODE = 4;
+    int FLOW_NODE = 12;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -962,7 +1799,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getGateway()
      * @generated
      */
-    int GATEWAY = 5;
+    int GATEWAY = 13;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1125,7 +1962,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getParallelGateway()
      * @generated
      */
-    int PARALLEL_GATEWAY = 6;
+    int PARALLEL_GATEWAY = 14;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1288,7 +2125,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExclusiveGateway()
      * @generated
      */
-    int EXCLUSIVE_GATEWAY = 7;
+    int EXCLUSIVE_GATEWAY = 15;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1460,7 +2297,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getIncusiveGateway()
      * @generated
      */
-    int INCUSIVE_GATEWAY = 8;
+    int INCUSIVE_GATEWAY = 16;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1632,7 +2469,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getComplexGateway()
      * @generated
      */
-    int COMPLEX_GATEWAY = 9;
+    int COMPLEX_GATEWAY = 17;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1804,7 +2641,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getEvent()
      * @generated
      */
-    int EVENT = 10;
+    int EVENT = 18;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1985,7 +2822,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getCatchEvent()
      * @generated
      */
-    int CATCH_EVENT = 11;
+    int CATCH_EVENT = 19;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -2166,7 +3003,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getThrowEvent()
      * @generated
      */
-    int THROW_EVENT = 12;
+    int THROW_EVENT = 20;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -2347,7 +3184,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getStartEvent()
      * @generated
      */
-    int START_EVENT = 13;
+    int START_EVENT = 21;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -2537,7 +3374,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getEndEvent()
      * @generated
      */
-    int END_EVENT = 14;
+    int END_EVENT = 22;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -2718,7 +3555,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getActivity()
      * @generated
      */
-    int ACTIVITY = 15;
+    int ACTIVITY = 23;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -2899,7 +3736,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getTask()
      * @generated
      */
-    int TASK = 16;
+    int TASK = 24;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -3080,7 +3917,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getPool()
      * @generated
      */
-    int POOL = 17;
+    int POOL = 25;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -3234,7 +4071,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getIcon()
      * @generated
      */
-    int ICON = 18;
+    int ICON = 26;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -3353,6 +4190,16 @@ public interface Bpmn2Package extends EPackage {
      */
     int ICON_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
 
+    /**
+     * The meta object id for the '{@link org.imixs.bpmn2.RelationshipDirection <em>Relationship Direction</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.imixs.bpmn2.RelationshipDirection
+     * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getRelationshipDirection()
+     * @generated
+     */
+    int RELATIONSHIP_DIRECTION = 27;
+
 
     /**
      * Returns the meta object for class '{@link org.imixs.bpmn2.BaseElement <em>Base Element</em>}'.
@@ -3385,6 +4232,372 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      */
     EAttribute getBaseElement_Documentation();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.Import <em>Import</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Import</em>'.
+     * @see org.imixs.bpmn2.Import
+     * @generated
+     */
+    EClass getImport();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Import#getImportType <em>Import Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Import Type</em>'.
+     * @see org.imixs.bpmn2.Import#getImportType()
+     * @see #getImport()
+     * @generated
+     */
+    EAttribute getImport_ImportType();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Import#getLocation <em>Location</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Location</em>'.
+     * @see org.imixs.bpmn2.Import#getLocation()
+     * @see #getImport()
+     * @generated
+     */
+    EAttribute getImport_Location();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Import#getNamespace <em>Namespace</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Namespace</em>'.
+     * @see org.imixs.bpmn2.Import#getNamespace()
+     * @see #getImport()
+     * @generated
+     */
+    EAttribute getImport_Namespace();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.ExtensionDefinition <em>Extension Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Extension Definition</em>'.
+     * @see org.imixs.bpmn2.ExtensionDefinition
+     * @generated
+     */
+    EClass getExtensionDefinition();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.ExtensionDefinition#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.imixs.bpmn2.ExtensionDefinition#getName()
+     * @see #getExtensionDefinition()
+     * @generated
+     */
+    EAttribute getExtensionDefinition_Name();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.imixs.bpmn2.ExtensionDefinition#getExtensionAttributeDefinitions <em>Extension Attribute Definitions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Extension Attribute Definitions</em>'.
+     * @see org.imixs.bpmn2.ExtensionDefinition#getExtensionAttributeDefinitions()
+     * @see #getExtensionDefinition()
+     * @generated
+     */
+    EReference getExtensionDefinition_ExtensionAttributeDefinitions();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.ExtensionAttributeDefinition <em>Extension Attribute Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Extension Attribute Definition</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeDefinition
+     * @generated
+     */
+    EClass getExtensionAttributeDefinition();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.ExtensionAttributeDefinition#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeDefinition#getName()
+     * @see #getExtensionAttributeDefinition()
+     * @generated
+     */
+    EAttribute getExtensionAttributeDefinition_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.ExtensionAttributeDefinition#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeDefinition#getType()
+     * @see #getExtensionAttributeDefinition()
+     * @generated
+     */
+    EAttribute getExtensionAttributeDefinition_Type();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.ExtensionAttributeDefinition#isIsReference <em>Is Reference</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Is Reference</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeDefinition#isIsReference()
+     * @see #getExtensionAttributeDefinition()
+     * @generated
+     */
+    EAttribute getExtensionAttributeDefinition_IsReference();
+
+    /**
+     * Returns the meta object for the container reference '{@link org.imixs.bpmn2.ExtensionAttributeDefinition#getExtensionDefinition <em>Extension Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Extension Definition</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeDefinition#getExtensionDefinition()
+     * @see #getExtensionAttributeDefinition()
+     * @generated
+     */
+    EReference getExtensionAttributeDefinition_ExtensionDefinition();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.ExtensionAttributeValue <em>Extension Attribute Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Extension Attribute Value</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeValue
+     * @generated
+     */
+    EClass getExtensionAttributeValue();
+
+    /**
+     * Returns the meta object for the reference '{@link org.imixs.bpmn2.ExtensionAttributeValue#getValueRef <em>Value Ref</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Value Ref</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeValue#getValueRef()
+     * @see #getExtensionAttributeValue()
+     * @generated
+     */
+    EReference getExtensionAttributeValue_ValueRef();
+
+    /**
+     * Returns the meta object for the attribute list '{@link org.imixs.bpmn2.ExtensionAttributeValue#getValue <em>Value</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Value</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeValue#getValue()
+     * @see #getExtensionAttributeValue()
+     * @generated
+     */
+    EAttribute getExtensionAttributeValue_Value();
+
+    /**
+     * Returns the meta object for the reference '{@link org.imixs.bpmn2.ExtensionAttributeValue#getExtensionAttributeDefinition <em>Extension Attribute Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Extension Attribute Definition</em>'.
+     * @see org.imixs.bpmn2.ExtensionAttributeValue#getExtensionAttributeDefinition()
+     * @see #getExtensionAttributeValue()
+     * @generated
+     */
+    EReference getExtensionAttributeValue_ExtensionAttributeDefinition();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.Extension <em>Extension</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Extension</em>'.
+     * @see org.imixs.bpmn2.Extension
+     * @generated
+     */
+    EClass getExtension();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Extension#isMustUnderstand <em>Must Understand</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Must Understand</em>'.
+     * @see org.imixs.bpmn2.Extension#isMustUnderstand()
+     * @see #getExtension()
+     * @generated
+     */
+    EAttribute getExtension_MustUnderstand();
+
+    /**
+     * Returns the meta object for the containment reference '{@link org.imixs.bpmn2.Extension#getDefinition <em>Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Definition</em>'.
+     * @see org.imixs.bpmn2.Extension#getDefinition()
+     * @see #getExtension()
+     * @generated
+     */
+    EReference getExtension_Definition();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.Relationship <em>Relationship</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Relationship</em>'.
+     * @see org.imixs.bpmn2.Relationship
+     * @generated
+     */
+    EClass getRelationship();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Relationship#getDirection <em>Direction</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Direction</em>'.
+     * @see org.imixs.bpmn2.Relationship#getDirection()
+     * @see #getRelationship()
+     * @generated
+     */
+    EAttribute getRelationship_Direction();
+
+    /**
+     * Returns the meta object for the reference list '{@link org.imixs.bpmn2.Relationship#getSources <em>Sources</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Sources</em>'.
+     * @see org.imixs.bpmn2.Relationship#getSources()
+     * @see #getRelationship()
+     * @generated
+     */
+    EReference getRelationship_Sources();
+
+    /**
+     * Returns the meta object for the reference list '{@link org.imixs.bpmn2.Relationship#getTargets <em>Targets</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Targets</em>'.
+     * @see org.imixs.bpmn2.Relationship#getTargets()
+     * @see #getRelationship()
+     * @generated
+     */
+    EReference getRelationship_Targets();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.Definitions <em>Definitions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Definitions</em>'.
+     * @see org.imixs.bpmn2.Definitions
+     * @generated
+     */
+    EClass getDefinitions();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.imixs.bpmn2.Definitions#getRootElements <em>Root Elements</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Root Elements</em>'.
+     * @see org.imixs.bpmn2.Definitions#getRootElements()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EReference getDefinitions_RootElements();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.imixs.bpmn2.Definitions#getImports <em>Imports</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Imports</em>'.
+     * @see org.imixs.bpmn2.Definitions#getImports()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EReference getDefinitions_Imports();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.imixs.bpmn2.Definitions#getRelationships <em>Relationships</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Relationships</em>'.
+     * @see org.imixs.bpmn2.Definitions#getRelationships()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EReference getDefinitions_Relationships();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.imixs.bpmn2.Definitions#getExtensions <em>Extensions</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Extensions</em>'.
+     * @see org.imixs.bpmn2.Definitions#getExtensions()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EReference getDefinitions_Extensions();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Definitions#getExporter <em>Exporter</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Exporter</em>'.
+     * @see org.imixs.bpmn2.Definitions#getExporter()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EAttribute getDefinitions_Exporter();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Definitions#getExporterVersion <em>Exporter Version</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Exporter Version</em>'.
+     * @see org.imixs.bpmn2.Definitions#getExporterVersion()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EAttribute getDefinitions_ExporterVersion();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Definitions#getTargetNamespace <em>Target Namespace</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Target Namespace</em>'.
+     * @see org.imixs.bpmn2.Definitions#getTargetNamespace()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EAttribute getDefinitions_TargetNamespace();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Definitions#getTypeLanguage <em>Type Language</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type Language</em>'.
+     * @see org.imixs.bpmn2.Definitions#getTypeLanguage()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EAttribute getDefinitions_TypeLanguage();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.imixs.bpmn2.Definitions#getExpressionLanguage <em>Expression Language</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Expression Language</em>'.
+     * @see org.imixs.bpmn2.Definitions#getExpressionLanguage()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EAttribute getDefinitions_ExpressionLanguage();
+
+    /**
+     * Returns the meta object for class '{@link org.imixs.bpmn2.RootElement <em>Root Element</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Root Element</em>'.
+     * @see org.imixs.bpmn2.RootElement
+     * @generated
+     */
+    EClass getRootElement();
 
     /**
      * Returns the meta object for class '{@link org.imixs.bpmn2.FlowElement <em>Flow Element</em>}'.
@@ -3677,6 +4890,16 @@ public interface Bpmn2Package extends EPackage {
     EClass getIcon();
 
     /**
+     * Returns the meta object for enum '{@link org.imixs.bpmn2.RelationshipDirection <em>Relationship Direction</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Relationship Direction</em>'.
+     * @see org.imixs.bpmn2.RelationshipDirection
+     * @generated
+     */
+    EEnum getRelationshipDirection();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3724,6 +4947,294 @@ public interface Bpmn2Package extends EPackage {
          * @generated
          */
         EAttribute BASE_ELEMENT__DOCUMENTATION = eINSTANCE.getBaseElement_Documentation();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.ImportImpl <em>Import</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.ImportImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getImport()
+         * @generated
+         */
+        EClass IMPORT = eINSTANCE.getImport();
+
+        /**
+         * The meta object literal for the '<em><b>Import Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IMPORT__IMPORT_TYPE = eINSTANCE.getImport_ImportType();
+
+        /**
+         * The meta object literal for the '<em><b>Location</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IMPORT__LOCATION = eINSTANCE.getImport_Location();
+
+        /**
+         * The meta object literal for the '<em><b>Namespace</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute IMPORT__NAMESPACE = eINSTANCE.getImport_Namespace();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.ExtensionDefinitionImpl <em>Extension Definition</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.ExtensionDefinitionImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtensionDefinition()
+         * @generated
+         */
+        EClass EXTENSION_DEFINITION = eINSTANCE.getExtensionDefinition();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTENSION_DEFINITION__NAME = eINSTANCE.getExtensionDefinition_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Extension Attribute Definitions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EXTENSION_DEFINITION__EXTENSION_ATTRIBUTE_DEFINITIONS = eINSTANCE.getExtensionDefinition_ExtensionAttributeDefinitions();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.ExtensionAttributeDefinitionImpl <em>Extension Attribute Definition</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.ExtensionAttributeDefinitionImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtensionAttributeDefinition()
+         * @generated
+         */
+        EClass EXTENSION_ATTRIBUTE_DEFINITION = eINSTANCE.getExtensionAttributeDefinition();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTENSION_ATTRIBUTE_DEFINITION__NAME = eINSTANCE.getExtensionAttributeDefinition_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTENSION_ATTRIBUTE_DEFINITION__TYPE = eINSTANCE.getExtensionAttributeDefinition_Type();
+
+        /**
+         * The meta object literal for the '<em><b>Is Reference</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTENSION_ATTRIBUTE_DEFINITION__IS_REFERENCE = eINSTANCE.getExtensionAttributeDefinition_IsReference();
+
+        /**
+         * The meta object literal for the '<em><b>Extension Definition</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EXTENSION_ATTRIBUTE_DEFINITION__EXTENSION_DEFINITION = eINSTANCE.getExtensionAttributeDefinition_ExtensionDefinition();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.ExtensionAttributeValueImpl <em>Extension Attribute Value</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.ExtensionAttributeValueImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtensionAttributeValue()
+         * @generated
+         */
+        EClass EXTENSION_ATTRIBUTE_VALUE = eINSTANCE.getExtensionAttributeValue();
+
+        /**
+         * The meta object literal for the '<em><b>Value Ref</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EXTENSION_ATTRIBUTE_VALUE__VALUE_REF = eINSTANCE.getExtensionAttributeValue_ValueRef();
+
+        /**
+         * The meta object literal for the '<em><b>Value</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTENSION_ATTRIBUTE_VALUE__VALUE = eINSTANCE.getExtensionAttributeValue_Value();
+
+        /**
+         * The meta object literal for the '<em><b>Extension Attribute Definition</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EXTENSION_ATTRIBUTE_VALUE__EXTENSION_ATTRIBUTE_DEFINITION = eINSTANCE.getExtensionAttributeValue_ExtensionAttributeDefinition();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.ExtensionImpl <em>Extension</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.ExtensionImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getExtension()
+         * @generated
+         */
+        EClass EXTENSION = eINSTANCE.getExtension();
+
+        /**
+         * The meta object literal for the '<em><b>Must Understand</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute EXTENSION__MUST_UNDERSTAND = eINSTANCE.getExtension_MustUnderstand();
+
+        /**
+         * The meta object literal for the '<em><b>Definition</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference EXTENSION__DEFINITION = eINSTANCE.getExtension_Definition();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.RelationshipImpl <em>Relationship</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.RelationshipImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getRelationship()
+         * @generated
+         */
+        EClass RELATIONSHIP = eINSTANCE.getRelationship();
+
+        /**
+         * The meta object literal for the '<em><b>Direction</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RELATIONSHIP__DIRECTION = eINSTANCE.getRelationship_Direction();
+
+        /**
+         * The meta object literal for the '<em><b>Sources</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference RELATIONSHIP__SOURCES = eINSTANCE.getRelationship_Sources();
+
+        /**
+         * The meta object literal for the '<em><b>Targets</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference RELATIONSHIP__TARGETS = eINSTANCE.getRelationship_Targets();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.DefinitionsImpl <em>Definitions</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.DefinitionsImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getDefinitions()
+         * @generated
+         */
+        EClass DEFINITIONS = eINSTANCE.getDefinitions();
+
+        /**
+         * The meta object literal for the '<em><b>Root Elements</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINITIONS__ROOT_ELEMENTS = eINSTANCE.getDefinitions_RootElements();
+
+        /**
+         * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINITIONS__IMPORTS = eINSTANCE.getDefinitions_Imports();
+
+        /**
+         * The meta object literal for the '<em><b>Relationships</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINITIONS__RELATIONSHIPS = eINSTANCE.getDefinitions_Relationships();
+
+        /**
+         * The meta object literal for the '<em><b>Extensions</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINITIONS__EXTENSIONS = eINSTANCE.getDefinitions_Extensions();
+
+        /**
+         * The meta object literal for the '<em><b>Exporter</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEFINITIONS__EXPORTER = eINSTANCE.getDefinitions_Exporter();
+
+        /**
+         * The meta object literal for the '<em><b>Exporter Version</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEFINITIONS__EXPORTER_VERSION = eINSTANCE.getDefinitions_ExporterVersion();
+
+        /**
+         * The meta object literal for the '<em><b>Target Namespace</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEFINITIONS__TARGET_NAMESPACE = eINSTANCE.getDefinitions_TargetNamespace();
+
+        /**
+         * The meta object literal for the '<em><b>Type Language</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEFINITIONS__TYPE_LANGUAGE = eINSTANCE.getDefinitions_TypeLanguage();
+
+        /**
+         * The meta object literal for the '<em><b>Expression Language</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute DEFINITIONS__EXPRESSION_LANGUAGE = eINSTANCE.getDefinitions_ExpressionLanguage();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.impl.RootElementImpl <em>Root Element</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.impl.RootElementImpl
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getRootElement()
+         * @generated
+         */
+        EClass ROOT_ELEMENT = eINSTANCE.getRootElement();
 
         /**
          * The meta object literal for the '{@link org.imixs.bpmn2.impl.FlowElementImpl <em>Flow Element</em>}' class.
@@ -3984,6 +5495,16 @@ public interface Bpmn2Package extends EPackage {
          * @generated
          */
         EClass ICON = eINSTANCE.getIcon();
+
+        /**
+         * The meta object literal for the '{@link org.imixs.bpmn2.RelationshipDirection <em>Relationship Direction</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.imixs.bpmn2.RelationshipDirection
+         * @see org.imixs.bpmn2.impl.Bpmn2PackageImpl#getRelationshipDirection()
+         * @generated
+         */
+        EEnum RELATIONSHIP_DIRECTION = eINSTANCE.getRelationshipDirection();
 
     }
 

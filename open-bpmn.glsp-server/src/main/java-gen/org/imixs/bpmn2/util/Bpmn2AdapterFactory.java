@@ -82,6 +82,38 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
                 return createBaseElementAdapter();
             }
             @Override
+            public Adapter caseImport(Import object) {
+                return createImportAdapter();
+            }
+            @Override
+            public Adapter caseExtensionDefinition(ExtensionDefinition object) {
+                return createExtensionDefinitionAdapter();
+            }
+            @Override
+            public Adapter caseExtensionAttributeDefinition(ExtensionAttributeDefinition object) {
+                return createExtensionAttributeDefinitionAdapter();
+            }
+            @Override
+            public Adapter caseExtensionAttributeValue(ExtensionAttributeValue object) {
+                return createExtensionAttributeValueAdapter();
+            }
+            @Override
+            public Adapter caseExtension(Extension object) {
+                return createExtensionAdapter();
+            }
+            @Override
+            public Adapter caseRelationship(Relationship object) {
+                return createRelationshipAdapter();
+            }
+            @Override
+            public Adapter caseDefinitions(Definitions object) {
+                return createDefinitionsAdapter();
+            }
+            @Override
+            public Adapter caseRootElement(RootElement object) {
+                return createRootElementAdapter();
+            }
+            @Override
             public Adapter caseFlowElement(FlowElement object) {
                 return createFlowElementAdapter();
             }
@@ -220,6 +252,118 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createBaseElementAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.Import <em>Import</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.Import
+     * @generated
+     */
+    public Adapter createImportAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.ExtensionDefinition <em>Extension Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.ExtensionDefinition
+     * @generated
+     */
+    public Adapter createExtensionDefinitionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.ExtensionAttributeDefinition <em>Extension Attribute Definition</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.ExtensionAttributeDefinition
+     * @generated
+     */
+    public Adapter createExtensionAttributeDefinitionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.ExtensionAttributeValue <em>Extension Attribute Value</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.ExtensionAttributeValue
+     * @generated
+     */
+    public Adapter createExtensionAttributeValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.Extension <em>Extension</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.Extension
+     * @generated
+     */
+    public Adapter createExtensionAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.Relationship <em>Relationship</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.Relationship
+     * @generated
+     */
+    public Adapter createRelationshipAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.Definitions <em>Definitions</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.Definitions
+     * @generated
+     */
+    public Adapter createDefinitionsAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.imixs.bpmn2.RootElement <em>Root Element</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.imixs.bpmn2.RootElement
+     * @generated
+     */
+    public Adapter createRootElementAdapter() {
         return null;
     }
 

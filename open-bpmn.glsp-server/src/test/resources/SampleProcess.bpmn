@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmngraph="http://www.imixs.org/bpmn/glsp/graph" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://sample.bpmn2.org/bpmn2/sample/process">
+<bpmn2:definitions 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100501/BPMN20.xsd" 
+xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" 
+xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+id="Definitions_1" 
+targetNamespace="http://sample.bpmn2.org/bpmn2/sample/process">
   <bpmn2:dataStore id="DataStore_1" name="Data Store 2"/>
   <bpmn2:process id="process_2" name="Default Process">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">

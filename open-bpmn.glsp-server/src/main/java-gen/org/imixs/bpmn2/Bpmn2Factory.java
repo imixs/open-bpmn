@@ -22,6 +22,78 @@ public interface Bpmn2Factory extends EFactory {
     Bpmn2Factory eINSTANCE = org.imixs.bpmn2.impl.Bpmn2FactoryImpl.init();
 
     /**
+     * Returns a new object of class '<em>Import</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Import</em>'.
+     * @generated
+     */
+    Import createImport();
+
+    /**
+     * Returns a new object of class '<em>Extension Definition</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Extension Definition</em>'.
+     * @generated
+     */
+    ExtensionDefinition createExtensionDefinition();
+
+    /**
+     * Returns a new object of class '<em>Extension Attribute Definition</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Extension Attribute Definition</em>'.
+     * @generated
+     */
+    ExtensionAttributeDefinition createExtensionAttributeDefinition();
+
+    /**
+     * Returns a new object of class '<em>Extension Attribute Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Extension Attribute Value</em>'.
+     * @generated
+     */
+    ExtensionAttributeValue createExtensionAttributeValue();
+
+    /**
+     * Returns a new object of class '<em>Extension</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Extension</em>'.
+     * @generated
+     */
+    Extension createExtension();
+
+    /**
+     * Returns a new object of class '<em>Relationship</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Relationship</em>'.
+     * @generated
+     */
+    Relationship createRelationship();
+
+    /**
+     * Returns a new object of class '<em>Definitions</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Definitions</em>'.
+     * @generated
+     */
+    Definitions createDefinitions();
+
+    /**
+     * Returns a new object of class '<em>Root Element</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Root Element</em>'.
+     * @generated
+     */
+    RootElement createRootElement();
+
+    /**
      * Returns a new object of class '<em>Expression</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

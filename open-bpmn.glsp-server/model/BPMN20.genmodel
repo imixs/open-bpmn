@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/open-bpmn.glsp-server/src/main/java-gen" modelPluginID="open-bpmn.glsp-server"
+    modelName="BPMN20" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>BPMN20.ecore</foreignModel>
+  <genPackages prefix="Bpmn2" basePackage="org.imixs" resource="XML" disposableProviderFactory="true"
+      ecorePackage="BPMN20.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BPMN20.ecore#//RelationshipDirection">
+      <genEnumLiterals ecoreEnumLiteral="BPMN20.ecore#//RelationshipDirection/None"/>
+      <genEnumLiterals ecoreEnumLiteral="BPMN20.ecore#//RelationshipDirection/Forward"/>
+      <genEnumLiterals ecoreEnumLiteral="BPMN20.ecore#//RelationshipDirection/Backward"/>
+      <genEnumLiterals ecoreEnumLiteral="BPMN20.ecore#//RelationshipDirection/Both"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="BPMN20.ecore#//BaseElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//BaseElement/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//BaseElement/documentation"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Import/importType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Import/location"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Import/namespace"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//ExtensionDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//ExtensionDefinition/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//ExtensionDefinition/extensionAttributeDefinitions"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//ExtensionAttributeDefinition">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//ExtensionAttributeDefinition/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//ExtensionAttributeDefinition/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//ExtensionAttributeDefinition/isReference"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference BPMN20.ecore#//ExtensionAttributeDefinition/extensionDefinition"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//ExtensionAttributeValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//ExtensionAttributeValue/valueRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute BPMN20.ecore#//ExtensionAttributeValue/value"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//ExtensionAttributeValue/extensionAttributeDefinition"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//Extension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Extension/mustUnderstand"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Extension/definition"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//Relationship">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Relationship/direction"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Relationship/sources"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Relationship/targets"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//Definitions">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Definitions/rootElements"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Definitions/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Definitions/relationships"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//Definitions/extensions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Definitions/exporter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Definitions/exporterVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Definitions/targetNamespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Definitions/typeLanguage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//Definitions/expressionLanguage"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//RootElement"/>
+    <genClasses image="false" ecoreClass="BPMN20.ecore#//FlowElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//FlowElement/category"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//Expression"/>
+    <genClasses ecoreClass="BPMN20.ecore#//SequenceFlow">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN20.ecore#//SequenceFlow/conditionExpression"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//SequenceFlow/sourceRef"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//SequenceFlow/targetRef"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN20.ecore#//FlowNode">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//FlowNode/incoming"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//FlowNode/outgoing"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN20.ecore#//Gateway"/>
+    <genClasses ecoreClass="BPMN20.ecore#//ParallelGateway"/>
+    <genClasses ecoreClass="BPMN20.ecore#//ExclusiveGateway">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//ExclusiveGateway/defaultSequenceFlow"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//IncusiveGateway">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//IncusiveGateway/defaultSequenceFlow"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//ComplexGateway">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN20.ecore#//ComplexGateway/defaultSequenceFlow"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN20.ecore#//Event"/>
+    <genClasses ecoreClass="BPMN20.ecore#//CatchEvent"/>
+    <genClasses ecoreClass="BPMN20.ecore#//ThrowEvent"/>
+    <genClasses ecoreClass="BPMN20.ecore#//StartEvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN20.ecore#//StartEvent/isInterrupting"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN20.ecore#//EndEvent"/>
+    <genClasses image="false" ecoreClass="BPMN20.ecore#//Activity"/>
+    <genClasses ecoreClass="BPMN20.ecore#//Task"/>
+    <genClasses ecoreClass="BPMN20.ecore#//Pool"/>
+    <genClasses ecoreClass="BPMN20.ecore#//Icon"/>
+  </genPackages>
+  <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
+      ecorePackage="glsp-graph.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="glsp-graph.ecore#//GSeverity">
+      <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/error"/>
+      <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/warning"/>
+      <genEnumLiterals ecoreEnumLiteral="glsp-graph.ecore#//GSeverity/info"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GModelElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/cssClasses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GModelElement/children"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference glsp-graph.ecore#//GModelElement/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/trace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelElement/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GShapeElement"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GGraph">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GGraph/layoutOptions"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GModelRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GModelRoot/canvasBounds"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GModelRoot/revision"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GNode"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GEdge">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdge/routingPoints"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdge/sourceId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdge/targetId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdge/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdge/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdge/routerKind"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GCompartment"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GLabel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLabel/text"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GIssueMarker">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GIssueMarker/issues"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GPort"/>
+    <genClasses ecoreClass="glsp-graph.ecore#//GButton">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GButton/enabled"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GBoundsAware">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GBoundsAware/position"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GBoundsAware/size"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GPoint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPoint/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPoint/y"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GDimension">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GDimension/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GDimension/height"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GEdgeLayoutable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GEdgeLayoutable/edgePlacement"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GEdgePlacement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/position"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/offset"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/side"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GEdgePlacement/rotate"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="glsp-graph.ecore#//GLayouting">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GLayouting/layout"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GLayouting/layoutOptions"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GBounds">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/x"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/y"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/width"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GBounds/height"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GAlignable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GAlignable/alignment"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GArgumentable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference glsp-graph.ecore#//GArgumentable/args"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GIssue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GIssue/severity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GIssue/message"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GHtmlRoot">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GHtmlRoot/classes"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//GPreRenderedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//GPreRenderedElement/code"/>
+    </genClasses>
+    <genClasses ecoreClass="glsp-graph.ecore#//StringToObjectMapEntry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute glsp-graph.ecore#//StringToObjectMapEntry/value"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

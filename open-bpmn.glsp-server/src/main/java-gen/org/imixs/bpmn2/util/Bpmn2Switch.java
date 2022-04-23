@@ -89,6 +89,78 @@ public class Bpmn2Switch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case Bpmn2Package.IMPORT: {
+                Import import_ = (Import)theEObject;
+                T result = caseImport(import_);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.EXTENSION_DEFINITION: {
+                ExtensionDefinition extensionDefinition = (ExtensionDefinition)theEObject;
+                T result = caseExtensionDefinition(extensionDefinition);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.EXTENSION_ATTRIBUTE_DEFINITION: {
+                ExtensionAttributeDefinition extensionAttributeDefinition = (ExtensionAttributeDefinition)theEObject;
+                T result = caseExtensionAttributeDefinition(extensionAttributeDefinition);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.EXTENSION_ATTRIBUTE_VALUE: {
+                ExtensionAttributeValue extensionAttributeValue = (ExtensionAttributeValue)theEObject;
+                T result = caseExtensionAttributeValue(extensionAttributeValue);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.EXTENSION: {
+                Extension extension = (Extension)theEObject;
+                T result = caseExtension(extension);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.RELATIONSHIP: {
+                Relationship relationship = (Relationship)theEObject;
+                T result = caseRelationship(relationship);
+                if (result == null) result = caseBaseElement(relationship);
+                if (result == null) result = caseGNode(relationship);
+                if (result == null) result = caseGShapeElement(relationship);
+                if (result == null) result = caseGEdgeLayoutable(relationship);
+                if (result == null) result = caseGLayouting(relationship);
+                if (result == null) result = caseGModelElement(relationship);
+                if (result == null) result = caseGBoundsAware(relationship);
+                if (result == null) result = caseGArgumentable(relationship);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.DEFINITIONS: {
+                Definitions definitions = (Definitions)theEObject;
+                T result = caseDefinitions(definitions);
+                if (result == null) result = caseBaseElement(definitions);
+                if (result == null) result = caseGNode(definitions);
+                if (result == null) result = caseGShapeElement(definitions);
+                if (result == null) result = caseGEdgeLayoutable(definitions);
+                if (result == null) result = caseGLayouting(definitions);
+                if (result == null) result = caseGModelElement(definitions);
+                if (result == null) result = caseGBoundsAware(definitions);
+                if (result == null) result = caseGArgumentable(definitions);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.ROOT_ELEMENT: {
+                RootElement rootElement = (RootElement)theEObject;
+                T result = caseRootElement(rootElement);
+                if (result == null) result = caseBaseElement(rootElement);
+                if (result == null) result = caseGNode(rootElement);
+                if (result == null) result = caseGShapeElement(rootElement);
+                if (result == null) result = caseGEdgeLayoutable(rootElement);
+                if (result == null) result = caseGLayouting(rootElement);
+                if (result == null) result = caseGModelElement(rootElement);
+                if (result == null) result = caseGBoundsAware(rootElement);
+                if (result == null) result = caseGArgumentable(rootElement);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case Bpmn2Package.FLOW_ELEMENT: {
                 FlowElement flowElement = (FlowElement)theEObject;
                 T result = caseFlowElement(flowElement);
@@ -388,6 +460,126 @@ public class Bpmn2Switch<T> extends Switch<T> {
      * @generated
      */
     public T caseBaseElement(BaseElement object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Import</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Import</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseImport(Import object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Extension Definition</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Extension Definition</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExtensionDefinition(ExtensionDefinition object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Extension Attribute Definition</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Extension Attribute Definition</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExtensionAttributeDefinition(ExtensionAttributeDefinition object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Extension Attribute Value</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Extension Attribute Value</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExtensionAttributeValue(ExtensionAttributeValue object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Extension</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Extension</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseExtension(Extension object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Relationship</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Relationship</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRelationship(Relationship object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Definitions</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Definitions</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDefinitions(Definitions object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Root Element</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Root Element</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRootElement(RootElement object) {
         return null;
     }
 

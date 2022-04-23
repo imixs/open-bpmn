@@ -4,6 +4,7 @@ package org.imixs.bpmn2.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -19,17 +20,26 @@ import org.imixs.bpmn2.Bpmn2Factory;
 import org.imixs.bpmn2.Bpmn2Package;
 import org.imixs.bpmn2.CatchEvent;
 import org.imixs.bpmn2.ComplexGateway;
+import org.imixs.bpmn2.Definitions;
 import org.imixs.bpmn2.EndEvent;
 import org.imixs.bpmn2.Event;
 import org.imixs.bpmn2.ExclusiveGateway;
 import org.imixs.bpmn2.Expression;
+import org.imixs.bpmn2.Extension;
+import org.imixs.bpmn2.ExtensionAttributeDefinition;
+import org.imixs.bpmn2.ExtensionAttributeValue;
+import org.imixs.bpmn2.ExtensionDefinition;
 import org.imixs.bpmn2.FlowElement;
 import org.imixs.bpmn2.FlowNode;
 import org.imixs.bpmn2.Gateway;
 import org.imixs.bpmn2.Icon;
+import org.imixs.bpmn2.Import;
 import org.imixs.bpmn2.IncusiveGateway;
 import org.imixs.bpmn2.ParallelGateway;
 import org.imixs.bpmn2.Pool;
+import org.imixs.bpmn2.Relationship;
+import org.imixs.bpmn2.RelationshipDirection;
+import org.imixs.bpmn2.RootElement;
 import org.imixs.bpmn2.SequenceFlow;
 import org.imixs.bpmn2.StartEvent;
 import org.imixs.bpmn2.Task;
@@ -48,6 +58,62 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * @generated
      */
     private EClass baseElementEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass importEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass extensionDefinitionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass extensionAttributeDefinitionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass extensionAttributeValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass extensionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass relationshipEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass definitionsEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass rootElementEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -176,6 +242,13 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
     private EClass iconEClass = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum relationshipDirectionEEnum = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -267,6 +340,312 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      */
     public EAttribute getBaseElement_Documentation() {
         return (EAttribute)baseElementEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getImport() {
+        return importEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getImport_ImportType() {
+        return (EAttribute)importEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getImport_Location() {
+        return (EAttribute)importEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getImport_Namespace() {
+        return (EAttribute)importEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExtensionDefinition() {
+        return extensionDefinitionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExtensionDefinition_Name() {
+        return (EAttribute)extensionDefinitionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getExtensionDefinition_ExtensionAttributeDefinitions() {
+        return (EReference)extensionDefinitionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExtensionAttributeDefinition() {
+        return extensionAttributeDefinitionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExtensionAttributeDefinition_Name() {
+        return (EAttribute)extensionAttributeDefinitionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExtensionAttributeDefinition_Type() {
+        return (EAttribute)extensionAttributeDefinitionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExtensionAttributeDefinition_IsReference() {
+        return (EAttribute)extensionAttributeDefinitionEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getExtensionAttributeDefinition_ExtensionDefinition() {
+        return (EReference)extensionAttributeDefinitionEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExtensionAttributeValue() {
+        return extensionAttributeValueEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getExtensionAttributeValue_ValueRef() {
+        return (EReference)extensionAttributeValueEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExtensionAttributeValue_Value() {
+        return (EAttribute)extensionAttributeValueEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getExtensionAttributeValue_ExtensionAttributeDefinition() {
+        return (EReference)extensionAttributeValueEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getExtension() {
+        return extensionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getExtension_MustUnderstand() {
+        return (EAttribute)extensionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getExtension_Definition() {
+        return (EReference)extensionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getRelationship() {
+        return relationshipEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getRelationship_Direction() {
+        return (EAttribute)relationshipEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getRelationship_Sources() {
+        return (EReference)relationshipEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getRelationship_Targets() {
+        return (EReference)relationshipEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDefinitions() {
+        return definitionsEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDefinitions_RootElements() {
+        return (EReference)definitionsEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDefinitions_Imports() {
+        return (EReference)definitionsEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDefinitions_Relationships() {
+        return (EReference)definitionsEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDefinitions_Extensions() {
+        return (EReference)definitionsEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDefinitions_Exporter() {
+        return (EAttribute)definitionsEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDefinitions_ExporterVersion() {
+        return (EAttribute)definitionsEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDefinitions_TargetNamespace() {
+        return (EAttribute)definitionsEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDefinitions_TypeLanguage() {
+        return (EAttribute)definitionsEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getDefinitions_ExpressionLanguage() {
+        return (EAttribute)definitionsEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getRootElement() {
+        return rootElementEClass;
     }
 
     /**
@@ -526,6 +905,15 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EEnum getRelationshipDirection() {
+        return relationshipDirectionEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Bpmn2Factory getBpmn2Factory() {
         return (Bpmn2Factory)getEFactoryInstance();
     }
@@ -552,6 +940,48 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         baseElementEClass = createEClass(BASE_ELEMENT);
         createEAttribute(baseElementEClass, BASE_ELEMENT__NAME);
         createEAttribute(baseElementEClass, BASE_ELEMENT__DOCUMENTATION);
+
+        importEClass = createEClass(IMPORT);
+        createEAttribute(importEClass, IMPORT__IMPORT_TYPE);
+        createEAttribute(importEClass, IMPORT__LOCATION);
+        createEAttribute(importEClass, IMPORT__NAMESPACE);
+
+        extensionDefinitionEClass = createEClass(EXTENSION_DEFINITION);
+        createEAttribute(extensionDefinitionEClass, EXTENSION_DEFINITION__NAME);
+        createEReference(extensionDefinitionEClass, EXTENSION_DEFINITION__EXTENSION_ATTRIBUTE_DEFINITIONS);
+
+        extensionAttributeDefinitionEClass = createEClass(EXTENSION_ATTRIBUTE_DEFINITION);
+        createEAttribute(extensionAttributeDefinitionEClass, EXTENSION_ATTRIBUTE_DEFINITION__NAME);
+        createEAttribute(extensionAttributeDefinitionEClass, EXTENSION_ATTRIBUTE_DEFINITION__TYPE);
+        createEAttribute(extensionAttributeDefinitionEClass, EXTENSION_ATTRIBUTE_DEFINITION__IS_REFERENCE);
+        createEReference(extensionAttributeDefinitionEClass, EXTENSION_ATTRIBUTE_DEFINITION__EXTENSION_DEFINITION);
+
+        extensionAttributeValueEClass = createEClass(EXTENSION_ATTRIBUTE_VALUE);
+        createEReference(extensionAttributeValueEClass, EXTENSION_ATTRIBUTE_VALUE__VALUE_REF);
+        createEAttribute(extensionAttributeValueEClass, EXTENSION_ATTRIBUTE_VALUE__VALUE);
+        createEReference(extensionAttributeValueEClass, EXTENSION_ATTRIBUTE_VALUE__EXTENSION_ATTRIBUTE_DEFINITION);
+
+        extensionEClass = createEClass(EXTENSION);
+        createEAttribute(extensionEClass, EXTENSION__MUST_UNDERSTAND);
+        createEReference(extensionEClass, EXTENSION__DEFINITION);
+
+        relationshipEClass = createEClass(RELATIONSHIP);
+        createEAttribute(relationshipEClass, RELATIONSHIP__DIRECTION);
+        createEReference(relationshipEClass, RELATIONSHIP__SOURCES);
+        createEReference(relationshipEClass, RELATIONSHIP__TARGETS);
+
+        definitionsEClass = createEClass(DEFINITIONS);
+        createEReference(definitionsEClass, DEFINITIONS__ROOT_ELEMENTS);
+        createEReference(definitionsEClass, DEFINITIONS__IMPORTS);
+        createEReference(definitionsEClass, DEFINITIONS__RELATIONSHIPS);
+        createEReference(definitionsEClass, DEFINITIONS__EXTENSIONS);
+        createEAttribute(definitionsEClass, DEFINITIONS__EXPORTER);
+        createEAttribute(definitionsEClass, DEFINITIONS__EXPORTER_VERSION);
+        createEAttribute(definitionsEClass, DEFINITIONS__TARGET_NAMESPACE);
+        createEAttribute(definitionsEClass, DEFINITIONS__TYPE_LANGUAGE);
+        createEAttribute(definitionsEClass, DEFINITIONS__EXPRESSION_LANGUAGE);
+
+        rootElementEClass = createEClass(ROOT_ELEMENT);
 
         flowElementEClass = createEClass(FLOW_ELEMENT);
         createEAttribute(flowElementEClass, FLOW_ELEMENT__CATEGORY);
@@ -598,6 +1028,9 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         poolEClass = createEClass(POOL);
 
         iconEClass = createEClass(ICON);
+
+        // Create enums
+        relationshipDirectionEEnum = createEEnum(RELATIONSHIP_DIRECTION);
     }
 
     /**
@@ -632,6 +1065,9 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 
         // Add supertypes to classes
         baseElementEClass.getESuperTypes().add(theGraphPackage.getGNode());
+        relationshipEClass.getESuperTypes().add(this.getBaseElement());
+        definitionsEClass.getESuperTypes().add(this.getBaseElement());
+        rootElementEClass.getESuperTypes().add(this.getBaseElement());
         flowElementEClass.getESuperTypes().add(this.getBaseElement());
         expressionEClass.getESuperTypes().add(this.getBaseElement());
         sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
@@ -656,6 +1092,48 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         initEClass(baseElementEClass, BaseElement.class, "BaseElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBaseElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getBaseElement_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getImport_ImportType(), ecorePackage.getEString(), "importType", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getImport_Location(), ecorePackage.getEString(), "location", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getImport_Namespace(), ecorePackage.getEString(), "namespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(extensionDefinitionEClass, ExtensionDefinition.class, "ExtensionDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getExtensionDefinition_Name(), ecorePackage.getEString(), "name", null, 0, 1, ExtensionDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExtensionDefinition_ExtensionAttributeDefinitions(), this.getExtensionAttributeDefinition(), this.getExtensionAttributeDefinition_ExtensionDefinition(), "extensionAttributeDefinitions", null, 0, -1, ExtensionDefinition.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
+
+        initEClass(extensionAttributeDefinitionEClass, ExtensionAttributeDefinition.class, "ExtensionAttributeDefinition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getExtensionAttributeDefinition_Name(), ecorePackage.getEString(), "name", null, 0, 1, ExtensionAttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getExtensionAttributeDefinition_Type(), ecorePackage.getEString(), "type", null, 0, 1, ExtensionAttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getExtensionAttributeDefinition_IsReference(), ecorePackage.getEBoolean(), "isReference", null, 0, 1, ExtensionAttributeDefinition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExtensionAttributeDefinition_ExtensionDefinition(), this.getExtensionDefinition(), this.getExtensionDefinition_ExtensionAttributeDefinitions(), "extensionDefinition", null, 1, 1, ExtensionAttributeDefinition.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
+
+        initEClass(extensionAttributeValueEClass, ExtensionAttributeValue.class, "ExtensionAttributeValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getExtensionAttributeValue_ValueRef(), ecorePackage.getEObject(), null, "valueRef", null, 0, 1, ExtensionAttributeValue.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
+        initEAttribute(getExtensionAttributeValue_Value(), ecorePackage.getEFeatureMapEntry(), "value", null, 0, -1, ExtensionAttributeValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExtensionAttributeValue_ExtensionAttributeDefinition(), this.getExtensionAttributeDefinition(), null, "extensionAttributeDefinition", null, 1, 1, ExtensionAttributeValue.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, !IS_ORDERED);
+
+        initEClass(extensionEClass, Extension.class, "Extension", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getExtension_MustUnderstand(), ecorePackage.getEBoolean(), "mustUnderstand", null, 0, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getExtension_Definition(), this.getExtensionDefinition(), null, "definition", null, 1, 1, Extension.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(relationshipEClass, Relationship.class, "Relationship", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getRelationship_Direction(), this.getRelationshipDirection(), "direction", null, 0, 1, Relationship.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getRelationship_Sources(), ecorePackage.getEObject(), null, "sources", null, 1, -1, Relationship.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getRelationship_Targets(), ecorePackage.getEObject(), null, "targets", null, 1, -1, Relationship.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(definitionsEClass, Definitions.class, "Definitions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDefinitions_RootElements(), this.getRootElement(), null, "rootElements", null, 0, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getDefinitions_Imports(), this.getImport(), null, "imports", null, 0, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getDefinitions_Relationships(), this.getRelationship(), null, "relationships", null, 0, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getDefinitions_Extensions(), this.getExtension(), null, "extensions", null, 0, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEAttribute(getDefinitions_Exporter(), ecorePackage.getEString(), "exporter", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDefinitions_ExporterVersion(), ecorePackage.getEString(), "exporterVersion", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDefinitions_TargetNamespace(), ecorePackage.getEString(), "targetNamespace", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDefinitions_TypeLanguage(), ecorePackage.getEString(), "typeLanguage", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDefinitions_ExpressionLanguage(), ecorePackage.getEString(), "expressionLanguage", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(rootElementEClass, RootElement.class, "RootElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(flowElementEClass, FlowElement.class, "FlowElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getFlowElement_Category(), ecorePackage.getEString(), "category", null, 0, -1, FlowElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -702,6 +1180,13 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        // Initialize enums and add enum literals
+        initEEnum(relationshipDirectionEEnum, RelationshipDirection.class, "RelationshipDirection");
+        addEEnumLiteral(relationshipDirectionEEnum, RelationshipDirection.NONE);
+        addEEnumLiteral(relationshipDirectionEEnum, RelationshipDirection.FORWARD);
+        addEEnumLiteral(relationshipDirectionEEnum, RelationshipDirection.BACKWARD);
+        addEEnumLiteral(relationshipDirectionEEnum, RelationshipDirection.BOTH);
 
         // Create resource
         createResource(eNS_URI);
