@@ -18,7 +18,7 @@
       <!-- @generated bpmn-glsp -->
       <package
             uri="http://www.openbpmn.org/bpmn/glsp"
-            class="org.openbpmn.glsp.graph.BpmnPackage"
+            class="org.openbpmn.glsp.bpmn.BpmnPackage"
             genModel="model/bpmn-glsp.genmodel"/>
    </extension>
 

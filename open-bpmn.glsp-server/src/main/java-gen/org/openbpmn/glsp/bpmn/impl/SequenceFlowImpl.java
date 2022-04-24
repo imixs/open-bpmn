@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.impl;
+package org.openbpmn.glsp.bpmn.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -9,8 +9,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.glsp.graph.impl.GEdgeImpl;
-import org.openbpmn.glsp.graph.BpmnPackage;
-import org.openbpmn.glsp.graph.SequenceFlow;
+
+import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.SequenceFlow;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,9 +21,9 @@ import org.openbpmn.glsp.graph.SequenceFlow;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.graph.impl.SequenceFlowImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.graph.impl.SequenceFlowImpl#getCondition <em>Condition</em>}</li>
- *   <li>{@link org.openbpmn.glsp.graph.impl.SequenceFlowImpl#isDefaultFlow <em>Default Flow</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl#getCondition <em>Condition</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl#isDefaultFlow <em>Default Flow</em>}</li>
  * </ul>
  *
  * @generated

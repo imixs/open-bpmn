@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.openbpmn.glsp.graph.EventNode;
 
 public class TestReflectionAPI {
     private static Logger logger = Logger.getLogger(TestReflectionAPI.class.getName());

@@ -126,11 +126,12 @@ Click on 'Finish' to generate the *.genmodel* file.
 
 ### Generate java classes
 
-Now you can generate the java classes. Before you can start, you need to change some of the details of the new *.genfile*.  Open the *.genfile* and choose the root element of the bpmnGraph. In the property view change the package name into `org.openbpmn.glsp`:
+Now you can generate the java classes. Before you can start, you need to change some of the details of the new *.genfile*.  Open the *.genfile* and choose the root element of the bpmn graph elements. In the property view change the package name into `org.openbpmn.glsp`
+
 
 <img src="./images/emf-generator-03.png" />
 
-Next choose the root element of you glsp graph model. In the property view change the package name to `org.eclipse.glsp`. 
+Next choose the root element of your glsp graph model. In the property view change the package name to `org.eclipse.glsp`. 
 
 <img src="./images/emf-generator-04.png" />
 

@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.impl;
+package org.openbpmn.glsp.bpmn.impl;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -11,16 +11,17 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.glsp.graph.GraphPackage;
 
 import org.eclipse.glsp.graph.impl.GraphPackageImpl;
-import org.openbpmn.glsp.graph.BaseElement;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.BpmnPackage;
-import org.openbpmn.glsp.graph.EventNode;
-import org.openbpmn.glsp.graph.FlowElement;
-import org.openbpmn.glsp.graph.GatewayNode;
-import org.openbpmn.glsp.graph.Icon;
-import org.openbpmn.glsp.graph.Pool;
-import org.openbpmn.glsp.graph.SequenceFlow;
-import org.openbpmn.glsp.graph.TaskNode;
+
+import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.EventNode;
+import org.openbpmn.glsp.bpmn.FlowElement;
+import org.openbpmn.glsp.bpmn.GatewayNode;
+import org.openbpmn.glsp.bpmn.Icon;
+import org.openbpmn.glsp.bpmn.Pool;
+import org.openbpmn.glsp.bpmn.SequenceFlow;
+import org.openbpmn.glsp.bpmn.TaskNode;
 
 /**
  * <!-- begin-user-doc -->
@@ -96,7 +97,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see org.openbpmn.glsp.graph.BpmnPackage#eNS_URI
+     * @see org.openbpmn.glsp.bpmn.BpmnPackage#eNS_URI
      * @see #init()
      * @generated
      */

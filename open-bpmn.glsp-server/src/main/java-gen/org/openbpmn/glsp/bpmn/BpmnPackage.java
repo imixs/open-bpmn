@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph;
+package org.openbpmn.glsp.bpmn;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -20,7 +20,7 @@ import org.eclipse.glsp.graph.GraphPackage;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see org.openbpmn.glsp.graph.BpmnFactory
+ * @see org.openbpmn.glsp.bpmn.BpmnFactory
  * @model kind="package"
  * @generated
  */
@@ -55,14 +55,14 @@ public interface BpmnPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    BpmnPackage eINSTANCE = org.openbpmn.glsp.graph.impl.BpmnPackageImpl.init();
+    BpmnPackage eINSTANCE = org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.BaseElementImpl <em>Base Element</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl <em>Base Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.BaseElementImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getBaseElement()
+     * @see org.openbpmn.glsp.bpmn.impl.BaseElementImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getBaseElement()
      * @generated
      */
     int BASE_ELEMENT = 0;
@@ -212,11 +212,11 @@ public interface BpmnPackage extends EPackage {
     int BASE_ELEMENT_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.FlowElementImpl <em>Flow Element</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl <em>Flow Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.FlowElementImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getFlowElement()
+     * @see org.openbpmn.glsp.bpmn.impl.FlowElementImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getFlowElement()
      * @generated
      */
     int FLOW_ELEMENT = 1;
@@ -375,11 +375,11 @@ public interface BpmnPackage extends EPackage {
     int FLOW_ELEMENT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.TaskNodeImpl <em>Task Node</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.TaskNodeImpl <em>Task Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.TaskNodeImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getTaskNode()
+     * @see org.openbpmn.glsp.bpmn.impl.TaskNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTaskNode()
      * @generated
      */
     int TASK_NODE = 2;
@@ -538,11 +538,11 @@ public interface BpmnPackage extends EPackage {
     int TASK_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.GatewayNodeImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getGatewayNode()
+     * @see org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGatewayNode()
      * @generated
      */
     int GATEWAY_NODE = 3;
@@ -701,11 +701,11 @@ public interface BpmnPackage extends EPackage {
     int GATEWAY_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.EventNodeImpl <em>Event Node</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.EventNodeImpl <em>Event Node</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.EventNodeImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getEventNode()
+     * @see org.openbpmn.glsp.bpmn.impl.EventNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getEventNode()
      * @generated
      */
     int EVENT_NODE = 4;
@@ -864,11 +864,11 @@ public interface BpmnPackage extends EPackage {
     int EVENT_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.PoolImpl <em>Pool</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.PoolImpl <em>Pool</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.PoolImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getPool()
+     * @see org.openbpmn.glsp.bpmn.impl.PoolImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPool()
      * @generated
      */
     int POOL = 5;
@@ -1018,11 +1018,11 @@ public interface BpmnPackage extends EPackage {
     int POOL_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.IconImpl <em>Icon</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.IconImpl <em>Icon</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.IconImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getIcon()
+     * @see org.openbpmn.glsp.bpmn.impl.IconImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIcon()
      * @generated
      */
     int ICON = 6;
@@ -1145,11 +1145,11 @@ public interface BpmnPackage extends EPackage {
     int ICON_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.graph.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.graph.impl.SequenceFlowImpl
-     * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getSequenceFlow()
+     * @see org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlow()
      * @generated
      */
     int SEQUENCE_FLOW = 7;
@@ -1318,146 +1318,146 @@ public interface BpmnPackage extends EPackage {
 
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.BaseElement <em>Base Element</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.BaseElement <em>Base Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Base Element</em>'.
-     * @see org.openbpmn.glsp.graph.BaseElement
+     * @see org.openbpmn.glsp.bpmn.BaseElement
      * @generated
      */
     EClass getBaseElement();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.graph.BaseElement#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.BaseElement#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see org.openbpmn.glsp.graph.BaseElement#getName()
+     * @see org.openbpmn.glsp.bpmn.BaseElement#getName()
      * @see #getBaseElement()
      * @generated
      */
     EAttribute getBaseElement_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.graph.BaseElement#getDocumentation <em>Documentation</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.BaseElement#getDocumentation <em>Documentation</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Documentation</em>'.
-     * @see org.openbpmn.glsp.graph.BaseElement#getDocumentation()
+     * @see org.openbpmn.glsp.bpmn.BaseElement#getDocumentation()
      * @see #getBaseElement()
      * @generated
      */
     EAttribute getBaseElement_Documentation();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.FlowElement <em>Flow Element</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.FlowElement <em>Flow Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Flow Element</em>'.
-     * @see org.openbpmn.glsp.graph.FlowElement
+     * @see org.openbpmn.glsp.bpmn.FlowElement
      * @generated
      */
     EClass getFlowElement();
 
     /**
-     * Returns the meta object for the attribute list '{@link org.openbpmn.glsp.graph.FlowElement#getCategory <em>Category</em>}'.
+     * Returns the meta object for the attribute list '{@link org.openbpmn.glsp.bpmn.FlowElement#getCategory <em>Category</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute list '<em>Category</em>'.
-     * @see org.openbpmn.glsp.graph.FlowElement#getCategory()
+     * @see org.openbpmn.glsp.bpmn.FlowElement#getCategory()
      * @see #getFlowElement()
      * @generated
      */
     EAttribute getFlowElement_Category();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.TaskNode <em>Task Node</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TaskNode <em>Task Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Task Node</em>'.
-     * @see org.openbpmn.glsp.graph.TaskNode
+     * @see org.openbpmn.glsp.bpmn.TaskNode
      * @generated
      */
     EClass getTaskNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.GatewayNode <em>Gateway Node</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.GatewayNode <em>Gateway Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Gateway Node</em>'.
-     * @see org.openbpmn.glsp.graph.GatewayNode
+     * @see org.openbpmn.glsp.bpmn.GatewayNode
      * @generated
      */
     EClass getGatewayNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.EventNode <em>Event Node</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.EventNode <em>Event Node</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Event Node</em>'.
-     * @see org.openbpmn.glsp.graph.EventNode
+     * @see org.openbpmn.glsp.bpmn.EventNode
      * @generated
      */
     EClass getEventNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.Pool <em>Pool</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Pool <em>Pool</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Pool</em>'.
-     * @see org.openbpmn.glsp.graph.Pool
+     * @see org.openbpmn.glsp.bpmn.Pool
      * @generated
      */
     EClass getPool();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.Icon <em>Icon</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Icon <em>Icon</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Icon</em>'.
-     * @see org.openbpmn.glsp.graph.Icon
+     * @see org.openbpmn.glsp.bpmn.Icon
      * @generated
      */
     EClass getIcon();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.graph.SequenceFlow <em>Sequence Flow</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.SequenceFlow <em>Sequence Flow</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for class '<em>Sequence Flow</em>'.
-     * @see org.openbpmn.glsp.graph.SequenceFlow
+     * @see org.openbpmn.glsp.bpmn.SequenceFlow
      * @generated
      */
     EClass getSequenceFlow();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.graph.SequenceFlow#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlow#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see org.openbpmn.glsp.graph.SequenceFlow#getName()
+     * @see org.openbpmn.glsp.bpmn.SequenceFlow#getName()
      * @see #getSequenceFlow()
      * @generated
      */
     EAttribute getSequenceFlow_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.graph.SequenceFlow#getCondition <em>Condition</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlow#getCondition <em>Condition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Condition</em>'.
-     * @see org.openbpmn.glsp.graph.SequenceFlow#getCondition()
+     * @see org.openbpmn.glsp.bpmn.SequenceFlow#getCondition()
      * @see #getSequenceFlow()
      * @generated
      */
     EAttribute getSequenceFlow_Condition();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.graph.SequenceFlow#isDefaultFlow <em>Default Flow</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlow#isDefaultFlow <em>Default Flow</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Default Flow</em>'.
-     * @see org.openbpmn.glsp.graph.SequenceFlow#isDefaultFlow()
+     * @see org.openbpmn.glsp.bpmn.SequenceFlow#isDefaultFlow()
      * @see #getSequenceFlow()
      * @generated
      */
@@ -1487,11 +1487,11 @@ public interface BpmnPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.BaseElementImpl <em>Base Element</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl <em>Base Element</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.BaseElementImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getBaseElement()
+         * @see org.openbpmn.glsp.bpmn.impl.BaseElementImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getBaseElement()
          * @generated
          */
         EClass BASE_ELEMENT = eINSTANCE.getBaseElement();
@@ -1513,11 +1513,11 @@ public interface BpmnPackage extends EPackage {
         EAttribute BASE_ELEMENT__DOCUMENTATION = eINSTANCE.getBaseElement_Documentation();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.FlowElementImpl <em>Flow Element</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl <em>Flow Element</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.FlowElementImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getFlowElement()
+         * @see org.openbpmn.glsp.bpmn.impl.FlowElementImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getFlowElement()
          * @generated
          */
         EClass FLOW_ELEMENT = eINSTANCE.getFlowElement();
@@ -1531,61 +1531,61 @@ public interface BpmnPackage extends EPackage {
         EAttribute FLOW_ELEMENT__CATEGORY = eINSTANCE.getFlowElement_Category();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.TaskNodeImpl <em>Task Node</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TaskNodeImpl <em>Task Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.TaskNodeImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getTaskNode()
+         * @see org.openbpmn.glsp.bpmn.impl.TaskNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTaskNode()
          * @generated
          */
         EClass TASK_NODE = eINSTANCE.getTaskNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.GatewayNodeImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getGatewayNode()
+         * @see org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGatewayNode()
          * @generated
          */
         EClass GATEWAY_NODE = eINSTANCE.getGatewayNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.EventNodeImpl <em>Event Node</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.EventNodeImpl <em>Event Node</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.EventNodeImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getEventNode()
+         * @see org.openbpmn.glsp.bpmn.impl.EventNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getEventNode()
          * @generated
          */
         EClass EVENT_NODE = eINSTANCE.getEventNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.PoolImpl <em>Pool</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.PoolImpl <em>Pool</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.PoolImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getPool()
+         * @see org.openbpmn.glsp.bpmn.impl.PoolImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPool()
          * @generated
          */
         EClass POOL = eINSTANCE.getPool();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.IconImpl <em>Icon</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.IconImpl <em>Icon</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.IconImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getIcon()
+         * @see org.openbpmn.glsp.bpmn.impl.IconImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIcon()
          * @generated
          */
         EClass ICON = eINSTANCE.getIcon();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.graph.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.graph.impl.SequenceFlowImpl
-         * @see org.openbpmn.glsp.graph.impl.BpmnPackageImpl#getSequenceFlow()
+         * @see org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlow()
          * @generated
          */
         EClass SEQUENCE_FLOW = eINSTANCE.getSequenceFlow();

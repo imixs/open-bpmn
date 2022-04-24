@@ -35,8 +35,8 @@ import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.types.GLSPServerException;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
-import org.openbpmn.glsp.graph.TaskNode;
-import org.openbpmn.glsp.graph.impl.BpmnFactoryImpl;
+import org.openbpmn.glsp.bpmn.TaskNode;
+import org.openbpmn.glsp.bpmn.impl.BpmnFactoryImpl;
 
 import com.google.inject.Inject;
 

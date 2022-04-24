@@ -19,9 +19,9 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
+import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.bpmn.Icon;
 import org.openbpmn.glsp.elements.IconBuilder;
-import org.openbpmn.glsp.graph.BaseElement;
-import org.openbpmn.glsp.graph.Icon;
 
 /**
  * The GatewayNodeBuilder provides helper methods to create GNode Elements

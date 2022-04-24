@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph;
+package org.openbpmn.glsp.bpmn;
 
 
 /**
@@ -9,7 +9,7 @@ package org.openbpmn.glsp.graph;
  * <!-- end-user-doc -->
  *
  *
- * @see org.openbpmn.glsp.graph.BpmnPackage#getPool()
+ * @see org.openbpmn.glsp.bpmn.BpmnPackage#getPool()
  * @model
  * @generated
  */

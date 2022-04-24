@@ -34,7 +34,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.openbpmn.glsp.graph.EventNode;
+import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;

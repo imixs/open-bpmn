@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.impl;
+package org.openbpmn.glsp.bpmn.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -9,8 +9,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.glsp.graph.impl.GNodeImpl;
-import org.openbpmn.glsp.graph.BaseElement;
-import org.openbpmn.glsp.graph.BpmnPackage;
+
+import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.bpmn.BpmnPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,8 +21,8 @@ import org.openbpmn.glsp.graph.BpmnPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.graph.impl.BaseElementImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.graph.impl.BaseElementImpl#getDocumentation <em>Documentation</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  *
  * @generated

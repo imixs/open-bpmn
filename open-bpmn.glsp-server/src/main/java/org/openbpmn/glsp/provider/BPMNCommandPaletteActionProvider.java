@@ -34,9 +34,9 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
-import org.openbpmn.glsp.graph.EventNode;
-import org.openbpmn.glsp.graph.GatewayNode;
-import org.openbpmn.glsp.graph.TaskNode;
+import org.openbpmn.glsp.bpmn.EventNode;
+import org.openbpmn.glsp.bpmn.GatewayNode;
+import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.utils.GridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 

@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.util;
+package org.openbpmn.glsp.bpmn.util;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -16,7 +16,8 @@ import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GShapeElement;
-import org.openbpmn.glsp.graph.*;
+
+import org.openbpmn.glsp.bpmn.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +29,7 @@ import org.openbpmn.glsp.graph.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see org.openbpmn.glsp.graph.BpmnPackage
+ * @see org.openbpmn.glsp.bpmn.BpmnPackage
  * @generated
  */
 public class BpmnSwitch<T> extends Switch<T> {

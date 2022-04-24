@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationAction;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
 import org.eclipse.glsp.server.model.GModelState;
-import org.openbpmn.glsp.graph.BaseElement;
+import org.openbpmn.glsp.bpmn.BaseElement;
 
 import com.google.inject.Inject;
 

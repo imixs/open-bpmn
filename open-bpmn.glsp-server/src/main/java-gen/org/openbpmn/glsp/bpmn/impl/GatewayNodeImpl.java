@@ -1,10 +1,11 @@
 /**
  */
-package org.openbpmn.glsp.graph.impl;
+package org.openbpmn.glsp.bpmn.impl;
 
 import org.eclipse.emf.ecore.EClass;
-import org.openbpmn.glsp.graph.BpmnPackage;
-import org.openbpmn.glsp.graph.GatewayNode;
+
+import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.GatewayNode;
 
 /**
  * <!-- begin-user-doc -->

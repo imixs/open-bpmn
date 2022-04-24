@@ -24,8 +24,8 @@ import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.Pool;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**

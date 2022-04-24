@@ -16,10 +16,10 @@
 package org.openbpmn.glsp.elements;
 
 import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.Icon;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.Icon;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**

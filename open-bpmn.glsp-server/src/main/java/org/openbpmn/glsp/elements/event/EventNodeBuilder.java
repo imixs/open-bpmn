@@ -17,8 +17,8 @@ package org.openbpmn.glsp.elements.event;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.EventNode;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**

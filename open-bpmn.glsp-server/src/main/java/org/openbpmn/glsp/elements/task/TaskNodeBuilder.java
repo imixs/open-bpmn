@@ -17,8 +17,8 @@ package org.openbpmn.glsp.elements.task;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.TaskNode;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {

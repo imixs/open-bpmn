@@ -17,8 +17,8 @@ package org.openbpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.GatewayNode;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**

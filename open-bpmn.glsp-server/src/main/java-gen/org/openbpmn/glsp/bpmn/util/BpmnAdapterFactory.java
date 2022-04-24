@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.util;
+package org.openbpmn.glsp.bpmn.util;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -18,14 +18,15 @@ import org.eclipse.glsp.graph.GLayouting;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GShapeElement;
-import org.openbpmn.glsp.graph.*;
+
+import org.openbpmn.glsp.bpmn.*;
 
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see org.openbpmn.glsp.graph.BpmnPackage
+ * @see org.openbpmn.glsp.bpmn.BpmnPackage
  * @generated
  */
 public class BpmnAdapterFactory extends AdapterFactoryImpl {
@@ -165,13 +166,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.BaseElement <em>Base Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.BaseElement <em>Base Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.BaseElement
+     * @see org.openbpmn.glsp.bpmn.BaseElement
      * @generated
      */
     public Adapter createBaseElementAdapter() {
@@ -179,13 +180,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.FlowElement <em>Flow Element</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.FlowElement <em>Flow Element</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.FlowElement
+     * @see org.openbpmn.glsp.bpmn.FlowElement
      * @generated
      */
     public Adapter createFlowElementAdapter() {
@@ -193,13 +194,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.TaskNode <em>Task Node</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.TaskNode <em>Task Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.TaskNode
+     * @see org.openbpmn.glsp.bpmn.TaskNode
      * @generated
      */
     public Adapter createTaskNodeAdapter() {
@@ -207,13 +208,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.GatewayNode <em>Gateway Node</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.GatewayNode <em>Gateway Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.GatewayNode
+     * @see org.openbpmn.glsp.bpmn.GatewayNode
      * @generated
      */
     public Adapter createGatewayNodeAdapter() {
@@ -221,13 +222,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.EventNode <em>Event Node</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.EventNode <em>Event Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.EventNode
+     * @see org.openbpmn.glsp.bpmn.EventNode
      * @generated
      */
     public Adapter createEventNodeAdapter() {
@@ -235,13 +236,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.Pool <em>Pool</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Pool <em>Pool</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.Pool
+     * @see org.openbpmn.glsp.bpmn.Pool
      * @generated
      */
     public Adapter createPoolAdapter() {
@@ -249,13 +250,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.Icon <em>Icon</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Icon <em>Icon</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.Icon
+     * @see org.openbpmn.glsp.bpmn.Icon
      * @generated
      */
     public Adapter createIconAdapter() {
@@ -263,13 +264,13 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.graph.SequenceFlow <em>Sequence Flow</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.SequenceFlow <em>Sequence Flow</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.graph.SequenceFlow
+     * @see org.openbpmn.glsp.bpmn.SequenceFlow
      * @generated
      */
     public Adapter createSequenceFlowAdapter() {

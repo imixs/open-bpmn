@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph;
+package org.openbpmn.glsp.bpmn;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -13,10 +13,10 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.graph.FlowElement#getCategory <em>Category</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.FlowElement#getCategory <em>Category</em>}</li>
  * </ul>
  *
- * @see org.openbpmn.glsp.graph.BpmnPackage#getFlowElement()
+ * @see org.openbpmn.glsp.bpmn.BpmnPackage#getFlowElement()
  * @model
  * @generated
  */
@@ -27,7 +27,7 @@ public interface FlowElement extends BaseElement {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the value of the '<em>Category</em>' attribute list.
-     * @see org.openbpmn.glsp.graph.BpmnPackage#getFlowElement_Category()
+     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getFlowElement_Category()
      * @model
      * @generated
      */

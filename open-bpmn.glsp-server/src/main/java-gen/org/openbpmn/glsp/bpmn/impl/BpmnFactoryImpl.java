@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.impl;
+package org.openbpmn.glsp.bpmn.impl;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -9,7 +9,8 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-import org.openbpmn.glsp.graph.*;
+
+import org.openbpmn.glsp.bpmn.*;
 
 /**
  * <!-- begin-user-doc -->

@@ -26,8 +26,8 @@ import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.eclipse.glsp.server.utils.GModelUtil;
+import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
-import org.openbpmn.glsp.graph.BpmnPackage;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public abstract class AbstractCreateEventHandler extends CreateBPMNNodeOperationHandler {

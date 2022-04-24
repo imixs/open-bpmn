@@ -17,8 +17,8 @@ package org.openbpmn.glsp.elements.flow;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.SequenceFlow;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.SequenceFlow;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**

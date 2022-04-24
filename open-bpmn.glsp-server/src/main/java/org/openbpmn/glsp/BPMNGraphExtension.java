@@ -18,8 +18,8 @@ package org.openbpmn.glsp;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.glsp.graph.GraphExtension;
-import org.openbpmn.glsp.graph.BpmnFactory;
-import org.openbpmn.glsp.graph.BpmnPackage;
+import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.BpmnPackage;
 
 public class BPMNGraphExtension implements GraphExtension {
 

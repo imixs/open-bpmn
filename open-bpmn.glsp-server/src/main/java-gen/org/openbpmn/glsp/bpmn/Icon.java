@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph;
+package org.openbpmn.glsp.bpmn;
 
 import org.eclipse.glsp.graph.GCompartment;
 
@@ -10,7 +10,7 @@ import org.eclipse.glsp.graph.GCompartment;
  * <!-- end-user-doc -->
  *
  *
- * @see org.openbpmn.glsp.graph.BpmnPackage#getIcon()
+ * @see org.openbpmn.glsp.bpmn.BpmnPackage#getIcon()
  * @model
  * @generated
  */

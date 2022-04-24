@@ -1,6 +1,6 @@
 /**
  */
-package org.openbpmn.glsp.graph.impl;
+package org.openbpmn.glsp.bpmn.impl;
 
 import java.util.Collection;
 
@@ -9,8 +9,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.openbpmn.glsp.graph.BpmnPackage;
-import org.openbpmn.glsp.graph.FlowElement;
+
+import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.FlowElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +21,7 @@ import org.openbpmn.glsp.graph.FlowElement;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.graph.impl.FlowElementImpl#getCategory <em>Category</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl#getCategory <em>Category</em>}</li>
  * </ul>
  *
  * @generated
