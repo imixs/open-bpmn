@@ -16,7 +16,7 @@
 package org.openbpmn.glsp.elements;
 
 import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
-import org.imixs.bpmn.glsp.elements.gateway.GatewayNodeBuilder;
+import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
 import org.openbpmn.glsp.graph.BpmnFactory;
 import org.openbpmn.glsp.graph.Icon;

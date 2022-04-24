@@ -137,7 +137,7 @@
 						<configuration>
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>org.imixs.bpmn.glsp.BPMNServerLauncher</mainClass>
+									<mainClass>org.openbpmn.glsp.BPMNServerLauncher</mainClass>
 								</transformer>
 							</transformers>
 							<filters>

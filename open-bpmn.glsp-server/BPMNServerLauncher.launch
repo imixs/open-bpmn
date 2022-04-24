@@ -10,7 +10,7 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.CLASSPATH_PROVIDER" value="org.eclipse.m2e.launchconfig.classpathProvider"/>
-    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.imixs.bpmn.glsp.BPMNServerLauncher"/>
+    <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.openbpmn.glsp.BPMNServerLauncher"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="org.imixs.bpmn.glsp"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.imixs.bpmn.glsp"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.m2e.launchconfig.sourcepathProvider"/>
