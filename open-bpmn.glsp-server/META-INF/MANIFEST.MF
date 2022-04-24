@@ -11,16 +11,26 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.eclipse.glsp.graph,
  org.eclipse.glsp.graph.impl,
  org.eclipse.glsp.graph.util,
- org.imixs.bpmn2,
- org.imixs.bpmn2.impl,
- org.imixs.bpmn2.util,
  org.imixs.bpmn.bpmn2,
  org.imixs.bpmn.bpmn2.impl,
  org.imixs.bpmn.bpmn2.util,
  org.imixs.bpmn.bpmngraph,
  org.imixs.bpmn.bpmngraph.impl,
- org.imixs.bpmn.bpmngraph.util
+ org.imixs.bpmn.bpmngraph.util,
+ org.imixs.bpmn2,
+ org.imixs.bpmn2.impl,
+ org.imixs.bpmn2.util,
+ org.openbpmn.bpmngraph,
+ org.openbpmn.bpmngraph.impl,
+ org.openbpmn.bpmngraph.util,
+ org.openbpmn.glsp.graph,
+ org.openbpmn.glsp.graph.bpmnglsp,
+ org.openbpmn.glsp.graph.bpmnglsp.impl,
+ org.openbpmn.glsp.graph.bpmnglsp.util,
+ org.openbpmn.glsp.graph.impl,
+ org.openbpmn.glsp.graph.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.glsp.graph

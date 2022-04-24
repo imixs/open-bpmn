@@ -19,9 +19,9 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.openbpmn.glsp.utils.ModelTypes;
 
-public class CreateExclusiveGatewayHandler extends CreateGatewayHandler {
+public class CreateExclusiveGatewayHandler extends AbstractCreateGatewayHandler {
 
     public CreateExclusiveGatewayHandler() {
         super(ModelTypes.EXCLUSIVE_GATEWAY, i -> "ExclusiveGateway" + i);

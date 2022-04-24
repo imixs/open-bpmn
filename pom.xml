@@ -57,5 +57,8 @@
 
 
 
+	<modules>
+		<module>open-bpmn.metamodel</module>
+	</modules>
 </project>
 

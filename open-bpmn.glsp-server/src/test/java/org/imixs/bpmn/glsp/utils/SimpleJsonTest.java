@@ -33,6 +33,7 @@ import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openbpmn.glsp.utils.BPMNFileGModelLoader;
 
 public class SimpleJsonTest {
    private static Logger logger = Logger.getLogger(SimpleJsonTest.class.getName());

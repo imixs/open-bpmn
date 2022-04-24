@@ -19,9 +19,9 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.imixs.bpmn.glsp.utils.ModelTypes;
+import org.openbpmn.glsp.utils.ModelTypes;
 
-public class CreateInclusiveGatewayHandler extends CreateGatewayHandler {
+public class CreateInclusiveGatewayHandler extends AbstractCreateGatewayHandler {
 
    public CreateInclusiveGatewayHandler() {
       super(ModelTypes.INCLUSIVE_GATEWAY, i -> "InclusiveGateway" + i);

@@ -17,9 +17,9 @@ package org.imixs.bpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.imixs.bpmn.glsp.utils.BPMNBuilderHelper;
-import org.imixs.bpmn2.Bpmn2Factory;
-import org.imixs.bpmn2.ExclusiveGateway;
+import org.openbpmn.glsp.graph.BpmnFactory;
+import org.openbpmn.glsp.graph.GatewayNode;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * The GatewayNodeBuilder defines the layout of BPMN gateways
@@ -27,7 +27,7 @@ import org.imixs.bpmn2.ExclusiveGateway;
  * @author rsoika
  *
  */
-public class GatewayNodeBuilder extends AbstractGNodeBuilder<ExclusiveGateway, GatewayNodeBuilder> {
+public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
 
     private final String name;
     private final String gatewayType;
@@ -43,8 +43,8 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<ExclusiveGateway, G
     }
 
     @Override
-    protected ExclusiveGateway instantiate() {
-        return Bpmn2Factory.eINSTANCE.createExclusiveGateway();
+    protected GatewayNode instantiate() {
+        return BpmnFactory.eINSTANCE.createGatewayNode();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<ExclusiveGateway, G
      * Define layout properties
      */
     @Override
-    protected void setProperties(final ExclusiveGateway node) {
+    protected void setProperties(final GatewayNode node) {
         super.setProperties(node);
         node.setName(name);
         node.getCategory().add(gatewayType);

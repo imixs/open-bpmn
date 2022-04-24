@@ -9,16 +9,17 @@
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated BPMN20 -->
       <package
-            uri="http://www.omg.org/spec/BPMN/20100501/BPMN20.xsd"
-            class="org.imixs.bpmn2.Bpmn2Package"
-            genModel="model/BPMN20.genmodel"/>
+            uri="http://www.imixs.org/bpmn/glsp/graph"
+            class="org.openbpmn.bpmngraph.BpmngraphPackage"
+            genModel="model/bpmn-graph.genmodel"/>
    </extension>
 
-   <extension point="org.eclipse.emf.ecore.extension_parser">
-      <!-- @generated BPMN20 -->
-      <parser
-            type="bpmn2"
-            class="org.imixs.bpmn2.util.Bpmn2ResourceFactoryImpl"/>
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated bpmn-glsp -->
+      <package
+            uri="http://www.openbpmn.org/bpmn/glsp"
+            class="org.openbpmn.glsp.graph.BpmnPackage"
+            genModel="model/bpmn-glsp.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -26,7 +27,7 @@
       <package
             uri="http://www.eclipse.org/glsp/graph"
             class="org.eclipse.glsp.graph.GraphPackage"
-            genModel="model/BPMN20.genmodel"/>
+            genModel="model/bpmn-graph.genmodel"/>
    </extension>
 
 </plugin>

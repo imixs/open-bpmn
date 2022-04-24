@@ -18,10 +18,10 @@ package org.imixs.bpmn.glsp.utils;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
-import org.imixs.bpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.imixs.bpmn2.Event;
 import org.junit.Assert;
 import org.junit.Test;
+import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
+import org.openbpmn.glsp.graph.EventNode;
 
 public class TestReflectionAPI {
     private static Logger logger = Logger.getLogger(TestReflectionAPI.class.getName());
@@ -30,7 +30,7 @@ public class TestReflectionAPI {
     public void testSettersOfEvent() {
         long l = System.currentTimeMillis();
 
-        Method[] methods = Event.class.getMethods();// .getDeclaredMethods();
+        Method[] methods = EventNode.class.getMethods();// .getDeclaredMethods();
 
         // test if setDocumentation(String) exists
         Assert.assertNotNull(ApplyEventUpdateOperationHandler.findSetter(methods, "documentation"));
