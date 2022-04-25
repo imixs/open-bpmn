@@ -10,6 +10,9 @@ import org.junit.Test;
 import org.openbpmn.bpmn2.Bpmn2Factory;
 import org.openbpmn.bpmn2.Definitions;
 import org.openbpmn.bpmn2.util.Bpmn2ResourceFactoryImpl;
+import org.openbpmn.bpmndi.BPMNDiagram;
+import org.openbpmn.bpmndi.BpmndiFactory;
+import org.openbpmn.di.DiFactory;
 
 public class TestSimple {
 
@@ -28,7 +31,12 @@ public class TestSimple {
         Definitions definitions = Bpmn2Factory.eINSTANCE.createDefinitions();
         definitions.setExporter("demo");
         definitions.setExpressionLanguage("java");
-
+        
+        
+        BPMNDiagram bpmdiagram=   BpmndiFactory.eINSTANCE.createBPMNDiagram();
+       
+        definitions.getDiagrams().add(bpmdiagram);
+        
         URI uri = URI.createURI("src/test/resources/example-empty.bpmn");
         Bpmn2ResourceFactoryImpl resFactory = new Bpmn2ResourceFactoryImpl();
         Resource resource = resFactory.createResource(uri);

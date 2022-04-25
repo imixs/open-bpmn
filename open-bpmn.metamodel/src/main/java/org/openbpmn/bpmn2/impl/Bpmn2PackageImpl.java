@@ -24,6 +24,18 @@ import org.openbpmn.bpmn2.SendTask;
 import org.openbpmn.bpmn2.ServiceTask;
 import org.openbpmn.bpmn2.Task;
 
+import org.openbpmn.bpmndi.BpmndiPackage;
+
+import org.openbpmn.bpmndi.impl.BpmndiPackageImpl;
+
+import org.openbpmn.dc.DcPackage;
+
+import org.openbpmn.dc.impl.DcPackageImpl;
+
+import org.openbpmn.di.DiPackage;
+
+import org.openbpmn.di.impl.DiPackageImpl;
+
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
@@ -169,11 +181,25 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 
         isInited = true;
 
+        // Obtain or create and register interdependencies
+        Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(BpmndiPackage.eNS_URI);
+        BpmndiPackageImpl theBpmndiPackage = (BpmndiPackageImpl)(registeredPackage instanceof BpmndiPackageImpl ? registeredPackage : BpmndiPackage.eINSTANCE);
+        registeredPackage = EPackage.Registry.INSTANCE.getEPackage(DiPackage.eNS_URI);
+        DiPackageImpl theDiPackage = (DiPackageImpl)(registeredPackage instanceof DiPackageImpl ? registeredPackage : DiPackage.eINSTANCE);
+        registeredPackage = EPackage.Registry.INSTANCE.getEPackage(DcPackage.eNS_URI);
+        DcPackageImpl theDcPackage = (DcPackageImpl)(registeredPackage instanceof DcPackageImpl ? registeredPackage : DcPackage.eINSTANCE);
+
         // Create package meta-data objects
         theBpmn2Package.createPackageContents();
+        theBpmndiPackage.createPackageContents();
+        theDiPackage.createPackageContents();
+        theDcPackage.createPackageContents();
 
         // Initialize created meta-data
         theBpmn2Package.initializePackageContents();
+        theBpmndiPackage.initializePackageContents();
+        theDiPackage.initializePackageContents();
+        theDcPackage.initializePackageContents();
 
         // Mark meta-data to indicate it can't be changed
         theBpmn2Package.freeze();
@@ -244,6 +270,15 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      */
     public EAttribute getDefinitions_ExporterVersion() {
         return (EAttribute)definitionsEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDefinitions_Diagrams() {
+        return (EReference)definitionsEClass.getEStructuralFeatures().get(6);
     }
 
     /**
@@ -515,6 +550,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         createEAttribute(definitionsEClass, DEFINITIONS__TYPE_LANGUAGE);
         createEAttribute(definitionsEClass, DEFINITIONS__EXPORTER);
         createEAttribute(definitionsEClass, DEFINITIONS__EXPORTER_VERSION);
+        createEReference(definitionsEClass, DEFINITIONS__DIAGRAMS);
 
         baseElementEClass = createEClass(BASE_ELEMENT);
         createEAttribute(baseElementEClass, BASE_ELEMENT__ID);
@@ -578,6 +614,9 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         setNsPrefix(eNS_PREFIX);
         setNsURI(eNS_URI);
 
+        // Obtain other dependent packages
+        BpmndiPackage theBpmndiPackage = (BpmndiPackage)EPackage.Registry.INSTANCE.getEPackage(BpmndiPackage.eNS_URI);
+
         // Create type parameters
 
         // Set bounds for type parameters
@@ -604,6 +643,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         initEAttribute(getDefinitions_TypeLanguage(), ecorePackage.getEString(), "typeLanguage", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDefinitions_Exporter(), ecorePackage.getEString(), "exporter", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDefinitions_ExporterVersion(), ecorePackage.getEString(), "exporterVersion", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDefinitions_Diagrams(), theBpmndiPackage.getBPMNDiagram(), null, "diagrams", null, 0, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
         initEClass(baseElementEClass, BaseElement.class, "BaseElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBaseElement_Id(), ecorePackage.getEString(), "id", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);

@@ -2,14 +2,25 @@
  */
 package org.openbpmn.bpmn2.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
+
+import org.openbpmn.bpmndi.BPMNDiagram;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,6 +36,7 @@ import org.openbpmn.bpmn2.Definitions;
  *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getTypeLanguage <em>Type Language</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getExporter <em>Exporter</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getExporterVersion <em>Exporter Version</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getDiagrams <em>Diagrams</em>}</li>
  * </ul>
  *
  * @generated
@@ -149,6 +161,16 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
      * @ordered
      */
     protected String exporterVersion = EXPORTER_VERSION_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getDiagrams() <em>Diagrams</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getDiagrams()
+     * @generated
+     * @ordered
+     */
+    protected EList<BPMNDiagram> diagrams;
 
     /**
      * <!-- begin-user-doc -->
@@ -300,6 +322,32 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<BPMNDiagram> getDiagrams() {
+        if (diagrams == null) {
+            diagrams = new EObjectContainmentEList<BPMNDiagram>(BPMNDiagram.class, this, Bpmn2Package.DEFINITIONS__DIAGRAMS);
+        }
+        return diagrams;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case Bpmn2Package.DEFINITIONS__DIAGRAMS:
+                return ((InternalEList<?>)getDiagrams()).basicRemove(otherEnd, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -315,6 +363,8 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
                 return getExporter();
             case Bpmn2Package.DEFINITIONS__EXPORTER_VERSION:
                 return getExporterVersion();
+            case Bpmn2Package.DEFINITIONS__DIAGRAMS:
+                return getDiagrams();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -324,6 +374,7 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
@@ -344,6 +395,10 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
                 return;
             case Bpmn2Package.DEFINITIONS__EXPORTER_VERSION:
                 setExporterVersion((String)newValue);
+                return;
+            case Bpmn2Package.DEFINITIONS__DIAGRAMS:
+                getDiagrams().clear();
+                getDiagrams().addAll((Collection<? extends BPMNDiagram>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -375,6 +430,9 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
             case Bpmn2Package.DEFINITIONS__EXPORTER_VERSION:
                 setExporterVersion(EXPORTER_VERSION_EDEFAULT);
                 return;
+            case Bpmn2Package.DEFINITIONS__DIAGRAMS:
+                getDiagrams().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -399,6 +457,8 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
                 return EXPORTER_EDEFAULT == null ? exporter != null : !EXPORTER_EDEFAULT.equals(exporter);
             case Bpmn2Package.DEFINITIONS__EXPORTER_VERSION:
                 return EXPORTER_VERSION_EDEFAULT == null ? exporterVersion != null : !EXPORTER_VERSION_EDEFAULT.equals(exporterVersion);
+            case Bpmn2Package.DEFINITIONS__DIAGRAMS:
+                return diagrams != null && !diagrams.isEmpty();
         }
         return super.eIsSet(featureID);
     }

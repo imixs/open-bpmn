@@ -38,7 +38,7 @@ public interface Bpmn2Package extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://www.omg.org/spec/BPMN/20100524/MODEL";
+    String eNS_URI = "http://www.omg.org/spec/BPMN/20100501/MODEL-XMI";
 
     /**
      * The package namespace name.
@@ -193,13 +193,22 @@ public interface Bpmn2Package extends EPackage {
     int DEFINITIONS__EXPORTER_VERSION = BASE_ELEMENT_FEATURE_COUNT + 5;
 
     /**
+     * The feature id for the '<em><b>Diagrams</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__DIAGRAMS = BASE_ELEMENT_FEATURE_COUNT + 6;
+
+    /**
      * The number of structural features of the '<em>Definitions</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEFINITIONS_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 6;
+    int DEFINITIONS_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 7;
 
     /**
      * The number of operations of the '<em>Definitions</em>' class.
@@ -1064,6 +1073,17 @@ public interface Bpmn2Package extends EPackage {
     EAttribute getDefinitions_ExporterVersion();
 
     /**
+     * Returns the meta object for the containment reference list '{@link org.openbpmn.bpmn2.Definitions#getDiagrams <em>Diagrams</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Diagrams</em>'.
+     * @see org.openbpmn.bpmn2.Definitions#getDiagrams()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EReference getDefinitions_Diagrams();
+
+    /**
      * Returns the meta object for class '{@link org.openbpmn.bpmn2.BaseElement <em>Base Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1417,6 +1437,14 @@ public interface Bpmn2Package extends EPackage {
          * @generated
          */
         EAttribute DEFINITIONS__EXPORTER_VERSION = eINSTANCE.getDefinitions_ExporterVersion();
+
+        /**
+         * The meta object literal for the '<em><b>Diagrams</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINITIONS__DIAGRAMS = eINSTANCE.getDefinitions_Diagrams();
 
         /**
          * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.BaseElementImpl <em>Base Element</em>}' class.

@@ -2,6 +2,9 @@
  */
 package org.openbpmn.bpmn2;
 
+import org.eclipse.emf.common.util.EList;
+
+import org.openbpmn.bpmndi.BPMNDiagram;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,6 +21,7 @@ package org.openbpmn.bpmn2;
  *   <li>{@link org.openbpmn.bpmn2.Definitions#getTypeLanguage <em>Type Language</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Definitions#getExporter <em>Exporter</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Definitions#getExporterVersion <em>Exporter Version</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.Definitions#getDiagrams <em>Diagrams</em>}</li>
  * </ul>
  *
  * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions()
@@ -156,5 +160,17 @@ public interface Definitions extends BaseElement {
      * @generated
      */
     void setExporterVersion(String value);
+
+    /**
+     * Returns the value of the '<em><b>Diagrams</b></em>' containment reference list.
+     * The list contents are of type {@link org.openbpmn.bpmndi.BPMNDiagram}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Diagrams</em>' containment reference list.
+     * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions_Diagrams()
+     * @model containment="true" ordered="false"
+     * @generated
+     */
+    EList<BPMNDiagram> getDiagrams();
 
 } // Definitions

@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="ASCII"?>
-<bpmn2:Definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" expressionLanguage="java" exporter="demo"/>
+<bpmn2:Definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100501/MODEL-XMI" expressionLanguage="java" exporter="demo">
+  <diagrams/>
+</bpmn2:Definitions>
