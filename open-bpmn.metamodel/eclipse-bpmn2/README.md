@@ -1,1 +1,0 @@
-This folder contains the origin ecore file from eclipse-bpmn2 project

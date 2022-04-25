@@ -12,14 +12,14 @@
       <package
             uri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI"
             class="org.eclipse.bpmn2.Bpmn2Package"
-            genModel="model/BPMN20.genmodel"/>
+            genModel="model/old/BPMN20.genmodel"/>
    </extension>
    
    <extension point="org.eclipse.emf.ecore.generated_package">
 	<package 
 			uri="http://www.omg.org/spec/BPMN/20100524/MODEL"
 			class="org.eclipse.bpmn2.Bpmn2Package"
-			genModel="model/BPMN20.genmodel"/>
+			genModel="model/old/BPMN20.genmodel"/>
 	</extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -34,7 +34,7 @@
       <package
             uri="http://www.omg.org/spec/BPMN/20100524/DI-XMI"
             class="org.eclipse.bpmn2.di.BpmnDiPackage"
-            genModel="model/BPMN20.genmodel"/>
+            genModel="model/old/BPMN20.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -49,7 +49,7 @@
       <package
             uri="http://www.omg.org/spec/DD/20100524/DI-XMI"
             class="org.eclipse.dd.di.DiPackage"
-            genModel="model/BPMN20.genmodel"/>
+            genModel="model/old/BPMN20.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -64,7 +64,7 @@
       <package
             uri="http://www.omg.org/spec/DD/20100524/DC-XMI"
             class="org.eclipse.dd.dc.DcPackage"
-            genModel="model/BPMN20.genmodel"/>
+            genModel="model/old/BPMN20.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -75,4 +75,34 @@
    </extension>
 
 null
-null</plugin>
+null
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated bpmn2 -->
+      <package
+            uri="http://www.omg.org/spec/BPMN/20100524/MODEL"
+            class="org.openbpmn.bpmn2.Bpmn2Package"
+            genModel="model/BPMN2.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.content_parser">
+      <!-- @generated bpmn2 -->
+      <parser
+            contentTypeIdentifier="bpmn"
+            class="org.openbpmn.bpmn2.util.Bpmn2ResourceFactoryImpl"/>
+   </extension>
+
+   <extension point="org.eclipse.core.contenttype.contentTypes">
+      <!-- @generated bpmn2 -->
+      <content-type
+            base-type="org.eclipse.core.runtime.xml"
+            file-extensions="bpmn2"
+            id="bpmn"
+            name="%_UI_Bpmn2_content_type"
+            priority="normal">
+         <describer class="org.eclipse.emf.ecore.xmi.impl.RootXMLContentHandlerImpl$Describer">
+            <parameter name="namespace" value="http://www.omg.org/spec/BPMN/20100524/MODEL"/>
+         </describer>
+      </content-type>
+   </extension>
+
+</plugin>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/open-bpmn.metamodel/src/main/java" modelPluginID="open-bpmn.metamodel"
+    modelName="BPMN2" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>BPMN2.ecore</foreignModel>
+  <genPackages prefix="Bpmn2" basePackage="org.openbpmn" resource="XML" disposableProviderFactory="true"
+      contentTypeIdentifier="bpmn" ecorePackage="BPMN2.ecore#/">
+    <genClasses ecoreClass="BPMN2.ecore#//Definitions">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/targetNamespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/expressionLanguage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/typeLanguage"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/exporter"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/exporterVersion"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN2.ecore#//BaseElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//BaseElement/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//BaseElement/documentation"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN2.ecore#//FlowElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//FlowElement/name"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN2.ecore#//FlowNode"/>
+    <genClasses ecoreClass="BPMN2.ecore#//Documentation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Documentation/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Documentation/textFormat"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN2.ecore#//Activity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Activity/isForCompensation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Activity/startQuantity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Activity/completionQuantity"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN2.ecore#//Task"/>
+    <genClasses ecoreClass="BPMN2.ecore#//SendTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//SendTask/implementation"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN2.ecore#//ServiceTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//ServiceTask/implementation"/>
+    </genClasses>
+    <genClasses ecoreClass="BPMN2.ecore#//RuleTask">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//RuleTask/implementation"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN2.ecore#//RootElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//RootElement/rootElements"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN2.ecore#//FlowElementsContainer"/>
+    <genClasses ecoreClass="BPMN2.ecore#//Process">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Process/isExecutable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Process/isClosed"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -19,9 +19,20 @@ Export-Package: org.eclipse.bpmn2,
  org.eclipse.dd.dc.util,
  org.eclipse.dd.di,
  org.eclipse.dd.di.impl,
- org.eclipse.dd.di.util
+ org.eclipse.dd.di.util,
+ bpmn2,
+ bpmn2.impl,
+ bpmn2.util,
+ org.openbpmn.bpmn.bpmn2,
+ org.openbpmn.bpmn.bpmn2.impl,
+ org.openbpmn.bpmn.bpmn2.util,
+ org.openbpmn.bpmn2,
+ org.openbpmn.bpmn2.impl,
+ org.openbpmn.bpmn2.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
- org.eclipse.xsd
+ org.eclipse.xsd,
+ org.junit,
+ org.junit.jupiter.api
 Bundle-ActivationPolicy: lazy
