@@ -14,13 +14,14 @@ package org.openbpmn.bpmn2;
  * <ul>
  *   <li>{@link org.openbpmn.bpmn2.Process#isIsExecutable <em>Is Executable</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Process#isIsClosed <em>Is Closed</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.Process#getResources <em>Resources</em>}</li>
  * </ul>
  *
  * @see org.openbpmn.bpmn2.Bpmn2Package#getProcess()
  * @model
  * @generated
  */
-public interface Process extends FlowElementsContainer {
+public interface Process extends RootElement {
     /**
      * Returns the value of the '<em><b>Is Executable</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -64,5 +65,27 @@ public interface Process extends FlowElementsContainer {
      * @generated
      */
     void setIsClosed(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Resources</em>' reference.
+     * @see #setResources(ResourceRole)
+     * @see org.openbpmn.bpmn2.Bpmn2Package#getProcess_Resources()
+     * @model
+     * @generated
+     */
+    ResourceRole getResources();
+
+    /**
+     * Sets the value of the '{@link org.openbpmn.bpmn2.Process#getResources <em>Resources</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Resources</em>' reference.
+     * @see #getResources()
+     * @generated
+     */
+    void setResources(ResourceRole value);
 
 } // Process

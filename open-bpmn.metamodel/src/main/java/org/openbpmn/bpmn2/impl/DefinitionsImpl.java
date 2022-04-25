@@ -37,6 +37,7 @@ import org.openbpmn.bpmndi.BPMNDiagram;
  *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getExporter <em>Exporter</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getExporterVersion <em>Exporter Version</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getDiagrams <em>Diagrams</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.impl.DefinitionsImpl#getProcesses <em>Processes</em>}</li>
  * </ul>
  *
  * @generated
@@ -171,6 +172,16 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
      * @ordered
      */
     protected EList<BPMNDiagram> diagrams;
+
+    /**
+     * The cached value of the '{@link #getProcesses() <em>Processes</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getProcesses()
+     * @generated
+     * @ordered
+     */
+    protected EList<org.openbpmn.bpmn2.Process> processes;
 
     /**
      * <!-- begin-user-doc -->
@@ -334,11 +345,25 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EList<org.openbpmn.bpmn2.Process> getProcesses() {
+        if (processes == null) {
+            processes = new EObjectContainmentEList<org.openbpmn.bpmn2.Process>(org.openbpmn.bpmn2.Process.class, this, Bpmn2Package.DEFINITIONS__PROCESSES);
+        }
+        return processes;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case Bpmn2Package.DEFINITIONS__DIAGRAMS:
                 return ((InternalEList<?>)getDiagrams()).basicRemove(otherEnd, msgs);
+            case Bpmn2Package.DEFINITIONS__PROCESSES:
+                return ((InternalEList<?>)getProcesses()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -365,6 +390,8 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
                 return getExporterVersion();
             case Bpmn2Package.DEFINITIONS__DIAGRAMS:
                 return getDiagrams();
+            case Bpmn2Package.DEFINITIONS__PROCESSES:
+                return getProcesses();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -400,6 +427,10 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
                 getDiagrams().clear();
                 getDiagrams().addAll((Collection<? extends BPMNDiagram>)newValue);
                 return;
+            case Bpmn2Package.DEFINITIONS__PROCESSES:
+                getProcesses().clear();
+                getProcesses().addAll((Collection<? extends org.openbpmn.bpmn2.Process>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -433,6 +464,9 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
             case Bpmn2Package.DEFINITIONS__DIAGRAMS:
                 getDiagrams().clear();
                 return;
+            case Bpmn2Package.DEFINITIONS__PROCESSES:
+                getProcesses().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -459,6 +493,8 @@ public class DefinitionsImpl extends BaseElementImpl implements Definitions {
                 return EXPORTER_VERSION_EDEFAULT == null ? exporterVersion != null : !EXPORTER_VERSION_EDEFAULT.equals(exporterVersion);
             case Bpmn2Package.DEFINITIONS__DIAGRAMS:
                 return diagrams != null && !diagrams.isEmpty();
+            case Bpmn2Package.DEFINITIONS__PROCESSES:
+                return processes != null && !processes.isEmpty();
         }
         return super.eIsSet(featureID);
     }

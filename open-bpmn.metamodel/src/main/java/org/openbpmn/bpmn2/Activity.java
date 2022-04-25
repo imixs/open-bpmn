@@ -15,6 +15,7 @@ package org.openbpmn.bpmn2;
  *   <li>{@link org.openbpmn.bpmn2.Activity#isIsForCompensation <em>Is For Compensation</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Activity#getStartQuantity <em>Start Quantity</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Activity#getCompletionQuantity <em>Completion Quantity</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.Activity#getResources <em>Resources</em>}</li>
  * </ul>
  *
  * @see org.openbpmn.bpmn2.Bpmn2Package#getActivity()
@@ -87,5 +88,27 @@ public interface Activity extends FlowNode {
      * @generated
      */
     void setCompletionQuantity(int value);
+
+    /**
+     * Returns the value of the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Resources</em>' reference.
+     * @see #setResources(ResourceRole)
+     * @see org.openbpmn.bpmn2.Bpmn2Package#getActivity_Resources()
+     * @model
+     * @generated
+     */
+    ResourceRole getResources();
+
+    /**
+     * Sets the value of the '{@link org.openbpmn.bpmn2.Activity#getResources <em>Resources</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Resources</em>' reference.
+     * @see #getResources()
+     * @generated
+     */
+    void setResources(ResourceRole value);
 
 } // Activity

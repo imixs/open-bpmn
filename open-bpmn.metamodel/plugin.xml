@@ -12,7 +12,7 @@
       <package
             uri="http://www.omg.org/spec/BPMN/20100524/MODEL-XMI"
             class="org.eclipse.bpmn2.Bpmn2Package"
-            genModel="model/old/BPMN20.genmodel"/>
+            genModel="model/eclipse-bpmn2/model/BPMN20.genmodel"/>
    </extension>
    
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -34,7 +34,7 @@
       <package
             uri="http://www.omg.org/spec/BPMN/20100524/DI-XMI"
             class="org.eclipse.bpmn2.di.BpmnDiPackage"
-            genModel="model/old/BPMN20.genmodel"/>
+            genModel="model/eclipse-bpmn2/model/BPMN20.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -49,7 +49,7 @@
       <package
             uri="http://www.omg.org/spec/DD/20100524/DI-XMI"
             class="org.eclipse.dd.di.DiPackage"
-            genModel="model/old/BPMN20.genmodel"/>
+            genModel="model/eclipse-bpmn2/model/BPMN20.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -64,7 +64,7 @@
       <package
             uri="http://www.omg.org/spec/DD/20100524/DC-XMI"
             class="org.eclipse.dd.dc.DcPackage"
-            genModel="model/old/BPMN20.genmodel"/>
+            genModel="model/eclipse-bpmn2/model/BPMN20.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.extension_parser">
@@ -90,6 +90,13 @@ null
             uri="http://www.omg.org/spec/BPMN/20100501/DI-XMI"
             class="org.openbpmn.bpmndi.BpmndiPackage"
             genModel="model/BPMN2.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated BPMN2 -->
+      <parser
+            type="bpmndi"
+            class="org.openbpmn.bpmndi.util.BpmndiResourceFactoryImpl"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.content_parser">
@@ -121,6 +128,13 @@ null
             genModel="model/BPMNDI.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated BPMN2 -->
+      <parser
+            type="di"
+            class="org.openbpmn.di.util.DiResourceFactoryImpl"/>
+   </extension>
+
 null
 null
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -137,5 +151,12 @@ null
             uri="http://www.omg.org/spec/DD/20100524/DC-XMI"
             class="org.openbpmn.dc.DcPackage"
             genModel="model/BPMNDI.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.extension_parser">
+      <!-- @generated BPMN2 -->
+      <parser
+            type="dc"
+            class="org.openbpmn.dc.util.DcResourceFactoryImpl"/>
    </extension>
 null</plugin>

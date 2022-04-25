@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MODEL:definitions
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xmlns:DI="http://www.omg.org/spec/BPMN/20100524/DI" 
+ xmlns:MODEL="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+ xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL 
+ http://www.omg.org/spec/BPMN/20100524/MODEL-XMI" 
+ 
+ exporter="demo" expressionLanguage="java">
+  <MODEL:rootElement xsi:type="MODEL:tProcess"/>
+  <DI:BPMNDiagram/>
+</MODEL:definitions>

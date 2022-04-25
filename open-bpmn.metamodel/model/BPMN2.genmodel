@@ -15,6 +15,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/exporter"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Definitions/exporterVersion"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//Definitions/diagrams"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//Definitions/processes"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN2.ecore#//RootElement"/>
+    <genClasses ecoreClass="BPMN2.ecore#//DocumentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//DocumentRoot/rootElement"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BPMN2.ecore#//BaseElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//BaseElement/id"/>
@@ -32,6 +37,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Activity/isForCompensation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Activity/startQuantity"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Activity/completionQuantity"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN2.ecore#//Activity/resources"/>
     </genClasses>
     <genClasses ecoreClass="BPMN2.ecore#//Task"/>
     <genClasses ecoreClass="BPMN2.ecore#//SendTask">
@@ -43,16 +49,16 @@
     <genClasses ecoreClass="BPMN2.ecore#//RuleTask">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//RuleTask/implementation"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="BPMN2.ecore#//RootElement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//RootElement/rootElements"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="BPMN2.ecore#//FlowElementsContainer"/>
     <genClasses ecoreClass="BPMN2.ecore#//Process">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Process/isExecutable"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//Process/isClosed"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BPMN2.ecore#//Process/resources"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="BPMN2.ecore#//ResourceRole">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//ResourceRole/name"/>
     </genClasses>
   </genPackages>
-  <genPackages prefix="Bpmndi" basePackage="org.openbpmn" disposableProviderFactory="true"
+  <genPackages prefix="Bpmndi" basePackage="org.openbpmn" resource="XML" disposableProviderFactory="true"
       ecorePackage="BPMNDI.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BPMNDI.ecore#//MessageVisibleKind">
       <genEnumLiterals ecoreEnumLiteral="BPMNDI.ecore#//MessageVisibleKind/initiating"/>
@@ -108,7 +114,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMNDI.ecore#//BPMNShape/participantBandKind"/>
     </genClasses>
   </genPackages>
-  <genPackages prefix="Di" basePackage="org.openbpmn" disposableProviderFactory="true"
+  <genPackages prefix="Di" basePackage="org.openbpmn" resource="XML" disposableProviderFactory="true"
       ecorePackage="DI.ecore#/">
     <genClasses ecoreClass="DI.ecore#//DocumentRoot">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DI.ecore#//DocumentRoot/mixed"/>
@@ -171,7 +177,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Style/id"/>
     </genClasses>
   </genPackages>
-  <genPackages prefix="Dc" basePackage="org.openbpmn" disposableProviderFactory="true"
+  <genPackages prefix="Dc" basePackage="org.openbpmn" resource="XML" disposableProviderFactory="true"
       ecorePackage="DC.ecore#/">
     <genClasses ecoreClass="DC.ecore#//DocumentRoot">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DC.ecore#//DocumentRoot/mixed"/>

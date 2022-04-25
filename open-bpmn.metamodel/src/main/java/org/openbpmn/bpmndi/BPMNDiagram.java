@@ -20,7 +20,7 @@ import org.openbpmn.di.Diagram;
  * </ul>
  *
  * @see org.openbpmn.bpmndi.BpmndiPackage#getBPMNDiagram()
- * @model
+ * @model extendedMetaData="name='BPMNDiagram' kind='elementOnly'"
  * @generated
  */
 public interface BPMNDiagram extends Diagram {

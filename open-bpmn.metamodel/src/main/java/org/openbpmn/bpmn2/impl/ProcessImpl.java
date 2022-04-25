@@ -5,10 +5,12 @@ package org.openbpmn.bpmn2.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.openbpmn.bpmn2.Bpmn2Package;
+import org.openbpmn.bpmn2.ResourceRole;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,11 +22,12 @@ import org.openbpmn.bpmn2.Bpmn2Package;
  * <ul>
  *   <li>{@link org.openbpmn.bpmn2.impl.ProcessImpl#isIsExecutable <em>Is Executable</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.ProcessImpl#isIsClosed <em>Is Closed</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.impl.ProcessImpl#getResources <em>Resources</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ProcessImpl extends FlowElementsContainerImpl implements org.openbpmn.bpmn2.Process {
+public class ProcessImpl extends RootElementImpl implements org.openbpmn.bpmn2.Process {
     /**
      * The default value of the '{@link #isIsExecutable() <em>Is Executable</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -64,6 +67,16 @@ public class ProcessImpl extends FlowElementsContainerImpl implements org.openbp
      * @ordered
      */
     protected boolean isClosed = IS_CLOSED_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getResources() <em>Resources</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getResources()
+     * @generated
+     * @ordered
+     */
+    protected ResourceRole resources;
 
     /**
      * <!-- begin-user-doc -->
@@ -131,6 +144,44 @@ public class ProcessImpl extends FlowElementsContainerImpl implements org.openbp
      * <!-- end-user-doc -->
      * @generated
      */
+    public ResourceRole getResources() {
+        if (resources != null && resources.eIsProxy()) {
+            InternalEObject oldResources = (InternalEObject)resources;
+            resources = (ResourceRole)eResolveProxy(oldResources);
+            if (resources != oldResources) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Bpmn2Package.PROCESS__RESOURCES, oldResources, resources));
+            }
+        }
+        return resources;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ResourceRole basicGetResources() {
+        return resources;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setResources(ResourceRole newResources) {
+        ResourceRole oldResources = resources;
+        resources = newResources;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, Bpmn2Package.PROCESS__RESOURCES, oldResources, resources));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -138,6 +189,9 @@ public class ProcessImpl extends FlowElementsContainerImpl implements org.openbp
                 return isIsExecutable();
             case Bpmn2Package.PROCESS__IS_CLOSED:
                 return isIsClosed();
+            case Bpmn2Package.PROCESS__RESOURCES:
+                if (resolve) return getResources();
+                return basicGetResources();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -155,6 +209,9 @@ public class ProcessImpl extends FlowElementsContainerImpl implements org.openbp
                 return;
             case Bpmn2Package.PROCESS__IS_CLOSED:
                 setIsClosed((Boolean)newValue);
+                return;
+            case Bpmn2Package.PROCESS__RESOURCES:
+                setResources((ResourceRole)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -174,6 +231,9 @@ public class ProcessImpl extends FlowElementsContainerImpl implements org.openbp
             case Bpmn2Package.PROCESS__IS_CLOSED:
                 setIsClosed(IS_CLOSED_EDEFAULT);
                 return;
+            case Bpmn2Package.PROCESS__RESOURCES:
+                setResources((ResourceRole)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -190,6 +250,8 @@ public class ProcessImpl extends FlowElementsContainerImpl implements org.openbp
                 return isExecutable != IS_EXECUTABLE_EDEFAULT;
             case Bpmn2Package.PROCESS__IS_CLOSED:
                 return isClosed != IS_CLOSED_EDEFAULT;
+            case Bpmn2Package.PROCESS__RESOURCES:
+                return resources != null;
         }
         return super.eIsSet(featureID);
     }

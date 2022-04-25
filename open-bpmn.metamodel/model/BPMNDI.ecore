@@ -13,7 +13,13 @@
         transient="true" containment="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNDiagram" upperBound="-2"
         eType="#//BPMNDiagram" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
+        resolveProxies="false">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="BPMNDiagram"/>
+        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/DI"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNEdge" upperBound="-2"
         eType="#//BPMNEdge" volatile="true" transient="true" derived="true" containment="true"
         resolveProxies="false"/>
@@ -31,6 +37,10 @@
         resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BPMNDiagram" eSuperTypes="DI.ecore#//Diagram">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="BPMNDiagram"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="plane" ordered="false"
         lowerBound="1" eType="#//BPMNPlane" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="labelStyle" ordered="false"

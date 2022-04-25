@@ -22,6 +22,7 @@ import org.openbpmn.bpmndi.BPMNDiagram;
  *   <li>{@link org.openbpmn.bpmn2.Definitions#getExporter <em>Exporter</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Definitions#getExporterVersion <em>Exporter Version</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.Definitions#getDiagrams <em>Diagrams</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.Definitions#getProcesses <em>Processes</em>}</li>
  * </ul>
  *
  * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions()
@@ -168,9 +169,22 @@ public interface Definitions extends BaseElement {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Diagrams</em>' containment reference list.
      * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions_Diagrams()
-     * @model containment="true" ordered="false"
+     * @model containment="true" required="true" ordered="false"
      * @generated
      */
     EList<BPMNDiagram> getDiagrams();
+
+    /**
+     * Returns the value of the '<em><b>Processes</b></em>' containment reference list.
+     * The list contents are of type {@link org.openbpmn.bpmn2.Process}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Processes</em>' containment reference list.
+     * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions_Processes()
+     * @model containment="true" required="true" ordered="false"
+     *        extendedMetaData="kind='element' name='process' namespace='http://www.omg.org/spec/BPMN/20100501/MODEL-XMI'"
+     * @generated
+     */
+    EList<org.openbpmn.bpmn2.Process> getProcesses();
 
 } // Definitions

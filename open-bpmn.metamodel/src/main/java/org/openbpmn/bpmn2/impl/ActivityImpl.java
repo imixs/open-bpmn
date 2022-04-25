@@ -5,11 +5,13 @@ package org.openbpmn.bpmn2.impl;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.openbpmn.bpmn2.Activity;
 import org.openbpmn.bpmn2.Bpmn2Package;
+import org.openbpmn.bpmn2.ResourceRole;
 
 /**
  * <!-- begin-user-doc -->
@@ -22,6 +24,7 @@ import org.openbpmn.bpmn2.Bpmn2Package;
  *   <li>{@link org.openbpmn.bpmn2.impl.ActivityImpl#isIsForCompensation <em>Is For Compensation</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.ActivityImpl#getStartQuantity <em>Start Quantity</em>}</li>
  *   <li>{@link org.openbpmn.bpmn2.impl.ActivityImpl#getCompletionQuantity <em>Completion Quantity</em>}</li>
+ *   <li>{@link org.openbpmn.bpmn2.impl.ActivityImpl#getResources <em>Resources</em>}</li>
  * </ul>
  *
  * @generated
@@ -86,6 +89,16 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
      * @ordered
      */
     protected int completionQuantity = COMPLETION_QUANTITY_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getResources() <em>Resources</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getResources()
+     * @generated
+     * @ordered
+     */
+    protected ResourceRole resources;
 
     /**
      * <!-- begin-user-doc -->
@@ -174,6 +187,44 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
      * <!-- end-user-doc -->
      * @generated
      */
+    public ResourceRole getResources() {
+        if (resources != null && resources.eIsProxy()) {
+            InternalEObject oldResources = (InternalEObject)resources;
+            resources = (ResourceRole)eResolveProxy(oldResources);
+            if (resources != oldResources) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, Bpmn2Package.ACTIVITY__RESOURCES, oldResources, resources));
+            }
+        }
+        return resources;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ResourceRole basicGetResources() {
+        return resources;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setResources(ResourceRole newResources) {
+        ResourceRole oldResources = resources;
+        resources = newResources;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, Bpmn2Package.ACTIVITY__RESOURCES, oldResources, resources));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -183,6 +234,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
                 return getStartQuantity();
             case Bpmn2Package.ACTIVITY__COMPLETION_QUANTITY:
                 return getCompletionQuantity();
+            case Bpmn2Package.ACTIVITY__RESOURCES:
+                if (resolve) return getResources();
+                return basicGetResources();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -203,6 +257,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
                 return;
             case Bpmn2Package.ACTIVITY__COMPLETION_QUANTITY:
                 setCompletionQuantity((Integer)newValue);
+                return;
+            case Bpmn2Package.ACTIVITY__RESOURCES:
+                setResources((ResourceRole)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -225,6 +282,9 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
             case Bpmn2Package.ACTIVITY__COMPLETION_QUANTITY:
                 setCompletionQuantity(COMPLETION_QUANTITY_EDEFAULT);
                 return;
+            case Bpmn2Package.ACTIVITY__RESOURCES:
+                setResources((ResourceRole)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -243,6 +303,8 @@ public class ActivityImpl extends FlowNodeImpl implements Activity {
                 return startQuantity != START_QUANTITY_EDEFAULT;
             case Bpmn2Package.ACTIVITY__COMPLETION_QUANTITY:
                 return completionQuantity != COMPLETION_QUANTITY_EDEFAULT;
+            case Bpmn2Package.ACTIVITY__RESOURCES:
+                return resources != null;
         }
         return super.eIsSet(featureID);
     }

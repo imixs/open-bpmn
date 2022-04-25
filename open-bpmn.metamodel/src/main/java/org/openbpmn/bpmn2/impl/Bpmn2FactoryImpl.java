@@ -14,6 +14,7 @@ import org.openbpmn.bpmn2.Activity;
 import org.openbpmn.bpmn2.Bpmn2Factory;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
+import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowNode;
 import org.openbpmn.bpmn2.RuleTask;
@@ -66,6 +67,7 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
             case Bpmn2Package.DEFINITIONS: return createDefinitions();
+            case Bpmn2Package.DOCUMENT_ROOT: return createDocumentRoot();
             case Bpmn2Package.FLOW_NODE: return createFlowNode();
             case Bpmn2Package.DOCUMENTATION: return createDocumentation();
             case Bpmn2Package.ACTIVITY: return createActivity();
@@ -87,6 +89,16 @@ public class Bpmn2FactoryImpl extends EFactoryImpl implements Bpmn2Factory {
     public Definitions createDefinitions() {
         DefinitionsImpl definitions = new DefinitionsImpl();
         return definitions;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DocumentRoot createDocumentRoot() {
+        DocumentRootImpl documentRoot = new DocumentRootImpl();
+        return documentRoot;
     }
 
     /**

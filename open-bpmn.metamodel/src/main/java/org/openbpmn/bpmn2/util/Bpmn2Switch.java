@@ -11,10 +11,11 @@ import org.openbpmn.bpmn2.Activity;
 import org.openbpmn.bpmn2.BaseElement;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
+import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowElement;
-import org.openbpmn.bpmn2.FlowElementsContainer;
 import org.openbpmn.bpmn2.FlowNode;
+import org.openbpmn.bpmn2.ResourceRole;
 import org.openbpmn.bpmn2.RootElement;
 import org.openbpmn.bpmn2.RuleTask;
 import org.openbpmn.bpmn2.SendTask;
@@ -82,6 +83,19 @@ public class Bpmn2Switch<T> extends Switch<T> {
                 Definitions definitions = (Definitions)theEObject;
                 T result = caseDefinitions(definitions);
                 if (result == null) result = caseBaseElement(definitions);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.ROOT_ELEMENT: {
+                RootElement rootElement = (RootElement)theEObject;
+                T result = caseRootElement(rootElement);
+                if (result == null) result = caseBaseElement(rootElement);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.DOCUMENT_ROOT: {
+                DocumentRoot documentRoot = (DocumentRoot)theEObject;
+                T result = caseDocumentRoot(documentRoot);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -165,25 +179,18 @@ public class Bpmn2Switch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case Bpmn2Package.ROOT_ELEMENT: {
-                RootElement rootElement = (RootElement)theEObject;
-                T result = caseRootElement(rootElement);
-                if (result == null) result = caseBaseElement(rootElement);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case Bpmn2Package.FLOW_ELEMENTS_CONTAINER: {
-                FlowElementsContainer flowElementsContainer = (FlowElementsContainer)theEObject;
-                T result = caseFlowElementsContainer(flowElementsContainer);
-                if (result == null) result = caseBaseElement(flowElementsContainer);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
             case Bpmn2Package.PROCESS: {
                 org.openbpmn.bpmn2.Process process = (org.openbpmn.bpmn2.Process)theEObject;
                 T result = caseProcess(process);
-                if (result == null) result = caseFlowElementsContainer(process);
+                if (result == null) result = caseRootElement(process);
                 if (result == null) result = caseBaseElement(process);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case Bpmn2Package.RESOURCE_ROLE: {
+                ResourceRole resourceRole = (ResourceRole)theEObject;
+                T result = caseResourceRole(resourceRole);
+                if (result == null) result = caseBaseElement(resourceRole);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -203,6 +210,36 @@ public class Bpmn2Switch<T> extends Switch<T> {
      * @generated
      */
     public T caseDefinitions(Definitions object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Root Element</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Root Element</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseRootElement(RootElement object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Document Root</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Document Root</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDocumentRoot(DocumentRoot object) {
         return null;
     }
 
@@ -342,36 +379,6 @@ public class Bpmn2Switch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Root Element</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Root Element</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseRootElement(RootElement object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Flow Elements Container</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Flow Elements Container</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseFlowElementsContainer(FlowElementsContainer object) {
-        return null;
-    }
-
-    /**
      * Returns the result of interpreting the object as an instance of '<em>Process</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -383,6 +390,21 @@ public class Bpmn2Switch<T> extends Switch<T> {
      * @generated
      */
     public T caseProcess(org.openbpmn.bpmn2.Process object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Resource Role</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Resource Role</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseResourceRole(ResourceRole object) {
         return null;
     }
 

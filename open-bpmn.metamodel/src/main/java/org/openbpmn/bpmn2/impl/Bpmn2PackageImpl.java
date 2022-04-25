@@ -14,10 +14,11 @@ import org.openbpmn.bpmn2.BaseElement;
 import org.openbpmn.bpmn2.Bpmn2Factory;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
+import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowElement;
-import org.openbpmn.bpmn2.FlowElementsContainer;
 import org.openbpmn.bpmn2.FlowNode;
+import org.openbpmn.bpmn2.ResourceRole;
 import org.openbpmn.bpmn2.RootElement;
 import org.openbpmn.bpmn2.RuleTask;
 import org.openbpmn.bpmn2.SendTask;
@@ -49,6 +50,20 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * @generated
      */
     private EClass definitionsEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass rootElementEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass documentRootEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -118,21 +133,14 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass rootElementEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass flowElementsContainerEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EClass processEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass resourceRoleEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -286,6 +294,42 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getDefinitions_Processes() {
+        return (EReference)definitionsEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getRootElement() {
+        return rootElementEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDocumentRoot() {
+        return documentRootEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getDocumentRoot_RootElement() {
+        return (EReference)documentRootEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getBaseElement() {
         return baseElementEClass;
     }
@@ -403,6 +447,15 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EReference getActivity_Resources() {
+        return (EReference)activityEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getTask() {
         return taskEClass;
     }
@@ -466,33 +519,6 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getRootElement() {
-        return rootElementEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getRootElement_RootElements() {
-        return (EReference)rootElementEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getFlowElementsContainer() {
-        return flowElementsContainerEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getProcess() {
         return processEClass;
     }
@@ -513,6 +539,33 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      */
     public EAttribute getProcess_IsClosed() {
         return (EAttribute)processEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EReference getProcess_Resources() {
+        return (EReference)processEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getResourceRole() {
+        return resourceRoleEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getResourceRole_Name() {
+        return (EAttribute)resourceRoleEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -551,6 +604,12 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         createEAttribute(definitionsEClass, DEFINITIONS__EXPORTER);
         createEAttribute(definitionsEClass, DEFINITIONS__EXPORTER_VERSION);
         createEReference(definitionsEClass, DEFINITIONS__DIAGRAMS);
+        createEReference(definitionsEClass, DEFINITIONS__PROCESSES);
+
+        rootElementEClass = createEClass(ROOT_ELEMENT);
+
+        documentRootEClass = createEClass(DOCUMENT_ROOT);
+        createEReference(documentRootEClass, DOCUMENT_ROOT__ROOT_ELEMENT);
 
         baseElementEClass = createEClass(BASE_ELEMENT);
         createEAttribute(baseElementEClass, BASE_ELEMENT__ID);
@@ -569,6 +628,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         createEAttribute(activityEClass, ACTIVITY__IS_FOR_COMPENSATION);
         createEAttribute(activityEClass, ACTIVITY__START_QUANTITY);
         createEAttribute(activityEClass, ACTIVITY__COMPLETION_QUANTITY);
+        createEReference(activityEClass, ACTIVITY__RESOURCES);
 
         taskEClass = createEClass(TASK);
 
@@ -581,14 +641,13 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         ruleTaskEClass = createEClass(RULE_TASK);
         createEAttribute(ruleTaskEClass, RULE_TASK__IMPLEMENTATION);
 
-        rootElementEClass = createEClass(ROOT_ELEMENT);
-        createEReference(rootElementEClass, ROOT_ELEMENT__ROOT_ELEMENTS);
-
-        flowElementsContainerEClass = createEClass(FLOW_ELEMENTS_CONTAINER);
-
         processEClass = createEClass(PROCESS);
         createEAttribute(processEClass, PROCESS__IS_EXECUTABLE);
         createEAttribute(processEClass, PROCESS__IS_CLOSED);
+        createEReference(processEClass, PROCESS__RESOURCES);
+
+        resourceRoleEClass = createEClass(RESOURCE_ROLE);
+        createEAttribute(resourceRoleEClass, RESOURCE_ROLE__NAME);
     }
 
     /**
@@ -623,6 +682,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 
         // Add supertypes to classes
         definitionsEClass.getESuperTypes().add(this.getBaseElement());
+        rootElementEClass.getESuperTypes().add(this.getBaseElement());
         flowElementEClass.getESuperTypes().add(this.getBaseElement());
         flowNodeEClass.getESuperTypes().add(this.getFlowElement());
         documentationEClass.getESuperTypes().add(this.getBaseElement());
@@ -631,9 +691,8 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         sendTaskEClass.getESuperTypes().add(this.getTask());
         serviceTaskEClass.getESuperTypes().add(this.getTask());
         ruleTaskEClass.getESuperTypes().add(this.getTask());
-        rootElementEClass.getESuperTypes().add(this.getBaseElement());
-        flowElementsContainerEClass.getESuperTypes().add(this.getBaseElement());
-        processEClass.getESuperTypes().add(this.getFlowElementsContainer());
+        processEClass.getESuperTypes().add(this.getRootElement());
+        resourceRoleEClass.getESuperTypes().add(this.getBaseElement());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(definitionsEClass, Definitions.class, "Definitions", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -643,7 +702,13 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         initEAttribute(getDefinitions_TypeLanguage(), ecorePackage.getEString(), "typeLanguage", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDefinitions_Exporter(), ecorePackage.getEString(), "exporter", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDefinitions_ExporterVersion(), ecorePackage.getEString(), "exporterVersion", null, 0, 1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDefinitions_Diagrams(), theBpmndiPackage.getBPMNDiagram(), null, "diagrams", null, 0, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getDefinitions_Diagrams(), theBpmndiPackage.getBPMNDiagram(), null, "diagrams", null, 1, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+        initEReference(getDefinitions_Processes(), this.getProcess(), null, "processes", null, 1, -1, Definitions.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(rootElementEClass, RootElement.class, "RootElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getDocumentRoot_RootElement(), this.getRootElement(), null, "rootElement", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
         initEClass(baseElementEClass, BaseElement.class, "BaseElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBaseElement_Id(), ecorePackage.getEString(), "id", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -662,6 +727,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         initEAttribute(getActivity_IsForCompensation(), ecorePackage.getEBoolean(), "isForCompensation", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getActivity_StartQuantity(), ecorePackage.getEInt(), "startQuantity", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getActivity_CompletionQuantity(), ecorePackage.getEInt(), "completionQuantity", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getActivity_Resources(), this.getResourceRole(), null, "resources", null, 0, 1, Activity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -674,17 +740,38 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
         initEClass(ruleTaskEClass, RuleTask.class, "RuleTask", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getRuleTask_Implementation(), ecorePackage.getEString(), "implementation", null, 0, 1, RuleTask.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(rootElementEClass, RootElement.class, "RootElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getRootElement_RootElements(), this.getRootElement(), null, "rootElements", null, 0, 1, RootElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-        initEClass(flowElementsContainerEClass, FlowElementsContainer.class, "FlowElementsContainer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
         initEClass(processEClass, org.openbpmn.bpmn2.Process.class, "Process", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getProcess_IsExecutable(), ecorePackage.getEBoolean(), "isExecutable", null, 0, 1, org.openbpmn.bpmn2.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getProcess_IsClosed(), ecorePackage.getEBoolean(), "isClosed", null, 0, 1, org.openbpmn.bpmn2.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getProcess_Resources(), this.getResourceRole(), null, "resources", null, 0, 1, org.openbpmn.bpmn2.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(resourceRoleEClass, ResourceRole.class, "ResourceRole", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getResourceRole_Name(), ecorePackage.getEString(), "name", null, 0, 1, ResourceRole.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);
+
+        // Create annotations
+        // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+        createExtendedMetaDataAnnotations();
+    }
+
+    /**
+     * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void createExtendedMetaDataAnnotations() {
+        String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+        addAnnotation
+          (getDefinitions_Processes(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "process",
+               "namespace", "http://www.omg.org/spec/BPMN/20100501/MODEL-XMI"
+           });
     }
 
 } //Bpmn2PackageImpl

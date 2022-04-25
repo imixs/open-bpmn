@@ -39,7 +39,7 @@ public interface DcPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://www.omg.org/spec/DD/20100524/DC-XMI";
+    String eNS_URI = "http://www.omg.org/spec/DD/20100501/DC-XMI";
 
     /**
      * The package namespace name.

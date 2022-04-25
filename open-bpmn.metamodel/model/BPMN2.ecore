@@ -12,6 +12,20 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="diagrams" ordered="false"
         lowerBound="1" upperBound="-1" eType="ecore:EClass BPMNDI.ecore#//BPMNDiagram"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="processes" ordered="false"
+        lowerBound="1" upperBound="-1" eType="#//Process" containment="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="process"/>
+        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100501/MODEL-XMI"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RootElement" abstract="true" eSuperTypes="#//BaseElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="rootElement" upperBound="-2"
+        eType="#//RootElement" volatile="true" transient="true" derived="true" containment="true"
+        resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BaseElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -31,6 +45,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isForCompensation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="startQuantity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="completionQuantity" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resources" eType="#//ResourceRole"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Task" eSuperTypes="#//Activity"/>
   <eClassifiers xsi:type="ecore:EClass" name="SendTask" eSuperTypes="#//Task">
@@ -42,14 +57,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="RuleTask" eSuperTypes="#//Task">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RootElement" abstract="true" eSuperTypes="#//BaseElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rootElements" ordered="false"
-        eType="#//RootElement" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FlowElementsContainer" abstract="true"
-      eSuperTypes="#//BaseElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Process" eSuperTypes="#//FlowElementsContainer">
+  <eClassifiers xsi:type="ecore:EClass" name="Process" eSuperTypes="#//RootElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isExecutable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isClosed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="resources" eType="#//ResourceRole"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ResourceRole" abstract="true" eSuperTypes="#//BaseElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -674,6 +674,35 @@ public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
 
         // Create resource
         createResource(eNS_URI);
+
+        // Create annotations
+        // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+        createExtendedMetaDataAnnotations();
+    }
+
+    /**
+     * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void createExtendedMetaDataAnnotations() {
+        String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+        addAnnotation
+          (getDocumentRoot_BPMNDiagram(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "BPMNDiagram",
+               "namespace", "http://www.omg.org/spec/BPMN/20100524/DI"
+           });
+        addAnnotation
+          (bpmnDiagramEClass,
+           source,
+           new String[] {
+               "name", "BPMNDiagram",
+               "kind", "elementOnly"
+           });
     }
 
 } //BpmndiPackageImpl

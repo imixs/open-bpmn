@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100501/MODEL" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100501/MODEL http://www.omg.org/spec/BPMN/20100501/MODEL-XMI" expressionLanguage="java" exporter="demo">
+  <diagrams/>
+  <bpmn2:process id="0000002" isClosed="true"/>
+</bpmn2:Definitions>

@@ -13,10 +13,11 @@ import org.openbpmn.bpmn2.Activity;
 import org.openbpmn.bpmn2.BaseElement;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
+import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowElement;
-import org.openbpmn.bpmn2.FlowElementsContainer;
 import org.openbpmn.bpmn2.FlowNode;
+import org.openbpmn.bpmn2.ResourceRole;
 import org.openbpmn.bpmn2.RootElement;
 import org.openbpmn.bpmn2.RuleTask;
 import org.openbpmn.bpmn2.SendTask;
@@ -84,6 +85,14 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
                 return createDefinitionsAdapter();
             }
             @Override
+            public Adapter caseRootElement(RootElement object) {
+                return createRootElementAdapter();
+            }
+            @Override
+            public Adapter caseDocumentRoot(DocumentRoot object) {
+                return createDocumentRootAdapter();
+            }
+            @Override
             public Adapter caseBaseElement(BaseElement object) {
                 return createBaseElementAdapter();
             }
@@ -120,16 +129,12 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
                 return createRuleTaskAdapter();
             }
             @Override
-            public Adapter caseRootElement(RootElement object) {
-                return createRootElementAdapter();
-            }
-            @Override
-            public Adapter caseFlowElementsContainer(FlowElementsContainer object) {
-                return createFlowElementsContainerAdapter();
-            }
-            @Override
             public Adapter caseProcess(org.openbpmn.bpmn2.Process object) {
                 return createProcessAdapter();
+            }
+            @Override
+            public Adapter caseResourceRole(ResourceRole object) {
+                return createResourceRoleAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -162,6 +167,34 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDefinitionsAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.RootElement <em>Root Element</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.bpmn2.RootElement
+     * @generated
+     */
+    public Adapter createRootElementAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.DocumentRoot <em>Document Root</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.bpmn2.DocumentRoot
+     * @generated
+     */
+    public Adapter createDocumentRootAdapter() {
         return null;
     }
 
@@ -292,34 +325,6 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.RootElement <em>Root Element</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.bpmn2.RootElement
-     * @generated
-     */
-    public Adapter createRootElementAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.FlowElementsContainer <em>Flow Elements Container</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.bpmn2.FlowElementsContainer
-     * @generated
-     */
-    public Adapter createFlowElementsContainerAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.Process <em>Process</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -330,6 +335,20 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createProcessAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.ResourceRole <em>Resource Role</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.bpmn2.ResourceRole
+     * @generated
+     */
+    public Adapter createResourceRoleAdapter() {
         return null;
     }
 

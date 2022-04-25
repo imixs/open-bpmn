@@ -72,7 +72,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getBaseElement()
      * @generated
      */
-    int BASE_ELEMENT = 1;
+    int BASE_ELEMENT = 3;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -202,13 +202,22 @@ public interface Bpmn2Package extends EPackage {
     int DEFINITIONS__DIAGRAMS = BASE_ELEMENT_FEATURE_COUNT + 6;
 
     /**
+     * The feature id for the '<em><b>Processes</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEFINITIONS__PROCESSES = BASE_ELEMENT_FEATURE_COUNT + 7;
+
+    /**
      * The number of structural features of the '<em>Definitions</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DEFINITIONS_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 7;
+    int DEFINITIONS_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 8;
 
     /**
      * The number of operations of the '<em>Definitions</em>' class.
@@ -220,6 +229,89 @@ public interface Bpmn2Package extends EPackage {
     int DEFINITIONS_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link org.openbpmn.bpmn2.impl.RootElementImpl <em>Root Element</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.bpmn2.impl.RootElementImpl
+     * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getRootElement()
+     * @generated
+     */
+    int ROOT_ELEMENT = 1;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
+
+    /**
+     * The number of structural features of the '<em>Root Element</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Root Element</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ROOT_ELEMENT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.bpmn2.impl.DocumentRootImpl <em>Document Root</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.bpmn2.impl.DocumentRootImpl
+     * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getDocumentRoot()
+     * @generated
+     */
+    int DOCUMENT_ROOT = 2;
+
+    /**
+     * The feature id for the '<em><b>Root Element</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOCUMENT_ROOT__ROOT_ELEMENT = 0;
+
+    /**
+     * The number of structural features of the '<em>Document Root</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOCUMENT_ROOT_FEATURE_COUNT = 1;
+
+    /**
+     * The number of operations of the '<em>Document Root</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DOCUMENT_ROOT_OPERATION_COUNT = 0;
+
+    /**
      * The meta object id for the '{@link org.openbpmn.bpmn2.impl.FlowElementImpl <em>Flow Element</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -227,7 +319,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getFlowElement()
      * @generated
      */
-    int FLOW_ELEMENT = 2;
+    int FLOW_ELEMENT = 4;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -282,7 +374,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getFlowNode()
      * @generated
      */
-    int FLOW_NODE = 3;
+    int FLOW_NODE = 5;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -337,7 +429,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getDocumentation()
      * @generated
      */
-    int DOCUMENTATION = 4;
+    int DOCUMENTATION = 6;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -401,7 +493,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getActivity()
      * @generated
      */
-    int ACTIVITY = 5;
+    int ACTIVITY = 7;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -458,13 +550,22 @@ public interface Bpmn2Package extends EPackage {
     int ACTIVITY__COMPLETION_QUANTITY = FLOW_NODE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTIVITY__RESOURCES = FLOW_NODE_FEATURE_COUNT + 3;
+
+    /**
      * The number of structural features of the '<em>Activity</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTIVITY_FEATURE_COUNT = FLOW_NODE_FEATURE_COUNT + 3;
+    int ACTIVITY_FEATURE_COUNT = FLOW_NODE_FEATURE_COUNT + 4;
 
     /**
      * The number of operations of the '<em>Activity</em>' class.
@@ -483,7 +584,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getTask()
      * @generated
      */
-    int TASK = 6;
+    int TASK = 8;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -540,6 +641,15 @@ public interface Bpmn2Package extends EPackage {
     int TASK__COMPLETION_QUANTITY = ACTIVITY__COMPLETION_QUANTITY;
 
     /**
+     * The feature id for the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TASK__RESOURCES = ACTIVITY__RESOURCES;
+
+    /**
      * The number of structural features of the '<em>Task</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -565,7 +675,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getSendTask()
      * @generated
      */
-    int SEND_TASK = 7;
+    int SEND_TASK = 9;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -622,6 +732,15 @@ public interface Bpmn2Package extends EPackage {
     int SEND_TASK__COMPLETION_QUANTITY = TASK__COMPLETION_QUANTITY;
 
     /**
+     * The feature id for the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SEND_TASK__RESOURCES = TASK__RESOURCES;
+
+    /**
      * The feature id for the '<em><b>Implementation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -656,7 +775,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getServiceTask()
      * @generated
      */
-    int SERVICE_TASK = 8;
+    int SERVICE_TASK = 10;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -713,6 +832,15 @@ public interface Bpmn2Package extends EPackage {
     int SERVICE_TASK__COMPLETION_QUANTITY = TASK__COMPLETION_QUANTITY;
 
     /**
+     * The feature id for the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SERVICE_TASK__RESOURCES = TASK__RESOURCES;
+
+    /**
      * The feature id for the '<em><b>Implementation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -747,7 +875,7 @@ public interface Bpmn2Package extends EPackage {
      * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getRuleTask()
      * @generated
      */
-    int RULE_TASK = 9;
+    int RULE_TASK = 11;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -804,6 +932,15 @@ public interface Bpmn2Package extends EPackage {
     int RULE_TASK__COMPLETION_QUANTITY = TASK__COMPLETION_QUANTITY;
 
     /**
+     * The feature id for the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RULE_TASK__RESOURCES = TASK__RESOURCES;
+
+    /**
      * The feature id for the '<em><b>Implementation</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -831,107 +968,6 @@ public interface Bpmn2Package extends EPackage {
     int RULE_TASK_OPERATION_COUNT = TASK_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.bpmn2.impl.RootElementImpl <em>Root Element</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.openbpmn.bpmn2.impl.RootElementImpl
-     * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getRootElement()
-     * @generated
-     */
-    int ROOT_ELEMENT = 10;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ROOT_ELEMENT__ID = BASE_ELEMENT__ID;
-
-    /**
-     * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ROOT_ELEMENT__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
-
-    /**
-     * The feature id for the '<em><b>Root Elements</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ROOT_ELEMENT__ROOT_ELEMENTS = BASE_ELEMENT_FEATURE_COUNT + 0;
-
-    /**
-     * The number of structural features of the '<em>Root Element</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ROOT_ELEMENT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 1;
-
-    /**
-     * The number of operations of the '<em>Root Element</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int ROOT_ELEMENT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
-
-    /**
-     * The meta object id for the '{@link org.openbpmn.bpmn2.impl.FlowElementsContainerImpl <em>Flow Elements Container</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.openbpmn.bpmn2.impl.FlowElementsContainerImpl
-     * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getFlowElementsContainer()
-     * @generated
-     */
-    int FLOW_ELEMENTS_CONTAINER = 11;
-
-    /**
-     * The feature id for the '<em><b>Id</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FLOW_ELEMENTS_CONTAINER__ID = BASE_ELEMENT__ID;
-
-    /**
-     * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FLOW_ELEMENTS_CONTAINER__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
-
-    /**
-     * The number of structural features of the '<em>Flow Elements Container</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FLOW_ELEMENTS_CONTAINER_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
-
-    /**
-     * The number of operations of the '<em>Flow Elements Container</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FLOW_ELEMENTS_CONTAINER_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
-
-    /**
      * The meta object id for the '{@link org.openbpmn.bpmn2.impl.ProcessImpl <em>Process</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -948,7 +984,7 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESS__ID = FLOW_ELEMENTS_CONTAINER__ID;
+    int PROCESS__ID = ROOT_ELEMENT__ID;
 
     /**
      * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
@@ -957,7 +993,7 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESS__DOCUMENTATION = FLOW_ELEMENTS_CONTAINER__DOCUMENTATION;
+    int PROCESS__DOCUMENTATION = ROOT_ELEMENT__DOCUMENTATION;
 
     /**
      * The feature id for the '<em><b>Is Executable</b></em>' attribute.
@@ -966,7 +1002,7 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESS__IS_EXECUTABLE = FLOW_ELEMENTS_CONTAINER_FEATURE_COUNT + 0;
+    int PROCESS__IS_EXECUTABLE = ROOT_ELEMENT_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Is Closed</b></em>' attribute.
@@ -975,7 +1011,16 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESS__IS_CLOSED = FLOW_ELEMENTS_CONTAINER_FEATURE_COUNT + 1;
+    int PROCESS__IS_CLOSED = ROOT_ELEMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Resources</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PROCESS__RESOURCES = ROOT_ELEMENT_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Process</em>' class.
@@ -984,7 +1029,7 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESS_FEATURE_COUNT = FLOW_ELEMENTS_CONTAINER_FEATURE_COUNT + 2;
+    int PROCESS_FEATURE_COUNT = ROOT_ELEMENT_FEATURE_COUNT + 3;
 
     /**
      * The number of operations of the '<em>Process</em>' class.
@@ -993,7 +1038,62 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      * @ordered
      */
-    int PROCESS_OPERATION_COUNT = FLOW_ELEMENTS_CONTAINER_OPERATION_COUNT + 0;
+    int PROCESS_OPERATION_COUNT = ROOT_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.bpmn2.impl.ResourceRoleImpl <em>Resource Role</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.bpmn2.impl.ResourceRoleImpl
+     * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getResourceRole()
+     * @generated
+     */
+    int RESOURCE_ROLE = 13;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_ROLE__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Documentation</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_ROLE__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_ROLE__NAME = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Resource Role</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_ROLE_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The number of operations of the '<em>Resource Role</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RESOURCE_ROLE_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
 
     /**
@@ -1082,6 +1182,48 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      */
     EReference getDefinitions_Diagrams();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link org.openbpmn.bpmn2.Definitions#getProcesses <em>Processes</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Processes</em>'.
+     * @see org.openbpmn.bpmn2.Definitions#getProcesses()
+     * @see #getDefinitions()
+     * @generated
+     */
+    EReference getDefinitions_Processes();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.bpmn2.RootElement <em>Root Element</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Root Element</em>'.
+     * @see org.openbpmn.bpmn2.RootElement
+     * @generated
+     */
+    EClass getRootElement();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.bpmn2.DocumentRoot <em>Document Root</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Document Root</em>'.
+     * @see org.openbpmn.bpmn2.DocumentRoot
+     * @generated
+     */
+    EClass getDocumentRoot();
+
+    /**
+     * Returns the meta object for the containment reference '{@link org.openbpmn.bpmn2.DocumentRoot#getRootElement <em>Root Element</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Root Element</em>'.
+     * @see org.openbpmn.bpmn2.DocumentRoot#getRootElement()
+     * @see #getDocumentRoot()
+     * @generated
+     */
+    EReference getDocumentRoot_RootElement();
 
     /**
      * Returns the meta object for class '{@link org.openbpmn.bpmn2.BaseElement <em>Base Element</em>}'.
@@ -1222,6 +1364,17 @@ public interface Bpmn2Package extends EPackage {
     EAttribute getActivity_CompletionQuantity();
 
     /**
+     * Returns the meta object for the reference '{@link org.openbpmn.bpmn2.Activity#getResources <em>Resources</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Resources</em>'.
+     * @see org.openbpmn.bpmn2.Activity#getResources()
+     * @see #getActivity()
+     * @generated
+     */
+    EReference getActivity_Resources();
+
+    /**
      * Returns the meta object for class '{@link org.openbpmn.bpmn2.Task <em>Task</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1295,37 +1448,6 @@ public interface Bpmn2Package extends EPackage {
     EAttribute getRuleTask_Implementation();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.bpmn2.RootElement <em>Root Element</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Root Element</em>'.
-     * @see org.openbpmn.bpmn2.RootElement
-     * @generated
-     */
-    EClass getRootElement();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.bpmn2.RootElement#getRootElements <em>Root Elements</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Root Elements</em>'.
-     * @see org.openbpmn.bpmn2.RootElement#getRootElements()
-     * @see #getRootElement()
-     * @generated
-     */
-    EReference getRootElement_RootElements();
-
-    /**
-     * Returns the meta object for class '{@link org.openbpmn.bpmn2.FlowElementsContainer <em>Flow Elements Container</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Flow Elements Container</em>'.
-     * @see org.openbpmn.bpmn2.FlowElementsContainer
-     * @generated
-     */
-    EClass getFlowElementsContainer();
-
-    /**
      * Returns the meta object for class '{@link org.openbpmn.bpmn2.Process <em>Process</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1356,6 +1478,38 @@ public interface Bpmn2Package extends EPackage {
      * @generated
      */
     EAttribute getProcess_IsClosed();
+
+    /**
+     * Returns the meta object for the reference '{@link org.openbpmn.bpmn2.Process#getResources <em>Resources</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Resources</em>'.
+     * @see org.openbpmn.bpmn2.Process#getResources()
+     * @see #getProcess()
+     * @generated
+     */
+    EReference getProcess_Resources();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.bpmn2.ResourceRole <em>Resource Role</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Resource Role</em>'.
+     * @see org.openbpmn.bpmn2.ResourceRole
+     * @generated
+     */
+    EClass getResourceRole();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.openbpmn.bpmn2.ResourceRole#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.openbpmn.bpmn2.ResourceRole#getName()
+     * @see #getResourceRole()
+     * @generated
+     */
+    EAttribute getResourceRole_Name();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -1445,6 +1599,42 @@ public interface Bpmn2Package extends EPackage {
          * @generated
          */
         EReference DEFINITIONS__DIAGRAMS = eINSTANCE.getDefinitions_Diagrams();
+
+        /**
+         * The meta object literal for the '<em><b>Processes</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DEFINITIONS__PROCESSES = eINSTANCE.getDefinitions_Processes();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.RootElementImpl <em>Root Element</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.bpmn2.impl.RootElementImpl
+         * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getRootElement()
+         * @generated
+         */
+        EClass ROOT_ELEMENT = eINSTANCE.getRootElement();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.DocumentRootImpl <em>Document Root</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.bpmn2.impl.DocumentRootImpl
+         * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getDocumentRoot()
+         * @generated
+         */
+        EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
+
+        /**
+         * The meta object literal for the '<em><b>Root Element</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference DOCUMENT_ROOT__ROOT_ELEMENT = eINSTANCE.getDocumentRoot_RootElement();
 
         /**
          * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.BaseElementImpl <em>Base Element</em>}' class.
@@ -1561,6 +1751,14 @@ public interface Bpmn2Package extends EPackage {
         EAttribute ACTIVITY__COMPLETION_QUANTITY = eINSTANCE.getActivity_CompletionQuantity();
 
         /**
+         * The meta object literal for the '<em><b>Resources</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ACTIVITY__RESOURCES = eINSTANCE.getActivity_Resources();
+
+        /**
          * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.TaskImpl <em>Task</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1625,34 +1823,6 @@ public interface Bpmn2Package extends EPackage {
         EAttribute RULE_TASK__IMPLEMENTATION = eINSTANCE.getRuleTask_Implementation();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.RootElementImpl <em>Root Element</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.openbpmn.bpmn2.impl.RootElementImpl
-         * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getRootElement()
-         * @generated
-         */
-        EClass ROOT_ELEMENT = eINSTANCE.getRootElement();
-
-        /**
-         * The meta object literal for the '<em><b>Root Elements</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference ROOT_ELEMENT__ROOT_ELEMENTS = eINSTANCE.getRootElement_RootElements();
-
-        /**
-         * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.FlowElementsContainerImpl <em>Flow Elements Container</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.openbpmn.bpmn2.impl.FlowElementsContainerImpl
-         * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getFlowElementsContainer()
-         * @generated
-         */
-        EClass FLOW_ELEMENTS_CONTAINER = eINSTANCE.getFlowElementsContainer();
-
-        /**
          * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.ProcessImpl <em>Process</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1677,6 +1847,32 @@ public interface Bpmn2Package extends EPackage {
          * @generated
          */
         EAttribute PROCESS__IS_CLOSED = eINSTANCE.getProcess_IsClosed();
+
+        /**
+         * The meta object literal for the '<em><b>Resources</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference PROCESS__RESOURCES = eINSTANCE.getProcess_Resources();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.bpmn2.impl.ResourceRoleImpl <em>Resource Role</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.bpmn2.impl.ResourceRoleImpl
+         * @see org.openbpmn.bpmn2.impl.Bpmn2PackageImpl#getResourceRole()
+         * @generated
+         */
+        EClass RESOURCE_ROLE = eINSTANCE.getResourceRole();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute RESOURCE_ROLE__NAME = eINSTANCE.getResourceRole_Name();
 
     }
 

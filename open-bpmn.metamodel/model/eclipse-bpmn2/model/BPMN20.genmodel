@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-;https://www.eclipse.org/legal/epl-2.0/
-;
-;SPDX-License-Identifier: EPL-2.0&#xD;&#xA;&#xD;&#xA;Contributors:&#xD;&#xA;   Reiner Hille-Doering (SAP AG) - initial API and implementation and/or initial documentation&#xD;&#xA;&#xD;&#xA;&lt;/copyright>"
-    modelDirectory="/org.eclipse.bpmn2/src" creationIcons="false" modelPluginID="org.eclipse.bpmn2"
-    templateDirectory="org.eclipse.bpmn2/templates" dynamicTemplates="true" modelName="Bpmn2"
-    modelPluginClass="" suppressEMFTypes="true" codeFormatting="true" importerID="org.eclipse.emf.importer.ecore"
-    complianceLevel="5.0" copyrightFields="false" runtimeVersion="2.4" language="en">
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/open-bpmn.metamodel/src/main/java" modelPluginID="open-bpmn.metamodel"
+    modelName="BPMN2" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
   <foreignModel>BPMN20.ecore</foreignModel>
   <genPackages prefix="Bpmn2" basePackage="org.eclipse" resource="XML" disposableProviderFactory="true"
       loadInitialization="true" multipleEditorPages="false" ecorePackage="BPMN20.ecore#/">
@@ -855,6 +852,7 @@
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/modelElement"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//DiagramElement/style"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//DiagramElement/id"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DI.ecore#//DiagramElement/anyAttribute"/>
     </genClasses>
     <genClasses ecoreClass="DI.ecore#//Edge">
       <genFeatures createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Edge/source"/>

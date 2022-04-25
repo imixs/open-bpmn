@@ -79,6 +79,7 @@ public interface DocumentRoot extends EObject {
      * @see #setBPMNDiagram(BPMNDiagram)
      * @see org.openbpmn.bpmndi.BpmndiPackage#getDocumentRoot_BPMNDiagram()
      * @model containment="true" upper="-2" transient="true" volatile="true" derived="true"
+     *        extendedMetaData="kind='element' name='BPMNDiagram' namespace='http://www.omg.org/spec/BPMN/20100524/DI'"
      * @generated
      */
     BPMNDiagram getBPMNDiagram();
