@@ -575,6 +575,28 @@ public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
                "name", "BPMNDiagram",
                "kind", "elementOnly"
            });
+        addAnnotation
+          (getBPMNDiagram_Plane(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "BPMNPlane",
+               "namespace", "http://www.omg.org/spec/BPMN/20100524/DI"
+           });
+        addAnnotation
+          (bpmnPlaneEClass,
+           source,
+           new String[] {
+               "name", "BPMNPlane",
+               "kind", "elementOnly"
+           });
+        addAnnotation
+          (getBPMNPlane_BpmnElement(),
+           source,
+           new String[] {
+               "kind", "attribute",
+               "name", "bpmnElement"
+           });
     }
 
 } //BpmndiPackageImpl

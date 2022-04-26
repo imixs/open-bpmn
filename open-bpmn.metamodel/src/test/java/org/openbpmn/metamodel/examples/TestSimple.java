@@ -16,6 +16,7 @@ import org.openbpmn.bpmn2.Bpmn2Factory;
 import org.openbpmn.bpmn2.Definitions;
 import org.openbpmn.bpmn2.util.Bpmn2ResourceFactoryImpl;
 import org.openbpmn.bpmndi.BPMNDiagram;
+import org.openbpmn.bpmndi.BPMNPlane;
 import org.openbpmn.bpmndi.BpmndiFactory;
 
 
@@ -45,6 +46,14 @@ public class TestSimple {
         bpmdiagram.setId("1-000001");
         bpmdiagram.setDocumentation("...some docu");
         bpmdiagram.setName("my diagram");
+        
+        BPMNPlane bpmnplane = BpmndiFactory.eINSTANCE.createBPMNPlane();
+        // id="BPMNPlane_1" bpmnElement="process_1">
+        bpmnplane.setId("BPMNPlane_1");
+        bpmnplane.setBpmnElement(process);
+        bpmdiagram.setPlane(bpmnplane);
+        
+        
 
         process.setId("0000002");
         process.setIsClosed(true);

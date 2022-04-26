@@ -19,7 +19,7 @@ import org.openbpmn.di.Plane;
  * </ul>
  *
  * @see org.openbpmn.bpmndi.BpmndiPackage#getBPMNPlane()
- * @model
+ * @model extendedMetaData="name='BPMNPlane' kind='elementOnly'"
  * @generated
  */
 public interface BPMNPlane extends Plane {
@@ -31,6 +31,7 @@ public interface BPMNPlane extends Plane {
      * @see #setBpmnElement(BaseElement)
      * @see org.openbpmn.bpmndi.BpmndiPackage#getBPMNPlane_BpmnElement()
      * @model ordered="false"
+     *        extendedMetaData="kind='attribute' name='bpmnElement'"
      * @generated
      */
     BaseElement getBpmnElement();

@@ -32,6 +32,7 @@ public interface BPMNDiagram extends Diagram {
      * @see #setPlane(BPMNPlane)
      * @see org.openbpmn.bpmndi.BpmndiPackage#getBPMNDiagram_Plane()
      * @model containment="true" required="true" ordered="false"
+     *        extendedMetaData="kind='element' name='BPMNPlane' namespace='http://www.omg.org/spec/BPMN/20100524/DI'"
      * @generated
      */
     BPMNPlane getPlane();

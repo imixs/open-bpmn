@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmn2" nsURI="http://www.omg.org/spec/BPMN/20100501/MODEL-XMI"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmn2" nsURI="http://www.omg.org/spec/BPMN/20100524/MODEL"
     nsPrefix="bpmn2">
   <eClassifiers xsi:type="ecore:EClass" name="Definitions" eSuperTypes="#//BaseElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -16,7 +16,8 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="BPMNDiagram"/>
-        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100501/DI-XMI"/>
+        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/DI"/>
+        
       </eAnnotations>
     </eStructuralFeatures>
 
@@ -25,7 +26,7 @@
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="kind" value="element"/>
         <details key="name" value="process"/>
-        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100501/MODEL-XMI"/>
+        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/MODEL"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

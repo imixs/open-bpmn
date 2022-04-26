@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmndi" nsURI="http://www.omg.org/spec/BPMN/20100501/DI-XMI"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmndi" nsURI="http://www.omg.org/spec/BPMN/20100524/DI"
     nsPrefix="bpmndi">
   <eClassifiers xsi:type="ecore:EClass" name="BPMNDiagram" eSuperTypes="DI.ecore#//Diagram">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="BPMNDiagram"/>
       <details key="kind" value="elementOnly"/>
     </eAnnotations>
+  
     <eStructuralFeatures xsi:type="ecore:EReference" name="plane" ordered="false"
-        lowerBound="1" eType="#//BPMNPlane" containment="true"/>
+        lowerBound="1" eType="#//BPMNPlane" containment="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="BPMNPlane"/>
+        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/DI"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+
+
     <eStructuralFeatures xsi:type="ecore:EReference" name="labelStyle" ordered="false"
         upperBound="-1" eType="#//BPMNLabelStyle" containment="true"/>
   </eClassifiers>
+  
   <eClassifiers xsi:type="ecore:EClass" name="BPMNEdge" eSuperTypes="DI.ecore#//LabeledEdge">
     <eStructuralFeatures xsi:type="ecore:EReference" name="label" ordered="false"
         eType="#//BPMNLabel" containment="true"/>
@@ -32,10 +42,24 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="font" ordered="false" lowerBound="1"
         eType="ecore:EClass DC.ecore#//Font" containment="true"/>
   </eClassifiers>
+  
+ 
+  
   <eClassifiers xsi:type="ecore:EClass" name="BPMNPlane" eSuperTypes="DI.ecore#//Plane">
+    <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+      <details key="name" value="BPMNPlane"/>
+      <details key="kind" value="elementOnly"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bpmnElement" ordered="false"
-        eType="ecore:EClass BPMN2.ecore#//BaseElement"/>
-  </eClassifiers>
+        eType="ecore:EClass BPMN2.ecore#//BaseElement">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="attribute"/>
+        <details key="name" value="bpmnElement"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>  
+
+  
   <eClassifiers xsi:type="ecore:EClass" name="BPMNShape" eSuperTypes="DI.ecore#//LabeledShape">
     <eStructuralFeatures xsi:type="ecore:EReference" name="label" ordered="false"
         eType="#//BPMNLabel" containment="true"/>

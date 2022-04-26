@@ -170,7 +170,7 @@ public interface Definitions extends BaseElement {
      * @return the value of the '<em>Diagrams</em>' containment reference list.
      * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions_Diagrams()
      * @model containment="true" required="true" ordered="false"
-     *        extendedMetaData="kind='element' name='BPMNDiagram' namespace='http://www.omg.org/spec/BPMN/20100501/DI-XMI'"
+     *        extendedMetaData="kind='element' name='BPMNDiagram' namespace='http://www.omg.org/spec/BPMN/20100524/DI'"
      * @generated
      */
     EList<BPMNDiagram> getDiagrams();
@@ -183,7 +183,7 @@ public interface Definitions extends BaseElement {
      * @return the value of the '<em>Processes</em>' containment reference list.
      * @see org.openbpmn.bpmn2.Bpmn2Package#getDefinitions_Processes()
      * @model containment="true" required="true" ordered="false"
-     *        extendedMetaData="kind='element' name='process' namespace='http://www.omg.org/spec/BPMN/20100501/MODEL-XMI'"
+     *        extendedMetaData="kind='element' name='process' namespace='http://www.omg.org/spec/BPMN/20100524/MODEL'"
      * @generated
      */
     EList<org.openbpmn.bpmn2.Process> getProcesses();

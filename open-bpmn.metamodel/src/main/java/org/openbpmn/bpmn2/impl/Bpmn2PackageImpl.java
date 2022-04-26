@@ -738,7 +738,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
            new String[] {
                "kind", "element",
                "name", "BPMNDiagram",
-               "namespace", "http://www.omg.org/spec/BPMN/20100501/DI-XMI"
+               "namespace", "http://www.omg.org/spec/BPMN/20100524/DI"
            });
         addAnnotation
           (getDefinitions_Processes(),
@@ -746,7 +746,7 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
            new String[] {
                "kind", "element",
                "name", "process",
-               "namespace", "http://www.omg.org/spec/BPMN/20100501/MODEL-XMI"
+               "namespace", "http://www.omg.org/spec/BPMN/20100524/MODEL"
            });
     }
 

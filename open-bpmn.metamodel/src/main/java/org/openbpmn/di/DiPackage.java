@@ -39,7 +39,7 @@ public interface DiPackage extends EPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    String eNS_URI = "http://www.omg.org/spec/DD/20100501/DI-XMI";
+    String eNS_URI = "http://www.omg.org/spec/DD/20100524/DI";
 
     /**
      * The package namespace name.

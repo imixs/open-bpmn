@@ -668,6 +668,35 @@ public class DiPackageImpl extends EPackageImpl implements DiPackage {
 
         // Create resource
         createResource(eNS_URI);
+
+        // Create annotations
+        // http:///org/eclipse/emf/ecore/util/ExtendedMetaData
+        createExtendedMetaDataAnnotations();
+    }
+
+    /**
+     * Initializes the annotations for <b>http:///org/eclipse/emf/ecore/util/ExtendedMetaData</b>.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected void createExtendedMetaDataAnnotations() {
+        String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+        addAnnotation
+          (planeEClass,
+           source,
+           new String[] {
+               "name", "Plane",
+               "kind", "elementOnly"
+           });
+        addAnnotation
+          (getPlane_PlaneElement(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "DiagramElement",
+               "namespace", "http://www.omg.org/spec/DD/20100524/DI"
+           });
     }
 
 } //DiPackageImpl

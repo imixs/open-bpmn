@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:Definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100501/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100501/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100501/MODEL http://www.omg.org/spec/BPMN/20100501/MODEL-XMI http://www.omg.org/spec/BPMN/20100501/DI http://www.omg.org/spec/BPMN/20100501/DI-XMI" expressionLanguage="java" exporter="demo">
-  <bpmndi:BPMNDiagram documentation="...some docu" id="1-000001" name="my diagram"/>
+<bpmn2:Definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" expressionLanguage="java" exporter="demo">
+  <bpmndi:BPMNDiagram documentation="...some docu" id="1-000001" name="my diagram">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bpmn2:Process src/test/resources/openbpmn-empty.bpmn#0000002"/>
+  </bpmndi:BPMNDiagram>
   <bpmn2:process id="0000002" isClosed="true"/>
 </bpmn2:Definitions>

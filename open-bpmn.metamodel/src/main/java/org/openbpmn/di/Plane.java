@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * @see org.openbpmn.di.DiPackage#getPlane()
  * @model abstract="true"
+ *        extendedMetaData="name='Plane' kind='elementOnly'"
  * @generated
  */
 public interface Plane extends Node {
@@ -32,6 +33,7 @@ public interface Plane extends Node {
      * @return the value of the '<em>Plane Element</em>' containment reference list.
      * @see org.openbpmn.di.DiPackage#getPlane_PlaneElement()
      * @model containment="true"
+     *        extendedMetaData="kind='element' name='DiagramElement' namespace='http://www.omg.org/spec/DD/20100524/DI'"
      * @generated
      */
     EList<DiagramElement> getPlaneElement();
