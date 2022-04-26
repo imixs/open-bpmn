@@ -27,7 +27,7 @@ Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](ht
 
 # The BPMN 2.0 Metamodel
 
-OpenBPMN provides a Java Metamodel which can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based on the [Eclipse Modeling Framework](https://www.eclipse.org/modeling/emf/) (EMF) and includes a set of junit test classes which may be helpful to implement you own business logic. 
+OpenBPMN provides a Java Metamodel which can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the `org.w3c.dom` XML API and includes a set of junit test classes which may be helpful to implement you own business logic. 
 
  - [OpenBPMN Metamodel](./open-bpmn.metamodel/README.md)
 

@@ -1,4 +1,29 @@
-# Open BPMN - Metamodel
+# Open BPMN 2.0 - Metamodel
+
+
+OpenBPMN provides a Java Metamodel which can be used to create, load and manipulate a BPMN model programmatically. The Metamodel provides factory and model classes to work with an BPMN model instance. The libray is based on the `org.w3c.dom` XML API that allows you to handle any kind of BPMN model and also work with BPMN 2.0 extensions or add your own extensions. 
+
+## The BPMNModelFactory
+
+The class `BPMNModelFactory` provides methods to create an empty model or to load an existing one. The `BPMNModelFactory` returns a BPMNModel instance which can be used to read, update or delete elements.
+
+### Load a Model
+
+To load a model instance and add a new Process into the model you just need this:
+
+```java
+	// load model
+	BPMNModel model = BPMNModelFactory.read("/process_1-empty-1.bpmn");
+	// add a new process....
+	model.addProcess("P-000002");
+	// store the model
+	model.save("src/test/resources/process_1-update-1.bpmn");
+```
+
+
+
+# Deprecated
+
 
 This project provides the [BPMN 2.0 metamodel](https://www.omg.org/spec/BPMN/) based on the Eclipse Modeling Framework (EMF). Reed the full spcification [here](BPMN-2.0_formal-13-12-09.pdf).
 
