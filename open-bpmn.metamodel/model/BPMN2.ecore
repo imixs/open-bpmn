@@ -9,9 +9,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeLanguage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exporter" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exporterVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+
     <eStructuralFeatures xsi:type="ecore:EReference" name="diagrams" ordered="false"
         lowerBound="1" upperBound="-1" eType="ecore:EClass BPMNDI.ecore#//BPMNDiagram"
-        containment="true"/>
+        containment="true">
+      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
+        <details key="kind" value="element"/>
+        <details key="name" value="BPMNDiagram"/>
+        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100501/DI-XMI"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+
     <eStructuralFeatures xsi:type="ecore:EReference" name="processes" ordered="false"
         lowerBound="1" upperBound="-1" eType="#//Process" containment="true">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
@@ -22,11 +30,6 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RootElement" abstract="true" eSuperTypes="#//BaseElement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="rootElement" upperBound="-2"
-        eType="#//RootElement" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BaseElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>

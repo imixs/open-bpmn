@@ -93,8 +93,6 @@ public class DiValidator extends EObjectValidator {
     @Override
     protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
         switch (classifierID) {
-            case DiPackage.DOCUMENT_ROOT:
-                return validateDocumentRoot((DocumentRoot)value, diagnostics, context);
             case DiPackage.DIAGRAM:
                 return validateDiagram((Diagram)value, diagnostics, context);
             case DiPackage.DIAGRAM_ELEMENT:
@@ -118,15 +116,6 @@ public class DiValidator extends EObjectValidator {
             default:
                 return true;
         }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean validateDocumentRoot(DocumentRoot documentRoot, DiagnosticChain diagnostics, Map<Object, Object> context) {
-        return validate_EveryDefaultConstraint(documentRoot, diagnostics, context);
     }
 
     /**

@@ -68,10 +68,6 @@ public class DiAdapterFactory extends AdapterFactoryImpl {
     protected DiSwitch<Adapter> modelSwitch =
         new DiSwitch<Adapter>() {
             @Override
-            public Adapter caseDocumentRoot(DocumentRoot object) {
-                return createDocumentRootAdapter();
-            }
-            @Override
             public Adapter caseDiagram(Diagram object) {
                 return createDiagramAdapter();
             }
@@ -130,20 +126,6 @@ public class DiAdapterFactory extends AdapterFactoryImpl {
         return modelSwitch.doSwitch((EObject)target);
     }
 
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.di.DocumentRoot <em>Document Root</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.di.DocumentRoot
-     * @generated
-     */
-    public Adapter createDocumentRootAdapter() {
-        return null;
-    }
 
     /**
      * Creates a new adapter for an object of class '{@link org.openbpmn.di.Diagram <em>Diagram</em>}'.

@@ -13,7 +13,6 @@ import org.openbpmn.bpmn2.Activity;
 import org.openbpmn.bpmn2.BaseElement;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
-import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowElement;
 import org.openbpmn.bpmn2.FlowNode;
@@ -87,10 +86,6 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseRootElement(RootElement object) {
                 return createRootElementAdapter();
-            }
-            @Override
-            public Adapter caseDocumentRoot(DocumentRoot object) {
-                return createDocumentRootAdapter();
             }
             @Override
             public Adapter caseBaseElement(BaseElement object) {
@@ -181,20 +176,6 @@ public class Bpmn2AdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createRootElementAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmn2.DocumentRoot <em>Document Root</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.bpmn2.DocumentRoot
-     * @generated
-     */
-    public Adapter createDocumentRootAdapter() {
         return null;
     }
 

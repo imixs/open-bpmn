@@ -1,44 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="di" nsURI="http://www.omg.org/spec/DD/20100501/DI-XMI" nsPrefix="di">
-  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mixed" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="xMLNSPrefixMap" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
-        transient="true" containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="xSISchemaLocation" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
-        transient="true" containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="diagramElement" upperBound="-2"
-        eType="#//DiagramElement" volatile="true" transient="true" derived="true"
-        containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="diagram" upperBound="-2"
-        eType="#//Diagram" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="edge" upperBound="-2" eType="#//Edge"
-        volatile="true" transient="true" derived="true" containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="label" upperBound="-2"
-        eType="#//Label" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="labeledEdge" upperBound="-2"
-        eType="#//LabeledEdge" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="labeledShape" upperBound="-2"
-        eType="#//LabeledShape" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="node" upperBound="-2" eType="#//Node"
-        volatile="true" transient="true" derived="true" containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="plane" upperBound="-2"
-        eType="#//Plane" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="shape" upperBound="-2"
-        eType="#//Shape" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="style" upperBound="-2"
-        eType="#//Style" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Diagram" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentation" ordered="false"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

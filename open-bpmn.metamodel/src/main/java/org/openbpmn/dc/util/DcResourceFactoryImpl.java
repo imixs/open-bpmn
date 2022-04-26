@@ -2,7 +2,6 @@
  */
 package org.openbpmn.dc.util;
 
-import org.eclipse.dd.dc.util.DcResourceImpl;
 import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.emf.ecore.resource.Resource;

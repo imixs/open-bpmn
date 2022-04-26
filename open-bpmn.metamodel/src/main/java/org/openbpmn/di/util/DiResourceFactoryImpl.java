@@ -2,7 +2,6 @@
  */
 package org.openbpmn.di.util;
 
-import org.eclipse.dd.di.util.DiResourceImpl;
 import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.emf.ecore.resource.Resource;

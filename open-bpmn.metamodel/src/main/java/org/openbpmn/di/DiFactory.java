@@ -22,15 +22,6 @@ public interface DiFactory extends EFactory {
     DiFactory eINSTANCE = org.openbpmn.di.impl.DiFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Document Root</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Document Root</em>'.
-     * @generated
-     */
-    DocumentRoot createDocumentRoot();
-
-    /**
      * Returns a new object of class '<em>Diagram Element</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

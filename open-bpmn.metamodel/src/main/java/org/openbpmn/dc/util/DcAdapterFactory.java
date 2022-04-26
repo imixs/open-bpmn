@@ -68,10 +68,6 @@ public class DcAdapterFactory extends AdapterFactoryImpl {
     protected DcSwitch<Adapter> modelSwitch =
         new DcSwitch<Adapter>() {
             @Override
-            public Adapter caseDocumentRoot(DocumentRoot object) {
-                return createDocumentRootAdapter();
-            }
-            @Override
             public Adapter caseBounds(Bounds object) {
                 return createBoundsAdapter();
             }
@@ -102,20 +98,6 @@ public class DcAdapterFactory extends AdapterFactoryImpl {
         return modelSwitch.doSwitch((EObject)target);
     }
 
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.dc.DocumentRoot <em>Document Root</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.dc.DocumentRoot
-     * @generated
-     */
-    public Adapter createDocumentRootAdapter() {
-        return null;
-    }
 
     /**
      * Creates a new adapter for an object of class '{@link org.openbpmn.dc.Bounds <em>Bounds</em>}'.

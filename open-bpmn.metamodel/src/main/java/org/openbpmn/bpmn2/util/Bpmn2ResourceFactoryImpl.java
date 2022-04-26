@@ -2,12 +2,12 @@
  */
 package org.openbpmn.bpmn2.util;
 
-import org.eclipse.bpmn2.util.Bpmn2ResourceImpl;
 import org.eclipse.emf.common.util.URI;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
 import org.eclipse.emf.ecore.resource.impl.ResourceFactoryImpl;
+
 import org.eclipse.emf.ecore.xmi.XMLResource;
 
 /**

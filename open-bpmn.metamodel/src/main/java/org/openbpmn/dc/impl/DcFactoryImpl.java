@@ -56,23 +56,12 @@ public class DcFactoryImpl extends EFactoryImpl implements DcFactory {
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case DcPackage.DOCUMENT_ROOT: return createDocumentRoot();
             case DcPackage.BOUNDS: return createBounds();
             case DcPackage.FONT: return createFont();
             case DcPackage.POINT: return createPoint();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DocumentRoot createDocumentRoot() {
-        DocumentRootImpl documentRoot = new DocumentRootImpl();
-        return documentRoot;
     }
 
     /**

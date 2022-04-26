@@ -22,7 +22,6 @@ import org.openbpmn.bpmndi.BPMNPlane;
 import org.openbpmn.bpmndi.BPMNShape;
 import org.openbpmn.bpmndi.BpmndiFactory;
 import org.openbpmn.bpmndi.BpmndiPackage;
-import org.openbpmn.bpmndi.DocumentRoot;
 import org.openbpmn.bpmndi.MessageVisibleKind;
 import org.openbpmn.bpmndi.ParticipantBandKind;
 
@@ -41,13 +40,6 @@ import org.openbpmn.di.impl.DiPackageImpl;
  * @generated
  */
 public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass documentRootEClass = null;
-
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -177,96 +169,6 @@ public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(BpmndiPackage.eNS_URI, theBpmndiPackage);
         return theBpmndiPackage;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getDocumentRoot() {
-        return documentRootEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getDocumentRoot_Mixed() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_XMLNSPrefixMap() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_XSISchemaLocation() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_BPMNDiagram() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_BPMNEdge() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_BPMNLabel() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_BPMNLabelStyle() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(6);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_BPMNPlane() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_BPMNShape() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(8);
     }
 
     /**
@@ -531,17 +433,6 @@ public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
         isCreated = true;
 
         // Create classes and their features
-        documentRootEClass = createEClass(DOCUMENT_ROOT);
-        createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BPMN_DIAGRAM);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BPMN_EDGE);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BPMN_LABEL);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BPMN_LABEL_STYLE);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BPMN_PLANE);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BPMN_SHAPE);
-
         bpmnDiagramEClass = createEClass(BPMN_DIAGRAM);
         createEReference(bpmnDiagramEClass, BPMN_DIAGRAM__PLANE);
         createEReference(bpmnDiagramEClass, BPMN_DIAGRAM__LABEL_STYLE);
@@ -618,17 +509,6 @@ public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
         bpmnShapeEClass.getESuperTypes().add(theDiPackage.getLabeledShape());
 
         // Initialize classes, features, and operations; add parameters
-        initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, DocumentRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, DocumentRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, DocumentRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_BPMNDiagram(), this.getBPMNDiagram(), null, "bPMNDiagram", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_BPMNEdge(), this.getBPMNEdge(), null, "bPMNEdge", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_BPMNLabel(), this.getBPMNLabel(), null, "bPMNLabel", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_BPMNLabelStyle(), this.getBPMNLabelStyle(), null, "bPMNLabelStyle", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_BPMNPlane(), this.getBPMNPlane(), null, "bPMNPlane", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_BPMNShape(), this.getBPMNShape(), null, "bPMNShape", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
         initEClass(bpmnDiagramEClass, BPMNDiagram.class, "BPMNDiagram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getBPMNDiagram_Plane(), this.getBPMNPlane(), null, "plane", null, 1, 1, BPMNDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
         initEReference(getBPMNDiagram_LabelStyle(), this.getBPMNLabelStyle(), null, "labelStyle", null, 0, -1, BPMNDiagram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -688,14 +568,6 @@ public class BpmndiPackageImpl extends EPackageImpl implements BpmndiPackage {
      */
     protected void createExtendedMetaDataAnnotations() {
         String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
-        addAnnotation
-          (getDocumentRoot_BPMNDiagram(),
-           source,
-           new String[] {
-               "kind", "element",
-               "name", "BPMNDiagram",
-               "namespace", "http://www.omg.org/spec/BPMN/20100524/DI"
-           });
         addAnnotation
           (bpmnDiagramEClass,
            source,

@@ -42,6 +42,9 @@ public class TestSimple {
         org.openbpmn.bpmn2.Process process = Bpmn2Factory.eINSTANCE.createProcess();
 
         BPMNDiagram bpmdiagram = BpmndiFactory.eINSTANCE.createBPMNDiagram();
+        bpmdiagram.setId("1-000001");
+        bpmdiagram.setDocumentation("...some docu");
+        bpmdiagram.setName("my diagram");
 
         process.setId("0000002");
         process.setIsClosed(true);

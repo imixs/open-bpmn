@@ -12,8 +12,14 @@
 	exporter="org.eclipse.bpmn2.modeler.core" 
 	exporterVersion="1.5.3.Final-v20210519-2007-B1" 
 	targetNamespace="http://org.eclipse.bpmn2/default/process">
+ 
   <bpmn2:process id="process_1" name="Default Process" isExecutable="false"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+  
+  <bpmn2:process id="0000002" isClosed="true"/>
+  <bpmndi:BPMNDiagram documentation="...some docu" id="1-000001" name="my diagram"/>
+  
+  
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1"/>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

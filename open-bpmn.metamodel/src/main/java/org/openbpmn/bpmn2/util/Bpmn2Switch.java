@@ -11,7 +11,6 @@ import org.openbpmn.bpmn2.Activity;
 import org.openbpmn.bpmn2.BaseElement;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
-import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowElement;
 import org.openbpmn.bpmn2.FlowNode;
@@ -90,12 +89,6 @@ public class Bpmn2Switch<T> extends Switch<T> {
                 RootElement rootElement = (RootElement)theEObject;
                 T result = caseRootElement(rootElement);
                 if (result == null) result = caseBaseElement(rootElement);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case Bpmn2Package.DOCUMENT_ROOT: {
-                DocumentRoot documentRoot = (DocumentRoot)theEObject;
-                T result = caseDocumentRoot(documentRoot);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -225,21 +218,6 @@ public class Bpmn2Switch<T> extends Switch<T> {
      * @generated
      */
     public T caseRootElement(RootElement object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Document Root</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Document Root</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseDocumentRoot(DocumentRoot object) {
         return null;
     }
 

@@ -18,9 +18,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//Definitions/processes"/>
     </genClasses>
     <genClasses image="false" ecoreClass="BPMN2.ecore#//RootElement"/>
-    <genClasses ecoreClass="BPMN2.ecore#//DocumentRoot">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//DocumentRoot/rootElement"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="BPMN2.ecore#//BaseElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BPMN2.ecore#//BaseElement/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMN2.ecore#//BaseElement/documentation"/>
@@ -72,17 +69,6 @@
       <genEnumLiterals ecoreEnumLiteral="BPMNDI.ecore#//ParticipantBandKind/middle_non_initiating"/>
       <genEnumLiterals ecoreEnumLiteral="BPMNDI.ecore#//ParticipantBandKind/bottom_non_initiating"/>
     </genEnums>
-    <genClasses ecoreClass="BPMNDI.ecore#//DocumentRoot">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute BPMNDI.ecore#//DocumentRoot/mixed"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/xMLNSPrefixMap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/xSISchemaLocation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/bPMNDiagram"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/bPMNEdge"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/bPMNLabel"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/bPMNLabelStyle"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/bPMNPlane"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//DocumentRoot/bPMNShape"/>
-    </genClasses>
     <genClasses ecoreClass="BPMNDI.ecore#//BPMNDiagram">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//BPMNDiagram/plane"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BPMNDI.ecore#//BPMNDiagram/labelStyle"/>
@@ -116,21 +102,6 @@
   </genPackages>
   <genPackages prefix="Di" basePackage="org.openbpmn" resource="XML" disposableProviderFactory="true"
       ecorePackage="DI.ecore#/">
-    <genClasses ecoreClass="DI.ecore#//DocumentRoot">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DI.ecore#//DocumentRoot/mixed"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/xMLNSPrefixMap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/xSISchemaLocation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/diagramElement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/diagram"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/edge"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/label"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/labeledEdge"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/labeledShape"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/node"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/plane"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/shape"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DI.ecore#//DocumentRoot/style"/>
-    </genClasses>
     <genClasses image="false" ecoreClass="DI.ecore#//Diagram">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DI.ecore#//Diagram/documentation"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference DI.ecore#//Diagram/ownedStyle"/>
@@ -179,14 +150,6 @@
   </genPackages>
   <genPackages prefix="Dc" basePackage="org.openbpmn" resource="XML" disposableProviderFactory="true"
       ecorePackage="DC.ecore#/">
-    <genClasses ecoreClass="DC.ecore#//DocumentRoot">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EAttribute DC.ecore#//DocumentRoot/mixed"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/xMLNSPrefixMap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/xSISchemaLocation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/bounds"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/font"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DC.ecore#//DocumentRoot/point"/>
-    </genClasses>
     <genClasses ecoreClass="DC.ecore#//Bounds">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/height"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DC.ecore#//Bounds/width"/>

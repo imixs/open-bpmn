@@ -2,40 +2,6 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmndi" nsURI="http://www.omg.org/spec/BPMN/20100501/DI-XMI"
     nsPrefix="bpmndi">
-  <eClassifiers xsi:type="ecore:EClass" name="DocumentRoot">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mixed" unique="false" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFeatureMapEntry"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="xMLNSPrefixMap" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
-        transient="true" containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="xSISchemaLocation" upperBound="-1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EStringToStringMapEntry"
-        transient="true" containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNDiagram" upperBound="-2"
-        eType="#//BPMNDiagram" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false">
-      <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
-        <details key="kind" value="element"/>
-        <details key="name" value="BPMNDiagram"/>
-        <details key="namespace" value="http://www.omg.org/spec/BPMN/20100524/DI"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNEdge" upperBound="-2"
-        eType="#//BPMNEdge" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNLabel" upperBound="-2"
-        eType="#//BPMNLabel" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNLabelStyle" upperBound="-2"
-        eType="#//BPMNLabelStyle" volatile="true" transient="true" derived="true"
-        containment="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNPlane" upperBound="-2"
-        eType="#//BPMNPlane" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bPMNShape" upperBound="-2"
-        eType="#//BPMNShape" volatile="true" transient="true" derived="true" containment="true"
-        resolveProxies="false"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BPMNDiagram" eSuperTypes="DI.ecore#//Diagram">
     <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
       <details key="name" value="BPMNDiagram"/>

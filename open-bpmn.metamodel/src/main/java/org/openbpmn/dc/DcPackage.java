@@ -6,7 +6,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 
 /**
  * <!-- begin-user-doc -->
@@ -58,88 +57,6 @@ public interface DcPackage extends EPackage {
     DcPackage eINSTANCE = org.openbpmn.dc.impl.DcPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link org.openbpmn.dc.impl.DocumentRootImpl <em>Document Root</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.openbpmn.dc.impl.DocumentRootImpl
-     * @see org.openbpmn.dc.impl.DcPackageImpl#getDocumentRoot()
-     * @generated
-     */
-    int DOCUMENT_ROOT = 0;
-
-    /**
-     * The feature id for the '<em><b>Mixed</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__MIXED = 0;
-
-    /**
-     * The feature id for the '<em><b>XMLNS Prefix Map</b></em>' map.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__XMLNS_PREFIX_MAP = 1;
-
-    /**
-     * The feature id for the '<em><b>XSI Schema Location</b></em>' map.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = 2;
-
-    /**
-     * The feature id for the '<em><b>Bounds</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__BOUNDS = 3;
-
-    /**
-     * The feature id for the '<em><b>Font</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__FONT = 4;
-
-    /**
-     * The feature id for the '<em><b>Point</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__POINT = 5;
-
-    /**
-     * The number of structural features of the '<em>Document Root</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT_FEATURE_COUNT = 6;
-
-    /**
-     * The number of operations of the '<em>Document Root</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT_OPERATION_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link org.openbpmn.dc.impl.BoundsImpl <em>Bounds</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -147,7 +64,7 @@ public interface DcPackage extends EPackage {
      * @see org.openbpmn.dc.impl.DcPackageImpl#getBounds()
      * @generated
      */
-    int BOUNDS = 1;
+    int BOUNDS = 0;
 
     /**
      * The feature id for the '<em><b>Height</b></em>' attribute.
@@ -211,7 +128,7 @@ public interface DcPackage extends EPackage {
      * @see org.openbpmn.dc.impl.DcPackageImpl#getFont()
      * @generated
      */
-    int FONT = 2;
+    int FONT = 1;
 
     /**
      * The feature id for the '<em><b>Is Bold</b></em>' attribute.
@@ -302,7 +219,7 @@ public interface DcPackage extends EPackage {
      * @see org.openbpmn.dc.impl.DcPackageImpl#getPoint()
      * @generated
      */
-    int POINT = 3;
+    int POINT = 2;
 
     /**
      * The feature id for the '<em><b>X</b></em>' attribute.
@@ -340,82 +257,6 @@ public interface DcPackage extends EPackage {
      */
     int POINT_OPERATION_COUNT = 0;
 
-
-    /**
-     * Returns the meta object for class '{@link org.openbpmn.dc.DocumentRoot <em>Document Root</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Document Root</em>'.
-     * @see org.openbpmn.dc.DocumentRoot
-     * @generated
-     */
-    EClass getDocumentRoot();
-
-    /**
-     * Returns the meta object for the attribute list '{@link org.openbpmn.dc.DocumentRoot#getMixed <em>Mixed</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute list '<em>Mixed</em>'.
-     * @see org.openbpmn.dc.DocumentRoot#getMixed()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EAttribute getDocumentRoot_Mixed();
-
-    /**
-     * Returns the meta object for the map '{@link org.openbpmn.dc.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
-     * @see org.openbpmn.dc.DocumentRoot#getXMLNSPrefixMap()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_XMLNSPrefixMap();
-
-    /**
-     * Returns the meta object for the map '{@link org.openbpmn.dc.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the map '<em>XSI Schema Location</em>'.
-     * @see org.openbpmn.dc.DocumentRoot#getXSISchemaLocation()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_XSISchemaLocation();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.dc.DocumentRoot#getBounds <em>Bounds</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Bounds</em>'.
-     * @see org.openbpmn.dc.DocumentRoot#getBounds()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Bounds();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.dc.DocumentRoot#getFont <em>Font</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Font</em>'.
-     * @see org.openbpmn.dc.DocumentRoot#getFont()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Font();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.dc.DocumentRoot#getPoint <em>Point</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Point</em>'.
-     * @see org.openbpmn.dc.DocumentRoot#getPoint()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Point();
 
     /**
      * Returns the meta object for class '{@link org.openbpmn.dc.Bounds <em>Bounds</em>}'.
@@ -612,64 +453,6 @@ public interface DcPackage extends EPackage {
      * @generated
      */
     interface Literals {
-        /**
-         * The meta object literal for the '{@link org.openbpmn.dc.impl.DocumentRootImpl <em>Document Root</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.openbpmn.dc.impl.DocumentRootImpl
-         * @see org.openbpmn.dc.impl.DcPackageImpl#getDocumentRoot()
-         * @generated
-         */
-        EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
-
-        /**
-         * The meta object literal for the '<em><b>Mixed</b></em>' attribute list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DOCUMENT_ROOT__MIXED = eINSTANCE.getDocumentRoot_Mixed();
-
-        /**
-         * The meta object literal for the '<em><b>XMLNS Prefix Map</b></em>' map feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__XMLNS_PREFIX_MAP = eINSTANCE.getDocumentRoot_XMLNSPrefixMap();
-
-        /**
-         * The meta object literal for the '<em><b>XSI Schema Location</b></em>' map feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = eINSTANCE.getDocumentRoot_XSISchemaLocation();
-
-        /**
-         * The meta object literal for the '<em><b>Bounds</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__BOUNDS = eINSTANCE.getDocumentRoot_Bounds();
-
-        /**
-         * The meta object literal for the '<em><b>Font</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__FONT = eINSTANCE.getDocumentRoot_Font();
-
-        /**
-         * The meta object literal for the '<em><b>Point</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__POINT = eINSTANCE.getDocumentRoot_Point();
-
         /**
          * The meta object literal for the '{@link org.openbpmn.dc.impl.BoundsImpl <em>Bounds</em>}' class.
          * <!-- begin-user-doc -->

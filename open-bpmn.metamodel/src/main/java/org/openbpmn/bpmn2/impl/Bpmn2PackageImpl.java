@@ -14,7 +14,6 @@ import org.openbpmn.bpmn2.BaseElement;
 import org.openbpmn.bpmn2.Bpmn2Factory;
 import org.openbpmn.bpmn2.Bpmn2Package;
 import org.openbpmn.bpmn2.Definitions;
-import org.openbpmn.bpmn2.DocumentRoot;
 import org.openbpmn.bpmn2.Documentation;
 import org.openbpmn.bpmn2.FlowElement;
 import org.openbpmn.bpmn2.FlowNode;
@@ -57,13 +56,6 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      * @generated
      */
     private EClass rootElementEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass documentRootEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -305,24 +297,6 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      */
     public EClass getRootElement() {
         return rootElementEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getDocumentRoot() {
-        return documentRootEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_RootElement() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -608,9 +582,6 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 
         rootElementEClass = createEClass(ROOT_ELEMENT);
 
-        documentRootEClass = createEClass(DOCUMENT_ROOT);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__ROOT_ELEMENT);
-
         baseElementEClass = createEClass(BASE_ELEMENT);
         createEAttribute(baseElementEClass, BASE_ELEMENT__ID);
         createEReference(baseElementEClass, BASE_ELEMENT__DOCUMENTATION);
@@ -707,9 +678,6 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
 
         initEClass(rootElementEClass, RootElement.class, "RootElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDocumentRoot_RootElement(), this.getRootElement(), null, "rootElement", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
         initEClass(baseElementEClass, BaseElement.class, "BaseElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBaseElement_Id(), ecorePackage.getEString(), "id", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
         initEReference(getBaseElement_Documentation(), this.getDocumentation(), null, "documentation", null, 0, -1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -764,6 +732,14 @@ public class Bpmn2PackageImpl extends EPackageImpl implements Bpmn2Package {
      */
     protected void createExtendedMetaDataAnnotations() {
         String source = "http:///org/eclipse/emf/ecore/util/ExtendedMetaData";
+        addAnnotation
+          (getDefinitions_Diagrams(),
+           source,
+           new String[] {
+               "kind", "element",
+               "name", "BPMNDiagram",
+               "namespace", "http://www.omg.org/spec/BPMN/20100501/DI-XMI"
+           });
         addAnnotation
           (getDefinitions_Processes(),
            source,

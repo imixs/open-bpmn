@@ -79,10 +79,6 @@ public class BpmndiAdapterFactory extends AdapterFactoryImpl {
     protected BpmndiSwitch<Adapter> modelSwitch =
         new BpmndiSwitch<Adapter>() {
             @Override
-            public Adapter caseDocumentRoot(DocumentRoot object) {
-                return createDocumentRootAdapter();
-            }
-            @Override
             public Adapter caseBPMNDiagram(BPMNDiagram object) {
                 return createBPMNDiagramAdapter();
             }
@@ -165,20 +161,6 @@ public class BpmndiAdapterFactory extends AdapterFactoryImpl {
         return modelSwitch.doSwitch((EObject)target);
     }
 
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.bpmndi.DocumentRoot <em>Document Root</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.bpmndi.DocumentRoot
-     * @generated
-     */
-    public Adapter createDocumentRootAdapter() {
-        return null;
-    }
 
     /**
      * Creates a new adapter for an object of class '{@link org.openbpmn.bpmndi.BPMNDiagram <em>BPMN Diagram</em>}'.

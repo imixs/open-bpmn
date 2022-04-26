@@ -93,8 +93,6 @@ public class DcValidator extends EObjectValidator {
     @Override
     protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
         switch (classifierID) {
-            case DcPackage.DOCUMENT_ROOT:
-                return validateDocumentRoot((DocumentRoot)value, diagnostics, context);
             case DcPackage.BOUNDS:
                 return validateBounds((Bounds)value, diagnostics, context);
             case DcPackage.FONT:
@@ -104,15 +102,6 @@ public class DcValidator extends EObjectValidator {
             default:
                 return true;
         }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public boolean validateDocumentRoot(DocumentRoot documentRoot, DiagnosticChain diagnostics, Map<Object, Object> context) {
-        return validate_EveryDefaultConstraint(documentRoot, diagnostics, context);
     }
 
     /**

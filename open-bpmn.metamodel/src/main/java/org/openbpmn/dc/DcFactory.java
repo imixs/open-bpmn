@@ -22,15 +22,6 @@ public interface DcFactory extends EFactory {
     DcFactory eINSTANCE = org.openbpmn.dc.impl.DcFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Document Root</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Document Root</em>'.
-     * @generated
-     */
-    DocumentRoot createDocumentRoot();
-
-    /**
      * Returns a new object of class '<em>Bounds</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

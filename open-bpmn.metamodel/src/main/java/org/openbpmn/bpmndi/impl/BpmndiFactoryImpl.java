@@ -57,7 +57,6 @@ public class BpmndiFactoryImpl extends EFactoryImpl implements BpmndiFactory {
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case BpmndiPackage.DOCUMENT_ROOT: return createDocumentRoot();
             case BpmndiPackage.BPMN_DIAGRAM: return createBPMNDiagram();
             case BpmndiPackage.BPMN_EDGE: return createBPMNEdge();
             case BpmndiPackage.BPMN_LABEL: return createBPMNLabel();
@@ -101,16 +100,6 @@ public class BpmndiFactoryImpl extends EFactoryImpl implements BpmndiFactory {
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public DocumentRoot createDocumentRoot() {
-        DocumentRootImpl documentRoot = new DocumentRootImpl();
-        return documentRoot;
     }
 
     /**

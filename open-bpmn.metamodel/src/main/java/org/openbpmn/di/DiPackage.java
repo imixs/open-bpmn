@@ -58,151 +58,6 @@ public interface DiPackage extends EPackage {
     DiPackage eINSTANCE = org.openbpmn.di.impl.DiPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link org.openbpmn.di.impl.DocumentRootImpl <em>Document Root</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.openbpmn.di.impl.DocumentRootImpl
-     * @see org.openbpmn.di.impl.DiPackageImpl#getDocumentRoot()
-     * @generated
-     */
-    int DOCUMENT_ROOT = 0;
-
-    /**
-     * The feature id for the '<em><b>Mixed</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__MIXED = 0;
-
-    /**
-     * The feature id for the '<em><b>XMLNS Prefix Map</b></em>' map.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__XMLNS_PREFIX_MAP = 1;
-
-    /**
-     * The feature id for the '<em><b>XSI Schema Location</b></em>' map.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = 2;
-
-    /**
-     * The feature id for the '<em><b>Diagram Element</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__DIAGRAM_ELEMENT = 3;
-
-    /**
-     * The feature id for the '<em><b>Diagram</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__DIAGRAM = 4;
-
-    /**
-     * The feature id for the '<em><b>Edge</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__EDGE = 5;
-
-    /**
-     * The feature id for the '<em><b>Label</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__LABEL = 6;
-
-    /**
-     * The feature id for the '<em><b>Labeled Edge</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__LABELED_EDGE = 7;
-
-    /**
-     * The feature id for the '<em><b>Labeled Shape</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__LABELED_SHAPE = 8;
-
-    /**
-     * The feature id for the '<em><b>Node</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__NODE = 9;
-
-    /**
-     * The feature id for the '<em><b>Plane</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__PLANE = 10;
-
-    /**
-     * The feature id for the '<em><b>Shape</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__SHAPE = 11;
-
-    /**
-     * The feature id for the '<em><b>Style</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT__STYLE = 12;
-
-    /**
-     * The number of structural features of the '<em>Document Root</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT_FEATURE_COUNT = 13;
-
-    /**
-     * The number of operations of the '<em>Document Root</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DOCUMENT_ROOT_OPERATION_COUNT = 0;
-
-    /**
      * The meta object id for the '{@link org.openbpmn.di.impl.DiagramImpl <em>Diagram</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -210,7 +65,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getDiagram()
      * @generated
      */
-    int DIAGRAM = 1;
+    int DIAGRAM = 0;
 
     /**
      * The feature id for the '<em><b>Documentation</b></em>' attribute.
@@ -292,7 +147,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getDiagramElement()
      * @generated
      */
-    int DIAGRAM_ELEMENT = 2;
+    int DIAGRAM_ELEMENT = 1;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -383,7 +238,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getEdge()
      * @generated
      */
-    int EDGE = 3;
+    int EDGE = 2;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -501,7 +356,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getNode()
      * @generated
      */
-    int NODE = 7;
+    int NODE = 6;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -592,7 +447,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getLabel()
      * @generated
      */
-    int LABEL = 4;
+    int LABEL = 3;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -692,7 +547,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getLabeledEdge()
      * @generated
      */
-    int LABELED_EDGE = 5;
+    int LABELED_EDGE = 4;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -819,7 +674,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getShape()
      * @generated
      */
-    int SHAPE = 9;
+    int SHAPE = 8;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -919,7 +774,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getLabeledShape()
      * @generated
      */
-    int LABELED_SHAPE = 6;
+    int LABELED_SHAPE = 5;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -1028,7 +883,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getPlane()
      * @generated
      */
-    int PLANE = 8;
+    int PLANE = 7;
 
     /**
      * The feature id for the '<em><b>Owning Diagram</b></em>' reference.
@@ -1137,7 +992,7 @@ public interface DiPackage extends EPackage {
      * @see org.openbpmn.di.impl.DiPackageImpl#getStyle()
      * @generated
      */
-    int STYLE = 10;
+    int STYLE = 9;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1166,159 +1021,6 @@ public interface DiPackage extends EPackage {
      */
     int STYLE_OPERATION_COUNT = 0;
 
-
-    /**
-     * Returns the meta object for class '{@link org.openbpmn.di.DocumentRoot <em>Document Root</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Document Root</em>'.
-     * @see org.openbpmn.di.DocumentRoot
-     * @generated
-     */
-    EClass getDocumentRoot();
-
-    /**
-     * Returns the meta object for the attribute list '{@link org.openbpmn.di.DocumentRoot#getMixed <em>Mixed</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute list '<em>Mixed</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getMixed()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EAttribute getDocumentRoot_Mixed();
-
-    /**
-     * Returns the meta object for the map '{@link org.openbpmn.di.DocumentRoot#getXMLNSPrefixMap <em>XMLNS Prefix Map</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the map '<em>XMLNS Prefix Map</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getXMLNSPrefixMap()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_XMLNSPrefixMap();
-
-    /**
-     * Returns the meta object for the map '{@link org.openbpmn.di.DocumentRoot#getXSISchemaLocation <em>XSI Schema Location</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the map '<em>XSI Schema Location</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getXSISchemaLocation()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_XSISchemaLocation();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getDiagramElement <em>Diagram Element</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Diagram Element</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getDiagramElement()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_DiagramElement();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getDiagram <em>Diagram</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Diagram</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getDiagram()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Diagram();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getEdge <em>Edge</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Edge</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getEdge()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Edge();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getLabel <em>Label</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Label</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getLabel()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Label();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getLabeledEdge <em>Labeled Edge</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Labeled Edge</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getLabeledEdge()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_LabeledEdge();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getLabeledShape <em>Labeled Shape</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Labeled Shape</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getLabeledShape()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_LabeledShape();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getNode <em>Node</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Node</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getNode()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Node();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getPlane <em>Plane</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Plane</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getPlane()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Plane();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getShape <em>Shape</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Shape</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getShape()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Shape();
-
-    /**
-     * Returns the meta object for the containment reference '{@link org.openbpmn.di.DocumentRoot#getStyle <em>Style</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference '<em>Style</em>'.
-     * @see org.openbpmn.di.DocumentRoot#getStyle()
-     * @see #getDocumentRoot()
-     * @generated
-     */
-    EReference getDocumentRoot_Style();
 
     /**
      * Returns the meta object for class '{@link org.openbpmn.di.Diagram <em>Diagram</em>}'.
@@ -1695,120 +1397,6 @@ public interface DiPackage extends EPackage {
      * @generated
      */
     interface Literals {
-        /**
-         * The meta object literal for the '{@link org.openbpmn.di.impl.DocumentRootImpl <em>Document Root</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see org.openbpmn.di.impl.DocumentRootImpl
-         * @see org.openbpmn.di.impl.DiPackageImpl#getDocumentRoot()
-         * @generated
-         */
-        EClass DOCUMENT_ROOT = eINSTANCE.getDocumentRoot();
-
-        /**
-         * The meta object literal for the '<em><b>Mixed</b></em>' attribute list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute DOCUMENT_ROOT__MIXED = eINSTANCE.getDocumentRoot_Mixed();
-
-        /**
-         * The meta object literal for the '<em><b>XMLNS Prefix Map</b></em>' map feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__XMLNS_PREFIX_MAP = eINSTANCE.getDocumentRoot_XMLNSPrefixMap();
-
-        /**
-         * The meta object literal for the '<em><b>XSI Schema Location</b></em>' map feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__XSI_SCHEMA_LOCATION = eINSTANCE.getDocumentRoot_XSISchemaLocation();
-
-        /**
-         * The meta object literal for the '<em><b>Diagram Element</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__DIAGRAM_ELEMENT = eINSTANCE.getDocumentRoot_DiagramElement();
-
-        /**
-         * The meta object literal for the '<em><b>Diagram</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__DIAGRAM = eINSTANCE.getDocumentRoot_Diagram();
-
-        /**
-         * The meta object literal for the '<em><b>Edge</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__EDGE = eINSTANCE.getDocumentRoot_Edge();
-
-        /**
-         * The meta object literal for the '<em><b>Label</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__LABEL = eINSTANCE.getDocumentRoot_Label();
-
-        /**
-         * The meta object literal for the '<em><b>Labeled Edge</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__LABELED_EDGE = eINSTANCE.getDocumentRoot_LabeledEdge();
-
-        /**
-         * The meta object literal for the '<em><b>Labeled Shape</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__LABELED_SHAPE = eINSTANCE.getDocumentRoot_LabeledShape();
-
-        /**
-         * The meta object literal for the '<em><b>Node</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__NODE = eINSTANCE.getDocumentRoot_Node();
-
-        /**
-         * The meta object literal for the '<em><b>Plane</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__PLANE = eINSTANCE.getDocumentRoot_Plane();
-
-        /**
-         * The meta object literal for the '<em><b>Shape</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__SHAPE = eINSTANCE.getDocumentRoot_Shape();
-
-        /**
-         * The meta object literal for the '<em><b>Style</b></em>' containment reference feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference DOCUMENT_ROOT__STYLE = eINSTANCE.getDocumentRoot_Style();
-
         /**
          * The meta object literal for the '{@link org.openbpmn.di.impl.DiagramImpl <em>Diagram</em>}' class.
          * <!-- begin-user-doc -->

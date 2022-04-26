@@ -7,7 +7,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
@@ -23,7 +22,6 @@ import org.openbpmn.bpmndi.impl.BpmndiPackageImpl;
 import org.openbpmn.dc.Bounds;
 import org.openbpmn.dc.DcFactory;
 import org.openbpmn.dc.DcPackage;
-import org.openbpmn.dc.DocumentRoot;
 import org.openbpmn.dc.Font;
 import org.openbpmn.dc.Point;
 
@@ -40,13 +38,6 @@ import org.openbpmn.di.impl.DiPackageImpl;
  * @generated
  */
 public class DcPackageImpl extends EPackageImpl implements DcPackage {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass documentRootEClass = null;
-
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -150,69 +141,6 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(DcPackage.eNS_URI, theDcPackage);
         return theDcPackage;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getDocumentRoot() {
-        return documentRootEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getDocumentRoot_Mixed() {
-        return (EAttribute)documentRootEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_XMLNSPrefixMap() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_XSISchemaLocation() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_Bounds() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_Font() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDocumentRoot_Point() {
-        return (EReference)documentRootEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -387,14 +315,6 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
         isCreated = true;
 
         // Create classes and their features
-        documentRootEClass = createEClass(DOCUMENT_ROOT);
-        createEAttribute(documentRootEClass, DOCUMENT_ROOT__MIXED);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__XMLNS_PREFIX_MAP);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__XSI_SCHEMA_LOCATION);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__BOUNDS);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__FONT);
-        createEReference(documentRootEClass, DOCUMENT_ROOT__POINT);
-
         boundsEClass = createEClass(BOUNDS);
         createEAttribute(boundsEClass, BOUNDS__HEIGHT);
         createEAttribute(boundsEClass, BOUNDS__WIDTH);
@@ -445,14 +365,6 @@ public class DcPackageImpl extends EPackageImpl implements DcPackage {
         // Add supertypes to classes
 
         // Initialize classes, features, and operations; add parameters
-        initEClass(documentRootEClass, DocumentRoot.class, "DocumentRoot", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getDocumentRoot_Mixed(), ecorePackage.getEFeatureMapEntry(), "mixed", null, 0, -1, DocumentRoot.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_XMLNSPrefixMap(), ecorePackage.getEStringToStringMapEntry(), null, "xMLNSPrefixMap", null, 0, -1, DocumentRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_XSISchemaLocation(), ecorePackage.getEStringToStringMapEntry(), null, "xSISchemaLocation", null, 0, -1, DocumentRoot.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_Bounds(), this.getBounds(), null, "bounds", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_Font(), this.getFont(), null, "font", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-        initEReference(getDocumentRoot_Point(), this.getPoint(), null, "point", null, 0, -2, DocumentRoot.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-
         initEClass(boundsEClass, Bounds.class, "Bounds", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBounds_Height(), ecorePackage.getEFloat(), "height", null, 1, 1, Bounds.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
         initEAttribute(getBounds_Width(), ecorePackage.getEFloat(), "width", null, 1, 1, Bounds.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
