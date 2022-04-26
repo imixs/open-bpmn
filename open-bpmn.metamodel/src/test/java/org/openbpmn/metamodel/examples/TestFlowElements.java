@@ -1,23 +1,30 @@
-package org.openbpmn.dom;
+package org.openbpmn.metamodel.examples;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * This test class reads a BPMN Model instance and prints the node elements
+ * This test class reads a BPMN Model instance and analyzes the content.
  * 
  * @author rsoika
  *
  */
-public class TestReadDom {
+public class TestFlowElements {
 
-    private static Logger logger = Logger.getLogger(TestReadDom.class.getName());
+    private static Logger logger = Logger.getLogger(TestFlowElements.class.getName());
 
     /**
      * This test parses a bpmn file
@@ -26,12 +33,39 @@ public class TestReadDom {
     public void testReadEmptyModel() {
 
         logger.info("...read model");
-        BPMNModel model = BPMNModelFactory.read("/process_1.bpmn");
+        BPMNModel model = BPMNModelFactory.read("/process_2.bpmn");
         System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
         System.out.println("------");
         if (model.getDoc().hasChildNodes()) {
             printNote(model.getDoc().getChildNodes());
         }
+
+        // read tasks....
+        List<org.openbpmn.bpmn.elements.Process> processList = model.getProcesList();
+        assertEquals(1,processList.size());
+        for (org.openbpmn.bpmn.elements.Process process : processList) {
+            logger.info("...Process ID=" + process.getAttributes().get("id"));
+
+            Set<Activity> activities = process.getActivities();
+            for (Activity element : activities) {
+                logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+            }
+
+            Set<Gateway> gateways = process.getGateways();
+            for (Gateway element : gateways) {
+                logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+            }
+
+            Set<Event> events = process.getEvents();
+            for (Event element : events) {
+                logger.info("....... Event type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+            }
+            
+            // we expect 3 sequnceFlows
+            assertEquals(3,process.getSequenceFlows().size());
+            
+        }
+
         logger.info("...model read sucessful");
     }
 

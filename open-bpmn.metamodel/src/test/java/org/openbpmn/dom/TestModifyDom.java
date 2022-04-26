@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNModelFactory;
+import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 public class TestModifyDom {
 
