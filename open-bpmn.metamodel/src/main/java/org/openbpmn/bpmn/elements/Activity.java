@@ -1,6 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.Map;
+import org.w3c.dom.Node;
 
 /**
  * An Activity is work that is performed within a Business Process. An Activity
@@ -18,8 +18,8 @@ import java.util.Map;
  */
 public class Activity extends FlowElement {
 
-    public Activity(String type, Map<String, String> attributes) {
-        super(type, attributes);
+    public Activity(String type, Node node) {
+        super(type, node);
     }
 
 }

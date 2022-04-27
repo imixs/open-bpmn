@@ -1,11 +1,11 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.Map;
+import org.w3c.dom.Node;
 
 public class Gateway extends FlowElement {
 
-    public Gateway(String type, Map<String, String> attributes) {
-        super(type, attributes);
+    public Gateway(String type, Node node) {
+        super(type, node);
     }
 
 }

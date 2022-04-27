@@ -49,6 +49,9 @@ public class TestFlowElements {
             Set<Activity> activities = process.getActivities();
             for (Activity element : activities) {
                 logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+                // bounds
+                logger.info("....... Activity Bounds=" + element.getBounds());
+                
             }
 
             Set<Gateway> gateways = process.getGateways();

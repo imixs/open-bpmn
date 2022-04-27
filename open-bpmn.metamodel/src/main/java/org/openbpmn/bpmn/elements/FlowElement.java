@@ -1,6 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.Map;
+import org.w3c.dom.Node;
 
 /**
  * The FlowElement is the abstract super class for all elements that can appear
@@ -15,8 +15,8 @@ public abstract class FlowElement extends BaseElement {
 
     protected String type = null;
 
-    public FlowElement(String type, Map<String, String> attributes) {
-        super(attributes);
+    public FlowElement(String type, Node node) {
+        super(node);
         this.type = type;
     }
 

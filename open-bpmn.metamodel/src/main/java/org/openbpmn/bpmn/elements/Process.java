@@ -1,8 +1,9 @@
 package org.openbpmn.bpmn.elements;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+
+import org.w3c.dom.Node;
 
 /**
  * A Process describes a sequence or flow of Activities in an organization with
@@ -20,12 +21,13 @@ public class Process extends BaseElement {
     protected Set<Gateway> gateways = null;
     protected Set<SequenceFlow> sequenceFlows = null;
 
+    protected Node bpmnPlane=null;
     public Process() {
         super();
     }
 
-    public Process(Map<String, String> attributes) {
-        super(attributes);
+    public Process(Node node) {
+        super( node);
     }
 
     public Set<Activity> getActivities() {
@@ -37,6 +39,14 @@ public class Process extends BaseElement {
 
     public void setActivities(Set<Activity> activities) {
         this.activities = activities;
+    }
+
+    public Node getBpmnPlane() {
+        return bpmnPlane;
+    }
+
+    public void setBpmnPlane(Node bpmnPlane) {
+        this.bpmnPlane = bpmnPlane;
     }
 
     public Set<Event> getEvents() {
