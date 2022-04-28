@@ -44,11 +44,11 @@ public class TestFlowElements {
         List<org.openbpmn.bpmn.elements.Process> processList = model.getProcesList();
         assertEquals(1,processList.size());
         for (org.openbpmn.bpmn.elements.Process process : processList) {
-            logger.info("...Process ID=" + process.getAttributes().get("id"));
+            logger.info("...Process ID=" + process.getAttribute("id"));
 
             Set<Activity> activities = process.getActivities();
             for (Activity element : activities) {
-                logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+                logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttribute("id"));
                 // bounds
                 logger.info("....... Activity Bounds=" + element.getBounds());
                 
@@ -56,12 +56,12 @@ public class TestFlowElements {
 
             Set<Gateway> gateways = process.getGateways();
             for (Gateway element : gateways) {
-                logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+                logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttribute("id"));
             }
 
             Set<Event> events = process.getEvents();
             for (Event element : events) {
-                logger.info("....... Event type=" + element.getType() + " id=" + element.getAttributes().get("id"));
+                logger.info("....... Event type=" + element.getType() + " id=" + element.getAttribute("id"));
             }
             
             // we expect 3 sequnceFlows

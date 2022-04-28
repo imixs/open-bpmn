@@ -1,7 +1,7 @@
 # Open BPMN 2.0 - Metamodel
 
 
-OpenBPMN provides a Java Metamodel which can be used to create, load and manipulate a BPMN model programmatically. The Metamodel provides factory and model classes to work with an BPMN model instance. The libray is based on the `org.w3c.dom` XML API that allows you to handle any kind of BPMN model and also work with BPMN 2.0 extensions or add your own extensions. 
+OpenBPMN provides a Java Metamodel which can be used to create, load and manipulate a BPMN model programmatically. The Metamodel provides factory and model classes to work with an BPMN model instance. The library is based on the `org.w3c.dom` XML API and operates directly on the dom Nodes which makes the Metamodel very flexible. This concept allows you to handle any kind of BPMN model and also work with BPMN 2.0 extensions or add your own extensions. 
 
 ## The BPMNModelFactory
 

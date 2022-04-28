@@ -55,6 +55,8 @@ import com.google.inject.Inject;
  * {@link GModelFactory}).
  * </p>
  *
+ * See: https://github.com/eclipse-glsp/glsp/discussions/526
+ *
  */
 public class BPMNFileGModelLoader implements ModelSourceLoader {
     private static Logger logger = Logger.getLogger(BPMNFileGModelLoader.class.getName());
