@@ -15,10 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.gateway;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreateExclusiveGatewayHandler extends AbstractCreateGatewayHandler {
@@ -32,8 +28,8 @@ public class CreateExclusiveGatewayHandler extends AbstractCreateGatewayHandler 
         return "Exclusive Gateway";
     }
 
-    @Override
-    protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-        return super.builder(point, modelState).addCssClass("exclusive");
-    }
+//    @Override
+//    protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+//        return super.builder(point, modelState).addCssClass("exclusive");
+//    }
 }

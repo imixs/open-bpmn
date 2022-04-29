@@ -15,24 +15,22 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.gateway;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreateInclusiveGatewayHandler extends AbstractCreateGatewayHandler {
 
-   public CreateInclusiveGatewayHandler() {
-      super(ModelTypes.INCLUSIVE_GATEWAY, i -> "InclusiveGateway" + i);
-   }
+    public CreateInclusiveGatewayHandler() {
+        super(ModelTypes.INCLUSIVE_GATEWAY, i -> "InclusiveGateway" + i);
+    }
 
-   @Override
-   public String getLabel() { return "Inclusive Gateway"; }
+    @Override
+    public String getLabel() {
+        return "Inclusive Gateway";
+    }
 
-   @Override
-   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("incusive");
-   }
+//   @Override
+//   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+//      return super.builder(point, modelState)
+//         .addCssClass("incusive");
+//   }
 }

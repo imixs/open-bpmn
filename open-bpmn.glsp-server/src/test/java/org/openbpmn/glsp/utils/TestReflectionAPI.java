@@ -13,13 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.imixs.bpmn.glsp.utils;
+package org.openbpmn.glsp.utils;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
 
@@ -33,7 +34,7 @@ public class TestReflectionAPI {
         Method[] methods = EventNode.class.getMethods();// .getDeclaredMethods();
 
         // test if setDocumentation(String) exists
-        Assert.assertNotNull(ApplyEventUpdateOperationHandler.findSetter(methods, "documentation"));
+        assertNotNull(ApplyEventUpdateOperationHandler.findSetter(methods, "documentation"));
 
         logger.info("....testSettersOfEvent took " + (System.currentTimeMillis() - l) + "ms");
 

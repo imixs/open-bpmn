@@ -21,14 +21,12 @@ import java.util.function.Function;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 public abstract class AbstractCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
@@ -63,9 +61,12 @@ public abstract class AbstractCreateEventHandler extends CreateBPMNNodeOperation
     protected EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
         int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.EVENT_NODE, "event", modelState);
         String name = labelProvider.apply(nodeCounter);
-        String eventType = ModelTypes.toNodeType(getElementTypeId());
-        return new EventNodeBuilder(getElementTypeId(), name, eventType) //
-                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("event");
+        // String eventType = ModelTypes.toNodeType(getElementTypeId());
+//        return new EventNodeBuilder(getElementTypeId(), name, eventType) //
+//                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("event");
+
+        return new EventNodeBuilder(getElementTypeId(), name) //
+                .position(point.orElse(null));
     }
 
 }

@@ -16,6 +16,7 @@
 package org.openbpmn.glsp.elements.task;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.TaskNode;
@@ -24,12 +25,19 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
     private final String name;
-    private final String taskType;
+    // private final String taskType;
 
-    public TaskNodeBuilder(final String type, final String name, final String taskType) {
+    public TaskNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
-        this.taskType = taskType;
+        // this.taskType = taskType;
+
+        String[] cssClasses = type.split(":");
+        for (String cssClass : cssClasses) {
+            this.addCssClass(cssClass);
+        }
+
+        this.addArguments(GArguments.cornerRadius(5));
 
     }
 
@@ -47,7 +55,7 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
     public void setProperties(final TaskNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.getCategory().add(taskType);
+        // node.getCategory().add(taskType);
         node.setDocumentation("...some documentation....");
 
         node.setLayout(GConstants.Layout.HBOX);

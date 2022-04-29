@@ -33,7 +33,7 @@ public class CreateStartEventHandler extends AbstractCreateEventHandler {
     }
 
     @Override
-    protected EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-        return super.builder(point, modelState).addCssClass("start");
+    public EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+        return super.builder(point, modelState);
     }
 }

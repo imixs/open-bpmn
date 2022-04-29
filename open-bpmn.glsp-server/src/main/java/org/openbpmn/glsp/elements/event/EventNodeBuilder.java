@@ -22,7 +22,7 @@ import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
- * The CatchEventNodeBuilder defines the layout of BPMN events
+ * The EventNodeBuilder defines the layout for all types of BPMN Event elements
  *
  * @author rsoika
  *
@@ -32,15 +32,24 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     // <T extends GNode, E extends AbstractGNodeBuilder<T, E>>
 
     private final String name;
-    private final String eventType;
+    // private final String category;
 
-    public EventNodeBuilder(final String type, final String name, String eventType) {
+    // , String eventType
+    public EventNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
-        if (eventType == null || eventType.isEmpty()) {
-            eventType = "";
+//        if (category == null || category.isEmpty()) {
+//            this.category = "";
+//        } else {
+        // this.category = category;
+        // }
+
+        // split the typeId into two parts and add the coressponding classes
+        String[] cssClasses = type.split(":");
+        for (String cssClass : cssClasses) {
+            this.addCssClass(cssClass);
         }
-        this.eventType = eventType;
+        // this.addCssClass("event");
 
     }
 
@@ -58,7 +67,11 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     public void setProperties(final EventNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.getCategory().add(eventType);
+
+//        if (category == null || category.isEmpty()) {
+//            node.getCategory().add(category);
+//        }
+
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));

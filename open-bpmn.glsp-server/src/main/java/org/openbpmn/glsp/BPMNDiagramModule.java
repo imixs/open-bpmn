@@ -15,20 +15,25 @@
  ********************************************************************************/
 package org.openbpmn.glsp;
 
+import java.util.logging.Logger;
+
 import org.eclipse.glsp.graph.GraphExtension;
 import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
-import org.eclipse.glsp.server.features.core.model.JsonFileGModelLoader;
+import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
 import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
+import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.openbpmn.bpmn.BPMNGModelFactory;
+import org.openbpmn.bpmn.BPMNModelSourceLoader;
 import org.openbpmn.glsp.elements.event.CreateCatchEventHandler;
 import org.openbpmn.glsp.elements.event.CreateEndEventHandler;
 import org.openbpmn.glsp.elements.event.CreateStartEventHandler;
@@ -57,15 +62,40 @@ import org.openbpmn.glsp.validators.LabelEditValidator;
  *
  */
 public class BPMNDiagramModule extends GModelJsonDiagramModule {
+    private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
+
+    @Override
+    protected Class<? extends GModelFactory> bindGModelFactory() {
+
+        return BPMNGModelFactory.class;
+    }
 
     @Override
     protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
         return BPMNDiagramConfiguration.class;
     }
 
+    /**
+     * NOTE: Only in case we need to store custom information that is specific to
+     * our model in the model state, we can bind a custom implementation here, that
+     * represents our model state. This implementation usually implements the
+     * interface GModelState (and extends the base class DefaultGModelState).
+     * <p>
+     * But for the moment we do not need this...
+     */
+    @Override
+    protected Class<? extends GModelState> bindGModelState() {
+        // TODO Auto-generated method stub
+        return super.bindGModelState();
+    }
+
     @Override
     protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-        return JsonFileGModelLoader.class;
+
+        logger.info("we are in theBPMNDiagramModule and bind our own modelloader...");
+
+        return BPMNModelSourceLoader.class;
+        // return JsonFileGModelLoader.class;
     }
 
     @Override

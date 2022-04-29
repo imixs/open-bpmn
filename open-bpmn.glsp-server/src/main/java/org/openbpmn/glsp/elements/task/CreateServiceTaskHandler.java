@@ -15,24 +15,22 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreateServiceTaskHandler extends CreateTaskHandler {
 
-   public CreateServiceTaskHandler() {
-      super(ModelTypes.SERVICE_TASK, i -> "ServiceTask" + i);
-   }
+    public CreateServiceTaskHandler() {
+        super(ModelTypes.SERVICE_TASK, i -> "ServiceTask" + i);
+    }
 
-   @Override
-   public String getLabel() { return "Service Task"; }
+    @Override
+    public String getLabel() {
+        return "Service Task";
+    }
 
-   @Override
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("service");
-   }
+//   @Override
+//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+//      return super.builder(point, modelState)
+//         .addCssClass("service");
+//   }
 }

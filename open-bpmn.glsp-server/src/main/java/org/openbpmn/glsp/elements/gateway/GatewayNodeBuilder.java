@@ -30,16 +30,20 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
 
     private final String name;
-    private final String gatewayType;
+//    private final String category;
 
-    public GatewayNodeBuilder(final String type, final String name, String gatewayType) {
+    public GatewayNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
-        if (gatewayType == null || gatewayType.isEmpty()) {
-            gatewayType = "";
+//        if (gatewayType == null || gatewayType.isEmpty()) {
+//            gatewayType = "";
+//        }
+        // this.category = category;
+        // split the typeId into two parts and add the corresponding classes
+        String[] cssClasses = type.split(":");
+        for (String cssClass : cssClasses) {
+            this.addCssClass(cssClass);
         }
-        this.gatewayType = gatewayType;
-
     }
 
     @Override
@@ -59,7 +63,9 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
     protected void setProperties(final GatewayNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.getCategory().add(gatewayType);
+//        if (category == null || category.isEmpty()) {
+//            node.getCategory().add(category);
+//        }
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));

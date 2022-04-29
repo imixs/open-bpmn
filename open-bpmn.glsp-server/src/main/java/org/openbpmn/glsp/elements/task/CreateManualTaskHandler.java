@@ -15,24 +15,22 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreateManualTaskHandler extends CreateTaskHandler {
 
-   public CreateManualTaskHandler() {
-      super(ModelTypes.MANUAL_TASK, i -> "ManualTask" + i);
-   }
+    public CreateManualTaskHandler() {
+        super(ModelTypes.MANUAL_TASK, i -> "ManualTask" + i);
+    }
 
-   @Override
-   public String getLabel() { return "Manual Task"; }
+    @Override
+    public String getLabel() {
+        return "Manual Task";
+    }
 
-   @Override
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("manual");
-   }
+//   @Override
+//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+//      return super.builder(point, modelState)
+//         .addCssClass("manual");
+//   }
 }

@@ -21,14 +21,12 @@ import java.util.function.Function;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 public abstract class AbstractCreateGatewayHandler extends CreateBPMNNodeOperationHandler {
 
@@ -63,9 +61,11 @@ public abstract class AbstractCreateGatewayHandler extends CreateBPMNNodeOperati
     protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
         int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.GATEWAY_NODE, "gateway", modelState);
         String name = labelProvider.apply(nodeCounter);
-        String gatewayType = ModelTypes.toNodeType(getElementTypeId());
-        return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //
-                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("gateway");
+        // String gatewayType = ModelTypes.toNodeType(getElementTypeId());
+//        return new GatewayNodeBuilder(getElementTypeId(), name, gatewayType) //
+//                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("gateway");
+        return new GatewayNodeBuilder(getElementTypeId(), name) //
+                .position(point.orElse(null));
     }
 
 }

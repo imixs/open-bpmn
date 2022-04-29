@@ -33,7 +33,7 @@ public class CreateCatchEventHandler extends AbstractCreateEventHandler {
     }
 
     @Override
-    protected EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-        return super.builder(point, modelState).addCssClass("catch");
+    public EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+        return super.builder(point, modelState);
     }
 }

@@ -51,40 +51,40 @@ public final class ModelTypes {
 
     public static final String SEQUENCE_FLOW = "edge:sequenceflow";
 
-    public static String toNodeType(final String type) {
-        switch (type) {
-        case MANUAL_TASK:
-            return "manual";
-        case USER_TASK:
-            return "user";
-        case SEND_TASK:
-            return "send";
-        case SCRIPT_TASK:
-            return "script";
-
-        case START_EVENT:
-            return "start";
-        case END_EVENT:
-            return "end";
-        case CATCH_EVENT:
-            return "catch";
-        case THROW_EVENT:
-            return "throw";
-
-        case EXCLUSIVE_GATEWAY:
-            return "exclusive";
-        case INCLUSIVE_GATEWAY:
-            return "inclusive";
-        case PARALLEL_GATEWAY:
-            return "parallel";
-        case COMPLEX_GATEWAY:
-            return "complex";
-
-        case POOL:
-            return "pool";
-        default:
-            return "unknown";
-        }
-    }
+//    public static String toNodeType(final String type) {
+//        switch (type) {
+//        case MANUAL_TASK:
+//            return "manual";
+//        case USER_TASK:
+//            return "user";
+//        case SEND_TASK:
+//            return "send";
+//        case SCRIPT_TASK:
+//            return "script";
+//
+//        case START_EVENT:
+//            return "start";
+//        case END_EVENT:
+//            return "end";
+//        case CATCH_EVENT:
+//            return "catch";
+//        case THROW_EVENT:
+//            return "throw";
+//
+//        case EXCLUSIVE_GATEWAY:
+//            return "exclusive";
+//        case INCLUSIVE_GATEWAY:
+//            return "inclusive";
+//        case PARALLEL_GATEWAY:
+//            return "parallel";
+//        case COMPLEX_GATEWAY:
+//            return "complex";
+//
+//        case POOL:
+//            return "pool";
+//        default:
+//            return "unknown";
+//        }
+//    }
 
 }

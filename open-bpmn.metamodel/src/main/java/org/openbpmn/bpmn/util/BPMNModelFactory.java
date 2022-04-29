@@ -1,5 +1,8 @@
 package org.openbpmn.bpmn.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
@@ -67,7 +70,7 @@ public class BPMNModelFactory {
 
             return new BPMNModel(doc);
         } catch (ParserConfigurationException e1) {
-          
+
             e1.printStackTrace();
         }
 
@@ -75,16 +78,47 @@ public class BPMNModelFactory {
     }
 
     /**
-     * Reads a BPMNModel instance from the filesytem.
+     * Reads a BPMNModel instance from an java.io.File
      * 
      * @param modelFile
-     * @return
+     * @return a BPMNModel instance
+     * @throws FileNotFoundException
+     * @throws IOException
      */
-    public static BPMNModel read(String modelFile) {
+    public static BPMNModel read(File modelFile) {
+        try {
+            return read(new FileInputStream(modelFile));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    /**
+     * Reads a BPMNModel instance from an given file path
+     * 
+     * @param modelFile
+     * @return a BPMNModel instance
+     * @throws IOException
+     */
+    public static BPMNModel read(String modelFilePath) {
+        return read(BPMNModel.class.getResourceAsStream(modelFilePath));
+    }
+
+    /**
+     * Reads a BPMNModel instance from an InputStream
+     * 
+     * @param modelFile
+     * @return a BPMNModel instance
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    public static BPMNModel read(InputStream is) {
+
+        logger.info("read from inputStream...");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setNamespaceAware(true);
-        try (InputStream is = readXmlFileIntoInputStream(modelFile)) {
+        try {
 
             // parse XML file
             DocumentBuilder db = docFactory.newDocumentBuilder();
@@ -102,17 +136,19 @@ public class BPMNModelFactory {
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
             e.printStackTrace();
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
         }
 
         return null;
 
-    }
-
-// read file from project resource's folder.
-    private static InputStream readXmlFileIntoInputStream(final String fileName) {
-
-        return BPMNModel.class.getResourceAsStream(fileName);
-        // return TestReadDom.class.getClassLoader().getResourceAsStream(fileName);
     }
 
 }

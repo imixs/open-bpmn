@@ -15,24 +15,22 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreateScriptTaskHandler extends CreateTaskHandler {
 
-   public CreateScriptTaskHandler() {
-      super(ModelTypes.SCRIPT_TASK, i -> "ScriptTask" + i);
-   }
+    public CreateScriptTaskHandler() {
+        super(ModelTypes.SCRIPT_TASK, i -> "ScriptTask" + i);
+    }
 
-   @Override
-   public String getLabel() { return "Script Task"; }
+    @Override
+    public String getLabel() {
+        return "Script Task";
+    }
 
-   @Override
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("script");
-   }
+//   @Override
+//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+//      return super.builder(point, modelState)
+//         .addCssClass("script");
+//   }
 }

@@ -21,12 +21,10 @@ import java.util.function.Function;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
@@ -51,9 +49,9 @@ public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
     protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
         int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, "task", modelState);
         String name = labelProvider.apply(nodeCounter);
-        String taskType = ModelTypes.toNodeType(getElementTypeId());
-        return new TaskNodeBuilder(getElementTypeId(), name, taskType) //
-                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5)).addCssClass("task");
+        // String taskType = ModelTypes.toNodeType(getElementTypeId());
+        return new TaskNodeBuilder(getElementTypeId(), name) //
+                .position(point.orElse(null));
     }
 
 }

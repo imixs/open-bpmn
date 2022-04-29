@@ -33,7 +33,7 @@ public class CreateThrowEventHandler extends AbstractCreateEventHandler {
     }
 
     @Override
-    protected EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-        return super.builder(point, modelState).addCssClass("throw");
+    public EventNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+        return super.builder(point, modelState);
     }
 }

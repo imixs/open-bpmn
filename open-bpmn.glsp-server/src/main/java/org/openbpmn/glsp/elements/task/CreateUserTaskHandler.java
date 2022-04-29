@@ -15,24 +15,22 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import java.util.Optional;
-
-import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreateUserTaskHandler extends CreateTaskHandler {
 
-   public CreateUserTaskHandler() {
-      super(ModelTypes.USER_TASK, i -> "UserTask" + i);
-   }
+    public CreateUserTaskHandler() {
+        super(ModelTypes.USER_TASK, i -> "UserTask" + i);
+    }
 
-   @Override
-   public String getLabel() { return "User Task"; }
+    @Override
+    public String getLabel() {
+        return "User Task";
+    }
 
-   @Override
-   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-      return super.builder(point, modelState)
-         .addCssClass("user");
-   }
+//   @Override
+//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
+//      return super.builder(point, modelState)
+//         .addCssClass("user");
+//   }
 }
