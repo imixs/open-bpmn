@@ -25,21 +25,22 @@ import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
 public final class BPMNServerLauncher {
-   private BPMNServerLauncher() {}
+    private BPMNServerLauncher() {
+    }
 
-   @SuppressWarnings("uncommentedmain")
-   public static void main(final String[] args) {
-      try {
-         DefaultCLIParser cliParser = new DefaultCLIParser(args, "bpmn server");
-         LaunchUtil.configure(cliParser);
-         int port = cliParser.parsePort();
+    @SuppressWarnings("uncommentedmain")
+    public static void main(final String[] args) {
+        try {
+            DefaultCLIParser cliParser = new DefaultCLIParser(args, "bpmn server");
+            LaunchUtil.configure(cliParser);
+            int port = cliParser.parsePort();
 
-         ServerModule serverModule = new ServerModule().configureDiagramModule(new BPMNDiagramModule());
-         GLSPServerLauncher launcher = new SocketGLSPServerLauncher(serverModule);
-         launcher.start("localhost", port);
-      } catch (ParseException | IOException e) {
-         e.printStackTrace();
-      }
-   }
+            ServerModule serverModule = new ServerModule().configureDiagramModule(new BPMNDiagramModule());
+            GLSPServerLauncher launcher = new SocketGLSPServerLauncher(serverModule);
+            launcher.start("localhost", port);
+        } catch (ParseException | IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

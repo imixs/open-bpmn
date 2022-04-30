@@ -16,18 +16,22 @@
 
 		<package-type>eclipse-plugin</package-type>
 		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
+		
+		<glsp-server-version>0.10.0-SNAPSHOT</glsp-server-version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
-			<version>0.9.0</version>
+			<!-- 0.9.0 -->
+			<version>${glsp-server-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.layout</artifactId>
-			<version>0.9.0</version>
+			<!-- 0.9.0  -->
+			<version>${glsp-server-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>

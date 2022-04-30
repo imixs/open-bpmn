@@ -15,29 +15,21 @@
  ********************************************************************************/
 package org.openbpmn.bpmn;
 
+import java.util.List;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GModelRoot;
+import javax.inject.Inject;
+
+import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.openbpmn.glsp.BPMNDiagramModule;
 
 /**
- * A graph model factory produces a graph model from the model state; typically
- * its contained source model.
+ * The BPMNGModelFactory is responsible to produce a graph model from the BPMN
+ * Meta model.
  * <p>
- * The responsibility of a {@link GModelFactory} implementation is to define how
- * a {@link GModelState} is to be translated into a {@link GModelRoot} that is
- * sent to the client for rendering. Before a {@link GModelFactory} is invoked,
- * the {@link ModelSourceLoader} has already been executed for loading the
- * source model into the {@link GModelState}. The {@link GModelFactory} then
- * produces the {@link GModelRoot} from the source model in the
- * {@link GModelState}. Implementations of {@link GModelFactory} are usually
- * specific to the type of source model, as they need to understand the source
- * model in order to translate it into a graph model.
- * </p>
+ * The BPMNGModelState holds an instance of the BPMN Meta model which is created
+ * by the {@link BPMNSourceModelStorage}
  * <p>
  * The graph model factory is invoked after initial load of the source model and
  * after each operation that is applied to the source model by an
@@ -46,13 +38,31 @@ import org.openbpmn.glsp.BPMNDiagramModule;
  * </p>
  **/
 public class BPMNGModelFactory implements GModelFactory {
-    private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
+    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
+
+    @Inject
+    protected BPMNGModelState modelState;
 
     @Override
     public void createGModel() {
-        logger.info("create GModel is called....");
-        // TODO Auto-generated method stub
-
+        logger.info("Creating new GModel from BPMN metha model...");
+        GGraph newGModel = null;
+        BPMNModel model = modelState.getBpmnModel();
+        if (model != null) {
+            List<org.openbpmn.bpmn.elements.Process> processList = model.getProcesList();
+            if (processList != null && processList.size() > 0) {
+                org.openbpmn.bpmn.elements.Process process = processList.get(0);
+                newGModel = BPMNGModelUtil.createGModelFromProcess(process, modelState);
+                modelState.setRoot(newGModel);
+                // updateRoot can be removed somtime in the future - see
+                // https://github.com/eclipse-glsp/glsp/discussions/615
+                modelState.updateRoot(newGModel);
+                modelState.getRoot().setRevision(-1);
+            }
+        }
+        if (newGModel == null) {
+            logger.info("Unable to create model - no processes found - creating an empty model");
+            BPMNGModelUtil.createNewEmptyRoot("process_0");
+        }
     }
-
 }

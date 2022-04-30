@@ -17,23 +17,30 @@ package org.openbpmn.glsp;
 
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GraphExtension;
-import org.eclipse.glsp.server.di.GModelJsonDiagramModule;
+import org.eclipse.glsp.server.actions.ActionHandler;
+import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
+import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.features.core.model.ModelSourceLoader;
+import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
+import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
-import org.eclipse.glsp.server.features.modelsourcewatcher.FileWatcher;
-import org.eclipse.glsp.server.features.modelsourcewatcher.ModelSourceWatcher;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
+import org.eclipse.glsp.server.operations.gmodel.CutOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.PasteOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 import org.openbpmn.bpmn.BPMNGModelFactory;
-import org.openbpmn.bpmn.BPMNModelSourceLoader;
+import org.openbpmn.bpmn.BPMNGModelState;
+import org.openbpmn.bpmn.BPMNSourceModelStorage;
 import org.openbpmn.glsp.elements.event.CreateCatchEventHandler;
 import org.openbpmn.glsp.elements.event.CreateEndEventHandler;
 import org.openbpmn.glsp.elements.event.CreateStartEventHandler;
@@ -61,70 +68,42 @@ import org.openbpmn.glsp.validators.LabelEditValidator;
  * @author rsoika
  *
  */
-public class BPMNDiagramModule extends GModelJsonDiagramModule {
+public class BPMNDiagramModule extends DiagramModule {
+    @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
 
     @Override
-    protected Class<? extends GModelFactory> bindGModelFactory() {
+    protected Class<? extends GModelState> bindGModelState() {
+        return BPMNGModelState.class;
+    }
 
+    @Override
+    protected Class<? extends SourceModelStorage> bindSourceModelStorage() {
+        return BPMNSourceModelStorage.class;
+    }
+
+    @Override
+    protected Class<? extends GModelFactory> bindGModelFactory() {
         return BPMNGModelFactory.class;
     }
 
     @Override
-    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
-        return BPMNDiagramConfiguration.class;
-    }
-
-    /**
-     * NOTE: Only in case we need to store custom information that is specific to
-     * our model in the model state, we can bind a custom implementation here, that
-     * represents our model state. This implementation usually implements the
-     * interface GModelState (and extends the base class DefaultGModelState).
-     * <p>
-     * But for the moment we do not need this...
-     */
-    @Override
-    protected Class<? extends GModelState> bindGModelState() {
-        // TODO Auto-generated method stub
-        return super.bindGModelState();
-    }
-
-    @Override
-    protected Class<? extends ModelSourceLoader> bindSourceModelLoader() {
-
-        logger.info("we are in theBPMNDiagramModule and bind our own modelloader...");
-
-        return BPMNModelSourceLoader.class;
-        // return JsonFileGModelLoader.class;
-    }
-
-    @Override
-    protected Class<? extends ModelSourceWatcher> bindModelSourceWatcher() {
-        return FileWatcher.class;
-    }
-
-    @Override
-    protected Class<? extends GraphExtension> bindGraphExtension() {
-        return BPMNGraphExtension.class;
-    }
-
-    /**
-     * Register validator classes
-     */
-    @Override
-    protected Class<? extends ModelValidator> bindModelValidator() {
-        return BPMNModelValidator.class;
-    }
-
-    @Override
-    protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
-        super.configureContextEditValidators(binding);
-        binding.add(LabelEditValidator.class);
+    protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
+        super.configureActionHandlers(binding);
+        binding.add(RequestClipboardDataActionHandler.class);
     }
 
     @Override
     protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
         super.configureOperationHandlers(binding);
+        binding.add(ApplyLabelEditOperationHandler.class);
+        binding.add(ChangeBoundsOperationHandler.class);
+        binding.add(ChangeRoutingPointsHandler.class);
+        binding.add(CutOperationHandler.class);
+        binding.add(DeleteOperationHandler.class);
+        binding.add(LayoutOperationHandler.class);
+        binding.add(PasteOperationHandler.class);
+        binding.add(ReconnectEdgeOperationHandler.class);
 
         // Tasks
         binding.add(CreateManualTaskHandler.class);
@@ -156,6 +135,31 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
 
         // register apply operations send from the client
         binding.add(ApplyEventUpdateOperationHandler.class);
+
+    }
+
+    @Override
+    protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
+        return BPMNToolPaletteItemProvider.class;
+    }
+
+    @Override
+    protected Class<? extends DiagramConfiguration> bindDiagramConfiguration() {
+        return BPMNDiagramConfiguration.class;
+    }
+
+    /**
+     * Register validator classes
+     */
+    @Override
+    protected Class<? extends ModelValidator> bindModelValidator() {
+        return BPMNModelValidator.class;
+    }
+
+    @Override
+    protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
+        super.configureContextEditValidators(binding);
+        binding.add(LabelEditValidator.class);
     }
 
     /**
@@ -164,11 +168,6 @@ public class BPMNDiagramModule extends GModelJsonDiagramModule {
     @Override
     protected Class<? extends CommandPaletteActionProvider> bindCommandPaletteActionProvider() {
         return BPMNCommandPaletteActionProvider.class;
-    }
-
-    @Override
-    protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
-        return BPMNToolPaletteItemProvider.class;
     }
 
     @Override

@@ -153,12 +153,12 @@
             "y": 40.0
           },
           "size": {
-            "width": 103.84375,
+            "width": 65.484375,
             "height": 16.0
           },
-          "text": "StartEvent0qwer",
+          "text": "StartEvent",
           "alignment": {
-            "x": 51.75,
+            "x": 32.6875,
             "y": 13.0
           }
         },
@@ -180,16 +180,16 @@
       ],
       "type": "event:start",
       "position": {
-        "x": 100.0,
+        "x": 120.0,
         "y": 230.0
       },
       "size": {
-        "width": 103.84375,
+        "width": 65.484375,
         "height": 56.0
       },
       "layout": "freeform",
       "layoutOptions": {
-        "prefWidth": 73.375,
+        "prefWidth": 103.84375,
         "prefHeight": 56.0
       },
       "args": {
@@ -382,5 +382,5 @@
     }
   ],
   "type": "graph",
-  "revision": 6
+  "revision": 5
 }

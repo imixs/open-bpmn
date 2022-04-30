@@ -30,7 +30,6 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.model.GModelState;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.glsp.BPMNDiagramModule;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.elements.event.EventNodeBuilder;
@@ -38,12 +37,22 @@ import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
- * Util Class to generate a GModel form a BPMN model
+ * The BPMNGModelUtil is a helper class to generate a GModel form a BPMN meta
+ * model
  * </p>
  **/
 public class BPMNGModelUtil {
-    private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
+    private static Logger logger = Logger.getLogger(BPMNGModelUtil.class.getName());
 
+    /**
+     * This method creates a GModel form a BPMN process instance
+     * <p>
+     * The method is called by the {@link BPMNGModelFactory}
+     *
+     * @param process
+     * @param modelState
+     * @return new GGraph
+     */
     public static GGraph createGModelFromProcess(final org.openbpmn.bpmn.elements.Process process,
             final GModelState modelState) {
 
@@ -51,26 +60,20 @@ public class BPMNGModelUtil {
 
         // Add all Events...
         for (Event event : process.getEvents()) {
-            System.out.println("event: " + event.getName());
+            logger.fine("event: " + event.getName());
             GPoint point = GraphUtil.point(event.getBounds().getX(), event.getBounds().getY());
-
             EventNodeBuilder builder = new EventNodeBuilder(ModelTypes.START_EVENT, event.getName());// , "event:start"
             EventNode eventNode = builder.position(point).build();
-
             entityNodes.add(eventNode);
-
         }
 
         // Add all Tasks
         for (Activity activity : process.getActivities()) {
             System.out.println("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
-
             TaskNodeBuilder builder = new TaskNodeBuilder(ModelTypes.MANUAL_TASK, activity.getName());// , "event:start"
             TaskNode taskNode = builder.position(point).build();
-
             entityNodes.add(taskNode);
-
         }
 
         // add to root node...
@@ -82,6 +85,12 @@ public class BPMNGModelUtil {
         return newGModel;
     }
 
+    /**
+     * This method generates an empty BPMN GModel
+     *
+     * @param rootID
+     * @return empty model
+     */
     public static GModelRoot createNewEmptyRoot(final String rootID) {
         GModelRoot root = GraphFactory.eINSTANCE.createGGraph();
         root.setId(rootID);

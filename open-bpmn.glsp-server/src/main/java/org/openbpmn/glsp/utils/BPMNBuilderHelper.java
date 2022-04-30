@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.glsp.utils;
 
+import java.util.logging.Logger;
+
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
@@ -24,12 +26,14 @@ import org.openbpmn.glsp.bpmn.Icon;
 import org.openbpmn.glsp.elements.IconBuilder;
 
 /**
- * The GatewayNodeBuilder provides helper methods to create GNode Elements
+ * The BPMNBuilderHelper provides helper methods to create GNode Elements
  *
  * @author rsoika
  *
  */
 public class BPMNBuilderHelper {
+    @SuppressWarnings("unused")
+    private static Logger logger = Logger.getLogger(BPMNBuilderHelper.class.getName());
 
     public static Icon createCompartmentIcon(final BaseElement node) {
         return new IconBuilder().id(node.getId() + "_icon")
