@@ -4,7 +4,7 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class Bounds {
+public class BPMNBounds {
 
     private float x;
     private float y;
@@ -19,7 +19,7 @@ public class Bounds {
      * 
      * @param width
      */
-    public Bounds(Node bpmnShape) {
+    public BPMNBounds(Node bpmnShape) {
 
         // find the dc:Bounds inside the given bpmnShape
         if (bpmnShape != null) {
@@ -49,7 +49,7 @@ public class Bounds {
         }
     }
 
-    public Bounds(float x, float y, float height, float width) {
+    public BPMNBounds(float x, float y, float height, float width) {
         super();
         this.x = x;
         this.y = y;

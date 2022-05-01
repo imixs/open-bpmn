@@ -16,9 +16,9 @@ import org.w3c.dom.Node;
  * @author rsoika
  *
  */
-public class Activity extends FlowElement {
+public class BPMNActivity extends BPMNFlowElement {
 
-    public Activity(String type, Node node) {
+    public BPMNActivity(String type, Node node) {
         super(type, node);
     }
 

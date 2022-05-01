@@ -11,11 +11,14 @@ import org.w3c.dom.Node;
  * @author rsoika
  *
  */
-public abstract class FlowElement extends BaseElement {
+public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     protected String type = null;
+    protected Node bpmnShape = null;
+    protected BPMNBounds bounds = null;
 
-    public FlowElement(String type, Node node) {
+
+    public BPMNFlowElement(String type, Node node) {
         super(node);
         this.type = type;
     }
@@ -28,4 +31,19 @@ public abstract class FlowElement extends BaseElement {
         this.type = type;
     }
 
+    public Node getBpmnShape() {
+        return bpmnShape;
+    }
+
+    public void setBpmnShape(Node bpmnShape) {
+        this.bpmnShape = bpmnShape;
+    }
+    
+    public BPMNBounds getBounds() {
+        if (bounds == null) {
+            // lazy loading of bounds from a given bpmnShape
+            bounds = new BPMNBounds(this.bpmnShape);
+        }
+        return bounds;
+    }
 }

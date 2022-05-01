@@ -27,6 +27,7 @@ import org.eclipse.glsp.server.model.DefaultGModelState;
 public class BPMNGModelState extends DefaultGModelState {
 
     private BPMNModel bpmnModel;
+    private boolean initalized = false;
 
     public BPMNModel getBpmnModel() {
         return bpmnModel;
@@ -34,6 +35,14 @@ public class BPMNGModelState extends DefaultGModelState {
 
     public void setBpmnModel(final BPMNModel bpmnModel) {
         this.bpmnModel = bpmnModel;
+    }
+
+    public boolean isInitalized() {
+        return initalized;
+    }
+
+    public void setInitalized(final boolean initalized) {
+        this.initalized = initalized;
     }
 
 }

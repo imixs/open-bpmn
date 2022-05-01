@@ -1,6 +1,7 @@
 package org.openbpmn.metamodel.examples;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
 import java.util.Set;
@@ -8,9 +9,11 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.Activity;
-import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNPoint;
+import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -41,31 +44,41 @@ public class TestFlowElements {
         }
 
         // read tasks....
-        List<org.openbpmn.bpmn.elements.Process> processList = model.getProcesList();
+        List<org.openbpmn.bpmn.elements.BPMNProcess> processList = model.getProcesList();
         assertEquals(1,processList.size());
-        for (org.openbpmn.bpmn.elements.Process process : processList) {
+        for (org.openbpmn.bpmn.elements.BPMNProcess process : processList) {
             logger.info("...Process ID=" + process.getAttribute("id"));
 
-            Set<Activity> activities = process.getActivities();
-            for (Activity element : activities) {
+            Set<BPMNActivity> activities = process.getActivities();
+            for (BPMNActivity element : activities) {
                 logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttribute("id"));
                 // bounds
                 logger.info("....... Activity Bounds=" + element.getBounds());
                 
             }
 
-            Set<Gateway> gateways = process.getGateways();
-            for (Gateway element : gateways) {
+            Set<BPMNGateway> gateways = process.getGateways();
+            for (BPMNGateway element : gateways) {
                 logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttribute("id"));
             }
 
-            Set<Event> events = process.getEvents();
-            for (Event element : events) {
+            Set<BPMNEvent> events = process.getEvents();
+            for (BPMNEvent element : events) {
                 logger.info("....... Event type=" + element.getType() + " id=" + element.getAttribute("id"));
             }
             
             // we expect 3 sequnceFlows
             assertEquals(3,process.getSequenceFlows().size());
+            BPMNSequenceFlow sequenceFlow = process.getSequenceFlowByID("SequenceFlow_1");
+            assertEquals("StartEvent_1",sequenceFlow.getSourceRef()); 
+            assertEquals("Task_1",sequenceFlow.getTargetRef()); 
+            
+            // test waypoints
+            List<BPMNPoint> wayPoints = sequenceFlow.getWayPoints();
+            assertNotNull(wayPoints);
+            BPMNPoint wayPoint=wayPoints.get(0);
+            assertEquals(118.0 ,wayPoint.getX());
+            assertEquals(136.0 ,wayPoint.getY());
             
         }
 

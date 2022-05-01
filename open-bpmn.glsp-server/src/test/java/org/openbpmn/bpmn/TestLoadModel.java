@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GGraph;
 import org.junit.jupiter.api.Test;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
@@ -43,9 +43,9 @@ public class TestLoadModel {
         // we expect one child
         assertNotNull(model);
 
-        List<Process> processList = model.getProcesList();
+        List<BPMNProcess> processList = model.getProcesList();
         if (processList != null && processList.size() > 0) {
-            Process process = processList.get(0);
+            BPMNProcess process = processList.get(0);
 
             GGraph newGModel = BPMNGModelUtil.createGModelFromProcess(process, null);
 

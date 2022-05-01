@@ -10,18 +10,16 @@ import org.w3c.dom.Node;
  * 
  * @author rsoika
  */
-public abstract class BaseElement {
+public abstract class BPMNBaseElement {
     // Map<String, String> attributes=null;
     private NamedNodeMap attributeMap = null;
     private Node elementNode = null;
-    protected Node bpmnShape = null;
-    protected Bounds bounds = null;
 
-    public BaseElement() {
+    public BPMNBaseElement() {
         super();
     }
 
-    public BaseElement(Node node) {
+    public BPMNBaseElement(Node node) {
         super();
         this.elementNode = node;
         if (this.elementNode.hasAttributes()) {
@@ -30,13 +28,6 @@ public abstract class BaseElement {
         }
     }
 
-    public Node getBpmnShape() {
-        return bpmnShape;
-    }
-
-    public void setBpmnShape(Node bpmnShape) {
-        this.bpmnShape = bpmnShape;
-    }
 
     /**
      * Returns the ID of the element
@@ -97,11 +88,5 @@ public abstract class BaseElement {
         return attributeMap;
     }
 
-    public Bounds getBounds() {
-        if (bounds == null) {
-            // lazy loading of bounds from a given bpmnShape
-            bounds = new Bounds(this.bpmnShape);
-        }
-        return bounds;
-    }
+  
 }

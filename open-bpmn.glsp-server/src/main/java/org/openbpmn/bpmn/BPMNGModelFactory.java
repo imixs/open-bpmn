@@ -45,24 +45,32 @@ public class BPMNGModelFactory implements GModelFactory {
 
     @Override
     public void createGModel() {
-        logger.info("Creating new GModel from BPMN metha model...");
-        GGraph newGModel = null;
-        BPMNModel model = modelState.getBpmnModel();
-        if (model != null) {
-            List<org.openbpmn.bpmn.elements.Process> processList = model.getProcesList();
-            if (processList != null && processList.size() > 0) {
-                org.openbpmn.bpmn.elements.Process process = processList.get(0);
-                newGModel = BPMNGModelUtil.createGModelFromProcess(process, modelState);
-                modelState.setRoot(newGModel);
-                // updateRoot can be removed somtime in the future - see
-                // https://github.com/eclipse-glsp/glsp/discussions/615
-                modelState.updateRoot(newGModel);
-                modelState.getRoot().setRevision(-1);
+
+        if (!modelState.isInitalized()) {
+
+            logger.info("Creating new GModel from BPMN metha model...");
+            long l = System.currentTimeMillis();
+            GGraph newGModel = null;
+            BPMNModel model = modelState.getBpmnModel();
+            if (model != null) {
+                List<org.openbpmn.bpmn.elements.BPMNProcess> processList = model.getProcesList();
+                if (processList != null && processList.size() > 0) {
+                    org.openbpmn.bpmn.elements.BPMNProcess process = processList.get(0);
+                    newGModel = BPMNGModelUtil.createGModelFromProcess(process, modelState);
+                    modelState.setRoot(newGModel);
+                    // updateRoot can be removed somtime in the future - see
+                    // https://github.com/eclipse-glsp/glsp/discussions/615
+                    modelState.updateRoot(newGModel);
+                    modelState.getRoot().setRevision(-1);
+                }
             }
-        }
-        if (newGModel == null) {
-            logger.info("Unable to create model - no processes found - creating an empty model");
-            BPMNGModelUtil.createNewEmptyRoot("process_0");
+            if (newGModel == null) {
+                logger.info("Unable to create model - no processes found - creating an empty model");
+                BPMNGModelUtil.createNewEmptyRoot("process_0");
+            }
+
+            modelState.setInitalized(true);
+            logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
         }
     }
 }
