@@ -19,6 +19,7 @@ import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNPoint;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -79,14 +80,17 @@ public class BPMNModel {
     }
 
     /**
-     * This method returns a list of all process elements
+     * This Method opens a BPMN context (e.g. a Process) with the given ID. The
+     * method returns null if no process with the given ID exists.
      * <p>
-     * bpmn2:process
+     * In case no ID is provided (null) the method returns the first (default) process from the model.
+     * 
+     * @param string
+     * @return BPMNProcess instance
      */
-    public List<org.openbpmn.bpmn.elements.BPMNProcess> getProcesList() {
+    public BPMNProcess openContext(String id) {
 
-        List<org.openbpmn.bpmn.elements.BPMNProcess> result = new ArrayList<org.openbpmn.bpmn.elements.BPMNProcess>();
-        // find process
+         // find process
         NodeList processList = definitions.getElementsByTagName("bpmn2:process");
         logger.info("..found " + processList.getLength() + " processes");
 
@@ -94,11 +98,16 @@ public class BPMNModel {
             Node item = processList.item(i);
 
             org.openbpmn.bpmn.elements.BPMNProcess process = new org.openbpmn.bpmn.elements.BPMNProcess(item);
+           
+            if (id!=null && !id.equals(process.getId())) {
+                // not match of the requested processs ID
+                continue;
+            }
 
             // find the bpmndi:BPMNPlane
             process.setBpmnPlane(findChildNodeByName(bpmnDiagram, "bpmndi:BPMNPlane", process.getId()));
 
-            // now find all relevant bpmn meta elements 
+            // now find all relevant bpmn meta elements
             NodeList childs = item.getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
@@ -106,7 +115,7 @@ public class BPMNModel {
                     // continue if not a new element node
                     continue;
                 }
-                
+
                 // check element type
                 if (isActivity(child)) {
                     BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
@@ -123,7 +132,7 @@ public class BPMNModel {
                             findChildNodeByName(process.getBpmnPlane(), "bpmndi:BPMNShape", gateway.getId()));
                     process.getGateways().add(gateway);
                 } else if (isSequenceFlow(child)) {
-                    BPMNSequenceFlow sequenceFlow=  buildSequenceFlow(child,process);                    
+                    BPMNSequenceFlow sequenceFlow = buildSequenceFlow(child, process);
                     process.getSequenceFlows().add(sequenceFlow);
 
                 } else {
@@ -131,11 +140,13 @@ public class BPMNModel {
                 }
             }
 
-            result.add(process);
+            return process;
         }
 
-        return result;
+        return null;
     }
+
+   
 
     /**
      * Helper method to build a SequenceFlow meta object from a bpmn2:sequenceFlow.
@@ -147,7 +158,7 @@ public class BPMNModel {
     public BPMNSequenceFlow buildSequenceFlow(Node node, org.openbpmn.bpmn.elements.BPMNProcess process) {
         BPMNSequenceFlow sequenceFlow = null;
         if ("bpmn2:sequenceFlow".equals(node.getNodeName())) {
-             sequenceFlow = new BPMNSequenceFlow(node);
+            sequenceFlow = new BPMNSequenceFlow(node);
             sequenceFlow.setSourceRef(sequenceFlow.getAttribute("sourceRef"));
             sequenceFlow.setTargetRef(sequenceFlow.getAttribute("targetRef"));
             // parse waypoints (di:waypoint)

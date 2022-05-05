@@ -13,6 +13,7 @@ import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNPoint;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.NamedNodeMap;
@@ -44,43 +45,40 @@ public class TestFlowElements {
         }
 
         // read tasks....
-        List<org.openbpmn.bpmn.elements.BPMNProcess> processList = model.getProcesList();
-        assertEquals(1,processList.size());
-        for (org.openbpmn.bpmn.elements.BPMNProcess process : processList) {
-            logger.info("...Process ID=" + process.getAttribute("id"));
+        BPMNProcess process = model.openContext(null);
+        assertNotNull(process);
+        logger.info("...Process ID=" + process.getAttribute("id"));
 
-            Set<BPMNActivity> activities = process.getActivities();
-            for (BPMNActivity element : activities) {
-                logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttribute("id"));
-                // bounds
-                logger.info("....... Activity Bounds=" + element.getBounds());
-                
-            }
+        Set<BPMNActivity> activities = process.getActivities();
+        for (BPMNActivity element : activities) {
+            logger.info("....... Activity type=" + element.getType() + " id=" + element.getAttribute("id"));
+            // bounds
+            logger.info("....... Activity Bounds=" + element.getBounds());
 
-            Set<BPMNGateway> gateways = process.getGateways();
-            for (BPMNGateway element : gateways) {
-                logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttribute("id"));
-            }
-
-            Set<BPMNEvent> events = process.getEvents();
-            for (BPMNEvent element : events) {
-                logger.info("....... Event type=" + element.getType() + " id=" + element.getAttribute("id"));
-            }
-            
-            // we expect 3 sequnceFlows
-            assertEquals(3,process.getSequenceFlows().size());
-            BPMNSequenceFlow sequenceFlow = process.getSequenceFlowByID("SequenceFlow_1");
-            assertEquals("StartEvent_1",sequenceFlow.getSourceRef()); 
-            assertEquals("Task_1",sequenceFlow.getTargetRef()); 
-            
-            // test waypoints
-            List<BPMNPoint> wayPoints = sequenceFlow.getWayPoints();
-            assertNotNull(wayPoints);
-            BPMNPoint wayPoint=wayPoints.get(0);
-            assertEquals(118.0 ,wayPoint.getX());
-            assertEquals(136.0 ,wayPoint.getY());
-            
         }
+
+        Set<BPMNGateway> gateways = process.getGateways();
+        for (BPMNGateway element : gateways) {
+            logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttribute("id"));
+        }
+
+        Set<BPMNEvent> events = process.getEvents();
+        for (BPMNEvent element : events) {
+            logger.info("....... Event type=" + element.getType() + " id=" + element.getAttribute("id"));
+        }
+
+        // we expect 3 sequnceFlows
+        assertEquals(3, process.getSequenceFlows().size());
+        BPMNSequenceFlow sequenceFlow = process.getSequenceFlowByID("SequenceFlow_1");
+        assertEquals("StartEvent_1", sequenceFlow.getSourceRef());
+        assertEquals("Task_1", sequenceFlow.getTargetRef());
+
+        // test waypoints
+        List<BPMNPoint> wayPoints = sequenceFlow.getWayPoints();
+        assertNotNull(wayPoints);
+        BPMNPoint wayPoint = wayPoints.get(0);
+        assertEquals(118.0, wayPoint.getX());
+        assertEquals(136.0, wayPoint.getY());
 
         logger.info("...model read sucessful");
     }

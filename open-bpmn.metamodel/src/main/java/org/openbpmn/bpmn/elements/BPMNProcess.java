@@ -3,6 +3,9 @@ package org.openbpmn.bpmn.elements;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.openbpmn.bpmn.elements.BPMNActivity.TaskType;
+import org.openbpmn.bpmn.elements.BPMNEvent.EventType;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -96,5 +99,44 @@ public class BPMNProcess extends BPMNBaseElement {
             }
         }
         return null;
+    }
+
+    /**
+     * Adds a new event
+     * <p>
+     * <bpmn2:startEvent id="StartEvent_1" name="Start Event 1">
+     * 
+     * @param id
+     * @param name
+     * @param type - EventType
+     */
+    public void addEvent(String id, String name, EventType type) {
+      
+        Element eventElement = this.getElementNode().getOwnerDocument().createElement(type.getBpmnType());
+        eventElement.setAttribute("id", id);
+        eventElement.setAttribute("name", name);
+        this.getElementNode().appendChild(eventElement);
+
+        BPMNEvent event = new BPMNEvent(type, eventElement);
+        getEvents().add(event);
+    }
+    /**
+     * Adds a new Task
+     * <p>
+     *  <bpmn2:sendTask id="SendTask_1" name="Send Task 1">
+     * 
+     * @param id
+     * @param name
+     * @param type - EventType
+     */
+    public void addTask(String id, String name, TaskType type) {
+      
+        Element taskElement = this.getElementNode().getOwnerDocument().createElement(type.getBpmnType());
+        taskElement.setAttribute("id", id);
+        taskElement.setAttribute("name", name);
+        this.getElementNode().appendChild(taskElement);
+
+        BPMNActivity task = new BPMNActivity(type, taskElement);
+        getActivities().add(task);
     }
 }
