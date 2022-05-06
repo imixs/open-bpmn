@@ -78,22 +78,22 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
 
     configureDefaultModelElements(context);
-    configureModelElement(context, 'task:manual', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'task:user', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'task:send', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'task:service', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'task:script', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'sendTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'serviceTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'scriptTask', TaskNode, RoundedCornerNodeView);
 
-    configureModelElement(context, 'event:start', EventNode, EventNodeView);
-    configureModelElement(context, 'event:end', EventNode, EventNodeView);
-    configureModelElement(context, 'event:catch', EventNode, EventNodeView);
-    configureModelElement(context, 'event:throw', EventNode, EventNodeView);
+    configureModelElement(context, 'startEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'endEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'catchEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'throwEvent', EventNode, EventNodeView);
 	configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
 
-    configureModelElement(context, 'gateway:exclusive', GatewayNode, GatewayNodeView);
-    configureModelElement(context, 'gateway:inclusive', GatewayNode, GatewayNodeView);
-    configureModelElement(context, 'gateway:parallel', GatewayNode, GatewayNodeView);
-    configureModelElement(context, 'gateway:complex', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'exclusiveGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'inclusiveGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'parallelGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'complexGateway', GatewayNode, GatewayNodeView);
 
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);

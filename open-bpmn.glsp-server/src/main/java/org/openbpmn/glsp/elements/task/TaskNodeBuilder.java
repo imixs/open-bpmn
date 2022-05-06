@@ -30,13 +30,8 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
     public TaskNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
-        // this.taskType = taskType;
-
-        String[] cssClasses = type.split(":");
-        for (String cssClass : cssClasses) {
-            this.addCssClass(cssClass);
-        }
-
+        this.addCssClass("task");
+        this.addCssClass(type);
         this.addArguments(GArguments.cornerRadius(5));
 
     }

@@ -15,12 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNTaskType;
 
 public class CreateUserTaskHandler extends CreateTaskHandler {
 
     public CreateUserTaskHandler() {
-        super(ModelTypes.USER_TASK, i -> "UserTask" + i);
+        super(BPMNTaskType.USER.name, i -> "UserTask" + i);
     }
 
     @Override

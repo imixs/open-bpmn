@@ -34,6 +34,9 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
+import org.openbpmn.bpmn.BPMNEventType;
+import org.openbpmn.bpmn.BPMNGatewayType;
+import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.bpmn.TaskNode;
@@ -63,39 +66,39 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         // Create node actions are always possible
         actions.addAll(Sets.newHashSet(
                 new LabeledAction("Create Manual Task",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.MANUAL_TASK,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTaskType.MANUAL.getName(),
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create User Task",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.USER_TASK,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTaskType.USER.getName(),
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Send Task",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.SEND_TASK,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTaskType.SEND.getName(),
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Service Task",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.SERVICE_TASK,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTaskType.SERVICE.getName(),
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Script Task",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.SCRIPT_TASK,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTaskType.SCRIPT.getName(),
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
                 new LabeledAction("Create Start Event",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.START_EVENT,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNEventType.START.name,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create End Event",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.END_EVENT,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNEventType.END.name,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Catch Event",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.CATCH_EVENT,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNEventType.CATCH.name,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Throw Event",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.THROW_EVENT,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNEventType.THROW.name,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
                 new LabeledAction("Create Exclusive Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.EXCLUSIVE_GATEWAY,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNGatewayType.EXCLUSIVE.name,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Inclusive Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(ModelTypes.INCLUSIVE_GATEWAY,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNGatewayType.INCLUSIVE.name,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
                 // Pool

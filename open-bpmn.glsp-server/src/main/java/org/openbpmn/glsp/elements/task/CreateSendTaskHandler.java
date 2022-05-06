@@ -15,12 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNTaskType;
 
 public class CreateSendTaskHandler extends CreateTaskHandler {
 
     public CreateSendTaskHandler() {
-        super(ModelTypes.SEND_TASK, i -> "SendTask" + i);
+        super(BPMNTaskType.SEND.name, i -> "SendTask" + i);
     }
 
     @Override

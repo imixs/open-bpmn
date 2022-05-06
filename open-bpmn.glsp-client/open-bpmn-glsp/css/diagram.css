@@ -76,17 +76,17 @@
 .sprotty-node.event > text.heading {
 	text-anchor:middle; 
 }
-.sprotty-node.event.start > circle {
+.sprotty-node.event.startEvent > circle {
 	fill: #57A14C;
 }
-.sprotty-node.event.end > circle {
+.sprotty-node.event.endEvent > circle {
 	fill: #BE5961;
 }
 
-.sprotty-node.event.catch > circle {
+.sprotty-node.event.catchEvent > circle {
 	fill: rgb(211, 215, 207);
 }
-.sprotty-node.event.throw > circle {
+.sprotty-node.event.throwEvent > circle {
 	fill: rgb(211, 215, 207);
 }
 

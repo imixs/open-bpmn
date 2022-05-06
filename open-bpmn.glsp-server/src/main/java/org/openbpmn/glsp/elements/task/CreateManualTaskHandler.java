@@ -15,12 +15,13 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.openbpmn.bpmn.BPMNTaskType;
 
 public class CreateManualTaskHandler extends CreateTaskHandler {
 
     public CreateManualTaskHandler() {
-        super(ModelTypes.MANUAL_TASK, i -> "ManualTask" + i);
+        super(BPMNTaskType.MANUAL.name, i -> "ManualTask" + i);
     }
 
     @Override
@@ -28,9 +29,20 @@ public class CreateManualTaskHandler extends CreateTaskHandler {
         return "Manual Task";
     }
 
+    @Override
+    public void executeOperation(final CreateNodeOperation operation) {
+        // TODO Auto-generated method stub
+        super.executeOperation(operation);
+
+        System.out
+                .println("executeOperation.........." + operation.getElementTypeId() + " kind=" + operation.getKind());
+
+    }
+
 //   @Override
 //   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
 //      return super.builder(point, modelState)
 //         .addCssClass("manual");
 //   }
+
 }

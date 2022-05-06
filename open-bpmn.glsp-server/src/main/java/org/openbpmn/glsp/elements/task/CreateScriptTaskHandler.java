@@ -15,12 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNTaskType;
 
 public class CreateScriptTaskHandler extends CreateTaskHandler {
 
     public CreateScriptTaskHandler() {
-        super(ModelTypes.SCRIPT_TASK, i -> "ScriptTask" + i);
+        super(BPMNTaskType.SCRIPT.name, i -> "ScriptTask" + i);
     }
 
     @Override

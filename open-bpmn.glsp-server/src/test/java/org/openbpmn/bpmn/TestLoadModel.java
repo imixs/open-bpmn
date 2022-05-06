@@ -17,9 +17,6 @@ package org.openbpmn.bpmn;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 import org.eclipse.glsp.graph.GGraph;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -33,7 +30,6 @@ import org.openbpmn.bpmn.util.BPMNModelFactory;
  *
  */
 public class TestLoadModel {
-    private static Logger logger = Logger.getLogger(TestLoadModel.class.getName());
 
     @Test
     public void testReadFile() {
@@ -43,14 +39,11 @@ public class TestLoadModel {
         // we expect one child
         assertNotNull(model);
 
-        List<BPMNProcess> processList = model.getProcesList();
-        if (processList != null && processList.size() > 0) {
-            BPMNProcess process = processList.get(0);
+        BPMNProcess process = model.openContext(null);
+        assertNotNull(process);
+        GGraph newGModel = BPMNGModelUtil.createGModelFromProcess(process, null);
 
-            GGraph newGModel = BPMNGModelUtil.createGModelFromProcess(process, null);
-
-            assertNotNull(newGModel);
-        }
+        assertNotNull(newGModel);
     }
 
 }

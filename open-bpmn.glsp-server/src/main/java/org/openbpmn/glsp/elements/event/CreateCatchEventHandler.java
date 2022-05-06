@@ -19,12 +19,12 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNEventType;
 
 public class CreateCatchEventHandler extends AbstractCreateEventHandler {
 
     public CreateCatchEventHandler() {
-        super(ModelTypes.CATCH_EVENT, i -> "CatchEvent" + i);
+        super(BPMNEventType.CATCH.name, i -> "CatchEvent" + i);
     }
 
     @Override

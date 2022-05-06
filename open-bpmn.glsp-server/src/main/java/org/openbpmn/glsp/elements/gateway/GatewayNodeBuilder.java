@@ -35,15 +35,9 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
     public GatewayNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
-//        if (gatewayType == null || gatewayType.isEmpty()) {
-//            gatewayType = "";
-//        }
-        // this.category = category;
-        // split the typeId into two parts and add the corresponding classes
-        String[] cssClasses = type.split(":");
-        for (String cssClass : cssClasses) {
-            this.addCssClass(cssClass);
-        }
+        this.addCssClass("gateway");
+        this.addCssClass(type);
+
     }
 
     @Override

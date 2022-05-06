@@ -15,12 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.gateway;
 
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNGatewayType;
 
 public class CreateExclusiveGatewayHandler extends AbstractCreateGatewayHandler {
 
     public CreateExclusiveGatewayHandler() {
-        super(ModelTypes.EXCLUSIVE_GATEWAY, i -> "ExclusiveGateway" + i);
+        super(BPMNGatewayType.EXCLUSIVE.name, i -> "ExclusiveGateway" + i);
     }
 
     @Override

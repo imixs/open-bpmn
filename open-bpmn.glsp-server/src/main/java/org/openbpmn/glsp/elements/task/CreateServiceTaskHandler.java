@@ -15,12 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNTaskType;
 
 public class CreateServiceTaskHandler extends CreateTaskHandler {
 
     public CreateServiceTaskHandler() {
-        super(ModelTypes.SERVICE_TASK, i -> "ServiceTask" + i);
+        super(BPMNTaskType.SERVICE.name, i -> "ServiceTask" + i);
     }
 
     @Override

@@ -19,12 +19,12 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNEventType;
 
 public class CreateStartEventHandler extends AbstractCreateEventHandler {
 
     public CreateStartEventHandler() {
-        super(ModelTypes.START_EVENT, i -> "StartEvent" + i);
+        super(BPMNEventType.START.name, i -> "StartEvent" + i);
     }
 
     @Override

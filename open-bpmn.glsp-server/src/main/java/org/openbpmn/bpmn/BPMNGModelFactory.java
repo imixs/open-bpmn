@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.bpmn;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -23,6 +22,7 @@ import javax.inject.Inject;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.operations.OperationHandler;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 
 /**
  * The BPMNGModelFactory is responsible to produce a graph model from the BPMN
@@ -53,11 +53,10 @@ public class BPMNGModelFactory implements GModelFactory {
             GGraph newGModel = null;
             BPMNModel model = modelState.getBpmnModel();
             if (model != null) {
-                List<org.openbpmn.bpmn.elements.BPMNProcess> processList = model.getProcesList();
-                if (processList != null && processList.size() > 0) {
-                    org.openbpmn.bpmn.elements.BPMNProcess process = processList.get(0);
+                BPMNProcess process = model.openContext(null);
+                if (process != null) {
                     newGModel = BPMNGModelUtil.createGModelFromProcess(process, modelState);
-                    modelState.setRoot(newGModel);
+                    // modelState.setRoot(newGModel);
                     // updateRoot can be removed somtime in the future - see
                     // https://github.com/eclipse-glsp/glsp/discussions/615
                     modelState.updateRoot(newGModel);
@@ -71,6 +70,8 @@ public class BPMNGModelFactory implements GModelFactory {
 
             modelState.setInitalized(true);
             logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
+        } else {
+            logger.info("===> createGModel skipped!");
         }
     }
 }

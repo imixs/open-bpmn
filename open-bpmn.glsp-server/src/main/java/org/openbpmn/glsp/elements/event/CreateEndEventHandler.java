@@ -19,12 +19,12 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNEventType;
 
 public class CreateEndEventHandler extends AbstractCreateEventHandler {
 
     public CreateEndEventHandler() {
-        super(ModelTypes.END_EVENT, i -> "EndEvent" + i);
+        super(BPMNEventType.END.name, i -> "EndEvent" + i);
     }
 
     @Override

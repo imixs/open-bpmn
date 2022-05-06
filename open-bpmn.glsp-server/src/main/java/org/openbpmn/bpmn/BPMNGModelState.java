@@ -35,6 +35,7 @@ public class BPMNGModelState extends DefaultGModelState {
 
     public void setBpmnModel(final BPMNModel bpmnModel) {
         this.bpmnModel = bpmnModel;
+        this.setRoot(null);
     }
 
     public boolean isInitalized() {

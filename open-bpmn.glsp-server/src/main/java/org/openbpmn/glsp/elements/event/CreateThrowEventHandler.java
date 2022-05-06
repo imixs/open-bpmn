@@ -19,12 +19,12 @@ import java.util.Optional;
 
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.bpmn.BPMNEventType;
 
 public class CreateThrowEventHandler extends AbstractCreateEventHandler {
 
     public CreateThrowEventHandler() {
-        super(ModelTypes.THROW_EVENT, i -> "ThrowEvent" + i);
+        super(BPMNEventType.THROW.name, i -> "ThrowEvent" + i);
     }
 
     @Override

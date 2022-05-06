@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2019 EclipseSource and others.
+ * Copyright (c) 2020 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,24 +13,22 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.gateway;
+package org.openbpmn.bpmn.operations;
 
-import org.openbpmn.bpmn.BPMNGatewayType;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.DeleteOperation;
+import org.openbpmn.bpmn.BPMNGModelState;
 
-public class CreateInclusiveGatewayHandler extends AbstractCreateGatewayHandler {
+import com.google.inject.Inject;
 
-    public CreateInclusiveGatewayHandler() {
-        super(BPMNGatewayType.INCLUSIVE.name, i -> "InclusiveGateway" + i);
-    }
+public class BPMNDeleteNodeHandler<T extends DeleteOperation> extends AbstractOperationHandler<DeleteOperation> {
+
+    @Inject
+    protected BPMNGModelState modelState;
 
     @Override
-    public String getLabel() {
-        return "Inclusive Gateway";
+    protected void executeOperation(final DeleteOperation operation) {
+        operation.getElementIds();
+        System.out.println("executeOperation..........");
     }
-
-//   @Override
-//   protected GatewayNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-//      return super.builder(point, modelState)
-//         .addCssClass("incusive");
-//   }
 }

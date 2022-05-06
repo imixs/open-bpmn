@@ -38,19 +38,8 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     public EventNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
-//        if (category == null || category.isEmpty()) {
-//            this.category = "";
-//        } else {
-        // this.category = category;
-        // }
-
-        // split the typeId into two parts and add the coressponding classes
-        String[] cssClasses = type.split(":");
-        for (String cssClass : cssClasses) {
-            this.addCssClass(cssClass);
-        }
-        // this.addCssClass("event");
-
+        this.addCssClass("event");
+        this.addCssClass(type);
     }
 
     @Override
@@ -67,11 +56,6 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     public void setProperties(final EventNode node) {
         super.setProperties(node);
         node.setName(name);
-
-//        if (category == null || category.isEmpty()) {
-//            node.getCategory().add(category);
-//        }
-
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));

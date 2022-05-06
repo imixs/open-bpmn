@@ -41,6 +41,7 @@ import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 import org.openbpmn.bpmn.BPMNGModelFactory;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNSourceModelStorage;
+import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.elements.event.CreateCatchEventHandler;
 import org.openbpmn.glsp.elements.event.CreateEndEventHandler;
 import org.openbpmn.glsp.elements.event.CreateStartEventHandler;
@@ -135,6 +136,9 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // register apply operations send from the client
         binding.add(ApplyEventUpdateOperationHandler.class);
+
+        // GLSP Operation handlers for ModelUpdates
+        binding.add(BPMNDeleteNodeHandler.class);
 
     }
 
