@@ -3,8 +3,10 @@ package org.openbpmn.bpmn.elements;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.openbpmn.bpmn.elements.BPMNActivity.TaskType;
-import org.openbpmn.bpmn.elements.BPMNEvent.EventType;
+import org.openbpmn.bpmn.BPMNEventType;
+import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTaskType;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -19,6 +21,8 @@ import org.w3c.dom.Node;
  */
 public class BPMNProcess extends BPMNBaseElement {
 
+    
+    
     protected Set<BPMNActivity> activities = null;
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
@@ -109,10 +113,10 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @param name
      * @param type - EventType
-     */
-    public void addEvent(String id, String name, EventType type) {
-      
-        Element eventElement = this.getElementNode().getOwnerDocument().createElement(type.getBpmnType());
+     */ 
+    public void addEvent(String id, String name, BPMNEventType type) {
+
+        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS+":"+type.getName());
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         this.getElementNode().appendChild(eventElement);
@@ -120,23 +124,104 @@ public class BPMNProcess extends BPMNBaseElement {
         BPMNEvent event = new BPMNEvent(type, eventElement);
         getEvents().add(event);
     }
+
     /**
      * Adds a new Task
      * <p>
-     *  <bpmn2:sendTask id="SendTask_1" name="Send Task 1">
+     * <bpmn2:sendTask id="SendTask_1" name="Send Task 1">
      * 
      * @param id
      * @param name
      * @param type - EventType
-     */
-    public void addTask(String id, String name, TaskType type) {
-      
-        Element taskElement = this.getElementNode().getOwnerDocument().createElement(type.getBpmnType());
+     */ 
+    public void addTask(String id, String name, BPMNTaskType type) {
+
+        Element taskElement = this.getDoc().createElement(BPMNModel.BPMN_NS+":"+type.getName());
         taskElement.setAttribute("id", id);
         taskElement.setAttribute("name", name);
         this.getElementNode().appendChild(taskElement);
 
         BPMNActivity task = new BPMNActivity(type, taskElement);
         getActivities().add(task);
+    }
+
+    /**
+     * Adds a new SequenceFlow
+     * <p>
+     * <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="Task_1" targetRef=
+     * "SendTask_1"/>
+     * 
+     * @param id
+     * @param source - ID of the source element 
+     * @param target - ID of the target element 
+     * @throws BPMNInvalidReferenceException 
+     */
+    public void addSequenceFlow(String id, String source, String target) throws BPMNInvalidReferenceException {
+
+        // validate IDs
+        BPMNFlowElement sourceElement = findFlowElementById(source);
+        BPMNFlowElement targetElement = findFlowElementById(target);
+
+        if (sourceElement == null || targetElement == null) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source or Target ID not set");
+        }
+        if (sourceElement.getId().equals(targetElement.getId())) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source and Target ID can not be the same");
+        }
+        
+        // create sequenceFlow element
+        Element sequenceFlow = this.getDoc().createElement(BPMNModel.BPMN_NS + ":sequenceFlow");
+        sequenceFlow.setAttribute("id", id);
+        sequenceFlow.setAttribute("sourceRef", source);
+        sequenceFlow.setAttribute("targetRef", target);
+        this.getElementNode().appendChild(sequenceFlow);
+
+        // add outgoing reference to source element
+        Element refOut = this.getDoc().createElement(BPMNModel.BPMN_NS + ":outgoing");
+        refOut.setTextContent(id);
+        sourceElement.getElementNode().appendChild(refOut);
+        // add incoming reference to target element
+        Element refIn = this.getDoc().createElement(BPMNModel.BPMN_NS + ":incoming");
+        refIn.setTextContent(id);
+        targetElement.getElementNode().appendChild(refIn);
+
+        BPMNSequenceFlow flow = new BPMNSequenceFlow(sequenceFlow);
+        getSequenceFlows().add(flow); 
+    }
+
+    /**
+     * Returns a FlowElement by id
+     * 
+     * @param id
+     * @return
+     */
+    public BPMNFlowElement findFlowElementById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+        Set<BPMNActivity> listA = this.getActivities();
+        for (BPMNActivity element : listA) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+
+        Set<BPMNEvent> listE = this.getEvents();
+        for (BPMNEvent element : listE) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+
+        Set<BPMNGateway> listG = this.getGateways();
+        for (BPMNGateway element : listG) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
@@ -28,6 +29,15 @@ public abstract class BPMNBaseElement {
         }
     }
 
+    /**
+     * Returns the Document object associated with this Element. The document
+     * object can be used to create new nodes. 
+     * @return
+     */
+    public Document getDoc() {
+        Document doc = this.getElementNode().getOwnerDocument();
+        return doc;
+    }
 
     /**
      * Returns the ID of the element
@@ -88,5 +98,4 @@ public abstract class BPMNBaseElement {
         return attributeMap;
     }
 
-  
 }

@@ -39,17 +39,21 @@ import org.w3c.dom.NodeList;
 public class BPMNModel {
     private static Logger logger = Logger.getLogger(BPMNModel.class.getName());
 
-    List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { "bpmn2:task", "bpmn2:serviceTask", "bpmn2:sendTask",
-            "bpmn2:receiveTask", "bpmn2:userTask", "bpmn2:manualTask", "bpmn2:businessRuleTask", "bpmn2:scriptTask",
-            "bpmn2:subProcess", "bpmn2:adHocSubProcess", "bpmn2:transaction", "bpmn2:callActivity" });
+    public final static String BPMN_NS="bpmn2";
+    public final static String DI_NS="bpmndi";
+    
+    
+    List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { "task", "serviceTask", "sendTask",
+            "receiveTask", "userTask", "manualTask", "businessRuleTask", "scriptTask",
+            "subProcess", "adHocSubProcess", "transaction", "callActivity" });
 
     List<String> BPMN_EVENTS = Arrays
-            .asList(new String[] { "bpmn2:startEvent", "bpmn2:endEvent", "bpmn2:catchEvent", "bpmn2:throwEvent" });
+            .asList(new String[] { "startEvent", "endEvent", "catchEvent", "throwEvent" });
 
-    List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { "bpmn2:exclusiveGateway", "bpmn2:inclusiveGateway",
-            "bpmn2:parallelGateway", "bpmn2:complexGateway" });
+    List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { "exclusiveGateway", "inclusiveGateway",
+            "parallelGateway", "complexGateway" });
 
-    List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { "bpmn2:sequenceFlow" });
+    List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { "sequenceFlow" });
 
     private Element definitions;
     private Document doc;
@@ -61,7 +65,7 @@ public class BPMNModel {
 
         definitions = doc.getDocumentElement();
         // find bpmndi:BPMNDiagram
-        NodeList diagramList = doc.getElementsByTagName("bpmndi:BPMNDiagram");
+        NodeList diagramList = doc.getElementsByTagName(DI_NS + ":BPMNDiagram");
         if (diagramList != null && diagramList.getLength() > 0) {
             bpmnDiagram = diagramList.item(0);
         }
@@ -83,29 +87,30 @@ public class BPMNModel {
      * This Method opens a BPMN context (e.g. a Process) with the given ID. The
      * method returns null if no process with the given ID exists.
      * <p>
-     * In case no ID is provided (null) the method returns the first (default) process from the model.
+     * In case no ID is provided (null) the method returns the first (default)
+     * process from the model.
      * 
      * @param string
      * @return BPMNProcess instance
      */
     public BPMNProcess openContext(String id) {
 
-         // find process
-        NodeList processList = definitions.getElementsByTagName("bpmn2:process");
+        // find process
+        NodeList processList = definitions.getElementsByTagName(BPMN_NS+":process");
         logger.info("..found " + processList.getLength() + " processes");
 
         for (int i = 0; i < processList.getLength(); i++) {
             Node item = processList.item(i);
 
             org.openbpmn.bpmn.elements.BPMNProcess process = new org.openbpmn.bpmn.elements.BPMNProcess(item);
-           
-            if (id!=null && !id.equals(process.getId())) {
+
+            if (id != null && !id.equals(process.getId())) {
                 // not match of the requested processs ID
                 continue;
             }
 
             // find the bpmndi:BPMNPlane
-            process.setBpmnPlane(findChildNodeByName(bpmnDiagram, "bpmndi:BPMNPlane", process.getId()));
+            process.setBpmnPlane(findChildNodeByName(bpmnDiagram, DI_NS + ":BPMNPlane", process.getId()));
 
             // now find all relevant bpmn meta elements
             NodeList childs = item.getChildNodes();
@@ -120,16 +125,16 @@ public class BPMNModel {
                 if (isActivity(child)) {
                     BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
                     activity.setBpmnShape(
-                            findChildNodeByName(process.getBpmnPlane(), "bpmndi:BPMNShape", activity.getId()));
+                            findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNShape", activity.getId()));
                     process.getActivities().add(activity);
                 } else if (isEvent(child)) {
                     BPMNEvent event = new BPMNEvent(child.getNodeName(), child);
-                    event.setBpmnShape(findChildNodeByName(process.getBpmnPlane(), "bpmndi:BPMNShape", event.getId()));
+                    event.setBpmnShape(findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNShape", event.getId()));
                     process.getEvents().add(event);
                 } else if (isGateway(child)) {
                     BPMNGateway gateway = new BPMNGateway(child.getNodeName(), child);
                     gateway.setBpmnShape(
-                            findChildNodeByName(process.getBpmnPlane(), "bpmndi:BPMNShape", gateway.getId()));
+                            findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNShape", gateway.getId()));
                     process.getGateways().add(gateway);
                 } else if (isSequenceFlow(child)) {
                     BPMNSequenceFlow sequenceFlow = buildSequenceFlow(child, process);
@@ -146,10 +151,11 @@ public class BPMNModel {
         return null;
     }
 
-   
-
     /**
      * Helper method to build a SequenceFlow meta object from a bpmn2:sequenceFlow.
+     * <p>
+     * <bpmn2:sequenceFlow id="flow_4" sourceRef="Task_1" targetRef= "SendTask_1"/>
+     * <p>
      * 
      * @param node
      * @param process
@@ -157,12 +163,11 @@ public class BPMNModel {
      */
     public BPMNSequenceFlow buildSequenceFlow(Node node, org.openbpmn.bpmn.elements.BPMNProcess process) {
         BPMNSequenceFlow sequenceFlow = null;
-        if ("bpmn2:sequenceFlow".equals(node.getNodeName())) {
+        if ((BPMN_NS+":sequenceFlow").equals(node.getNodeName())) {
             sequenceFlow = new BPMNSequenceFlow(node);
-            sequenceFlow.setSourceRef(sequenceFlow.getAttribute("sourceRef"));
-            sequenceFlow.setTargetRef(sequenceFlow.getAttribute("targetRef"));
+
             // parse waypoints (di:waypoint)
-            Node bpmnEdge = findChildNodeByName(process.getBpmnPlane(), "bpmndi:BPMNEdge", sequenceFlow.getId());
+            Node bpmnEdge = findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNEdge", sequenceFlow.getId());
             List<Node> wayPoints = findChildNodesByName(bpmnEdge, "di:waypoint");
             for (Node wayPoint : wayPoints) {
                 NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
@@ -175,7 +180,7 @@ public class BPMNModel {
     }
 
     public BPMNModel addProcess(String id) {
-        Element process = doc.createElement("bpmn2:process");
+        Element process = doc.createElement(BPMN_NS+":process");
         process.setAttribute("id", id);
         definitions.appendChild(process);
 
@@ -240,6 +245,10 @@ public class BPMNModel {
      */
     private boolean isActivity(Node node) {
         String type = node.getNodeName();
+        // cut namespce
+        if (type.startsWith(BPMN_NS+":")) {
+            type=type.substring((BPMN_NS+":").length());
+        }
         return (BPMN_ACTIVITIES.contains(type));
     }
 
@@ -251,6 +260,10 @@ public class BPMNModel {
      */
     private boolean isGateway(Node node) {
         String type = node.getNodeName();
+        // cut namespce
+        if (type.startsWith(BPMN_NS+":")) {
+            type=type.substring((BPMN_NS+":").length());
+        }
         return (BPMN_GATEWAYS.contains(type));
     }
 
@@ -262,6 +275,10 @@ public class BPMNModel {
      */
     private boolean isEvent(Node node) {
         String type = node.getNodeName();
+        // cut namespce
+        if (type.startsWith(BPMN_NS+":")) {
+            type=type.substring((BPMN_NS+":").length());
+        }
         return (BPMN_EVENTS.contains(type));
     }
 
@@ -273,6 +290,10 @@ public class BPMNModel {
      */
     private boolean isSequenceFlow(Node node) {
         String type = node.getNodeName();
+        // cut namespce
+        if (type.startsWith(BPMN_NS+":")) {
+            type=type.substring((BPMN_NS+":").length());
+        }
         return (BPMN_SQUENCEFLOWS.contains(type));
     }
 

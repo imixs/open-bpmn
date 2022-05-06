@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
+import org.openbpmn.bpmn.BPMNTaskType;
 import org.w3c.dom.Node;
 
 /**
@@ -18,34 +19,13 @@ import org.w3c.dom.Node;
  */
 public class BPMNActivity extends BPMNFlowElement {
 
-    public enum TaskType {
-        TASK(Constants.TASK),SEND(Constants.SEND_TASK), MANUAL(Constants.MANUAL_TASK);
-
-        private String bpmnType;
-
-        TaskType(String type) {
-            this.bpmnType = type;
-        }
-
-        private static class Constants {
-            public static final String SEND_TASK = "bpmn2:sendTask";
-            public static final String MANUAL_TASK = "bpmn2:manualTask";
-            public static final String TASK = "bpmn2:task";
-        }
-
-        public String getBpmnType() {
-            return bpmnType;
-        }
-    }
-    
+   
     public BPMNActivity(String type, Node node) {
         super(type, node);
     }
-    
-    public BPMNActivity(TaskType type, Node node) {
-        super(type.bpmnType, node);
-    }
 
-    
+    public BPMNActivity(BPMNTaskType type, Node node) {
+        super(type.name, node);
+    }
 
 }
