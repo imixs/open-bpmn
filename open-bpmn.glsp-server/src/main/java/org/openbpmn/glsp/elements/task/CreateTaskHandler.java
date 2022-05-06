@@ -23,6 +23,7 @@ import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.GModelUtil;
+import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
@@ -31,9 +32,9 @@ public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
     private final Function<Integer, String> labelProvider;
     private final String elementTypeId;
 
-    public CreateTaskHandler(final String elementTypeId, final Function<Integer, String> labelProvider) {
-        super(elementTypeId);
-        this.elementTypeId = elementTypeId;
+    public CreateTaskHandler(final BPMNTaskType taskType, final Function<Integer, String> labelProvider) {
+        super(taskType.name);
+        this.elementTypeId = taskType.name;
         this.labelProvider = labelProvider;
     }
 
@@ -47,7 +48,8 @@ public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
     }
 
     protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, "task", modelState);
+
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, elementTypeId, modelState);
         String name = labelProvider.apply(nodeCounter);
         // String taskType = ModelTypes.toNodeType(getElementTypeId());
         return new TaskNodeBuilder(getElementTypeId(), name) //

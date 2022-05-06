@@ -20,7 +20,8 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateScriptTaskHandler extends CreateTaskHandler {
 
     public CreateScriptTaskHandler() {
-        super(BPMNTaskType.SCRIPT.name, i -> "ScriptTask" + i);
+        super(BPMNTaskType.SCRIPT, i -> "ScriptTask-" + i);
+
     }
 
     @Override
@@ -28,9 +29,4 @@ public class CreateScriptTaskHandler extends CreateTaskHandler {
         return "Script Task";
     }
 
-//   @Override
-//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-//      return super.builder(point, modelState)
-//         .addCssClass("script");
-//   }
 }

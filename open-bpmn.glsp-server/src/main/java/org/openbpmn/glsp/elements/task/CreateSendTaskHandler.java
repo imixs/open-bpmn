@@ -20,7 +20,7 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateSendTaskHandler extends CreateTaskHandler {
 
     public CreateSendTaskHandler() {
-        super(BPMNTaskType.SEND.name, i -> "SendTask" + i);
+        super(BPMNTaskType.SEND, i -> "SendTask-" + i);
     }
 
     @Override
@@ -28,9 +28,4 @@ public class CreateSendTaskHandler extends CreateTaskHandler {
         return "Send Task";
     }
 
-//   @Override
-//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-//      return super.builder(point, modelState)
-//         .addCssClass("send");
-//   }
 }

@@ -20,7 +20,7 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateUserTaskHandler extends CreateTaskHandler {
 
     public CreateUserTaskHandler() {
-        super(BPMNTaskType.USER.name, i -> "UserTask" + i);
+        super(BPMNTaskType.USER, i -> "UserTask-" + i);
     }
 
     @Override
@@ -28,9 +28,4 @@ public class CreateUserTaskHandler extends CreateTaskHandler {
         return "User Task";
     }
 
-//   @Override
-//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-//      return super.builder(point, modelState)
-//         .addCssClass("user");
-//   }
 }

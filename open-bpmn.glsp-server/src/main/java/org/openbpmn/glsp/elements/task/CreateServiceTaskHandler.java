@@ -20,7 +20,7 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateServiceTaskHandler extends CreateTaskHandler {
 
     public CreateServiceTaskHandler() {
-        super(BPMNTaskType.SERVICE.name, i -> "ServiceTask" + i);
+        super(BPMNTaskType.SERVICE, i -> "ServiceTask-" + i);
     }
 
     @Override
@@ -28,9 +28,4 @@ public class CreateServiceTaskHandler extends CreateTaskHandler {
         return "Service Task";
     }
 
-//   @Override
-//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-//      return super.builder(point, modelState)
-//         .addCssClass("service");
-//   }
 }

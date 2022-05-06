@@ -21,7 +21,7 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateManualTaskHandler extends CreateTaskHandler {
 
     public CreateManualTaskHandler() {
-        super(BPMNTaskType.MANUAL.name, i -> "ManualTask" + i);
+        super(BPMNTaskType.MANUAL, i -> "ManualTask-" + i);
     }
 
     @Override
@@ -31,18 +31,11 @@ public class CreateManualTaskHandler extends CreateTaskHandler {
 
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
-        // TODO Auto-generated method stub
         super.executeOperation(operation);
 
         System.out
                 .println("executeOperation.........." + operation.getElementTypeId() + " kind=" + operation.getKind());
 
     }
-
-//   @Override
-//   protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-//      return super.builder(point, modelState)
-//         .addCssClass("manual");
-//   }
 
 }
