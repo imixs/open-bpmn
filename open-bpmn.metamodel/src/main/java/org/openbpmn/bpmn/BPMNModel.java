@@ -3,6 +3,9 @@ package org.openbpmn.bpmn;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,6 +44,7 @@ public class BPMNModel {
 
     public final static String BPMN_NS="bpmn2";
     public final static String DI_NS="bpmndi";
+    private BPMNProcess context=null;
     
     
     List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { "task", "serviceTask", "sendTask",
@@ -79,6 +83,10 @@ public class BPMNModel {
         return doc;
     }
 
+    public BPMNProcess getContext() {
+        return context;
+    }
+
     public Node getBpmnDiagram() {
         return bpmnDiagram;
     }
@@ -102,15 +110,15 @@ public class BPMNModel {
         for (int i = 0; i < processList.getLength(); i++) {
             Node item = processList.item(i);
 
-            org.openbpmn.bpmn.elements.BPMNProcess process = new org.openbpmn.bpmn.elements.BPMNProcess(item);
+            context = new org.openbpmn.bpmn.elements.BPMNProcess(item);
 
-            if (id != null && !id.equals(process.getId())) {
+            if (id != null && !id.equals(context.getId())) {
                 // not match of the requested processs ID
                 continue;
             }
 
             // find the bpmndi:BPMNPlane
-            process.setBpmnPlane(findChildNodeByName(bpmnDiagram, DI_NS + ":BPMNPlane", process.getId()));
+            context.setBpmnPlane(findChildNodeByName(bpmnDiagram, DI_NS + ":BPMNPlane", context.getId()));
 
             // now find all relevant bpmn meta elements
             NodeList childs = item.getChildNodes();
@@ -125,27 +133,27 @@ public class BPMNModel {
                 if (isActivity(child)) {
                     BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
                     activity.setBpmnShape(
-                            findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNShape", activity.getId()));
-                    process.getActivities().add(activity);
+                            findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", activity.getId()));
+                    context.getActivities().add(activity);
                 } else if (isEvent(child)) {
                     BPMNEvent event = new BPMNEvent(child.getNodeName(), child);
-                    event.setBpmnShape(findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNShape", event.getId()));
-                    process.getEvents().add(event);
+                    event.setBpmnShape(findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", event.getId()));
+                    context.getEvents().add(event);
                 } else if (isGateway(child)) {
                     BPMNGateway gateway = new BPMNGateway(child.getNodeName(), child);
                     gateway.setBpmnShape(
-                            findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNShape", gateway.getId()));
-                    process.getGateways().add(gateway);
+                            findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", gateway.getId()));
+                    context.getGateways().add(gateway);
                 } else if (isSequenceFlow(child)) {
-                    BPMNSequenceFlow sequenceFlow = buildSequenceFlow(child, process);
-                    process.getSequenceFlows().add(sequenceFlow);
+                    BPMNSequenceFlow sequenceFlow = buildSequenceFlow(child, context);
+                    context.getSequenceFlows().add(sequenceFlow);
 
                 } else {
                     // unsupported node type
                 }
             }
-
-            return process;
+            
+            return context;
         }
 
         return null;
@@ -216,11 +224,21 @@ public class BPMNModel {
      */
     public void save(String file) {
         try (FileOutputStream output = new FileOutputStream(file)) {
+            if (doc==null) {
+                logger.severe("...unable to save file - doc is null!");
+            }
             writeXml(doc, output);
         } catch (TransformerException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public void save(URI targetURI) {
+        // targetURI = file:///home/user/a.txt
+        Path path = Paths.get("/", targetURI.toString()).normalize();
+        String filePath=""+path;
+        filePath=filePath.replace("/file:", "");
+        save(filePath);
     }
 
     // write doc to output stream
