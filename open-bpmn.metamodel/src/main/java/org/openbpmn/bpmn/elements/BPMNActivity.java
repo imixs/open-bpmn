@@ -24,8 +24,8 @@ public class BPMNActivity extends BPMNFlowElement {
         super(type, node);
     }
 
-    public BPMNActivity(BPMNTaskType type, Node node) {
-        super(type.name, node);
-    }
+//    public BPMNActivity(BPMNTaskType type, Node node) {
+//        super(type.name, node);
+//    }
 
 }

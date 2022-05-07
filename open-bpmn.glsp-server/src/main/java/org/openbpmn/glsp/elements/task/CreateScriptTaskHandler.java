@@ -20,8 +20,8 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateScriptTaskHandler extends CreateTaskHandler {
 
     public CreateScriptTaskHandler() {
-        super(BPMNTaskType.SCRIPT, i -> "ScriptTask-" + i);
-
+        super(BPMNTaskType.SCRIPT);
+        // this.elementTypeId = BPMNTaskType.SCRIPT;
     }
 
     @Override

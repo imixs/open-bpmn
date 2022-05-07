@@ -20,7 +20,7 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateServiceTaskHandler extends CreateTaskHandler {
 
     public CreateServiceTaskHandler() {
-        super(BPMNTaskType.SERVICE, i -> "ServiceTask-" + i);
+        super(BPMNTaskType.SERVICE);
     }
 
     @Override

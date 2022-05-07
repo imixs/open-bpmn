@@ -17,43 +17,73 @@ package org.openbpmn.glsp.elements.task;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
+import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNTaskType;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
+
+import com.google.inject.Inject;
 
 public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
-    private final Function<Integer, String> labelProvider;
-    private final String elementTypeId;
+    @Inject
+    protected BPMNGModelState modelState;
 
-    public CreateTaskHandler(final BPMNTaskType taskType, final Function<Integer, String> labelProvider) {
-        super(taskType.name);
-        this.elementTypeId = taskType.name;
-        this.labelProvider = labelProvider;
+    /**
+     * Default constructor
+     */
+    public CreateTaskHandler() {
+        super(BPMNTaskType.TASK);
+    }
+
+    public CreateTaskHandler(final String elementTypeId) {
+        super(elementTypeId);
     }
 
     protected String getElementTypeId() {
-        return elementTypeId;
+        return getHandledElementTypeIds().get(0);
     }
 
     @Override
     protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-        return builder(point, modelState).build();
+        System.out.println("===== > createNode");
+        TaskNode taskNode = builder(point, modelState).build();
+
+        // now we add this task into the source model
+        System.out.println("===== > createNode tasknodeID=" + taskNode.getId());
+        BPMNProcess process = modelState.getBpmnModel().getContext();
+        process.addTask(taskNode.getId(), taskNode.getName(), taskNode.getType());
+
+        return taskNode;
     }
 
     protected TaskNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
 
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, elementTypeId, modelState);
-        String name = labelProvider.apply(nodeCounter);
-        // String taskType = ModelTypes.toNodeType(getElementTypeId());
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, getElementTypeId(), modelState);
+        String name = getLabel() + " " + nodeCounter;
+
         return new TaskNodeBuilder(getElementTypeId(), name) //
                 .position(point.orElse(null));
+    }
+
+    @Override
+    public void executeOperation(final CreateNodeOperation operation) {
+        super.executeOperation(operation);
+
+        System.out.println("===== > executeOperation " + operation.getElementTypeId() + " kind=" + operation.getKind());
+        System.out.println("===== > Modelstate we have now " + modelState.getIndex().allIds().size() + " elements");
+
+        // How should we generate a new element in the SourceModel if we do not know the
+        // ID???
+
     }
 
 }

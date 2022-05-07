@@ -41,10 +41,10 @@ import org.openbpmn.glsp.utils.ModelTypes;
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
     public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(//
-            BPMNTaskType.MANUAL.name, //
-            BPMNTaskType.SCRIPT.name, //
-            BPMNTaskType.SEND.name, //
-            BPMNTaskType.SERVICE.name, //
+            BPMNTaskType.MANUAL, //
+            BPMNTaskType.SCRIPT, //
+            BPMNTaskType.SEND, //
+            BPMNTaskType.SERVICE, //
             BPMNGatewayType.EXCLUSIVE.name, //
             BPMNGatewayType.INCLUSIVE.name, //
             BPMNEventType.START.name, //
@@ -54,12 +54,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
             ModelTypes.SEQUENCE_FLOW);
 
     public final static List<String> ALL_PORTS = Arrays.asList( //
-            BPMNTaskType.MANUAL.name, //
-            BPMNTaskType.SCRIPT.name, //
+            BPMNTaskType.MANUAL, //
+            BPMNTaskType.SCRIPT, //
             BPMNEventType.START.name, //
             BPMNEventType.END.name, //
-            BPMNTaskType.SEND.name, //
-            BPMNTaskType.SERVICE.name, //
+            BPMNTaskType.SEND, //
+            BPMNTaskType.TASK, //
+            BPMNTaskType.SERVICE, //
             ModelTypes.EVENT_PORT);
 
     /**
@@ -77,7 +78,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON);
 
-        mappings.put(BPMNTaskType.TASK.name, BpmnPackage.Literals.TASK_NODE);
+        mappings.put(BPMNTaskType.TASK, BpmnPackage.Literals.TASK_NODE);
 
         mappings.put(BPMNGatewayType.GATEWAY.name, BpmnPackage.Literals.GATEWAY_NODE);
         mappings.put(ModelTypes.GATEWAY_PORT, GraphPackage.Literals.GPORT);
@@ -118,10 +119,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     public List<ShapeTypeHint> getShapeTypeHints() {
         List<ShapeTypeHint> nodeHints = new ArrayList<>();
         nodeHints.add(new ShapeTypeHint(DefaultTypes.NODE, true, true, true, false));
-        nodeHints.add(new ShapeTypeHint(BPMNTaskType.MANUAL.name, true, true, true, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTaskType.SCRIPT.name, true, true, true, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTaskType.SEND.name, true, true, true, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTaskType.SERVICE.name, true, true, true, true));
+        nodeHints.add(new ShapeTypeHint(BPMNTaskType.MANUAL, true, true, true, true));
+        nodeHints.add(new ShapeTypeHint(BPMNTaskType.SCRIPT, true, true, true, true));
+        nodeHints.add(new ShapeTypeHint(BPMNTaskType.SEND, true, true, true, true));
+        nodeHints.add(new ShapeTypeHint(BPMNTaskType.SERVICE, true, true, true, true));
 
         nodeHints.add(new ShapeTypeHint(BPMNEventType.START.name, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(BPMNEventType.END.name, true, true, false, true));
@@ -172,17 +173,17 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
 
         sequenceFlowHint.setSourceElementTypeIds(Arrays.asList(//
-                BPMNTaskType.MANUAL.name, //
-                BPMNTaskType.SCRIPT.name, //
-                BPMNTaskType.SEND.name, //
-                BPMNTaskType.SERVICE.name, //
+                BPMNTaskType.MANUAL, //
+                BPMNTaskType.SCRIPT, //
+                BPMNTaskType.SEND, //
+                BPMNTaskType.SERVICE, //
                 ModelTypes.EVENT_PORT));
 
         sequenceFlowHint.setTargetElementTypeIds(Arrays.asList(//
-                BPMNTaskType.MANUAL.name, //
-                BPMNTaskType.SCRIPT.name, //
-                BPMNTaskType.SEND.name, //
-                BPMNTaskType.SERVICE.name, //
+                BPMNTaskType.MANUAL, //
+                BPMNTaskType.SCRIPT, //
+                BPMNTaskType.SEND, //
+                BPMNTaskType.SERVICE, //
                 ModelTypes.EVENT_PORT));
 
         edgeHints.add(sequenceFlowHint);

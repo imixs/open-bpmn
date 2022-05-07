@@ -134,9 +134,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param name
      * @param type - EventType
      */ 
-    public void addTask(String id, String name, BPMNTaskType type) {
+    public void addTask(String id, String name, String type) {
 
-        Element taskElement = this.getDoc().createElement(BPMNModel.BPMN_NS+":"+type.getName());
+        Element taskElement = this.getDoc().createElement(BPMNModel.BPMN_NS+":"+type);
         taskElement.setAttribute("id", id);
         taskElement.setAttribute("name", name);
         this.getElementNode().appendChild(taskElement);

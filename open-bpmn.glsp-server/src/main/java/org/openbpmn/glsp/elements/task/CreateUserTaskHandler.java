@@ -20,7 +20,7 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateUserTaskHandler extends CreateTaskHandler {
 
     public CreateUserTaskHandler() {
-        super(BPMNTaskType.USER, i -> "UserTask-" + i);
+        super(BPMNTaskType.USER);
     }
 
     @Override

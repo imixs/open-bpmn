@@ -20,7 +20,9 @@ import org.openbpmn.bpmn.BPMNTaskType;
 public class CreateSendTaskHandler extends CreateTaskHandler {
 
     public CreateSendTaskHandler() {
-        super(BPMNTaskType.SEND, i -> "SendTask-" + i);
+        super(BPMNTaskType.SEND);
+        // this.elementTypeId = BPMNTaskType.SEND;
+
     }
 
     @Override

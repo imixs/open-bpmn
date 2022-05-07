@@ -64,8 +64,8 @@ public class BPMNGModelUtil {
         for (BPMNActivity activity : process.getActivities()) {
             System.out.println("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
-            TaskNodeBuilder builder = new TaskNodeBuilder(BPMNTaskType.MANUAL.name, activity.getName());// ,
-                                                                                                        // "event:start"
+            TaskNodeBuilder builder = new TaskNodeBuilder(BPMNTaskType.MANUAL, activity.getName());// ,
+                                                                                                   // "event:start"
             TaskNode taskNode = builder.position(point).build();
             entityNodes.add(taskNode);
         }

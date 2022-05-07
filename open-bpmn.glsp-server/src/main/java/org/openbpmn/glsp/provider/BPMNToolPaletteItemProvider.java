@@ -86,17 +86,15 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         List<PaletteItem> result = new ArrayList<>();
 //        result.add(
 //                new PaletteItem("manual-task", "Manual Task", new TriggerNodeCreationAction(BPMNActivity.TaskType...M   . ModelTypes.MANUAL_TASK)));
-        result.add(new PaletteItem(BPMNTaskType.MANUAL.getName(), "Manual Task",
-                new TriggerNodeCreationAction(BPMNTaskType.MANUAL.getName())));
-        result.add(new PaletteItem(BPMNTaskType.USER.getName(), "User Task",
-                new TriggerNodeCreationAction(BPMNTaskType.USER.getName())));
+        result.add(new PaletteItem(BPMNTaskType.MANUAL, "Manual Task",
+                new TriggerNodeCreationAction(BPMNTaskType.MANUAL)));
+        result.add(new PaletteItem(BPMNTaskType.USER, "User Task", new TriggerNodeCreationAction(BPMNTaskType.USER)));
 
-        result.add(new PaletteItem(BPMNTaskType.SERVICE.getName(), "Service Task",
-                new TriggerNodeCreationAction(BPMNTaskType.SERVICE.getName())));
-        result.add(new PaletteItem(BPMNTaskType.SEND.getName(), "Send Task",
-                new TriggerNodeCreationAction(BPMNTaskType.SEND.getName())));
-        result.add(new PaletteItem(BPMNTaskType.SCRIPT.getName(), "Script Task",
-                new TriggerNodeCreationAction(BPMNTaskType.SCRIPT.getName())));
+        result.add(new PaletteItem(BPMNTaskType.SERVICE, "Service Task",
+                new TriggerNodeCreationAction(BPMNTaskType.SERVICE)));
+        result.add(new PaletteItem(BPMNTaskType.SEND, "Send Task", new TriggerNodeCreationAction(BPMNTaskType.SEND)));
+        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "Script Task",
+                new TriggerNodeCreationAction(BPMNTaskType.SCRIPT)));
 
         return result;
     }

@@ -15,27 +15,18 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNTaskType;
 
 public class CreateManualTaskHandler extends CreateTaskHandler {
 
     public CreateManualTaskHandler() {
-        super(BPMNTaskType.MANUAL, i -> "ManualTask-" + i);
+        super(BPMNTaskType.MANUAL);
+        // this.elementTypeId = BPMNTaskType.MANUAL;
     }
 
     @Override
     public String getLabel() {
         return "Manual Task";
-    }
-
-    @Override
-    public void executeOperation(final CreateNodeOperation operation) {
-        super.executeOperation(operation);
-
-        System.out
-                .println("executeOperation.........." + operation.getElementTypeId() + " kind=" + operation.getKind());
-
     }
 
 }

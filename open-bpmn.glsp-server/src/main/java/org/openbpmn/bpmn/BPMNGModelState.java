@@ -28,6 +28,7 @@ public class BPMNGModelState extends DefaultGModelState {
 
     private BPMNModel bpmnModel;
     private boolean initalized = false;
+    private String fileUri = null;
 
     public BPMNModel getBpmnModel() {
         return bpmnModel;
@@ -44,6 +45,14 @@ public class BPMNGModelState extends DefaultGModelState {
 
     public void setInitalized(final boolean initalized) {
         this.initalized = initalized;
+    }
+
+    public String getFileUri() {
+        return fileUri;
+    }
+
+    public void setFileUri(final String uri) {
+        fileUri = uri;
     }
 
 }
