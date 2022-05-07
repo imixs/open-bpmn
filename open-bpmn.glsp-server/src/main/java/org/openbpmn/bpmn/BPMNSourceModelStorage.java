@@ -18,7 +18,10 @@ package org.openbpmn.bpmn;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.actions.SaveModelAction;
@@ -63,13 +66,26 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
             BPMNModel model = BPMNModelFactory.read(file);
             // we store the BPMN meta model into the modelState
             modelState.setBpmnModel(model);
+            modelState.setFileUri(uri);
         }
     }
 
     @Override
     public void saveSourceModel(final SaveModelAction action) {
         logger.info("================> We are in the saveSourceModel action!");
-        // TODO Auto-generated method stub
+
+        Optional<String> uri = action.getFileUri();
+        if (!uri.isPresent() || uri.isEmpty()) {
+            logger.info("Workaround for issue https://github.com/eclipse-glsp/glsp/issues/645 ");
+        }
+        BPMNModel model = modelState.getBpmnModel();
+        String filePath = modelState.getFileUri();
+        try {
+            java.net.URI targetURI = new URI(filePath);
+            model.save(targetURI);
+        } catch (URISyntaxException e) {
+            logger.severe("Invalid Target URI: " + e.getMessage());
+        }
 
     }
 
