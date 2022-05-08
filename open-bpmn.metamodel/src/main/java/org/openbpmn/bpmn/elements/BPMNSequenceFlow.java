@@ -11,6 +11,7 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
 
     protected String sourceRef = null;
     protected String targetRef = null;
+    protected Node bpmnEdge = null;
     protected List<BPMNPoint> wayPoints=null;
     
     public BPMNSequenceFlow(Node node) {
@@ -30,6 +31,16 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
     }
 
     
+    public Node getBpmnEdge() {
+        return bpmnEdge;
+    }
+
+
+    public void setBpmnEdge(Node bpmnEdge) {
+        this.bpmnEdge = bpmnEdge;
+    }
+
+
     public String getSourceRef() {
         return sourceRef;
     }

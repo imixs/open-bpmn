@@ -1,6 +1,8 @@
 package org.openbpmn.bpmn.elements;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNEventType;
@@ -156,6 +158,138 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
+     * Deletes a BPMNTask element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteTask(String id) {
+        BPMNActivity task = (BPMNActivity) findBaseElementById(id);
+        if (task == null) {
+            // does not exist
+            return;
+        }
+        List<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(task.getId());
+
+        // remove all flows
+        for (BPMNSequenceFlow flow : flowList) {
+            deleteSequenceFlow(flow.getId());
+        }
+
+        // finally delete the task element and the shape
+        this.getElementNode().removeChild(task.getElementNode());
+        this.getBpmnPlane().removeChild(task.getBpmnShape());
+
+        this.getActivities().remove(task);
+    }
+
+    /**
+     * Deletes a BPMNEvent element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteEvent(String id) {
+        BPMNEvent event = (BPMNEvent) findBaseElementById(id);
+        if (event == null) {
+            // does not exist
+            return;
+        }
+        List<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(event.getId());
+
+        // remove all flows
+        for (BPMNSequenceFlow flow : flowList) {
+            deleteSequenceFlow(flow.getId());
+        }
+
+        // finally delete the task element and the shape
+        this.getElementNode().removeChild(event.getElementNode());
+        this.getBpmnPlane().removeChild(event.getBpmnShape());
+
+        this.getEvents().remove(event);
+    }
+
+    /**
+     * Deletes a BPMNGateway element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteGateway(String id) {
+        BPMNGateway getway = (BPMNGateway) findBaseElementById(id);
+        if (getway == null) {
+            // does not exist
+            return;
+        }
+        List<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(getway.getId());
+
+        // remove all flows
+        for (BPMNSequenceFlow flow : flowList) {
+            deleteSequenceFlow(flow.getId());
+        }
+
+        // finally delete the task element and the shape
+        this.getElementNode().removeChild(getway.getElementNode());
+        this.getBpmnPlane().removeChild(getway.getBpmnShape());
+
+        this.getGateways().remove(getway);
+    }
+
+    /**
+     * Deletes a BPMNSequenceFlow element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteSequenceFlow(String id) {
+        BPMNSequenceFlow seqenceFlow = (BPMNSequenceFlow) findBaseElementById(id);
+        if (seqenceFlow == null) {
+            // does not exist
+            return;
+        }
+
+        String targetRef = seqenceFlow.getTargetRef();
+        String soureRef = seqenceFlow.getSourceRef();
+        // first we need to update the elemnts still connected with this flow
+        // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+        // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+        BPMNBaseElement targetElement = findBaseElementById(targetRef);
+        if (targetElement != null) {
+            NodeList childs = targetElement.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() == Node.ELEMENT_NODE
+                        && (child.getLocalName().equals("incoming") || child.getLocalName().equals("outgoing"))) {
+                    if (id.equals(child.getTextContent())) {
+                        targetElement.getElementNode().removeChild(child);
+                        break;
+                    }
+                }
+            }
+        }
+        BPMNBaseElement sourceElement = findBaseElementById(soureRef);
+        if (sourceElement != null) {
+            NodeList childs = sourceElement.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() == Node.ELEMENT_NODE
+                        && (child.getLocalName().equals("incoming") || child.getLocalName().equals("outgoing"))) {
+                    if (id.equals(child.getTextContent())) {
+                        sourceElement.getElementNode().removeChild(child);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Finally delete the flow element and the edge
+        this.getElementNode().removeChild(seqenceFlow.getElementNode());
+        this.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
+        
+        this.getSequenceFlows().remove(seqenceFlow);
+    }
+
+    /**
      * Adds a new SequenceFlow
      * <p>
      * <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="Task_1" targetRef=
@@ -169,8 +303,8 @@ public class BPMNProcess extends BPMNBaseElement {
     public void addSequenceFlow(String id, String source, String target) throws BPMNInvalidReferenceException {
 
         // validate IDs
-        BPMNFlowElement sourceElement = findFlowElementById(source);
-        BPMNFlowElement targetElement = findFlowElementById(target);
+        BPMNFlowElement sourceElement = (BPMNFlowElement) findBaseElementById(source);
+        BPMNFlowElement targetElement = (BPMNFlowElement) findBaseElementById(target);
 
         if (sourceElement == null || targetElement == null) {
             throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
@@ -207,7 +341,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @return
      */
-    public BPMNFlowElement findFlowElementById(String id) {
+    public BPMNBaseElement findBaseElementById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -232,7 +366,34 @@ public class BPMNProcess extends BPMNBaseElement {
             }
         }
 
+        Set<BPMNSequenceFlow> listF = this.getSequenceFlows();
+        for (BPMNSequenceFlow element : listF) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+
         return null;
+    }
+
+    /**
+     * Returns a list of sequenceFlows associated with a given FlowElement
+     * 
+     * @param id of a flowElement
+     * @return list of SequenceFlows
+     */
+    public List<BPMNSequenceFlow> findSequenceFlowsByElementId(String id) {
+        List<BPMNSequenceFlow> result = new ArrayList<BPMNSequenceFlow>();
+        if (id == null || id.isEmpty()) {
+            return result;
+        }
+        Set<BPMNSequenceFlow> listA = this.getSequenceFlows();
+        for (BPMNSequenceFlow flow : listA) {
+            if (id.equals(flow.sourceRef) || id.equals(flow.targetRef)) {
+                result.add(flow);
+            }
+        }
+        return result;
     }
 
     /**
@@ -268,6 +429,10 @@ public class BPMNProcess extends BPMNBaseElement {
                 getGateways().add(gateway);
             } else if (BPMNModel.isSequenceFlow(child)) {
                 BPMNSequenceFlow sequenceFlow = BPMNModel.buildSequenceFlow(child, this);
+
+                sequenceFlow.setBpmnEdge(BPMNModel.findChildNodeByName(this.getBpmnPlane(),
+                        BPMNModel.DI_NS + ":BPMNEdge", sequenceFlow.getId()));
+
                 getSequenceFlows().add(sequenceFlow);
 
             } else {
