@@ -3,11 +3,13 @@ package org.openbpmn.bpmn;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.net.URI;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -17,10 +19,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
@@ -42,22 +42,25 @@ import org.w3c.dom.NodeList;
 public class BPMNModel {
     private static Logger logger = Logger.getLogger(BPMNModel.class.getName());
 
-    public final static String BPMN_NS="bpmn2";
-    public final static String DI_NS="bpmndi";
-    private BPMNProcess context=null;
-    
-    
-    List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { "task", "serviceTask", "sendTask",
-            "receiveTask", "userTask", "manualTask", "businessRuleTask", "scriptTask",
-            "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+    private static final SecureRandom random = new SecureRandom();
+    private static final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
 
-    List<String> BPMN_EVENTS = Arrays
+    public final static String BPMN_NS = "bpmn2";
+    public final static String DI_NS = "bpmndi";
+    public final static String DC_NS = "dc";
+    private BPMNProcess context = null;
+
+    public static List<String> BPMN_ACTIVITIES = Arrays
+            .asList(new String[] { "task", "serviceTask", "sendTask", "receiveTask", "userTask", "manualTask",
+                    "businessRuleTask", "scriptTask", "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+
+    public static List<String> BPMN_EVENTS = Arrays
             .asList(new String[] { "startEvent", "endEvent", "catchEvent", "throwEvent" });
 
-    List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { "exclusiveGateway", "inclusiveGateway",
-            "parallelGateway", "complexGateway" });
+    public static List<String> BPMN_GATEWAYS = Arrays
+            .asList(new String[] { "exclusiveGateway", "inclusiveGateway", "parallelGateway", "complexGateway" });
 
-    List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { "sequenceFlow" });
+    public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { "sequenceFlow" });
 
     private Element definitions;
     private Document doc;
@@ -104,13 +107,13 @@ public class BPMNModel {
     public BPMNProcess openContext(String id) {
 
         // find process
-        NodeList processList = definitions.getElementsByTagName(BPMN_NS+":process");
+        NodeList processList = definitions.getElementsByTagName(BPMN_NS + ":process");
         logger.info("..found " + processList.getLength() + " processes");
 
         for (int i = 0; i < processList.getLength(); i++) {
             Node item = processList.item(i);
 
-            context = new org.openbpmn.bpmn.elements.BPMNProcess(item);
+            context = new BPMNProcess(item);
 
             if (id != null && !id.equals(context.getId())) {
                 // not match of the requested processs ID
@@ -120,39 +123,8 @@ public class BPMNModel {
             // find the bpmndi:BPMNPlane
             context.setBpmnPlane(findChildNodeByName(bpmnDiagram, DI_NS + ":BPMNPlane", context.getId()));
 
-            // now find all relevant bpmn meta elements
-            NodeList childs = item.getChildNodes();
-            for (int j = 0; j < childs.getLength(); j++) {
-                Node child = childs.item(j);
-                if (child.getNodeType() != Node.ELEMENT_NODE) {
-                    // continue if not a new element node
-                    continue;
-                }
+            context.init();
 
-                // check element type
-                if (isActivity(child)) {
-                    BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
-                    activity.setBpmnShape(
-                            findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", activity.getId()));
-                    context.getActivities().add(activity);
-                } else if (isEvent(child)) {
-                    BPMNEvent event = new BPMNEvent(child.getNodeName(), child);
-                    event.setBpmnShape(findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", event.getId()));
-                    context.getEvents().add(event);
-                } else if (isGateway(child)) {
-                    BPMNGateway gateway = new BPMNGateway(child.getNodeName(), child);
-                    gateway.setBpmnShape(
-                            findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", gateway.getId()));
-                    context.getGateways().add(gateway);
-                } else if (isSequenceFlow(child)) {
-                    BPMNSequenceFlow sequenceFlow = buildSequenceFlow(child, context);
-                    context.getSequenceFlows().add(sequenceFlow);
-
-                } else {
-                    // unsupported node type
-                }
-            }
-            
             return context;
         }
 
@@ -169,14 +141,14 @@ public class BPMNModel {
      * @param process
      * @return
      */
-    public BPMNSequenceFlow buildSequenceFlow(Node node, org.openbpmn.bpmn.elements.BPMNProcess process) {
+    public static BPMNSequenceFlow buildSequenceFlow(Node node, org.openbpmn.bpmn.elements.BPMNProcess process) {
         BPMNSequenceFlow sequenceFlow = null;
-        if ((BPMN_NS+":sequenceFlow").equals(node.getNodeName())) {
+        if ((BPMN_NS + ":sequenceFlow").equals(node.getNodeName())) {
             sequenceFlow = new BPMNSequenceFlow(node);
 
             // parse waypoints (di:waypoint)
             Node bpmnEdge = findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNEdge", sequenceFlow.getId());
-            List<Node> wayPoints = findChildNodesByName(bpmnEdge, "di:waypoint");
+            List<Node> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, "di:waypoint");
             for (Node wayPoint : wayPoints) {
                 NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                 BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
@@ -187,10 +159,27 @@ public class BPMNModel {
         return sequenceFlow;
     }
 
+    /**
+     * Adds a new process to the definitions
+     * <p>
+     * The method also generates the BPMNPlane
+     * 
+     * @param id
+     * @return
+     */
     public BPMNModel addProcess(String id) {
-        Element process = doc.createElement(BPMN_NS+":process");
+        Element process = doc.createElement(BPMN_NS + ":process");
         process.setAttribute("id", id);
-        definitions.appendChild(process);
+        // definitions.appendChild(process);
+        definitions.insertBefore(process, this.getBpmnDiagram());
+
+        // add bpmndi:BPMNPlane
+        // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
+        Element bpmnPlane = doc.createElement(BPMNModel.DI_NS + ":BPMNPlane");
+        bpmnPlane.setAttribute("id", "BPMNPlane_" + id);
+        bpmnPlane.setAttribute("bpmnElement", id);
+        this.getBpmnDiagram().appendChild(bpmnPlane);
+        // definitions.insertBefore(bpmnPlane,this.getBpmnDiagram());
 
         return this;
     }
@@ -203,7 +192,7 @@ public class BPMNModel {
      * @param nodeName
      * @return
      */
-    public List<Node> findChildNodesByName(Node parent, String nodeName) {
+    public static List<Node> findChildNodesByName(Node parent, String nodeName) {
         List<Node> result = new ArrayList<Node>();
         if (parent != null && nodeName != null) {
             NodeList childs = parent.getChildNodes();
@@ -224,7 +213,7 @@ public class BPMNModel {
      */
     public void save(String file) {
         try (FileOutputStream output = new FileOutputStream(file)) {
-            if (doc==null) {
+            if (doc == null) {
                 logger.severe("...unable to save file - doc is null!");
             }
             writeXml(doc, output);
@@ -234,25 +223,70 @@ public class BPMNModel {
     }
 
     public void save(URI targetURI) {
-        // targetURI = file:///home/user/a.txt
-        Path path = Paths.get("/", targetURI.toString()).normalize();
-        String filePath=""+path;
-        filePath=filePath.replace("/file:", "");
-        save(filePath);
+        save(Paths.get(targetURI).toString());
     }
 
-    // write doc to output stream
+    /**
+     * Generates a random 12 byte id
+     * <p>
+     * HEX: 0-9, a-f. For example: 6587fddb, c0f182c1
+     * 
+     * @return
+     */
+    public static String generateShortID() {
+        byte[] buffer = new byte[12];
+        random.nextBytes(buffer);
+        return encoder.encodeToString(buffer);
+
+    }
+
+    /**
+     * Generates a random short 6 byte id with a prafix
+     * <p>
+     * HEX: 0-9, a-f. For example: BPMNShape_a55ac5, BPMNShape_1382c1
+     * 
+     * @return
+     */
+    public static String generateShortID(String prefix) {
+        byte[] buffer = new byte[4];
+        random.nextBytes(buffer);
+        return prefix + "_" + encoder.encodeToString(buffer);
+
+    }
+
+    /**
+     * Helper method to write the dom document to an output stream
+     * 
+     * @param doc
+     * @param output
+     * @throws TransformerException
+     */
     private static void writeXml(Document doc, OutputStream output) throws TransformerException {
 
+        String IDENTITY_XSLT_WITH_INDENT = // workaround to remove newlines
+                "<xsl:stylesheet version='1.0' " + //
+                        "xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:bpmn2=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\">"
+                        + //
+                        "<xsl:output indent=\"yes\" cdata-section-elements=\"cdata-other-elements\"/>" + //
+                        "<xsl:strip-space elements=\"*\"/>" + //
+                        " <xsl:template match=\"@*|node()\">" + //
+                        "   <xsl:copy>" + //
+                        "      <xsl:apply-templates select=\"@*|node()\"/>" + //
+                        "    </xsl:copy>" + //
+                        " </xsl:template>" + //
+                        "</xsl:stylesheet>";
+
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
+       // Transformer transformer = transformerFactory.newTransformer();
+        Transformer transformer = transformerFactory
+                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
-
+        // pretty print
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        // transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
         transformer.transform(source, result);
-
     }
 
     /**
@@ -261,11 +295,11 @@ public class BPMNModel {
      * @param node
      * @return
      */
-    private boolean isActivity(Node node) {
+    public static boolean isActivity(Node node) {
         String type = node.getNodeName();
         // cut namespce
-        if (type.startsWith(BPMN_NS+":")) {
-            type=type.substring((BPMN_NS+":").length());
+        if (type.startsWith(BPMN_NS + ":")) {
+            type = type.substring((BPMN_NS + ":").length());
         }
         return (BPMN_ACTIVITIES.contains(type));
     }
@@ -276,11 +310,11 @@ public class BPMNModel {
      * @param node
      * @return
      */
-    private boolean isGateway(Node node) {
+    public static boolean isGateway(Node node) {
         String type = node.getNodeName();
         // cut namespce
-        if (type.startsWith(BPMN_NS+":")) {
-            type=type.substring((BPMN_NS+":").length());
+        if (type.startsWith(BPMN_NS + ":")) {
+            type = type.substring((BPMN_NS + ":").length());
         }
         return (BPMN_GATEWAYS.contains(type));
     }
@@ -291,11 +325,11 @@ public class BPMNModel {
      * @param node
      * @return
      */
-    private boolean isEvent(Node node) {
+    public static boolean isEvent(Node node) {
         String type = node.getNodeName();
         // cut namespce
-        if (type.startsWith(BPMN_NS+":")) {
-            type=type.substring((BPMN_NS+":").length());
+        if (type.startsWith(BPMN_NS + ":")) {
+            type = type.substring((BPMN_NS + ":").length());
         }
         return (BPMN_EVENTS.contains(type));
     }
@@ -306,11 +340,11 @@ public class BPMNModel {
      * @param node
      * @return
      */
-    private boolean isSequenceFlow(Node node) {
+    public static boolean isSequenceFlow(Node node) {
         String type = node.getNodeName();
         // cut namespce
-        if (type.startsWith(BPMN_NS+":")) {
-            type=type.substring((BPMN_NS+":").length());
+        if (type.startsWith(BPMN_NS + ":")) {
+            type = type.substring((BPMN_NS + ":").length());
         }
         return (BPMN_SQUENCEFLOWS.contains(type));
     }
@@ -323,7 +357,7 @@ public class BPMNModel {
      * @param nodeName - name of the child element
      * @param id       of the child element
      */
-    private Node findChildNodeByName(Node parent, String nodeName, String id) {
+    public static Node findChildNodeByName(Node parent, String nodeName, String id) {
         if (id == null || id.isEmpty() || parent == null || nodeName == null) {
             return null;
         }

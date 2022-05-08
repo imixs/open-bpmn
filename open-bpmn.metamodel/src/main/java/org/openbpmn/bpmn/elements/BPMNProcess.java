@@ -5,10 +5,10 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNEventType;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A Process describes a sequence or flow of Activities in an organization with
@@ -21,8 +21,6 @@ import org.w3c.dom.Node;
  */
 public class BPMNProcess extends BPMNBaseElement {
 
-    
-    
     protected Set<BPMNActivity> activities = null;
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
@@ -113,10 +111,10 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @param name
      * @param type - EventType
-     */ 
+     */
     public void addEvent(String id, String name, BPMNEventType type) {
 
-        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS+":"+type.getName());
+        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type.getName());
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         this.getElementNode().appendChild(eventElement);
@@ -126,23 +124,35 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Adds a new Task
+     * Creates a new BPMNTask element in this context.
      * <p>
      * <bpmn2:sendTask id="SendTask_1" name="Send Task 1">
      * 
      * @param id
      * @param name
      * @param type - EventType
-     */ 
-    public void addTask(String id, String name, String type) {
+     */
+    public BPMNActivity addTask(String id, String name, String type) {
 
-        Element taskElement = this.getDoc().createElement(BPMNModel.BPMN_NS+":"+type);
+        // create a new Dom node...
+        Element taskElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
         taskElement.setAttribute("id", id);
         taskElement.setAttribute("name", name);
         this.getElementNode().appendChild(taskElement);
 
+        // build a BPMNActivity instance
         BPMNActivity task = new BPMNActivity(type, taskElement);
+        // create a new BPMNShape
+        // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
+        bpmnShape.setAttribute("bpmnElement", id);
+
+        this.getBpmnPlane().appendChild(bpmnShape);
+        task.setBpmnShape(bpmnShape);
+
         getActivities().add(task);
+        return task;
     }
 
     /**
@@ -152,9 +162,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * "SendTask_1"/>
      * 
      * @param id
-     * @param source - ID of the source element 
-     * @param target - ID of the target element 
-     * @throws BPMNInvalidReferenceException 
+     * @param source - ID of the source element
+     * @param target - ID of the target element
+     * @throws BPMNInvalidReferenceException
      */
     public void addSequenceFlow(String id, String source, String target) throws BPMNInvalidReferenceException {
 
@@ -170,7 +180,7 @@ public class BPMNProcess extends BPMNBaseElement {
             throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
                     "Source and Target ID can not be the same");
         }
-        
+
         // create sequenceFlow element
         Element sequenceFlow = this.getDoc().createElement(BPMNModel.BPMN_NS + ":sequenceFlow");
         sequenceFlow.setAttribute("id", id);
@@ -188,7 +198,7 @@ public class BPMNProcess extends BPMNBaseElement {
         targetElement.getElementNode().appendChild(refIn);
 
         BPMNSequenceFlow flow = new BPMNSequenceFlow(sequenceFlow);
-        getSequenceFlows().add(flow); 
+        getSequenceFlows().add(flow);
     }
 
     /**
@@ -224,4 +234,47 @@ public class BPMNProcess extends BPMNBaseElement {
 
         return null;
     }
+
+    /**
+     * This method parses the content of the process element and adds all tasks,
+     * gateways and events
+     */
+    public void init() {
+        // now find all relevant bpmn meta elements
+        NodeList childs = this.getElementNode().getChildNodes();
+        for (int j = 0; j < childs.getLength(); j++) {
+            Node child = childs.item(j);
+            if (child.getNodeType() != Node.ELEMENT_NODE) {
+                // continue if not a new element node
+                continue;
+            }
+
+            // check element type
+            if (BPMNModel.isActivity(child)) {
+                BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
+
+                activity.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
+                        activity.getId()));
+                getActivities().add(activity);
+            } else if (BPMNModel.isEvent(child)) {
+                BPMNEvent event = new BPMNEvent(child.getNodeName(), child);
+                event.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
+                        event.getId()));
+                getEvents().add(event);
+            } else if (BPMNModel.isGateway(child)) {
+                BPMNGateway gateway = new BPMNGateway(child.getNodeName(), child);
+                gateway.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
+                        gateway.getId()));
+                getGateways().add(gateway);
+            } else if (BPMNModel.isSequenceFlow(child)) {
+                BPMNSequenceFlow sequenceFlow = BPMNModel.buildSequenceFlow(child, this);
+                getSequenceFlows().add(sequenceFlow);
+
+            } else {
+                // unsupported node type
+            }
+        }
+
+    }
+
 }

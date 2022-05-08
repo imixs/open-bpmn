@@ -1,6 +1,5 @@
 package org.openbpmn.bpmn.elements;
 
-import org.openbpmn.bpmn.BPMNTaskType;
 import org.w3c.dom.Node;
 
 /**
@@ -18,14 +17,9 @@ import org.w3c.dom.Node;
  *
  */
 public class BPMNActivity extends BPMNFlowElement {
-
    
-    public BPMNActivity(String type, Node node) {
+    protected BPMNActivity(String type, Node node) {
         super(type, node);
     }
-
-//    public BPMNActivity(BPMNTaskType type, Node node) {
-//        super(type.name, node);
-//    }
 
 }

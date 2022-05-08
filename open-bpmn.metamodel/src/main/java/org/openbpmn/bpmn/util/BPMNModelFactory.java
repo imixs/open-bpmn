@@ -57,17 +57,23 @@ public class BPMNModelFactory {
 
             Element definitions = doc.createElementNS("http://www.omg.org/spec/BPMN/20100524/MODEL",
                     "bpmn2:definitions");
-            definitions.setAttribute("xmlns:dc", "http://www.omg.org/spec/DD/20100524/DC");
+            definitions.setAttribute("xmlns:bpmndi", "http://www.omg.org/spec/BPMN/20100524/DI");
             definitions.setAttribute("xmlns:di", "http://www.omg.org/spec/DD/20100524/DI");
+            definitions.setAttribute("xmlns:dc", "http://www.omg.org/spec/DD/20100524/DC");
             definitions.setAttribute("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
             definitions.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-
             definitions.setAttribute("exporter", exporter);
             definitions.setAttribute("exporterVersion", exporterVersion);
             definitions.setAttribute("targetNamespace", targetNamespace);
-
             doc.appendChild(definitions);
+            // add BPMNDiagram
+            // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+            Element bpmnDiagram = doc.createElement(BPMNModel.DI_NS + ":BPMNDiagram");
+            bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
+            bpmnDiagram.setAttribute("name", "Default Process Diagram");
+            definitions.appendChild(bpmnDiagram);
 
+           
             return new BPMNModel(doc);
         } catch (ParserConfigurationException e1) {
 

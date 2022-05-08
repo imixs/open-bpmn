@@ -7,6 +7,8 @@ import org.w3c.dom.Node;
  * in a Process flow, which are FlowNodes consisting of Activities ,
  * Choreography Activities, Gateways , and Events , Data Objects , Data
  * Associations , and Sequence Flows.
+ * <p>
+ * A BPMNFlowElement holds a reference to the bpmnShape element 
  * 
  * @author rsoika
  *
@@ -46,4 +48,15 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         }
         return bounds;
     }
+    
+    public BPMNBounds setBounds(float x, float y, float height, float width) {
+        // init bound if not yet loaded
+        getBounds();
+        
+        // update bounds
+        bounds.updateBounds(x, y, width, height);
+        
+        return bounds;
+    }
+    
 }
