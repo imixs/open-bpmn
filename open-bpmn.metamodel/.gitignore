@@ -1,4 +1,4 @@
 
 ### junit test resoruces ###
-.src/test/resources/create-*
-.src/test/resources/update-*
+src/test/resources/create-*
+src/test/resources/update-*
