@@ -285,7 +285,7 @@ public class BPMNProcess extends BPMNBaseElement {
         // Finally delete the flow element and the edge
         this.getElementNode().removeChild(seqenceFlow.getElementNode());
         this.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
-        
+
         this.getSequenceFlows().remove(seqenceFlow);
     }
 
@@ -336,9 +336,8 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Returns a BPMNBaseElement by given id.
-     * <p
-     * If no element with the given ID exists, the method returns null.
+     * Returns a BPMNBaseElement by given id. <p If no element with the given ID
+     * exists, the method returns null.
      * 
      * @param id
      * @return
@@ -414,18 +413,18 @@ public class BPMNProcess extends BPMNBaseElement {
 
             // check element type
             if (BPMNModel.isActivity(child)) {
-                BPMNActivity activity = new BPMNActivity(child.getLocalName(), child);
+                BPMNActivity activity = new BPMNActivity(resolveBPMNElementType(child), child);
 
                 activity.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
                         activity.getId()));
                 getActivities().add(activity);
             } else if (BPMNModel.isEvent(child)) {
-                BPMNEvent event = new BPMNEvent(child.getLocalName(), child);
+                BPMNEvent event = new BPMNEvent(resolveBPMNElementType(child), child);
                 event.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
                         event.getId()));
                 getEvents().add(event);
             } else if (BPMNModel.isGateway(child)) {
-                BPMNGateway gateway = new BPMNGateway(child.getLocalName(), child);
+                BPMNGateway gateway = new BPMNGateway(resolveBPMNElementType(child), child);
                 gateway.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
                         gateway.getId()));
                 getGateways().add(gateway);
@@ -444,4 +443,22 @@ public class BPMNProcess extends BPMNBaseElement {
 
     }
 
+    /**
+     * This helper method resolves the BPMN Type out of the nodes NodeName
+     * <p>
+     * bpmn2:task => task
+     * <p>
+     * bpmn2:startEvent => startEvent
+     * 
+     * @param nodeName
+     * @return
+     */
+    private String resolveBPMNElementType(Node child) {
+        String nodeName = child.getNodeName();
+        // in case the type starts with a namespace than we cut this prafix
+        if (nodeName.startsWith(BPMNModel.BPMN_NS)) {
+            nodeName = nodeName.substring(BPMNModel.BPMN_NS.length() + 1);
+        }
+        return nodeName;
+    }
 }

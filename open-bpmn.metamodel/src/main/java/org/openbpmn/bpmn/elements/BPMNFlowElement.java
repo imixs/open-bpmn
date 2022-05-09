@@ -20,9 +20,10 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
     protected BPMNBounds bounds = null;
 
 
-    public BPMNFlowElement(String type, Node node) {
+    
+    public BPMNFlowElement(String _type, Node node) {
         super(node);
-        this.type = type;
+        this.type = _type;
     }
 
     public String getType() {
