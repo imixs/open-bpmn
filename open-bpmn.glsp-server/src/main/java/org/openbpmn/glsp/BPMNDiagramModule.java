@@ -34,7 +34,6 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
 import org.eclipse.glsp.server.operations.gmodel.CutOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.PasteOperationHandler;
 import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
@@ -101,7 +100,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.add(ChangeBoundsOperationHandler.class);
         binding.add(ChangeRoutingPointsHandler.class);
         binding.add(CutOperationHandler.class);
-        binding.add(DeleteOperationHandler.class);
+        // binding.add(DeleteOperationHandler.class);
         binding.add(LayoutOperationHandler.class);
         binding.add(PasteOperationHandler.class);
         binding.add(ReconnectEdgeOperationHandler.class);

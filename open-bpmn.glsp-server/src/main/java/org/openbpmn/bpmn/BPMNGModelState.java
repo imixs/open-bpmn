@@ -46,4 +46,12 @@ public class BPMNGModelState extends DefaultGModelState {
         this.initalized = initalized;
     }
 
+    /**
+     * Reset the model state which will force a re-generation in the
+     * BPMNGModelFactory.createGModel() method
+     */
+    public void reset() {
+        this.initalized = false;
+    }
+
 }

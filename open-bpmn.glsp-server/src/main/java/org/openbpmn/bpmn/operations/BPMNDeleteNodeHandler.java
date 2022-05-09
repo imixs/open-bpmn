@@ -15,20 +15,51 @@
  ********************************************************************************/
 package org.openbpmn.bpmn.operations;
 
+import java.util.List;
+
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.openbpmn.bpmn.BPMNGModelState;
+import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNGateway;
 
 import com.google.inject.Inject;
 
-public class BPMNDeleteNodeHandler<T extends DeleteOperation> extends AbstractOperationHandler<DeleteOperation> {
+public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperation> {
 
     @Inject
     protected BPMNGModelState modelState;
 
     @Override
     protected void executeOperation(final DeleteOperation operation) {
-        operation.getElementIds();
-        System.out.println("executeOperation..........");
+        List<String> elementIds = operation.getElementIds();
+        if (elementIds == null || elementIds.size() == 0) {
+            System.out.println("Elements to delete are not specified");
+        }
+        for (String id : elementIds) {
+            System.out.println("...delete Element " + id);
+
+            // Update the source model
+            BPMNBaseElement baseElement = modelState.getBpmnModel().getContext().findBaseElementById(id);
+            if (baseElement == null) {
+                System.out.println("...no BPMN elmenet with id: " + id + " found!");
+            }
+            if (baseElement instanceof BPMNActivity) {
+                modelState.getBpmnModel().getContext().deleteTask(id);
+            }
+            if (baseElement instanceof BPMNEvent) {
+                modelState.getBpmnModel().getContext().deleteEvent(id);
+            }
+            if (baseElement instanceof BPMNGateway) {
+                modelState.getBpmnModel().getContext().deleteGateway(id);
+            }
+        }
+
+        // reset model state
+        modelState.reset();
+
     }
+
 }

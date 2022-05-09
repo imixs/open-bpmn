@@ -336,7 +336,9 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Returns a FlowElement by id
+     * Returns a BPMNBaseElement by given id.
+     * <p
+     * If no element with the given ID exists, the method returns null.
      * 
      * @param id
      * @return

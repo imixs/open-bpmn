@@ -64,9 +64,12 @@ public class BPMNGModelUtil {
         for (BPMNActivity activity : process.getActivities()) {
             System.out.println("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
-            TaskNodeBuilder builder = new TaskNodeBuilder(BPMNTaskType.MANUAL, activity.getName());// ,
-                                                                                                   // "event:start"
-            TaskNode taskNode = builder.position(point).build();
+            TaskNodeBuilder builder = new TaskNodeBuilder(BPMNTaskType.MANUAL, activity.getName());
+
+            TaskNode taskNode = builder //
+                    .id(activity.getId()) //
+                    .position(point) //
+                    .build();
             entityNodes.add(taskNode);
         }
 
@@ -76,7 +79,10 @@ public class BPMNGModelUtil {
             GPoint point = GraphUtil.point(event.getBounds().getX(), event.getBounds().getY());
             EventNodeBuilder builder = new EventNodeBuilder(BPMNEventType.START.name, event.getName());// ,
                                                                                                        // "event:start"
-            EventNode eventNode = builder.position(point).build();
+            EventNode eventNode = builder //
+                    .id(event.getId()) //
+                    .position(point) //
+                    .build();
             entityNodes.add(eventNode);
         }
 
@@ -86,7 +92,10 @@ public class BPMNGModelUtil {
             GPoint point = GraphUtil.point(gateway.getBounds().getX(), gateway.getBounds().getY());
             GatewayNodeBuilder builder = new GatewayNodeBuilder(BPMNGatewayType.EXCLUSIVE.name, gateway.getName());// ,
                                                                                                                    // "event:start"
-            GatewayNode gatewayNode = builder.position(point).build();
+            GatewayNode gatewayNode = builder //
+                    .id(gateway.getId()) //
+                    .position(point) //
+                    .build();
             entityNodes.add(gatewayNode);
         }
 
