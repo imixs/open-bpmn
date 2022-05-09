@@ -22,3 +22,13 @@ During development you can use the 'build' script to build & run the backend in 
 To build and start the GLSP Server only, run:
 
 	$ ./build.sh -b
+
+	
+	
+### Debug - Eclipse
+
+You can also launch the server from Eclipse IDE in the Debug mode. 	
+
+Just start the `org.openbpmn.glsp.BPMNServerLauncher` application in Debug mode (Debug As - Java Application"
+
+<img src="../doc/images/eclipse-debug.png" />
