@@ -54,10 +54,8 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
      */
     @Override
     public void loadSourceModel(final RequestModelAction action) {
-        // TODO Auto-generated method stub
-        logger.info("loading BPMN Meta model....");
+        logger.fine("loading BPMN Meta model....");
         Map<String, String> options = action.getOptions();
-        // needsClientLayout/true
         boolean bNeedsClientLayout = Boolean.parseBoolean(options.get("needsClientLayout"));
         String uri = options.get("uri");
         String diagramType = options.get("diagramType");
@@ -66,20 +64,20 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
             BPMNModel model = BPMNModelFactory.read(file);
             // we store the BPMN meta model into the modelState
             modelState.setBpmnModel(model);
-            modelState.setFileUri(uri);
         }
     }
 
     @Override
     public void saveSourceModel(final SaveModelAction action) {
-        logger.info("================> We are in the saveSourceModel action!");
 
-        Optional<String> uri = action.getFileUri();
-        if (!uri.isPresent() || uri.isEmpty()) {
-            logger.info("Workaround for issue https://github.com/eclipse-glsp/glsp/issues/645 ");
+        Map<String, String> options = modelState.getClientOptions();
+        String filePath = options.get("uri");
+        Optional<String> uriOpt = action.getFileUri();
+        if (uriOpt.isPresent() && !uriOpt.isEmpty()) {
+            // we got a new URI which means we have a 'saveAs' situaiton!
+            filePath = uriOpt.get();
         }
         BPMNModel model = modelState.getBpmnModel();
-        String filePath = modelState.getFileUri();
         try {
             java.net.URI targetURI = new URI(filePath);
             model.save(targetURI);

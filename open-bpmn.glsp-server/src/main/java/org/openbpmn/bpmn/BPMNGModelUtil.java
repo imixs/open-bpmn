@@ -123,26 +123,6 @@ public class BPMNGModelUtil {
     }
 
     /**
-     * Helper method to get a GModelElement by its id
-     *
-     * @param entityNodes
-     * @param id
-     * @return
-     */
-    private static GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
-        if (id == null || id.isEmpty()) {
-            return null;
-        }
-        for (GModelElement element : entityNodes) {
-            if (id.equals(element.getId())) {
-                return element;
-            }
-        }
-        return null;
-
-    }
-
-    /**
      * This method generates an empty BPMN GModel
      *
      * @param rootID
