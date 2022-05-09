@@ -84,21 +84,14 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteTaskItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-//        result.add(
-//                new PaletteItem("manual-task", "Manual Task", new TriggerNodeCreationAction(BPMNActivity.TaskType...M   . ModelTypes.MANUAL_TASK)));
+        result.add(new PaletteItem(BPMNTaskType.TASK, "Task", new TriggerNodeCreationAction(BPMNTaskType.TASK)));
         result.add(new PaletteItem(BPMNTaskType.MANUAL, "Manual Task",
                 new TriggerNodeCreationAction(BPMNTaskType.MANUAL)));
         result.add(new PaletteItem(BPMNTaskType.USER, "User Task", new TriggerNodeCreationAction(BPMNTaskType.USER)));
-
         result.add(new PaletteItem(BPMNTaskType.SERVICE, "Service Task",
                 new TriggerNodeCreationAction(BPMNTaskType.SERVICE)));
         result.add(new PaletteItem(BPMNTaskType.SEND, "Send Task", new TriggerNodeCreationAction(BPMNTaskType.SEND)));
-//        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "Script Task",
-//                new TriggerNodeCreationAction(BPMNTaskType.SCRIPT)));
-
-        // we can also provide attributes here
-        result.add(new PaletteItem(BPMNTaskType.TASK, "X-BPMN Task", new TriggerNodeCreationAction(BPMNTaskType.TASK)));
-        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "X-BPMN Script",
+        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "Script Task",
                 new TriggerNodeCreationAction(BPMNTaskType.SCRIPT)));
 
         return result;
