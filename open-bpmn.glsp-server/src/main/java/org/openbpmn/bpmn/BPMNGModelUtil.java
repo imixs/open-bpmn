@@ -64,8 +64,9 @@ public class BPMNGModelUtil {
         for (BPMNActivity activity : process.getActivities()) {
             System.out.println("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
-            TaskNodeBuilder builder = new TaskNodeBuilder(BPMNTaskType.MANUAL, activity.getName());
+            TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
 
+            // Build the GLSP Node....
             TaskNode taskNode = builder //
                     .id(activity.getId()) //
                     .position(point) //
@@ -77,8 +78,8 @@ public class BPMNGModelUtil {
         for (BPMNEvent event : process.getEvents()) {
             logger.fine("event: " + event.getName());
             GPoint point = GraphUtil.point(event.getBounds().getX(), event.getBounds().getY());
-            EventNodeBuilder builder = new EventNodeBuilder(BPMNEventType.START.name, event.getName());// ,
-                                                                                                       // "event:start"
+            EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());// ,
+                                                                                              // "event:start"
             EventNode eventNode = builder //
                     .id(event.getId()) //
                     .position(point) //

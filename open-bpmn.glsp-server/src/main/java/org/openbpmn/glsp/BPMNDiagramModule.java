@@ -50,8 +50,8 @@ import org.openbpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.openbpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
 import org.openbpmn.glsp.elements.gateway.CreateInclusiveGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
+import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.elements.task.CreateManualTaskHandler;
-import org.openbpmn.glsp.elements.task.CreateScriptTaskHandler;
 import org.openbpmn.glsp.elements.task.CreateSendTaskHandler;
 import org.openbpmn.glsp.elements.task.CreateServiceTaskHandler;
 import org.openbpmn.glsp.elements.task.CreateUserTaskHandler;
@@ -105,11 +105,12 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.add(PasteOperationHandler.class);
         binding.add(ReconnectEdgeOperationHandler.class);
 
+        binding.add(BPMNCreateTaskHandler.class);
         // Tasks
         binding.add(CreateManualTaskHandler.class);
         binding.add(CreateServiceTaskHandler.class);
         binding.add(CreateSendTaskHandler.class);
-        binding.add(CreateScriptTaskHandler.class);
+        // binding.add(CreateScriptTaskHandler.class);
         binding.add(CreateUserTaskHandler.class);
 
         // Events

@@ -25,6 +25,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNTaskType;
+import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.bpmn.TaskNode;
@@ -60,8 +61,24 @@ public abstract class CreateTaskHandler extends CreateBPMNNodeOperationHandler {
         // now we add this task into the source model
         System.out.println("===== > createNode tasknodeID=" + taskNode.getId());
         BPMNProcess process = modelState.getBpmnModel().getContext();
-        process.addTask(taskNode.getId(), taskNode.getName(), taskNode.getType());
+        BPMNActivity task = process.addTask(taskNode.getId(), taskNode.getName(), taskNode.getType());
 
+//        BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
+//        activity.setBpmnShape(
+//                findChildNodeByName(context.getBpmnPlane(), DI_NS + ":BPMNShape", activity.getId()));
+//        context.getActivities().add(activity);
+
+        System.out.println("===== > setzte bounds");
+
+        if (point == null) {
+            System.out.println("===== > Sehr schade - poin ist leider null");
+
+        }
+        if (point.isPresent()) {
+            System.out.println("===== > es geht los - ich will ein updateBounds mahcen");
+            task.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
+        }
+        System.out.println("===== > fertig");
         return taskNode;
     }
 

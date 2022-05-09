@@ -78,6 +78,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
 
     configureDefaultModelElements(context);
+    configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'sendTask', TaskNode, RoundedCornerNodeView);

@@ -414,18 +414,18 @@ public class BPMNProcess extends BPMNBaseElement {
 
             // check element type
             if (BPMNModel.isActivity(child)) {
-                BPMNActivity activity = new BPMNActivity(child.getNodeName(), child);
+                BPMNActivity activity = new BPMNActivity(child.getLocalName(), child);
 
                 activity.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
                         activity.getId()));
                 getActivities().add(activity);
             } else if (BPMNModel.isEvent(child)) {
-                BPMNEvent event = new BPMNEvent(child.getNodeName(), child);
+                BPMNEvent event = new BPMNEvent(child.getLocalName(), child);
                 event.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
                         event.getId()));
                 getEvents().add(event);
             } else if (BPMNModel.isGateway(child)) {
-                BPMNGateway gateway = new BPMNGateway(child.getNodeName(), child);
+                BPMNGateway gateway = new BPMNGateway(child.getLocalName(), child);
                 gateway.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
                         gateway.getId()));
                 getGateways().add(gateway);

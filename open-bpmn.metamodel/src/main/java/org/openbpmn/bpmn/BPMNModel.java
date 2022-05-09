@@ -51,8 +51,26 @@ public class BPMNModel {
     private BPMNProcess context = null;
 
     public static List<String> BPMN_ACTIVITIES = Arrays
-            .asList(new String[] { "task", "serviceTask", "sendTask", "receiveTask", "userTask", "manualTask",
-                    "businessRuleTask", "scriptTask", "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+            .asList(new String[] { //
+                    BPMNTaskType.TASK, //
+                    BPMNTaskType.MANUAL, //
+                    BPMNTaskType.SEND, //
+                    BPMNTaskType.SERVICE, //
+                    BPMNTaskType.SCRIPT,
+                    BPMNTaskType.USER, //
+                    "receiveTask",
+                    "businessRuleTask",  "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+
+
+    public static List<String> BPMN_TASKS = Arrays
+            .asList(new String[] { //
+                    BPMNTaskType.TASK, //
+                    BPMNTaskType.MANUAL, //
+                    BPMNTaskType.SEND, //
+                    BPMNTaskType.SERVICE, //
+                    BPMNTaskType.SCRIPT,
+                    BPMNTaskType.USER //
+                    });
 
     public static List<String> BPMN_EVENTS = Arrays
             .asList(new String[] { "startEvent", "endEvent", "catchEvent", "throwEvent" });
@@ -277,9 +295,9 @@ public class BPMNModel {
                         "</xsl:stylesheet>";
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-       // Transformer transformer = transformerFactory.newTransformer();
-        Transformer transformer = transformerFactory
-                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
+        Transformer transformer = transformerFactory.newTransformer();
+//        Transformer transformer = transformerFactory
+//                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
         // pretty print

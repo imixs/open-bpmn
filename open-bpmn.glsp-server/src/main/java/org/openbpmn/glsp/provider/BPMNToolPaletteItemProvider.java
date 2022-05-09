@@ -93,7 +93,12 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         result.add(new PaletteItem(BPMNTaskType.SERVICE, "Service Task",
                 new TriggerNodeCreationAction(BPMNTaskType.SERVICE)));
         result.add(new PaletteItem(BPMNTaskType.SEND, "Send Task", new TriggerNodeCreationAction(BPMNTaskType.SEND)));
-        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "Script Task",
+//        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "Script Task",
+//                new TriggerNodeCreationAction(BPMNTaskType.SCRIPT)));
+
+        // we can also provide attributes here
+        result.add(new PaletteItem(BPMNTaskType.TASK, "X-BPMN Task", new TriggerNodeCreationAction(BPMNTaskType.TASK)));
+        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "X-BPMN Script",
                 new TriggerNodeCreationAction(BPMNTaskType.SCRIPT)));
 
         return result;
