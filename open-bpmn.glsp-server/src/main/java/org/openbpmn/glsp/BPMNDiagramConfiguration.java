@@ -45,19 +45,19 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
             BPMNTaskType.SCRIPT, //
             BPMNTaskType.SEND, //
             BPMNTaskType.SERVICE, //
-            BPMNGatewayType.EXCLUSIVE.name, //
-            BPMNGatewayType.INCLUSIVE.name, //
-            BPMNEventType.START.name, //
-            BPMNEventType.END.name, //
-            BPMNEventType.CATCH.name, //
-            BPMNEventType.THROW.name, //
+            BPMNGatewayType.EXCLUSIVE, //
+            BPMNGatewayType.INCLUSIVE, //
+            BPMNEventType.START, //
+            BPMNEventType.END, //
+            BPMNEventType.CATCH, //
+            BPMNEventType.THROW, //
             ModelTypes.SEQUENCE_FLOW);
 
     public final static List<String> ALL_PORTS = Arrays.asList( //
             BPMNTaskType.MANUAL, //
             BPMNTaskType.SCRIPT, //
-            BPMNEventType.START.name, //
-            BPMNEventType.END.name, //
+            BPMNEventType.START, //
+            BPMNEventType.END, //
             BPMNTaskType.SEND, //
             BPMNTaskType.TASK, //
             BPMNTaskType.SERVICE, //
@@ -80,10 +80,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         mappings.put(BPMNTaskType.TASK, BpmnPackage.Literals.TASK_NODE);
 
-        mappings.put(BPMNGatewayType.GATEWAY.name, BpmnPackage.Literals.GATEWAY_NODE);
+        mappings.put(BPMNGatewayType.GATEWAY, BpmnPackage.Literals.GATEWAY_NODE);
         mappings.put(ModelTypes.GATEWAY_PORT, GraphPackage.Literals.GPORT);
 
-        mappings.put(BPMNEventType.EVENT.name, BpmnPackage.Literals.EVENT_NODE);
+        mappings.put(BPMNEventType.EVENT, BpmnPackage.Literals.EVENT_NODE);
 //        mappings.put(ModelTypes.THROW_EVENT, BpmnPackage.Literals.EVENT_NODE);
 //        mappings.put(ModelTypes.START_EVENT, BpmnPackage.Literals.START_EVENT);
 //        mappings.put(ModelTypes.END_EVENT, BpmnPackage.Literals.END_EVENT);
@@ -124,13 +124,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(new ShapeTypeHint(BPMNTaskType.SEND, true, true, true, true));
         nodeHints.add(new ShapeTypeHint(BPMNTaskType.SERVICE, true, true, true, true));
 
-        nodeHints.add(new ShapeTypeHint(BPMNEventType.START.name, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNEventType.END.name, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNEventType.CATCH.name, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNEventType.THROW.name, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(BPMNEventType.START, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(BPMNEventType.END, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(BPMNEventType.CATCH, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(BPMNEventType.THROW, true, true, false, true));
 
-        nodeHints.add(new ShapeTypeHint(BPMNGatewayType.EXCLUSIVE.name, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNGatewayType.INCLUSIVE.name, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(BPMNGatewayType.EXCLUSIVE, true, true, false, true));
+        nodeHints.add(new ShapeTypeHint(BPMNGatewayType.INCLUSIVE, true, true, false, true));
 
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
 

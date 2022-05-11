@@ -15,16 +15,19 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.gmodel.CreateNodeOperationHandler;
+import org.eclipse.glsp.server.operations.gmodel.AbstractCreateNodeOperationHandler;
 import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.utils.GridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
+
+import com.google.common.collect.Lists;
 
 /**
  * The CreateBPMNNodeOperationHandler is used to detect the node within
@@ -33,10 +36,18 @@ import org.openbpmn.glsp.utils.ModelTypes;
  * @author rsoika
  *
  */
-public abstract class CreateBPMNNodeOperationHandler extends CreateNodeOperationHandler {
+public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateNodeOperationHandler {
 
     public CreateBPMNNodeOperationHandler(final String elementTypeId) {
         super(elementTypeId);
+    }
+
+    public CreateBPMNNodeOperationHandler(final String... elementTypeIds) {
+        super(Lists.newArrayList(elementTypeIds));
+    }
+
+    public CreateBPMNNodeOperationHandler(final List<String> handledElementTypeIds) {
+        super(handledElementTypeIds);
     }
 
     /**
@@ -48,7 +59,7 @@ public abstract class CreateBPMNNodeOperationHandler extends CreateNodeOperation
      * @return the absolute location where the element should be created.
      */
     @Override
-    protected Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+    public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
         return GridSnapper.snap(operation.getLocation());
     }
 

@@ -41,14 +41,10 @@ import org.openbpmn.bpmn.BPMNGModelFactory;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNSourceModelStorage;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
-import org.openbpmn.glsp.elements.event.CreateCatchEventHandler;
-import org.openbpmn.glsp.elements.event.CreateEndEventHandler;
-import org.openbpmn.glsp.elements.event.CreateStartEventHandler;
-import org.openbpmn.glsp.elements.event.CreateThrowEventHandler;
+import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.openbpmn.glsp.elements.flow.CreateSequenceFlowHandler;
-import org.openbpmn.glsp.elements.gateway.CreateExclusiveGatewayHandler;
-import org.openbpmn.glsp.elements.gateway.CreateInclusiveGatewayHandler;
+import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
+import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
@@ -105,18 +101,18 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.add(BPMNCreateTaskHandler.class);
 
         // Events
-        binding.add(CreateStartEventHandler.class);
-        binding.add(CreateEndEventHandler.class);
-        binding.add(CreateCatchEventHandler.class);
-        binding.add(CreateThrowEventHandler.class);
+        binding.add(BPMNCreateEventHandler.class);
+//        binding.add(CreateEndEventHandler.class);
+//        binding.add(CreateCatchEventHandler.class);
+//        binding.add(CreateThrowEventHandler.class);
 
         // Flows
-        binding.add(CreateSequenceFlowHandler.class);
+        binding.add(BPMNCreateSequenceFlowHandler.class);
         // binding.add(XXCreateEdgeHandler.class);
 
         // Gateways
-        binding.add(CreateExclusiveGatewayHandler.class);
-        binding.add(CreateInclusiveGatewayHandler.class);
+        binding.add(BPMNCreateGatewayHandler.class);
+        // binding.add(CreateInclusiveGatewayHandler.class);
 
         // Pools
         binding.add(CreatePoolHandler.class);

@@ -23,16 +23,21 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
+			<artifactId>org.eclipse.glsp.server</artifactId>
+			<version>${glsp-server-version}</version>
+		</dependency>
+<!--
+		<dependency>
+			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
-			<!-- 0.9.0 -->
 			<version>${glsp-server-version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.layout</artifactId>
-			<!-- 0.9.0  -->
 			<version>${glsp-server-version}</version>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.eclipse.elk</groupId>
 			<artifactId>org.eclipse.elk.alg.layered</artifactId>

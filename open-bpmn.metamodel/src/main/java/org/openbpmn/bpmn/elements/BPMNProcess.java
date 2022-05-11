@@ -114,15 +114,46 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param name
      * @param type - EventType
      */
-    public void addEvent(String id, String name, BPMNEventType type) {
+    public BPMNEvent addEvent(String id, String name, String type) {
+ 
+//        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type.getName());
+//        eventElement.setAttribute("id", id);
+//        eventElement.setAttribute("name", name);
+//        this.getElementNode().appendChild(eventElement);
+//
+//        BPMNEvent event = new BPMNEvent(type, eventElement);
+//        getEvents().add(event);
+//        
+        
 
-        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type.getName());
+        // create a new Dom node...
+        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         this.getElementNode().appendChild(eventElement);
 
+        // build a BPMNActivity instance
         BPMNEvent event = new BPMNEvent(type, eventElement);
+        // create a new BPMNShape
+        // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
+        bpmnShape.setAttribute("bpmnElement", id);
+
+        this.getBpmnPlane().appendChild(bpmnShape);
+        event.setBpmnShape(bpmnShape);
+
         getEvents().add(event);
+        return event;
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
 
     /**
@@ -178,7 +209,9 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(task.getElementNode());
-        this.getBpmnPlane().removeChild(task.getBpmnShape());
+        if (task.getBpmnShape()!=null) {
+            this.getBpmnPlane().removeChild(task.getBpmnShape());
+        }
 
         this.getActivities().remove(task);
     }
@@ -204,7 +237,9 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(event.getElementNode());
-        this.getBpmnPlane().removeChild(event.getBpmnShape());
+        if (event.getBpmnShape()!=null) {
+            this.getBpmnPlane().removeChild(event.getBpmnShape());
+        }
 
         this.getEvents().remove(event);
     }
@@ -230,7 +265,9 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(getway.getElementNode());
-        this.getBpmnPlane().removeChild(getway.getBpmnShape());
+        if (getway.getBpmnShape()!=null) {
+            this.getBpmnPlane().removeChild(getway.getBpmnShape());
+        }
 
         this.getGateways().remove(getway);
     }
@@ -259,7 +296,8 @@ public class BPMNProcess extends BPMNBaseElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getLocalName().equals("incoming") || child.getLocalName().equals("outgoing"))) {
+                        && (child.getNodeName().equals(BPMNModel.BPMN_NS + ":incoming")
+                                || child.getNodeName().equals(BPMNModel.BPMN_NS + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         targetElement.getElementNode().removeChild(child);
                         break;
@@ -273,7 +311,8 @@ public class BPMNProcess extends BPMNBaseElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getLocalName().equals("incoming") || child.getLocalName().equals("outgoing"))) {
+                        && (child.getNodeName().equals(BPMNModel.BPMN_NS + ":incoming")
+                                || child.getNodeName().equals(BPMNModel.BPMN_NS + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;
@@ -284,7 +323,9 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // Finally delete the flow element and the edge
         this.getElementNode().removeChild(seqenceFlow.getElementNode());
-        this.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
+        if (seqenceFlow.getBpmnEdge() != null) {
+            this.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
+        }
 
         this.getSequenceFlows().remove(seqenceFlow);
     }

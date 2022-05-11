@@ -1,11 +1,11 @@
 package org.openbpmn.metamodel.examples;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNEventType;
 import org.openbpmn.bpmn.BPMNModel;
@@ -14,65 +14,31 @@ import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
+import org.w3c.dom.Document;
 
 /**
- * This test class tests the deletion of BPMN Model elements
+ * This test class tests the deep copy of a BPMN Model instance
  * 
  * @author rsoika
  *
  */
-public class TestDeleteModel {
+public class TestDeepCopy {
 
-    private static Logger logger = Logger.getLogger(TestDeleteModel.class.getName());
-
-    static BPMNModel model = null;
-
-    @BeforeAll
-    public static void init() {
-        logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
-        
-    }
-    
-    /**
-     * This test creates a bpmn file
-     */
-    @Test
-    public void testDeleteTask() {
-        String out = "src/test/resources/delete-process_1.bpmn";
-        BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
-       
-        BPMNProcess process = model.openContext(null);
-        process.deleteTask("Task_1");
-
-        model.save(out);
-        logger.info("...model update sucessful: " + out);
-    }
-    
-    
-    /**
-     * This test creates a bpmn file
-     */
-    @Test
-    public void testDeleteTaskAndStartEvent() {
-        String out = "src/test/resources/delete-process_2.bpmn";
-        BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
-       
-        BPMNProcess process = model.openContext(null);
-        process.deleteTask("Task_1");
-        process.deleteEvent("StartEvent_1");
-
-        model.save(out);
-        logger.info("...model update sucessful: " + out);
-    }
+    private static Logger logger = Logger.getLogger(TestDeepCopy.class.getName());
 
    
-    
+
+
     /**
-     * This test build new model and delete element
+     * This test creates a bpmn file with a process definition containing Start and
+     * End Events and a Task connected with SequenceFlows.
+     * <p>
+     * The test also adds shape information to task_1
      */
     @Test
-    public void testBuildAndDelete() {
+    public void testCreateModelWithProcessAndElementsLayout() {
+        String out = "src/test/resources/clone-process_4.bpmn";
+        logger.info("...create empty model");
 
         String exporter = "demo";
         String version = "1.0.0";
@@ -97,9 +63,26 @@ public class TestDeleteModel {
             fail();
         }
         
-   
-        processContext.deleteTask("task_1");
-       // logger.info("...model update sucessful: " + out);
+        
+        // now generate a deep copy
+        long l=System.currentTimeMillis();
+        Document  clone=(Document) model.getDoc().cloneNode(true);
+        logger.info("clone model took " + (System.currentTimeMillis()-l) + "ms");
+        // remove elements from origin
+        processContext.deleteEvent("start_1");
+        
+        model.save(out);
+        
+        // test structure of clone....
+        BPMNModel modelClone=new BPMNModel(clone);
+        BPMNProcess processContextClone = modelClone.openContext("process_1");
+        assertEquals(2, processContextClone.getEvents().size());
+        
+        assertEquals(1, processContext.getEvents().size());
+        
+        
+        logger.info("...model created sucessful: " + out);
+
     }
 
 }

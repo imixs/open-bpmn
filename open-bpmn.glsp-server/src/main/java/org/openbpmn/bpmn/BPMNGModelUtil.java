@@ -91,8 +91,8 @@ public class BPMNGModelUtil {
         for (BPMNGateway gateway : process.getGateways()) {
             logger.fine("gateway: " + gateway.getName());
             GPoint point = GraphUtil.point(gateway.getBounds().getX(), gateway.getBounds().getY());
-            GatewayNodeBuilder builder = new GatewayNodeBuilder(BPMNGatewayType.EXCLUSIVE.name, gateway.getName());// ,
-                                                                                                                   // "event:start"
+            GatewayNodeBuilder builder = new GatewayNodeBuilder(BPMNGatewayType.EXCLUSIVE, gateway.getName());// ,
+                                                                                                              // "event:start"
             GatewayNode gatewayNode = builder //
                     .id(gateway.getId()) //
                     .position(point) //

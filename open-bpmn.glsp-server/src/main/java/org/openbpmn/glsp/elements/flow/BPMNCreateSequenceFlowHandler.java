@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.task;
+package org.openbpmn.glsp.elements.flow;
 
 import java.util.List;
 import java.util.Map;
@@ -28,16 +28,15 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.BPMNSequenceFlowType;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
 import com.google.inject.Inject;
 
-public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateSequenceFlowHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
 
-    private static Logger logger = Logger.getLogger(BPMNCreateTaskHandler.class.getName());
+    private static Logger logger = Logger.getLogger(BPMNCreateSequenceFlowHandler.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
@@ -52,8 +51,10 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler { // C
      * <p>
      * We use this constructor to overwrite the handledElementTypeIds
      */
-    public BPMNCreateTaskHandler() {
-        super(BPMNModel.BPMN_TASKS);
+    public BPMNCreateSequenceFlowHandler() {
+        // super(BPMNModel.BPMN_SQUENCEFLOWS);
+        super(BPMNSequenceFlowType.SEQUENCE_FLOW);
+        handledElementTypeIds = BPMNModel.BPMN_SQUENCEFLOWS;
     }
 
     @Override
@@ -66,27 +67,28 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler { // C
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
+        String gatewayID = "";
         // We can not call super.execute because of the missing createNode impl!
         // super.executeOperation(operation);
         // See: https://github.com/eclipse-glsp/glsp/issues/648
 
-        // now we add this task into the source model
-        String taskID = "task-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode tasknodeID=" + taskID);
-        BPMNProcess process = modelState.getBpmnModel().getContext();
-        BPMNActivity task = process.addTask(taskID, getLabel(), operation.getElementTypeId());
-        Optional<GPoint> point = operation.getLocation();
-        if (point.isPresent()) {
-            task.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
-        }
+//        // now we add this task into the source model
+//        String gatewayID = "gateway-" + BPMNModel.generateShortID();
+//        logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
+//        BPMNProcess process = modelState.getBpmnModel().getContext();
+//        BPMNGateway gateway = process.addaddTask(gatewayID, getLabel(), operation.getElementTypeId());
+//        Optional<GPoint> point = operation.getLocation();
+//        if (point.isPresent()) {
+//            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
+//        }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(taskID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
     }
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, elementTypeId, modelState);
-        return "Task-" + nodeCounter;
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.GATEWAY_NODE, elementTypeId, modelState);
+        return "Gateway-" + nodeCounter;
     }
 
 }

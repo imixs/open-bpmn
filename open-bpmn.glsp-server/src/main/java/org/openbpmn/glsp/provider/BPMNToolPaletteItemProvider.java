@@ -105,15 +105,14 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteEventItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNEventType.START.name, "Start Event",
-                new TriggerNodeCreationAction(BPMNEventType.START.name)));
-        result.add(new PaletteItem(BPMNEventType.END.name, "End Event",
-                new TriggerNodeCreationAction(BPMNEventType.END.name)));
+        result.add(new PaletteItem(BPMNEventType.START, "Start Event",
+                new TriggerNodeCreationAction(BPMNEventType.START)));
+        result.add(new PaletteItem(BPMNEventType.END, "End Event", new TriggerNodeCreationAction(BPMNEventType.END)));
 
-        result.add(new PaletteItem(BPMNEventType.CATCH.name, "Catch Event",
-                new TriggerNodeCreationAction(BPMNEventType.CATCH.name)));
-        result.add(new PaletteItem(BPMNEventType.THROW.name, "Throw Event",
-                new TriggerNodeCreationAction(BPMNEventType.THROW.name)));
+        result.add(new PaletteItem(BPMNEventType.CATCH, "Catch Event",
+                new TriggerNodeCreationAction(BPMNEventType.CATCH)));
+        result.add(new PaletteItem(BPMNEventType.THROW, "Throw Event",
+                new TriggerNodeCreationAction(BPMNEventType.THROW)));
         return result;
     }
 
@@ -132,14 +131,14 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteGatewayItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNGatewayType.EXCLUSIVE.name, "Exclusive",
-                new TriggerNodeCreationAction(BPMNGatewayType.EXCLUSIVE.name)));
+        result.add(new PaletteItem(BPMNGatewayType.EXCLUSIVE, "Exclusive",
+                new TriggerNodeCreationAction(BPMNGatewayType.EXCLUSIVE)));
 
-        result.add(new PaletteItem(BPMNGatewayType.INCLUSIVE.name, "Inclusive",
-                new TriggerNodeCreationAction(BPMNGatewayType.INCLUSIVE.name)));
+        result.add(new PaletteItem(BPMNGatewayType.INCLUSIVE, "Inclusive",
+                new TriggerNodeCreationAction(BPMNGatewayType.INCLUSIVE)));
 
-        result.add(new PaletteItem(BPMNGatewayType.PARALLEL.name, "Parallel",
-                new TriggerNodeCreationAction(BPMNGatewayType.PARALLEL.name)));
+        result.add(new PaletteItem(BPMNGatewayType.PARALLEL, "Parallel",
+                new TriggerNodeCreationAction(BPMNGatewayType.PARALLEL)));
 
         return result;
     }
