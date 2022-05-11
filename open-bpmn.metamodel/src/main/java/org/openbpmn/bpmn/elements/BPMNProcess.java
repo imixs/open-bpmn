@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.openbpmn.bpmn.BPMNEventType;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.w3c.dom.Element;
@@ -106,57 +105,6 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Adds a new event
-     * <p>
-     * <bpmn2:startEvent id="StartEvent_1" name="Start Event 1">
-     * 
-     * @param id
-     * @param name
-     * @param type - EventType
-     */
-    public BPMNEvent addEvent(String id, String name, String type) {
- 
-//        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type.getName());
-//        eventElement.setAttribute("id", id);
-//        eventElement.setAttribute("name", name);
-//        this.getElementNode().appendChild(eventElement);
-//
-//        BPMNEvent event = new BPMNEvent(type, eventElement);
-//        getEvents().add(event);
-//        
-        
-
-        // create a new Dom node...
-        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
-        eventElement.setAttribute("id", id);
-        eventElement.setAttribute("name", name);
-        this.getElementNode().appendChild(eventElement);
-
-        // build a BPMNActivity instance
-        BPMNEvent event = new BPMNEvent(type, eventElement);
-        // create a new BPMNShape
-        // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
-        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
-        bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
-        bpmnShape.setAttribute("bpmnElement", id);
-
-        this.getBpmnPlane().appendChild(bpmnShape);
-        event.setBpmnShape(bpmnShape);
-
-        getEvents().add(event);
-        return event;
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
-
-    /**
      * Creates a new BPMNTask element in this context.
      * <p>
      * <bpmn2:sendTask id="SendTask_1" name="Send Task 1">
@@ -189,6 +137,74 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
+     * Adds a new event
+     * <p>
+     * <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="Exclusive Gateway 1"
+     * gatewayDirection="Diverging">
+     * 
+     * @param id
+     * @param name
+     * @param type - EventType
+     */
+    public BPMNEvent addEvent(String id, String name, String type) {
+        // create a new Dom node...
+        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
+        eventElement.setAttribute("id", id);
+        eventElement.setAttribute("name", name);
+        this.getElementNode().appendChild(eventElement);
+
+        // build a BPMNActivity instance
+        BPMNEvent event = new BPMNEvent(type, eventElement);
+        // create a new BPMNShape
+        // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
+        bpmnShape.setAttribute("bpmnElement", id);
+
+        this.getBpmnPlane().appendChild(bpmnShape);
+        event.setBpmnShape(bpmnShape);
+
+        getEvents().add(event);
+        return event;
+
+    }
+
+    /**
+     * Adds a new gateway
+     * <p>
+     * <bpmn2:startEvent id="StartEvent_1" name="Start Event 1">
+     * 
+     * @param id
+     * @param name
+     * @param type - EventType
+     */
+    public BPMNGateway addGateway(String id, String name, String type) {
+        // create a new Dom node...
+        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
+        eventElement.setAttribute("id", id);
+        eventElement.setAttribute("name", name);
+        // set a default
+        eventElement.setAttribute("gatewayDirection", "Diverging");
+
+        this.getElementNode().appendChild(eventElement);
+
+        // build a BPMNGateway instance
+        BPMNGateway gateway = new BPMNGateway(type, eventElement);
+        // create a new BPMNShape
+        // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
+        bpmnShape.setAttribute("bpmnElement", id);
+
+        this.getBpmnPlane().appendChild(bpmnShape);
+        gateway.setBpmnShape(bpmnShape);
+
+        getGateways().add(gateway);
+        return gateway;
+
+    }
+
+    /**
      * Deletes a BPMNTask element from this context.
      * <p>
      * 
@@ -209,7 +225,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(task.getElementNode());
-        if (task.getBpmnShape()!=null) {
+        if (task.getBpmnShape() != null) {
             this.getBpmnPlane().removeChild(task.getBpmnShape());
         }
 
@@ -237,7 +253,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(event.getElementNode());
-        if (event.getBpmnShape()!=null) {
+        if (event.getBpmnShape() != null) {
             this.getBpmnPlane().removeChild(event.getBpmnShape());
         }
 
@@ -265,7 +281,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(getway.getElementNode());
-        if (getway.getBpmnShape()!=null) {
+        if (getway.getBpmnShape() != null) {
             this.getBpmnPlane().removeChild(getway.getBpmnShape());
         }
 

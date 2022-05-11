@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNEventType;
+import org.openbpmn.bpmn.BPMNGatewayType;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.bpmn.elements.BPMNActivity;
@@ -100,6 +101,47 @@ public class TestCreateModel {
 
     }
 
+    
+    /**
+     * This test creates a bpmn file with a process definition containing Start and
+     * End Events and a Task connected with SequenceFlows
+     */
+    @Test
+    public void testCreateModelWithProcessAndGatewayElements() {
+        String out = "src/test/resources/create-process_5.bpmn";
+        logger.info("...create empty model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        model.addProcess("process_1");
+
+        BPMNProcess processContext = model.openContext("process_1");
+        assertNotNull(processContext);
+
+        // add a start and end event
+        processContext.addEvent("start_1", "Start", BPMNEventType.START);
+        processContext.addEvent("end_1", "End", BPMNEventType.END);
+        processContext.addTask("task_1", "Task", BPMNTaskType.TASK);
+        processContext.addGateway("gateway_1", "Gateway", BPMNGatewayType.EXCLUSIVE);
+
+        try {
+            processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+        } catch (BPMNInvalidReferenceException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+
+    }
+
+    
+    
     /**
      * This test creates a bpmn file with a process definition containing Start and
      * End Events and a Task connected with SequenceFlows.
