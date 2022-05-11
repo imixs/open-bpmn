@@ -41,7 +41,7 @@ public class TestLoadModel {
 
         BPMNProcess process = model.openContext(null);
         assertNotNull(process);
-        GGraph newGModel = BPMNGModelUtil.createGModelFromProcess(process, null);
+        GGraph newGModel = BPMNGModelFactory.createGModelFromProcess(process, null);
 
         assertNotNull(newGModel);
     }

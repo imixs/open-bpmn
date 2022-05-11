@@ -27,8 +27,8 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNGModelState;
-import org.openbpmn.bpmn.BPMNGatewayType;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -53,9 +53,9 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateGatewayHandler() {
-        // super(BPMNModel.BPMN_GATEWAYS);
-        super(BPMNGatewayType.GATEWAY);
-        handledElementTypeIds = BPMNModel.BPMN_GATEWAYS;
+        super(BPMNModel.BPMN_GATEWAYS);
+        // super(BPMNGatewayType.GATEWAY);
+        // handledElementTypeIds = BPMNModel.BPMN_GATEWAYS;
     }
 
     @Override
@@ -77,12 +77,11 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         String gatewayID = "gateway-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
         BPMNProcess process = modelState.getBpmnModel().getContext();
-        // BPMNGateway gateway = process.addaddTask(gatewayID, getLabel(),
-        // operation.getElementTypeId());
-//        Optional<GPoint> point = operation.getLocation();
-//        if (point.isPresent()) {
-//            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
-//        }
+        BPMNGateway gateway = process.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
+        Optional<GPoint> point = operation.getLocation();
+        if (point.isPresent()) {
+            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
+        }
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
     }
@@ -90,6 +89,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
     @Override
     public String getLabel() {
         int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.GATEWAY_NODE, elementTypeId, modelState);
+        nodeCounter++; // start with 1
         return "Gateway-" + nodeCounter;
     }
 

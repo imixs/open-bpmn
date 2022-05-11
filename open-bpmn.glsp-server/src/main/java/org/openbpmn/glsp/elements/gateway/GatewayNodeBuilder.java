@@ -30,7 +30,6 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
 
     private final String name;
-//    private final String category;
 
     public GatewayNodeBuilder(final String type, final String name) {
         super(type);
@@ -57,9 +56,6 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
     protected void setProperties(final GatewayNode node) {
         super.setProperties(node);
         node.setName(name);
-//        if (category == null || category.isEmpty()) {
-//            node.getCategory().add(category);
-//        }
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
