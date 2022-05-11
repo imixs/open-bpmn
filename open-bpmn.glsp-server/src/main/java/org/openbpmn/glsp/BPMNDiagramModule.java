@@ -108,7 +108,7 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Flows
         binding.add(BPMNCreateSequenceFlowHandler.class);
-        // binding.add(XXCreateEdgeHandler.class);
+        // binding.add(CreateSequenceFlowHandler.class);
 
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);

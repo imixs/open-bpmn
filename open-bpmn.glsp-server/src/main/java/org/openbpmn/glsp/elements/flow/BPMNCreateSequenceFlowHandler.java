@@ -15,26 +15,21 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.flow;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.SelectAction;
-import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.utils.GModelUtil;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.gmodel.AbstractCreateEdgeOperationHandler;
 import org.openbpmn.bpmn.BPMNGModelState;
-import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNSequenceFlowType;
-import org.openbpmn.glsp.bpmn.BpmnPackage;
-import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
+import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
 
-public class BPMNCreateSequenceFlowHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateSequenceFlowHandler extends AbstractCreateEdgeOperationHandler { // CreateNodeOperationHandler
 
     private static Logger logger = Logger.getLogger(BPMNCreateSequenceFlowHandler.class.getName());
 
@@ -44,51 +39,24 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNNodeOperationHandle
     @Inject
     protected ActionDispatcher actionDispatcher;
 
-    private String elementTypeId;
-
     /**
      * Default constructor
      * <p>
-     * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateSequenceFlowHandler() {
-        // super(BPMNModel.BPMN_SQUENCEFLOWS);
-        super(BPMNSequenceFlowType.SEQUENCE_FLOW);
-        handledElementTypeIds = BPMNModel.BPMN_SQUENCEFLOWS;
+        super(ModelTypes.SEQUENCE_FLOW, "Sequence Flow");
     }
 
     @Override
-    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-        // no-op, because this class returns a command directly instead of executing the
-        // command directly on a model
-        return null;
-    }
+    protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
+            final GModelState modelState) {
+        return Optional.of(new SequenceFlowBuilder() //
+                .source(source) //
+                .target(target) //
+                .addArgument(GArguments.edgePadding(10)) //
+                .addCssClass("sequenceflow") //
 
-    @Override
-    public void executeOperation(final CreateNodeOperation operation) {
-        elementTypeId = operation.getElementTypeId();
-        String gatewayID = "";
-        // We can not call super.execute because of the missing createNode impl!
-        // super.executeOperation(operation);
-        // See: https://github.com/eclipse-glsp/glsp/issues/648
-
-//        // now we add this task into the source model
-//        String gatewayID = "gateway-" + BPMNModel.generateShortID();
-//        logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
-//        BPMNProcess process = modelState.getBpmnModel().getContext();
-//        BPMNGateway gateway = process.addaddTask(gatewayID, getLabel(), operation.getElementTypeId());
-//        Optional<GPoint> point = operation.getLocation();
-//        if (point.isPresent()) {
-//            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
-//        }
-        modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
-    }
-
-    @Override
-    public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.GATEWAY_NODE, elementTypeId, modelState);
-        return "Gateway-" + nodeCounter;
+                .build());
     }
 
 }
