@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Node;
 
 /**
@@ -17,9 +18,9 @@ import org.w3c.dom.Node;
  *
  */
 public class BPMNActivity extends BPMNFlowElement {
-   
-    protected BPMNActivity(String type, Node node) {
-        super(type, node);
+
+    protected BPMNActivity(BPMNModel model, Node node, String type) {
+        super(model, node, type);
     }
 
 }

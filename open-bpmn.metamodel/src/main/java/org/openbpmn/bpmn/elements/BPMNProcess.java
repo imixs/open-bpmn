@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -28,16 +29,25 @@ public class BPMNProcess extends BPMNBaseElement {
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
 
     protected Node bpmnPlane = null;
+  
 
     public BPMNProcess() {
         super();
     }
 
-    public BPMNProcess(Node node) {
-        super(node);
+
+
+    public BPMNProcess(BPMNModel model, Node item) {
+        super(model,item);
     }
 
-    public Set<BPMNActivity> getActivities() {
+
+
+    public BPMNModel getModel() {
+        return model;
+    }
+
+    public Set<BPMNActivity> getActivities() { 
         if (activities == null) {
             activities = new HashSet<BPMNActivity>();
         }
@@ -116,16 +126,16 @@ public class BPMNProcess extends BPMNBaseElement {
     public BPMNActivity addTask(String id, String name, String type) {
 
         // create a new Dom node...
-        Element taskElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
+        Element taskElement = model.createElement(BPMNNS.BPMN2, type);
         taskElement.setAttribute("id", id);
         taskElement.setAttribute("name", name);
         this.getElementNode().appendChild(taskElement);
 
         // build a BPMNActivity instance
-        BPMNActivity task = new BPMNActivity(type, taskElement);
+        BPMNActivity task = new BPMNActivity(model, taskElement,type);
         // create a new BPMNShape
         // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
-        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        Element bpmnShape = model.createElement(BPMNNS.BPMNDI,  "BPMNShape");
         bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
         bpmnShape.setAttribute("bpmnElement", id);
 
@@ -148,16 +158,16 @@ public class BPMNProcess extends BPMNBaseElement {
      */
     public BPMNEvent addEvent(String id, String name, String type) {
         // create a new Dom node...
-        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
+        Element eventElement = model.createElement(BPMNNS.BPMN2, type);
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         this.getElementNode().appendChild(eventElement);
 
         // build a BPMNActivity instance
-        BPMNEvent event = new BPMNEvent(type, eventElement);
+        BPMNEvent event = new BPMNEvent(model, eventElement,type);
         // create a new BPMNShape
         // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
-        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        Element bpmnShape = model.createElement(BPMNNS.BPMNDI,"BPMNShape");
         bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
         bpmnShape.setAttribute("bpmnElement", id);
 
@@ -180,7 +190,7 @@ public class BPMNProcess extends BPMNBaseElement {
      */
     public BPMNGateway addGateway(String id, String name, String type) {
         // create a new Dom node...
-        Element eventElement = this.getDoc().createElement(BPMNModel.BPMN_NS + ":" + type);
+        Element eventElement = model.createElement(BPMNNS.BPMN2, type);
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         // set a default
@@ -189,10 +199,10 @@ public class BPMNProcess extends BPMNBaseElement {
         this.getElementNode().appendChild(eventElement);
 
         // build a BPMNGateway instance
-        BPMNGateway gateway = new BPMNGateway(type, eventElement);
+        BPMNGateway gateway = new BPMNGateway(model, eventElement,type);
         // create a new BPMNShape
         // <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
-        Element bpmnShape = this.getDoc().createElement(BPMNModel.DI_NS + ":BPMNShape");
+        Element bpmnShape = model.createElement(BPMNNS.BPMNDI,"BPMNShape");
         bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
         bpmnShape.setAttribute("bpmnElement", id);
 
@@ -312,8 +322,8 @@ public class BPMNProcess extends BPMNBaseElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNModel.BPMN_NS + ":incoming")
-                                || child.getNodeName().equals(BPMNModel.BPMN_NS + ":outgoing"))) {
+                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
+                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix  + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         targetElement.getElementNode().removeChild(child);
                         break;
@@ -327,8 +337,8 @@ public class BPMNProcess extends BPMNBaseElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNModel.BPMN_NS + ":incoming")
-                                || child.getNodeName().equals(BPMNModel.BPMN_NS + ":outgoing"))) {
+                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix  + ":incoming")
+                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;
@@ -373,22 +383,22 @@ public class BPMNProcess extends BPMNBaseElement {
         }
 
         // create sequenceFlow element
-        Element sequenceFlow = this.getDoc().createElement(BPMNModel.BPMN_NS + ":sequenceFlow");
+        Element sequenceFlow = model.createElement(BPMNNS.BPMN2,"sequenceFlow");
         sequenceFlow.setAttribute("id", id);
         sequenceFlow.setAttribute("sourceRef", source);
         sequenceFlow.setAttribute("targetRef", target);
         this.getElementNode().appendChild(sequenceFlow);
 
         // add outgoing reference to source element
-        Element refOut = this.getDoc().createElement(BPMNModel.BPMN_NS + ":outgoing");
+        Element refOut = model.createElement(BPMNNS.BPMN2,"outgoing");
         refOut.setTextContent(id);
         sourceElement.getElementNode().appendChild(refOut);
         // add incoming reference to target element
-        Element refIn = this.getDoc().createElement(BPMNModel.BPMN_NS + ":incoming");
+        Element refIn =  model.createElement(BPMNNS.BPMN2, "incoming");
         refIn.setTextContent(id);
         targetElement.getElementNode().appendChild(refIn);
 
-        BPMNSequenceFlow flow = new BPMNSequenceFlow(sequenceFlow);
+        BPMNSequenceFlow flow = new BPMNSequenceFlow(model,sequenceFlow);
         getSequenceFlows().add(flow);
     }
 
@@ -470,26 +480,26 @@ public class BPMNProcess extends BPMNBaseElement {
 
             // check element type
             if (BPMNModel.isActivity(child)) {
-                BPMNActivity activity = new BPMNActivity(resolveBPMNElementType(child), child);
+                BPMNActivity activity = new BPMNActivity(model, child,child.getLocalName());
 
-                activity.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
+                activity.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNNS.BPMNDI.prefix + ":BPMNShape",
                         activity.getId()));
                 getActivities().add(activity);
             } else if (BPMNModel.isEvent(child)) {
-                BPMNEvent event = new BPMNEvent(resolveBPMNElementType(child), child);
-                event.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
+                BPMNEvent event = new BPMNEvent(model,child,child.getLocalName());
+                event.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNNS.BPMNDI.prefix + ":BPMNShape",
                         event.getId()));
                 getEvents().add(event);
             } else if (BPMNModel.isGateway(child)) {
-                BPMNGateway gateway = new BPMNGateway(resolveBPMNElementType(child), child);
-                gateway.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNModel.DI_NS + ":BPMNShape",
+                BPMNGateway gateway = new BPMNGateway(model,child,child.getLocalName());
+                gateway.setBpmnShape(BPMNModel.findChildNodeByName(this.getBpmnPlane(), BPMNNS.BPMNDI.prefix + ":BPMNShape",
                         gateway.getId()));
                 getGateways().add(gateway);
             } else if (BPMNModel.isSequenceFlow(child)) {
-                BPMNSequenceFlow sequenceFlow = BPMNModel.buildSequenceFlow(child, this);
+                BPMNSequenceFlow sequenceFlow = model.buildSequenceFlow(child, this);
 
                 sequenceFlow.setBpmnEdge(BPMNModel.findChildNodeByName(this.getBpmnPlane(),
-                        BPMNModel.DI_NS + ":BPMNEdge", sequenceFlow.getId()));
+                        BPMNNS.BPMNDI.prefix + ":BPMNEdge", sequenceFlow.getId()));
 
                 getSequenceFlows().add(sequenceFlow);
 
@@ -500,22 +510,5 @@ public class BPMNProcess extends BPMNBaseElement {
 
     }
 
-    /**
-     * This helper method resolves the BPMN Type out of the nodes NodeName
-     * <p>
-     * bpmn2:task => task
-     * <p>
-     * bpmn2:startEvent => startEvent
-     * 
-     * @param nodeName
-     * @return
-     */
-    private String resolveBPMNElementType(Node child) {
-        String nodeName = child.getNodeName();
-        // in case the type starts with a namespace than we cut this prafix
-        if (nodeName.startsWith(BPMNModel.BPMN_NS)) {
-            nodeName = nodeName.substring(BPMNModel.BPMN_NS.length() + 1);
-        }
-        return nodeName;
-    }
+    
 }

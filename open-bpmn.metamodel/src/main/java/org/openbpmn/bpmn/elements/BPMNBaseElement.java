@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -12,16 +13,22 @@ import org.w3c.dom.Node;
  * @author rsoika
  */
 public abstract class BPMNBaseElement {
-    // Map<String, String> attributes=null;
     private NamedNodeMap attributeMap = null;
     private Node elementNode = null;
+    protected BPMNModel model = null;
 
     public BPMNBaseElement() {
         super();
     }
 
-    public BPMNBaseElement(Node node) {
+    /**
+     * Create a new BPMN Base Element. The constructor expects a model instnace and a node. 
+     * @param node
+     * @param model
+     */
+    public BPMNBaseElement(BPMNModel model,Node node) {
         super();
+        this.model=model;
         this.elementNode = node;
         if (this.elementNode.hasAttributes()) {
             // get attributes names and values

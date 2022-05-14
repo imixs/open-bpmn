@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Node;
 
 public class BPMNSequenceFlow extends BPMNBaseElement {
@@ -14,8 +15,8 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
     protected Node bpmnEdge = null;
     protected List<BPMNPoint> wayPoints=null;
     
-    public BPMNSequenceFlow(Node node) {
-        super(node);
+    public BPMNSequenceFlow(BPMNModel model,Node node) {
+        super(model,node);
         wayPoints=new ArrayList<BPMNPoint>();
         
        

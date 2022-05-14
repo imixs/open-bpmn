@@ -3,13 +3,16 @@ package org.openbpmn.bpmn;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringReader;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
@@ -18,6 +21,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -42,33 +46,24 @@ public class BPMNModel {
 
     private static final SecureRandom random = new SecureRandom();
     private static final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-
-    public final static String BPMN_NS = "bpmn2";
-    public final static String DI_NS = "bpmndi";
-    public final static String DC_NS = "dc";
     private BPMNProcess context = null;
 
-    public static List<String> BPMN_ACTIVITIES = Arrays
-            .asList(new String[] { //
-                    BPMNTaskType.TASK, //
-                    BPMNTaskType.MANUAL, //
-                    BPMNTaskType.SEND, //
-                    BPMNTaskType.SERVICE, //
-                    BPMNTaskType.SCRIPT,
-                    BPMNTaskType.USER, //
-                    "receiveTask",
-                    "businessRuleTask",  "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+  
+    public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
+            BPMNTaskType.TASK, //
+            BPMNTaskType.MANUAL, //
+            BPMNTaskType.SEND, //
+            BPMNTaskType.SERVICE, //
+            BPMNTaskType.SCRIPT, BPMNTaskType.USER, //
+            "receiveTask", "businessRuleTask", "subProcess", "adHocSubProcess", "transaction", "callActivity" });
 
-
-    public static List<String> BPMN_TASKS = Arrays
-            .asList(new String[] { //
-                    BPMNTaskType.TASK, //
-                    BPMNTaskType.MANUAL, //
-                    BPMNTaskType.SEND, //
-                    BPMNTaskType.SERVICE, //
-                    BPMNTaskType.SCRIPT,
-                    BPMNTaskType.USER //
-                    });
+    public static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
+            BPMNTaskType.TASK, //
+            BPMNTaskType.MANUAL, //
+            BPMNTaskType.SEND, //
+            BPMNTaskType.SERVICE, //
+            BPMNTaskType.SCRIPT, BPMNTaskType.USER //
+    });
 
     public static List<String> BPMN_EVENTS = Arrays
             .asList(new String[] { "startEvent", "endEvent", "catchEvent", "throwEvent" });
@@ -83,14 +78,79 @@ public class BPMNModel {
 
     private Node bpmnDiagram;
 
-    public BPMNModel(Document doc) {
-        this.doc = doc;
+  
+    private  final Map< BPMNNS,String> URI_BY_NAMESPACE = new HashMap<>();
 
-        definitions = doc.getDocumentElement();
-        // find bpmndi:BPMNDiagram
-        NodeList diagramList = doc.getElementsByTagName(DI_NS + ":BPMNDiagram");
-        if (diagramList != null && diagramList.getLength() > 0) {
-            bpmnDiagram = diagramList.item(0);
+    /**
+     * Returns the namespace uri for a given namespace
+     * 
+     * @param ns
+     * @return
+     */
+    public String getNameSpaceUri(BPMNNS ns) {
+        return URI_BY_NAMESPACE.get(ns);
+    }
+    public void setNameSpaceUri(BPMNNS ns, String uri) {
+        URI_BY_NAMESPACE.put(ns, uri);
+    }
+
+    
+    /**
+     * This method instantiates a new BPMN model with the default  BPMN namespaces. 
+     * @param doc
+     */
+    private BPMNModel() {
+        setNameSpaceUri(BPMNNS.BPMN2, "http://www.omg.org/spec/BPMN/20100524/MODEL");
+        setNameSpaceUri(BPMNNS.BPMNDI, "http://www.omg.org/spec/BPMN/20100524/DI");
+        setNameSpaceUri(BPMNNS.DI, "http://www.omg.org/spec/DD/20100524/DC");
+        setNameSpaceUri(BPMNNS.DC, "http://www.omg.org/spec/DD/20100524/DI");
+   
+      
+    }
+    
+    
+    
+    /**
+     * This method instantiates a new BPMN model based on a given
+     * org.w3c.dom.Document. The method parses the BPMN namespaces. If
+     * 
+     * @param doc
+     */
+    public BPMNModel(Document doc) {
+        this();
+        if (doc != null) {
+            this.doc = doc;
+
+            definitions = doc.getDocumentElement();
+
+            // parse the BPMN namespaces
+            NamedNodeMap defAttributes = definitions.getAttributes();
+            for (int j = 0; j < defAttributes.getLength(); j++) {
+                Node node = defAttributes.item(j);
+                // update to new namespace uri if not matching the default URI
+                if (BPMNNS.BPMN2.prefix.equals(node.getLocalName()) && !getNameSpaceUri(BPMNNS.BPMN2).equals(node.getNodeValue())) {
+                    logger.fine("...set BPMN2 namespace URI: " + node.getNodeValue());
+                    setNameSpaceUri(BPMNNS.BPMN2,node.getNodeValue());
+                }
+                if (BPMNNS.BPMNDI.prefix.equals(node.getLocalName()) && !getNameSpaceUri(BPMNNS.BPMNDI).equals(node.getNodeValue())) {
+                    logger.fine("...set BPMNDI namespace URI: " + node.getNodeValue());
+                    setNameSpaceUri(BPMNNS.BPMNDI,node.getNodeValue());
+                }
+                if (BPMNNS.DC.prefix.equals(node.getLocalName()) && !getNameSpaceUri(BPMNNS.DC).equals(node.getNodeValue())) {
+                    logger.fine("...set DC namespace URI: " + node.getNodeValue());
+                    setNameSpaceUri(BPMNNS.DC,node.getNodeValue());
+                }
+                if (BPMNNS.DI.prefix.equals(node.getLocalName()) && !getNameSpaceUri(BPMNNS.DI).equals(node.getNodeValue())) {
+                    logger.fine("...set DI namespace URI: " + node.getNodeValue());
+                    setNameSpaceUri(BPMNNS.DI,node.getNodeValue());
+                }
+            }
+
+            // find bpmndi:BPMNDiagram
+            NodeList diagramList = doc.getElementsByTagName(BPMNNS.BPMNDI.prefix + ":BPMNDiagram");
+            if (diagramList != null && diagramList.getLength() > 0) {
+                bpmnDiagram = diagramList.item(0);
+            }
         }
     }
 
@@ -110,6 +170,9 @@ public class BPMNModel {
         return bpmnDiagram;
     }
 
+    public void setBpmnDiagram(Node bpmnDiagram) {
+        this.bpmnDiagram = bpmnDiagram;
+    }
     /**
      * This Method opens a BPMN context (e.g. a Process) with the given ID. The
      * method returns null if no process with the given ID exists.
@@ -123,28 +186,29 @@ public class BPMNModel {
     public BPMNProcess openContext(String id) {
 
         // find process
-        NodeList processList = definitions.getElementsByTagName(BPMN_NS + ":process");
+        NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix+":process");
         logger.info("..found " + processList.getLength() + " processes");
 
         for (int i = 0; i < processList.getLength(); i++) {
             Node item = processList.item(i);
-
-            context = new BPMNProcess(item);
-
+            context = new BPMNProcess(this,item);
             if (id != null && !id.equals(context.getId())) {
                 // not match of the requested processs ID
                 continue;
             }
 
             // find the bpmndi:BPMNPlane
-            context.setBpmnPlane(findChildNodeByName(bpmnDiagram, DI_NS + ":BPMNPlane", context.getId()));
-
+            context.setBpmnPlane(findChildNodeByName(bpmnDiagram, BPMNNS.BPMNDI.prefix + ":BPMNPlane", context.getId()));
             context.init();
-
             return context;
         }
 
         return null;
+    }
+
+    public Element createElement(BPMNNS ns, String type) {
+        Element element = this.getDoc().createElementNS(getNameSpaceUri(ns), ns.prefix + ":" + type);
+        return element;
     }
 
     /**
@@ -157,14 +221,13 @@ public class BPMNModel {
      * @param process
      * @return
      */
-    public static BPMNSequenceFlow buildSequenceFlow(Node node, org.openbpmn.bpmn.elements.BPMNProcess process) {
+    public BPMNSequenceFlow buildSequenceFlow(Node node, BPMNProcess process) {
         BPMNSequenceFlow sequenceFlow = null;
-        if ((BPMN_NS + ":sequenceFlow").equals(node.getNodeName())) {
-            sequenceFlow = new BPMNSequenceFlow(node);
-
+        if (isSequenceFlow(node)) {
+            sequenceFlow = new BPMNSequenceFlow(this,node);
             // parse waypoints (di:waypoint)
-            Node bpmnEdge = findChildNodeByName(process.getBpmnPlane(), DI_NS + ":BPMNEdge", sequenceFlow.getId());
-            List<Node> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, "di:waypoint");
+            Node bpmnEdge = findChildNodeByName(process.getBpmnPlane(), BPMNNS.BPMNDI.prefix + ":BPMNEdge", sequenceFlow.getId());
+            List<Node> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,BPMNNS.DI.prefix + ":waypoint");
             for (Node wayPoint : wayPoints) {
                 NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                 BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
@@ -184,14 +247,21 @@ public class BPMNModel {
      * @return
      */
     public BPMNModel addProcess(String id) {
-        Element process = doc.createElement(BPMN_NS + ":process");
+
+        // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        Element process = createElement(BPMNNS.BPMN2, "process" );
+
+        System.out.println(process.getNodeName());
+        System.out.println(process.getLocalName());
+        System.out.println(process.getNamespaceURI());
+
         process.setAttribute("id", id);
         // definitions.appendChild(process);
         definitions.insertBefore(process, this.getBpmnDiagram());
 
         // add bpmndi:BPMNPlane
         // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
-        Element bpmnPlane = doc.createElement(BPMNModel.DI_NS + ":BPMNPlane");
+        Element bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
         bpmnPlane.setAttribute("id", "BPMNPlane_" + id);
         bpmnPlane.setAttribute("bpmnElement", id);
         this.getBpmnDiagram().appendChild(bpmnPlane);
@@ -293,9 +363,9 @@ public class BPMNModel {
                         "</xsl:stylesheet>";
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-//        Transformer transformer = transformerFactory
-//                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
+//        Transformer transformer = transformerFactory.newTransformer();
+        Transformer transformer = transformerFactory
+                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
         // pretty print
@@ -312,12 +382,12 @@ public class BPMNModel {
      * @return
      */
     public static boolean isActivity(Node node) {
-        String type = node.getNodeName();
-        // cut namespce
-        if (type.startsWith(BPMN_NS + ":")) {
-            type = type.substring((BPMN_NS + ":").length());
-        }
-        return (BPMN_ACTIVITIES.contains(type));
+//        String type = node.getNodeName();
+//        // cut namespce
+//        if (type.startsWith(BPMNNS.BPMN2.prefix":")) {
+//            type = type.substring((BPMNNS.BPMN2.prefix":").length());
+//        }
+        return (BPMN_ACTIVITIES.contains(node.getLocalName()));
     }
 
     /**
@@ -327,12 +397,12 @@ public class BPMNModel {
      * @return
      */
     public static boolean isGateway(Node node) {
-        String type = node.getNodeName();
-        // cut namespce
-        if (type.startsWith(BPMN_NS + ":")) {
-            type = type.substring((BPMN_NS + ":").length());
-        }
-        return (BPMN_GATEWAYS.contains(type));
+//        String type = node.getNodeName();
+//        // cut namespce
+//        if (type.startsWith(BPMNNS.BPMN2.prefix":")) {
+//            type = type.substring((BPMNNS.BPMN2.prefix":").length());
+//        }
+        return (BPMN_GATEWAYS.contains(node.getLocalName()));
     }
 
     /**
@@ -342,12 +412,12 @@ public class BPMNModel {
      * @return
      */
     public static boolean isEvent(Node node) {
-        String type = node.getNodeName();
-        // cut namespce
-        if (type.startsWith(BPMN_NS + ":")) {
-            type = type.substring((BPMN_NS + ":").length());
-        }
-        return (BPMN_EVENTS.contains(type));
+//        String type = node.getNodeName();
+//        // cut namespce
+//        if (type.startsWith(BPMNNS.BPMN2.prefix":")) {
+//            type = type.substring((BPMNNS.BPMN2.prefix":").length());
+//        }
+        return (BPMN_EVENTS.contains(node.getLocalName()));
     }
 
     /**
@@ -357,12 +427,12 @@ public class BPMNModel {
      * @return
      */
     public static boolean isSequenceFlow(Node node) {
-        String type = node.getNodeName();
+       // String type = node.getLocalName();//.getNodeName();
         // cut namespce
-        if (type.startsWith(BPMN_NS + ":")) {
-            type = type.substring((BPMN_NS + ":").length());
-        }
-        return (BPMN_SQUENCEFLOWS.contains(type));
+//        if (type.startsWith(BPMNNS.BPMN2.prefix":")) {
+//            type = type.substring((BPMNNS.BPMN2.prefix":").length());
+//        }
+        return (BPMN_SQUENCEFLOWS.contains(node.getLocalName()));
     }
 
     /**

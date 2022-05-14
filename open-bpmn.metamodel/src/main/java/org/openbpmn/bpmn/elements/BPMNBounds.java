@@ -1,6 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -15,7 +16,9 @@ public class BPMNBounds {
 
     private Node bounds = null;
     private Node bpmnShape = null;
-
+    protected BPMNModel model = null;
+    
+    
     /**
      * Creates the bounds out of the bpmn elemnet
      * <p>
@@ -24,14 +27,15 @@ public class BPMNBounds {
      * 
      * @param width
      */
-    public BPMNBounds(Node _bpmnShape) {
+    public BPMNBounds(Node _bpmnShape,BPMNModel model) {
+        this.model=model;
         this.bpmnShape = _bpmnShape;
         // find the dc:Bounds inside the given bpmnShape
         if (bpmnShape != null) {
             NodeList childList = bpmnShape.getChildNodes();
             for (int i = 0; i < childList.getLength(); i++) {
                 Node child = childList.item(i);
-                if ((BPMNModel.DC_NS + ":Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
+                if ((BPMNNS.DC.prefix+ ":Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
                     NamedNodeMap nodeMap = child.getAttributes();
                     for (int j = 0; j < nodeMap.getLength(); j++) {
                         Node attr = nodeMap.item(j);
@@ -68,7 +72,7 @@ public class BPMNBounds {
             if (bpmnShape == null) {
                 System.out.println("....leider ist bpmnShape null");
             }
-            bounds = bpmnShape.getOwnerDocument().createElement(BPMNModel.DC_NS + ":Bounds");
+            bounds = model.createElement(BPMNNS.DC , "Bounds");
             bpmnShape.appendChild(bounds);
         }
         // update attributes

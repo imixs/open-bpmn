@@ -1,12 +1,14 @@
 package org.openbpmn.bpmn.elements;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Node;
 
 public class BPMNEvent extends BPMNFlowElement {
 
  
-    protected BPMNEvent(String type, Node node) {
-        super(type, node);
+    
+    protected BPMNEvent(BPMNModel model,Node node, String type) {
+        super(model,node,type);
     }
     
    

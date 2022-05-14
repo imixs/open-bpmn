@@ -23,7 +23,7 @@ public class TestUpdateBounds {
 
     private static Logger logger = Logger.getLogger(TestUpdateBounds.class.getName());
 
-    static BPMNModel model = null;
+    static BPMNModel model = null; 
 
     @BeforeAll
     public static void init() {

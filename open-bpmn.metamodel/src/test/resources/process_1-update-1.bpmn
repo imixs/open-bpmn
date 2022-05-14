@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
-    <process id="process_10005"/>
-    <process id="P-000002"/>
+<?xml version="1.0" encoding="UTF-8"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_10005"/>
+    <bpmn2:process id="P-000002"/>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_10005" id="BPMNPlane_process_10005"/>
+        <bpmndi:BPMNPlane bpmnElement="P-000002" id="BPMNPlane_P-000002"/>
+    </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

@@ -28,7 +28,7 @@ public class TestCreateModel {
     /**
      * This test creates a bpmn file
      */
-    @Test
+    @Test 
     public void testCreateEmptyModel() {
         String out = "src/test/resources/create-process_1.bpmn";
         logger.info("...create empty model");

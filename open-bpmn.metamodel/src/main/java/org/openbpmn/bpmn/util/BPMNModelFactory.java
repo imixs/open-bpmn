@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -26,7 +27,8 @@ public class BPMNModelFactory {
     private static Logger logger = Logger.getLogger(BPMNModelFactory.class.getName());
 
     /**
-     * This method creates a new BPMNModel instance.
+     * This method creates a new empty BPMNModel instance. The BPMNModel is
+     * initialized with the BPMN default namespaces.
      * 
      * @param exporter
      * @param exporterVersion
@@ -57,24 +59,30 @@ public class BPMNModelFactory {
 
             Element definitions = doc.createElementNS("http://www.omg.org/spec/BPMN/20100524/MODEL",
                     "bpmn2:definitions");
+
+            // set BPMN default namespaces
             definitions.setAttribute("xmlns:bpmndi", "http://www.omg.org/spec/BPMN/20100524/DI");
             definitions.setAttribute("xmlns:di", "http://www.omg.org/spec/DD/20100524/DI");
             definitions.setAttribute("xmlns:dc", "http://www.omg.org/spec/DD/20100524/DC");
             definitions.setAttribute("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
             definitions.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+
+            // set definitions attributes
             definitions.setAttribute("exporter", exporter);
             definitions.setAttribute("exporterVersion", exporterVersion);
             definitions.setAttribute("targetNamespace", targetNamespace);
             doc.appendChild(definitions);
-            // add BPMNDiagram
+            BPMNModel model = new BPMNModel(doc);
+
+            // add an empty BPMNDiagram tag
             // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
-            Element bpmnDiagram = doc.createElement(BPMNModel.DI_NS + ":BPMNDiagram");
+            Element bpmnDiagram = model.createElement(BPMNNS.BPMNDI, "BPMNDiagram");
             bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
             bpmnDiagram.setAttribute("name", "Default Process Diagram");
             definitions.appendChild(bpmnDiagram);
+            model.setBpmnDiagram(bpmnDiagram);
 
-           
-            return new BPMNModel(doc);
+            return model;
         } catch (ParserConfigurationException e1) {
 
             e1.printStackTrace();
@@ -131,9 +139,9 @@ public class BPMNModelFactory {
 
             // read from a project's resources folder
             Document doc = db.parse(is);
-          
 
             Element root = doc.getDocumentElement();
+
             if (!"bpmn2:definitions".equals(root.getNodeName())) {
                 logger.severe("Missing root element 'bpmn2:definitions'!");
                 return null;

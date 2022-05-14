@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Node;
 
 /**
@@ -8,7 +9,7 @@ import org.w3c.dom.Node;
  * Choreography Activities, Gateways , and Events , Data Objects , Data
  * Associations , and Sequence Flows.
  * <p>
- * A BPMNFlowElement holds a reference to the bpmnShape element 
+ * A BPMNFlowElement holds a reference to the bpmnShape element
  * 
  * @author rsoika
  *
@@ -19,10 +20,15 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
     protected Node bpmnShape = null;
     protected BPMNBounds bounds = null;
 
-
-    
-    public BPMNFlowElement(String _type, Node node) {
-        super(node);
+    /**
+     * Creates a new BPMNFlowElement
+     * 
+     * @param _type
+     * @param node
+     * @param model
+     */
+    public BPMNFlowElement(BPMNModel model, Node node, String _type) {
+        super(model, node);
         this.type = _type;
     }
 
@@ -41,23 +47,23 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
     public void setBpmnShape(Node bpmnShape) {
         this.bpmnShape = bpmnShape;
     }
-    
+
     public BPMNBounds getBounds() {
         if (bounds == null) {
             // lazy loading of bounds from a given bpmnShape
-            bounds = new BPMNBounds(this.bpmnShape);
+            bounds = new BPMNBounds(this.bpmnShape, model);
         }
         return bounds;
     }
-    
+
     public BPMNBounds setBounds(float x, float y, float height, float width) {
         // init bound if not yet loaded
         getBounds();
-        
+
         // update bounds
         bounds.updateBounds(x, y, width, height);
-        
+
         return bounds;
     }
-    
+
 }

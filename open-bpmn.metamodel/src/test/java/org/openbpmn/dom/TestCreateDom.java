@@ -15,7 +15,7 @@ public class TestCreateDom {
      */
     @Test
     public void testReadEmptyModel() {
-
+ 
         logger.info("...creating new empty model");
 
         BPMNModel model1 = BPMNModelFactory.createInstance("demo", "1.0.0", "http://org.openbpmn") //
