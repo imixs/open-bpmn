@@ -67,7 +67,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler { // 
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
         // We can not call super.execute because of the missing createNode impl!
-        super.executeOperation(operation);
+        // super.executeOperation(operation);
         // See: https://github.com/eclipse-glsp/glsp/issues/648
 
         // now we add this task into the source model
