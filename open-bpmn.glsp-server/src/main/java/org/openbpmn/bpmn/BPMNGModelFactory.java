@@ -35,11 +35,14 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.elements.event.EventNodeBuilder;
+import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
 
@@ -100,8 +103,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param modelState
      * @return new GGraph
      */
-    public static GGraph createGModelFromProcess(final org.openbpmn.bpmn.elements.BPMNProcess process,
-            final GModelState modelState) {
+    public static GGraph createGModelFromProcess(final BPMNProcess process, final GModelState modelState) {
 
         List<GModelElement> entityNodes = new ArrayList<>();
 
@@ -110,6 +112,8 @@ public class BPMNGModelFactory implements GModelFactory {
             System.out.println("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
             TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
+
+            logger.info("....Task Position " + activity.getId() + "=" + point.getX() + "," + point.getY());
 
             // Build the GLSP Node....
             TaskNode taskNode = builder //
@@ -124,6 +128,9 @@ public class BPMNGModelFactory implements GModelFactory {
             logger.fine("event: " + event.getName());
             GPoint point = GraphUtil.point(event.getBounds().getX(), event.getBounds().getY());
             EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
+
+            logger.info("....event Position " + event.getId() + "=" + point.getX() + "," + point.getY());
+
             EventNode eventNode = builder //
                     .id(event.getId()) //
                     .position(point) //
@@ -144,26 +151,27 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all SequenceFlows
-//        for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
-//            logger.fine("sequenceFlow: " + sequenceFlow.getName());
-//            SequenceFlowBuilder builder = new SequenceFlowBuilder();
-//            GModelElement target = findElementById(entityNodes, sequenceFlow.getTargetRef());
-//            if (target != null) {
-//                builder.target(target);
-//            }
-//            GModelElement source = findElementById(entityNodes, sequenceFlow.getSourceRef());
-//            if (source != null) {
-//                builder.source(source);
-//            }
-//            logger.info("..................bin noch dabei");
-//            org.openbpmn.glsp.bpmn.SequenceFlow sequenceFlowEdge = builder.build();
-//            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
-//                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
-//                sequenceFlowEdge.getRoutingPoints().add(point);
-//            }
-//
-//            entityNodes.add(sequenceFlowEdge);
-//        }
+        for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
+            logger.fine("sequenceFlow: " + sequenceFlow.getName());
+            SequenceFlowBuilder builder = new SequenceFlowBuilder();
+
+            GModelElement target = findElementById(entityNodes, sequenceFlow.getTargetRef());
+            if (target != null) {
+                builder.target(target);
+            }
+            GModelElement source = findElementById(entityNodes, sequenceFlow.getSourceRef());
+            if (source != null) {
+                builder.source(source);
+            }
+            logger.info("..................bin noch dabei");
+            org.openbpmn.glsp.bpmn.SequenceFlow sequenceFlowEdge = builder.build();
+            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
+                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+                sequenceFlowEdge.getRoutingPoints().add(point);
+            }
+
+            entityNodes.add(sequenceFlowEdge);
+        }
 
         logger.info("..................ready to build GGraph");
         // add to root node...
@@ -173,6 +181,16 @@ public class BPMNGModelFactory implements GModelFactory {
                 .build();
 
         return newGModel;
+    }
+
+    private static GModelElement findElementById(final List<GModelElement> entityNodes, final String targetRef) {
+
+        for (GModelElement element : entityNodes) {
+            if (element.getId().equals(targetRef)) {
+                return element;
+            }
+        }
+        return null;
     }
 
     /**
