@@ -16,11 +16,9 @@
 package org.openbpmn.glsp.elements.gateway;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -56,13 +54,6 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         super(BPMNModel.BPMN_GATEWAYS);
         // super(BPMNGatewayType.GATEWAY);
         // handledElementTypeIds = BPMNModel.BPMN_GATEWAYS;
-    }
-
-    @Override
-    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-        // no-op, because this class returns a command directly instead of executing the
-        // command directly on a model
-        return null;
     }
 
     @Override

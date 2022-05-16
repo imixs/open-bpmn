@@ -16,11 +16,9 @@
 package org.openbpmn.glsp.elements.task;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -35,7 +33,7 @@ import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
 import com.google.inject.Inject;
 
-public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
     private static Logger logger = Logger.getLogger(BPMNCreateTaskHandler.class.getName());
 
@@ -57,14 +55,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler { // C
     }
 
     @Override
-    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-        // no-op, because this class returns a command directly instead of executing the
-        // command directly on a model
-        return null;
-    }
-
-    @Override
-    public void executeOperation(final CreateNodeOperation operation) {
+    protected void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
         // We can not call super.execute because of the missing createNode impl!
         // super.executeOperation(operation);

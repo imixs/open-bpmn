@@ -21,22 +21,16 @@ import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
-import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataActionHandler;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
-import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperationHandler;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CutOperationHandler;
+import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeBoundsOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ChangeRoutingPointsHandler;
-import org.eclipse.glsp.server.operations.gmodel.CutOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.LayoutOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.PasteOperationHandler;
-import org.eclipse.glsp.server.operations.gmodel.ReconnectEdgeOperationHandler;
 import org.openbpmn.bpmn.BPMNGModelFactory;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNSourceModelStorage;
@@ -82,20 +76,20 @@ public class BPMNDiagramModule extends DiagramModule {
     @Override
     protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
         super.configureActionHandlers(binding);
-        binding.add(RequestClipboardDataActionHandler.class);
+        // binding.add(RequestClipboardDataActionHandler.class);
     }
 
     @Override
     protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
         super.configureOperationHandlers(binding);
-        binding.add(ApplyLabelEditOperationHandler.class);
-        binding.add(ChangeBoundsOperationHandler.class);
-        binding.add(ChangeRoutingPointsHandler.class);
+//        binding.add(ApplyLabelEditOperationHandler.class);
+//        binding.add(ChangeBoundsOperationHandler.class);
+//        binding.add(ChangeRoutingPointsHandler.class);
         binding.add(CutOperationHandler.class);
         // binding.add(DeleteOperationHandler.class);
-        binding.add(LayoutOperationHandler.class);
-        binding.add(PasteOperationHandler.class);
-        binding.add(ReconnectEdgeOperationHandler.class);
+//        binding.add(LayoutOperationHandler.class);
+//        binding.add(PasteOperationHandler.class);
+//        binding.add(ReconnectEdgeOperationHandler.class);
 
         // Tasks
         binding.add(BPMNCreateTaskHandler.class);

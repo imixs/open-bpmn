@@ -17,8 +17,8 @@ package org.openbpmn.bpmn.operations;
 
 import java.util.List;
 
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
-import org.eclipse.glsp.server.operations.gmodel.DeleteOperationHandler;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
@@ -27,14 +27,14 @@ import org.openbpmn.bpmn.elements.BPMNGateway;
 
 import com.google.inject.Inject;
 
-public class BPMNDeleteNodeHandler extends DeleteOperationHandler {
+public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperation> {
 
     @Inject
     protected BPMNGModelState modelState;
 
     @Override
     public void executeOperation(final DeleteOperation operation) {
-        super.executeOperation(operation);
+
         List<String> elementIds = operation.getElementIds();
         if (elementIds == null || elementIds.size() == 0) {
             System.out.println("Elements to delete are not specified");

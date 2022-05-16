@@ -16,11 +16,9 @@
 package org.openbpmn.glsp.elements.event;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -35,7 +33,7 @@ import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
 import com.google.inject.Inject;
 
-public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
     private static Logger logger = Logger.getLogger(BPMNCreateEventHandler.class.getName());
 
@@ -54,13 +52,6 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler { // 
      */
     public BPMNCreateEventHandler() {
         super(BPMNModel.BPMN_EVENTS);
-    }
-
-    @Override
-    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-        // no-op, because this class returns a command directly instead of executing the
-        // command directly on a model
-        return null;
     }
 
     @Override

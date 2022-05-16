@@ -15,21 +15,19 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.flow;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GEdge;
-import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.gmodel.AbstractCreateEdgeOperationHandler;
+import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNGModelState;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
 
-public class BPMNCreateSequenceFlowHandler extends AbstractCreateEdgeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateSequenceFlowHandler extends AbstractOperationHandler<CreateNodeOperation> {
+
+    // public class BPMNDeleteNodeHandler extends
+    // AbstractOperationHandler<DeleteOperation> {
 
     private static Logger logger = Logger.getLogger(BPMNCreateSequenceFlowHandler.class.getName());
 
@@ -39,24 +37,30 @@ public class BPMNCreateSequenceFlowHandler extends AbstractCreateEdgeOperationHa
     @Inject
     protected ActionDispatcher actionDispatcher;
 
+    @Override
+    protected void executeOperation(final CreateNodeOperation operation) {
+        // TODO Auto-generated method stub
+        logger.warning("NOT YET IMPLEMENTED: BPMNCreateSequenceFlowHandler.executeOperation()");
+    }
+
     /**
      * Default constructor
      * <p>
      */
-    public BPMNCreateSequenceFlowHandler() {
-        super(ModelTypes.SEQUENCE_FLOW, "Sequence Flow");
-    }
-
-    @Override
-    protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
-            final GModelState modelState) {
-        return Optional.of(new SequenceFlowBuilder() //
-                .source(source) //
-                .target(target) //
-                .addArgument(GArguments.edgePadding(10)) //
-                .addCssClass("sequenceflow") //
-
-                .build());
-    }
+//    public BPMNCreateSequenceFlowHandler() {
+//        super(ModelTypes.SEQUENCE_FLOW, "Sequence Flow");
+//    }
+//
+//    @Override
+//    protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
+//            final GModelState modelState) {
+//        return Optional.of(new SequenceFlowBuilder() //
+//                .source(source) //
+//                .target(target) //
+//                .addArgument(GArguments.edgePadding(10)) //
+//                .addCssClass("sequenceflow") //
+//
+//                .build());
+//    }
 
 }

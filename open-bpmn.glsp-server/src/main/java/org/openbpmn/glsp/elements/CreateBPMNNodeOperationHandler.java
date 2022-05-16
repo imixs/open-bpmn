@@ -21,13 +21,15 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.gmodel.AbstractCreateNodeOperationHandler;
 import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.utils.GridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 /**
  * The CreateBPMNNodeOperationHandler is used to detect the node within
@@ -36,7 +38,10 @@ import com.google.common.collect.Lists;
  * @author rsoika
  *
  */
-public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateNodeOperationHandler {
+public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation> {
+
+    @Inject
+    protected GModelState modelState;
 
     public CreateBPMNNodeOperationHandler(final String elementTypeId) {
         super(elementTypeId);
@@ -58,17 +63,22 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateNodeO
      * @param operation
      * @return the absolute location where the element should be created.
      */
-    @Override
     public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
         return GridSnapper.snap(operation.getLocation());
     }
 
     /**
-     * Find the optional container element the node is part of.
+     * <p>
+     * Return the GModelElement that will contain the newly created node. It is
+     * usually the target element ({@link CreateNodeOperation#getContainerId()}),
+     * but could also be e.g. an intermediate compartment, or even a different Node.
+     * </p>
+     *
+     * @param operation
+     * @return the GModelElement that will contain the newly created node.
      */
-    @Override
     protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
-        Optional<GModelElement> container = super.getContainer(operation);
+        Optional<GModelElement> container = modelState.getIndex().get(operation.getContainerId());
         // If the container is a Pool node, find its structure compartment
         Optional<GModelElement> structCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
                 .flatMap(this::getPoolCompartment);

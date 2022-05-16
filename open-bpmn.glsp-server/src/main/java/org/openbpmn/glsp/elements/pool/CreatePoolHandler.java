@@ -15,19 +15,20 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.pool;
 
-import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
+    private static Logger logger = Logger.getLogger(CreatePoolHandler.class.getName());
 
     public CreatePoolHandler() {
         super(ModelTypes.POOL);
@@ -43,12 +44,13 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     }
 
     @Override
-    protected GNode createNode(final Optional<GPoint> point, final Map<String, String> args) {
-        return builder(point, modelState).build();
+    public String getLabel() {
+        return "Pool";
     }
 
     @Override
-    public String getLabel() {
-        return "Pool";
+    protected void executeOperation(final CreateNodeOperation operation) {
+        // TODO Auto-generated method stub
+        logger.warning("NOT YET IMPLEMENTED: CreatePoolHandler.executeOperation");
     }
 }
