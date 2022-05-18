@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
 import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
@@ -31,6 +32,7 @@ import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.openbpmn.bpmn.BPMNEventType;
 import org.openbpmn.bpmn.BPMNGatewayType;
+import org.openbpmn.bpmn.BPMNSequenceFlowType;
 import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.glsp.utils.ModelTypes;
 
@@ -63,17 +65,35 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         // Create custom Palette Groups
         List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
         return Lists.newArrayList(
-
                 PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(), "symbol-property", "A"),
-
                 PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(), "symbol-property", "B"),
                 PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(), "symbol-property",
                         "C"),
                 PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
                         "symbol-property", "D"),
                 // show all edges
-                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "E"));
 
+                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "E")
+
+//                PaletteItem.createPaletteGroup("edge-group", "Edges", createPaletteSequenceFlowItems(),
+//                        "symbol-property", "E")
+
+        );
+
+    }
+
+    /**
+     * Create a palette Item Group with all SequenceFlow elements
+     *
+     * @return
+     */
+    protected List<PaletteItem> createPaletteSequenceFlowItems() {
+
+        List<PaletteItem> result = new ArrayList<>();
+        result.add(new PaletteItem(BPMNSequenceFlowType.SEQUENCE_FLOW, "Sequence Flow",
+                new TriggerEdgeCreationAction(BPMNSequenceFlowType.SEQUENCE_FLOW)));
+
+        return result;
     }
 
     /**

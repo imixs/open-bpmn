@@ -92,7 +92,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.POOL, BpmnPackage.Literals.POOL);
         mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
 
-        mappings.put(ModelTypes.SEQUENCE_FLOW, GraphPackage.Literals.GEDGE);
+        mappings.put(ModelTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW); // GraphPackage.Literals.GEDGE);
         return mappings;
 
     }

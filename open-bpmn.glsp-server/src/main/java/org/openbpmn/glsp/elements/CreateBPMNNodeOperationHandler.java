@@ -18,15 +18,12 @@ package org.openbpmn.glsp.elements;
 import java.util.List;
 import java.util.Optional;
 
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.utils.GridSnapper;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -78,16 +75,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
      * @return the GModelElement that will contain the newly created node.
      */
     protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
-        Optional<GModelElement> container = modelState.getIndex().get(operation.getContainerId());
-        // If the container is a Pool node, find its structure compartment
-        Optional<GModelElement> structCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
-                .flatMap(this::getPoolCompartment);
-        return structCompt.isPresent() ? structCompt : container;
-    }
-
-    protected Optional<GCompartment> getPoolCompartment(final Pool pool) {
-        return pool.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-                .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
+        return modelState.getIndex().get(operation.getContainerId());
     }
 
 }

@@ -23,7 +23,7 @@ import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
- * The IconBuilder is used to add icons into different elements like Taks or
+ * The IconBuilder is used to add icons into different elements like Tasks or
  * Gateways
  *
  * @See {@link TaskNodeBuilder}, {@link GatewayNodeBuilder}

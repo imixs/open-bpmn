@@ -37,7 +37,7 @@ import org.openbpmn.bpmn.BPMNSourceModelStorage;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
+import org.openbpmn.glsp.elements.flow.CreateSequenceFlowHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
@@ -96,24 +96,18 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Events
         binding.add(BPMNCreateEventHandler.class);
-//        binding.add(CreateEndEventHandler.class);
-//        binding.add(CreateCatchEventHandler.class);
-//        binding.add(CreateThrowEventHandler.class);
 
         // Flows
-        binding.add(BPMNCreateSequenceFlowHandler.class);
-        // binding.add(CreateSequenceFlowHandler.class);
+        // binding.add(BPMNCreateSequenceFlowHandler.class);
+        binding.add(CreateSequenceFlowHandler.class);
 
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);
-        // binding.add(CreateInclusiveGatewayHandler.class);
 
         // Pools
         binding.add(CreatePoolHandler.class);
 
         binding.remove(LayoutOperationHandler.class);
-
-        // WICHTIG:
 
         // register apply operations send from the client
         binding.add(ApplyEventUpdateOperationHandler.class);
