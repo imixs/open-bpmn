@@ -39,7 +39,7 @@ public final class ModelTypes {
     public static final String EVENT_PORT = "event:port";
 
     // public static final String GATEWAY = "gateway";
-    public static final String GATEWAY_PORT = "gateway:port";
+    // public static final String GATEWAY_PORT = "gateway:port";
 //    public static final String EXCLUSIVE_GATEWAY = GATEWAY + ":exclusive";
 //    public static final String PARALLEL_GATEWAY = GATEWAY + ":parallel";
 //    public static final String EVENT_GATEWAY = GATEWAY + ":event";
@@ -50,7 +50,7 @@ public final class ModelTypes {
     public static final String STRUCTURE = "struct";
 
     // public static final String SEQUENCE_FLOW = "edge:sequenceflow";
-    public static final String SEQUENCE_FLOW = "sequenceFlow";
+    // public static final String SEQUENCE_FLOW = "sequenceFlow";
 
 //    public static String toNodeType(final String type) {
 //        switch (type) {

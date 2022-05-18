@@ -36,6 +36,7 @@ import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.openbpmn.bpmn.BPMNEventType;
 import org.openbpmn.bpmn.BPMNGatewayType;
+import org.openbpmn.bpmn.BPMNSequenceFlowType;
 import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
@@ -144,7 +145,8 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
 
     private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {
         return new LabeledAction(label,
-                Lists.newArrayList(new CreateEdgeOperation(ModelTypes.SEQUENCE_FLOW, source.getId(), node.getId())),
+                Lists.newArrayList(
+                        new CreateEdgeOperation(BPMNSequenceFlowType.SEQUENCE_FLOW, source.getId(), node.getId())),
                 "fa-plus-square");
     }
 

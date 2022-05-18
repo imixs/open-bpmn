@@ -29,6 +29,7 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.openbpmn.bpmn.BPMNEventType;
 import org.openbpmn.bpmn.BPMNGatewayType;
+import org.openbpmn.bpmn.BPMNSequenceFlowType;
 import org.openbpmn.bpmn.BPMNTaskType;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.utils.ModelTypes;
@@ -51,7 +52,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
             BPMNEventType.END, //
             BPMNEventType.CATCH, //
             BPMNEventType.THROW, //
-            ModelTypes.SEQUENCE_FLOW);
+            BPMNSequenceFlowType.SEQUENCE_FLOW);
 
     public final static List<String> ALL_PORTS = Arrays.asList( //
             BPMNTaskType.MANUAL, //
@@ -72,29 +73,23 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      */
     @Override
     public Map<String, EClass> getTypeMappings() {
-
         Map<String, EClass> mappings = DefaultTypes.getDefaultTypeMappings();
+
+        // Layout Model types
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON);
-
-        mappings.put(BPMNTaskType.TASK, BpmnPackage.Literals.TASK_NODE);
-
-        mappings.put(BPMNGatewayType.GATEWAY, BpmnPackage.Literals.GATEWAY_NODE);
-        mappings.put(ModelTypes.GATEWAY_PORT, GraphPackage.Literals.GPORT);
-
-        mappings.put(BPMNEventType.EVENT, BpmnPackage.Literals.EVENT_NODE);
-//        mappings.put(ModelTypes.THROW_EVENT, BpmnPackage.Literals.EVENT_NODE);
-//        mappings.put(ModelTypes.START_EVENT, BpmnPackage.Literals.START_EVENT);
-//        mappings.put(ModelTypes.END_EVENT, BpmnPackage.Literals.END_EVENT);
         mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
-
         mappings.put(ModelTypes.POOL, BpmnPackage.Literals.POOL);
         mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
 
-        mappings.put(ModelTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW); // GraphPackage.Literals.GEDGE);
-        return mappings;
+        // BPMN Types
+        mappings.put(BPMNTaskType.TASK, BpmnPackage.Literals.TASK_NODE);
+        mappings.put(BPMNGatewayType.GATEWAY, BpmnPackage.Literals.GATEWAY_NODE);
+        mappings.put(BPMNEventType.EVENT, BpmnPackage.Literals.EVENT_NODE);
+        mappings.put(BPMNSequenceFlowType.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW);
 
+        return mappings;
     }
 
     /**
@@ -170,7 +165,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         List<EdgeTypeHint> edgeHints = new ArrayList<>();
 
         // SequenceFLow
-        EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(ModelTypes.SEQUENCE_FLOW);
+        EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNSequenceFlowType.SEQUENCE_FLOW);
 
         sequenceFlowHint.setSourceElementTypeIds(Arrays.asList(//
                 BPMNTaskType.MANUAL, //
@@ -187,8 +182,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
                 ModelTypes.EVENT_PORT));
 
         edgeHints.add(sequenceFlowHint);
-
-        // TODO add other BPMN Flows
 
         return edgeHints;
     }
