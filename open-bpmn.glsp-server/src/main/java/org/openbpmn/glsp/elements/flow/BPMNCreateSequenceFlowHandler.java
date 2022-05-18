@@ -15,21 +15,24 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.flow;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
+import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
 
 public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandler {
 
-    // public class BPMNDeleteNodeHandler extends
-    // AbstractOperationHandler<DeleteOperation> {
-
+    protected final String label;
     private static Logger logger = Logger.getLogger(BPMNCreateSequenceFlowHandler.class.getName());
 
     @Inject
@@ -44,33 +47,42 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateSequenceFlowHandler() {
-        super(BPMNModel.BPMN_SQUENCEFLOWS);
+        super(ModelTypes.SEQUENCE_FLOW);
+        this.label = "Sequence Flow";
     }
 
     @Override
     protected void executeOperation(final CreateEdgeOperation operation) {
-        // TODO Auto-generated method stub
-        logger.warning("NOT YET IMPLEMENTED: BPMNCreateSequenceFlowHandler.executeOperation()");
+        if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
+            throw new IllegalArgumentException("Incomplete create connection action");
+        }
+        BPMNProcess process = modelState.getBpmnModel().getContext();
+        try {
+            Optional<BaseElement> element = null;
+            String targetId = operation.getTargetElementId();
+            // find GNode
+            element = modelState.getIndex().findElementByClass(targetId, BaseElement.class);
+            if (element.isPresent()) {
+                targetId = element.get().getId();
+            }
+
+            String sourceId = operation.getSourceElementId();
+            // find GNode
+            element = modelState.getIndex().findElementByClass(sourceId, BaseElement.class);
+            if (element.isPresent()) {
+                sourceId = element.get().getId();
+            }
+            process.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
+
+            modelState.reset();
+        } catch (BPMNInvalidReferenceException e) {
+            logger.severe(e.getMessage());
+        }
+
     }
 
-    /**
-     * Default constructor
-     * <p>
-     */
-//    public BPMNCreateSequenceFlowHandler() {
-//        super(ModelTypes.SEQUENCE_FLOW, "Sequence Flow");
-//    }
-//
-//    @Override
-//    protected Optional<GEdge> createEdge(final GModelElement source, final GModelElement target,
-//            final GModelState modelState) {
-//        return Optional.of(new SequenceFlowBuilder() //
-//                .source(source) //
-//                .target(target) //
-//                .addArgument(GArguments.edgePadding(10)) //
-//                .addCssClass("sequenceflow") //
-//
-//                .build());
-//    }
-
+    @Override
+    public String getLabel() {
+        return label;
+    }
 }

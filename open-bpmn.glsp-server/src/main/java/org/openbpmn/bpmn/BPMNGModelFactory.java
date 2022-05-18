@@ -21,11 +21,13 @@ import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -40,6 +42,7 @@ import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
+import org.openbpmn.glsp.bpmn.SequenceFlow;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.elements.event.EventNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
@@ -69,8 +72,6 @@ public class BPMNGModelFactory implements GModelFactory {
     public void createGModel() {
 
         if (!modelState.isInitalized()) {
-
-            logger.info("Creating new GModel from BPMN metha model...");
             long l = System.currentTimeMillis();
             GGraph newGModel = null;
             BPMNModel model = modelState.getBpmnModel();
@@ -112,9 +113,6 @@ public class BPMNGModelFactory implements GModelFactory {
             System.out.println("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
             TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
-
-            logger.info("....Task Position " + activity.getId() + "=" + point.getX() + "," + point.getY());
-
             // Build the GLSP Node....
             TaskNode taskNode = builder //
                     .id(activity.getId()) //
@@ -128,9 +126,7 @@ public class BPMNGModelFactory implements GModelFactory {
             logger.fine("event: " + event.getName());
             GPoint point = GraphUtil.point(event.getBounds().getX(), event.getBounds().getY());
             EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
-
-            logger.info("....event Position " + event.getId() + "=" + point.getX() + "," + point.getY());
-
+            // Build the GLSP Node....
             EventNode eventNode = builder //
                     .id(event.getId()) //
                     .position(point) //
@@ -140,9 +136,9 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Gateways...
         for (BPMNGateway gateway : process.getGateways()) {
-            logger.fine("gateway: " + gateway.getName());
             GPoint point = GraphUtil.point(gateway.getBounds().getX(), gateway.getBounds().getY());
             GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
+            // Build the GLSP Node....
             GatewayNode gatewayNode = builder //
                     .id(gateway.getId()) //
                     .position(point) //
@@ -152,19 +148,18 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all SequenceFlows
         for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
-            logger.fine("sequenceFlow: " + sequenceFlow.getName());
             SequenceFlowBuilder builder = new SequenceFlowBuilder();
 
             GModelElement target = findElementById(entityNodes, sequenceFlow.getTargetRef());
             if (target != null) {
-                builder.target(target);
+                builder.target(findPort(target));
             }
             GModelElement source = findElementById(entityNodes, sequenceFlow.getSourceRef());
             if (source != null) {
-                builder.source(source);
+                builder.source(findPort(source));
             }
-            logger.info("..................bin noch dabei");
-            org.openbpmn.glsp.bpmn.SequenceFlow sequenceFlowEdge = builder.build();
+
+            SequenceFlow sequenceFlowEdge = builder.build();
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
                 GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
                 sequenceFlowEdge.getRoutingPoints().add(point);
@@ -173,7 +168,6 @@ public class BPMNGModelFactory implements GModelFactory {
             entityNodes.add(sequenceFlowEdge);
         }
 
-        logger.info("..................ready to build GGraph");
         // add to root node...
         GGraph newGModel = new GGraphBuilder() //
                 .id(process.getId()) //
@@ -183,10 +177,37 @@ public class BPMNGModelFactory implements GModelFactory {
         return newGModel;
     }
 
-    private static GModelElement findElementById(final List<GModelElement> entityNodes, final String targetRef) {
+    /**
+     * This method tests if the given element has a Child of type GPort. This is the
+     * case for Events and Gateways. In this case the method returns the GPort.
+     * Otherwise the method returns the element.
+     *
+     * @return GPort of an alement or the element if no GPort exists
+     */
+    private static GModelElement findPort(final GModelElement element) {
 
+        EList<GModelElement> childs = element.getChildren();
+        for (GModelElement child : childs) {
+            if (child instanceof GPort) {
+                // return Optional.of(child);
+                return child;
+            }
+        }
+        // we did not found a GPort
+        return element;
+    }
+
+    /**
+     * Finds an GModelElement by its ID in a given List of GModelElements. The
+     * method returns null if not element with the given ID exists.
+     *
+     * @param entityNodes - List of GModelElements
+     * @param id          - id to search for
+     * @return GModelElement - or null if no elment was found.
+     */
+    private static GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
         for (GModelElement element : entityNodes) {
-            if (element.getId().equals(targetRef)) {
+            if (element.getId().equals(id)) {
                 return element;
             }
         }

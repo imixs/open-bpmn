@@ -37,7 +37,7 @@ import org.openbpmn.bpmn.BPMNSourceModelStorage;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
-import org.openbpmn.glsp.elements.flow.CreateSequenceFlowHandler;
+import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
@@ -98,8 +98,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.add(BPMNCreateEventHandler.class);
 
         // Flows
-        // binding.add(BPMNCreateSequenceFlowHandler.class);
-        binding.add(CreateSequenceFlowHandler.class);
+        binding.add(BPMNCreateSequenceFlowHandler.class);
 
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);

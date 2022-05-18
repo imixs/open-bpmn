@@ -20,6 +20,7 @@ import java.util.List;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
+import org.eclipse.glsp.server.operations.CreateEdgeOperationHandler;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -30,7 +31,11 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public abstract class CreateBPMNEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation> {
+public abstract class CreateBPMNEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation>
+        implements CreateEdgeOperationHandler {
+
+//public abstract class AbstractGModelCreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation>
+//    implements CreateEdgeOperationHandler {
 
     @Inject
     protected GModelState modelState;

@@ -104,7 +104,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
-    configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
+    // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
+    configureModelElement(context, 'sequenceFlow', SequenceFlow, BPMNSequenceFlowView);
+    
+    
 
 });
 

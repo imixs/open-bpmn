@@ -49,7 +49,8 @@ public final class ModelTypes {
     public static final String POOL = "pool";
     public static final String STRUCTURE = "struct";
 
-    public static final String SEQUENCE_FLOW = "edge:sequenceflow";
+    // public static final String SEQUENCE_FLOW = "edge:sequenceflow";
+    public static final String SEQUENCE_FLOW = "sequenceFlow";
 
 //    public static String toNodeType(final String type) {
 //        switch (type) {
