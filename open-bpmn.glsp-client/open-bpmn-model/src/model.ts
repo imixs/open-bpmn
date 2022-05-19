@@ -40,7 +40,7 @@ import {
 	withEditLabelFeature,
 	Fadeable, Hoverable,SPort
 } from '@eclipse-glsp/client';
-
+import { Bounds,Point } from 'sprotty-protocol';
 // import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
@@ -191,7 +191,7 @@ export namespace GatewayNode {
 }
 
 /*
- * Helper Methods to determind if a ModelElemtn is of a specific type
+ * Helper Methods to determind if a ModelElement is of a specific type
  * The methods return the corresponding node
  */
 export function isTaskNode(element: SModelElement): element is TaskNode {
@@ -204,6 +204,65 @@ export function isEventNode(element: SModelElement): element is EventNode {
 
 export function isGatewayNode(element: SModelElement): element is GatewayNode {
 	return element instanceof GatewayNode || false;
+}
+
+/*
+* This method returns the BPMN Node Element of a given SModelElement.
+* The method detects if the given ModelElement is for example a SPort
+* or label:heading. In this case the method returns the parent element
+* which is a Task, Event or Gateway node
+*/
+export function getBPMNNode(modelElement: SModelElement): SModelElement | undefined {
+	if (isTaskNode(modelElement)) {
+		// we found a direct task node
+		return modelElement;
+	}
+	if (isEventNode(modelElement)) {
+		// we found a direct event node
+		return modelElement;
+	}
+	if (isGatewayNode(modelElement)) {
+		// we found a direct gateway node
+		return modelElement;
+	}
+
+	if (modelElement instanceof BPMNPort) {
+		// we have a BPMNPOrt - so return the parent
+		if (modelElement instanceof SChildElement) {
+			return modelElement.parent;
+		}
+	}
+	if (modelElement instanceof SChildElement) {
+		// try a recusrive call
+		return getBPMNNode(modelElement.parent);
+	}
+
+	// no result!
+	return undefined;
+}
+
+/*
+ * This method returns the center point of a BPMNNode element.
+ * The method is needed because of the untypical implementation
+ * of the EventView and GatewayView
+ */
+export function getBPMNNodeCenter(modelElement: SModelElement): Point | undefined {
+	if (isTaskNode(modelElement)) {
+		console.log('we found a task node ');
+		// we can use the default method of GLSP here
+		const point = Bounds.center(modelElement.bounds);
+		console.log(' center bounds y='+point.y);
+		return point;
+	}
+	if (isEventNode(modelElement)) {
+		console.log('we found a event node');
+		let point = Bounds.center(modelElement.bounds);
+		console.log(' center bounds y='+point.y);
+		// we fix the center point offset here
+		point = { x:point.x, y:modelElement.bounds.y+(36*0.5)};
+		return point;
+	}
+	return undefined;
 }
 
 /**

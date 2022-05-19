@@ -139,7 +139,7 @@ export class GatewayNodeView extends ShapeView {
 			if (entry instanceof SLabel && entry.type === 'label:heading') {
 				// adjust allignment and position
 				entry.alignment = { x: 0, y: 0 };
-				entry.position = { x: 0, y: 75 };
+				entry.position = { x: 0, y: 65 };
 			}
 		}
 
@@ -149,9 +149,9 @@ export class GatewayNodeView extends ShapeView {
 			vnode = (
 				// render circle with a event symbol and the label:heading
 				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<rect x="0" y="0" width="42.5" height="42.5" transform={'rotate(45)'}></rect>
+					<rect x="0" y="0" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
 					<g class-bpmn-symbol={true}>
-						<path transform={'scale(2.0) translate(-7.5,6.5)'}
+						<path transform={'scale(2.0) translate(-8 5)'}
 							d={gatewaySymbol} />
 					</g>
 					{context.renderChildren(element)}
@@ -173,6 +173,12 @@ export class GatewayNodeView extends ShapeView {
 	}
 }
 
+/*
+ * This is the view for all kinds of BPMN Event elements.
+ * The radius of the event symbol (cycle) is 36.
+ * The cycle can contain an additional symbol in its centre.  
+ * 
+ */
 @injectable()
 export class EventNodeView extends ShapeView {
 
@@ -191,22 +197,25 @@ export class EventNodeView extends ShapeView {
 			// eslint-disable-next-line max-len
 			eventSymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
 		}
-		// find the label:heading and adust position
+		
+		// Next we adust the position of the label:heading and
+		// this is some kind of hack!
 		for (const entry of element.children) {
 			if (entry instanceof SLabel && entry.type === 'label:heading') {
 				// adjust allignment and position
 				entry.alignment = { x: 0, y: 0 };
-				entry.position = { x: 0, y: 40 };
+				entry.position = { x: 0, y: 50 };
 			}
 		}
 
+        // render the symbol and its children...
 		let vnode: any = undefined;
 		if (eventSymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='20' cx='0' cy='0' ></circle>
-					<g class-bpmn-symbol={true} transform="translate(-11 -11),scale(1.5)">
+					<circle r='18' cx='0' cy='18' ></circle>
+					<g class-bpmn-symbol={true} transform="translate(-10 6),scale(1.5)">
 						<path d={eventSymbol} />
 					</g>
 					{context.renderChildren(element)}
@@ -216,7 +225,7 @@ export class EventNodeView extends ShapeView {
 			// we do not found a symbol so simply draw an empty circle...
 			vnode = (
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='20' cx='0' cy='0' ></circle>
+					<circle r='18' cx='0' cy='0' ></circle>
 					{context.renderChildren(element)}
 				</g>
 			);
