@@ -17,8 +17,7 @@ public class BPMNBounds {
     private Node bounds = null;
     private Node bpmnShape = null;
     protected BPMNModel model = null;
-    
-    
+
     /**
      * Creates the bounds out of the bpmn elemnet
      * <p>
@@ -27,15 +26,15 @@ public class BPMNBounds {
      * 
      * @param width
      */
-    public BPMNBounds(Node _bpmnShape,BPMNModel model) {
-        this.model=model;
+    public BPMNBounds(Node _bpmnShape, BPMNModel model) {
+        this.model = model;
         this.bpmnShape = _bpmnShape;
         // find the dc:Bounds inside the given bpmnShape
         if (bpmnShape != null) {
             NodeList childList = bpmnShape.getChildNodes();
             for (int i = 0; i < childList.getLength(); i++) {
                 Node child = childList.item(i);
-                if ((BPMNNS.DC.prefix+ ":Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
+                if ((BPMNNS.DC.prefix + ":Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
                     NamedNodeMap nodeMap = child.getAttributes();
                     for (int j = 0; j < nodeMap.getLength(); j++) {
                         Node attr = nodeMap.item(j);
@@ -72,7 +71,7 @@ public class BPMNBounds {
             if (bpmnShape == null) {
                 System.out.println("....leider ist bpmnShape null");
             }
-            bounds = model.createElement(BPMNNS.DC , "Bounds");
+            bounds = model.createElement(BPMNNS.DC, "Bounds");
             bpmnShape.appendChild(bounds);
         }
         // update attributes
@@ -119,6 +118,17 @@ public class BPMNBounds {
 
     public void setWidth(double width) {
         this.width = width;
+    }
+
+    /**
+     * Returns the center of the element
+     * 
+     * @return
+     */
+    public BPMNPoint getCenter() {
+        Double _x = x + (width * 0.5);
+        Double _y = y + (height * 0.5);
+        return new BPMNPoint(_x.intValue(), _y.intValue());
     }
 
     @Override

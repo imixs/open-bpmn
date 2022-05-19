@@ -10,8 +10,9 @@ public class BPMNPoint {
         this.x = x;
         this.y = y;
     }
+
     public BPMNPoint(String x, String y) {
-        this(Float.parseFloat(x),Float.parseFloat(y));
+        this(Float.parseFloat(x), Float.parseFloat(y));
     }
 
     public float getX() {
@@ -30,10 +31,9 @@ public class BPMNPoint {
         this.y = y;
     }
 
-  
     @Override
     public String toString() {
-        return "x=" + x + " y=" + y ;
+        return "x=" + x + " y=" + y;
     }
 
 }

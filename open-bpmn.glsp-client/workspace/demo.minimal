@@ -1,86 +1,29 @@
-{
-  "id": "glsp-graph",
-  "children": [
-    {
-      "category": [
-        "manual"
-      ],
-      "name": "ManualTask0",
-      "documentation": "...some documentation....",
-      "id": "462179c2-a275-4c71-b52d-3f03f0e323f4",
-      "cssClasses": [
-        "task",
-        "manual"
-      ],
-      "children": [
-        {
-          "id": "462179c2-a275-4c71-b52d-3f03f0e323f4_icon",
-          "type": "icon",
-          "position": {
-            "x": 5.0,
-            "y": 20.0
-          },
-          "size": {
-            "width": 25.0,
-            "height": 20.0
-          }
-        },
-        {
-          "id": "462179c2-a275-4c71-b52d-3f03f0e323f4_classname",
-          "type": "label:heading",
-          "position": {
-            "x": 40.0,
-            "y": 22.0
-          },
-          "size": {
-            "width": 82.71875,
-            "height": 16.0
-          },
-          "text": "ManualTask0",
-          "alignment": {
-            "x": 41.25,
-            "y": 13.0
-          }
-        }
-      ],
-      "type": "task:manual",
-      "position": {
-        "x": 30.0,
-        "y": -310.0
-      },
-      "size": {
-        "width": 160.0,
-        "height": 60.0
-      },
-      "layout": "hbox",
-      "layoutOptions": {
-        "minWidth": 160.0,
-        "hGap": 10.0,
-        "vAlign": "center",
-        "minHeight": 60.0,
-        "prefWidth": 160.0,
-        "prefHeight": 60.0
-      },
-      "args": {
-        "radiusTopLeft": 5.0,
-        "radiusBottomLeft": 5.0,
-        "radiusTopRight": 5.0,
-        "radiusBottomRight": 5.0
-      }
-    },
-    {
-      "id": "a9a8194b-1856-448a-94a2-e2148c8218c1",
-      "cssClasses": [
-        "sequenceflow"
-      ],
-      "type": "edge:sequenceflow",
-      "targetId": "462179c2-a275-4c71-b52d-3f03f0e323f4",
-      "routerKind": "manhattan",
-      "args": {
-        "edgePadding": 10.0
-      }
-    }
-  ],
-  "type": "graph",
-  "revision": 4
-}
+<?xml version="1.0" encoding="UTF-8"?><!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.3.Final-v20210519-2007-B1" id="Definitions_1">
+    <bpmn2:process id="Process_1" isExecutable="false" name="Process 1">
+        <bpmn2:scriptTask id="task-1fOZtOQncu3Ax62S" name="Task-0">
+            <bpmn2:outgoing>SequenceFlow_f0fY_w</bpmn2:outgoing>
+        </bpmn2:scriptTask>
+        <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway-SGZgUHGeSPu81wGF" name="Gateway-1">
+            <bpmn2:incoming>SequenceFlow_f0fY_w</bpmn2:incoming>
+        </bpmn2:exclusiveGateway>
+        <bpmn2:sequenceFlow id="SequenceFlow_f0fY_w" sourceRef="task-1fOZtOQncu3Ax62S" targetRef="gateway-SGZgUHGeSPu81wGF"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="Process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="Process_1" id="BPMNShape_XwO2kA"/>
+            <bpmndi:BPMNShape bpmnElement="task-1fOZtOQncu3Ax62S" id="BPMNShape_nPN5Lw">
+                <dc:Bounds height="10.0" width="10.0" x="180.0" y="90.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gateway-SGZgUHGeSPu81wGF" id="BPMNShape__R1RiA">
+                <dc:Bounds height="10.0" width="10.0" x="330.0" y="250.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_f0fY_w" id="BPMNEdge_MsMXjw">
+                <di:waypoint x="185.0" y="95.0"/>
+                <di:waypoint x="335.0" y="255.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+            <dc:Font name="arial" size="9.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

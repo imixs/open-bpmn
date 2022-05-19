@@ -9,12 +9,15 @@ import org.w3c.dom.Node;
  * The BaseElement is the abstract super class for most BPMN elements. It
  * provides a list of attributes with at least an id and a documentation. Other
  * element types can extend the attribute list.
+ * <p>
+ * A BPMNFlowElement holds a reference to the bpmnShape element
  * 
  * @author rsoika
  */
 public abstract class BPMNBaseElement {
     private NamedNodeMap attributeMap = null;
     private Node elementNode = null;
+   
     protected BPMNModel model = null;
 
     public BPMNBaseElement() {
@@ -22,23 +25,28 @@ public abstract class BPMNBaseElement {
     }
 
     /**
-     * Create a new BPMN Base Element. The constructor expects a model instnace and a node. 
+     * Create a new BPMN Base Element. The constructor expects a model instnace and
+     * a node.
+     * 
      * @param node
      * @param model
      */
-    public BPMNBaseElement(BPMNModel model,Node node) {
+    public BPMNBaseElement(BPMNModel model, Node node) {
         super();
-        this.model=model;
+        this.model = model;
         this.elementNode = node;
+
         if (this.elementNode.hasAttributes()) {
             // get attributes names and values
             this.attributeMap = this.elementNode.getAttributes();
         }
+       
     }
 
     /**
-     * Returns the Document object associated with this Element. The document
-     * object can be used to create new nodes. 
+     * Returns the Document object associated with this Element. The document object
+     * can be used to create new nodes.
+     * 
      * @return
      */
     public Document getDoc() {
@@ -80,7 +88,6 @@ public abstract class BPMNBaseElement {
             Node node = attributeMap.item(i);
             if (name.equals(node.getNodeName())) {
                 return node.getNodeValue();
-
             }
         }
         return null;
@@ -105,4 +112,6 @@ public abstract class BPMNBaseElement {
         return attributeMap;
     }
 
+
+  
 }

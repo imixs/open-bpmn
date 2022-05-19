@@ -1,6 +1,8 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -9,7 +11,7 @@ import org.w3c.dom.Node;
  * Choreography Activities, Gateways , and Events , Data Objects , Data
  * Associations , and Sequence Flows.
  * <p>
- * A BPMNFlowElement holds a reference to the bpmnShape element
+ * A BPMNFlowElement holds a reference to the Bounds of the element
  * 
  * @author rsoika
  *
@@ -17,8 +19,8 @@ import org.w3c.dom.Node;
 public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     protected String type = null;
-    protected Node bpmnShape = null;
     protected BPMNBounds bounds = null;
+    protected Element bpmnShape = null;
 
     /**
      * Creates a new BPMNFlowElement
@@ -30,6 +32,15 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
     public BPMNFlowElement(BPMNModel model, Node node, String _type) {
         super(model, node);
         this.type = _type;
+        // find the BPMNShape element. If not defined create a new one
+        if (model.getContext() != null) {
+            bpmnShape = (Element) BPMNModel.findChildNodeByName(model.getContext().bpmnPlane,
+                    BPMNNS.BPMNDI.prefix + ":BPMNShape", getId());
+            if (bpmnShape == null) {
+                // create shape element
+                createBPMNShape();
+            }
+        }
     }
 
     public String getType() {
@@ -38,14 +49,6 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Node getBpmnShape() {
-        return bpmnShape;
-    }
-
-    public void setBpmnShape(Node bpmnShape) {
-        this.bpmnShape = bpmnShape;
     }
 
     public BPMNBounds getBounds() {
@@ -66,4 +69,33 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         return bounds;
     }
 
+    public Element getBpmnShape() {
+        return bpmnShape;
+    }
+
+    public void setBpmnShape(Element bpmnShape) {
+        this.bpmnShape = bpmnShape;
+    }
+
+    /**
+     * Creates a BPMN shape node for this element
+     * <p>
+     * <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+     */
+    protected void createBPMNShape() {
+        if (bpmnShape != null) {
+            BPMNModel.getLogger().warning("bpmnShape already exits");
+        }
+        if (model.getContext().bpmnPlane == null) {
+            BPMNModel.getLogger().warning("Missing bpmnPlane in current model context");
+        }
+        if (this.getId() != null) {
+            bpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
+            bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
+            bpmnShape.setAttribute("bpmnElement", this.getId());
+            model.getContext().bpmnPlane.appendChild(bpmnShape);
+        } else {
+            BPMNModel.getLogger().warning("Missing ID attribute!");
+        }
+    }
 }

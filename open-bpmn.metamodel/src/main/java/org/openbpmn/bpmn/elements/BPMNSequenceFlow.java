@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 public class BPMNSequenceFlow extends BPMNBaseElement {
@@ -12,40 +15,54 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
 
     protected String sourceRef = null;
     protected String targetRef = null;
-    protected Node bpmnEdge = null;
-    protected List<BPMNPoint> wayPoints=null;
-    
-    public BPMNSequenceFlow(BPMNModel model,Node node) {
-        super(model,node);
-        wayPoints=new ArrayList<BPMNPoint>();
-        
-       
-        this.sourceRef=this.getAttribute("sourceRef");
-        if (sourceRef==null || sourceRef.isEmpty()) {
+    protected Element bpmnEdge = null;
+    protected List<BPMNPoint> wayPoints = null;
+
+    public BPMNSequenceFlow(BPMNModel model, Node node) {
+        super(model, node);
+        wayPoints = new ArrayList<BPMNPoint>();
+
+        this.sourceRef = this.getAttribute("sourceRef");
+        if (sourceRef == null || sourceRef.isEmpty()) {
             logger.warning("Missing sourceRef!");
         }
-       
-        this.targetRef=this.getAttribute("targetRef");
-        if (targetRef==null || targetRef.isEmpty()) {
+
+        this.targetRef = this.getAttribute("targetRef");
+        if (targetRef == null || targetRef.isEmpty()) {
             logger.warning("Missing targetRef!");
+        }
+        
+     // find the BPMNShape element. If not defined create a new one
+        if (model.getContext() != null) {
+            bpmnEdge = (Element) BPMNModel.findChildNodeByName(model.getContext().bpmnPlane,
+                    BPMNNS.BPMNDI.prefix + ":BPMNEdge", getId());
+            if (bpmnEdge == null) {
+                // create shape element
+                createBPMNEdge();
+            } else {
+                // parse waypoints (di:waypoint)
+                List<Node> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,BPMNNS.DI.prefix + ":waypoint");
+                for (Node wayPoint : wayPoints) {
+                    NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
+                    BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
+                            wayPointattributeMap.getNamedItem("y").getNodeValue());
+                    getWayPoints().add(point);
+                }
+            }
         }
     }
 
-    
-    public Node getBpmnEdge() {
+    public Element getBpmnEdge() {
         return bpmnEdge;
     }
 
-
-    public void setBpmnEdge(Node bpmnEdge) {
+    public void setBpmnEdge(Element bpmnEdge) {
         this.bpmnEdge = bpmnEdge;
     }
-
 
     public String getSourceRef() {
         return sourceRef;
     }
-   
 
     public void setSourceRef(String sourceRef) {
         this.sourceRef = sourceRef;
@@ -66,6 +83,60 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
     public void setWayPoints(List<BPMNPoint> wayPoints) {
         this.wayPoints = wayPoints;
     }
-    
+
+    /**
+     * Adds a new waypoint to the BPMNEdge element
+     * 
+     * <pre>
+     * {@code
+     * <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" 
+     *      bpmnElement="SequenceFlow_1" 
+     *      sourceElement="BPMNShape_StartEvent_1" 
+     *      targetElement="BPMNShape_ManualTask_1"> 
+     *      <di:waypoint x="138.0" y="100.0"/>
+     *      <di:waypoint x="214.0" y="100.0"/> 
+     *      <bpmndi:BPMNLabel id="BPMNLabel_3"/>
+     * </bpmndi:BPMNEdge>
+     * }
+     * </pre>
+     */
+    public void addWayPoint(BPMNPoint wayPoint) {
+        // update shape
+        if (this.bpmnEdge != null) {
+            Element diwayPoint = model.createElement(BPMNNS.DI, "waypoint");
+            diwayPoint.setAttribute("x", wayPoint.getX() + "");
+            diwayPoint.setAttribute("y", wayPoint.getY() + "");
+            this.bpmnEdge.appendChild(diwayPoint);
+        } else {
+            logger.warning("missing bpmnShape for SequenceFlow: " + this.getId());
+        }
+        this.wayPoints.add(wayPoint);
+    }
+
+    public void removeWayPoint(BPMNPoint wayPoint) {
+        this.wayPoints.remove(wayPoint);
+    }
+
+    /**
+     * Creates a BPMNEdge node for this element
+     * <p>
+     * <bpmndi:BPMNBPMNEdge id="BPMNBPMNEdge_1" bpmnElement="StartEvent_1">
+     */
+    protected void createBPMNEdge() {
+        if (bpmnEdge != null) {
+            BPMNModel.getLogger().warning("bpmnShape already exits");
+        }
+        if (model.getContext().bpmnPlane == null) {
+            BPMNModel.getLogger().warning("Missing bpmnPlane in current model context");
+        }
+        if (this.getId() != null) {
+            bpmnEdge = model.createElement(BPMNNS.BPMNDI, "BPMNEdge");
+            bpmnEdge.setAttribute("id", BPMNModel.generateShortID("BPMNEdge"));
+            bpmnEdge.setAttribute("bpmnElement", this.getId());
+            model.getContext().bpmnPlane.appendChild(bpmnEdge);
+        } else {
+            BPMNModel.getLogger().warning("Missing ID attribute!");
+        }
+    }
 
 }
