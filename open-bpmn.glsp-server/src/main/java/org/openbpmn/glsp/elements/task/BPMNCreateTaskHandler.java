@@ -57,10 +57,6 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
     @Override
     protected void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
-        // We can not call super.execute because of the missing createNode impl!
-        // super.executeOperation(operation);
-        // See: https://github.com/eclipse-glsp/glsp/issues/648
-
         // now we add this task into the source model
         String taskID = "task-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode tasknodeID=" + taskID);
@@ -68,7 +64,8 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         BPMNActivity task = process.addTask(taskID, getLabel(), operation.getElementTypeId());
         Optional<GPoint> point = operation.getLocation();
         if (point.isPresent()) {
-            task.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
+            task.getBounds().updateBounds(point.get().getX(), point.get().getY(), BPMNActivity.DEFAULT_WIDTH,
+                    BPMNActivity.DEFAULT_HEIGHT);
         }
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(taskID)));

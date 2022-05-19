@@ -17,6 +17,7 @@ package org.openbpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
@@ -59,7 +60,8 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, -30.0, 0.0, 60.0, 60.0));
+        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, -(BPMNGateway.DEFAULT_WIDTH * 0.5), 0.0,
+                BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT));
     }
 
 }

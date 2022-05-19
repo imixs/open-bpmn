@@ -59,31 +59,52 @@ public class BPMNBounds {
     }
 
     public void updateBounds(double x, double y, double width, double height) {
-        System.out.println("....Bin in update boudns");
         setX(x);
         setY(y);
         setWidth(width);
         setHeight(height);
         if (bounds == null) {
-            System.out.println("....Bounds sin noch null - ich bua ewele");
             // <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
-
             if (bpmnShape == null) {
-                System.out.println("....leider ist bpmnShape null");
+                BPMNModel.getLogger().warning("bpmnShape missing!");
+            } else {
+                bounds = model.createElement(BPMNNS.DC, "Bounds");
+                bpmnShape.appendChild(bounds);
             }
-            bounds = model.createElement(BPMNNS.DC, "Bounds");
-            bpmnShape.appendChild(bounds);
         }
         // update attributes
         if (bounds instanceof org.w3c.dom.Element) {
-            System.out.println("....So jetzt gehts loss");
-
             org.w3c.dom.Element e = (Element) bounds;
             e.setAttribute("x", "" + getX());
-
             e.setAttribute("y", "" + getY());
             e.setAttribute("width", "" + getWidth());
             e.setAttribute("height", "" + getHeight());
+        }
+    }
+
+    /**
+     * Updates the x y position
+     * 
+     * @param x
+     * @param y
+     */
+    public void updateLocation(double x, double y) {
+        setX(x);
+        setY(y);
+        if (bounds == null) {
+            // <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
+            if (bpmnShape == null) {
+                BPMNModel.getLogger().warning("bpmnShape missing!");
+            } else {
+                bounds = model.createElement(BPMNNS.DC, "Bounds");
+                bpmnShape.appendChild(bounds);
+            }
+        }
+        // update attributes
+        if (bounds instanceof org.w3c.dom.Element) {
+            org.w3c.dom.Element e = (Element) bounds;
+            e.setAttribute("x", "" + getX());
+            e.setAttribute("y", "" + getY());
         }
 
     }

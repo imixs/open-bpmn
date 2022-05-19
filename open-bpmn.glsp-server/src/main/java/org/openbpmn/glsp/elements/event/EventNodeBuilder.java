@@ -17,24 +17,23 @@ package org.openbpmn.glsp.elements.event;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * The EventNodeBuilder defines the layout for all types of BPMN Event elements
+ * <p>
+ * The radius of the circle symbol is 36. The label is below the symbol.
  *
  * @author rsoika
  *
  */
 public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
 
-    // <T extends GNode, E extends AbstractGNodeBuilder<T, E>>
-
     private final String name;
-    // private final String category;
 
-    // , String eventType
     public EventNodeBuilder(final String type, final String name) {
         super(type);
         this.name = name;
@@ -57,9 +56,11 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         super.setProperties(node);
         node.setName(name);
         node.setLayout(GConstants.Layout.FREEFORM);
-
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, -20.0, -20.0, 40.0, 40.0));
+
+        // adjust the x-position of the port by half the radius.
+        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, -(BPMNEvent.DEFAULT_WIDTH * 0.5), 0.0,
+                BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT));
     }
 
 }

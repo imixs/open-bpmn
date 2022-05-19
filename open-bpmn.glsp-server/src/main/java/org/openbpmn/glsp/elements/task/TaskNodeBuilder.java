@@ -18,6 +18,7 @@ package org.openbpmn.glsp.elements.task;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
@@ -25,7 +26,6 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
     private final String name;
-    // private final String taskType;
 
     public TaskNodeBuilder(final String type, final String name) {
         super(type);
@@ -56,8 +56,8 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
         node.setLayout(GConstants.Layout.HBOX);
 
         // Set min width/height
-        node.getLayoutOptions().put("minWidth", 160);
-        node.getLayoutOptions().put("minHeight", 60);
+        node.getLayoutOptions().put("minWidth", BPMNActivity.DEFAULT_WIDTH);
+        node.getLayoutOptions().put("minHeight", BPMNActivity.DEFAULT_HEIGHT);
 
         node.getLayoutOptions().put("hGap", 10);
         node.getLayoutOptions().put("vAlign", "center");

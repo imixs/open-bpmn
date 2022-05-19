@@ -52,18 +52,11 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
      */
     public BPMNCreateGatewayHandler() {
         super(BPMNModel.BPMN_GATEWAYS);
-        // super(BPMNGatewayType.GATEWAY);
-        // handledElementTypeIds = BPMNModel.BPMN_GATEWAYS;
     }
 
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
-
-        // We can not call super.execute because of the missing createNode impl!
-        // super.executeOperation(operation);
-        // See: https://github.com/eclipse-glsp/glsp/issues/648
-
         // now we add this task into the source model
         String gatewayID = "gateway-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
@@ -71,7 +64,8 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         BPMNGateway gateway = process.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
         Optional<GPoint> point = operation.getLocation();
         if (point.isPresent()) {
-            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), 10.0, 10.0);
+            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), BPMNGateway.DEFAULT_HEIGHT,
+                    BPMNGateway.DEFAULT_HEIGHT);
         }
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));

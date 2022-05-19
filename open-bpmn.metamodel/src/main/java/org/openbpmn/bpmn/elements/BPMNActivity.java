@@ -19,6 +19,10 @@ import org.w3c.dom.Node;
  */
 public class BPMNActivity extends BPMNFlowElement {
 
+    public final static double DEFAULT_WIDTH = 110.0;
+    public final static double DEFAULT_HEIGHT = 50.0;
+
+    
     protected BPMNActivity(BPMNModel model, Node node, String type) {
         super(model, node, type);
     }
