@@ -65,7 +65,6 @@ export interface HelperLine {
 	readonly y2: number
 }
 
-
 /*
  * This is a custom Implementation of a GridSnapper
  * for BPMN
@@ -81,7 +80,6 @@ export class BPMNGridSnapper extends GridSnapper {
     }
 }
 
-
 /*
  * The HelperLineListener reacts on mouseDown and mouseMove and searches for
  * matching elements acording to the current  possition of the draged element.
@@ -94,7 +92,7 @@ export class HelperLineListener extends MouseListener {
 
 	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
 		// check if target is relevant....
-		let bpmnNode = getBPMNNode(target);
+		const bpmnNode = getBPMNNode(target);
 		if (bpmnNode) {
 			// switch into active mode
 			this.isActive = true;
@@ -114,7 +112,7 @@ export class HelperLineListener extends MouseListener {
 	override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
 		if (this.isActive) {
 			// first test if we have a mouseMove on a BPMNNode
-			let bpmnNode = getBPMNNode(target);
+			const bpmnNode = getBPMNNode(target);
 			if (bpmnNode) {
 				const helperLines: HelperLine[] | undefined = this.findHelperLines(bpmnNode);
 				if (helperLines) {

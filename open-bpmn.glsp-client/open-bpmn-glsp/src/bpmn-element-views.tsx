@@ -105,12 +105,11 @@ export class IconView extends ShapeView {
 	}
 }
 
-
 /*
  * This is the view for all kinds of BPMN Event elements.
  * The radius of the event symbol (cycle) is 40.
  * The cycle can contain an additional symbol in its centre.  
- * 
+ *
  */
 @injectable()
 export class EventNodeView extends ShapeView {
@@ -143,9 +142,7 @@ export class EventNodeView extends ShapeView {
 		}
 
         // render the symbol and its children...
-		//let vnode: any = undefined;
-
-		let vnode: any = (
+		const vnode: any = (
 			// render circle with a event symbol and the label:heading
 			<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
 				<circle r='20' cx='20' cy='20' ></circle>
@@ -155,7 +152,7 @@ export class EventNodeView extends ShapeView {
 				{context.renderChildren(element)}
 			</g>
 		);
-		
+
 		const subType = getSubType(element);
 		if (subType) {
 			setAttr(vnode, 'class', subType);
@@ -167,8 +164,8 @@ export class EventNodeView extends ShapeView {
 /*
  * This is the view for all kinds of BPMN Gateway elements.
  * The gateway symbol (dyamond) has a width of 50.
- * The dyamond can contain an additional symbol in its centre.  
- * 
+ * The dyamond can contain an additional symbol in its centre.
+ *
  */
 @injectable()
 export class GatewayNodeView extends ShapeView {
@@ -199,7 +196,7 @@ export class GatewayNodeView extends ShapeView {
 		}
 
 		/*  text-anchor="middle"  waere die lösung */
-		let	vnode: any = (
+		const vnode: any = (
 			// render circle with an event symbol and the label:heading
 			<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
 				<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
@@ -210,7 +207,7 @@ export class GatewayNodeView extends ShapeView {
 				{context.renderChildren(element)}
 			</g>
 		);
-		
+
 		const subType = getSubType(element);
 		if (subType) {
 			setAttr(vnode, 'class', subType);

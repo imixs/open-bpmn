@@ -19,5 +19,5 @@ export const BPMNLanguage: GLSPDiagramLanguage = {
     contributionId: 'Bpmn',
     label: 'BPMN 2.0 diagram',
     diagramType: 'bpmn-diagram',
-    fileExtensions: ['.minimal']
+    fileExtensions: ['.bpmn','.bpmn2']
 };
