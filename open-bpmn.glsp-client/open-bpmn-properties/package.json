@@ -1,9 +1,9 @@
 {
   "private": "true",
   "name": "@open-bpmn/open-bpmn-properties",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
-    "@open-bpmn/open-bpmn-model": "0.1.0",
+    "@open-bpmn/open-bpmn-model": "0.2.0",
     "@jsonforms/core": "3.0.0-beta.0",
     "@jsonforms/react": "3.0.0-beta.0",
     "@jsonforms/vanilla-renderers": "3.0.0-beta.0",

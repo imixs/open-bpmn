@@ -10,10 +10,14 @@
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
-            <bpmndi:BPMNShape bpmnElement="end_1" id="BPMNShape_tw0acA"/>
-            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_bNAVjw">
+            <bpmndi:BPMNShape bpmnElement="end_1" id="BPMNShape_yMMEyQ"/>
+            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_V1fYFA">
                 <dc:Bounds xmlns:dc="http://www.omg.org/spec/DD/20100524/DI" height="60.0" width="140.0" x="10.0" y="10.0"/>
             </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_8HJPxA">
+                <di:waypoint xmlns:di="http://www.omg.org/spec/DD/20100524/DC" x="80.0" y="40.0"/>
+                <di:waypoint xmlns:di="http://www.omg.org/spec/DD/20100524/DC" x="0.0" y="0.0"/>
+            </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
