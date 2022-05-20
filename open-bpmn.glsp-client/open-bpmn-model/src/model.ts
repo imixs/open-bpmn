@@ -121,7 +121,7 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 	// return the offset bounds
 	get symbolBounds(): Bounds {
 		return {
-			x: this.bounds.x-20,
+			x: this.bounds.x,
 			y: this.bounds.y,
 			width: 40.0,
 			height: 40.0
@@ -175,7 +175,7 @@ export class GatewayNode extends SNode implements Nameable, WithEditableLabel, B
 	// return the default bounds
 	get symbolBounds(): Bounds {
 		return {
-			x: this.bounds.x-25,
+			x: this.bounds.x,
 			y: this.bounds.y,
 			width: 50.0,
 			height: 50.0

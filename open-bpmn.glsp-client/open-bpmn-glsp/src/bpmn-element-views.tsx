@@ -49,12 +49,6 @@ export class IconView extends ShapeView {
 		if (!(eventNode || taskNode || gatewayNode)) {
 			return undefined;
 		}
-		/*
-		const gatewayNode = findParentByFeature(element, isGatewayNode);
-		if (!gatewayNode) {
-			return undefined;
-		}
-		*/
 
 		let icon;
 		if (taskNode) {
@@ -111,8 +105,70 @@ export class IconView extends ShapeView {
 	}
 }
 
-/**
- * This  gateway...
+
+/*
+ * This is the view for all kinds of BPMN Event elements.
+ * The radius of the event symbol (cycle) is 40.
+ * The cycle can contain an additional symbol in its centre.  
+ * 
+ */
+@injectable()
+export class EventNodeView extends ShapeView {
+
+	render(element: EventNode, context: RenderingContext): VNode | undefined {
+		if (!this.isVisible(element, context)) {
+			return undefined;
+		}
+
+		// first we compute the event symbol based on the event type
+		let eventSymbol = 'M14';
+		if (element.type === 'sendEvent') {
+			// eslint-disable-next-line max-len
+			eventSymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
+		}
+		if (element.type === 'scriptEvent') {
+			// default symbol
+			// eslint-disable-next-line max-len
+			eventSymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
+		}
+		
+		// Next we adust the position of the label:heading and
+		// this is some kind of hack!
+		for (const entry of element.children) {
+			if (entry instanceof SLabel && entry.type === 'label:heading') {
+				// adjust allignment and position
+				entry.alignment = { x: 0, y: 0 };
+				entry.position = { x: 20, y: 55 };
+			}
+		}
+
+        // render the symbol and its children...
+		//let vnode: any = undefined;
+
+		let vnode: any = (
+			// render circle with a event symbol and the label:heading
+			<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
+				<circle r='20' cx='20' cy='20' ></circle>
+				<g class-bpmn-symbol={true} transform="translate(8 8),scale(1.5)">
+					<path d={eventSymbol} />
+				</g>
+				{context.renderChildren(element)}
+			</g>
+		);
+		
+		const subType = getSubType(element);
+		if (subType) {
+			setAttr(vnode, 'class', subType);
+		}
+		return vnode;
+	}
+}
+
+/*
+ * This is the view for all kinds of BPMN Gateway elements.
+ * The gateway symbol (dyamond) has a width of 50.
+ * The dyamond can contain an additional symbol in its centre.  
+ * 
  */
 @injectable()
 export class GatewayNodeView extends ShapeView {
@@ -123,7 +179,7 @@ export class GatewayNodeView extends ShapeView {
 		}
 
 		// first we compute the gateway symbol based on the gateway type
-		let gatewaySymbol = undefined;
+		let gatewaySymbol = 'M14';
 		if (element.type === 'exclusiveGateway') {
 			// eslint-disable-next-line max-len
 			gatewaySymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
@@ -143,92 +199,18 @@ export class GatewayNodeView extends ShapeView {
 		}
 
 		/*  text-anchor="middle"  waere die lösung */
-		let vnode: any = undefined;
-		if (gatewaySymbol) {
-			vnode = (
-				// render circle with a event symbol and the label:heading
-				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
-					<g class-bpmn-symbol={true}>
-						<path transform={'scale(2.0) translate(5 5)'}
-							d={gatewaySymbol} />
-					</g>
-					{context.renderChildren(element)}
+		let	vnode: any = (
+			// render circle with an event symbol and the label:heading
+			<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
+				<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
+				<g class-bpmn-symbol={true}>
+					<path transform={'scale(2.0) translate(5 5)'}
+						d={gatewaySymbol} />
 				</g>
-			);
-		} else {
-			// we do not found a header so simply draw a circle...
-			vnode = (
-				<g class-sprotty-node={true}>
-					<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
-				</g>
-			);
-		}
-		const subType = getSubType(element);
-		if (subType) {
-			setAttr(vnode, 'class', subType);
-		}
-		return vnode;
-	}
-}
-
-/*
- * This is the view for all kinds of BPMN Event elements.
- * The radius of the event symbol (cycle) is 40.
- * The cycle can contain an additional symbol in its centre.  
- * 
- */
-@injectable()
-export class EventNodeView extends ShapeView {
-
-	render(element: EventNode, context: RenderingContext): VNode | undefined {
-		if (!this.isVisible(element, context)) {
-			return undefined;
-		}
-
-		// first we compute the event symbol based on the event type
-		let eventSymbol = undefined;
-		if (element.type === 'startEvent') {
-			// eslint-disable-next-line max-len
-			eventSymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
-		} else {
-			// default symbol
-			// eslint-disable-next-line max-len
-			eventSymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
-		}
+				{context.renderChildren(element)}
+			</g>
+		);
 		
-		// Next we adust the position of the label:heading and
-		// this is some kind of hack!
-		for (const entry of element.children) {
-			if (entry instanceof SLabel && entry.type === 'label:heading') {
-				// adjust allignment and position
-				entry.alignment = { x: 0, y: 0 };
-				entry.position = { x: 20, y: 55 };
-			}
-		}
-
-        // render the symbol and its children...
-		let vnode: any = undefined;
-		if (eventSymbol) {
-			vnode = (
-				// render circle with a event symbol and the label:heading
-				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='20' cx='20' cy='20' ></circle>
-					<g class-bpmn-symbol={true} transform="translate(8 8),scale(1.5)">
-						<path d={eventSymbol} />
-					</g>
-					{context.renderChildren(element)}
-				</g>
-			);
-		} else {
-			// we do not found a symbol so simply draw an empty circle...
-			vnode = (
-				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='20' cx='20' cy='0' ></circle>
-					{context.renderChildren(element)}
-				</g>
-			);
-		}
 		const subType = getSubType(element);
 		if (subType) {
 			setAttr(vnode, 'class', subType);
