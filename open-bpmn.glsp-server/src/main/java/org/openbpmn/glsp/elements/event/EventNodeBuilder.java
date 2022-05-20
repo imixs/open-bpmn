@@ -57,10 +57,9 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         node.setName(name);
         node.setLayout(GConstants.Layout.FREEFORM);
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-
-        // adjust the x-position of the port by half the radius.
-        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, -(BPMNEvent.DEFAULT_WIDTH * 0.5), 0.0,
-                BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT));
+        // add SPort
+        node.getChildren().add(
+                BPMNBuilderHelper.createBPMNPort(node, 0.0, 0.0, BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT));
     }
 
 }

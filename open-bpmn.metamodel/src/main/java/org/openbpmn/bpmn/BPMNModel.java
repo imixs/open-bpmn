@@ -198,8 +198,13 @@ public class BPMNModel {
             }
 
             // find the bpmndi:BPMNPlane
+//            context.setBpmnPlane(
+//                    findChildNodeByName(bpmnDiagram, BPMNNS.BPMNDI.prefix + ":BPMNPlane", context.getId()));
+            
             context.setBpmnPlane(
-                    findChildNodeByName(bpmnDiagram, BPMNNS.BPMNDI.prefix + ":BPMNPlane", context.getId()));
+                    findBpmnPlane(bpmnDiagram, context.getId()));
+            
+            
             context.init();
             return context;
         }
@@ -408,10 +413,10 @@ public class BPMNModel {
             // check the attribute bpmnElement
             if (nodeName.equals(child.getNodeName()) && child.hasAttributes()) {
                 // get attributes names and values
-                NamedNodeMap nodeMap = child.getAttributes();
-                for (int j = 0; j < nodeMap.getLength(); j++) {
-                    Node node = nodeMap.item(j);
-                    if ("bpmnElement".equals(node.getNodeName()) && id.equals(node.getNodeValue())) {
+                NamedNodeMap attributesMap = child.getAttributes();
+                for (int j = 0; j < attributesMap.getLength(); j++) {
+                    Node attr = attributesMap.item(j);
+                    if ("bpmnElement".equals(attr.getNodeName()) && id.equals(attr.getNodeValue())) {
                         // found it!
                         return child;
                     }
@@ -421,6 +426,71 @@ public class BPMNModel {
         }
         // not found!
         return null;
+    }
+
+    // context.setBpmnPlane(
+    // findChildNodeByName(bpmnDiagram, BPMNNS.BPMNDI.prefix + ":BPMNPlane",
+    // context.getId()));
+    //
+    // <bpmndi:BPMNPlane id="BPMNPlane_1">
+    /**
+     * This method finds a bpmndi:BPMNPlane within a bpmn2:definitions. The Id is a
+     * reference to a bpmn2:process. In some cases bpmn2:definitions contains only
+     * one bpmndi:BPMNPlane without a reference to a process (default plane) in this
+     * case if no matching plane with the given id was found the method returns the
+     * default plane.
+     * 
+     * <pre>
+     * {@code
+     * <bpmn2:definitions >
+     *   <bpmn2:process id="Process_1" name="Process 1" isExecutable="false"> ...
+     *   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+     *      <bpmndi:BPMNPlane id="BPMNPlane_1">
+     *      
+     * }</pre
+     * 
+     * @param bpmnDefinitions
+     * @param nodeName
+     * @param id
+     * @return
+     */
+    public static Node findBpmnPlane(Node bpmnDefinitions, String id) {
+        if (id == null || id.isEmpty() || bpmnDefinitions == null ) {
+            return null;
+        }
+        
+        String name=BPMNNS.BPMNDI.prefix + ":BPMNPlane";
+        Node defaultBpmnPlane=null;
+        NodeList childList = bpmnDefinitions.getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+
+            // check the attribute bpmnElement
+            if (name.equals(child.getNodeName()) && child.hasAttributes()) {
+                // get attributes names and values
+                NamedNodeMap attributesMap = child.getAttributes();
+                Node bpmnElement=attributesMap.getNamedItem("bpmnElement");
+                if (bpmnElement!=null) {
+                    if (id.equals(bpmnElement.getNodeValue())) {
+                        // found by id
+                        return child;
+                    }
+                } else {
+                    // set default plane
+                    defaultBpmnPlane=child;
+                }
+//                for (int j = 0; j < attributesMap.getLength(); j++) {
+//                    Node attr = attributesMap.item(j);
+//                    if ("bpmnElement".equals(attr.getNodeName()) && id.equals(attr.getNodeValue())) {
+//                        // found it!
+//                        return child;
+//                    }
+//                }
+            }
+
+        }
+        // return defaultPlane or null if no plane was found!
+        return defaultBpmnPlane;
     }
 
     /**

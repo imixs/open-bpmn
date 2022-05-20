@@ -108,7 +108,6 @@ export class IconView extends ShapeView {
 			setAttr(vnode, 'class', subType);
 		}
 		return vnode;
-
 	}
 }
 
@@ -139,7 +138,7 @@ export class GatewayNodeView extends ShapeView {
 			if (entry instanceof SLabel && entry.type === 'label:heading') {
 				// adjust allignment and position
 				entry.alignment = { x: 0, y: 0 };
-				entry.position = { x: 0, y: 65 };
+				entry.position = { x: 25, y: 65 };
 			}
 		}
 
@@ -148,10 +147,10 @@ export class GatewayNodeView extends ShapeView {
 		if (gatewaySymbol) {
 			vnode = (
 				// render circle with a event symbol and the label:heading
-				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<rect x="0" y="0" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
+				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
+					<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
 					<g class-bpmn-symbol={true}>
-						<path transform={'scale(2.0) translate(-8 5)'}
+						<path transform={'scale(2.0) translate(5 5)'}
 							d={gatewaySymbol} />
 					</g>
 					{context.renderChildren(element)}
@@ -160,8 +159,8 @@ export class GatewayNodeView extends ShapeView {
 		} else {
 			// we do not found a header so simply draw a circle...
 			vnode = (
-				<g transform={'scale(1) translate(0,0)'} class-sprotty-node={true}>
-					<rect x="0" y="0" ></rect>
+				<g class-sprotty-node={true}>
+					<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
 				</g>
 			);
 		}
@@ -175,7 +174,7 @@ export class GatewayNodeView extends ShapeView {
 
 /*
  * This is the view for all kinds of BPMN Event elements.
- * The radius of the event symbol (cycle) is 36.
+ * The radius of the event symbol (cycle) is 40.
  * The cycle can contain an additional symbol in its centre.  
  * 
  */
@@ -204,7 +203,7 @@ export class EventNodeView extends ShapeView {
 			if (entry instanceof SLabel && entry.type === 'label:heading') {
 				// adjust allignment and position
 				entry.alignment = { x: 0, y: 0 };
-				entry.position = { x: 0, y: 50 };
+				entry.position = { x: 20, y: 55 };
 			}
 		}
 
@@ -214,8 +213,8 @@ export class EventNodeView extends ShapeView {
 			vnode = (
 				// render circle with a event symbol and the label:heading
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='18' cx='0' cy='18' ></circle>
-					<g class-bpmn-symbol={true} transform="translate(-10 6),scale(1.5)">
+					<circle r='20' cx='20' cy='20' ></circle>
+					<g class-bpmn-symbol={true} transform="translate(8 8),scale(1.5)">
 						<path d={eventSymbol} />
 					</g>
 					{context.renderChildren(element)}
@@ -225,7 +224,7 @@ export class EventNodeView extends ShapeView {
 			// we do not found a symbol so simply draw an empty circle...
 			vnode = (
 				<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-					<circle r='18' cx='0' cy='0' ></circle>
+					<circle r='20' cx='20' cy='0' ></circle>
 					{context.renderChildren(element)}
 				</g>
 			);

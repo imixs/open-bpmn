@@ -27,19 +27,20 @@ import org.eclipse.glsp.graph.util.GraphUtil;
  *
  */
 public final class GridSnapper {
-   public static final double GRID_X = 10.0;
-   public static final double GRID_Y = 10.0;
+    public static final double GRID_X = 5.0;
+    public static final double GRID_Y = 5.0;
 
-   private GridSnapper() {}
+    private GridSnapper() {
+    }
 
-   public static GPoint snap(final GPoint originalpoint) {
-      double snappedX = Math.round(originalpoint.getX() / GRID_X) * GRID_X;
-      double snappedY = Math.round(originalpoint.getY() / GRID_Y) * GRID_Y;
-      return GraphUtil.point(snappedX, snappedY);
-   }
+    public static GPoint snap(final GPoint originalpoint) {
+        double snappedX = Math.round(originalpoint.getX() / GRID_X) * GRID_X;
+        double snappedY = Math.round(originalpoint.getY() / GRID_Y) * GRID_Y;
+        return GraphUtil.point(snappedX, snappedY);
+    }
 
-   public static Optional<GPoint> snap(final Optional<GPoint> originalPoint) {
-      return originalPoint.map(GridSnapper::snap);
-   }
+    public static Optional<GPoint> snap(final Optional<GPoint> originalPoint) {
+        return originalPoint.map(GridSnapper::snap);
+    }
 
 }

@@ -60,8 +60,9 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
         node.setLayout(GConstants.Layout.FREEFORM);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, -(BPMNGateway.DEFAULT_WIDTH * 0.5), 0.0,
-                BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT));
+        // add SPort
+        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, 0.0, 0.0, BPMNGateway.DEFAULT_WIDTH,
+                BPMNGateway.DEFAULT_HEIGHT));
     }
 
 }

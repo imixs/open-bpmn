@@ -37,13 +37,22 @@ import {
 	SModelElement,
 	SShapeElement,
 	WithEditableLabel,
-	withEditLabelFeature,
+	withEditLabelFeature,isBoundsAware,
 	Fadeable, Hoverable,SPort
 } from '@eclipse-glsp/client';
 import { Bounds,Point } from 'sprotty-protocol';
 // import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
-export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel {
+export interface BPMNFlowElement {
+    symbolBounds: Bounds
+}
+
+/* a weak teas if an SModelElement is a BPMNFlowElement */
+export function isBPMNFlowElement(obj: any): obj is BPMNFlowElement {
+  return ('symbolBounds' in obj) && (obj instanceof SModelElement );
+}
+
+export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel, BPMNFlowElement {
 	static readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -59,6 +68,11 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 	];
 	category?: string;
 	documentation?: string;
+
+	// return the default bounds
+	get symbolBounds(): Bounds {
+		return this.bounds;
+	}
 
 	get editableLabel(): (SChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
@@ -84,17 +98,10 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 			'documentation': this.documentation ? this.documentation : ''
 		};
 	}
-
-	/*
-	 * Returns the BPMN anchorCompute Kind for GatewayNodes
-	 */
-	/*get anchorKind(): string {
-		return BPMN_ELEMENT_ANCHOR_KIND;
-	}*/
 }
 
 /* CircularNode RectangularNode */
-export class EventNode extends CircularNode implements Nameable, WithEditableLabel {
+export class EventNode extends CircularNode implements Nameable, WithEditableLabel, BPMNFlowElement {
 	static readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -110,6 +117,16 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 	];
 	category?: string;
 	documentation?: string;
+
+	// return the offset bounds
+	get symbolBounds(): Bounds {
+		return {
+			x: this.bounds.x-20,
+			y: this.bounds.y,
+			width: 40.0,
+			height: 40.0
+        };
+	}
 
 	get editableLabel(): (SChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
@@ -138,7 +155,7 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 }
 
 // DiamondNode
-export class GatewayNode extends SNode implements Nameable, WithEditableLabel {
+export class GatewayNode extends SNode implements Nameable, WithEditableLabel, BPMNFlowElement {
 	static readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -154,6 +171,16 @@ export class GatewayNode extends SNode implements Nameable, WithEditableLabel {
 	];
 	category?: string;
 	documentation: string;
+
+	// return the default bounds
+	get symbolBounds(): Bounds {
+		return {
+			x: this.bounds.x-25,
+			y: this.bounds.y,
+			width: 50.0,
+			height: 50.0
+        };
+	}
 
 	get editableLabel(): (SChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
@@ -213,23 +240,16 @@ export function isGatewayNode(element: SModelElement): element is GatewayNode {
 * which is a Task, Event or Gateway node
 */
 export function getBPMNNode(modelElement: SModelElement): SModelElement | undefined {
-	if (isTaskNode(modelElement)) {
-		// we found a direct task node
-		return modelElement;
-	}
-	if (isEventNode(modelElement)) {
-		// we found a direct event node
-		return modelElement;
-	}
-	if (isGatewayNode(modelElement)) {
-		// we found a direct gateway node
+
+	if (isBPMNFlowElement(modelElement)) {
+		// console.log('isBPMNFlowELement=true');
 		return modelElement;
 	}
 
 	if (modelElement instanceof BPMNPort) {
-		// we have a BPMNPOrt - so return the parent
+		// we have a BPMNPOrt - recusrive call with parent
 		if (modelElement instanceof SChildElement) {
-			return modelElement.parent;
+			return getBPMNNode(modelElement.parent);
 		}
 	}
 	if (modelElement instanceof SChildElement) {
@@ -242,25 +262,24 @@ export function getBPMNNode(modelElement: SModelElement): SModelElement | undefi
 }
 
 /*
- * This method returns the center point of a BPMNNode element.
+ * This method returns the center point of a BPMNFlowElement.
+ * A BPMNFlowElement holds an extra bounds element for the symbol.
  * The method is needed because of the untypical implementation
  * of the EventView and GatewayView
  */
 export function getBPMNNodeCenter(modelElement: SModelElement): Point | undefined {
-	if (isTaskNode(modelElement)) {
-		console.log('we found a task node ');
-		// we can use the default method of GLSP here
-		const point = Bounds.center(modelElement.bounds);
-		console.log(' center bounds y='+point.y);
-		return point;
-	}
-	if (isEventNode(modelElement)) {
-		console.log('we found a event node');
-		let point = Bounds.center(modelElement.bounds);
-		console.log(' center bounds y='+point.y);
-		// we fix the center point offset here
-		point = { x:point.x, y:modelElement.bounds.y+(36*0.5)};
-		return point;
+
+	if (isBPMNFlowElement(modelElement) && isBoundsAware(modelElement)) {
+		console.log('Bounds  : '+modelElement.type );
+		console.log('  outer -> x='+modelElement.bounds.x +  ' y='+modelElement.bounds.y
+		+  ' w='+modelElement.bounds.width
+		+  ' h='+modelElement.bounds.height);
+		console.log('   symbol -> x='+modelElement.symbolBounds.x +  ' y='+modelElement.symbolBounds.y
+		+  ' w='+modelElement.symbolBounds.width
+		+  ' h='+modelElement.symbolBounds.height);
+		const result = Bounds.center(modelElement.symbolBounds);
+		console.log('  center -> x='+result.x + ' y='+result.y);
+		return result;
 	}
 	return undefined;
 }
@@ -278,23 +297,11 @@ export class BPMNPort extends SPort implements Fadeable, Hoverable {
     hoverFeedback = false;
     opacity = 1;
 
-	/*
-	* Returns the BPMN anchorCompute Kind for BPMN Elements
-	*/
-	/*get anchorKind(): string {
-		return BPMN_ELEMENT_ANCHOR_KIND;
-	}*/
 }
 
 export class SequenceFlow extends SEdge {
 	condition?: string;
 
-	/*
-	* Returns the BPMN anchorCompute Kind for BPMN Elements
-	*/
-	/*get anchorKind(): string {
-		return BPMN_ELEMENT_ANCHOR_KIND;
-	}*/
 }
 
 export class Icon extends SShapeElement implements LayoutContainer {

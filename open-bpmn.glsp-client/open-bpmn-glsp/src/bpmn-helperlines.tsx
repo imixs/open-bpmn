@@ -73,11 +73,11 @@ export interface HelperLine {
 @injectable()
 export class BPMNGridSnapper extends GridSnapper {
     override get gridX(): number {
-        return 1;
+        return 5;
     }
 
     override get gridY(): number {
-        return 1;
+        return 5;
     }
 }
 
