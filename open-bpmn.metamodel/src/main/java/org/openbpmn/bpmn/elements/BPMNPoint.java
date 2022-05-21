@@ -2,10 +2,10 @@ package org.openbpmn.bpmn.elements;
 
 public class BPMNPoint {
 
-    private float x;
-    private float y;
+    private double x;
+    private double y;
 
-    public BPMNPoint(float x, float y) {
+    public BPMNPoint(double x, double y) {
         super();
         this.x = x;
         this.y = y;
@@ -15,19 +15,19 @@ public class BPMNPoint {
         this(Float.parseFloat(x), Float.parseFloat(y));
     }
 
-    public float getX() {
+    public double getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public float getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(double y) {
         this.y = y;
     }
 

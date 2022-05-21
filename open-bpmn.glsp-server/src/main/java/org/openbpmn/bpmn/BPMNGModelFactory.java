@@ -159,6 +159,8 @@ public class BPMNGModelFactory implements GModelFactory {
                 builder.source(findPort(source));
             }
 
+            builder.id(sequenceFlow.getId());
+
             SequenceFlow sequenceFlowEdge = builder.build();
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
                 GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());

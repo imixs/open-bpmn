@@ -24,6 +24,7 @@ import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 
 import com.google.inject.Inject;
 
@@ -55,6 +56,9 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             }
             if (baseElement instanceof BPMNGateway) {
                 modelState.getBpmnModel().getContext().deleteGateway(id);
+            }
+            if (baseElement instanceof BPMNSequenceFlow) {
+                modelState.getBpmnModel().getContext().deleteSequenceFlow(id);
             }
         }
 

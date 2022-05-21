@@ -9,6 +9,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class BPMNSequenceFlow extends BPMNBaseElement {
     private static Logger logger = Logger.getLogger(BPMNSequenceFlow.class.getName());
@@ -60,20 +61,45 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         this.bpmnEdge = bpmnEdge;
     }
 
+    /**
+     * Returns the sourc ref ID
+     * @return
+     */
     public String getSourceRef() {
         return sourceRef;
     }
-
+    
+    /**
+     * Returns the Connected BPMN source element
+     * @return
+     */
+    public BPMNFlowElement getSourceElement() {
+        return this.model.getContext().findBPMNFlowElementById(sourceRef);
+    }
+    
+    
     public void setSourceRef(String sourceRef) {
         this.sourceRef = sourceRef;
     }
 
+    /**
+     * Returns the target ref id
+     * @return
+     */
     public String getTargetRef() {
         return targetRef;
     }
 
     public void setTargetRef(String targetRef) {
         this.targetRef = targetRef;
+    }
+
+    /**
+     * Returns the Connected BPMN target element
+     * @return
+     */
+    public BPMNFlowElement getTargetElement() {
+        return this.model.getContext().findBPMNFlowElementById(targetRef);
     }
 
     public List<BPMNPoint> getWayPoints() {
@@ -113,8 +139,27 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         this.wayPoints.add(wayPoint);
     }
 
-    public void removeWayPoint(BPMNPoint wayPoint) {
-        this.wayPoints.remove(wayPoint);
+  
+    /**
+     * Removes all wayPoints form this BPMNSequenceFlow
+     */
+    public void clearWayPoints() {
+        NodeList childList = bpmnEdge.getChildNodes();
+        List<Node> deletionList = new ArrayList<Node>();
+        // find all di:waypoint
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            if ((BPMNNS.DI.prefix + ":waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
+                // collect node....
+                deletionList.add(child);
+            }
+        }
+        // remove nodes form Edge element...
+        for (Node element: deletionList) {
+            bpmnEdge.removeChild(element);
+        }
+        // reset wayPoints
+        wayPoints.clear();
     }
 
     /**

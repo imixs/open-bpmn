@@ -37,13 +37,11 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
         <di:waypoint xsi:type="dc:Point" x="86.0" y="71.0"/>
-        <di:waypoint xsi:type="dc:Point" x="118.0" y="71.0"/>
         <di:waypoint xsi:type="dc:Point" x="150.0" y="71.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_4"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="BPMNShape_Task_1" targetElement="BPMNShape_EndEvent_1">
         <di:waypoint xsi:type="dc:Point" x="260.0" y="71.0"/>
-        <di:waypoint xsi:type="dc:Point" x="305.0" y="71.0"/>
         <di:waypoint xsi:type="dc:Point" x="350.0" y="71.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_5"/>
       </bpmndi:BPMNEdge>
