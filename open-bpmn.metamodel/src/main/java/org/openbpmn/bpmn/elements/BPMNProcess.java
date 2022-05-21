@@ -376,13 +376,44 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Returns a BPMNBaseElement by given id. <p If no element with the given ID
-     * exists, the method returns null.
+     * Finds a BPMNBaseElement by given id.
+     * <p>
+     * If no element with the given ID exists, the method returns null.
      * 
      * @param id
      * @return
      */
     public BPMNBaseElement findBaseElementById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        // test flowElements...
+        BPMNBaseElement result = findBPMNFlowElementById(id);
+
+        if (result != null) {
+            return result;
+        }
+
+        // test sequence flows
+        result = this.findBPMNSequenceFlowById(id);
+        if (result != null) {
+            return result;
+        }
+
+        // no match!
+        return null;
+    }
+
+    /**
+     * Finds a BPMNFlowElement by ID
+     * <p>
+     * If no element with the given ID exists, the method returns null.
+     * 
+     * @param id
+     * @return
+     */
+    public BPMNFlowElement findBPMNFlowElementById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -407,6 +438,21 @@ public class BPMNProcess extends BPMNBaseElement {
             }
         }
 
+        return null;
+    }
+
+    /**
+     * Finds a BPMNSequence by ID
+     * <p>
+     * If no element with the given ID exists, the method returns null.
+     * 
+     * @param id
+     * @return
+     */
+    public BPMNSequenceFlow findBPMNSequenceFlowById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
         Set<BPMNSequenceFlow> listF = this.getSequenceFlows();
         for (BPMNSequenceFlow element : listF) {
             if (id.equals(element.getId())) {
@@ -423,7 +469,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id of a flowElement
      * @return list of SequenceFlows
      */
-    public List<BPMNSequenceFlow> findSequenceFlowsByElementId(String id) {
+    private List<BPMNSequenceFlow> findSequenceFlowsByElementId(String id) {
         List<BPMNSequenceFlow> result = new ArrayList<BPMNSequenceFlow>();
         if (id == null || id.isEmpty()) {
             return result;

@@ -34,6 +34,8 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.BPMNGModelFactory;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNSourceModelStorage;
+import org.openbpmn.bpmn.operations.BPMNChangeBoundsOperationHandler;
+import org.openbpmn.bpmn.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
@@ -90,6 +92,9 @@ public class BPMNDiagramModule extends DiagramModule {
 //        binding.add(LayoutOperationHandler.class);
 //        binding.add(PasteOperationHandler.class);
 //        binding.add(ReconnectEdgeOperationHandler.class);
+
+        binding.add(BPMNChangeBoundsOperationHandler.class);
+        binding.add(BPMNChangeRoutingPointsOperationHandler.class);
 
         // Tasks
         binding.add(BPMNCreateTaskHandler.class);
