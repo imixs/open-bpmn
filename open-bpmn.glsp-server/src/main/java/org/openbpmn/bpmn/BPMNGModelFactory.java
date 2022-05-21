@@ -84,7 +84,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 }
             }
             if (newGModel == null) {
-                logger.info("Unable to create model - no processes found - creating an empty model");
+                logger.warning("Unable to create model - no processes found - creating an empty model");
                 createNewEmptyRoot("process_0");
             }
 

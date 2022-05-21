@@ -128,8 +128,7 @@ public class BPMNModelFactory {
      * @throws IOException
      */
     public static BPMNModel read(InputStream is) {
-
-        logger.info("read from inputStream...");
+        logger.fine("read from inputStream...");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setNamespaceAware(true);
         try {

@@ -187,7 +187,7 @@ public class BPMNModel {
 
         // find process
         NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
-        logger.info("..found " + processList.getLength() + " processes");
+        logger.fine("..found " + processList.getLength() + " processes");
 
         for (int i = 0; i < processList.getLength(); i++) {
             Node item = processList.item(i);
@@ -196,15 +196,8 @@ public class BPMNModel {
                 // not match of the requested processs ID
                 continue;
             }
+            context.setBpmnPlane(findBpmnPlane(bpmnDiagram, context.getId()));
 
-            // find the bpmndi:BPMNPlane
-//            context.setBpmnPlane(
-//                    findChildNodeByName(bpmnDiagram, BPMNNS.BPMNDI.prefix + ":BPMNPlane", context.getId()));
-            
-            context.setBpmnPlane(
-                    findBpmnPlane(bpmnDiagram, context.getId()));
-            
-            
             context.init();
             return context;
         }
@@ -428,16 +421,11 @@ public class BPMNModel {
         return null;
     }
 
-    // context.setBpmnPlane(
-    // findChildNodeByName(bpmnDiagram, BPMNNS.BPMNDI.prefix + ":BPMNPlane",
-    // context.getId()));
-    //
-    // <bpmndi:BPMNPlane id="BPMNPlane_1">
     /**
      * This method finds a bpmndi:BPMNPlane within a bpmn2:definitions. The Id is a
      * reference to a bpmn2:process. In some cases bpmn2:definitions contains only
      * one bpmndi:BPMNPlane without a reference to a process (default plane) in this
-     * case if no matching plane with the given id was found the method returns the
+     * case, if no matching plane with the given id was found the method returns the
      * default plane.
      * 
      * <pre>
@@ -455,12 +443,17 @@ public class BPMNModel {
      * @return
      */
     public static Node findBpmnPlane(Node bpmnDefinitions, String id) {
-        if (id == null || id.isEmpty() || bpmnDefinitions == null ) {
+        if (id == null || id.isEmpty() || bpmnDefinitions == null) {
             return null;
         }
-        
-        String name=BPMNNS.BPMNDI.prefix + ":BPMNPlane";
-        Node defaultBpmnPlane=null;
+
+        String diagramID = "";
+        if (bpmnDefinitions.getAttributes() != null && bpmnDefinitions.getAttributes().getNamedItem("id") != null) {
+            diagramID = bpmnDefinitions.getAttributes().getNamedItem("id").getNodeValue();
+        }
+
+        String name = BPMNNS.BPMNDI.prefix + ":BPMNPlane";
+        Node defaultBpmnPlane = null;
         NodeList childList = bpmnDefinitions.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
@@ -469,27 +462,32 @@ public class BPMNModel {
             if (name.equals(child.getNodeName()) && child.hasAttributes()) {
                 // get attributes names and values
                 NamedNodeMap attributesMap = child.getAttributes();
-                Node bpmnElement=attributesMap.getNamedItem("bpmnElement");
-                if (bpmnElement!=null) {
+                Node bpmnElement = attributesMap.getNamedItem("bpmnElement");
+                if (bpmnElement != null) {
                     if (id.equals(bpmnElement.getNodeValue())) {
                         // found by id
                         return child;
                     }
                 } else {
                     // set default plane
-                    defaultBpmnPlane=child;
+                    defaultBpmnPlane = child;
                 }
-//                for (int j = 0; j < attributesMap.getLength(); j++) {
-//                    Node attr = attributesMap.item(j);
-//                    if ("bpmnElement".equals(attr.getNodeName()) && id.equals(attr.getNodeValue())) {
-//                        // found it!
-//                        return child;
-//                    }
-//                }
+
             }
 
         }
         // return defaultPlane or null if no plane was found!
+        if (defaultBpmnPlane == null) {
+            logger.warning("No BPMNPlane for " + id + " found in " + diagramID);
+            return null;
+        }
+        // Fallback to default bpmnPlane....
+        String bpmnPlaneID = "";
+        if (defaultBpmnPlane.getAttributes() != null && defaultBpmnPlane.getAttributes().getNamedItem("id") != null) {
+            bpmnPlaneID = defaultBpmnPlane.getAttributes().getNamedItem("id").getNodeValue();
+        }
+        logger.warning(
+                "No BPMNPlane for " + id + " found in " + diagramID + " - fallback to default plane " + bpmnPlaneID);
         return defaultBpmnPlane;
     }
 
