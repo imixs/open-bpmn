@@ -64,7 +64,8 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 	 */
 	protected renderLine(edge: SEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
 		let path = '';
-		const radius = 10;
+		// let radius = 10;
+		let radius = 10;
 		for (let i = 0; i < segments.length; i++) {
 			const p = segments[i];
 			// start point?
@@ -82,6 +83,7 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 					const pnext = segments[i + 1];
 					// draw lines ending with rounded corners...
 					// right-down  ↴
+					radius=this.computeMaxRadius(p,plast,pnext);
 					if (plast.x < p.x && p.y < pnext.y) {
 						path += ` L ${p.x - radius},${p.y}  Q ${p.x},${p.y} ${p.x},${p.y + radius}`;
 						// down-right  ↳
@@ -109,6 +111,7 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 						// default
 						path += ` L ${p.x},${p.y}`;
 					}
+					
 
 				} else {
 					// default behaviour
@@ -123,4 +126,38 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 		return vnode;
 		// return <path d={path} />;
 	}
+	
+	/**
+	 * Helper method to compute the maximum possible radius. 
+	 * If two poins are very close the radius need to be reduced 
+	 */
+	protected computeMaxRadius(pCurrent: Point, pLast: Point, pNext: Point): number {
+		let radius = 10;
+		const dRef=0.5
+		// verfiy last point
+		let xDif=Math.abs(pCurrent.x-pLast.x);
+		let yDif=Math.abs(pCurrent.y-pLast.y);
+		if ( xDif>0 && xDif<10) {
+			radius=xDif*dRef;
+			return radius;
+		}
+		if (yDif>0 && yDif <10) {
+			radius=yDif*dRef;
+			return radius;
+		}
+		// verify next point
+		xDif=Math.abs(pCurrent.x-pNext.x);
+		yDif=Math.abs(pCurrent.y-pNext.y);
+		if ( xDif>0 && xDif<10) {
+			radius=xDif*dRef;
+			return radius;
+		}
+		if (yDif>0 && yDif <10) {
+			radius=yDif*dRef;
+			return radius;
+		}
+		// default
+		return radius;
+	}
+	
 }

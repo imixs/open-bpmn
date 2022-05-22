@@ -107,8 +107,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
     configureModelElement(context, 'sequenceFlow', SequenceFlow, BPMNSequenceFlowView);
-    
-    
 
 });
 
