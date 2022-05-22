@@ -3,3 +3,4 @@
 src/test/resources/create-*
 src/test/resources/update-*
 src/test/resources/delete-*
+src/test/resources/out*.bpmn

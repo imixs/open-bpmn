@@ -1,6 +1,7 @@
 package org.openbpmn.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.logging.Logger;
 
@@ -28,27 +29,23 @@ public class TestReadDom {
     @Test
     public void testReadEmptyModel() {
 
-
         logger.info("...read model");
-        
-        
+
         BPMNModel model = BPMNModelFactory.read("/process_1.bpmn");
         System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
         System.out.println("------");
         if (model.getDoc().hasChildNodes()) {
             printNote(model.getDoc().getChildNodes());
         }
-        
+
         // next validate the BPMN Default Namespaces
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL",model.getNameSpaceUri(BPMNNS.BPMN2));
-        
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+
         logger.info("...model read sucessful");
     }
-    
-    
-   
+
     /**
-     * This Test verifies if a BPMN model with custom namespace URIs can be read. 
+     * This Test verifies if a BPMN model with custom namespace URIs can be read.
      * 
      */
     @Test
@@ -56,20 +53,40 @@ public class TestReadDom {
 
         logger.info("...read model");
 
-        
         BPMNModel model = BPMNModelFactory.read("/process_1_custom_namespace.bpmn");
         System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
         // next validate the custom BPMN Namespace for bpmn2
-        assertEquals("http://www.omg.org/spec/BPMN/20100000/MODEL",model.getNameSpaceUri(BPMNNS.BPMN2));
-        
-        // now we read  once again a model with the default namespace
+        assertEquals("http://www.omg.org/spec/BPMN/20100000/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+
+        // now we read once again a model with the default namespace
         // we expect that the default namespace is set again!
-         model = BPMNModelFactory.read("/process_1.bpmn");
+        model = BPMNModelFactory.read("/process_1.bpmn");
         // next validate the BPMN Default Namespaces
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL",model.getNameSpaceUri(BPMNNS.BPMN2));
-      
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+
         logger.info("...model read sucessful");
-        
+
+    }
+
+    /**
+     * This test parses a blank (empty) bpmn file and creaes a default process
+     */
+    @Test
+    public void testReadBlankFile() {
+        logger.info("...read blank model");
+
+        String out = "src/test/resources/out_blank.bpmn";
+
+        BPMNModel model = BPMNModelFactory.read("/blank.bpmn");
+        System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
+
+        // next validate the BPMN Default Namespaces
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+        assertNotNull(model);
+        assertEquals("process_1", model.openContext(null).getId());
+
+        model.save(out);
+        logger.info("...blank model created sucessful: " + out);
     }
 
     private static void printNote(NodeList nodeList) {
@@ -109,5 +126,4 @@ public class TestReadDom {
         }
 
     }
-
 }

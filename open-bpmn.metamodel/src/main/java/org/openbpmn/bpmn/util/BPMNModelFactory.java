@@ -26,6 +26,10 @@ import org.xml.sax.SAXException;
 public class BPMNModelFactory {
     private static Logger logger = Logger.getLogger(BPMNModelFactory.class.getName());
 
+    public static final String DEFAULT_EXPORTER = "org.openbpmn";
+    public static final String DEFAULT_VERSION = "1.0.0";
+    public static final String DEFAULT_TARGETNAMESPACE = "http://org.openbpmn";
+
     /**
      * This method creates a new empty BPMNModel instance. The BPMNModel is
      * initialized with the BPMN default namespaces.
@@ -56,7 +60,6 @@ public class BPMNModelFactory {
              */
             // root elements
             Document doc = docBuilder.newDocument();
-
             Element definitions = doc.createElementNS("http://www.omg.org/spec/BPMN/20100524/MODEL",
                     "bpmn2:definitions");
 
@@ -132,15 +135,20 @@ public class BPMNModelFactory {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setNamespaceAware(true);
         try {
+            if (is.available() == 0) {
+                logger.warning("Emtpy BPMN file - creating a default process");
+                // create a default model
+                BPMNModel defaultModel = BPMNModelFactory
+                        .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE) //
+                        .addProcess("process_1");
+                return defaultModel;
+            }
 
             // parse XML file
             DocumentBuilder db = docFactory.newDocumentBuilder();
-
             // read from a project's resources folder
             Document doc = db.parse(is);
-
             Element root = doc.getDocumentElement();
-
             if (!"bpmn2:definitions".equals(root.getNodeName())) {
                 logger.severe("Missing root element 'bpmn2:definitions'!");
                 return null;
@@ -157,12 +165,8 @@ public class BPMNModelFactory {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }
         }
-
         return null;
-
     }
-
 }

@@ -110,7 +110,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Tasks
         for (BPMNActivity activity : process.getActivities()) {
-            System.out.println("activity: " + activity.getName());
+            logger.fine("activity: " + activity.getName());
             GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
             TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
             // Build the GLSP Node....
@@ -136,6 +136,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Gateways...
         for (BPMNGateway gateway : process.getGateways()) {
+            logger.fine("gateway: " + gateway.getName());
             GPoint point = GraphUtil.point(gateway.getBounds().getX(), gateway.getBounds().getY());
             GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
             // Build the GLSP Node....
@@ -149,7 +150,6 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all SequenceFlows
         for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
             SequenceFlowBuilder builder = new SequenceFlowBuilder();
-
             GModelElement target = findElementById(entityNodes, sequenceFlow.getTargetRef());
             if (target != null) {
                 builder.target(findPort(target));
@@ -158,15 +158,12 @@ public class BPMNGModelFactory implements GModelFactory {
             if (source != null) {
                 builder.source(findPort(source));
             }
-
             builder.id(sequenceFlow.getId());
-
             SequenceFlow sequenceFlowEdge = builder.build();
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
                 GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
                 sequenceFlowEdge.getRoutingPoints().add(point);
             }
-
             entityNodes.add(sequenceFlowEdge);
         }
 

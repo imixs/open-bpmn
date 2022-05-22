@@ -223,9 +223,9 @@ public class BPMNModel {
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
         Element process = createElement(BPMNNS.BPMN2, "process");
 
-        System.out.println(process.getNodeName());
-        System.out.println(process.getLocalName());
-        System.out.println(process.getNamespaceURI());
+        logger.fine(process.getNodeName());
+        logger.fine(process.getLocalName());
+        logger.fine(process.getNamespaceURI());
 
         process.setAttribute("id", id);
         // definitions.appendChild(process);
