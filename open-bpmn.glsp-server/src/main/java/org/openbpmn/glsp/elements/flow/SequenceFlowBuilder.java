@@ -17,7 +17,7 @@ package org.openbpmn.glsp.elements.flow;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.bpmn.BPMNSequenceFlowType;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.SequenceFlow;
 
@@ -32,7 +32,7 @@ public class SequenceFlowBuilder extends AbstractGEdgeBuilder<SequenceFlow, Sequ
     private String condition;
 
     public SequenceFlowBuilder() {
-        super(BPMNSequenceFlowType.SEQUENCE_FLOW);
+        super(BPMNTypes.SEQUENCE_FLOW);
     }
 
     public SequenceFlowBuilder condition(final String condition) {

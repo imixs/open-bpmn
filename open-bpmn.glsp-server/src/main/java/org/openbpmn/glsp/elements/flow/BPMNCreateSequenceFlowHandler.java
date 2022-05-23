@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNSequenceFlowType;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.glsp.bpmn.BaseElement;
@@ -47,7 +47,7 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateSequenceFlowHandler() {
-        super(BPMNSequenceFlowType.SEQUENCE_FLOW);
+        super(BPMNTypes.SEQUENCE_FLOW);
         this.label = "Sequence Flow";
     }
 

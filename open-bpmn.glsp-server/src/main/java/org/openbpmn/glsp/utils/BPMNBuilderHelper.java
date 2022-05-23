@@ -21,6 +21,7 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GPortBuilder;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.bpmn.Icon;
 import org.openbpmn.glsp.elements.IconBuilder;
@@ -51,6 +52,18 @@ public class BPMNBuilderHelper {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header") //
                 .text(node.getName()).build();
+    }
+
+    /**
+     * Creates a moveable BPMNLabel. This element is used for Event and Gateway Nodes
+     * 
+     */
+    public static GLabel createBPMNLabel(final String id, final String name, final Double x, final Double y) {
+        return new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
+                .id(id + "_bpmnlabel") //
+                .position(x, y) //
+                .text(name) //
+                .build();
     }
 
     /**

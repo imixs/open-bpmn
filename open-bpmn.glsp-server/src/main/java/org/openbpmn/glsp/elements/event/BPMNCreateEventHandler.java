@@ -33,6 +33,12 @@ import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
 import com.google.inject.Inject;
 
+/**
+ * OperationHandler to create a new Event .
+ *
+ * @author rsoika
+ *
+ */
 public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
     private static Logger logger = Logger.getLogger(BPMNCreateEventHandler.class.getName());

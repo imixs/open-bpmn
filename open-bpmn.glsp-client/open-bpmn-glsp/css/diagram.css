@@ -53,6 +53,13 @@
     fill: var(--theia-titleBar-activeForeground);
 }
 
+.sprotty-label.BPMNLabel {
+    font-weight: normal;
+    font-size: 0.8em;
+    fill: var(--theia-titleBar-activeForeground);
+}
+
+
 .sprotty-resize-handle.selected {
     fill: #47699B;
 }
@@ -73,20 +80,20 @@
 
 /*** Events ***/
 
-.sprotty-node.event > text.heading {
+.xxxxxxxxsprotty-node.event > text.heading {
 	text-anchor:middle; 
 }
-.sprotty-node.event.startEvent > circle {
+.event.startEvent > circle {
 	fill: #57A14C;
 }
-.sprotty-node.event.endEvent > circle {
+.event.endEvent > circle {
 	fill: #BE5961;
 }
 
-.sprotty-node.event.catchEvent > circle {
+.event.catchEvent > circle {
 	fill: rgb(211, 215, 207);
 }
-.sprotty-node.event.throwEvent > circle {
+.event.throwEvent > circle {
 	fill: rgb(211, 215, 207);
 }
 
@@ -118,7 +125,7 @@
 
 /*** Gateways ***/
 
-.sprotty-node.gateway > text.heading {
+.xxxxxxxsprotty-node.gateway > text.heading {
 	text-anchor:middle; 
 }
 .sprotty-node.gateway > rect {

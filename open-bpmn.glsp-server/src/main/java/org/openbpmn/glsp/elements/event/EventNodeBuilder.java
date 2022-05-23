@@ -17,10 +17,9 @@ package org.openbpmn.glsp.elements.event;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.EventNode;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * The EventNodeBuilder defines the layout for all types of BPMN Event elements
@@ -55,11 +54,14 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     public void setProperties(final EventNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.setLayout(GConstants.Layout.FREEFORM);
-        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+        node.setLayout(GConstants.Layout.HBOX); // .FREEFORM);
+        size = GraphUtil.dimension(36.0, 36.0);
+        node.setSize(size);
+//          node.getLayoutOptions().put("vAlign", "center");
+        // node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
         // add SPort
-        node.getChildren().add(
-                BPMNBuilderHelper.createBPMNPort(node, 0.0, 0.0, BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT));
+//        node.getChildren().add(
+//                BPMNBuilderHelper.createBPMNPort(node, 0.0, 0.0, BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT));
     }
 
 }

@@ -47,28 +47,38 @@ public class BPMNModel {
     private BPMNProcess context = null;
 
     public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
-            BPMNTaskType.TASK, //
-            BPMNTaskType.MANUAL, //
-            BPMNTaskType.SEND, //
-            BPMNTaskType.SERVICE, //
-            BPMNTaskType.SCRIPT, BPMNTaskType.USER, //
+            BPMNTypes.TASK, //
+            BPMNTypes.MANUAL_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.SCRIPT_TASK, //
+            BPMNTypes.USER_TASK, //
             "receiveTask", "businessRuleTask", "subProcess", "adHocSubProcess", "transaction", "callActivity" });
 
     public static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
-            BPMNTaskType.TASK, //
-            BPMNTaskType.MANUAL, //
-            BPMNTaskType.SEND, //
-            BPMNTaskType.SERVICE, //
-            BPMNTaskType.SCRIPT, BPMNTaskType.USER //
+            BPMNTypes.TASK, //
+            BPMNTypes.MANUAL_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.SCRIPT_TASK, //
+            BPMNTypes.USER_TASK //
     });
 
-    public static List<String> BPMN_EVENTS = Arrays
-            .asList(new String[] { "startEvent", "endEvent", "catchEvent", "throwEvent" });
+    public static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
+            BPMNTypes.START_EVENT, //
+            BPMNTypes.END_EVENT, //
+            BPMNTypes.CATCH_EVENT, //
+            BPMNTypes.THROW_EVENT //
+    });
 
-    public static List<String> BPMN_GATEWAYS = Arrays
-            .asList(new String[] { "exclusiveGateway", "inclusiveGateway", "parallelGateway", "complexGateway" });
+    public static List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { //
+            BPMNTypes.EXCLUSIVE_GATEWAY, //
+            BPMNTypes.INCLUSIVE_GATEWAY, //
+            BPMNTypes.PARALLEL_GATEWAY, //
+            BPMNTypes.COMPLEX_GATEWAY //
+    });
 
-    public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { "sequenceFlow" });
+    public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { BPMNTypes.SEQUENCE_FLOW });
 
     private Element definitions;
     private Document doc;

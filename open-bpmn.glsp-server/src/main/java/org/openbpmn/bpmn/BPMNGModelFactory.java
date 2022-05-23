@@ -24,6 +24,7 @@ import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GPoint;
@@ -48,6 +49,7 @@ import org.openbpmn.glsp.elements.event.EventNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * The BPMNGModelFactory is responsible to produce a graph model from the BPMN
@@ -132,6 +134,11 @@ public class BPMNGModelFactory implements GModelFactory {
                     .position(point) //
                     .build();
             entityNodes.add(eventNode);
+
+            // now add a lable just for testing....
+            GLabel label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), point.getX(),
+                    point.getY() + 40);
+            entityNodes.add(label);
         }
 
         // Add all Gateways...

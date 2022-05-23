@@ -19,7 +19,7 @@ import {
     ConsoleLogger,
     createClientContainer,
     DeleteElementContextMenuItemProvider,
-    editLabelFeature,
+    editLabelFeature,moveFeature,selectFeature,
     //GridSnapper,
     LogLevel,
     overrideViewerOptions,
@@ -28,7 +28,7 @@ import {
     RectangularNodeView,
     SCompartment,
     SCompartmentView,
-    SLabel,
+    SLabel,CircularNodeView,
     SLabelView,configureView,
     StructureCompartmentView,configureCommand,
     TYPES
@@ -49,7 +49,7 @@ import {
 	BPMNPolylineElementAnchor,
 	BPMNPort
 } from '@open-bpmn/open-bpmn-model';
-import { IconView, GatewayNodeView, EventNodeView } from './bpmn-element-views';
+import { IconView, GatewayNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNGridSnapper } from './bpmn-helperlines';
 
@@ -86,10 +86,15 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'serviceTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'scriptTask', TaskNode, RoundedCornerNodeView);
 
-    configureModelElement(context, 'startEvent', EventNode, EventNodeView);
-    configureModelElement(context, 'endEvent', EventNode, EventNodeView);
-    configureModelElement(context, 'catchEvent', EventNode, EventNodeView);
-    configureModelElement(context, 'throwEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'startEvent', EventNode, CircularNodeView);
+    // configureModelElement(context, 'startEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'endEvent', EventNode, CircularNodeView);
+
+    // configureModelElement(context, DefaultTypes.NODE_CIRCLE, CircularNode, CircularNodeView);
+    // configureModelElement(context, DefaultTypes.NODE_DIAMOND, DiamondNode, DiamondNodeView);
+
+    configureModelElement(context, 'catchEvent', EventNode, CircularNodeView);
+    configureModelElement(context, 'throwEvent', EventNode, CircularNodeView);
 	configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
 
     configureModelElement(context, 'exclusiveGateway', GatewayNode, GatewayNodeView);
@@ -98,6 +103,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'complexGateway', GatewayNode, GatewayNodeView);
 
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
+    configureModelElement(context, 'BPMNLabel', SLabel, SLabelView, { enable: [editLabelFeature,selectFeature,moveFeature] });
+
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);

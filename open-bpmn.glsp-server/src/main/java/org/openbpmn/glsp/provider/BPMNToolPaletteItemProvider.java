@@ -30,10 +30,7 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
-import org.openbpmn.bpmn.BPMNEventType;
-import org.openbpmn.bpmn.BPMNGatewayType;
-import org.openbpmn.bpmn.BPMNSequenceFlowType;
-import org.openbpmn.bpmn.BPMNTaskType;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
@@ -90,8 +87,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteSequenceFlowItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNSequenceFlowType.SEQUENCE_FLOW, "Sequence Flow",
-                new TriggerEdgeCreationAction(BPMNSequenceFlowType.SEQUENCE_FLOW)));
+        result.add(new PaletteItem(BPMNTypes.SEQUENCE_FLOW, "Sequence Flow",
+                new TriggerEdgeCreationAction(BPMNTypes.SEQUENCE_FLOW)));
 
         return result;
     }
@@ -104,15 +101,17 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteTaskItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNTaskType.TASK, "Task", new TriggerNodeCreationAction(BPMNTaskType.TASK)));
-        result.add(new PaletteItem(BPMNTaskType.MANUAL, "Manual Task",
-                new TriggerNodeCreationAction(BPMNTaskType.MANUAL)));
-        result.add(new PaletteItem(BPMNTaskType.USER, "User Task", new TriggerNodeCreationAction(BPMNTaskType.USER)));
-        result.add(new PaletteItem(BPMNTaskType.SERVICE, "Service Task",
-                new TriggerNodeCreationAction(BPMNTaskType.SERVICE)));
-        result.add(new PaletteItem(BPMNTaskType.SEND, "Send Task", new TriggerNodeCreationAction(BPMNTaskType.SEND)));
-        result.add(new PaletteItem(BPMNTaskType.SCRIPT, "Script Task",
-                new TriggerNodeCreationAction(BPMNTaskType.SCRIPT)));
+        result.add(new PaletteItem(BPMNTypes.TASK, "Task", new TriggerNodeCreationAction(BPMNTypes.TASK)));
+        result.add(new PaletteItem(BPMNTypes.MANUAL_TASK, "Manual Task",
+                new TriggerNodeCreationAction(BPMNTypes.MANUAL_TASK)));
+        result.add(
+                new PaletteItem(BPMNTypes.USER_TASK, "User Task", new TriggerNodeCreationAction(BPMNTypes.USER_TASK)));
+        result.add(new PaletteItem(BPMNTypes.SERVICE_TASK, "Service Task",
+                new TriggerNodeCreationAction(BPMNTypes.SERVICE_TASK)));
+        result.add(
+                new PaletteItem(BPMNTypes.SEND_TASK, "Send Task", new TriggerNodeCreationAction(BPMNTypes.SEND_TASK)));
+        result.add(new PaletteItem(BPMNTypes.SCRIPT_TASK, "Script Task",
+                new TriggerNodeCreationAction(BPMNTypes.SCRIPT_TASK)));
 
         return result;
     }
@@ -125,14 +124,15 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteEventItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNEventType.START, "Start Event",
-                new TriggerNodeCreationAction(BPMNEventType.START)));
-        result.add(new PaletteItem(BPMNEventType.END, "End Event", new TriggerNodeCreationAction(BPMNEventType.END)));
+        result.add(new PaletteItem(BPMNTypes.START_EVENT, "Start Event",
+                new TriggerNodeCreationAction(BPMNTypes.START_EVENT)));
+        result.add(
+                new PaletteItem(BPMNTypes.END_EVENT, "End Event", new TriggerNodeCreationAction(BPMNTypes.END_EVENT)));
 
-        result.add(new PaletteItem(BPMNEventType.CATCH, "Catch Event",
-                new TriggerNodeCreationAction(BPMNEventType.CATCH)));
-        result.add(new PaletteItem(BPMNEventType.THROW, "Throw Event",
-                new TriggerNodeCreationAction(BPMNEventType.THROW)));
+        result.add(new PaletteItem(BPMNTypes.CATCH_EVENT, "Catch Event",
+                new TriggerNodeCreationAction(BPMNTypes.CATCH_EVENT)));
+        result.add(new PaletteItem(BPMNTypes.THROW_EVENT, "Throw Event",
+                new TriggerNodeCreationAction(BPMNTypes.THROW_EVENT)));
         return result;
     }
 
@@ -151,14 +151,14 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteGatewayItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNGatewayType.EXCLUSIVE, "Exclusive",
-                new TriggerNodeCreationAction(BPMNGatewayType.EXCLUSIVE)));
+        result.add(new PaletteItem(BPMNTypes.EXCLUSIVE_GATEWAY, "Exclusive",
+                new TriggerNodeCreationAction(BPMNTypes.EXCLUSIVE_GATEWAY)));
 
-        result.add(new PaletteItem(BPMNGatewayType.INCLUSIVE, "Inclusive",
-                new TriggerNodeCreationAction(BPMNGatewayType.INCLUSIVE)));
+        result.add(new PaletteItem(BPMNTypes.INCLUSIVE_GATEWAY, "Inclusive",
+                new TriggerNodeCreationAction(BPMNTypes.INCLUSIVE_GATEWAY)));
 
-        result.add(new PaletteItem(BPMNGatewayType.PARALLEL, "Parallel",
-                new TriggerNodeCreationAction(BPMNGatewayType.PARALLEL)));
+        result.add(new PaletteItem(BPMNTypes.PARALLEL_GATEWAY, "Parallel",
+                new TriggerNodeCreationAction(BPMNTypes.PARALLEL_GATEWAY)));
 
         return result;
     }
