@@ -17,14 +17,20 @@ import {
 	getSubType,
 	RenderingContext,
 	SLabel,
-	setAttr
+	setAttr,
+	ActionDispatcher,SelectAction,
+	SModelRoot,getElements,
+	TYPES
 } from '@eclipse-glsp/client';
-
-import { injectable } from 'inversify';
+// import { toTypeGuard } from '@eclipse-glsp/protocol';
+// @eclipse-glsp/protocol
+import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
 import { Icon, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from '@open-bpmn/open-bpmn-model';
-
+import {
+	SelectionListener
+} from '@eclipse-glsp/client/lib/features/select/selection-service';
 /****************************************************************************
  * This module provides BPMN element views like Gateways, or Events
  *
@@ -159,4 +165,18 @@ export class GatewayNodeView extends ShapeView {
 		return vnode;
 	}
 }
+
+@injectable()
+export class EventNodeSelectionListener implements SelectionListener {
+    @inject(TYPES.IActionDispatcher)
+    protected actionDispatcher: ActionDispatcher;
+    selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
+        const eventNodes=  getElements(root.index,selectedElements, isEventNode);
+        if (eventNodes.length > 0) {
+            const eventLabelIds = eventNodes.map(node => node.id+"_bpmnlabel");
+            this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: eventLabelIds }));
+        }
+    }
+}
+
 

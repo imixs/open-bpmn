@@ -49,7 +49,7 @@ import {
 	BPMNPolylineElementAnchor,
 	BPMNPort
 } from '@open-bpmn/open-bpmn-model';
-import { IconView, GatewayNodeView } from './bpmn-element-views';
+import { IconView, GatewayNodeView,EventNodeSelectionListener } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNGridSnapper } from './bpmn-helperlines';
 
@@ -64,6 +64,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.ISnapper).to(BPMNGridSnapper);
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
+
+	// neuer SelectionListener for Event BPMNLabels
+	bind(TYPES.SelectionListener).to(EventNodeSelectionListener);
 
 	// bpmn helper lines
     bind(TYPES.MouseListener).to(HelperLineListener);

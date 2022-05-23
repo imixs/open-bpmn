@@ -6,10 +6,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
-import org.openbpmn.bpmn.BPMNEventType;
-import org.openbpmn.bpmn.BPMNGatewayType;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNTaskType;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
@@ -84,9 +82,9 @@ public class TestCreateModel {
         assertNotNull(processContext);
 
         // add a start and end event
-        processContext.addEvent("start_1", "Start", BPMNEventType.START);
-        processContext.addEvent("end_1", "End", BPMNEventType.END);
-        processContext.addTask("task_1", "Task", BPMNTaskType.TASK);
+        processContext.addEvent("start_1", "Start",BPMNTypes.START_EVENT);
+        processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+        processContext.addTask("task_1", "Task", BPMNTypes.TASK);
 
         try {
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
@@ -122,10 +120,10 @@ public class TestCreateModel {
         assertNotNull(processContext);
 
         // add a start and end event
-        processContext.addEvent("start_1", "Start", BPMNEventType.START);
-        processContext.addEvent("end_1", "End", BPMNEventType.END);
-        processContext.addTask("task_1", "Task", BPMNTaskType.TASK);
-        processContext.addGateway("gateway_1", "Gateway", BPMNGatewayType.EXCLUSIVE);
+        processContext.addEvent("start_1", "Start",BPMNTypes.START_EVENT);
+        processContext.addEvent("end_1", "End",BPMNTypes.END_EVENT);
+        processContext.addTask("task_1", "Task", BPMNTypes.TASK);
+        processContext.addGateway("gateway_1", "Gateway", BPMNTypes.EXCLUSIVE_GATEWAY);
 
         try {
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
@@ -164,9 +162,9 @@ public class TestCreateModel {
         assertNotNull(processContext);
 
         // add a start and end event
-        processContext.addEvent("start_1", "Start", BPMNEventType.START);
-        processContext.addEvent("end_1", "End", BPMNEventType.END);
-        BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTaskType.TASK);
+        processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+        processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+        BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
         task.getBounds().updateBounds(10.0, 10.0, 140.0, 60.0);
         try {
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
