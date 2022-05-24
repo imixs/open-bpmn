@@ -139,8 +139,8 @@ public class BPMNModelFactory {
                 logger.warning("Emtpy BPMN file - creating a default process");
                 // create a default model
                 BPMNModel defaultModel = BPMNModelFactory
-                        .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE) //
-                        .addProcess("process_1");
+                        .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
+                defaultModel.buildProcess("process_1");
                 return defaultModel;
             }
 
