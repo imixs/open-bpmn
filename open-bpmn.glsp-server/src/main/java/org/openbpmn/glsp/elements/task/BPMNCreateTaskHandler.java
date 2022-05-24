@@ -61,7 +61,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         String taskID = "task-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode tasknodeID=" + taskID);
         BPMNProcess process = modelState.getBpmnModel().getContext();
-        BPMNActivity task = process.addTask(taskID, getLabel(), operation.getElementTypeId());
+        BPMNActivity task = process.buildTask(taskID, getLabel(), operation.getElementTypeId());
         Optional<GPoint> point = operation.getLocation();
         if (point.isPresent()) {
             task.getBounds().updateBounds(point.get().getX(), point.get().getY(), BPMNActivity.DEFAULT_WIDTH,

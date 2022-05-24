@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.elements.BPMNDimension;
+import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -49,12 +51,15 @@ public class TestUpdateBounds {
         BPMNBounds bounds = task1.getBounds();
         assertNotNull(task1);
 
-        assertEquals(270.0, bounds.getX());
+        BPMNPoint point = bounds.getPosition();
+        assertEquals(270.0, point.getX());
+        BPMNDimension size = bounds.getDimension();
 
         // adjust position
-        bounds.updateBounds(300, bounds.getY(), bounds.getWidth(), bounds.getHeight());
+        bounds.updateBounds(300, point.getY(), size.getWidth(), size.getHeight());
         bounds = task1.getBounds();
-        assertEquals(300.0, bounds.getX());
+        point = bounds.getPosition();
+        assertEquals(300.0, point.getX());
 
         model.save(out);
 

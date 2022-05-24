@@ -21,7 +21,7 @@ public class TestModifyDom {
         BPMNModel model = BPMNModelFactory.read("/process_1-empty-1.bpmn");
 
         // add a new process....
-        model.addProcess("P-000002");
+        model.buildProcess("P-000002");
 
         // store the model
         model.save("src/test/resources/process_1-update-1.bpmn");

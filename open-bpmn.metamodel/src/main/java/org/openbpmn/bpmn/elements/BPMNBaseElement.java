@@ -17,7 +17,6 @@ import org.w3c.dom.Node;
 public abstract class BPMNBaseElement {
     private NamedNodeMap attributeMap = null;
     private Node elementNode = null;
-   
     protected BPMNModel model = null;
 
     public BPMNBaseElement() {

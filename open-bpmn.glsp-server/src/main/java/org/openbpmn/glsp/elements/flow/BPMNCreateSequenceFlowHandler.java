@@ -72,7 +72,7 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
             if (element.isPresent()) {
                 sourceId = element.get().getId();
             }
-            process.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
+            process.buildSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
 
             modelState.reset();
         } catch (BPMNInvalidReferenceException e) {

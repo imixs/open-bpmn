@@ -44,19 +44,19 @@ public class TestDeepCopy {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
-        model.addProcess("process_1");
+        model.buildProcess("process_1");
 
         BPMNProcess processContext = model.openContext("process_1");
         assertNotNull(processContext);
 
         // add a start and end event
-        processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
-        processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
-        BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
+        processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
+        processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
+        BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
         task.getBounds().updateBounds(10.0, 10.0, 140.0, 60.0);
         try {
-            processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
-            processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+            processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1"); 
         } catch (BPMNInvalidReferenceException e) {
             e.printStackTrace();
             fail();

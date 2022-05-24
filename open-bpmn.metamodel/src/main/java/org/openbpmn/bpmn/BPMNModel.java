@@ -109,8 +109,8 @@ public class BPMNModel {
     private BPMNModel() {
         setNameSpaceUri(BPMNNS.BPMN2, "http://www.omg.org/spec/BPMN/20100524/MODEL");
         setNameSpaceUri(BPMNNS.BPMNDI, "http://www.omg.org/spec/BPMN/20100524/DI");
-        setNameSpaceUri(BPMNNS.DI, "http://www.omg.org/spec/DD/20100524/DC");
-        setNameSpaceUri(BPMNNS.DC, "http://www.omg.org/spec/DD/20100524/DI");
+        setNameSpaceUri(BPMNNS.DI, "http://www.omg.org/spec/DD/20100524/DI");
+        setNameSpaceUri(BPMNNS.DC, "http://www.omg.org/spec/DD/20100524/DC");
 
     }
 
@@ -184,6 +184,45 @@ public class BPMNModel {
     }
 
     /**
+     *  Builds a new BPMNProcess element and adds this  into this model instance.
+     *  This method also generates the BPMNPlane
+     * <p>
+     *  <pre>
+     * {@code
+     *   <bpmn2:process id="process_1"/>
+         <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+            <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1"/>
+         </bpmndi:BPMNDiagram>
+     * }</pre>
+     * 
+     * @param id
+     * @param name
+     * @param type - EventType
+     */
+    public BPMNProcess buildProcess(String id) {
+        // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        Element process = createElement(BPMNNS.BPMN2, "process");
+        logger.fine(process.getNodeName());
+        logger.fine(process.getLocalName());
+        logger.fine(process.getNamespaceURI());
+        process.setAttribute("id", id);
+        // definitions.appendChild(process);
+        definitions.insertBefore(process, this.getBpmnDiagram());
+    
+        // add bpmndi:BPMNPlane
+        // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
+        Element bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
+        bpmnPlane.setAttribute("id", "BPMNPlane_" + id);
+        bpmnPlane.setAttribute("bpmnElement", id);
+        this.getBpmnDiagram().appendChild(bpmnPlane);
+        // definitions.insertBefore(bpmnPlane,this.getBpmnDiagram());
+    
+        BPMNProcess bpmnProcess= openContext(id); 
+                //new BPMNProcess(this, process);
+        return bpmnProcess;
+    }
+
+    /**
      * This Method opens a BPMN context (e.g. a Process) with the given ID. The
      * method returns null if no process with the given ID exists.
      * <p>
@@ -220,38 +259,7 @@ public class BPMNModel {
         return element;
     }
 
-    /**
-     * Adds a new process to the definitions
-     * <p>
-     * The method also generates the BPMNPlane
-     * 
-     * @param id
-     * @return
-     */
-    public BPMNModel addProcess(String id) {
-
-        // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
-        Element process = createElement(BPMNNS.BPMN2, "process");
-
-        logger.fine(process.getNodeName());
-        logger.fine(process.getLocalName());
-        logger.fine(process.getNamespaceURI());
-
-        process.setAttribute("id", id);
-        // definitions.appendChild(process);
-        definitions.insertBefore(process, this.getBpmnDiagram());
-
-        // add bpmndi:BPMNPlane
-        // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
-        Element bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
-        bpmnPlane.setAttribute("id", "BPMNPlane_" + id);
-        bpmnPlane.setAttribute("bpmnElement", id);
-        this.getBpmnDiagram().appendChild(bpmnPlane);
-        // definitions.insertBefore(bpmnPlane,this.getBpmnDiagram());
-
-        return this;
-    }
-
+  
     /**
      * This helper method returns a set of child nodes by name from a given parent
      * node.
