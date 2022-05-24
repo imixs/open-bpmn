@@ -2,6 +2,7 @@ package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -20,6 +21,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     protected String type = null;
     protected BPMNBounds bounds = null;
+    protected BPMNLabel label = null;
     protected Element bpmnShape = null;
 
     /**
@@ -51,6 +53,17 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         this.type = type;
     }
 
+    public BPMNLabel getLabel() {
+       
+        if (isEvent() || isGateway()) {
+            if (label == null) {
+                // lazy loading of bounds from a given bpmnShape
+                label = new BPMNLabel(this.bpmnShape, model);
+            }
+        }
+        return label;
+    }
+
     public BPMNBounds getBounds() {
         if (bounds == null) {
             // lazy loading of bounds from a given bpmnShape
@@ -75,6 +88,24 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     public void setBpmnShape(Element bpmnShape) {
         this.bpmnShape = bpmnShape;
+    }
+
+    public boolean isEvent() {
+        return (BPMNTypes.EVENT.equals(type)//
+                || BPMNTypes.START_EVENT.equals(type) //
+                || BPMNTypes.END_EVENT.equals(type) //
+                || BPMNTypes.CATCH_EVENT.equals(type) //
+                || BPMNTypes.THROW_EVENT.equals(type) //
+        );
+    }
+
+    public boolean isGateway() {
+        return (BPMNTypes.GATEWAY.equals(type) //
+                || BPMNTypes.EXCLUSIVE_GATEWAY.equals(type)//
+                || BPMNTypes.INCLUSIVE_GATEWAY.equals(type)//
+                || BPMNTypes.COMPLEX_GATEWAY.equals(type)//
+                || BPMNTypes.PARALLEL_GATEWAY.equals(type)//
+        );
     }
 
     /**

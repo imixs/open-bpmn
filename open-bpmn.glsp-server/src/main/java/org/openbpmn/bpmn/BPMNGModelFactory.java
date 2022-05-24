@@ -38,6 +38,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
@@ -113,7 +114,8 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all Tasks
         for (BPMNActivity activity : process.getActivities()) {
             logger.fine("activity: " + activity.getName());
-            GPoint point = GraphUtil.point(activity.getBounds().getX(), activity.getBounds().getY());
+            BPMNPoint bpmnPoint = activity.getBounds().getPosition();
+            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
             TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
             // Build the GLSP Node....
             TaskNode taskNode = builder //
@@ -126,7 +128,8 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all Events...
         for (BPMNEvent event : process.getEvents()) {
             logger.fine("event: " + event.getName());
-            GPoint point = GraphUtil.point(event.getBounds().getX(), event.getBounds().getY());
+            BPMNPoint bpmnPoint = event.getBounds().getPosition();
+            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
             EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
             // Build the GLSP Node....
             EventNode eventNode = builder //
@@ -136,15 +139,25 @@ public class BPMNGModelFactory implements GModelFactory {
             entityNodes.add(eventNode);
 
             // now add a lable just for testing....
-            GLabel label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), point.getX(),
-                    point.getY() + 40);
+            GLabel label = null;
+            BPMNLabel bpmnLabel = event.getLabel();
+            if (bpmnLabel != null) {
+                label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), bpmnLabel.getX(),
+                        bpmnLabel.getY());
+            } else {
+                // create default position
+                label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), point.getX(),
+                        point.getY() + 40);
+            }
+
             entityNodes.add(label);
         }
 
         // Add all Gateways...
         for (BPMNGateway gateway : process.getGateways()) {
             logger.fine("gateway: " + gateway.getName());
-            GPoint point = GraphUtil.point(gateway.getBounds().getX(), gateway.getBounds().getY());
+            BPMNPoint bpmnPoint = gateway.getBounds().getPosition();
+            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
             GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
             // Build the GLSP Node....
             GatewayNode gatewayNode = builder //

@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
@@ -28,7 +29,11 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.elements.BPMNDimension;
+import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 
 import com.google.inject.Inject;
@@ -70,17 +75,40 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                     bpmnBounds.updateBounds(newPoint.getX(), newPoint.getY(), newSize.getWidth(), newSize.getHeight());
                 } else {
                     // for all other elements update the position only
-                    bpmnBounds.updateBounds(newPoint.getX(), newPoint.getY(), bpmnBounds.getWidth(),
-                            bpmnBounds.getHeight());
+                    BPMNDimension dimension = bpmnBounds.getDimension();
+                    bpmnBounds.updateBounds(newPoint.getX(), newPoint.getY(), dimension.getWidth(),
+                            dimension.getHeight());
                 }
+                // Finally we update the Gmodel to avoid a new initialization.
+                Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
+                if (_node.isPresent()) {
+                    GNode node = _node.get();
+                    node.setPosition(newPoint);
+                    node.setSize(newSize);
+                }
+            } else {
+                // test if we have a BPMNLable element?
+                if (id.endsWith("_bpmnlabel")) {
+                    // update the source model
+                    bpmnElement = context.findBPMNFlowElementById(id.substring(0, id.lastIndexOf("_bpmnlabel")));
+                    if (bpmnElement != null) {
+                        if (bpmnElement instanceof BPMNEvent || bpmnElement instanceof BPMNGateway) {
+                            BPMNLabel label = bpmnElement.getLabel();
+                            label.updateLocation(newPoint.getX(), newPoint.getY());
+                        }
+
+                    }
+
+                    // update Glabel
+                    Optional<GLabel> _node = modelState.getIndex().findElementByClass(id, GLabel.class);
+                    if (_node.isPresent()) {
+                        GLabel node = _node.get();
+                        node.setPosition(newPoint);
+                    }
+                }
+
             }
-            // Finally we update the Gmodel to avoid a new initialization.
-            Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
-            if (_node.isPresent()) {
-                GNode node = _node.get();
-                node.setPosition(newPoint);
-                node.setSize(newSize);
-            }
+
         }
         // no more action - the GModel is now up to date
     }

@@ -12,7 +12,13 @@ public class BPMNPoint {
     }
 
     public BPMNPoint(String x, String y) {
-        this(Float.parseFloat(x), Float.parseFloat(y));
+        this(0.0, 0.0);
+        try {
+            this.setX(Float.parseFloat(x));
+            this.setY(Float.parseFloat(y));
+        } catch (NumberFormatException e) {
+            // no op
+        }
     }
 
     public double getX() {
