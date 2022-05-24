@@ -46,7 +46,7 @@ import {
 	EventNode,
 	SequenceFlow,
 	BPMNElementAnchor,
-	BPMNPolylineElementAnchor,
+	// BPMNPolylineElementAnchor,
 	BPMNPort
 } from '@open-bpmn/open-bpmn-model';
 import { IconView, GatewayNodeView,EventNodeSelectionListener } from './bpmn-element-views';
@@ -76,7 +76,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
-    bind(TYPES.IAnchorComputer).to(BPMNPolylineElementAnchor).inSingletonScope();
+   // bind(TYPES.IAnchorComputer).to(BPMNPolylineElementAnchor).inSingletonScope();
 
     // bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();

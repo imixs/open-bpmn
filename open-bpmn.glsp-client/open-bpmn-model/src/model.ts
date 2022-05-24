@@ -117,6 +117,13 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 	];
 	category?: string;
 	documentation?: string;
+	
+	/*
+     * Returns the anchorComputer Kind for CustomTaskNode
+     */
+     //get anchorKind(): string {
+     //   return 'bpmn-element';
+     //}
 
 	// return the offset bounds
 	get symbolBounds(): Bounds {
