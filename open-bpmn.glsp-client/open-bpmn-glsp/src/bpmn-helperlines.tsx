@@ -15,7 +15,8 @@
  ********************************************************************************/
 
 import {
-	Action, SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp,GridSnapper, isBoundsAware
+	Action, SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp, isBoundsAware, //
+	ISnapper,SLabel
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import {
@@ -65,20 +66,110 @@ export interface HelperLine {
 	readonly y2: number
 }
 
-/*
- * This is a custom Implementation of a GridSnapper
- * for BPMN
+
+/**
+ * Snapper implementation to allign elements
+ * The snapper finds surrounding elements and snaps the 
+ * current position if the alligment is not grater than 10 pixles.
+ * This leads to a magnetic snap behaviour. 
  */
 @injectable()
-export class BPMNGridSnapper extends GridSnapper {
-    override get gridX(): number {
-        return 5;
+export class BPMNElementSnapper implements ISnapper {
+	
+ 	get snapRange(): number {
+        return 10;
+    }
+    
+	/* Find a possible snapPoint. 
+	 * a SnapPoint is found if the x or y coordinates matching the position
+	 * of another element Node
+	 */
+    snap(position: Point, element: SModelElement): Point {
+	
+		const snapPoint:Point = this.findSnapPoint(element);
+			
+		// if a snapPoint was found and this snapPoint is still in the snapRange,
+		// then we adjust the current mouse Postion. Otherwise we return the current position
+		const y=(snapPoint.y>-1 && Math.abs(position.y-snapPoint.y)<=this.snapRange)?snapPoint.y:position.y;
+		const x=(snapPoint.x>-1 && Math.abs(position.x-snapPoint.x)<=this.snapRange)?snapPoint.x:position.x;
+        
+        return {x:x,y:y};
     }
 
-    override get gridY(): number {
-        return 5;
-    }
+	/*
+	 * This helper method searches the model for model elements
+	 * matching the horizontal and/or vertical alligment of the given modelElement.
+	 *
+	 * A ModelElement is a alligned to another element if its center point matches
+	 * the same x or y axis. The method retuns up to two elements - vertical and/or horizontal 
+	 * 
+	 * The method takes into account an approximation of 10. (See method 'isNear')
+     *
+	 */
+	private findSnapPoint(modelElement: SModelElement): Point {
+		let root:any;
+		try {  
+		 	root = modelElement.root;
+		}
+		catch (e: unknown) {
+  		   // unable to get root (during creation)
+		}
+		
+		let x: number=-1;
+		let y: number=-1;
+		
+		if (root && isBoundsAware(modelElement)) {
+			const childs = root.children;
+			const modelElementCenter = Bounds.center(modelElement.bounds);
+			// In the following we iterate over all model elements
+			// and compare the x and y axis of the center points
+			for (const element of childs) {
+				if (element.id !== modelElement.id && isBoundsAware(element) && !(element instanceof SLabel)) {
+					const elementCenter = Bounds.center(element.bounds);
+					if (elementCenter && modelElementCenter) {
+						// test horizontal alligment...
+						if (y==-1 && this.isNear(elementCenter.y, modelElementCenter.y)) {
+							// fount horizontal snap point
+							y=elementCenter.y-(modelElement.bounds.height*0.5);
+						}
+						// test vertical alligment...
+						if (x==-1 && this.isNear(elementCenter.x, modelElementCenter.x)) {
+							// found vertical snap point!
+							x=elementCenter.x-(modelElement.bounds.width*0.5);
+						}
+					}
+				}
+				if (x>-1 && y>-1) {
+					// we can break here as we found already the maximum of two possible matches.
+					break;
+				}
+			}
+		}
+		// return snapoint (-1,-1 if not match was found)
+		return {x:x,y:y};
+	}
+	
+    /**
+     * Returns true if the values are in a range of 10
+     */
+	private isNear(p1: number, p2:number) {		
+		const p3=Math.abs(p1-p2);
+		if (p3<this.snapRange) {
+			return true;
+		}
+		return false;
+	}
 }
+
+
+
+
+
+
+
+
+
+
 
 /*
  * The HelperLineListener reacts on mouseDown and mouseMove and searches for

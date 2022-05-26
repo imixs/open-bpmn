@@ -48,7 +48,7 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,BPMNLabelNodeSelectionListener } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNGridSnapper } from './bpmn-helperlines';
+import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNElementSnapper } from './bpmn-helperlines';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 
@@ -57,8 +57,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
-   // bind(TYPES.ISnapper).to(GridSnapper);
-    bind(TYPES.ISnapper).to(BPMNGridSnapper);
+    // bind(TYPES.ISnapper).to(GridSnapper);
+    // bind(TYPES.ISnapper).to(BPMNGridSnapper);
+    bind(TYPES.ISnapper).to(BPMNElementSnapper);
+
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
