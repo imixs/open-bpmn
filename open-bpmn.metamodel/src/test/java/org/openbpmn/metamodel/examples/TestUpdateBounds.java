@@ -58,7 +58,8 @@ public class TestUpdateBounds {
             BPMNDimension size = bounds.getDimension();
 
             // adjust position
-            bounds.updateBounds(300, point.getY(), size.getWidth(), size.getHeight());
+            bounds.updateLocation(300, point.getY() );
+            bounds.updateDimension(size.getWidth(), size.getHeight());
             bounds = task1.getBounds();
             point = bounds.getPosition();
             assertEquals(300.0, point.getX());

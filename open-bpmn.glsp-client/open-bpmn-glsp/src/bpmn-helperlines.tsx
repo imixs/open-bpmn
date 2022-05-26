@@ -1,28 +1,25 @@
 /********************************************************************************
- *  Open-BPMN
+ * Copyright (c) 2022 Imixs Software Solutions GmbH,
  *
- *  Copyright (C) 2022 Imixs Software Solutions GmbH,
- *  http://www.imixs.com
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 3
- *  of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *  General Public License for more details.
+ * You can receive a copy of the GNU General Public
+ * License at http://www.gnu.org/licenses/gpl.html
  *
- *  You can receive a copy of the GNU General Public
- *  License at http://www.gnu.org/licenses/gpl.html
+ * Project:
+ *     https://github.com/imixs/open-bpmn
  *
- *  Project:
- *      https://github.com/imixs/open-bpmn
- *
- *  Contributors:
- *      Imixs Software Solutions GmbH - Project Management
- *      Ralph Soika - Software Developer
+ * Contributors:
+ *     Imixs Software Solutions GmbH - Project Management
+ *     Ralph Soika - Software Developer
  ********************************************************************************/
 import {
 	Action, SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp, isBoundsAware, //
@@ -76,33 +73,32 @@ export interface HelperLine {
 	readonly y2: number
 }
 
-
 /**
  * Snapper implementation to allign elements
- * The snapper finds surrounding elements and snaps the 
+ * The snapper finds surrounding elements and snaps the
  * current position if the alligment is not grater than 10 pixles.
- * This leads to a magnetic snap behaviour. 
+ * This leads to a magnetic snap behaviour.
  */
 @injectable()
 export class BPMNElementSnapper implements ISnapper {
-	
- 	get snapRange(): number {
+
+	get snapRange(): number {
         return 10;
     }
-    
+
 	/* Find a possible snapPoint. 
 	 * a SnapPoint is found if the x or y coordinates matching the position
 	 * of another element Node
 	 */
     snap(position: Point, element: SModelElement): Point {
-	
-		const snapPoint:Point = this.findSnapPoint(element);
-			
+
+		const snapPoint: Point = this.findSnapPoint(element);
+
 		// if a snapPoint was found and this snapPoint is still in the snapRange,
 		// then we adjust the current mouse Postion. Otherwise we return the current position
-		const y=(snapPoint.y>-1 && Math.abs(position.y-snapPoint.y)<=this.snapRange)?snapPoint.y:position.y;
-		const x=(snapPoint.x>-1 && Math.abs(position.x-snapPoint.x)<=this.snapRange)?snapPoint.x:position.x;
-        
+		const y=(snapPoint.y>-1 && Math.abs(position.y-snapPoint.y)<=this.snapRange)?snapPoint.y: position.y;
+		const x=(snapPoint.x>-1 && Math.abs(position.x-snapPoint.x)<=this.snapRange)?snapPoint.x: position.x;
+
         return {x:x,y:y};
     }
 
@@ -111,23 +107,23 @@ export class BPMNElementSnapper implements ISnapper {
 	 * matching the horizontal and/or vertical alligment of the given modelElement.
 	 *
 	 * A ModelElement is a alligned to another element if its center point matches
-	 * the same x or y axis. The method retuns up to two elements - vertical and/or horizontal 
-	 * 
+	 * the same x or y axis. The method retuns up to two elements - vertical and/or horizontal
+	 *
 	 * The method takes into account an approximation of 10. (See method 'isNear')
      *
 	 */
 	private findSnapPoint(modelElement: SModelElement): Point {
-		let root:any;
-		try {  
-		 	root = modelElement.root;
+		let root: any;
+		try {
+			root = modelElement.root;
 		}
 		catch (e: unknown) {
-  		   // unable to get root (during creation)
+			// unable to get root (during creation)
 		}
-		
-		let x: number=-1;
-		let y: number=-1;
-		
+
+		let x=-1;
+		let y=-1;
+
 		if (root && isBoundsAware(modelElement)) {
 			const childs = root.children;
 			const modelElementCenter = Bounds.center(modelElement.bounds);
@@ -138,12 +134,12 @@ export class BPMNElementSnapper implements ISnapper {
 					const elementCenter = Bounds.center(element.bounds);
 					if (elementCenter && modelElementCenter) {
 						// test horizontal alligment...
-						if (y==-1 && this.isNear(elementCenter.y, modelElementCenter.y)) {
+						if (y===-1 && this.isNear(elementCenter.y, modelElementCenter.y)) {
 							// fount horizontal snap point
 							y=elementCenter.y-(modelElement.bounds.height*0.5);
 						}
 						// test vertical alligment...
-						if (x==-1 && this.isNear(elementCenter.x, modelElementCenter.x)) {
+						if (x===-1 && this.isNear(elementCenter.x, modelElementCenter.x)) {
 							// found vertical snap point!
 							x=elementCenter.x-(modelElement.bounds.width*0.5);
 						}
@@ -158,11 +154,11 @@ export class BPMNElementSnapper implements ISnapper {
 		// return snapoint (-1,-1 if not match was found)
 		return {x:x,y:y};
 	}
-	
+
     /**
      * Returns true if the values are in a range of 10
      */
-	private isNear(p1: number, p2:number) {		
+	private isNear(p1: number, p2: number) {
 		const p3=Math.abs(p1-p2);
 		if (p3<this.snapRange) {
 			return true;
@@ -170,16 +166,6 @@ export class BPMNElementSnapper implements ISnapper {
 		return false;
 	}
 }
-
-
-
-
-
-
-
-
-
-
 
 /*
  * The HelperLineListener reacts on mouseDown and mouseMove and searches for
@@ -200,7 +186,6 @@ export class HelperLineListener extends MouseListener {
 		} else {
 			this.isActive = false;
 		}
-
 		return [];
 	}
 
@@ -213,8 +198,7 @@ export class HelperLineListener extends MouseListener {
 	override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
 		if (this.isActive) {
 			// first test if we have a mouseMove on a BPMNNode
-			//const bpmnNode = isBPMNNode(target);
-			
+			// const bpmnNode = isBPMNNode(target);
 			if (isBPMNNode(target)) {
 				const helperLines: HelperLine[] | undefined = this.findHelperLines(target);
 				if (helperLines) {
@@ -302,7 +286,6 @@ export class HelperLineListener extends MouseListener {
 		}
 		return undefined;
 	}
-		
 }
 
 export const HELPLINE = 'helpline';

@@ -1,28 +1,25 @@
 /********************************************************************************
- *  Open-BPMN
+ * Copyright (c) 2022 Imixs Software Solutions GmbH,
  *
- *  Copyright (C) 2022 Imixs Software Solutions GmbH,
- *  http://www.imixs.com
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
  *
- *  This program is free software; you can redistribute it and/or
- *  modify it under the terms of the GNU General Public License
- *  as published by the Free Software Foundation; either version 3
- *  of the License, or (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- *  General Public License for more details.
+ * You can receive a copy of the GNU General Public
+ * License at http://www.gnu.org/licenses/gpl.html
  *
- *  You can receive a copy of the GNU General Public
- *  License at http://www.gnu.org/licenses/gpl.html
+ * Project:
+ *     https://github.com/imixs/open-bpmn
  *
- *  Project:
- *      https://github.com/imixs/open-bpmn
- *
- *  Contributors:
- *      Imixs Software Solutions GmbH - Project Management
- *      Ralph Soika - Software Developer
+ * Contributors:
+ *     Imixs Software Solutions GmbH - Project Management
+ *     Ralph Soika - Software Developer
  ********************************************************************************/
 import {
 	getSubType,
@@ -66,7 +63,6 @@ export class IconView extends ShapeView {
 
 		let icon;
 		if (taskNode) {
-		
 			if (taskNode.type === 'manualTask') {
 				// From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
 				icon =
@@ -130,16 +126,12 @@ export class BPMNLabelNodeSelectionListener implements SelectionListener {
     @inject(TYPES.IActionDispatcher)
     protected actionDispatcher: ActionDispatcher;
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-	    // we are only intersted in Events and Gateways
-        const eventNodes=  getElements(root.index,selectedElements,isBPMNLabelNode);
-        if (eventNodes.length > 0) {
-	        // find the associated BPMNLabels 
-            const eventLabelIds = eventNodes.map(node => node.id+"_bpmnlabel");
+		// we are only intersted in Events and Gateways
+		const eventNodes=  getElements(root.index,selectedElements,isBPMNLabelNode);
+		if (eventNodes.length > 0) {
+			// find the associated BPMNLabels
+			const eventLabelIds = eventNodes.map(node => node.id+'_bpmnlabel');
             this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: eventLabelIds }));
         }
     }
 }
-
-
-
-

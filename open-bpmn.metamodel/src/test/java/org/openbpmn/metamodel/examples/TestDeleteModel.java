@@ -93,7 +93,8 @@ public class TestDeleteModel {
             processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
             BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
-            task.getBounds().updateBounds(10.0, 10.0, 140.0, 60.0);
+            task.getBounds().updateLocation(10.0, 10.0);
+            task.getBounds().updateDimension( 140.0, 60.0);
 
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
