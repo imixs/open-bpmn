@@ -1,17 +1,28 @@
 /********************************************************************************
- * Copyright (c) 2019-2021 EclipseSource and others.
- *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * http://www.eclipse.org/legal/epl-2.0.
- *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
- *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ *  Open-BPMN
+ *  
+ *  Copyright (C) 2022 Imixs Software Solutions GmbH,  
+ *  http://www.imixs.com
+ *  
+ *  This program is free software; you can redistribute it and/or 
+ *  modify it under the terms of the GNU General Public License 
+ *  as published by the Free Software Foundation; either version 3 
+ *  of the License, or (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful, 
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+ *  General Public License for more details.
+ *  
+ *  You can receive a copy of the GNU General Public
+ *  License at http://www.gnu.org/licenses/gpl.html
+ *  
+ *  Project: 
+ *      https://github.com/imixs/open-bpmn
+ *  
+ *  Contributors:  
+ *      Imixs Software Solutions GmbH - Project Management
+ *      Ralph Soika - Software Developer
  ********************************************************************************/
 import {
     configureDefaultModelElements,
