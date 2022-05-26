@@ -2,6 +2,7 @@ package org.openbpmn.metamodel.examples;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNDimension;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
@@ -25,10 +27,10 @@ public class TestUpdateBounds {
 
     private static Logger logger = Logger.getLogger(TestUpdateBounds.class.getName());
 
-    static BPMNModel model = null; 
+    static BPMNModel model = null;
 
     @BeforeAll
-    public static void init() {
+    public static void init() throws BPMNModelException {
         logger.info("...read model");
         model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
     }
@@ -40,27 +42,30 @@ public class TestUpdateBounds {
     public void testUpdatePosition() {
         String out = "src/test/resources/update-bounds-process_2.bpmn";
         logger.info("...read model");
+        try {
+            // read tasks....
+            BPMNProcess process = model.openContext(null);
+            assertNotNull(process);
 
-        // read tasks....
-        BPMNProcess process = model.openContext(null);
-        assertNotNull(process);
+            BPMNActivity task1 = (BPMNActivity) process.findBaseElementById("Task_1");
+            assertNotNull(task1);
 
-        BPMNActivity task1 = (BPMNActivity) process.findBaseElementById("Task_1");
-        assertNotNull(task1);
+            BPMNBounds bounds = task1.getBounds();
+            assertNotNull(task1);
 
-        BPMNBounds bounds = task1.getBounds();
-        assertNotNull(task1);
+            BPMNPoint point = bounds.getPosition();
+            assertEquals(270.0, point.getX());
+            BPMNDimension size = bounds.getDimension();
 
-        BPMNPoint point = bounds.getPosition();
-        assertEquals(270.0, point.getX());
-        BPMNDimension size = bounds.getDimension();
-
-        // adjust position
-        bounds.updateBounds(300, point.getY(), size.getWidth(), size.getHeight());
-        bounds = task1.getBounds();
-        point = bounds.getPosition();
-        assertEquals(300.0, point.getX());
-
+            // adjust position
+            bounds.updateBounds(300, point.getY(), size.getWidth(), size.getHeight());
+            bounds = task1.getBounds();
+            point = bounds.getPosition();
+            assertEquals(300.0, point.getX());
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
         model.save(out);
 
         logger.info("...model update sucessful: " + out);

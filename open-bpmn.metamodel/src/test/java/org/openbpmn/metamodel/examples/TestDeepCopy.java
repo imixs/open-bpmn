@@ -11,7 +11,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.Document;
 
@@ -43,7 +43,7 @@ public class TestDeepCopy {
         String version = "1.0.0";
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-
+        try {
         model.buildProcess("process_1");
 
         BPMNProcess processContext = model.openContext("process_1");
@@ -54,13 +54,10 @@ public class TestDeepCopy {
         processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
         BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
         task.getBounds().updateBounds(10.0, 10.0, 140.0, 60.0);
-        try {
+       
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1"); 
-        } catch (BPMNInvalidReferenceException e) {
-            e.printStackTrace();
-            fail();
-        }
+       
         
         
         // now generate a deep copy
@@ -79,7 +76,10 @@ public class TestDeepCopy {
         
         assertEquals(1, processContext.getEvents().size());
         
-        
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
         logger.info("...model created sucessful: " + out);
 
     }

@@ -55,7 +55,7 @@
 
 .sprotty-label.BPMNLabel {
     font-weight: normal;
-    font-size: 0.8em;
+    font-size: 0.7em;
     fill: var(--theia-titleBar-activeForeground);
 }
 
@@ -128,13 +128,9 @@
 .xxxxxxxsprotty-node.gateway > text.heading {
 	text-anchor:middle; 
 }
-.sprotty-node.gateway > rect {
+.gateway > polygon {
     fill: #C39D5C;
 }
-
-
-
-
 
 .pool > .sprotty-node {
     fill: #34466199;

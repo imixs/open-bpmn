@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 public class TestModifyDom {
@@ -12,9 +13,10 @@ public class TestModifyDom {
 
     /**
      * This test parses a bpmn file
+     * @throws BPMNModelException 
      */
     @Test
-    public void testReadEmptyModel() {
+    public void testReadEmptyModel() throws BPMNModelException {
 
         logger.info("...load existing model");
 

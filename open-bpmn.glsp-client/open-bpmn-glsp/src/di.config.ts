@@ -25,10 +25,9 @@ import {
     overrideViewerOptions,
     RevealNamedElementActionProvider,
     RoundedCornerNodeView,
-    RectangularNodeView,
     SCompartment,
     SCompartmentView,
-    SLabel,CircularNodeView,
+    SLabel,CircularNodeView,DiamondNodeView,
     SLabelView,configureView,
     StructureCompartmentView,configureCommand,
     TYPES
@@ -45,11 +44,9 @@ import {
 	TaskNode,
 	EventNode,
 	SequenceFlow,
-	BPMNElementAnchor,
-	// BPMNPolylineElementAnchor,
-	BPMNPort
+	BPMNElementAnchor
 } from '@open-bpmn/open-bpmn-model';
-import { IconView, GatewayNodeView,EventNodeSelectionListener } from './bpmn-element-views';
+import { IconView,BPMNLabelNodeSelectionListener } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNGridSnapper } from './bpmn-helperlines';
 
@@ -66,7 +63,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
 	// neuer SelectionListener for Event BPMNLabels
-	bind(TYPES.SelectionListener).to(EventNodeSelectionListener);
+	bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
 
 	// bpmn helper lines
     bind(TYPES.MouseListener).to(HelperLineListener);
@@ -98,12 +95,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'catchEvent', EventNode, CircularNodeView);
     configureModelElement(context, 'throwEvent', EventNode, CircularNodeView);
-	configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
+	// configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
 
-    configureModelElement(context, 'exclusiveGateway', GatewayNode, GatewayNodeView);
-    configureModelElement(context, 'inclusiveGateway', GatewayNode, GatewayNodeView);
-    configureModelElement(context, 'parallelGateway', GatewayNode, GatewayNodeView);
-    configureModelElement(context, 'complexGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'exclusiveGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'inclusiveGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'parallelGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'complexGateway', GatewayNode, DiamondNodeView);
 
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'BPMNLabel', SLabel, SLabelView, { enable: [editLabelFeature,selectFeature,moveFeature] });

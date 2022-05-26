@@ -16,18 +16,15 @@
 import {
 	getSubType,
 	RenderingContext,
-	SLabel,
 	setAttr,
 	ActionDispatcher,SelectAction,
 	SModelRoot,getElements,
 	TYPES
 } from '@eclipse-glsp/client';
-// import { toTypeGuard } from '@eclipse-glsp/protocol';
-// @eclipse-glsp/protocol
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
-import { Icon, GatewayNode, isTaskNode, isEventNode, isGatewayNode } from '@open-bpmn/open-bpmn-model';
+import { Icon, isTaskNode, isEventNode, isGatewayNode, isBPMNLabelNode } from '@open-bpmn/open-bpmn-model';
 import {
 	SelectionListener
 } from '@eclipse-glsp/client/lib/features/select/selection-service';
@@ -58,6 +55,7 @@ export class IconView extends ShapeView {
 
 		let icon;
 		if (taskNode) {
+		
 			if (taskNode.type === 'manualTask') {
 				// From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
 				icon =
@@ -111,72 +109,26 @@ export class IconView extends ShapeView {
 	}
 }
 
-/*
- * This is the view for all kinds of BPMN Gateway elements.
- * The gateway symbol (dyamond) has a width of 50.
- * The dyamond can contain an additional symbol in its centre.
- *
+/**
+ * This selectionListener selects an associated BPMNLabel of a
+ * selected BPMN Event or Gatweway.
+ * This allows to move both independent Nodes (GNode and GLabel)
  */
 @injectable()
-export class GatewayNodeView extends ShapeView {
-	render(element: GatewayNode, context: RenderingContext): VNode | undefined {
-
-		if (!this.isVisible(element, context)) {
-			return undefined;
-		}
-
-		// first we compute the gateway symbol based on the gateway type
-		let gatewaySymbol = 'M14';
-		if (element.type === 'exclusiveGateway') {
-			// eslint-disable-next-line max-len
-			gatewaySymbol = 'M14 7v1H8v6H7V8H1V7h6V1h1v6h6z';
-		} else {
-			// default symbol
-			// eslint-disable-next-line max-len
-			gatewaySymbol = 'M7.116 8l-4.558 4.558.884.884L8 8.884l4.558 4.558.884-.884L8.884 8l4.558-4.558-.884-.884L8 7.116 3.442 2.558l-.884.884L7.116 8z';
-		}
-
-		// find the label:heading and adust position
-		for (const entry of element.children) {
-			if (entry instanceof SLabel && entry.type === 'label:heading') {
-				// adjust allignment and position
-				entry.alignment = { x: 0, y: 0 };
-				entry.position = { x: 25, y: 65 };
-			}
-		}
-
-		/*  text-anchor="middle"  waere die lösung */
-		const vnode: any = (
-			// render circle with an event symbol and the label:heading
-			<g class-sprotty-node={true} class-mouseover={element.hoverFeedback}>
-				<rect x="18" y="-18" width="35.35" height="35.35" transform={'rotate(45)'}></rect>
-				<g class-bpmn-symbol={true}>
-					<path transform={'scale(2.0) translate(5 5)'}
-						d={gatewaySymbol} />
-				</g>
-				{context.renderChildren(element)}
-			</g>
-		);
-
-		const subType = getSubType(element);
-		if (subType) {
-			setAttr(vnode, 'class', subType);
-		}
-		return vnode;
-	}
-}
-
-@injectable()
-export class EventNodeSelectionListener implements SelectionListener {
+export class BPMNLabelNodeSelectionListener implements SelectionListener {
     @inject(TYPES.IActionDispatcher)
     protected actionDispatcher: ActionDispatcher;
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-        const eventNodes=  getElements(root.index,selectedElements, isEventNode);
+	    // we are only intersted in Events and Gateways
+        const eventNodes=  getElements(root.index,selectedElements,isBPMNLabelNode);
         if (eventNodes.length > 0) {
+	        // find the associated BPMNLabels 
             const eventLabelIds = eventNodes.map(node => node.id+"_bpmnlabel");
             this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: eventLabelIds }));
         }
     }
 }
+
+
 
 

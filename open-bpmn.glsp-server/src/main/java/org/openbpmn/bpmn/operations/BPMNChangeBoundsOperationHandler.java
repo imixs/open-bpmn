@@ -35,6 +35,7 @@ import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 
 import com.google.inject.Inject;
 
@@ -61,54 +62,59 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
         BPMNProcess context = modelState.getBpmnModel().getContext();
         // iterate over all new Bounds...
-        List<ElementAndBounds> elementBounds = operation.getNewBounds();
-        for (ElementAndBounds elementBound : elementBounds) {
-            String id = elementBound.getElementId();
-            GPoint newPoint = elementBound.getNewPosition();
-            GDimension newSize = elementBound.getNewSize();
-            // find the corresponding BPMN element
-            BPMNFlowElement bpmnElement = context.findBPMNFlowElementById(id);
-            if (bpmnElement != null) {
-                BPMNBounds bpmnBounds = bpmnElement.getBounds();
-                // for Task Elements update position and size
-                if (bpmnElement instanceof BPMNActivity) {
-                    bpmnBounds.updateBounds(newPoint.getX(), newPoint.getY(), newSize.getWidth(), newSize.getHeight());
+        try {
+            List<ElementAndBounds> elementBounds = operation.getNewBounds();
+            for (ElementAndBounds elementBound : elementBounds) {
+                String id = elementBound.getElementId();
+                GPoint newPoint = elementBound.getNewPosition();
+                GDimension newSize = elementBound.getNewSize();
+                // find the corresponding BPMN element
+                BPMNFlowElement bpmnElement = context.findBPMNFlowElementById(id);
+                if (bpmnElement != null) {
+                    BPMNBounds bpmnBounds = bpmnElement.getBounds();
+                    // for Task Elements update position and size
+                    if (bpmnElement instanceof BPMNActivity) {
+                        bpmnBounds.updateLocation(newPoint.getX(), newPoint.getY());
+                        bpmnBounds.updateDimension(newSize.getWidth(), newSize.getHeight());
+                    } else {
+                        // for all other elements update the position only
+                        BPMNDimension dimension = bpmnBounds.getDimension();
+                        bpmnBounds.updateLocation(newPoint.getX(), newPoint.getY());
+                        bpmnBounds.updateDimension(dimension.getWidth(), dimension.getHeight());
+                    }
+                    // Finally we update the Gmodel to avoid a new initialization.
+                    Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
+                    if (_node.isPresent()) {
+                        GNode node = _node.get();
+                        node.setPosition(newPoint);
+                        node.setSize(newSize);
+                    }
                 } else {
-                    // for all other elements update the position only
-                    BPMNDimension dimension = bpmnBounds.getDimension();
-                    bpmnBounds.updateBounds(newPoint.getX(), newPoint.getY(), dimension.getWidth(),
-                            dimension.getHeight());
-                }
-                // Finally we update the Gmodel to avoid a new initialization.
-                Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
-                if (_node.isPresent()) {
-                    GNode node = _node.get();
-                    node.setPosition(newPoint);
-                    node.setSize(newSize);
-                }
-            } else {
-                // test if we have a BPMNLable element?
-                if (id.endsWith("_bpmnlabel")) {
-                    // update the source model
-                    bpmnElement = context.findBPMNFlowElementById(id.substring(0, id.lastIndexOf("_bpmnlabel")));
-                    if (bpmnElement != null) {
-                        if (bpmnElement instanceof BPMNEvent || bpmnElement instanceof BPMNGateway) {
-                            BPMNLabel label = bpmnElement.getLabel();
-                            label.updateLocation(newPoint.getX(), newPoint.getY());
+                    // test if we have a BPMNLable element?
+                    if (id.endsWith("_bpmnlabel")) {
+                        // update the source model
+                        bpmnElement = context.findBPMNFlowElementById(id.substring(0, id.lastIndexOf("_bpmnlabel")));
+                        if (bpmnElement != null) {
+                            if (bpmnElement instanceof BPMNEvent || bpmnElement instanceof BPMNGateway) {
+                                BPMNLabel label = bpmnElement.getLabel();
+                                label.updateLocation(newPoint.getX(), newPoint.getY());
+                            }
+
                         }
 
+                        // update Glabel
+                        Optional<GLabel> _node = modelState.getIndex().findElementByClass(id, GLabel.class);
+                        if (_node.isPresent()) {
+                            GLabel node = _node.get();
+                            node.setPosition(newPoint);
+                        }
                     }
 
-                    // update Glabel
-                    Optional<GLabel> _node = modelState.getIndex().findElementByClass(id, GLabel.class);
-                    if (_node.isPresent()) {
-                        GLabel node = _node.get();
-                        node.setPosition(newPoint);
-                    }
                 }
 
             }
-
+        } catch (BPMNMissingElementException e) {
+            e.printStackTrace();
         }
         // no more action - the GModel is now up to date
     }

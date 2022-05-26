@@ -28,6 +28,7 @@ import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
@@ -60,12 +61,16 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         // now we add this task into the source model
         String taskID = "task-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode tasknodeID=" + taskID);
-        BPMNProcess process = modelState.getBpmnModel().getContext();
-        BPMNActivity task = process.buildTask(taskID, getLabel(), operation.getElementTypeId());
-        Optional<GPoint> point = operation.getLocation();
-        if (point.isPresent()) {
-            task.getBounds().updateBounds(point.get().getX(), point.get().getY(), BPMNActivity.DEFAULT_WIDTH,
-                    BPMNActivity.DEFAULT_HEIGHT);
+        try {
+            BPMNProcess process = modelState.getBpmnModel().getContext();
+            BPMNActivity task = process.buildTask(taskID, getLabel(), operation.getElementTypeId());
+            Optional<GPoint> point = operation.getLocation();
+            if (point.isPresent()) {
+                task.getBounds().updateLocation(point.get().getX(), point.get().getY());
+                task.getBounds().updateDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+            }
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
         }
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(taskID)));

@@ -17,10 +17,10 @@ package org.openbpmn.glsp.elements.gateway;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.GatewayNode;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * The GatewayNodeBuilder defines the layout of BPMN gateways
@@ -50,19 +50,13 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
         return this;
     }
 
-    /**
-     * Define layout properties
-     */
     @Override
-    protected void setProperties(final GatewayNode node) {
+    public void setProperties(final GatewayNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.setLayout(GConstants.Layout.FREEFORM);
-
-        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-        // add SPort
-        node.getChildren().add(BPMNBuilderHelper.createBPMNPort(node, 0.0, 0.0, BPMNGateway.DEFAULT_WIDTH,
-                BPMNGateway.DEFAULT_HEIGHT));
+        node.setLayout(GConstants.Layout.HBOX);
+        size = GraphUtil.dimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
+        node.setSize(size);
     }
 
 }

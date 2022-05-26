@@ -24,6 +24,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -198,8 +199,9 @@ public class BPMNModel {
      * @param id
      * @param name
      * @param type - EventType
+     * @throws BPMNModelException 
      */
-    public BPMNProcess buildProcess(String id) {
+    public BPMNProcess buildProcess(String id) throws BPMNModelException {
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
         Element process = createElement(BPMNNS.BPMN2, "process");
         logger.fine(process.getNodeName());
@@ -231,8 +233,9 @@ public class BPMNModel {
      * 
      * @param string
      * @return BPMNProcess instance
+     * @throws BPMNModelException 
      */
-    public BPMNProcess openContext(String id) {
+    public BPMNProcess openContext(String id) throws BPMNModelException {
 
         // find process
         NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");

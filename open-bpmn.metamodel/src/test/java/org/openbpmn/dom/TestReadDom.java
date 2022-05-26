@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -25,9 +26,10 @@ public class TestReadDom {
 
     /**
      * This test parses a bpmn file
+     * @throws BPMNModelException 
      */
     @Test
-    public void testReadEmptyModel() {
+    public void testReadEmptyModel() throws BPMNModelException {
 
         logger.info("...read model");
 
@@ -46,10 +48,11 @@ public class TestReadDom {
 
     /**
      * This Test verifies if a BPMN model with custom namespace URIs can be read.
+     * @throws BPMNModelException 
      * 
      */
     @Test
-    public void testReadEmptyModelWithCustomNamespace() {
+    public void testReadEmptyModelWithCustomNamespace() throws BPMNModelException {
 
         logger.info("...read model");
 
@@ -70,9 +73,10 @@ public class TestReadDom {
 
     /**
      * This test parses a blank (empty) bpmn file and creaes a default process
+     * @throws BPMNModelException 
      */
     @Test
-    public void testReadBlankFile() {
+    public void testReadBlankFile() throws BPMNModelException {
         logger.info("...read blank model");
 
         String out = "src/test/resources/out_blank.bpmn";

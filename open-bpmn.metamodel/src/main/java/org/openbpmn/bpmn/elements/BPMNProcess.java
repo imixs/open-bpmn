@@ -8,6 +8,8 @@ import java.util.Set;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -117,8 +119,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @param name
      * @param type - EventType
+     * @throws BPMNModelException 
      */
-    public BPMNActivity buildTask(String id, String name, String type) {
+    public BPMNActivity buildTask(String id, String name, String type) throws BPMNModelException {
 
         // create a new Dom node...
         Element taskElement = model.createElement(BPMNNS.BPMN2, type);
@@ -134,8 +137,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * Adds a new BPMNTask from a existing Element Node
      * @param eventElement
      * @return
+     * @throws BPMNModelException 
      */
-    private BPMNActivity addActivity(Element element) {
+    private BPMNActivity addActivity(Element element) throws BPMNModelException {
         BPMNActivity task = new BPMNActivity(model, element, element.getLocalName());
         getActivities().add(task);
         return task;
@@ -151,8 +155,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @param name
      * @param type - EventType
+     * @throws BPMNModelException 
      */
-    public BPMNEvent buildEvent(String id, String name, String type) {
+    public BPMNEvent buildEvent(String id, String name, String type) throws BPMNModelException {
         // create a new Dom node...
         Element eventElement = model.createElement(BPMNNS.BPMN2, type);
         eventElement.setAttribute("id", id);
@@ -161,6 +166,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // add BPMNEvent instance
         BPMNEvent event = this.addEvent(eventElement);
+        
         return event;
 
     }
@@ -169,8 +175,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * Adds a new BPMNEvent from a existing Element Node
      * @param eventElement
      * @return
+     * @throws BPMNModelException 
      */
-    private BPMNEvent addEvent(Element element) {
+    private BPMNEvent addEvent(Element element) throws BPMNModelException {
          BPMNEvent event = new BPMNEvent(model, element, element.getLocalName());
          getEvents().add(event);
          return event;
@@ -186,8 +193,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @param name
      * @param type - EventType
+     * @throws BPMNModelException 
      */
-    public BPMNGateway buildGateway(String id, String name, String type) {
+    public BPMNGateway buildGateway(String id, String name, String type) throws BPMNModelException {
         // create a new Dom node...
         Element eventElement = model.createElement(BPMNNS.BPMN2, type);
         eventElement.setAttribute("id", id);
@@ -207,8 +215,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * Adds a new BPMNEvent from a existing Element Node
      * @param eventElement
      * @return
+     * @throws BPMNModelException 
      */
-    private BPMNGateway addGateway(Element element) {
+    private BPMNGateway addGateway(Element element) throws BPMNModelException {
         BPMNGateway gateway = new BPMNGateway(model, element, element.getLocalName());
          getGateways().add(gateway);
          return gateway;
@@ -224,8 +233,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param source - ID of the source element
      * @param target - ID of the target element
      * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException 
      */
-    public BPMNSequenceFlow buildSequenceFlow(String id, String source, String target) throws BPMNInvalidReferenceException {
+    public BPMNSequenceFlow buildSequenceFlow(String id, String source, String target) throws BPMNInvalidReferenceException, BPMNMissingElementException {
 
         // validate IDs
         BPMNFlowElement sourceElement = (BPMNFlowElement) findBaseElementById(source);
@@ -532,8 +542,9 @@ public class BPMNProcess extends BPMNBaseElement {
     /**
      * This method parses the content of the process element and adds all tasks,
      * gateways and events
+     * @throws BPMNModelException 
      */
-    public void init() {
+    public void init() throws BPMNModelException {
         // now find all relevant bpmn meta elements
         NodeList childs = this.getElementNode().getChildNodes();
         for (int j = 0; j < childs.getLength(); j++) {
@@ -545,18 +556,20 @@ public class BPMNProcess extends BPMNBaseElement {
 
             // check element type
             if (BPMNModel.isActivity(child)) {
-                BPMNActivity activity = new BPMNActivity(model, child, child.getLocalName());
-                getActivities().add(activity);
+                //BPMNActivity activity = new BPMNActivity(model, child, child.getLocalName());
+                this.addActivity((Element) child);
             } else if (BPMNModel.isEvent(child)) {
                 this.addEvent((Element) child);
 //                BPMNEvent event = new BPMNEvent(model, child, child.getLocalName());
 //                getEvents().add(event);
             } else if (BPMNModel.isGateway(child)) {
-                BPMNGateway gateway = new BPMNGateway(model, child, child.getLocalName());
-                getGateways().add(gateway);
+//                BPMNGateway gateway = new BPMNGateway(model, child, child.getLocalName());
+//                getGateways().add(gateway);
+                this.addGateway((Element) child);
             } else if (BPMNModel.isSequenceFlow(child)) {
-                BPMNSequenceFlow sequenceFlow = new BPMNSequenceFlow(model, child);
-                getSequenceFlows().add(sequenceFlow);
+//                BPMNSequenceFlow sequenceFlow = new BPMNSequenceFlow(model, child);
+//                getSequenceFlows().add(sequenceFlow);
+                this.addSequenceFlow((Element) child);
             } else {
                 // unsupported node type
             }

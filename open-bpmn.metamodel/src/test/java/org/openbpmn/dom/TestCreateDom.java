@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 public class TestCreateDom {
@@ -12,9 +13,10 @@ public class TestCreateDom {
 
     /**
      * This test creates an empty BPMN model instance
+     * @throws BPMNModelException 
      */
     @Test
-    public void testReadEmptyModel() {
+    public void testReadEmptyModel() throws BPMNModelException {
  
         logger.info("...creating new empty model");
 

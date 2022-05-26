@@ -22,7 +22,7 @@ public final class ModelTypes {
     public static final String LABEL_HEADING = "label:heading";
     public static final String COMP_HEADER = "comp:header";
     public static final String ICON = "icon";
-    public static final String ACTIVITY_NODE = "activityNode";
+//    public static final String ACTIVITY_NODE = "activityNode";
 
 //    public static final String TASK = "task";
 //    public static final String MANUAL_TASK = TASK + ":manual";
@@ -36,7 +36,7 @@ public final class ModelTypes {
 //    public static final String THROW_EVENT = EVENT + ":throw";
 //    public static final String START_EVENT = EVENT + ":start";
 //    public static final String END_EVENT = EVENT + ":end";
-    public static final String EVENT_PORT = "event:port";
+    // public static final String EVENT_PORT = "event:port";
 
     // public static final String GATEWAY = "gateway";
     // public static final String GATEWAY_PORT = "gateway:port";

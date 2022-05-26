@@ -29,6 +29,7 @@ import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 import com.google.inject.Inject;
@@ -61,9 +62,16 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         String diagramType = options.get("diagramType");
         if (bNeedsClientLayout && uri != null && "bpmn-diagram".equals(diagramType)) {
             final File file = convertToFile(modelState);
-            BPMNModel model = BPMNModelFactory.read(file);
-            // we store the BPMN meta model into the modelState
-            modelState.setBpmnModel(model);
+            BPMNModel model;
+            try {
+                model = BPMNModelFactory.read(file);
+                // we store the BPMN meta model into the modelState
+                modelState.setBpmnModel(model);
+            } catch (BPMNModelException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
         }
     }
 

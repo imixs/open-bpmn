@@ -15,7 +15,7 @@
  ********************************************************************************/
 
 import {
-	Action, SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp,GridSnapper
+	Action, SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp,GridSnapper, isBoundsAware
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import {
@@ -27,7 +27,7 @@ import {
 } from 'sprotty';
 import { VNode } from 'snabbdom';
 import { Bounds, Point } from 'sprotty-protocol';
-import { getBPMNNode,getBPMNNodeCenter} from '@open-bpmn/open-bpmn-model';
+import { isBPMNNode} from '@open-bpmn/open-bpmn-model';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
@@ -92,7 +92,7 @@ export class HelperLineListener extends MouseListener {
 
 	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
 		// check if target is relevant....
-		const bpmnNode = getBPMNNode(target);
+		const bpmnNode = isBPMNNode(target);
 		if (bpmnNode) {
 			// switch into active mode
 			this.isActive = true;
@@ -112,9 +112,10 @@ export class HelperLineListener extends MouseListener {
 	override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
 		if (this.isActive) {
 			// first test if we have a mouseMove on a BPMNNode
-			const bpmnNode = getBPMNNode(target);
-			if (bpmnNode) {
-				const helperLines: HelperLine[] | undefined = this.findHelperLines(bpmnNode);
+			//const bpmnNode = isBPMNNode(target);
+			
+			if (isBPMNNode(target)) {
+				const helperLines: HelperLine[] | undefined = this.findHelperLines(target);
 				if (helperLines) {
 					return [DrawHelperLinesAction.create({ helperLines: helperLines })];
 				} else {
@@ -148,22 +149,22 @@ export class HelperLineListener extends MouseListener {
 	private findHelperLines(modelElement: SModelElement): HelperLine[] | undefined {
 		const root: SModelRoot = modelElement.root;
 		const helperLines: HelperLine[] = [];
-		if (root) {
+		if (root  && isBoundsAware(modelElement)) {
 			const childs = root.children;
 			const canvasBounds = root.canvasBounds;
 			// compute absolute center bounds of the model element. This is needed to compute the
 			// dimensions of the drawing canvas.
 			const absoluteCenterBounds = Bounds.center(getAbsoluteBounds(modelElement));
 			// const modelElementCenter = Bounds.center(modelElement.bounds);
-			const modelElementCenter = getBPMNNodeCenter(modelElement);
+			const modelElementCenter = Bounds.center(modelElement.bounds);
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			let foundHorizontal = false;
 			let foundVertical = false;
 			for (const element of childs) {
-				if (element.id !== modelElement.id) {
+				if (element.id !== modelElement.id && isBoundsAware(element)) {
 					// const elementCenter = Bounds.center(element.bounds);
-					const elementCenter = getBPMNNodeCenter(element);
+					const elementCenter = Bounds.center(element.bounds);
 					if (elementCenter && modelElementCenter) {
 						// test vertical alligment...
 						if (!foundHorizontal && elementCenter.y === modelElementCenter.y) {

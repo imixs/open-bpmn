@@ -26,13 +26,21 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
 import com.google.inject.Inject;
 
+/**
+ * OperationHandler to create a new gateway.
+ *
+ * @author rsoika
+ *
+ */
 public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
 
     private static Logger logger = Logger.getLogger(BPMNCreateGatewayHandler.class.getName());
@@ -60,12 +68,20 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         // now we add this task into the source model
         String gatewayID = "gateway-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
-        BPMNProcess process = modelState.getBpmnModel().getContext();
-        BPMNGateway gateway = process.buildGateway(gatewayID, getLabel(), operation.getElementTypeId());
-        Optional<GPoint> point = operation.getLocation();
-        if (point.isPresent()) {
-            gateway.getBounds().updateBounds(point.get().getX(), point.get().getY(), BPMNGateway.DEFAULT_HEIGHT,
-                    BPMNGateway.DEFAULT_HEIGHT);
+        try {
+            BPMNProcess process = modelState.getBpmnModel().getContext();
+            BPMNGateway gateway = process.buildGateway(gatewayID, getLabel(), operation.getElementTypeId());
+            Optional<GPoint> point = operation.getLocation();
+            if (point.isPresent()) {
+                gateway.getBounds().updateLocation(point.get().getX(), point.get().getY());
+                gateway.getBounds().updateDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
+                // set label data
+                gateway.getLabel().updateLocation(point.get().getX() - 3,
+                        point.get().getY() + gateway.getDefaultHeigth() + BPMNEvent.LABEL_OFFSET);
+                gateway.getLabel().updateDimension(BPMNEvent.DEFAULT_WIDTH, 14);
+            }
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
         }
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));

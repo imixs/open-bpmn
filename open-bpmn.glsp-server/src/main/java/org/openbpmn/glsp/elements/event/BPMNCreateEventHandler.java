@@ -28,6 +28,7 @@ import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 
@@ -66,12 +67,20 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         // now we add this task into the source model
         String eventID = "event-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode eventnodeID=" + eventID);
-        BPMNProcess process = modelState.getBpmnModel().getContext();
-        BPMNEvent event = process.buildEvent(eventID, getLabel(), operation.getElementTypeId());
-        Optional<GPoint> point = operation.getLocation();
-        if (point.isPresent()) {
-            event.getBounds().updateBounds(point.get().getX(), point.get().getY(), BPMNEvent.DEFAULT_WIDTH,
-                    BPMNEvent.DEFAULT_HEIGHT);
+        try {
+            BPMNProcess process = modelState.getBpmnModel().getContext();
+            BPMNEvent event = process.buildEvent(eventID, getLabel(), operation.getElementTypeId());
+            Optional<GPoint> point = operation.getLocation();
+            if (point.isPresent()) {
+                event.getBounds().updateLocation(point.get().getX(), point.get().getY());
+                event.getBounds().updateDimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
+                // set label data
+                event.getLabel().updateLocation(point.get().getX() - 3,
+                        point.get().getY() + event.getDefaultHeigth() + BPMNEvent.LABEL_OFFSET);
+                event.getLabel().updateDimension(BPMNEvent.DEFAULT_WIDTH, 14);
+            }
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
         }
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(eventID)));

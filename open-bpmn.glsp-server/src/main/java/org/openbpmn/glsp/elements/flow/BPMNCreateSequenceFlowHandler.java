@@ -24,7 +24,7 @@ import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
 
@@ -75,7 +75,7 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
             process.buildSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
 
             modelState.reset();
-        } catch (BPMNInvalidReferenceException e) {
+        } catch (BPMNModelException e) {
             logger.severe(e.getMessage());
         }
 

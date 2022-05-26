@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -99,10 +100,11 @@ public class BPMNModelFactory {
      * 
      * @param modelFile
      * @return a BPMNModel instance
+     * @throws BPMNModelException 
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static BPMNModel read(File modelFile) {
+    public static BPMNModel read(File modelFile) throws BPMNModelException {
         try {
             return read(new FileInputStream(modelFile));
         } catch (FileNotFoundException e) {
@@ -116,9 +118,10 @@ public class BPMNModelFactory {
      * 
      * @param modelFile
      * @return a BPMNModel instance
+     * @throws BPMNModelException 
      * @throws IOException
      */
-    public static BPMNModel read(String modelFilePath) {
+    public static BPMNModel read(String modelFilePath) throws BPMNModelException {
         return read(BPMNModel.class.getResourceAsStream(modelFilePath));
     }
 
@@ -127,10 +130,11 @@ public class BPMNModelFactory {
      * 
      * @param modelFile
      * @return a BPMNModel instance
+     * @throws BPMNModelException 
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static BPMNModel read(InputStream is) {
+    public static BPMNModel read(InputStream is) throws BPMNModelException {
         logger.fine("read from inputStream...");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setNamespaceAware(true);

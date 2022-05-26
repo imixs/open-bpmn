@@ -10,7 +10,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
@@ -26,7 +26,7 @@ public class TestCreateModel {
     /**
      * This test creates a bpmn file
      */
-    @Test 
+    @Test
     public void testCreateEmptyModel() {
         String out = "src/test/resources/create-process_1.bpmn";
         logger.info("...create empty model");
@@ -55,7 +55,12 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
-        model.buildProcess("process_1");
+        try {
+            model.buildProcess("process_1");
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
         assertNotNull(model);
 
         model.save(out);
@@ -75,20 +80,19 @@ public class TestCreateModel {
         String version = "1.0.0";
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-
-        BPMNProcess processContext =  model.buildProcess("process_1");
-
-        assertNotNull(processContext);
-
-        // add a start and end event
-        processContext.buildEvent("start_1", "Start",BPMNTypes.START_EVENT);
-        processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
-        processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
-
         try {
+            BPMNProcess processContext = model.buildProcess("process_1");
+
+            assertNotNull(processContext);
+
+            // add a start and end event
+            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
+            processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
-        } catch (BPMNInvalidReferenceException e) {
+        } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
@@ -98,7 +102,6 @@ public class TestCreateModel {
 
     }
 
-    
     /**
      * This test creates a bpmn file with a process definition containing Start and
      * End Events and a Task connected with SequenceFlows
@@ -112,22 +115,21 @@ public class TestCreateModel {
         String version = "1.0.0";
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-
-        model.buildProcess("process_1");
-
-        BPMNProcess processContext = model.openContext("process_1");
-        assertNotNull(processContext);
-
-        // add a start and end event
-        processContext.buildEvent("start_1", "Start",BPMNTypes.START_EVENT);
-        processContext.buildEvent("end_1", "End",BPMNTypes.END_EVENT);
-        processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
-        processContext.buildGateway("gateway_1", "Gateway", BPMNTypes.EXCLUSIVE_GATEWAY);
-
         try {
+            model.buildProcess("process_1");
+
+            BPMNProcess processContext = model.openContext("process_1");
+            assertNotNull(processContext);
+
+            // add a start and end event
+            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
+            processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+            processContext.buildGateway("gateway_1", "Gateway", BPMNTypes.EXCLUSIVE_GATEWAY);
+
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
-        } catch (BPMNInvalidReferenceException e) {
+        } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
@@ -137,8 +139,6 @@ public class TestCreateModel {
 
     }
 
-    
-    
     /**
      * This test creates a bpmn file with a process definition containing Start and
      * End Events and a Task connected with SequenceFlows.
@@ -154,21 +154,21 @@ public class TestCreateModel {
         String version = "1.0.0";
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-
-        model.buildProcess("process_1");
-
-        BPMNProcess processContext = model.openContext("process_1"); 
-        assertNotNull(processContext);
-
-        // add a start and end event
-        processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
-        processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
-        BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
-        task.getBounds().updateBounds(10.0, 10.0, 140.0, 60.0);
         try {
+            model.buildProcess("process_1");
+
+            BPMNProcess processContext = model.openContext("process_1");
+            assertNotNull(processContext);
+
+            // add a start and end event
+            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
+            BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+            task.getBounds().updateBounds(10.0, 10.0, 140.0, 60.0);
+
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
-        } catch (BPMNInvalidReferenceException e) {
+        } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }

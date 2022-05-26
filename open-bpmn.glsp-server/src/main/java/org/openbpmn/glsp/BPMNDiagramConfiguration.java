@@ -51,16 +51,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
             BPMNTypes.THROW_EVENT, //
             BPMNTypes.SEQUENCE_FLOW);
 
-    public final static List<String> ALL_PORTS = Arrays.asList( //
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.START_EVENT, //
-            BPMNTypes.END_EVENT, //
-            ModelTypes.EVENT_PORT);
-
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
      * used by GSON to construct the correct {@link EClass} based on the "type"
@@ -76,7 +66,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON);
-        mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
+        // mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
         mappings.put(ModelTypes.POOL, BpmnPackage.Literals.POOL);
         mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
 
@@ -164,32 +154,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         // SequenceFLow
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
 
-        sequenceFlowHint.setSourceElementTypeIds(Arrays.asList(//
-                BPMNTypes.MANUAL_TASK, //
-                BPMNTypes.SCRIPT_TASK, //
-                BPMNTypes.SEND_TASK, //
-                BPMNTypes.SERVICE_TASK, //
-
-                BPMNTypes.CATCH_EVENT, //
-                BPMNTypes.THROW_EVENT, //
-                BPMNTypes.START_EVENT, //
-                BPMNTypes.END_EVENT //
-
-        ));
-        // ModelTypes.EVENT_PORT
-
-        sequenceFlowHint.setTargetElementTypeIds(Arrays.asList(//
-                BPMNTypes.MANUAL_TASK, //
-                BPMNTypes.SCRIPT_TASK, //
-                BPMNTypes.SEND_TASK, //
-                BPMNTypes.SERVICE_TASK, //
-
-                BPMNTypes.CATCH_EVENT, //
-                BPMNTypes.THROW_EVENT, //
-                BPMNTypes.START_EVENT, //
-                BPMNTypes.END_EVENT //
-        ));
-        // ModelTypes.EVENT_PORT
+        sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_FLOWELEMENTS);
+        sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_FLOWELEMENTS);
         edgeHints.add(sequenceFlowHint);
 
         return edgeHints;
