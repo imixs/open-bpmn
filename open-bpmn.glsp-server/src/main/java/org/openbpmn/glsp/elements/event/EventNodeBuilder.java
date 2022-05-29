@@ -124,8 +124,9 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
          * </pre>
          *
          */
+        // VerticalLayout
         JsonObjectBuilder builder = Json.createObjectBuilder() //
-                .add("type", "VerticalLayout");
+                .add("type", "HorizontalLayout");
 
         builder.add("elements", buildControlElements("name", "category", "documentation"));
 
