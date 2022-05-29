@@ -16,16 +16,15 @@
     --jsonforms-property-view-padding: 8px;
 }
 
-#jsonforms-property-view>div.theia-widget-noInfo {
-    padding: var(--theia-empty-property-view-widget-padding);
-}
 
-#property-view {
-    overflow-y: auto;
-}
 
-#jsonforms-property-view {
+.jsonforms-property-view {
     padding: var(--jsonforms-property-view-padding);
+}
+
+
+.jsonforms-property-view>div.theia-widget-noInfo {
+    padding: var(--theia-empty-property-view-widget-padding);
 }
 
 .jsonforms-property-view .vertical-layout {
@@ -34,11 +33,21 @@
     width: 100%;
     padding-right: 0;
 }
+.jsonforms-property-view .horizontal-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 
 .jsonforms-property-view .vertical-layout>* {
     display: table-row;
     width: 100%;
 }
+.jsonforms-property-view .horizontal-layout>* {
+  flex: 1;
+}
+
 
 .jsonforms-property-view .vertical-layout-item .control {
     margin: var(--jsonforms-property-view-margin);
@@ -46,6 +55,11 @@
     flex-direction: row;
     margin-right: var(--jsonforms-property-view-padding)
 }
+.jsonforms-property-view .horizontal-layout-item .control {
+    margin: var(--jsonforms-property-view-margin);
+    margin-right: var(--jsonforms-property-view-padding)
+}
+
 
 .jsonforms-property-view .vertical-layout-item>label {
     flex: none;
@@ -54,6 +68,21 @@
     margin-bottom: 10px;
     align-items: center;
 }
+
+
+
+
+
+.jsonforms-property-view .horizontal-layout[hidden] {
+  display: none;
+}
+
+
+
+
+
+
+
 
 .jsonforms-property-view .array-table-layout table {
     border-spacing: 0;
@@ -64,12 +93,14 @@
     flex: none;
     display: flex;
     width: var(--jsonforms-property-view-label-width);
+    height: var(--jsonforms-property-view-line-height);
     align-items: center;
 }
 
 .jsonforms-property-view .control>input, .jsonforms-property-view .control>select, .jsonforms-property-view .array-table-layout td input, .jsonforms-property-view .array-table-layout td select {
     display: flex;
     height: var(--jsonforms-property-view-line-height);
+    width: 100%;
     padding: 0 5px;
     background: var(--theia-editorWidget-background) !important;
     flex-basis: 100% !important;
@@ -77,6 +108,7 @@
     flex-grow: 0 !important;
     color: var(--theia-input-foreground);
     border: var(--theia-border-width) solid var(--theia-input-border);
+    
 }
 
 .jsonforms-property-view .control>input[type="date"]::-webkit-calendar-picker-indicator {
@@ -170,4 +202,86 @@
 
 .jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>button:focus {
     background-color: var(--theia-button-hoverBackground);
+}
+
+
+/* Layouts */
+
+
+.group-layout {
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-color: var(--jsf-border-color);
+  border-width: thin;
+  border-radius: 0.2em;
+}
+
+.group-layout[hidden] {
+  display: none;
+}
+
+.group-layout>legend {
+  padding: 0 0.5em;
+  font-weight: bold;
+  color: var(--jsf-main-fg-color);
+}
+
+.categorization {
+  display: flex;
+  flex-direction: row;
+}
+
+.categorization[hidden] {
+  display: none;
+}
+
+.categorization>* {
+  border-style: solid;
+  border-width: thin;
+  border-color: var(--jsf-border-color);
+  border-radius: 0.2em;
+}
+
+.categorization>*:first-child {
+  margin-right: 0.25em;
+}
+
+.categorization>.categorization-master {
+  flex: 1;
+}
+
+.categorization>.categorization-master ul {
+  list-style-type: none;
+  font-weight: normal;
+}
+
+.categorization>.categorization-master ul>li>span {
+  cursor: pointer;
+  display: block;
+  color: var(--jsf-main-fg-color);
+}
+
+.categorization>.categorization-master ul>li>span:hover {
+  font-weight: bold;
+}
+
+.categorization>.categorization-master ul>li.category-group>ul {
+  padding-left: 0.5em;
+}
+
+.categorization>.categorization-master ul>li.category-group>span {
+  cursor: default;
+}
+
+.categorization>.categorization-master ul>li.category-group>span:hover {
+  font-weight: normal;
+}
+
+.categorization>.categorization-master ul>li.selected>span {
+  font-weight: bold;
+}
+
+.categorization>.categorization-detail {
+  flex: 3;
 }
