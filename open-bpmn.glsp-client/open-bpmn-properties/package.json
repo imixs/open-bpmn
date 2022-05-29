@@ -1,5 +1,4 @@
 {
-  "private": "true",
   "name": "@open-bpmn/open-bpmn-properties",
   "version": "0.2.0",
   "dependencies": {

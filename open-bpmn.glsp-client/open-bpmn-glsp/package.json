@@ -1,5 +1,4 @@
 {
-  "private": "true",
   "name": "@open-bpmn/open-bpmn-glsp",
   "version": "0.2.0",
   "description": "GLSP sprotty diagrams for the BPMN DSL",
