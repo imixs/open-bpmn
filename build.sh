@@ -29,12 +29,12 @@ if [[ ${#1} -gt 2 ]]; then
   if [[ "$1" == -*"f"* ]]; then
     buildFrontend='true'
   fi
-  if [[ "$1" == -*"r"* ]]; then
-    rebuildFrontend='true'
-  fi  
   if [[ "$1" == -*"ff"* ]]; then
     forceFrontend='true'
   fi
+  if [[ "$1" == -*"r"* ]]; then
+    rebuildFrontend='true'
+  fi  
 fi
 
 while [ "$1" != "" ]; do
@@ -86,7 +86,6 @@ fi
 if [ "$rebuildFrontend" == "true" ]; then
   cd open-bpmn.glsp-client/
   yarn
-  yarn start:external
   cd ..
 fi
 

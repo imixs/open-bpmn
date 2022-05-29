@@ -1,5 +1,4 @@
 {
-  "private": "true",
   "name": "@open-bpmn/open-bpmn-theia",
   "version": "0.2.0",
   "description": "Theia extension for the BPMN GLSP Client",

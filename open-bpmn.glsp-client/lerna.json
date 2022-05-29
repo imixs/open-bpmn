@@ -6,5 +6,8 @@
     "run": {
       "stream": true
     }
-  }
+  },
+  "publish": {
+    "registry": "https://registry.npmjs.org/"
+  }  
 }
