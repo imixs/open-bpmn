@@ -54,6 +54,7 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
     public void setProperties(final GatewayNode node) {
         super.setProperties(node);
         node.setName(name);
+        node.setDocumentation("...some documentation....");
         node.setLayout(GConstants.Layout.HBOX);
         size = GraphUtil.dimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
         node.setSize(size);

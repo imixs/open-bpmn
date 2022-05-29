@@ -32,7 +32,7 @@ import {
 	EditorContextService,
 	EditModeListener,
 	TYPES,
-	SModelRoot
+	SModelRoot,hasArguments
 } from '@eclipse-glsp/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 
@@ -186,7 +186,19 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	 * and updates the property panel input fields
 	 */
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-		if (this.selectionService.isSingleSelection()) {
+		
+		// first we need to verify if a Symbol/BPMNLabel combination was selected. 
+		// In this case we are only interested in the BPMNFlowElement and not in the label
+		if (selectedElements.length>1) {
+			
+			const filteredArr = selectedElements.filter(val=>!val.endsWith('_bpmnlabel'))
+			console.log(filteredArr)
+
+			selectedElements=filteredArr;
+			console.log(selectedElements)
+		}
+		
+		if (selectedElements.length === 1) {
 			// because the jsonFomrs send a onchange event after init we mark this state here
 			this.initForm = true;
 			console.log('======== > selection change  received:', root, selectedElements);
@@ -211,6 +223,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 							data={task.propetriesData}
 							cells={vanillaCells}
 							renderers={vanillaRenderers}
+							onChange={({ errors, data }) => this.setState({ data })}
 						/>,
 						this.bodyDiv
 					);
@@ -224,6 +237,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 							data={gateway.propetriesData}
 							cells={vanillaCells}
 							renderers={vanillaRenderers}
+							onChange={({ errors, data }) => this.setState({ data })}
 						/>,
 						this.bodyDiv
 					);
@@ -232,10 +246,24 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 				if (element instanceof EventNode) {
 					console.log('...Event selected....');
+					let bpmnPropertiesData;
+					let bpmnPropertiesSchema;
+					let bpmnPropertiesUISchema;
+					if (hasArguments(element)) {
+						
+						bpmnPropertiesData=JSON.parse(element.args.JSONFormsData+'');
+						bpmnPropertiesSchema=JSON.parse(element.args.JSONFormsSchema+'');
+						bpmnPropertiesUISchema=JSON.parse(element.args.JSONFormsUISchema+'');
+					}
+						
+					
 					const event: EventNode = element;
+					// event.propetriesData
 					ReactDOM.render(
 						<JsonForms
-							data={event.propetriesData}
+							data={bpmnPropertiesData}
+							schema={bpmnPropertiesSchema}
+							uischema={bpmnPropertiesUISchema}
 							cells={vanillaCells}
 							renderers={vanillaRenderers}
 							onChange={({ errors, data }) => this.setState({ data })}

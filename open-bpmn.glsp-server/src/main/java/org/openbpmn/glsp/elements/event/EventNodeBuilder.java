@@ -15,6 +15,16 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.event;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -55,9 +65,176 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     public void setProperties(final EventNode node) {
         super.setProperties(node);
         node.setName(name);
+        node.setDocumentation("...some documentation....");
+        node.getArgs().put("JSONFormsData", buildJSONFormsData());
+        node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaSimple());
+        node.getArgs().put("JSONFormsSchema", buildSchema());
+
         node.setLayout(GConstants.Layout.HBOX);
         size = GraphUtil.dimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
         node.setSize(size);
     }
 
+    /**
+     * This Helper Method generates a JSON Object with the BPMNElement properties.
+     * <p>
+     * This json object is used on the GLSP Client to generate the EMF JsonForms
+     *
+     * @return
+     */
+    private String buildJSONFormsData() {
+        String result = "{}";
+        JsonObject jsonObject = Json.createObjectBuilder() //
+                .add("name", name) //
+                .add("category", "some cati") //
+                .add("documentation", "some test docu") //
+                .build();
+
+        try (Writer writer = new StringWriter()) {
+            Json.createWriter(writer).write(jsonObject);
+            result = writer.toString();
+        } catch (IOException e) {
+            result = "{}";
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * This Helper Method generates a UISchema JSON Object used on the GLSP Client
+     * to generate the EMF JsonForms
+     *
+     * @return
+     */
+    private String buildJSONFormsUISchemaSimple() {
+        String result = "{}";
+
+        /**
+         * <pre>
+         * {@code
+         *    {
+         *      "type": "Categorization",
+         *      "elements": [
+         *          { "type": "Category",
+         *            "label": "Basic Information",
+         *            "elements": [ {
+         *          }
+         *      ]
+         * }
+         * </pre>
+         *
+         */
+        JsonObjectBuilder builder = Json.createObjectBuilder() //
+                .add("type", "VerticalLayout");
+
+        builder.add("elements", buildControlElements("name", "category", "documentation"));
+
+        // write result
+        JsonObject jsonObject = builder.build();
+
+        try (Writer writer = new StringWriter()) {
+            Json.createWriter(writer).write(jsonObject);
+            result = writer.toString();
+        } catch (IOException e) {
+            result = "{}";
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private String buildSchema() {
+        String result = "{\n" + "  \"type\": \"object\",\n" + "  \"properties\": {\n" + "    \"name\": {\n"
+                + "      \"type\": \"string\",\n" + "      \"minLength\": 3,\n"
+                + "      \"description\": \"Please enter your name\"\n" + "    },\n" + "    \"category\": {\n"
+                + "      \"type\": \"string\"\n" + "    },\n" + "    \"documentation\": {\n"
+                + "      \"type\": \"string\"\n" + "    }\n" + "  }\n" + "}";
+
+        return result;
+    }
+
+    /**
+     * This Helper Method generates a UISchema JSON Object used on the GLSP Client
+     * to generate the EMF JsonForms
+     *
+     * @return
+     */
+    private String buildJSONFormsUISchemaTabs() {
+        String result = "{}";
+
+        /**
+         * <pre>
+         * {@code
+         *    {
+         *      "type": "Categorization",
+         *      "elements": [
+         *          { "type": "Category",
+         *            "label": "Basic Information",
+         *            "elements": [ {
+         *          }
+         *      ]
+         * }
+         * </pre>
+         *
+         */
+        JsonObjectBuilder builder = Json.createObjectBuilder() //
+                .add("type", "HorizontalLayout");
+
+        // builder.add("elements", buildControlElements("name", "category"));
+
+        // add elements
+        JsonArrayBuilder elementsBuider = Json.createArrayBuilder();
+        elementsBuider.add(Json.createObjectBuilder(). //
+                add("type", "Category"). //
+                add("label", "Basic Information"). //
+                add("elements", buildControlElements("name", "category")));
+
+        elementsBuider.add(Json.createObjectBuilder(). //
+                add("type", "Category"). //
+                add("label", "Sonstiges"). //
+                add("elements", buildControlElements("documentation")));
+
+        builder.add("elements", elementsBuider.build());
+
+        // write result
+        JsonObject jsonObject = builder.build();
+
+        try (Writer writer = new StringWriter()) {
+            Json.createWriter(writer).write(jsonObject);
+            result = writer.toString();
+        } catch (IOException e) {
+            result = "{}";
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * <pre>
+     * {@code
+     *    "elements": [
+     *        { "type": "Control",
+     *          "scope": "#/properties/firstName"
+     *        },
+     *        { "type": "Control",
+     *          "scope": "#/properties/secondName"
+     *        }
+     *       ]
+     * }
+     * </pre>
+     */
+    private JsonArray buildControlElements(final String... items) {
+
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+
+        for (String item : items) {
+            builder.add(Json.createObjectBuilder(). //
+                    add("type", "Control"). //
+                    add("scope", "#/properties/" + item));
+        }
+
+        JsonArray value = builder.build();
+
+        return value;
+
+    }
 }

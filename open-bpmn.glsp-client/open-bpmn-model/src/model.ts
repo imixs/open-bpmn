@@ -101,7 +101,7 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 }
 
 /* CircularNode RectangularNode */
-export class EventNode extends CircularNode implements Nameable, WithEditableLabel, BPMNFlowElement {
+export class EventNode extends CircularNode implements BPMNFlowElement {
 	static readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -112,24 +112,11 @@ export class EventNode extends CircularNode implements Nameable, WithEditableLab
 		fadeFeature,
 		hoverFeedbackFeature,
 		popupFeature,
-		nameFeature,
-		withEditLabelFeature
+		nameFeature
 	];
 	category?: string;
 	documentation?: string;
-
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
-		const label = this.children.find(element => element.type === 'label:heading');
-		if (label && isEditableLabel(label)) {
-			return label;
-		}
-		return undefined;
-	}
-
-	get name(): string {
-		const labelText = this.editableLabel?.text;
-		return labelText ? labelText : '<unknown>';
-	}
+	name?: string;
 
 	/*
 	 * Method that returns a json data structure including all
