@@ -1044,27 +1044,27 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@jsonforms/core@3.0.0-beta.0":
-  version "3.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@jsonforms/core/-/core-3.0.0-beta.0.tgz#5f8060684513a25af7320665a0343dc1eab5ecf1"
-  integrity sha512-GnZOTmMQT+px8bA14wjF/mAnLbQgAOHMpoZUB7W/pvHCpGNlQqFZAFhFp0xlDei7XWg+id6FUIUe8Qa4EsWOJw==
+"@jsonforms/core@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@jsonforms/core/-/core-3.0.0-beta.2.tgz#441cf5c331f749168ef9bf15223b2fd553dcc5e5"
+  integrity sha512-usquDE9ItW8BuY4ueeHilozop+OiiIh4mjMJzxWcgjtxbIDmIlV1zlS8KIxzi3SfOViCLiaip2/MSZVFT/YJ1A==
   dependencies:
     "@types/json-schema" "^7.0.3"
     ajv "^8.6.1"
     ajv-formats "^2.1.0"
     lodash "^4.17.15"
 
-"@jsonforms/react@3.0.0-beta.0":
-  version "3.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@jsonforms/react/-/react-3.0.0-beta.0.tgz#fe69ffa5960d6cbbf7a682d153d2f0841145eff1"
-  integrity sha512-nbSfvSYTKi56p+9Nw71EhSWZVouBciZa6G7gJqRQY6fTWYnMK1q2bhCdSbk9T5QvLIQ2uLM5an00fHvbDYwkpQ==
+"@jsonforms/react@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@jsonforms/react/-/react-3.0.0-beta.2.tgz#069d704a9ad6a9dfe65a0ccd841c5d86dfff8e1a"
+  integrity sha512-snMm6Q1s+PepKfihC9ADFEUej37DbcO9nrLw8AAPiEXFbKxje0FRZUfXChvk8oKuTJjjxDfeHbWaMcsBR9iabQ==
   dependencies:
     lodash "^4.17.15"
 
-"@jsonforms/vanilla-renderers@3.0.0-beta.0":
-  version "3.0.0-beta.0"
-  resolved "https://registry.yarnpkg.com/@jsonforms/vanilla-renderers/-/vanilla-renderers-3.0.0-beta.0.tgz#10fe4b81a258d11de01c3d7977e8cfd63c985b77"
-  integrity sha512-ItwZqnyF0bXUMma9EtgYAvxt75PJPI71mCLyIGRmkjZDyr/Bw7Ebz7Qow1B5sIoaP0gvNYFrSv+V/Ale9+6UVA==
+"@jsonforms/vanilla-renderers@3.0.0-beta.2":
+  version "3.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/@jsonforms/vanilla-renderers/-/vanilla-renderers-3.0.0-beta.2.tgz#54373ac4ebf9678af04dfd8df873e48d9ba16bf9"
+  integrity sha512-qj1algf69QGq+3mEieH0SRAn9E6pX/GZmpSIro9TfVmg9JPMH4gjFqoimcGMGX86RqVLQuYwYKG6MCRHQjCwjQ==
 
 "@lerna/add@4.0.0":
   version "4.0.0"
@@ -5922,7 +5922,7 @@ has-bigints@^1.0.1:
 has-cors@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/has-cors/-/has-cors-1.1.0.tgz#5e474793f7ea9843d1bb99c23eef49ff126fff39"
-  integrity sha1-XkdHk/fqmEPRu5nCPu9J/xJv/zk=
+  integrity sha512-g5VNKdkFuUuVCP9gYfDJHjK2nqdQJ7aDLTnycnc2+RvsOQbuLdF5pm7vuE5J76SEBIQjs4kQY/BWq74JUmjbXA==
 
 has-flag@^3.0.0:
   version "3.0.0"
@@ -6391,7 +6391,7 @@ is-plain-object@^5.0.0:
 is-redirect@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-redirect/-/is-redirect-1.0.0.tgz#1d03dded53bd8db0f30c26e4f95d36fc7c87dc24"
-  integrity sha1-HQPd7VO9jbDzDCbk+V02/HyH3CQ=
+  integrity sha512-cr/SlUEe5zOGmzvj9bUyC4LVvkNVAXu4GytXLNMr1pny+a65MpQ9IJzFHD5vi7FyJgb4qt27+eS3TuQnqB+RQw==
 
 is-regex@^1.1.4:
   version "1.1.4"

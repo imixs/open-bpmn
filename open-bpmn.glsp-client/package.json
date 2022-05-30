@@ -46,7 +46,8 @@
     "open-bpmn-model",
     "open-bpmn-properties",
     "open-bpmn-theia",
-    "open-bpmn-app"
+    "open-bpmn-app",
+    "workspaces/*"
   ],
 
   "resolutions": {
