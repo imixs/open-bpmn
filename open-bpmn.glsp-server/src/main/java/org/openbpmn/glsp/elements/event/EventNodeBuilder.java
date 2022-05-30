@@ -23,7 +23,6 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -31,6 +30,8 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.EventNode;
+import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
+import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 
 /**
  * The EventNodeBuilder defines the layout for all types of BPMN Event elements
@@ -67,7 +68,8 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         node.setName(name);
         node.setDocumentation("...some documentation....");
         node.getArgs().put("JSONFormsData", buildJSONFormsData());
-        node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaSimple());
+        // node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaSimple());
+        node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaTabs());
         node.getArgs().put("JSONFormsSchema", buildSchema());
 
         node.setLayout(GConstants.Layout.HBOX);
@@ -107,40 +109,13 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
      * @return
      */
     private String buildJSONFormsUISchemaSimple() {
-        String result = "{}";
 
-        /**
-         * <pre>
-         * {@code
-         *    {
-         *      "type": "Categorization",
-         *      "elements": [
-         *          { "type": "Category",
-         *            "label": "Basic Information",
-         *            "elements": [ {
-         *          }
-         *      ]
-         * }
-         * </pre>
-         *
-         */
-        // VerticalLayout
-        JsonObjectBuilder builder = Json.createObjectBuilder() //
-                .add("type", "HorizontalLayout");
+        return new UISchemaBuilder(Layout.VERTICAL). //
+                addElements(new String[] { "name", "category", "documentation" },
+                        new String[] { "", "", "please enter a description" })
+                . //
+                build();
 
-        builder.add("elements", buildControlElements("name", "category", "documentation"));
-
-        // write result
-        JsonObject jsonObject = builder.build();
-
-        try (Writer writer = new StringWriter()) {
-            Json.createWriter(writer).write(jsonObject);
-            result = writer.toString();
-        } catch (IOException e) {
-            result = "{}";
-            e.printStackTrace();
-        }
-        return result;
     }
 
     private String buildSchema() {
@@ -162,51 +137,17 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     private String buildJSONFormsUISchemaTabs() {
         String result = "{}";
 
-        /**
-         * <pre>
-         * {@code
-         *    {
-         *      "type": "Categorization",
-         *      "elements": [
-         *          { "type": "Category",
-         *            "label": "Basic Information",
-         *            "elements": [ {
-         *          }
-         *      ]
-         * }
-         * </pre>
-         *
-         */
-        JsonObjectBuilder builder = Json.createObjectBuilder() //
-                .add("type", "HorizontalLayout");
+        result = new UISchemaBuilder(Layout.CATEGORIZATION). //
+                addCategory("Basic Information"). //
+                addLayout(Layout.HORIZONTAL). //
+                addElements("name", "category"). //
+                addCategory("Workflow"). //
+                addLayout(Layout.HORIZONTAL). //
+                addElements(new String[] { "documentation" }, new String[] { "please enter a description" }). //
+                build();
 
-        // builder.add("elements", buildControlElements("name", "category"));
-
-        // add elements
-        JsonArrayBuilder elementsBuider = Json.createArrayBuilder();
-        elementsBuider.add(Json.createObjectBuilder(). //
-                add("type", "Category"). //
-                add("label", "Basic Information"). //
-                add("elements", buildControlElements("name", "category")));
-
-        elementsBuider.add(Json.createObjectBuilder(). //
-                add("type", "Category"). //
-                add("label", "Sonstiges"). //
-                add("elements", buildControlElements("documentation")));
-
-        builder.add("elements", elementsBuider.build());
-
-        // write result
-        JsonObject jsonObject = builder.build();
-
-        try (Writer writer = new StringWriter()) {
-            Json.createWriter(writer).write(jsonObject);
-            result = writer.toString();
-        } catch (IOException e) {
-            result = "{}";
-            e.printStackTrace();
-        }
         return result;
+
     }
 
     /**
