@@ -138,12 +138,14 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         String result = "{}";
 
         result = new UISchemaBuilder(Layout.CATEGORIZATION). //
-                addCategory("Basic Information"). //
+                addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name", "category"). //
+                addCategory("Attributes"). //
+                addLayout(Layout.VERTICAL). //
+                addElements(new String[] { "documentation" }, new String[] { "please enter a description" }). //
                 addCategory("Workflow"). //
                 addLayout(Layout.HORIZONTAL). //
-                addElements(new String[] { "documentation" }, new String[] { "please enter a description" }). //
                 build();
 
         return result;

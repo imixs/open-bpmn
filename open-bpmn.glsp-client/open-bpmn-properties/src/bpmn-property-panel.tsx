@@ -115,7 +115,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 	protected createBody(): void {
 		const bodyDiv = document.createElement('div');
-		bodyDiv.classList.add('properties-body', 'jsonforms-property-view');
+		// , 'jsonforms-property-view'
+		bodyDiv.classList.add('bpmn-properties-body');
 		this.containerElement.appendChild(bodyDiv);
 		this.bodyDiv = bodyDiv;
 	}

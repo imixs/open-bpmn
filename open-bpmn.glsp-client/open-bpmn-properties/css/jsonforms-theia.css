@@ -1,67 +1,71 @@
 /********************************************************************************
- * Copyright (c) 2021 EclipseSource and others.
+ * Copyright (c) 2022 Imixs Software Solutions GmbH,
  *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * https://www.eclipse.org/legal/epl-2.0, or the MIT License which is
- * available at https://opensource.org/licenses/MIT.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
  *
- * SPDX-License-Identifier: EPL-2.0 OR MIT
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You can receive a copy of the GNU General Public
+ * License at http://www.gnu.org/licenses/gpl.html
+ *
+ * Project:
+ *     https://github.com/imixs/open-bpmn
+ *
+ * Contributors:
+ *     Imixs Software Solutions GmbH - Project Management
+ *     Ralph Soika - Software Developer
  ********************************************************************************/
-
 :root {
-    --jsonforms-property-view-label-width: 250px;
-    --jsonforms-property-view-line-height: 28px;
-    --jsonforms-property-view-margin: 4px;
-    --jsonforms-property-view-padding: 8px;
+    --jsonforms-label-width: 250px;
+    --jsonforms-line-height: 28px;
+    --jsonforms-margin: 4px;
+    --jsonforms-padding: 8px;
 }
 
-
-
-.jsonforms-property-view {
-    padding: var(--jsonforms-property-view-padding);
-}
-
-
-.jsonforms-property-view>div.theia-widget-noInfo {
-    padding: var(--theia-empty-property-view-widget-padding);
-}
-
-.jsonforms-property-view .vertical-layout {
+.vertical-layout {
     display: table !important;
     table-layout: auto;
     width: 100%;
-    padding-right: 0;
+    padding: var(--jsonforms-padding);
 }
-.jsonforms-property-view .horizontal-layout {
+.horizontal-layout {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
+  padding: var(--jsonforms-padding);
 }
 
 
-.jsonforms-property-view .vertical-layout>* {
+.vertical-layout>* {
     display: table-row;
     width: 100%;
 }
-.jsonforms-property-view .horizontal-layout>* {
+.horizontal-layout>* {
   flex: 1;
 }
 
 
-.jsonforms-property-view .vertical-layout-item .control {
-    margin: var(--jsonforms-property-view-margin);
+.vertical-layout-item .control {
     display: flex;
     flex-direction: row;
-    margin-right: var(--jsonforms-property-view-padding)
+	margin: var(--jsonforms-margin);
+    padding-right: var(--jsonforms-padding)
 }
-.jsonforms-property-view .horizontal-layout-item .control {
-    margin: var(--jsonforms-property-view-margin);
-    margin-right: var(--jsonforms-property-view-padding)
+.horizontal-layout-item .control {
+	display: flex;
+    flex-direction: column;
+    margin: var(--jsonforms-margin);
+    padding-right: var(--jsonforms-padding)
 }
 
 
-.jsonforms-property-view .vertical-layout-item>label {
+.vertical-layout-item>label {
     flex: none;
     display: flex;
     align-items: center;
@@ -73,7 +77,7 @@
 
 
 
-.jsonforms-property-view .horizontal-layout[hidden] {
+.horizontal-layout[hidden] {
   display: none;
 }
 
@@ -84,26 +88,26 @@
 
 
 
-.jsonforms-property-view .array-table-layout table {
+.array-table-layout table {
     border-spacing: 0;
     width: 100%;
 }
 
-.jsonforms-property-view .control>label, .jsonforms-property-view .array-table-layout.control>header>label {
+.control>label, .array-table-layout.control>header>label {
     flex: none;
     display: flex;
-    width: var(--jsonforms-property-view-label-width);
-    height: var(--jsonforms-property-view-line-height);
+    width: var(--jsonforms-label-width);
+    height: var(--jsonforms-line-height);
     align-items: center;
 }
 
-.jsonforms-property-view .control>input, .jsonforms-property-view .control>select, .jsonforms-property-view .array-table-layout td input, .jsonforms-property-view .array-table-layout td select {
+.control>input, .control>select, .array-table-layout td input, .array-table-layout td select {
     display: flex;
-    height: var(--jsonforms-property-view-line-height);
+    height: var(--jsonforms-line-height);
     width: 100%;
     padding: 0 5px;
     background: var(--theia-editorWidget-background) !important;
-    flex-basis: 100% !important;
+    flex-basis: auto;
     flex-shrink: 1 !important;
     flex-grow: 0 !important;
     color: var(--theia-input-foreground);
@@ -111,28 +115,28 @@
     
 }
 
-.jsonforms-property-view .control>input[type="date"]::-webkit-calendar-picker-indicator {
+.control>input[type="date"]::-webkit-calendar-picker-indicator {
     /* filter to invert calendar icon of date input field is visible in both themes */
     filter: invert(0.5);
 }
 
-.jsonforms-property-view .control>select {
+.control>select {
     padding: 0 !important;
     border: none;
 }
 
-.jsonforms-property-view .control>input[type="checkbox"] {
+.control>input[type="checkbox"] {
     display: flex !important;
     flex: none !important;
     outline: none !important;
     margin: 0;
 }
 
-.jsonforms-property-view .control>input[disabled], .jsonforms-property-view .array-table-layout td input[disabled], .jsonforms-property-view .array-table-layout td select[disabled] {
+.control>input[disabled], .array-table-layout td input[disabled], .array-table-layout td select[disabled] {
     opacity: 0.5;
 }
 
-.jsonforms-property-view .control>.validation {
+.control>.validation {
     font-size: var(--theia-ui-font-size0);
     text-align: left;
     font-family: var(--theia-ui-font-family);
@@ -140,32 +144,32 @@
     order: 2;
 }
 
-.jsonforms-property-view .control>.validation_error, .jsonforms-property-view .control>.validate.invalid {
+.control>.validation_error, .control>.validate.invalid {
     color: var(--theia-editorError-foreground);
 }
 
-.jsonforms-property-view .array-table-layout.control>header {
+.array-table-layout.control>header {
     margin-top: 10px;
     display: flex;
-    width: var(--jsonforms-property-view-label-width);
+    width: var(--jsonforms-label-width);
     flex: none;
     flex-direction: column;
 }
 
-.jsonforms-property-view .array-table-layout.control>header>button {
+.array-table-layout.control>header>button {
     margin: 10px 10px 0 0;
     align-self: flex-start;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>thead {
+.array-table-layout.control>table>thead {
     display: none;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>input {
+.array-table-layout.control>table>tbody>tr>td>input {
     width: 100%;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>span {
+.array-table-layout.control>table>tbody>tr>td>span {
     /* .validation error */
     font-size: var(--theia-ui-font-size0);
     text-align: left;
@@ -176,7 +180,7 @@
     margin-left: 12px;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>button {
+.array-table-layout.control>table>tbody>tr>td>button {
     /* theia-button */
     border: none;
     color: var(--theia-button-foreground);
@@ -191,16 +195,16 @@
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td:nth-child(2) {
+.array-table-layout.control>table>tbody>tr>td:nth-child(2) {
     width: 12%;
     white-space: break-spaces;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td:last-child {
+.array-table-layout.control>table>tbody>tr>td:last-child {
     width: 1%;
 }
 
-.jsonforms-property-view .array-table-layout.control>table>tbody>tr>td>button:focus {
+.array-table-layout.control>table>tbody>tr>td>button:focus {
     background-color: var(--theia-button-hoverBackground);
 }
 
@@ -237,10 +241,7 @@
 }
 
 .categorization>* {
-  border-style: solid;
-  border-width: thin;
-  border-color: var(--jsf-border-color);
-  border-radius: 0.2em;
+
 }
 
 .categorization>*:first-child {
@@ -249,21 +250,24 @@
 
 .categorization>.categorization-master {
   flex: 1;
+  background: var(--theia-menu-background);
 }
 
 .categorization>.categorization-master ul {
   list-style-type: none;
   font-weight: normal;
+  padding: 0;
 }
 
 .categorization>.categorization-master ul>li>span {
   cursor: pointer;
   display: block;
   color: var(--jsf-main-fg-color);
+  padding: var(--jsonforms-padding);
 }
 
 .categorization>.categorization-master ul>li>span:hover {
-  font-weight: bold;
+  background: var(--theia-list-hoverBackground);
 }
 
 .categorization>.categorization-master ul>li.category-group>ul {
@@ -280,6 +284,9 @@
 
 .categorization>.categorization-master ul>li.selected>span {
   font-weight: bold;
+  border-top: 1px solid var(--theia-focusBorder);
+  border-bottom: 1px solid var(--theia-focusBorder);
+  background: var(--theia-activityBar-background);
 }
 
 .categorization>.categorization-detail {
