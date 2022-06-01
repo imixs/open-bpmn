@@ -18,9 +18,9 @@ package org.openbpmn.glsp.jsonforms;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.Map;
 
 import javax.json.Json;
-import javax.json.JsonArray;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
@@ -28,7 +28,10 @@ import javax.json.JsonObjectBuilder;
 /**
  * The UISchemaBuilder can be used to define a UISchema used by JSONForms
  * <p>
- *
+ * The UI schema, which is passed to JSON Forms, describes the general layout of
+ * a form and is just a regular JSON object. It describes the form by means of
+ * different UI schema elements, which can often be categorized into either
+ * Controls or Layouts.
  *
  * @author rsoika
  *
@@ -43,6 +46,7 @@ public class UISchemaBuilder {
 
     JsonArrayBuilder groupArrayBuilder = null;
     JsonArrayBuilder layoutsArrayBuilder = null;
+    JsonArrayBuilder controlsArrayBuilder = null;
     JsonObjectBuilder layoutContext = null;
     JsonObjectBuilder groupContext = null;
 
@@ -79,6 +83,11 @@ public class UISchemaBuilder {
             throw new IllegalArgumentException("Invalid context - current layout does not support Categories!");
         }
 
+        // close current controllsBuilder....
+        if (controlsArrayBuilder != null && layoutContext != null) {
+            layoutContext.add("elements", controlsArrayBuilder.build());
+        }
+
         // close current layoutContext....
         if (layoutsArrayBuilder != null && layoutContext != null) {
             this.layoutsArrayBuilder.add(layoutContext);
@@ -106,6 +115,11 @@ public class UISchemaBuilder {
 
     public UISchemaBuilder addLayout(final Layout layoutType) {
 
+        // close current controllsBuilder....
+        if (controlsArrayBuilder != null && layoutContext != null) {
+            layoutContext.add("elements", controlsArrayBuilder.build());
+        }
+
         // layout context
         switch (layoutType) {
         case HORIZONTAL:
@@ -120,31 +134,111 @@ public class UISchemaBuilder {
     }
 
     /**
-     * Adds new controles into the current layoutContext.
+     * Adds a control into the current layout context
      *
-     * @param controls
-     * @param labels   - optional description text
+     * The mandatory scope property of a control expects a JSON schema reference
+     * value, that defines to which property of the data the control should be bound
+     * to.
+     *
+     * <pre>
+     * {@code
+     *    "elements": [
+     *        { "type": "Control",
+     *          "scope": "#/properties/firstName"
+     *        },
+     *        { "type": "Control",
+     *          "scope": "#/properties/secondName"
+     *        }
+     *       ]
+     * }
+     * </pre>
+     *
+     * @param item  - item name
+     * @param label - optional label
      * @return this
      */
-    public UISchemaBuilder addElements(final String[] controls, final String[] labels) {
+    public UISchemaBuilder addElement(final String item, final String label) {
+        return this.addElement(item, label, null);
+    }
+
+    /**
+     * Adds a control into the current layout context
+     *
+     * @param item    - item name
+     * @param label   - optional label
+     * @param options - optional options
+     * @return this
+     */
+    public UISchemaBuilder addElement(final String item, final String label, final Map<String, String> options) {
 
         if (layoutContext == null) {
+            // add a default layout context
             this.addLayout(Layout.VERTICAL);
         }
 
-        layoutContext.add("elements", buildControlElements(controls, labels));
+        // do we already have a controlArray builder?
+        if (controlsArrayBuilder == null) {
+            // create a new one
+            controlsArrayBuilder = Json.createArrayBuilder();
+        }
+
+        JsonObjectBuilder controlBuilder = Json.createObjectBuilder(). //
+                add("type", "Control"). //
+                add("scope", "#/properties/" + item);
+
+        // add optional description?
+        if (label != null && !label.isBlank()) {
+            controlBuilder.add("label", label);
+        }
+
+        // add optional options?
+        if (options != null && options.size() > 0) {
+            JsonObjectBuilder optionsBuilder = Json.createObjectBuilder();
+
+            for (Map.Entry<String, String> entry : options.entrySet()) {
+                String sKey = entry.getKey();
+                String sVal = entry.getValue();
+
+                // is boolean?
+                if ("true".equals(sVal) || "false".equals(sVal)) {
+                    optionsBuilder.add(sKey, Boolean.parseBoolean(sVal));
+                } else {
+                    // treat as string
+                    optionsBuilder.add(sKey, sVal);
+                }
+            }
+
+            controlBuilder.add("options", optionsBuilder.build());
+        }
+
+        controlsArrayBuilder.add(controlBuilder);
 
         return this;
+
     }
 
+    /**
+     * Adds a list of control elements
+     *
+     * @param controls
+     * @return this
+     */
     public UISchemaBuilder addElements(final String... controls) {
-        return this.addElements(controls, null);
+        for (String control : controls) {
+            this.addElement(control, null, null);
+        }
+        return this;
     }
 
     /**
      * Returns a String with the JSON UISchema
      */
     public String build() {
+
+        // close current controllsBuilder....
+        if (controlsArrayBuilder != null && layoutContext != null) {
+            layoutContext.add("elements", controlsArrayBuilder.build());
+        }
 
         if (groupArrayBuilder != null) {
 
@@ -173,44 +267,6 @@ public class UISchemaBuilder {
             e.printStackTrace();
         }
         return result;
-    }
-
-    /**
-     * <pre>
-     * {@code
-     *    "elements": [
-     *        { "type": "Control",
-     *          "scope": "#/properties/firstName"
-     *        },
-     *        { "type": "Control",
-     *          "scope": "#/properties/secondName"
-     *        }
-     *       ]
-     * }
-     * </pre>
-     *
-     * @param descriptions
-     */
-    private JsonArray buildControlElements(final String[] items, final String[] labels) {
-
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        for (int i = 0; i < items.length; i++) {
-            String item = items[i];
-            JsonObjectBuilder eBuilder = Json.createObjectBuilder(). //
-                    add("type", "Control"). //
-                    add("scope", "#/properties/" + item);
-
-            // add optional description
-            if (labels != null && labels.length > i && !labels[i].isBlank()) {
-                eBuilder.add("label", labels[i]);
-            }
-
-            arrayBuilder.add(eBuilder);
-        }
-
-        JsonArray jsonArray = arrayBuilder.build();
-        return jsonArray;
-
     }
 
 }

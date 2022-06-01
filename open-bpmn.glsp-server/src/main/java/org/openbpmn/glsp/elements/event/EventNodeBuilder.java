@@ -18,6 +18,8 @@ package org.openbpmn.glsp.elements.event;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -33,9 +35,12 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 
 /**
- * The EventNodeBuilder defines the layout for all types of BPMN Event elements
+ * The EventNodeBuilder defines the layout and properties for all types of BPMN
+ * Event elements
  * <p>
  * The radius of the circle symbol is 36. The label is below the symbol.
+ * <p>
+ * The EventNodeBuilder also creates JSONForms data and schema information.
  *
  * @author rsoika
  *
@@ -65,7 +70,6 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     public void setProperties(final EventNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.setDocumentation("...some documentation....");
         node.getArgs().put("JSONFormsData", buildJSONFormsData());
         // node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaSimple());
         node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaTabs());
@@ -110,9 +114,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     private String buildJSONFormsUISchemaSimple() {
 
         return new UISchemaBuilder(Layout.VERTICAL). //
-                addElements(new String[] { "name", "category", "documentation" },
-                        new String[] { "", "", "please enter a description" })
-                . //
+                addElements("name", "category", "documentation"). //
                 build();
 
     }
@@ -146,13 +148,15 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
     private String buildJSONFormsUISchemaTabs() {
         String result = "{}";
 
+        Map<String, String> multilineOption = new HashMap<>();
+        multilineOption.put("multi", "true");
         result = new UISchemaBuilder(Layout.CATEGORIZATION). //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name", "category"). //
                 addCategory("Attributes"). //
                 addLayout(Layout.VERTICAL). //
-                addElements(new String[] { "documentation" }, new String[] { "Documentation" }). //
+                addElement("documentation", "Documentation", multilineOption). //
                 addCategory("Workflow"). //
                 addLayout(Layout.HORIZONTAL). //
                 build();

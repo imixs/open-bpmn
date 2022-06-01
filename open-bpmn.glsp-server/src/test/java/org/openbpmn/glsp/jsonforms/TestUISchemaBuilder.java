@@ -18,6 +18,8 @@ package org.openbpmn.glsp.jsonforms;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.model.DefaultGModelState;
@@ -38,7 +40,7 @@ public class TestUISchemaBuilder extends DefaultGModelState {
     public void testHorizontalLayout() {
 
         UISchemaBuilder builder = new UISchemaBuilder(Layout.HORIZONTAL);
-        builder.addElements(new String[] { "firstName", "lastName", "role" }, null);
+        builder.addElements(new String[] { "firstName", "lastName", "role" });
 
         String json = builder.build();
 
@@ -52,7 +54,8 @@ public class TestUISchemaBuilder extends DefaultGModelState {
     public void testHorizontalLayoutWithLabel() {
 
         UISchemaBuilder builder = new UISchemaBuilder(Layout.HORIZONTAL);
-        builder.addElements(new String[] { "firstName", "lastName", "role" }, new String[] { "First Name" });
+        builder.addElement("firstName", "First Name", null). //
+                addElements("lastName", "role");
 
         String json = builder.build();
 
@@ -89,7 +92,7 @@ public class TestUISchemaBuilder extends DefaultGModelState {
 
         builder.addCategory("Cat-1"). //
                 addLayout(Layout.HORIZONTAL). //
-                addElements(new String[] { "color", "rule" }, null). //
+                addElements("color", "rule"). //
                 addCategory("Cat-2"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("firstName", "lastName", "role");
@@ -123,6 +126,28 @@ public class TestUISchemaBuilder extends DefaultGModelState {
         assertNotNull(json);
         logger.info(json);
         assertTrue(json.contains("VerticalLayout"));
+
+    }
+
+    /**
+     * Test create controls with options
+     */
+    @Test
+    public void testOptions() {
+
+        UISchemaBuilder builder = new UISchemaBuilder(Layout.HORIZONTAL);
+
+        Map<String, String> options = new HashMap<>();
+        options.put("multi", "true");
+
+        builder.addElements("firstName", "lastName");
+
+        builder.addElement("description", "Description", options);
+        String json = builder.build();
+
+        assertNotNull(json);
+
+        logger.info(json);
 
     }
 }

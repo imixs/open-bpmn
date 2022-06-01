@@ -37,10 +37,6 @@ import javax.json.JsonObjectBuilder;
  */
 public class SchemaBuilder {
 
-    public enum Layout {
-        HORIZONTAL, VERTICAL, GROUP, CATEGORIZATION
-    }
-
     JsonObjectBuilder rootSchemaBuilder;
     JsonObjectBuilder propertiesBuilder;
 

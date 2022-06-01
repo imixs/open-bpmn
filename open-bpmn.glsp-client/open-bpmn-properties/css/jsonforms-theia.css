@@ -114,6 +114,20 @@
     border: var(--theia-border-width) solid var(--theia-input-border);
     
 }
+.control>textarea {
+    display: flex;
+    height: var(--jsonforms-line-height);
+    width: 100%;
+    padding: 0 5px;
+    background: var(--theia-editorWidget-background) !important;
+    flex-basis: auto;
+    flex-shrink: 1 !important;
+    flex-grow: 0 !important;
+    color: var(--theia-input-foreground);
+    border: var(--theia-border-width) solid var(--theia-input-border);
+    resize: vertical;
+    min-height: 7em;
+}
 
 .control>input[type="date"]::-webkit-calendar-picker-indicator {
     /* filter to invert calendar icon of date input field is visible in both themes */
@@ -290,5 +304,5 @@
 }
 
 .categorization>.categorization-detail {
-  flex: 3;
+  flex: 6;
 }

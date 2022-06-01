@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.eclipse.glsp.graph.GGraph;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
@@ -32,7 +33,7 @@ import org.openbpmn.bpmn.util.BPMNModelFactory;
 public class TestLoadModel {
 
     @Test
-    public void testReadFile() {
+    public void testReadFile() throws BPMNModelException {
         BPMNModel model = BPMNModelFactory.read("/bpmn/process_1.bpmn");
 
         System.out.println("------");

@@ -41,7 +41,7 @@ import {
 	SelectionService
 } from '@eclipse-glsp/client/lib/features/select/selection-service';
 
-import { TaskNode, GatewayNode, EventNode } from '@open-bpmn/open-bpmn-model';
+import { isBPMNNode } from '@open-bpmn/open-bpmn-model';
 
 // Import Instruction sReact and JsonForms
 import * as React from 'react';
@@ -215,38 +215,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				this.selectedElementId = element.id;
 				console.log('======== > new selection ID=' + element.id);
 
-				if (element instanceof TaskNode) {
-
-					console.log('...Task selected');
-					const task: TaskNode = element;
-					ReactDOM.render(
-						<JsonForms
-							data={task.propetriesData}
-							cells={vanillaCells}
-							renderers={vanillaRenderers}
-							onChange={({ errors, data }) => this.setState({ data })}
-						/>,
-						this.bodyDiv
-					);
-				}
-
-				if (element instanceof GatewayNode) {
-					console.log('...Gateway selected');
-					const gateway: GatewayNode = element;
-					ReactDOM.render(
-						<JsonForms
-							data={gateway.propetriesData}
-							cells={vanillaCells}
-							renderers={vanillaRenderers}
-							onChange={({ errors, data }) => this.setState({ data })}
-						/>,
-						this.bodyDiv
-					);
-					console.log('...eventtype=' + gateway.category);
-				}
-
-				if (element instanceof EventNode) {
-					console.log('...Event selected....');
+				// Build a generic JSONForms Property panel
+				if (isBPMNNode(element)) {
+					console.log('...BPMN Node selected....');
 					let bpmnPropertiesData;
 					let bpmnPropertiesSchema;
 					let bpmnPropertiesUISchema;
@@ -256,9 +227,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						bpmnPropertiesSchema=JSON.parse(element.args.JSONFormsSchema+'');
 						bpmnPropertiesUISchema=JSON.parse(element.args.JSONFormsUISchema+'');
 					}
-						
 					
-					const event: EventNode = element;
 					// event.propetriesData
 					ReactDOM.render(
 						<JsonForms
@@ -271,7 +240,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						/>,
 						this.bodyDiv
 					);
-					console.log('...eventtype=' + event.category);
+					
 				}
 			} else {
 				// element not defined!

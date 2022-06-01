@@ -143,7 +143,7 @@ public class BPMNGModelFactory implements GModelFactory {
                         .build();
                 entityNodes.add(eventNode);
 
-                // now add a label just for testing....
+                // now add a GLabel
                 GLabel label = null;
                 BPMNLabel bpmnLabel = event.getLabel();
                 if (bpmnLabel != null) {
