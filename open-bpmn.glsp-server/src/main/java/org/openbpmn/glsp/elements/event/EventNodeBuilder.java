@@ -20,8 +20,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
@@ -30,6 +28,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.EventNode;
+import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 
@@ -118,19 +117,29 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
 
     }
 
+    /**
+     * Returns the Data Schema for a event
+     *
+     * @return
+     */
     private String buildSchema() {
-        String result = "{\n" + "  \"type\": \"object\",\n" + "  \"properties\": {\n" + "    \"name\": {\n"
-                + "      \"type\": \"string\",\n" + "      \"minLength\": 3,\n"
-                + "      \"description\": \"Please enter your name\"\n" + "    },\n" + "    \"category\": {\n"
-                + "      \"type\": \"string\"\n" + "    },\n" + "    \"documentation\": {\n"
-                + "      \"type\": \"string\"\n" + "    }\n" + "  }\n" + "}";
 
-        return result;
+        return new SchemaBuilder(). //
+                addProperty("name", "string", "Please enter your name :-)"). //
+                addProperty("category", "string", null). //
+                addProperty("documentation", "string", null). //
+                build();
+
     }
 
     /**
      * This Helper Method generates a UISchema JSON Object used on the GLSP Client
      * to generate the EMF JsonForms
+     * <p>
+     * The UI schema, which is passed to JSON Forms, describes the general layout of
+     * a form and is just a regular JSON object. It describes the form by means of
+     * different UI schema elements, which can often be categorized into either
+     * Controls or Layouts.
      *
      * @return
      */
@@ -143,7 +152,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
                 addElements("name", "category"). //
                 addCategory("Attributes"). //
                 addLayout(Layout.VERTICAL). //
-                addElements(new String[] { "documentation" }, new String[] { "please enter a description" }). //
+                addElements(new String[] { "documentation" }, new String[] { "Documentation" }). //
                 addCategory("Workflow"). //
                 addLayout(Layout.HORIZONTAL). //
                 build();
@@ -152,33 +161,4 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
 
     }
 
-    /**
-     * <pre>
-     * {@code
-     *    "elements": [
-     *        { "type": "Control",
-     *          "scope": "#/properties/firstName"
-     *        },
-     *        { "type": "Control",
-     *          "scope": "#/properties/secondName"
-     *        }
-     *       ]
-     * }
-     * </pre>
-     */
-    private JsonArray buildControlElements(final String... items) {
-
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-
-        for (String item : items) {
-            builder.add(Json.createObjectBuilder(). //
-                    add("type", "Control"). //
-                    add("scope", "#/properties/" + item));
-        }
-
-        JsonArray value = builder.build();
-
-        return value;
-
-    }
 }

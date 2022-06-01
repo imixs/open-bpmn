@@ -251,7 +251,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					let bpmnPropertiesSchema;
 					let bpmnPropertiesUISchema;
 					if (hasArguments(element)) {
-						
+						// parse the jsonForms schema details
 						bpmnPropertiesData=JSON.parse(element.args.JSONFormsData+'');
 						bpmnPropertiesSchema=JSON.parse(element.args.JSONFormsSchema+'');
 						bpmnPropertiesUISchema=JSON.parse(element.args.JSONFormsUISchema+'');

@@ -63,13 +63,22 @@ public abstract class BPMNBaseElement {
     }
 
     /**
-     * Returns the name of the element
+     * Returns the name attribute of the BPMN element
      * 
      * @return
      */
     public String getName() {
         return getAttribute("name");
     }
+
+    /**
+     * Updates the name attribute of the BPMN element
+     * 
+     * @param name
+     */
+    public void setName(String name) {
+        setAttribute("name",name);
+    } 
 
     /**
      * Returns the value of a given attribute by name.
@@ -92,6 +101,27 @@ public abstract class BPMNBaseElement {
         return null;
     }
 
+    /**
+     * Set the value of a given attribute by name.
+     * <p>
+     * The method operates directly on the attriubteMap loaded in the constructor.
+     * 
+     * @param name
+     * @return
+     */
+    public void setAttribute(String name, String value) {
+        if (name == null || name.isEmpty() || attributeMap == null) {
+            return;
+        }
+        for (int i = 0; i < attributeMap.getLength(); i++) {
+            Node node = attributeMap.item(i);
+            if (name.equals(node.getNodeName())) {
+                // update the attribute value
+                node.setNodeValue(value);
+            }
+        }
+    }
+    
     /**
      * Returns the corresponding dom element node
      * 

@@ -13,30 +13,37 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.utils;
+package org.openbpmn.glsp.jsonforms;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
+import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.junit.jupiter.api.Test;
-import org.openbpmn.glsp.bpmn.EventNode;
-import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
 
-public class TestReflectionAPI {
-    private static Logger logger = Logger.getLogger(TestReflectionAPI.class.getName());
+/**
+ * Test class to test the UISchemaBuilder used to generate JSONForms uiSchematas
+ *
+ * @author rsoika
+ *
+ */
+public class TestSchemaBuilder extends DefaultGModelState {
+
+    private static Logger logger = Logger.getLogger(TestSchemaBuilder.class.getName());
 
     @Test
-    public void testSettersOfEvent() {
-        long l = System.currentTimeMillis();
+    public void testSimple() {
 
-        Method[] methods = EventNode.class.getMethods();// .getDeclaredMethods();
+        SchemaBuilder builder = new SchemaBuilder(). //
+                addProperty("name", "string", "Please enter your name"). //
+                addProperty("description", "string", null);
 
-        // test if setDocumentation(String) exists
-        assertNotNull(ApplyEventUpdateOperationHandler.findSetter(methods, "documentation"));
+        String json = builder.build();
 
-        logger.info("....testSettersOfEvent took " + (System.currentTimeMillis() - l) + "ms");
+        assertNotNull(json);
+
+        logger.info(json);
 
     }
 
