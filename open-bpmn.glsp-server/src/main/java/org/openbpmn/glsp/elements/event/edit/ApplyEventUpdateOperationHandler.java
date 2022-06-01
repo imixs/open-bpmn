@@ -83,7 +83,6 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
 
         Set<String> features = json.keySet();
         String value = null;
-        // Method[] methods = EventNode.class.getMethods();
         for (String feature : features) {
 
             logger.fine("...update feature = " + feature);
