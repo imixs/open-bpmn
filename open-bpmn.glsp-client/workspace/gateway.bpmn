@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1">
+        <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway-wiwN41vbYeLp70IT" name="Gateway-1"/>
+        <bpmn2:manualTask id="task-Y5hG-zmJcjIjUNZ4" name="Task-0"/>
+        <bpmn2:parallelGateway gatewayDirection="Diverging" id="gateway-oJBZOsoxU0O8hRbC" name="Gateway-6"/>
+        <bpmn2:inclusiveGateway gatewayDirection="Diverging" id="gateway-T_mpcSKyaa6VQkqV" name="Gateway-3"/>
+        <bpmn2:startEvent id="event-p-k3Y_-Z26F365SH" name="Event-0">
+            <bpmn2:messageEventDefinition id="messageEventDefinition_ga7dFw"/>
+        </bpmn2:startEvent>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
+            <bpmndi:BPMNShape bpmnElement="gateway-wiwN41vbYeLp70IT" id="BPMNShape_HZZlWA">
+                <dc:Bounds height="50.0" width="50.0" x="99.0" y="81.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_OarDRw">
+                    <dc:Bounds height="14.0" width="36.0" x="96.0" y="131.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-Y5hG-zmJcjIjUNZ4" id="BPMNShape_H1YH_w">
+                <dc:Bounds height="50.0" width="110.0" x="165.0" y="205.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gateway-oJBZOsoxU0O8hRbC" id="BPMNShape_yEyoxg">
+                <dc:Bounds height="50.0" width="50.0" x="373.0" y="81.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_sW90Vg">
+                    <dc:Bounds height="14.0" width="36.0" x="363.0390625" y="128.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="gateway-T_mpcSKyaa6VQkqV" id="BPMNShape_znW-Vw">
+                <dc:Bounds height="50.0" width="50.0" x="229.0" y="81.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_dJIxiQ">
+                    <dc:Bounds height="14.0" width="36.0" x="221.0390625" y="135.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event-p-k3Y_-Z26F365SH" id="BPMNShape_cpuEVw">
+                <dc:Bounds height="36.0" width="36.0" x="75.0" y="209.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_PXLfsA">
+                    <dc:Bounds height="14.0" width="36.0" x="72.765625" y="247.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

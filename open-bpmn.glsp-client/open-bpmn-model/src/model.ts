@@ -66,8 +66,6 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 		nameFeature,
 		withEditLabelFeature
 	];
-	category?: string;
-	documentation?: string;
 
 	// return the default bounds
 	get symbolBounds(): Bounds {
@@ -87,17 +85,6 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 		return labelText ? labelText : '<unknown>';
 	}
 
-	/*
-	 * Method that returns a json data structure including all
-	 * editable element properties
-	 */
-	get propetriesData(): any {
-		return {
-			'name': this.name,
-			'category': this.category,
-			'documentation': this.documentation ? this.documentation : ''
-		};
-	}
 }
 
 /* CircularNode RectangularNode */
@@ -114,21 +101,9 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
-	category?: string;
-	documentation?: string;
+	symbol?: string;
 	name?: string;
 
-	/*
-	 * Method that returns a json data structure including all
-	 * editable element properties
-	 */
-	get propetriesData(): any {
-		return {
-			'name': this.name,
-			'category': this.category,
-			'documentation': this.documentation ? this.documentation : ''
-		};
-	}
 }
 
 // DiamondNode
@@ -162,17 +137,6 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
 		return labelText ? labelText : '<unknown>';
 	}
 
-	/*
-	 * Method that returns a json data structure including all
-	 * editable element properties
-	 */
-	get propetriesData(): any {
-		return {
-			'name': this.name,
-			'category': this.category,
-			'documentation': this.documentation ? this.documentation : ''
-		};
-	}
 }
 
 export namespace GatewayNode {

@@ -33,6 +33,7 @@ import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * The EventNodeBuilder defines the layout and properties for all types of BPMN
@@ -48,6 +49,7 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
 
     private final String name;
+    private final int SYMBOL_OFFSET = 10;
 
     public EventNodeBuilder(final String type, final String name) {
         super(type);
@@ -78,6 +80,13 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         node.setLayout(GConstants.Layout.HBOX);
         size = GraphUtil.dimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
         node.setSize(size);
+
+        node.getLayoutOptions().put("minWidth", BPMNEvent.DEFAULT_WIDTH);
+        node.getLayoutOptions().put("minHeight", BPMNEvent.DEFAULT_HEIGHT);
+
+        node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
+
+        node.setSymbol("message");
     }
 
     /**

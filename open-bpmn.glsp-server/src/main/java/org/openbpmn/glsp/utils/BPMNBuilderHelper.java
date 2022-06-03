@@ -35,9 +35,9 @@ public class BPMNBuilderHelper {
     private static Logger logger = Logger.getLogger(BPMNBuilderHelper.class.getName());
 
     public static Icon createCompartmentIcon(final BaseElement node) {
-        return new IconBuilder().id(node.getId() + "_icon")
-                // .position(-10, -10)
-                .build();
+        return new IconBuilder(). //
+                id(node.getId() + "_icon"). //
+                build();
     }
 
     /**
