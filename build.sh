@@ -35,6 +35,9 @@ if [[ ${#1} -gt 2 ]]; then
   if [[ "$1" == -*"r"* ]]; then
     rebuildFrontend='true'
   fi  
+  if [[ "$1" == -*"d"* ]]; then
+    buildDocker='true'
+  fi  
 fi
 
 while [ "$1" != "" ]; do
@@ -44,6 +47,8 @@ while [ "$1" != "" ]; do
     -f | --frontend ) buildFrontend='true'
                       ;;
     -r | --frontend ) rebuildFrontend='true'
+                      ;;
+    -d | --docker ) buildDocker='true'
                       ;;
     -ff | --forcefrontend ) forceFrontend='true'
                       ;;
@@ -56,6 +61,7 @@ done
 [[ "$buildFrontend" == "true" ]] && echo "  building Frontend Only (-f)"
 [[ "$rebuildFrontend" == "true" ]] && echo "  rebuilding Frontend (-r)"
 [[ "$forceFrontend" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-ff)"
+[[ "$buildDocker" == "true" ]] && echo "  building Docker Image"
 
 if [ "$buildAll" == "true" ]; then
   echo "$(date +"[%T.%3N]") Build backend products"
@@ -88,6 +94,16 @@ if [ "$rebuildFrontend" == "true" ]; then
   yarn
   cd ..
 fi
+
+if [ "$buildDocker" == "true" ]; then
+  mvn clean install -DskipTests
+  cd open-bpmn.glsp-client/
+  yarn
+  cd ..
+  cd docker/
+  docker build -t imixs/open-bpmn .
+fi
+
 
 if [ "$buildAll" == "true" ]; then
   cd open-bpmn.glsp-client/
