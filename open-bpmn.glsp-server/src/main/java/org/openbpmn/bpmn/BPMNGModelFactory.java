@@ -52,6 +52,7 @@ import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.w3c.dom.Node;
 
 /**
  * The BPMNGModelFactory is responsible to produce a graph model from the BPMN
@@ -146,6 +147,7 @@ public class BPMNGModelFactory implements GModelFactory {
             // Add all Events...
             for (BPMNEvent event : process.getEvents()) {
                 logger.fine("event: " + event.getName());
+
                 BPMNPoint bpmnPoint = event.getBounds().getPosition();
                 GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
                 EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
@@ -154,6 +156,24 @@ public class BPMNGModelFactory implements GModelFactory {
                         .id(event.getId()) //
                         .position(point) //
                         .build();
+
+                // compute the symbol for the BPMNEvent
+                String symbol = null;
+                List<Node> eventDefinitionList = event.getEventDefinitions();
+                if (eventDefinitionList.size() > 0) {
+                    for (Node eventDefinition : eventDefinitionList) {
+                        if (symbol == null) {
+                            symbol = eventDefinition.getLocalName();
+                        } else {
+                            // we already have a symbol - Switch ot Multiple Symbol?
+                            if (!symbol.equals(eventDefinition.getLocalName())) {
+                                symbol = BPMNTypes.MULTIPLE_EVENT_DEFINITIONS;
+                            }
+                        }
+                    }
+                    eventNode.setSymbol(symbol);
+                }
+
                 entityNodes.add(eventNode);
 
                 // now add a GLabel

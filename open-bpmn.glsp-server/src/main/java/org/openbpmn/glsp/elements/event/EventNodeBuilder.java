@@ -49,7 +49,6 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeBuilder> {
 
     private final String name;
-    private final int SYMBOL_OFFSET = 10;
 
     public EventNodeBuilder(final String type, final String name) {
         super(type);
@@ -77,7 +76,7 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
         node.getArgs().put("JSONFormsUISchema", buildJSONFormsUISchemaTabs());
         node.getArgs().put("JSONFormsSchema", buildSchema());
 
-        node.setLayout(GConstants.Layout.HBOX);
+        node.setLayout(GConstants.Layout.FREEFORM);
         size = GraphUtil.dimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
         node.setSize(size);
 
@@ -86,7 +85,6 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
 
-        node.setSymbol("message");
     }
 
     /**

@@ -71,6 +71,9 @@
     border: none;
 }
 
+.bpmn-property-header .header-icon span::first-letter {
+    text-transform:capitalize;
+}
 
 
 .bpmn-properties-body {

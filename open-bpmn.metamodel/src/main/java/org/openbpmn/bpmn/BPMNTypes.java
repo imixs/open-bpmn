@@ -29,6 +29,10 @@ public class BPMNTypes {
     public static final String EVENT_DEFINITION_LINK = "linkEventDefinition";
     public static final String EVENT_DEFINITION_ERROR = "errorEventDefinition";
     public static final String EVENT_DEFINITION_TERMINATE = "terminateEventDefinition";
+   
+    // Multiple Event Definitions
+    public static final String MULTIPLE_EVENT_DEFINITIONS = "multipleEventDefinition";
+    
     
     // Gateway
     public static final String GATEWAY = "gateway"; 

@@ -75,6 +75,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	modelRootId: string;
 	selectedElementId: string;
 	initForm: boolean;
+	headerTitle: HTMLElement;
 
 	@postConstruct()
 	postConstruct(): void {
@@ -124,8 +125,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	protected createHeaderTitle(): HTMLElement {
 		const header = document.createElement('div');
 		header.classList.add('header-icon');
-		header.appendChild(createIcon('layers'));
-		header.insertAdjacentText('beforeend', 'BPMN Properties');
+		header.appendChild(createIcon('extensions')); 
+		this.headerTitle= document.createElement('span');
+		header.appendChild(this.headerTitle);
+		this.headerTitle.textContent='BPMN Properties';
 		return header;
 	}
 
@@ -214,6 +217,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				// set new selectionId
 				this.selectedElementId = element.id;
 				console.log('======== > new selection ID=' + element.id);
+				
+				// update header
+				//this.header.insertAdjacentText('beforeend',element.type);
+				this.headerTitle.textContent=element.type;
 
 				// Build a generic JSONForms Property panel
 				if (isBPMNNode(element)) {
@@ -245,10 +252,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			} else {
 				// element not defined!
 				this.selectedElementId = '';
+				this.headerTitle.textContent='BPMN Properties';
 			}
 		} else {
 			// no single element selected!
 			this.selectedElementId = '';
+			this.headerTitle.textContent='BPMN Properties';
 			if (!this.selectionService.hasSelectedElements()) {
 				// show an empty pane (or later the process panel)
 				console.log('.... BPMNPropertyPanel - no element selected -');

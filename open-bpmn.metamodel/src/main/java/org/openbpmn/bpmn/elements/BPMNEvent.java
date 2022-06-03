@@ -1,11 +1,15 @@
 package org.openbpmn.bpmn.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class BPMNEvent extends BPMNFlowElement {
 
@@ -42,6 +46,41 @@ public class BPMNEvent extends BPMNFlowElement {
         Element eventDefintion = model.createElement(BPMNNS.BPMN2, type);
         eventDefintion.setAttribute("id", BPMNModel.generateShortID(type));
         this.getElementNode().appendChild(eventDefintion);
+
+    }
+
+    /**
+     * Returns a list of EventDefintions associated with this element.
+     * <p>
+     * The return type is a list of eventDefinition Nodes
+     * <p>
+     * If the element has no EventDefinitions the method returns an empty list.
+     * 
+     * @return - list of EventDefinitions - can be empty if no EventDefinitions exist
+     * @throws BPMNModelException
+     */
+    public List<Node> getEventDefinitions() throws BPMNModelException {
+
+        List<Node> result = new ArrayList<Node>();
+
+        if (this.getElementNode() == null) {
+            return result;
+        }
+
+        // iterate over all childs
+        NodeList childList = this.getElementNode().getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            // check the attribute bpmnElement
+            if (!child.getNodeName().isEmpty() && child.hasAttributes()) {
+                String name = child.getNodeName();
+                // check if this is a EventDefinition
+                if (name.endsWith("EventDefinition")) {
+                    result.add(child);
+                }
+            }
+        }
+        return result;
 
     }
 
