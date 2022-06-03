@@ -2,7 +2,6 @@
  */
 package org.openbpmn.glsp.bpmn;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -13,7 +12,7 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.bpmn.FlowElement#getCategory <em>Category</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.FlowElement#getSymbol <em>Symbol</em>}</li>
  * </ul>
  *
  * @see org.openbpmn.glsp.bpmn.BpmnPackage#getFlowElement()
@@ -22,15 +21,25 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface FlowElement extends BaseElement {
     /**
-     * Returns the value of the '<em><b>Category</b></em>' attribute list.
-     * The list contents are of type {@link java.lang.String}.
+     * Returns the value of the '<em><b>Symbol</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Category</em>' attribute list.
-     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getFlowElement_Category()
+     * @return the value of the '<em>Symbol</em>' attribute.
+     * @see #setSymbol(String)
+     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getFlowElement_Symbol()
      * @model
      * @generated
      */
-    EList<String> getCategory();
+    String getSymbol();
+
+    /**
+     * Sets the value of the '{@link org.openbpmn.glsp.bpmn.FlowElement#getSymbol <em>Symbol</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Symbol</em>' attribute.
+     * @see #getSymbol()
+     * @generated
+     */
+    void setSymbol(String value);
 
 } // FlowElement

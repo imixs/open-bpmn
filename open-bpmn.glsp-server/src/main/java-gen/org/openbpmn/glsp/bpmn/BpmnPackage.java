@@ -185,22 +185,13 @@ public interface BpmnPackage extends EPackage {
     int BASE_ELEMENT__NAME = GraphPackage.GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Documentation</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int BASE_ELEMENT__DOCUMENTATION = GraphPackage.GNODE_FEATURE_COUNT + 1;
-
-    /**
      * The number of structural features of the '<em>Base Element</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT_FEATURE_COUNT = GraphPackage.GNODE_FEATURE_COUNT + 2;
+    int BASE_ELEMENT_FEATURE_COUNT = GraphPackage.GNODE_FEATURE_COUNT + 1;
 
     /**
      * The number of operations of the '<em>Base Element</em>' class.
@@ -339,22 +330,13 @@ public interface BpmnPackage extends EPackage {
     int FLOW_ELEMENT__NAME = BASE_ELEMENT__NAME;
 
     /**
-     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * The feature id for the '<em><b>Symbol</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
-
-    /**
-     * The feature id for the '<em><b>Category</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int FLOW_ELEMENT__CATEGORY = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int FLOW_ELEMENT__SYMBOL = BASE_ELEMENT_FEATURE_COUNT + 0;
 
     /**
      * The number of structural features of the '<em>Flow Element</em>' class.
@@ -502,22 +484,13 @@ public interface BpmnPackage extends EPackage {
     int TASK_NODE__NAME = FLOW_ELEMENT__NAME;
 
     /**
-     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * The feature id for the '<em><b>Symbol</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TASK_NODE__DOCUMENTATION = FLOW_ELEMENT__DOCUMENTATION;
-
-    /**
-     * The feature id for the '<em><b>Category</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int TASK_NODE__CATEGORY = FLOW_ELEMENT__CATEGORY;
+    int TASK_NODE__SYMBOL = FLOW_ELEMENT__SYMBOL;
 
     /**
      * The number of structural features of the '<em>Task Node</em>' class.
@@ -665,22 +638,13 @@ public interface BpmnPackage extends EPackage {
     int GATEWAY_NODE__NAME = FLOW_ELEMENT__NAME;
 
     /**
-     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * The feature id for the '<em><b>Symbol</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__DOCUMENTATION = FLOW_ELEMENT__DOCUMENTATION;
-
-    /**
-     * The feature id for the '<em><b>Category</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int GATEWAY_NODE__CATEGORY = FLOW_ELEMENT__CATEGORY;
+    int GATEWAY_NODE__SYMBOL = FLOW_ELEMENT__SYMBOL;
 
     /**
      * The number of structural features of the '<em>Gateway Node</em>' class.
@@ -828,22 +792,13 @@ public interface BpmnPackage extends EPackage {
     int EVENT_NODE__NAME = FLOW_ELEMENT__NAME;
 
     /**
-     * The feature id for the '<em><b>Documentation</b></em>' attribute.
+     * The feature id for the '<em><b>Symbol</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EVENT_NODE__DOCUMENTATION = FLOW_ELEMENT__DOCUMENTATION;
-
-    /**
-     * The feature id for the '<em><b>Category</b></em>' attribute list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int EVENT_NODE__CATEGORY = FLOW_ELEMENT__CATEGORY;
+    int EVENT_NODE__SYMBOL = FLOW_ELEMENT__SYMBOL;
 
     /**
      * The number of structural features of the '<em>Event Node</em>' class.
@@ -989,15 +944,6 @@ public interface BpmnPackage extends EPackage {
      * @ordered
      */
     int POOL__NAME = BASE_ELEMENT__NAME;
-
-    /**
-     * The feature id for the '<em><b>Documentation</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int POOL__DOCUMENTATION = BASE_ELEMENT__DOCUMENTATION;
 
     /**
      * The number of structural features of the '<em>Pool</em>' class.
@@ -1339,17 +1285,6 @@ public interface BpmnPackage extends EPackage {
     EAttribute getBaseElement_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.BaseElement#getDocumentation <em>Documentation</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Documentation</em>'.
-     * @see org.openbpmn.glsp.bpmn.BaseElement#getDocumentation()
-     * @see #getBaseElement()
-     * @generated
-     */
-    EAttribute getBaseElement_Documentation();
-
-    /**
      * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.FlowElement <em>Flow Element</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1360,15 +1295,15 @@ public interface BpmnPackage extends EPackage {
     EClass getFlowElement();
 
     /**
-     * Returns the meta object for the attribute list '{@link org.openbpmn.glsp.bpmn.FlowElement#getCategory <em>Category</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.FlowElement#getSymbol <em>Symbol</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute list '<em>Category</em>'.
-     * @see org.openbpmn.glsp.bpmn.FlowElement#getCategory()
+     * @return the meta object for the attribute '<em>Symbol</em>'.
+     * @see org.openbpmn.glsp.bpmn.FlowElement#getSymbol()
      * @see #getFlowElement()
      * @generated
      */
-    EAttribute getFlowElement_Category();
+    EAttribute getFlowElement_Symbol();
 
     /**
      * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TaskNode <em>Task Node</em>}'.
@@ -1505,14 +1440,6 @@ public interface BpmnPackage extends EPackage {
         EAttribute BASE_ELEMENT__NAME = eINSTANCE.getBaseElement_Name();
 
         /**
-         * The meta object literal for the '<em><b>Documentation</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute BASE_ELEMENT__DOCUMENTATION = eINSTANCE.getBaseElement_Documentation();
-
-        /**
          * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl <em>Flow Element</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1523,12 +1450,12 @@ public interface BpmnPackage extends EPackage {
         EClass FLOW_ELEMENT = eINSTANCE.getFlowElement();
 
         /**
-         * The meta object literal for the '<em><b>Category</b></em>' attribute list feature.
+         * The meta object literal for the '<em><b>Symbol</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute FLOW_ELEMENT__CATEGORY = eINSTANCE.getFlowElement_Category();
+        EAttribute FLOW_ELEMENT__SYMBOL = eINSTANCE.getFlowElement_Symbol();
 
         /**
          * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TaskNodeImpl <em>Task Node</em>}' class.

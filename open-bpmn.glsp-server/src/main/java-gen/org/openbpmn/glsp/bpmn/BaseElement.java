@@ -14,7 +14,6 @@ import org.eclipse.glsp.graph.GNode;
  * </p>
  * <ul>
  *   <li>{@link org.openbpmn.glsp.bpmn.BaseElement#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.bpmn.BaseElement#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  *
  * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBaseElement()
@@ -43,27 +42,5 @@ public interface BaseElement extends GNode {
      * @generated
      */
     void setName(String value);
-
-    /**
-     * Returns the value of the '<em><b>Documentation</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Documentation</em>' attribute.
-     * @see #setDocumentation(String)
-     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBaseElement_Documentation()
-     * @model
-     * @generated
-     */
-    String getDocumentation();
-
-    /**
-     * Sets the value of the '{@link org.openbpmn.glsp.bpmn.BaseElement#getDocumentation <em>Documentation</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Documentation</em>' attribute.
-     * @see #getDocumentation()
-     * @generated
-     */
-    void setDocumentation(String value);
 
 } // BaseElement

@@ -9,10 +9,9 @@
       ecorePackage="bpmn-glsp.ecore#/">
     <genClasses ecoreClass="bpmn-glsp.ecore#//BaseElement">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BaseElement/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BaseElement/documentation"/>
     </genClasses>
     <genClasses ecoreClass="bpmn-glsp.ecore#//FlowElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//FlowElement/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//FlowElement/symbol"/>
     </genClasses>
     <genClasses ecoreClass="bpmn-glsp.ecore#//TaskNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//GatewayNode"/>

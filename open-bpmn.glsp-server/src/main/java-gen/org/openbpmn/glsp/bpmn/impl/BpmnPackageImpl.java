@@ -176,15 +176,6 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBaseElement_Documentation() {
-        return (EAttribute)baseElementEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public EClass getFlowElement() {
         return flowElementEClass;
     }
@@ -194,7 +185,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFlowElement_Category() {
+    public EAttribute getFlowElement_Symbol() {
         return (EAttribute)flowElementEClass.getEStructuralFeatures().get(0);
     }
 
@@ -309,10 +300,9 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         // Create classes and their features
         baseElementEClass = createEClass(BASE_ELEMENT);
         createEAttribute(baseElementEClass, BASE_ELEMENT__NAME);
-        createEAttribute(baseElementEClass, BASE_ELEMENT__DOCUMENTATION);
 
         flowElementEClass = createEClass(FLOW_ELEMENT);
-        createEAttribute(flowElementEClass, FLOW_ELEMENT__CATEGORY);
+        createEAttribute(flowElementEClass, FLOW_ELEMENT__SYMBOL);
 
         taskNodeEClass = createEClass(TASK_NODE);
 
@@ -373,10 +363,9 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         // Initialize classes, features, and operations; add parameters
         initEClass(baseElementEClass, BaseElement.class, "BaseElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBaseElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBaseElement_Documentation(), ecorePackage.getEString(), "documentation", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(flowElementEClass, FlowElement.class, "FlowElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getFlowElement_Category(), ecorePackage.getEString(), "category", null, 0, -1, FlowElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFlowElement_Symbol(), ecorePackage.getEString(), "symbol", null, 0, 1, FlowElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(taskNodeEClass, TaskNode.class, "TaskNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

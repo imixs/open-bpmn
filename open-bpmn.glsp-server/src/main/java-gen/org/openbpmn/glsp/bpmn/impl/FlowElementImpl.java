@@ -2,13 +2,11 @@
  */
 package org.openbpmn.glsp.bpmn.impl;
 
-import java.util.Collection;
-
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.bpmn.FlowElement;
@@ -21,21 +19,31 @@ import org.openbpmn.glsp.bpmn.FlowElement;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl#getCategory <em>Category</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl#getSymbol <em>Symbol</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class FlowElementImpl extends BaseElementImpl implements FlowElement {
     /**
-     * The cached value of the '{@link #getCategory() <em>Category</em>}' attribute list.
+     * The default value of the '{@link #getSymbol() <em>Symbol</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getCategory()
+     * @see #getSymbol()
      * @generated
      * @ordered
      */
-    protected EList<String> category;
+    protected static final String SYMBOL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getSymbol() <em>Symbol</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getSymbol()
+     * @generated
+     * @ordered
+     */
+    protected String symbol = SYMBOL_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -61,11 +69,20 @@ public class FlowElementImpl extends BaseElementImpl implements FlowElement {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<String> getCategory() {
-        if (category == null) {
-            category = new EDataTypeUniqueEList<String>(String.class, this, BpmnPackage.FLOW_ELEMENT__CATEGORY);
-        }
-        return category;
+    public String getSymbol() {
+        return symbol;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSymbol(String newSymbol) {
+        String oldSymbol = symbol;
+        symbol = newSymbol;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.FLOW_ELEMENT__SYMBOL, oldSymbol, symbol));
     }
 
     /**
@@ -76,8 +93,8 @@ public class FlowElementImpl extends BaseElementImpl implements FlowElement {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case BpmnPackage.FLOW_ELEMENT__CATEGORY:
-                return getCategory();
+            case BpmnPackage.FLOW_ELEMENT__SYMBOL:
+                return getSymbol();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -87,13 +104,11 @@ public class FlowElementImpl extends BaseElementImpl implements FlowElement {
      * <!-- end-user-doc -->
      * @generated
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case BpmnPackage.FLOW_ELEMENT__CATEGORY:
-                getCategory().clear();
-                getCategory().addAll((Collection<? extends String>)newValue);
+            case BpmnPackage.FLOW_ELEMENT__SYMBOL:
+                setSymbol((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -107,8 +122,8 @@ public class FlowElementImpl extends BaseElementImpl implements FlowElement {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case BpmnPackage.FLOW_ELEMENT__CATEGORY:
-                getCategory().clear();
+            case BpmnPackage.FLOW_ELEMENT__SYMBOL:
+                setSymbol(SYMBOL_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -122,8 +137,8 @@ public class FlowElementImpl extends BaseElementImpl implements FlowElement {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case BpmnPackage.FLOW_ELEMENT__CATEGORY:
-                return category != null && !category.isEmpty();
+            case BpmnPackage.FLOW_ELEMENT__SYMBOL:
+                return SYMBOL_EDEFAULT == null ? symbol != null : !SYMBOL_EDEFAULT.equals(symbol);
         }
         return super.eIsSet(featureID);
     }
@@ -138,8 +153,8 @@ public class FlowElementImpl extends BaseElementImpl implements FlowElement {
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (category: ");
-        result.append(category);
+        result.append(" (symbol: ");
+        result.append(symbol);
         result.append(')');
         return result.toString();
     }

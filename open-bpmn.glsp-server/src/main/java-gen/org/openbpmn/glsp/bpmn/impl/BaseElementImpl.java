@@ -22,7 +22,6 @@ import org.openbpmn.glsp.bpmn.BpmnPackage;
  * </p>
  * <ul>
  *   <li>{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl#getDocumentation <em>Documentation</em>}</li>
  * </ul>
  *
  * @generated
@@ -47,26 +46,6 @@ public class BaseElementImpl extends GNodeImpl implements BaseElement {
      * @ordered
      */
     protected String name = NAME_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDocumentation()
-     * @generated
-     * @ordered
-     */
-    protected static final String DOCUMENTATION_EDEFAULT = null;
-
-    /**
-     * The cached value of the '{@link #getDocumentation() <em>Documentation</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getDocumentation()
-     * @generated
-     * @ordered
-     */
-    protected String documentation = DOCUMENTATION_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -113,34 +92,11 @@ public class BaseElementImpl extends GNodeImpl implements BaseElement {
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getDocumentation() {
-        return documentation;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setDocumentation(String newDocumentation) {
-        String oldDocumentation = documentation;
-        documentation = newDocumentation;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BASE_ELEMENT__DOCUMENTATION, oldDocumentation, documentation));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
             case BpmnPackage.BASE_ELEMENT__NAME:
                 return getName();
-            case BpmnPackage.BASE_ELEMENT__DOCUMENTATION:
-                return getDocumentation();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -155,9 +111,6 @@ public class BaseElementImpl extends GNodeImpl implements BaseElement {
         switch (featureID) {
             case BpmnPackage.BASE_ELEMENT__NAME:
                 setName((String)newValue);
-                return;
-            case BpmnPackage.BASE_ELEMENT__DOCUMENTATION:
-                setDocumentation((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -174,9 +127,6 @@ public class BaseElementImpl extends GNodeImpl implements BaseElement {
             case BpmnPackage.BASE_ELEMENT__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case BpmnPackage.BASE_ELEMENT__DOCUMENTATION:
-                setDocumentation(DOCUMENTATION_EDEFAULT);
-                return;
         }
         super.eUnset(featureID);
     }
@@ -191,8 +141,6 @@ public class BaseElementImpl extends GNodeImpl implements BaseElement {
         switch (featureID) {
             case BpmnPackage.BASE_ELEMENT__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case BpmnPackage.BASE_ELEMENT__DOCUMENTATION:
-                return DOCUMENTATION_EDEFAULT == null ? documentation != null : !DOCUMENTATION_EDEFAULT.equals(documentation);
         }
         return super.eIsSet(featureID);
     }
@@ -209,8 +157,6 @@ public class BaseElementImpl extends GNodeImpl implements BaseElement {
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
-        result.append(", documentation: ");
-        result.append(documentation);
         result.append(')');
         return result.toString();
     }

@@ -3,11 +3,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmn" nsURI="http://www.openbpmn.org/bpmn/glsp" nsPrefix="bpmn">
   <eClassifiers xsi:type="ecore:EClass" name="BaseElement" eSuperTypes="glsp-graph.ecore#//GNode">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FlowElement" eSuperTypes="#//BaseElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="symbol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TaskNode" eSuperTypes="#//FlowElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="GatewayNode" eSuperTypes="#//FlowElement"/>
