@@ -71,6 +71,31 @@ public class BPMNModel {
             BPMNTypes.CATCH_EVENT, //
             BPMNTypes.THROW_EVENT //
     });
+    
+    public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
+            BPMNTypes.MANUAL_TASK, //
+            BPMNTypes.SCRIPT_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.EXCLUSIVE_GATEWAY, //
+            BPMNTypes.INCLUSIVE_GATEWAY, //
+            BPMNTypes.START_EVENT, //
+            BPMNTypes.END_EVENT, //
+            BPMNTypes.CATCH_EVENT, //
+            BPMNTypes.THROW_EVENT, //
+            BPMNTypes.SEQUENCE_FLOW);
+
+    
+    public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
+            BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
+            BPMNTypes.EVENT_DEFINITION_TIMER, //
+            BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+            BPMNTypes.EVENT_DEFINITION_MESSAGE, //
+            BPMNTypes.EVENT_DEFINITION_LINK, //
+            BPMNTypes.EVENT_DEFINITION_ERROR, //
+            BPMNTypes.EVENT_DEFINITION_TERMINATE, //
+            BPMNTypes.EVENT_DEFINITION_COMPENSATION
+    });
 
     public static List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { //
             BPMNTypes.EXCLUSIVE_GATEWAY, //

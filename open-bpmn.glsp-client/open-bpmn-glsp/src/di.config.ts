@@ -97,15 +97,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'scriptTask', TaskNode, RoundedCornerNodeView);
 
     configureModelElement(context, 'startEvent', EventNode, CircularNodeView);
-    // configureModelElement(context, 'startEvent', EventNode, EventNodeView);
     configureModelElement(context, 'endEvent', EventNode, CircularNodeView);
-
-    // configureModelElement(context, DefaultTypes.NODE_CIRCLE, CircularNode, CircularNodeView);
-    // configureModelElement(context, DefaultTypes.NODE_DIAMOND, DiamondNode, DiamondNodeView);
-
     configureModelElement(context, 'intermediateCatchEvent', EventNode, CircularNodeView);
     configureModelElement(context, 'intermediateThrowEvent', EventNode, CircularNodeView);
-	// configureModelElement(context, 'event:port', BPMNPort, RectangularNodeView);
 
     configureModelElement(context, 'exclusiveGateway', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'inclusiveGateway', GatewayNode, DiamondNodeView);
@@ -127,7 +121,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 });
 
-export default function createContainer(widgetId: string): Container {
+// createBPMNDiagramContainer
+// createContainer
+export default function createBPMNDiagramContainer(widgetId: string): Container {
     // Create the createClientContainer with the diagramModule and the BPMN bpmnPropertyModule...
     const container = createClientContainer(bpmnDiagramModule, bpmnPropertyModule);
     overrideViewerOptions(container, {

@@ -66,16 +66,11 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(), "symbol-property", "B"),
                 PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(), "symbol-property",
                         "C"),
-                PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
+                PaletteItem.createPaletteGroup("event-group", "Event Definitions", createPaletteEventDefinitions(),
                         "symbol-property", "D"),
-                // show all edges
-
-                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "E")
-
-//                PaletteItem.createPaletteGroup("edge-group", "Edges", createPaletteSequenceFlowItems(),
-//                        "symbol-property", "E")
-
-        );
+                PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
+                        "symbol-property", "E"),
+                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "F"));
 
     }
 
@@ -133,6 +128,35 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 new TriggerNodeCreationAction(BPMNTypes.CATCH_EVENT)));
         result.add(new PaletteItem(BPMNTypes.THROW_EVENT, "Throw Event",
                 new TriggerNodeCreationAction(BPMNTypes.THROW_EVENT)));
+        return result;
+    }
+
+    /**
+     * Create a palette Item Group with all Event Defintions
+     *
+     * @return
+     */
+    protected List<PaletteItem> createPaletteEventDefinitions() {
+
+        List<PaletteItem> result = new ArrayList<>();
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_CONDITIONAL, "Conditional",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_CONDITIONAL)));
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_COMPENSATION, "Compensation",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_COMPENSATION)));
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_ERROR, "Error",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_ERROR)));
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_LINK, "Link",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_LINK)));
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_MESSAGE, "Message",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_MESSAGE)));
+
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_SIGNAL, "Signal",
+                new TriggerEdgeCreationAction(BPMNTypes.EVENT_DEFINITION_SIGNAL)));
+
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_TERMINATE, "Terminate",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_TERMINATE)));
+        result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_TIMER, "Timer",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_TIMER)));
         return result;
     }
 

@@ -20,6 +20,16 @@ public class BPMNTypes {
     public static final String CATCH_EVENT = "intermediateCatchEvent";
     public static final String THROW_EVENT = "intermediateThrowEvent";
     
+    // Event Definitions
+    public static final String EVENT_DEFINITION_CONDITIONAL = "conditionalEventDefinition";
+    public static final String EVENT_DEFINITION_COMPENSATION = "compensationEventDefinition";
+    public static final String EVENT_DEFINITION_TIMER = "timerEventDefinition";
+    public static final String EVENT_DEFINITION_SIGNAL = "signalEventDefinition";
+    public static final String EVENT_DEFINITION_MESSAGE = "messageEventDefinition";
+    public static final String EVENT_DEFINITION_LINK = "linkEventDefinition";
+    public static final String EVENT_DEFINITION_ERROR = "errorEventDefinition";
+    public static final String EVENT_DEFINITION_TERMINATE = "terminateEventDefinition";
+    
     // Gateway
     public static final String GATEWAY = "gateway"; 
     public static final String EXCLUSIVE_GATEWAY = "exclusiveGateway";

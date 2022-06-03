@@ -27,6 +27,7 @@ import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.utils.ModelTypes;
@@ -37,19 +38,6 @@ import org.openbpmn.glsp.utils.ModelTypes;
  * implementation is identified via its diagram type.
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
-
-    public final static List<String> ALL_BPMN_FLOWELEMENTS = Arrays.asList(//
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.EXCLUSIVE_GATEWAY, //
-            BPMNTypes.INCLUSIVE_GATEWAY, //
-            BPMNTypes.START_EVENT, //
-            BPMNTypes.END_EVENT, //
-            BPMNTypes.CATCH_EVENT, //
-            BPMNTypes.THROW_EVENT, //
-            BPMNTypes.SEQUENCE_FLOW);
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
@@ -100,41 +88,99 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     @Override
     public List<ShapeTypeHint> getShapeTypeHints() {
         List<ShapeTypeHint> nodeHints = new ArrayList<>();
-        nodeHints.add(new ShapeTypeHint(DefaultTypes.NODE, true, true, true, false));
+
+        // nodeHints.add(new ShapeTypeHint(DefaultTypes.NODE, true, true, true, false));
         nodeHints.add(new ShapeTypeHint(BPMNTypes.MANUAL_TASK, true, true, true, true));
         nodeHints.add(new ShapeTypeHint(BPMNTypes.SCRIPT_TASK, true, true, true, true));
         nodeHints.add(new ShapeTypeHint(BPMNTypes.SEND_TASK, true, true, true, true));
         nodeHints.add(new ShapeTypeHint(BPMNTypes.SERVICE_TASK, true, true, true, true));
 
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.START_EVENT, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.END_EVENT, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.CATCH_EVENT, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.THROW_EVENT, true, true, false, true));
+        // Event ShapeTypeHints
+        // Each event type has different containable EventDefinitions!
+        nodeHints.add(createStartEventHint());
+        nodeHints.add(createEndEventHint());
+        nodeHints.add(createCatchEventHint());
+        nodeHints.add(createThrowEventHint());
 
+        // Gateway ShapeEventTypes
         nodeHints.add(new ShapeTypeHint(BPMNTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
         nodeHints.add(new ShapeTypeHint(BPMNTypes.INCLUSIVE_GATEWAY, true, true, false, true));
 
+        // Add Pool
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
-
-        catHint.setContainableElementTypeIds(ALL_BPMN_FLOWELEMENTS);
+        catHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         nodeHints.add(catHint);
 
         return nodeHints;
     }
 
     /**
-     * Set the BPMN default shape hints.
-     * <ul>
-     * <li>repositionable=true
-     * <li>deletable = true
-     * <li>resizable = false
-     * <li>reparentable = true
+     * Creates a StartEvent ShapeTypeHint
      * <p>
+     * The method defines the containable Event Definitions
+     *
+     * @return
      */
-    @Override
-    public ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {
-        // Override the default-default
-        return new ShapeTypeHint(elementId, true, true, false, true);
+    private ShapeTypeHint createStartEventHint() {
+        List<String> definitions = Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
+                BPMNTypes.EVENT_DEFINITION_TIMER, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE });
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.START_EVENT, true, true, false, true);
+        shapeTypeHint.setContainableElementTypeIds(definitions);
+        return shapeTypeHint;
+    }
+
+    /**
+     * Creates a EndEvent ShapeTypeHint
+     * <p>
+     * The method defines the containable Event Definitions
+     *
+     * @return
+     */
+    private ShapeTypeHint createEndEventHint() {
+        List<String> definitions = Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_TERMINATE });
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.END_EVENT, true, true, false, true);
+        shapeTypeHint.setContainableElementTypeIds(definitions);
+        return shapeTypeHint;
+    }
+
+    /**
+     * Creates a CatchEvent ShapeTypeHint
+     * <p>
+     * The method defines the containable Event Definitions
+     *
+     * @return
+     */
+    private ShapeTypeHint createCatchEventHint() {
+        List<String> definitions = Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
+                BPMNTypes.EVENT_DEFINITION_LINK, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL });
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.CATCH_EVENT, true, true, false, true);
+        shapeTypeHint.setContainableElementTypeIds(definitions);
+        return shapeTypeHint;
+    }
+
+    /**
+     * Creates a CatchEvent ShapeTypeHint
+     * <p>
+     * The method defines the containable Event Definitions
+     *
+     * @return
+     */
+    private ShapeTypeHint createThrowEventHint() {
+        List<String> definitions = Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
+                BPMNTypes.EVENT_DEFINITION_LINK, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL });
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.THROW_EVENT, true, true, false, true);
+        shapeTypeHint.setContainableElementTypeIds(definitions);
+        return shapeTypeHint;
     }
 
     /**
@@ -153,12 +199,26 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // SequenceFLow
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
-
-        sequenceFlowHint.setSourceElementTypeIds(ALL_BPMN_FLOWELEMENTS);
-        sequenceFlowHint.setTargetElementTypeIds(ALL_BPMN_FLOWELEMENTS);
+        sequenceFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        sequenceFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         edgeHints.add(sequenceFlowHint);
 
         return edgeHints;
+    }
+
+    /**
+     * Set the BPMN default shape hints.
+     * <ul>
+     * <li>repositionable=true
+     * <li>deletable = true
+     * <li>resizable = false
+     * <li>reparentable = true
+     * <p>
+     */
+    @Override
+    public ShapeTypeHint createDefaultShapeTypeHint(final String elementId) {
+        // Override the default-default
+        return new ShapeTypeHint(elementId, true, true, false, true);
     }
 
     /**
