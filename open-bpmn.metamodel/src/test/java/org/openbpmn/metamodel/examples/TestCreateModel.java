@@ -125,6 +125,7 @@ public class TestCreateModel {
             processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
             processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+            processContext.buildEvent("cathEvent_1", "Catch Event", BPMNTypes.CATCH_EVENT);
             processContext.buildGateway("gateway_1", "Gateway", BPMNTypes.EXCLUSIVE_GATEWAY);
 
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");

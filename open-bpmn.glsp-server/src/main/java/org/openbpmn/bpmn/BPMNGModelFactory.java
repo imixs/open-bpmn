@@ -104,6 +104,19 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
+     * This method generates an empty BPMN GModel
+     *
+     * @param rootID
+     * @return empty model
+     */
+    public static GModelRoot createNewEmptyRoot(final String rootID) {
+        GModelRoot root = GraphFactory.eINSTANCE.createGGraph();
+        root.setId(rootID);
+        root.setType(DefaultTypes.GRAPH);
+        return root;
+    }
+
+    /**
      * This method creates a GModel form a BPMN process instance
      * <p>
      * The method is called by the {@link BPMNGModelFactory}
@@ -250,18 +263,5 @@ public class BPMNGModelFactory implements GModelFactory {
             }
         }
         return null;
-    }
-
-    /**
-     * This method generates an empty BPMN GModel
-     *
-     * @param rootID
-     * @return empty model
-     */
-    public static GModelRoot createNewEmptyRoot(final String rootID) {
-        GModelRoot root = GraphFactory.eINSTANCE.createGGraph();
-        root.setId(rootID);
-        root.setType(DefaultTypes.GRAPH);
-        return root;
     }
 }

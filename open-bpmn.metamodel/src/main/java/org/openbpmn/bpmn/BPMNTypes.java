@@ -17,8 +17,8 @@ public class BPMNTypes {
     public static final String EVENT = "event";
     public static final String START_EVENT = "startEvent";
     public static final String END_EVENT= "endEvent";
-    public static final String CATCH_EVENT = "catchEvent";
-    public static final String THROW_EVENT = "throwEvent";
+    public static final String CATCH_EVENT = "intermediateCatchEvent";
+    public static final String THROW_EVENT = "intermediateThrowEvent";
     
     // Gateway
     public static final String GATEWAY = "gateway"; 
