@@ -22,8 +22,8 @@
  *     Ralph Soika - Software Developer
  ********************************************************************************/
 import {
-	Action, SModelElement, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp, isBoundsAware, //
-	ISnapper,SLabel
+	Action, SModelElement, SLabel, SModelRoot, MouseListener, FeedbackCommand, hasObjectProp, isBoundsAware, //
+	ISnapper
 } from '@eclipse-glsp/client';
 import { inject, injectable } from 'inversify';
 import {
@@ -35,7 +35,7 @@ import {
 } from 'sprotty';
 import { VNode } from 'snabbdom';
 import { Bounds, Point } from 'sprotty-protocol';
-import { isBPMNNode} from '@open-bpmn/open-bpmn-model';
+import { isBPMNNode,isEventNode,isGatewayNode } from '@open-bpmn/open-bpmn-model';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
@@ -88,16 +88,33 @@ export class BPMNElementSnapper implements ISnapper {
 
 	/* Find a possible snapPoint. 
 	 * a SnapPoint is found if the x or y coordinates matching the position
-	 * of another element Node
+	 * of another element Node.
+	 * We are only interested in BPMNNode elemnets. For all other element we return
+	 * the default.
 	 */
     snap(position: Point, element: SModelElement): Point {
-
+		if (!isBPMNNode(element)) {
+			// return position;
+			return {x:position.x,y:position.y};
+		}
+		// find snap position
 		const snapPoint: Point = this.findSnapPoint(element);
-
 		// if a snapPoint was found and this snapPoint is still in the snapRange,
 		// then we adjust the current mouse Postion. Otherwise we return the current position
 		const y=(snapPoint.y>-1 && Math.abs(position.y-snapPoint.y)<=this.snapRange)?snapPoint.y: position.y;
 		const x=(snapPoint.x>-1 && Math.abs(position.x-snapPoint.x)<=this.snapRange)?snapPoint.x: position.x;
+		const xSnap=(x-position.x);
+		const ySnap=(y-position.y);
+		// fix label ofset (only needed or Events and Gateways)?
+		if ((isEventNode(element) || isGatewayNode(element)) && (ySnap!=0 || xSnap!=0)) {
+			const label:any=element.root.index.getById(element.id + '_bpmnlabel');
+			if (label instanceof SLabel) {					
+				// fix ofset of the lable position....
+				const ly=label.position.y+ySnap;
+				const lx=label.position.x +xSnap;
+				label.position={x:lx,y:ly};
+			}
+		}
 
         return {x:x,y:y};
     }
@@ -130,7 +147,7 @@ export class BPMNElementSnapper implements ISnapper {
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			for (const element of childs) {
-				if (element.id !== modelElement.id && isBoundsAware(element) && !(element instanceof SLabel)) {
+				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
 					const elementCenter = Bounds.center(element.bounds);
 					if (elementCenter && modelElementCenter) {
 						// test horizontal alligment...
@@ -173,14 +190,11 @@ export class BPMNElementSnapper implements ISnapper {
  */
 @injectable()
 export class HelperLineListener extends MouseListener {
-	protected previouslySelected: string[];
 	protected isActive = false;
-	protected dreck: Point;
 
 	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
 		// check if target is relevant....
-		const bpmnNode = isBPMNNode(target);
-		if (bpmnNode) {
+		if (isBPMNNode(target) || target.type=='icon') {
 			// switch into active mode
 			this.isActive = true;
 		} else {
@@ -247,7 +261,7 @@ export class HelperLineListener extends MouseListener {
 			let foundHorizontal = false;
 			let foundVertical = false;
 			for (const element of childs) {
-				if (element.id !== modelElement.id && isBoundsAware(element)) {
+				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
 					// const elementCenter = Bounds.center(element.bounds);
 					const elementCenter = Bounds.center(element.bounds);
 					if (elementCenter && modelElementCenter) {
