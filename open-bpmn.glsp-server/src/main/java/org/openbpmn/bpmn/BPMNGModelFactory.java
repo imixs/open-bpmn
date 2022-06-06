@@ -39,6 +39,7 @@ import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
+import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
@@ -49,6 +50,7 @@ import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNPoint;
@@ -168,6 +170,9 @@ public class BPMNGModelFactory implements GModelFactory {
                         .id(activity.getId()) //
                         .position(point) //
                         .build();
+
+                buildJSONFormsProperties(taskNode, activity);
+
                 entityNodes.add(taskNode);
             }
 
@@ -201,39 +206,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     eventNode.setSymbol(symbol);
                 }
 
-                // finally we define the JSONForms schemata
-                DataBuilder dataBuilder = new DataBuilder();
-                UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
-                SchemaBuilder schemaBuilder = new SchemaBuilder();
-
-                if (extensions != null) {
-                    for (BPMNExtension extension : extensions) {
-                        extension.addFormsData(dataBuilder, event);
-                        extension.addCategories(uiSchemaBuilder, event);
-                        extension.addSchema(schemaBuilder, event);
-                    }
-                }
-
-                // Build Data
-                try (Writer writer = new StringWriter()) {
-                    eventNode.getArgs().put("JSONFormsData", dataBuilder.build());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                // Build UISchema
-                try (Writer writer = new StringWriter()) {
-                    eventNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                // Build Schema
-                try (Writer writer = new StringWriter()) {
-                    eventNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                buildJSONFormsProperties(eventNode, event);
 
                 entityNodes.add(eventNode);
 
@@ -307,6 +280,45 @@ public class BPMNGModelFactory implements GModelFactory {
                 .build();
 
         return newGModel;
+    }
+
+    private void buildJSONFormsProperties(final GNode eventNode, final BPMNFlowElement bpmnElement) {
+        // finally we define the JSONForms schemata
+        DataBuilder dataBuilder = new DataBuilder();
+        UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
+        SchemaBuilder schemaBuilder = new SchemaBuilder();
+
+        if (extensions != null) {
+            for (BPMNExtension extension : extensions) {
+                // validate if the extension can handle this BPMN element
+                if (extension.handles(bpmnElement)) {
+                    extension.addFormsData(dataBuilder, bpmnElement);
+                    extension.addCategories(uiSchemaBuilder, bpmnElement);
+                    extension.addSchema(schemaBuilder, bpmnElement);
+                }
+            }
+        }
+
+        // Build Data
+        try (Writer writer = new StringWriter()) {
+            eventNode.getArgs().put("JSONFormsData", dataBuilder.build());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Build UISchema
+        try (Writer writer = new StringWriter()) {
+            eventNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Build Schema
+        try (Writer writer = new StringWriter()) {
+            eventNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

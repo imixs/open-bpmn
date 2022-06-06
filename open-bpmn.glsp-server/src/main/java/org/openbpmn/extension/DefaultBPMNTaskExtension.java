@@ -26,8 +26,8 @@ package org.openbpmn.extension;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -40,15 +40,15 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class DefaultBPMNEventExtension implements BPMNExtension {
+public class DefaultBPMNTaskExtension implements BPMNExtension {
 
-    public DefaultBPMNEventExtension() {
+    public DefaultBPMNTaskExtension() {
         super();
     }
 
     @Override
     public String getUISchema(final BPMNBaseElement element) {
-        System.out.println(" ..................OOOHHH wir sind in einer Imixs Extennsion");
+        System.out.println(" ..................OOOHHH wir sind in einer Task Extennsion");
         return null;
     }
 
@@ -58,11 +58,12 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNFlowElement bpmnEvent) {
+    public void addFormsData(final DataBuilder dataBuilder, final BPMNFlowElement bpmnTask) {
 
         dataBuilder //
-                .addData("name", bpmnEvent.getName()) //
+                .addData("name", bpmnTask.getName()) //
                 .addData("category", "some cati") //
+                .addData("execution", "exec") //
                 .addData("documentation", "some test docu");
     }
 
@@ -71,11 +72,12 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
      *
      */
     @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNFlowElement bpmnEvent) {
+    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNFlowElement bpmnTask) {
 
         schemaBuilder. //
                 addProperty("name", "string", "Please enter your name :-)"). //
                 addProperty("category", "string", null). //
+                addProperty("execution", "string", null). //
                 addProperty("documentation", "string", null);
 
     }
@@ -86,14 +88,14 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
      * @see UISchemaBuilder
      */
     @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNFlowElement bpmnEvent) {
+    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNFlowElement bpmnTask) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
-                addElements("name", "category"). //
+                addElements("name", "category", "execution"). //
                 addCategory("Attributes"). //
                 addLayout(Layout.VERTICAL). //
                 addElement("documentation", "Documentation", multilineOption). //
@@ -103,10 +105,12 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
     }
 
     /**
-     * This Extension is for BPMNEvents only
+     * This Extension is for BPMNActivities only
      */
     @Override
     public boolean handles(final BPMNFlowElement bpmnElement) {
-        return (bpmnElement instanceof BPMNEvent);
+
+        return (bpmnElement instanceof BPMNActivity);
     }
+
 }

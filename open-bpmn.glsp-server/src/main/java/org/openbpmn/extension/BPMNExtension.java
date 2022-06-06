@@ -24,7 +24,7 @@
 package org.openbpmn.extension;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -66,7 +66,7 @@ public interface BPMNExtension {
      * JsonForms
      *
      */
-    void addFormsData(DataBuilder dataBuilder, BPMNEvent bpmnEvent);
+    void addFormsData(DataBuilder dataBuilder, BPMNFlowElement bpmnElement);
 
     /**
      * This Helper Method adds categories to a JSONForms UISchema
@@ -86,7 +86,7 @@ public interface BPMNExtension {
      * JsonForms
      *
      */
-    void addCategories(UISchemaBuilder uiSchemaBuilder, BPMNEvent event);
+    void addCategories(UISchemaBuilder uiSchemaBuilder, BPMNFlowElement bpmnElement);
 
     /**
      * This Helper Method adds new schema information to a JSONForms Schema
@@ -106,6 +106,18 @@ public interface BPMNExtension {
      * This SchemaBuilder is used on the BPMNGmodelFactory to generate the JsonForms
      *
      */
-    void addSchema(SchemaBuilder schemaBuilder, BPMNEvent event);
+    void addSchema(SchemaBuilder schemaBuilder, BPMNFlowElement bpmnElement);
+
+    /**
+     * Validates whether the given {@link BPMNFlowElement} can be handled by this
+     * BPMN extension. The default implementation returns true. Implementations can
+     * accept only specific BPMN element types.
+     *
+     * @param bpmnElement The BPMNFlowElement that should be handled.
+     * @return `true` if the given bpmnElement can be handled, `false` otherwise.
+     */
+    default boolean handles(final BPMNFlowElement bpmnElement) {
+        return true;
+    }
 
 }

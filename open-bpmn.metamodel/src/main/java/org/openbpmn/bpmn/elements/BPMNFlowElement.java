@@ -50,7 +50,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
                 label=this.getLabel();
                 if (label!=null) {
                     // set default position
-                    BPMNPoint pos = this.getBounds().getPosition();
+                    //BPMNPoint pos = this.getBounds().getPosition();
                     label.updateLocation(0.0,0.0);
                 }
             }
@@ -73,14 +73,28 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      */
     public abstract double getDefaultHeigth();
 
+    /**
+     * Returns the BPMN sub type
+     * @return
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Set the BPMN sub type
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Returns the BPMN Label
+     * 
+     * @return
+     * @throws BPMNMissingElementException
+     */
     public BPMNLabel getLabel() throws BPMNMissingElementException {
 
         if (isEvent() || isGateway()) {
@@ -92,6 +106,12 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         return label;
     }
 
+    /**
+     * Returns the BPMNShape bounds.
+     * 
+     * @return
+     * @throws BPMNMissingElementException
+     */
     public BPMNBounds getBounds() throws BPMNMissingElementException {
         if (bounds == null) {
             // lazy loading of bounds from a given bpmnShape
@@ -100,6 +120,16 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         return bounds;
     }
 
+    /**
+     * Updates the BPMN Shape bounds.
+     * 
+     * @param x
+     * @param y
+     * @param height
+     * @param width
+     * @return
+     * @throws BPMNMissingElementException
+     */
     public BPMNBounds setBounds(double x, double y, double height, double width) throws BPMNMissingElementException {
         // init bound if not yet loaded
         getBounds();
@@ -112,14 +142,28 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         return bounds;
     }
 
+    /**
+     * Returns the BPMNShape element
+     * 
+     * @return
+     */
     public Element getBpmnShape() {
         return bpmnShape;
     }
 
+    /**
+     * Set the BPMNShape element
+     * 
+     * @param bpmnShape
+     */
     public void setBpmnShape(Element bpmnShape) {
         this.bpmnShape = bpmnShape;
     }
 
+    /**
+     * Returns true if the element is an BPMN Event
+     * @return
+     */
     public boolean isEvent() {
         return (BPMNTypes.EVENT.equals(type)//
                 || BPMNTypes.START_EVENT.equals(type) //
@@ -129,6 +173,11 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         );
     }
 
+
+    /**
+     * Returns true if the element is an BPMN Gateway
+     * @return
+     */
     public boolean isGateway() {
         return (BPMNTypes.GATEWAY.equals(type) //
                 || BPMNTypes.EXCLUSIVE_GATEWAY.equals(type)//
