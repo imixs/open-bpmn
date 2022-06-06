@@ -2,7 +2,13 @@
 
 Open BPMN is a free and open platform for modeling BPMN 2.0 diagrams.  The primary goal of this project is to provide a graphical BPMN editing framework, which can be easily customized and extended for any BPMN 2.0 compliant execution engine. 
 
-The [Business Process Model and Notation](https://www.omg.org/spec/BPMN/) was intended for users at all levels, from the business analysts who create the initial design, to the developers who implement the technical details, and finally, to the business users responsible for managing and monitoring the processes. BPMN is today the common standard for describing business processes.
+Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/), an extensible open-source framework for building custom diagram editors based on web technologies.
+
+## What is BPMN 2.0?
+
+BPMN is an open standard to describe business processes and the basis for the execution of business processes in BPMN compatible process engines.   
+
+The [Business Process Model and Notation](https://www.omg.org/spec/BPMN/) (BPMN 2.0) was intended for users at all levels, from the business analysts who create the initial design, to the developers who implement the technical details, and finally, to the business users responsible for managing and monitoring the processes. BPMN is today the common standard for describing business processes.
 
 BPMN 2.0 is an XML language proposed by the [Object Management Group](https://www.omg.org/spec/BPMN/) (OMG), as a notation for describing not only business workflows (a.k.a. "processes") but also higher-level collaborations between business partners and the choreography of information exchanged between these business partners. Due to the fact that BPMN 2.0 is a XML based formal description language, it can be interpreted and executed by various types of Workflow Engines. 
 
@@ -18,11 +24,11 @@ Open Source Workflow Engines like [Imixs-Workflow](https://www.imixs.org) integr
 
 ## Architecture
 
-Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/), an extensible open-source framework for building custom diagram editors based on web technologies.
+Open BPMN is based on the [Eclipse GLSP](https://www.eclipse.org/glsp/), an open-source framework to build diagram editors based on web technologies. Open BPMN supports this technology and provides the following building blocks:
 
- - [open-bpmn.metamodel](./open-bpmn.metamodel/README.md) - provides the BPMN 2.0 metamodel
- - [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) - contains the GLSP sever implementation
- - [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) - contains the GLSP Client components and Theia integration
+ - [open-bpmn.metamodel](./open-bpmn.metamodel/README.md) - an open BPMN 2.0 metamodel
+ - [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) - the GLSP Server implementation
+ - [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) - the GLSP Client components and Theia integration
 
 
 # The BPMN 2.0 Metamodel
@@ -47,8 +53,6 @@ The Application can be started from a Web Browser
 
 	
 
-
-
 ## Locally build for Development
 
 During development you can run the frontend and backend in separate tasks. This gives you more control over the CLient and the Backend Component. 
@@ -67,7 +71,7 @@ With the option `-ff` you can force a full rebuild of the client components. Thi
 	
 You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
 
-# Development
+## Development
 
 Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts the different concepts in various ways. The following sections provide details about the development with Eclipse GLSP and the solutions used in Open BPMN.
 
@@ -78,7 +82,7 @@ Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts t
  
  
  
-# NodeJS
+### NodeJS
 
 We use nodejs on Linux Debian during development. To manage version of node js see: https://phoenixnap.com/kb/update-node-js-version
 
