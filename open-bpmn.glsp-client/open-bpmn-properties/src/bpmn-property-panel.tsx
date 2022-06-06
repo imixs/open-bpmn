@@ -180,7 +180,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	}
 
 	editModeChanged(_oldValue: string, _newValue: string): void {
-		console.log('...bin in editModeChanged: ' + _newValue);
+		console.log('... editModeChanged: ' + _newValue);
 		// this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
 		this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly }));
 	}
@@ -194,12 +194,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		// first we need to verify if a Symbol/BPMNLabel combination was selected. 
 		// In this case we are only interested in the BPMNFlowElement and not in the label
 		if (selectedElements.length>1) {
-			
 			const filteredArr = selectedElements.filter(val=>!val.endsWith('_bpmnlabel'))
-			console.log(filteredArr)
-
 			selectedElements=filteredArr;
-			console.log(selectedElements)
 		}
 		
 		if (selectedElements.length === 1) {
