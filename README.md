@@ -1,8 +1,8 @@
 <img width="200" src="./doc/images/logo-openbpmn.png" />
 
-Open BPMN is a free and open platform for modeling BPMN 2.0 diagrams.  The primary goal of this project is to provide a graphical BPMN editing framework, which can be easily customized and extended for any BPMN 2.0 compliant execution engine. 
+Open BPMN is a free and open platform for modeling BPMN 2.0 diagrams.  The primary goal of this project is to provide a graphical BPMN editing framework, which can be easily customized and extended by any BPMN 2.0 compliant execution engine. Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/).
 
-Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/), an extensible open-source framework for building custom diagram editors based on web technologies.
+**Note:** The project is still under development. See the developer details below. 
 
 ## What is BPMN 2.0?
 
@@ -24,7 +24,8 @@ Open Source Workflow Engines like [Imixs-Workflow](https://www.imixs.org) integr
 
 ## Architecture
 
-Open BPMN is based on the [Eclipse GLSP](https://www.eclipse.org/glsp/), an open-source framework to build diagram editors based on web technologies. Open BPMN supports this technology and provides the following building blocks:
+Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/), an extensible open-source framework for building custom diagram editors based on web technologies.
+Open BPMN supports this technology and provides the following building blocks:
 
  - [open-bpmn.metamodel](./open-bpmn.metamodel/README.md) - an open BPMN 2.0 metamodel
  - [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) - the GLSP Server implementation
