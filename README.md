@@ -1,4 +1,4 @@
-<img width="200" src="./doc/images/logo.png" />
+<img width="200" src="./doc/images/logo-openbpmn.png" />
 
 Open BPMN is a free and open platform for modeling BPMN 2.0 diagrams.  The primary goal of this project is to provide a graphical BPMN editing framework, which can be easily customized and extended for any BPMN 2.0 compliant execution engine. 
 
