@@ -1,22 +1,34 @@
 /********************************************************************************
- * Copyright (c) 2020 EclipseSource and others.
+ * Copyright (c) 2022 Imixs Software Solutions GmbH,
  *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * https://www.eclipse.org/legal/epl-2.0.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
  *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ * You can receive a copy of the GNU General Public
+ * License at http://www.gnu.org/licenses/gpl.html
+ *
+ * Project:
+ *     https://github.com/imixs/open-bpmn
+ *
+ * Contributors:
+ *     Imixs Software Solutions GmbH - Project Management
+ *     Ralph Soika - Software Developer
  ********************************************************************************/
 package org.openbpmn.bpmn;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -43,6 +55,7 @@ import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.bpmn.SequenceFlow;
@@ -51,6 +64,10 @@ import org.openbpmn.glsp.elements.event.EventNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
+import org.openbpmn.glsp.jsonforms.DataBuilder;
+import org.openbpmn.glsp.jsonforms.SchemaBuilder;
+import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
+import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 import org.w3c.dom.Node;
 
@@ -73,8 +90,18 @@ public class BPMNGModelFactory implements GModelFactory {
     @Inject
     protected BPMNGModelState modelState;
 
+    @Inject
+    protected Set<BPMNExtension> extensions;
+
     @Override
     public void createGModel() {
+        // call extension.....
+        if (extensions != null) {
+            System.out.println("-------_> Wir haben " + extensions.size() + "  BPMNExtensions :-)");
+
+        } else {
+            System.out.println("-------_> Wir haben KEINE BPMNExtension :-(((");
+        }
 
         if (!modelState.isInitalized()) {
             long l = System.currentTimeMillis();
@@ -126,7 +153,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param modelState
      * @return new GGraph
      */
-    public static GGraph createGModelFromProcess(final BPMNProcess process, final GModelState modelState) {
+    public GGraph createGModelFromProcess(final BPMNProcess process, final GModelState modelState) {
 
         List<GModelElement> entityNodes = new ArrayList<>();
         try {
@@ -172,6 +199,40 @@ public class BPMNGModelFactory implements GModelFactory {
                         }
                     }
                     eventNode.setSymbol(symbol);
+                }
+
+                // finally we define the JSONForms schemata
+                DataBuilder dataBuilder = new DataBuilder();
+                UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
+                SchemaBuilder schemaBuilder = new SchemaBuilder();
+
+                if (extensions != null) {
+                    for (BPMNExtension extension : extensions) {
+                        extension.addFormsData(dataBuilder, event);
+                        extension.addCategories(uiSchemaBuilder, event);
+                        extension.addSchema(schemaBuilder, event);
+                    }
+                }
+
+                // Build Data
+                try (Writer writer = new StringWriter()) {
+                    eventNode.getArgs().put("JSONFormsData", dataBuilder.build());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Build UISchema
+                try (Writer writer = new StringWriter()) {
+                    eventNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                // Build Schema
+                try (Writer writer = new StringWriter()) {
+                    eventNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
                 entityNodes.add(eventNode);
@@ -255,7 +316,7 @@ public class BPMNGModelFactory implements GModelFactory {
      *
      * @return GPort of an alement or the element if no GPort exists
      */
-    private static GModelElement findPort(final GModelElement element) {
+    private GModelElement findPort(final GModelElement element) {
 
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {
@@ -276,7 +337,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param id          - id to search for
      * @return GModelElement - or null if no elment was found.
      */
-    private static GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
+    GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
         for (GModelElement element : entityNodes) {
             if (element.getId().equals(id)) {
                 return element;

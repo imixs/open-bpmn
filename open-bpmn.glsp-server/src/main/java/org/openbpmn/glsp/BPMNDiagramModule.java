@@ -1,17 +1,25 @@
 /********************************************************************************
- * Copyright (c) 2020-2022 EclipseSource and others.
+ * Copyright (c) 2022 Imixs Software Solutions GmbH,
  *
- * This program and the accompanying materials are made available under the
- * terms of the Eclipse Public License v. 2.0 which is available at
- * https://www.eclipse.org/legal/epl-2.0.
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 3
+ * of the License, or (at your option) any later version.
  *
- * This Source Code may also be made available under the following Secondary
- * Licenses when the conditions for such availability set forth in the Eclipse
- * Public License v. 2.0 are satisfied: GNU General Public License, version 2
- * with the GNU Classpath Exception which is available at
- * https://www.gnu.org/software/classpath/license.html.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
  *
- * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
+ * You can receive a copy of the GNU General Public
+ * License at http://www.gnu.org/licenses/gpl.html
+ *
+ * Project:
+ *     https://github.com/imixs/open-bpmn
+ *
+ * Contributors:
+ *     Imixs Software Solutions GmbH - Project Management
+ *     Ralph Soika - Software Developer
  ********************************************************************************/
 package org.openbpmn.glsp;
 
@@ -29,7 +37,6 @@ import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CutOperationHandler;
-import org.eclipse.glsp.server.operations.LayoutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.BPMNGModelFactory;
 import org.openbpmn.bpmn.BPMNGModelState;
@@ -37,6 +44,8 @@ import org.openbpmn.bpmn.BPMNSourceModelStorage;
 import org.openbpmn.bpmn.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
+import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
@@ -49,6 +58,8 @@ import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNModelValidator;
 import org.openbpmn.glsp.validators.LabelEditValidator;
 
+import com.google.inject.multibindings.Multibinder;
+
 /**
  * The DiagramModule contains the bindings in dedicated methods. Imixs BPMN
  * extends this module and customize it by overriding dedicated binding methods.
@@ -60,6 +71,8 @@ import org.openbpmn.glsp.validators.LabelEditValidator;
 public class BPMNDiagramModule extends DiagramModule {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
+
+    private Multibinder<BPMNExtension> bpmnExtensionBinder;
 
     @Override
     protected Class<? extends GModelState> bindGModelState() {
@@ -113,13 +126,35 @@ public class BPMNDiagramModule extends DiagramModule {
         // Pools
         binding.add(CreatePoolHandler.class);
 
-        binding.remove(LayoutOperationHandler.class);
+        // binding.remove(LayoutOperationHandler.class);
 
         // register apply operations send from the client
         binding.add(ApplyEventUpdateOperationHandler.class);
 
         // GLSP Operation handlers for ModelUpdates
         binding.add(BPMNDeleteNodeHandler.class);
+
+    }
+
+    /**
+     * This method creates a new Multibinder to bind BPMNExension
+     */
+    @Override
+    protected void configureAdditionals() {
+        super.configureAdditionals();
+        // create the BPMNExtension binder
+        bpmnExtensionBinder = Multibinder.newSetBinder(binder(), BPMNExtension.class);
+        configureBPMNExtensions(bpmnExtensionBinder);
+    }
+
+    /**
+     * Overwrite this method to add custom BPMN Extensions
+     *
+     * @param binding
+     */
+    protected void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
+        binding.addBinding().to(DefaultBPMNEventExtension.class);
+        logger.info("added BPMNExtension: " + DefaultBPMNEventExtension.class.getName() + "...");
 
     }
 

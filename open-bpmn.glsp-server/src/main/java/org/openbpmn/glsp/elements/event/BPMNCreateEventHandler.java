@@ -35,7 +35,11 @@ import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import com.google.inject.Inject;
 
 /**
- * OperationHandler to create a new Event .
+ * This is the OperationHandler to create all kinds of BPMNEvents. This
+ * operationHandler is called when the user adds a new Element from the
+ * ToolPalette.
+ * <p>
+ * The Handler simply extends the SourceModel and reset the state.
  *
  * @author rsoika
  *
