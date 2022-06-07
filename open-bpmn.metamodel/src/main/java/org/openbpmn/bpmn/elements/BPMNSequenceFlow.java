@@ -35,8 +35,8 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         
      // find the BPMNShape element. If not defined create a new one
         if (model.getContext() != null) {
-            bpmnEdge = (Element) BPMNModel.findChildNodeByName(model.getContext().bpmnPlane,
-                    BPMNNS.BPMNDI.prefix + ":BPMNEdge", getId());
+            bpmnEdge = (Element) BPMNModel.findBPMNPlaneElement(model.getContext().bpmnPlane,
+                     "BPMNEdge", getId());
             if (bpmnEdge == null) {
                 // create shape element
                 createBPMNEdge();

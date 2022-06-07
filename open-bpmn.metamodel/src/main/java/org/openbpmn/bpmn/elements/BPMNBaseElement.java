@@ -43,6 +43,14 @@ public abstract class BPMNBaseElement {
     }
 
     /**
+     * Returns the current Model Instance
+     * @return
+     */
+    public BPMNModel getModel() {
+        return model;
+    }
+
+    /**
      * Returns the Document object associated with this Element. The document object
      * can be used to create new nodes.
      * 

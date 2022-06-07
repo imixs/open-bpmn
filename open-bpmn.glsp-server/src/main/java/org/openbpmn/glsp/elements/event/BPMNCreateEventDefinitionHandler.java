@@ -42,7 +42,7 @@ import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import com.google.inject.Inject;
 
 /**
- * OperationHandler to add a new EventDefinition.
+ * OperationHandler to add a new EventDefinition to a BPMN Event node.
  *
  * @author rsoika
  *

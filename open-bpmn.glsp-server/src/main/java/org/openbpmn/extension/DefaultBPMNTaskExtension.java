@@ -25,10 +25,12 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
+
+import javax.json.JsonObject;
 
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -42,14 +44,10 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  */
 public class DefaultBPMNTaskExtension implements BPMNExtension {
 
+    private static Logger logger = Logger.getLogger(DefaultBPMNTaskExtension.class.getName());
+
     public DefaultBPMNTaskExtension() {
         super();
-    }
-
-    @Override
-    public String getUISchema(final BPMNBaseElement element) {
-        System.out.println(" ..................OOOHHH wir sind in einer Task Extennsion");
-        return null;
     }
 
     /**
@@ -58,7 +56,7 @@ public class DefaultBPMNTaskExtension implements BPMNExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNFlowElement bpmnTask) {
+    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnTask) {
 
         dataBuilder //
                 .addData("name", bpmnTask.getName()) //
@@ -72,7 +70,7 @@ public class DefaultBPMNTaskExtension implements BPMNExtension {
      *
      */
     @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNFlowElement bpmnTask) {
+    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnTask) {
 
         schemaBuilder. //
                 addProperty("name", "string", "Please enter your name :-)"). //
@@ -88,7 +86,7 @@ public class DefaultBPMNTaskExtension implements BPMNExtension {
      * @see UISchemaBuilder
      */
     @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNFlowElement bpmnTask) {
+    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnTask) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
@@ -108,9 +106,14 @@ public class DefaultBPMNTaskExtension implements BPMNExtension {
      * This Extension is for BPMNActivities only
      */
     @Override
-    public boolean handles(final BPMNFlowElement bpmnElement) {
-
+    public boolean handles(final BPMNBaseElement bpmnElement) {
         return (bpmnElement instanceof BPMNActivity);
+    }
+
+    @Override
+    public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+        // TODO Auto-generated method stub
+        logger.info("updateData - not yet implemented!");
     }
 
 }

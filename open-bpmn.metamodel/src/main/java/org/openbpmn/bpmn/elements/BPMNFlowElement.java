@@ -40,8 +40,8 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         this.type = _type;
         // find the BPMNShape element. If not defined create a new one
         if (model.getContext() != null) {
-            bpmnShape = (Element) BPMNModel.findChildNodeByName(model.getContext().bpmnPlane,
-                    BPMNNS.BPMNDI.prefix + ":BPMNShape", getId());
+            bpmnShape = (Element) BPMNModel.findBPMNPlaneElement(model.getContext().bpmnPlane,
+                   "BPMNShape", getId());
             if (bpmnShape == null) {
                 // create shape element
                 bpmnShape = buildBPMNShape();

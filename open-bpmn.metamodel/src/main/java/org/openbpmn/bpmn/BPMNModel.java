@@ -23,6 +23,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
@@ -71,7 +72,7 @@ public class BPMNModel {
             BPMNTypes.CATCH_EVENT, //
             BPMNTypes.THROW_EVENT //
     });
-    
+
     public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
             BPMNTypes.MANUAL_TASK, //
             BPMNTypes.SCRIPT_TASK, //
@@ -85,7 +86,6 @@ public class BPMNModel {
             BPMNTypes.THROW_EVENT, //
             BPMNTypes.SEQUENCE_FLOW);
 
-    
     public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
             BPMNTypes.EVENT_DEFINITION_TIMER, //
@@ -94,8 +94,7 @@ public class BPMNModel {
             BPMNTypes.EVENT_DEFINITION_LINK, //
             BPMNTypes.EVENT_DEFINITION_ERROR, //
             BPMNTypes.EVENT_DEFINITION_TERMINATE, //
-            BPMNTypes.EVENT_DEFINITION_COMPENSATION
-    });
+            BPMNTypes.EVENT_DEFINITION_COMPENSATION });
 
     public static List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { //
             BPMNTypes.EXCLUSIVE_GATEWAY, //
@@ -210,21 +209,23 @@ public class BPMNModel {
     }
 
     /**
-     *  Builds a new BPMNProcess element and adds this  into this model instance.
-     *  This method also generates the BPMNPlane
+     * Builds a new BPMNProcess element and adds this into this model instance. This
+     * method also generates the BPMNPlane
      * <p>
-     *  <pre>
+     * 
+     * <pre>
      * {@code
      *   <bpmn2:process id="process_1"/>
          <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
             <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1"/>
          </bpmndi:BPMNDiagram>
-     * }</pre>
+     * }
+     * </pre>
      * 
      * @param id
      * @param name
      * @param type - EventType
-     * @throws BPMNModelException 
+     * @throws BPMNModelException
      */
     public BPMNProcess buildProcess(String id) throws BPMNModelException {
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
@@ -235,7 +236,7 @@ public class BPMNModel {
         process.setAttribute("id", id);
         // definitions.appendChild(process);
         definitions.insertBefore(process, this.getBpmnDiagram());
-    
+
         // add bpmndi:BPMNPlane
         // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
         Element bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
@@ -243,9 +244,9 @@ public class BPMNModel {
         bpmnPlane.setAttribute("bpmnElement", id);
         this.getBpmnDiagram().appendChild(bpmnPlane);
         // definitions.insertBefore(bpmnPlane,this.getBpmnDiagram());
-    
-        BPMNProcess bpmnProcess= openContext(id); 
-                //new BPMNProcess(this, process);
+
+        BPMNProcess bpmnProcess = openContext(id);
+        // new BPMNProcess(this, process);
         return bpmnProcess;
     }
 
@@ -258,7 +259,7 @@ public class BPMNModel {
      * 
      * @param string
      * @return BPMNProcess instance
-     * @throws BPMNModelException 
+     * @throws BPMNModelException
      */
     public BPMNProcess openContext(String id) throws BPMNModelException {
 
@@ -287,14 +288,13 @@ public class BPMNModel {
         return element;
     }
 
-  
     /**
      * This helper method returns a set of child nodes by name from a given parent
      * node.
      * 
      * @param parent
      * @param nodeName
-     * @return
+     * @return - list of nodes. If no nodes were found, the method returns an empty list
      */
     public static List<Node> findChildNodesByName(Node parent, String nodeName) {
         List<Node> result = new ArrayList<Node>();
@@ -403,6 +403,10 @@ public class BPMNModel {
         return (BPMN_ACTIVITIES.contains(node.getLocalName()));
     }
 
+    public static boolean isActivity(BPMNBaseElement element) {
+        return isActivity(element.getElementNode());
+    }
+
     /**
      * Returns true if the node is a gateway node.
      * 
@@ -411,6 +415,10 @@ public class BPMNModel {
      */
     public static boolean isGateway(Node node) {
         return (BPMN_GATEWAYS.contains(node.getLocalName()));
+    }
+
+    public static boolean isGateway(BPMNBaseElement element) {
+        return isGateway(element.getElementNode());
     }
 
     /**
@@ -423,6 +431,10 @@ public class BPMNModel {
         return (BPMN_EVENTS.contains(node.getLocalName()));
     }
 
+    public static boolean isEvent(BPMNBaseElement element) {
+        return isEvent(element.getElementNode());
+    }
+
     /**
      * Returns true if the node is a sequenceFlow.
      * 
@@ -431,40 +443,6 @@ public class BPMNModel {
      */
     public static boolean isSequenceFlow(Node node) {
         return (BPMN_SQUENCEFLOWS.contains(node.getLocalName()));
-    }
-
-    /**
-     * This helper method returns a BPMN node child node for the given parent
-     * element with the corresponding name and id
-     *
-     * @param parent   - parent Element
-     * @param nodeName - name of the child element
-     * @param id       of the child element
-     */
-    public static Node findChildNodeByName(Node parent, String nodeName, String id) {
-        if (id == null || id.isEmpty() || parent == null || nodeName == null) {
-            return null;
-        }
-        NodeList childList = parent.getChildNodes();
-        for (int i = 0; i < childList.getLength(); i++) {
-            Node child = childList.item(i);
-
-            // check the attribute bpmnElement
-            if (nodeName.equals(child.getNodeName()) && child.hasAttributes()) {
-                // get attributes names and values
-                NamedNodeMap attributesMap = child.getAttributes();
-                for (int j = 0; j < attributesMap.getLength(); j++) {
-                    Node attr = attributesMap.item(j);
-                    if ("bpmnElement".equals(attr.getNodeName()) && id.equals(attr.getNodeValue())) {
-                        // found it!
-                        return child;
-                    }
-                }
-            }
-
-        }
-        // not found!
-        return null;
     }
 
     /**
@@ -535,6 +513,45 @@ public class BPMNModel {
         logger.warning(
                 "No BPMNPlane for " + id + " found in " + diagramID + " - fallback to default plane " + bpmnPlaneID);
         return defaultBpmnPlane;
+    }
+
+    /**
+     * This helper method returns a BPMNDI node for the given bpmnPlane. A BPMNDI
+     * element is identified by the ID stored in the attribute bpmnElement
+     * <p>
+     * <pre>
+     *  {@code<bpmndi:BPMNShape id="BPMNShape_ihwxlQ" bpmnElement="event-1">}
+     * </pre>
+     * <p>
+     * 
+     * @param bpmnPlane - the bpmnPlane Element
+     * @param nodeName  - name of the element
+     * @param id        - the id referign to the main BPMN element
+     */
+    public static Node findBPMNPlaneElement(Node bpmnPlane, String nodeName, String id) {
+        if (id == null || id.isEmpty() || bpmnPlane == null || nodeName == null) {
+            return null;
+        }
+        String fullNodeName = BPMNNS.BPMNDI.prefix + ":" + nodeName;
+        NodeList childList = bpmnPlane.getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            // check the attribute bpmnElement
+            if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
+                // get attributes names and values
+                NamedNodeMap attributesMap = child.getAttributes();
+                for (int j = 0; j < attributesMap.getLength(); j++) {
+                    Node attr = attributesMap.item(j);
+                    if ("bpmnElement".equals(attr.getNodeName()) && id.equals(attr.getNodeValue())) {
+                        // found it!
+                        return child;
+                    }
+                }
+            }
+
+        }
+        // not found!
+        return null;
     }
 
     /**

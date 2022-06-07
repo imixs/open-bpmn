@@ -23,6 +23,8 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
+import javax.json.JsonObject;
+
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
@@ -32,13 +34,69 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 public interface BPMNExtension {
 
     /**
-     * Executes the Extension handler for the given {@link BPMNBaseElement} and
-     * returns a JSONForms UIScheam
+     * This Helper Method generates a JSON Object by adding the corresponding
+     * BPMNElement properties.
+     * <p>
+     * You can add a new data field by calling
+     * <p>
+     * {@code builder.add("myField","someData")}
+     * <p>
+     * This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the
+     * JsonForms
      *
-     * @param element The BPMNBaseElement that should be processed.
-     * @return JSONForms UISchema
      */
-    String getUISchema(BPMNBaseElement element);
+    void addFormsData(DataBuilder dataBuilder, BPMNBaseElement bpmnElement);
+
+    /**
+     * This Helper Method adds categories to a JSONForms UISchema
+     * <p>
+     * You can add a new data field by calling
+     *
+     * <pre>
+     * {@code
+        uiSchemaBuilder. //
+                addCategory("General"). //
+                addLayout(Layout.HORIZONTAL). //
+                addElements("name", "category"). //
+    }
+     * </pre>
+     * <p>
+     * This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the
+     * JsonForms
+     *
+     */
+    void addCategories(UISchemaBuilder uiSchemaBuilder, BPMNBaseElement bpmnElement);
+
+    /**
+     * This Helper Method adds new schema information to a JSONForms Schema
+     * <p>
+     * You can add a new data field by calling
+     *
+     * <pre>
+     * {@code
+         schemaBuilder.addProperty("name", "string", "Please enter your name");
+     *
+       }
+     * </pre>
+     *
+     *
+     * <p>
+     * This SchemaBuilder is used on the BPMNGmodelFactory to generate the JsonForms
+     *
+     */
+    void addSchema(SchemaBuilder schemaBuilder, BPMNBaseElement bpmnElement);
+
+    /**
+     * Validates whether the given {@link BPMNFlowElement} can be handled by this
+     * BPMN extension. The default implementation returns true. Implementations can
+     * accept only specific BPMN element types.
+     *
+     * @param bpmnElement The BPMNFlowElement that should be handled.
+     * @return `true` if the given bpmnElement can be handled, `false` otherwise.
+     */
+    default boolean handles(final BPMNBaseElement bpmnElement) {
+        return true;
+    }
 
     /**
      * Returns the priority of this action handler. The priority is used to derive
@@ -55,69 +113,11 @@ public interface BPMNExtension {
     }
 
     /**
-     * This Helper Method generates a JSON Object by adding the corresponding
-     * BPMNElement properties.
-     * <p>
-     * You can add a new data field by calling
-     * <p>
-     * {@code builder.add("myField","someData")}
-     * <p>
-     * This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the
-     * JsonForms
+     * Updates the properties of a BPMN Element
      *
+     * @param json        - a JSON structure representing the data
+     * @param bpmnElement - the BPMN element to be updated
      */
-    void addFormsData(DataBuilder dataBuilder, BPMNFlowElement bpmnElement);
-
-    /**
-     * This Helper Method adds categories to a JSONForms UISchema
-     * <p>
-     * You can add a new data field by calling
-     *
-     * <pre>
-     * {@code
-    uiSchemaBuilder. //
-                addCategory("General"). //
-                addLayout(Layout.HORIZONTAL). //
-                addElements("name", "category"). //
-    }
-     * </pre>
-     * <p>
-     * This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the
-     * JsonForms
-     *
-     */
-    void addCategories(UISchemaBuilder uiSchemaBuilder, BPMNFlowElement bpmnElement);
-
-    /**
-     * This Helper Method adds new schema information to a JSONForms Schema
-     * <p>
-     * You can add a new data field by calling
-     *
-     * <pre>
-     * {@code
-    schemaBuilder. //
-                addProperty("name", "string", "Please enter your name"). //
-     *
-       }
-     * </pre>
-     *
-     *
-     * <p>
-     * This SchemaBuilder is used on the BPMNGmodelFactory to generate the JsonForms
-     *
-     */
-    void addSchema(SchemaBuilder schemaBuilder, BPMNFlowElement bpmnElement);
-
-    /**
-     * Validates whether the given {@link BPMNFlowElement} can be handled by this
-     * BPMN extension. The default implementation returns true. Implementations can
-     * accept only specific BPMN element types.
-     *
-     * @param bpmnElement The BPMNFlowElement that should be handled.
-     * @return `true` if the given bpmnElement can be handled, `false` otherwise.
-     */
-    default boolean handles(final BPMNFlowElement bpmnElement) {
-        return true;
-    }
+    void updateData(JsonObject json, BPMNBaseElement bpmnElement);
 
 }

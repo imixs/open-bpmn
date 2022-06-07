@@ -41,6 +41,7 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.BPMNGModelFactory;
 import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNSourceModelStorage;
+import org.openbpmn.bpmn.operations.BPMNApplyPropertiesUpdateOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
@@ -49,7 +50,6 @@ import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
-import org.openbpmn.glsp.elements.event.edit.ApplyEventUpdateOperationHandler;
 import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
@@ -130,7 +130,7 @@ public class BPMNDiagramModule extends DiagramModule {
         // binding.remove(LayoutOperationHandler.class);
 
         // register apply operations send from the client
-        binding.add(ApplyEventUpdateOperationHandler.class);
+        binding.add(BPMNApplyPropertiesUpdateOperationHandler.class);
 
         // GLSP Operation handlers for ModelUpdates
         binding.add(BPMNDeleteNodeHandler.class);

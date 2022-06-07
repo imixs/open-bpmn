@@ -286,17 +286,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			this.initForm = false;
 			return;
 		}
-		console.log('...entered setState with new event data: ' + _newData.data.name);
-		console.log('...die current id=' + this.selectedElementId);
-
 		const newJsonData = JSON.stringify(_newData.data);
-		console.log('...json=' + newJsonData);
-		const action = new ApplyEventUpdateOperation(this.selectedElementId, newJsonData);
-		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'name:' + _newData.data.name);
-		// const action = new ApplyEventUpdateOperation(this.selectedElementId, 'documentation:' + _newData.data.documentation);
+		const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData);
 		this.actionDispatcher.dispatch(action);
-
-		console.log('...name updated');
 	}
 
 }
@@ -304,9 +296,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 /**
  * This action is send after a property change to the backend providing the ID and the new value
  */
-export class ApplyEventUpdateOperation implements Action {
-	static readonly KIND = 'applyEventUpdate';
-	readonly kind = ApplyEventUpdateOperation.KIND;
+export class BPMNApplyPropertiesUpdateOperation implements Action {
+	static readonly KIND = 'applyBPMNPropertiesUpdate';
+	readonly kind = BPMNApplyPropertiesUpdateOperation.KIND;
 	constructor(readonly id: string, readonly jsonData: string) { }
 }
 

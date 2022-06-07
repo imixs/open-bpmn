@@ -1,4 +1,4 @@
-package org.openbpmn.glsp.elements.event.edit;
+package org.openbpmn.bpmn.operations;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.operations.Operation;
@@ -10,16 +10,18 @@ import org.eclipse.glsp.server.operations.Operation;
  * <p>
  * Each operation is uniquely defined by its KIND
  * <p>
- * The Operations are handled by the {@link ApplyEventUpdateOperationHandler}.
- * The operation handler is responsible of processing the operation and updates
- * the model representation accordingly.
+ * The Operations are handled by the
+ * {@link BPMNApplyPropertiesUpdateOperationHandler}. The operation handler is
+ * responsible of processing the operation and updates the model representation
+ * accordingly.
  * <p>
- * The expression is a string that describes with attribute should be updated:
- * <p>
- * ATTRIBUTE_NAME:NEW_VALUE
+ * The operation provides the Elment ID and a JSON data structure with the
+ * new/updated data.
  *
  */
-public class ApplyEventUpdateOperation extends Operation {
+public class BPMNApplyPropertiesUpdateOperation extends Operation {
+
+    public static final String OPERATION_KIND = "applyBPMNPropertiesUpdate";
 
     public static final String DOCUMENTATION_PREFIX = "documentation:";
     public static final String NAME_PREFIX = "name:";
@@ -27,11 +29,11 @@ public class ApplyEventUpdateOperation extends Operation {
     private String id;
     private String jsonData;
 
-    public ApplyEventUpdateOperation() {
-        super("applyEventUpdate");
+    public BPMNApplyPropertiesUpdateOperation() {
+        super(OPERATION_KIND);
     }
 
-    public ApplyEventUpdateOperation(final String nodeId, final String jsonData) {
+    public BPMNApplyPropertiesUpdateOperation(final String nodeId, final String jsonData) {
         this();
         this.id = nodeId;
         this.jsonData = jsonData;

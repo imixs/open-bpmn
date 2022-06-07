@@ -21,7 +21,7 @@
  *     Imixs Software Solutions GmbH - Project Management
  *     Ralph Soika - Software Developer
  ********************************************************************************/
-package org.openbpmn.glsp.elements.event.edit;
+package org.openbpmn.bpmn.operations;
 
 import java.io.StringReader;
 import java.util.Optional;
@@ -37,21 +37,22 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.BPMNGModelState;
-import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventNode;
 
 import com.google.inject.Inject;
 
 /**
- * The ApplyEventEditOperationHandler is responsible for processing the
- * ApplyEventEditOperation send by the client and updates the model
- * representation accordingly.
- * <p>
- * Finally the OperationHandler sends out a EventEditOperation
+ * The BPMNApplyPropertiesUpdateOperationHandler is responsible for processing
+ * the {@link BPMNApplyPropertiesUpdateOperation} send by the client for updates
+ * of the element properties
  *
  */
-public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<ApplyEventUpdateOperation> {
-    private static Logger logger = Logger.getLogger(ApplyEventUpdateOperationHandler.class.getName());
+public class BPMNApplyPropertiesUpdateOperationHandler
+        extends AbstractOperationHandler<BPMNApplyPropertiesUpdateOperation> {
+    private static Logger logger = Logger.getLogger(BPMNApplyPropertiesUpdateOperationHandler.class.getName());
 
     @Inject
     protected ActionDispatcher actionDispatcher;
@@ -59,15 +60,18 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
     @Inject
     protected BPMNGModelState modelState;
 
+    @Inject
+    protected Set<BPMNExtension> extensions;
+
     /**
      *
      */
     @Override
-    protected void executeOperation(final ApplyEventUpdateOperation operation) {
+    protected void executeOperation(final BPMNApplyPropertiesUpdateOperation operation) {
         long l = System.currentTimeMillis();
-        logger.fine("....execute UpdateEvent Operation id: " + operation.getId());
+        logger.info("....execute UpdateEvent Operation id: " + operation.getId());
         String jsonData = operation.getJsonData();
-        logger.fine("....expression= " + jsonData);
+        logger.info("....data= " + jsonData);
 
         Optional<EventNode> element = modelState.getIndex().findElementByClass(operation.getId(), EventNode.class);
         if (element.isEmpty()) {
@@ -75,10 +79,10 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
         }
 
         // find the corresponding BPMN element
-        BPMNEvent bpmnEvent = (BPMNEvent) modelState.getBpmnModel().getContext().findBaseElementById(operation.getId());
-        if (bpmnEvent == null) {
+        BPMNBaseElement bpmnElement = modelState.getBpmnModel().getContext().findBaseElementById(operation.getId());
+        if (bpmnElement == null) {
             throw new IllegalArgumentException(
-                    "BPMN Event with id " + operation.getId() + " is not defined in current model!");
+                    "BPMN Element with id " + operation.getId() + " is not defined in current model!");
         }
         // parse json....
         JsonObject json = null;
@@ -89,25 +93,31 @@ public class ApplyEventUpdateOperationHandler extends AbstractOperationHandler<A
             throw new RuntimeException("Cannot read json data : " + e.getMessage());
         }
 
-        Set<String> features = json.keySet();
-        String value = null;
-        for (String feature : features) {
-
-            logger.fine("...update feature = " + feature);
-            if ("name".equals(feature)) {
-                value = json.getString(feature);
-                bpmnEvent.setName(value);
-
+        // The Name Feature for Events and Gateways is handled separately
+        if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
+            // get name....
+            String nameValue = json.getString("name");
+            // did the name has changed?
+            if (nameValue != null && !nameValue.equals(bpmnElement.getName())) {
                 // now we update the GLabel associated with the Event directly.
                 Optional<GLabel> label = modelState.getIndex().findElementByClass(operation.getId() + "_bpmnlabel",
                         GLabel.class);
                 if (!label.isEmpty()) {
-                    label.get().setText(value);
+                    label.get().setText(nameValue);
                 }
 
-                continue;
             }
+        }
 
+        // Now call the extensions to update the property data according to the BPMN
+        // element
+        if (extensions != null) {
+            for (BPMNExtension extension : extensions) {
+                // validate if the extension can handle this BPMN element
+                if (extension.handles(bpmnElement)) {
+                    extension.updateData(json, bpmnElement);
+                }
+            }
         }
 
         logger.info("....execute UpdateEvent took " + (System.currentTimeMillis() - l) + "ms");
