@@ -148,10 +148,15 @@ public class BPMNModelFactory {
                 return defaultModel;
             }
 
-            // parse XML file
+            
+            
+         // parse XML file
             DocumentBuilder db = docFactory.newDocumentBuilder();
             // read from a project's resources folder
+          
             Document doc = db.parse(is);
+            
+            
             Element root = doc.getDocumentElement();
             if (!"bpmn2:definitions".equals(root.getNodeName())) {
                 logger.severe("Missing root element 'bpmn2:definitions'!");

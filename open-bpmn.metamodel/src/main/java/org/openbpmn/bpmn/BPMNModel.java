@@ -3,7 +3,6 @@ package org.openbpmn.bpmn;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.StringReader;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
@@ -21,7 +20,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -365,9 +363,10 @@ public class BPMNModel {
      * @param output
      * @throws TransformerException
      */
+    @SuppressWarnings("unused")
     private static void writeXml(Document doc, OutputStream output) throws TransformerException {
 
-        String IDENTITY_XSLT_WITH_INDENT = // workaround to remove newlines
+        String IDENTITY_XSLT_WITH_INDENT = // workaround to remove newlines - does not work for cdata
                 "<xsl:stylesheet version='1.0' " + //
                         "xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:bpmn2=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\">"
                         + //
@@ -381,16 +380,20 @@ public class BPMNModel {
                         "</xsl:stylesheet>";
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//        Transformer transformer = transformerFactory.newTransformer();
-        Transformer transformer = transformerFactory
-                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
+      
+        Transformer transformer = transformerFactory.newTransformer();
+//        Transformer transformer = transformerFactory
+//                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
-        // pretty print
+       
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        // transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+        // pretty print
+        // Note: The indent feature is not working correctly. It add unexpected new lines witch pollutes the output.
+        // for this reason we set indent to 'no'
+        transformer.setOutputProperty(OutputKeys.INDENT, "no");
         transformer.transform(source, result);
+        
     }
 
     /**

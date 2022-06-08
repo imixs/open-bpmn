@@ -1,25 +1,17 @@
 /********************************************************************************
- * Copyright (c) 2022 Imixs Software Solutions GmbH,
+ * Copyright (c) 2022 Imixs Software Solutions GmbH and others.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 3
- * of the License, or (at your option) any later version.
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License v. 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * General Public License for more details.
+ * This Source Code may also be made available under the following Secondary
+ * Licenses when the conditions for such availability set forth in the Eclipse
+ * Public License v. 2.0 are satisfied: GNU General Public License, version 2
+ * with the GNU Classpath Exception which is available at
+ * https://www.gnu.org/software/classpath/license.html.
  *
- * You can receive a copy of the GNU General Public
- * License at http://www.gnu.org/licenses/gpl.html
- *
- * Project:
- *     https://github.com/imixs/open-bpmn
- *
- * Contributors:
- *     Imixs Software Solutions GmbH - Project Management
- *     Ralph Soika - Software Developer
+ * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 package org.openbpmn.extension;
 
@@ -42,6 +34,7 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -73,7 +66,9 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
                 BPMNNS.BPMN2.prefix + ":documentation");
         if (elementList.size() > 0) {
             // get the first one and update the value only
-            dataBuilder.addData("documentation", elementList.get(0).getNodeValue());
+            Node docElement = elementList.get(0);
+            String value = docElement.getFirstChild().getNodeValue();
+            dataBuilder.addData("documentation", value);
         }
     }
 
@@ -154,7 +149,14 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
                 } else {
                     // get the first one and update the value only
                     CDATASection cdata = bpmnElement.getDoc().createCDATASection(value);
-                    elementList.get(0).appendChild(cdata);
+                    Node documentationElement = elementList.get(0);
+                    // remove old
+                    NodeList docChildList = documentationElement.getChildNodes();
+                    for (int i = 0; i < docChildList.getLength(); i++) {
+                        Node child = docChildList.item(i);
+                        documentationElement.removeChild(child);
+                    }
+                    documentationElement.appendChild(cdata);
                     // elementList.get(0).set.setNodeValue(cdata);
                 }
 
