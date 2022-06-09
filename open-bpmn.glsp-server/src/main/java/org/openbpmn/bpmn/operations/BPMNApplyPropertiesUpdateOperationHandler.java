@@ -32,7 +32,7 @@ import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
-import org.openbpmn.glsp.bpmn.EventNode;
+import org.openbpmn.glsp.bpmn.BaseElement;
 
 import com.google.inject.Inject;
 
@@ -65,9 +65,9 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         String jsonData = operation.getJsonData();
         logger.info("....data= " + jsonData);
 
-        Optional<EventNode> element = modelState.getIndex().findElementByClass(operation.getId(), EventNode.class);
+        Optional<BaseElement> element = modelState.getIndex().findElementByClass(operation.getId(), BaseElement.class);
         if (element.isEmpty()) {
-            throw new RuntimeException("Cannot find element with id '" + operation.getId() + "'");
+            throw new RuntimeException("Cannot find BaseElement with id '" + operation.getId() + "'");
         }
 
         // find the corresponding BPMN element

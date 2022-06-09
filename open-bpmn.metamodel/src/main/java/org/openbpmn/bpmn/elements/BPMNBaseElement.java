@@ -1,9 +1,15 @@
 package org.openbpmn.bpmn.elements;
 
+import java.util.List;
+
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * The BaseElement is the abstract super class for most BPMN elements. It
@@ -18,6 +24,7 @@ public abstract class BPMNBaseElement {
     private NamedNodeMap attributeMap = null;
     private Node elementNode = null;
     protected BPMNModel model = null;
+    private Element documentationNode = null;
 
     public BPMNBaseElement() {
         super();
@@ -39,11 +46,12 @@ public abstract class BPMNBaseElement {
             // get attributes names and values
             this.attributeMap = this.elementNode.getAttributes();
         }
-       
+
     }
 
     /**
      * Returns the current Model Instance
+     * 
      * @return
      */
     public BPMNModel getModel() {
@@ -85,8 +93,59 @@ public abstract class BPMNBaseElement {
      * @param name
      */
     public void setName(String name) {
-        setAttribute("name",name);
-    } 
+        setAttribute("name", name);
+    }
+
+    /**
+     * Returns the Documentation
+     * 
+     * @return String - can be empty
+     */
+    public String getDocumentation() {
+        if (documentationNode == null) {
+            // lazy loading of documentation element
+            List<Node> elementList = BPMNModel.findChildNodesByName(elementNode,
+                    BPMNNS.BPMN2.prefix + ":documentation");
+            if (elementList.size() > 0) {
+                // get the first one and update the value only
+                documentationNode = (Element) elementList.get(0);
+            }
+        }
+        if (documentationNode != null && documentationNode.getFirstChild() != null) {
+            return documentationNode.getFirstChild().getNodeValue();
+        } else {
+            return ""; // element
+        }
+    }
+
+    /**
+     * Set the new documentation content for this element.
+     * @param content
+     */
+    public void setDocumentation(String content) {
+        if (documentationNode == null) {
+            // lazy loading of documentation element
+            List<Node> elementList = BPMNModel.findChildNodesByName(elementNode,
+                    BPMNNS.BPMN2.prefix + ":documentation");
+            if (elementList.size() == 0) {
+                // create new node
+                documentationNode = model.createElement(BPMNNS.BPMN2, "documentation");
+                documentationNode.setAttribute("id", BPMNModel.generateShortID("documentation"));
+                elementNode.appendChild(documentationNode);
+            } else {
+                // get the first one and update the value only
+                documentationNode = (Element) elementList.get(0);
+            }
+        }
+        // remove old child nodes
+        NodeList docChildList = documentationNode.getChildNodes();
+        for (int i = 0; i < docChildList.getLength(); i++) {
+            Node child = docChildList.item(i);
+            documentationNode.removeChild(child);
+        }
+        CDATASection cdata = getDoc().createCDATASection(content);
+        documentationNode.appendChild(cdata);
+    }
 
     /**
      * Returns the value of a given attribute by name.
@@ -129,7 +188,7 @@ public abstract class BPMNBaseElement {
             }
         }
     }
-    
+
     /**
      * Returns the corresponding dom element node
      * 
@@ -149,6 +208,4 @@ public abstract class BPMNBaseElement {
         return attributeMap;
     }
 
-
-  
 }

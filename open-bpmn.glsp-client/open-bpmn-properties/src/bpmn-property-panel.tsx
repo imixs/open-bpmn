@@ -172,8 +172,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	}
 
 	editModeChanged(_oldValue: string, _newValue: string): void {
-		console.log('... editModeChanged: ' + _newValue);
-		// this.actionDispatcher.dispatch(new SetUIExtensionVisibilityAction(BPMNPropertyPanel.ID, !this.editorContext.isReadonly));
 		this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly }));
 	}
 
@@ -182,7 +180,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	 * and updates the property panel input fields
 	 */
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-		
 		// first we need to verify if a Symbol/BPMNLabel combination was selected. 
 		// In this case we are only interested in the BPMNFlowElement and not in the label
 		if (selectedElements.length>1) {
@@ -190,10 +187,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			selectedElements=filteredArr;
 		}
 		
+		// Check if we now have exactly one elemnt selected. Only in this case we show 
+		// a property panel.
 		if (selectedElements.length === 1) {
-			// because the jsonFomrs send a onchange event after init we mark this state here
-			this.initForm = true;
-			console.log('======== > selection change  received:', root, selectedElements);
 			const element = root.index.getById(selectedElements[0]);
 			if (element) {
 				// did we have a change?
@@ -204,7 +200,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				}
 				// set new selectionId
 				this.selectedElementId = element.id;
-				console.log('======== > new selection ID=' + element.id);
+				console.log('======== > setup new property panel - selectionID=' + element.id);
+				// because the jsonFomrs send a onchange event after init we mark this state here
+				this.initForm = true;
 				
 				// update header
 				//this.header.insertAdjacentText('beforeend',element.type);
@@ -212,7 +210,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
 				// Build a generic JSONForms Property panel
 				if (isBPMNNode(element)) {
-					console.log('...BPMN Node selected....');
+					// BPMN Node selected, collect JSONForms schemata....
 					let bpmnPropertiesData;
 					let bpmnPropertiesSchema;
 					let bpmnPropertiesUISchema;
@@ -222,8 +220,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						bpmnPropertiesSchema=JSON.parse(element.args.JSONFormsSchema+'');
 						bpmnPropertiesUISchema=JSON.parse(element.args.JSONFormsUISchema+'');
 					}
-					
-					// event.propetriesData
+					// render JSONForm
 					ReactDOM.render(
 						<JsonForms
 							data={bpmnPropertiesData}
@@ -248,7 +245,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			this.headerTitle.textContent='BPMN Properties';
 			if (!this.selectionService.hasSelectedElements()) {
 				// show an empty pane (or later the process panel)
-				console.log('.... BPMNPropertyPanel - no element selected -');
 				if (this.bodyDiv) {
 					ReactDOM.render(
 						<React.Fragment>Please select an element </React.Fragment>,
@@ -257,7 +253,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				}
 			} else {
 				// multi selection - we can not show a property panel
-				console.log('.... BPMNPropertyPanel - multiple elements selected -');
 				if (this.bodyDiv) {
 					ReactDOM.render(
 						<React.Fragment>Please select a single element </React.Fragment>,
@@ -269,7 +264,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	}
 
 	/*
-	 * Send a ApplyEditOperation Action....
+	 * This method is responsible to send the new data in a 
+	 * ApplyEditOperation Action to the server....
 	 */
 	setState(_newData: any): void {
 		if (this.initForm) {

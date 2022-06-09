@@ -1,22 +1,18 @@
 package org.openbpmn.metamodel.examples;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * This test class tests the creation of a BPMN Model with elements containing a
@@ -54,15 +50,7 @@ public class TestDocumentation {
 
             String value = "Some text with \n<markup>code</markup>\n Finish!";
         
-            // create new node
-            Element documentation = bpmnElement.getModel().createElement(BPMNNS.BPMN2, "documentation");
-            documentation.setAttribute("id", BPMNModel.generateShortID("documentation"));
-            bpmnElement.getElementNode().appendChild(documentation);
-
-            CDATASection cdata = bpmnElement.getDoc().createCDATASection(value);
-
-            documentation.appendChild(cdata);
-            // .setTextContent(value);
+            bpmnElement.setDocumentation(value);
 
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -74,4 +62,46 @@ public class TestDocumentation {
 
     }
 
+    /**
+     * Test to read a documentation element with a CDATA tag
+     * <p>
+     * This is the expected documentation element value format
+     */
+    @Test
+    public void testReadElementDocumentationCDATA() {
+        logger.info("...read model");
+        try {
+            BPMNModel model = BPMNModelFactory.read("/process_documentation_CDATA.bpmn");
+           BPMNProcess process = model.openContext(null);
+           BPMNEvent startEvent = (BPMNEvent) process.findBaseElementById("start_1");
+           assertEquals("Some text with \n"
+                   + "<markup>code</markup>!",startEvent.getDocumentation());
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+        
+    
+    /**
+     * Test to read a documentation element with a Text (no CDATA)
+     * <p>
+     * Normally the documentation value should be in a CDATA tag.
+     */
+    @Test
+    public void testReadElementDocumentationText() {
+        logger.info("...read model");
+        try {
+            BPMNModel model = BPMNModelFactory.read("/process_documentation_TEXT.bpmn");
+           BPMNProcess process = model.openContext(null);
+           BPMNEvent startEvent = (BPMNEvent) process.findBaseElementById("start_1");
+           assertEquals("Some text with",startEvent.getDocumentation());
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+        
 }

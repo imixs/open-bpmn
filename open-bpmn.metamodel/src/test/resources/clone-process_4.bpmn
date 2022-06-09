@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
     <bpmn2:process id="process_1">
         <bpmn2:endEvent id="end_1" name="End">
             <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
@@ -10,13 +11,18 @@
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
-            <bpmndi:BPMNShape bpmnElement="end_1" id="BPMNShape_yMMEyQ"/>
-            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_V1fYFA">
-                <dc:Bounds xmlns:dc="http://www.omg.org/spec/DD/20100524/DI" height="60.0" width="140.0" x="10.0" y="10.0"/>
+            <bpmndi:BPMNShape bpmnElement="end_1" id="BPMNShape_02-GBg">
+                <dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_MWtgrQ">
+                    <dc:Bounds x="0.0" y="0.0"/>
+                </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_8HJPxA">
-                <di:waypoint xmlns:di="http://www.omg.org/spec/DD/20100524/DC" x="80.0" y="40.0"/>
-                <di:waypoint xmlns:di="http://www.omg.org/spec/DD/20100524/DC" x="0.0" y="0.0"/>
+            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_R1oKBg">
+                <dc:Bounds height="60.0" width="140.0" x="10.0" y="10.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_6yLxgw">
+                <di:waypoint x="80.0" y="40.0"/>
+                <di:waypoint x="18.0" y="18.0"/>
             </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>

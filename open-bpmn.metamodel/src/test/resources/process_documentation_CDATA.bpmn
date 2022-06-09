@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions
+	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+	xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+	xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo"
+	exporterVersion="1.0.0" targetNamespace="http://org.openbpmn"
+	xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+	<bpmn2:process id="process_1">
+		<bpmn2:startEvent id="start_1" name="Start">
+			<bpmn2:documentation id="documentation_TLPRag"><![CDATA[Some text with 
+<markup>code</markup>!]]></bpmn2:documentation>
+		</bpmn2:startEvent>
+	</bpmn2:process>
+	<bpmndi:BPMNDiagram id="BPMNDiagram_1"
+		name="Default Process Diagram">
+		<bpmndi:BPMNPlane bpmnElement="process_1"
+			id="BPMNPlane_process_1">
+			<bpmndi:BPMNShape bpmnElement="start_1"
+				id="BPMNShape_pG-beg">
+				<dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0" />
+				<bpmndi:BPMNLabel id="BPMNLabel_OzBZnw">
+					<dc:Bounds x="0.0" y="0.0" />
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNShape>
+		</bpmndi:BPMNPlane>
+	</bpmndi:BPMNDiagram>
+</bpmn2:definitions>
