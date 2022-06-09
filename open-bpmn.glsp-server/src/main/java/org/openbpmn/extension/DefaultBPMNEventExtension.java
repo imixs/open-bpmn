@@ -35,7 +35,7 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class DefaultBPMNEventExtension implements BPMNExtension {
+public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     private static Logger logger = Logger.getLogger(DefaultBPMNEventExtension.class.getName());
 
     public DefaultBPMNEventExtension() {
@@ -103,22 +103,18 @@ public class DefaultBPMNEventExtension implements BPMNExtension {
     @Override
     public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
+        // default update of name and documentation
+        super.updateData(json, bpmnElement);
+
+        // check custom features
         Set<String> features = json.keySet();
         String value = null;
         for (String feature : features) {
             value = json.getString(feature);
 
             logger.fine("...update feature = " + feature);
-            if ("name".equals(feature)) {
-                bpmnElement.setName(value);
-                continue;
-            }
 
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(value);
-                continue;
-            }
-
+            // TODO implement Event features
         }
 
     }

@@ -17,6 +17,7 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.json.JsonObject;
@@ -34,7 +35,7 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class DefaultBPMNTaskExtension implements BPMNExtension {
+public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = Logger.getLogger(DefaultBPMNTaskExtension.class.getName());
 
@@ -104,8 +105,21 @@ public class DefaultBPMNTaskExtension implements BPMNExtension {
 
     @Override
     public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
-        // TODO Auto-generated method stub
-        logger.info("updateData - not yet implemented!");
+
+        // default update of name and documentation
+        super.updateData(json, bpmnElement);
+
+        // check custom features
+        Set<String> features = json.keySet();
+        String value = null;
+        for (String feature : features) {
+            value = json.getString(feature);
+
+            logger.fine("...update feature = " + feature);
+
+            // TODO implement Event features
+        }
+
     }
 
 }

@@ -17,7 +17,9 @@ package org.openbpmn.glsp.utils;
 
 import java.util.logging.Logger;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BaseElement;
@@ -50,6 +52,26 @@ public class BPMNBuilderHelper {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header") //
                 .text(node.getName()).build();
+    }
+
+    /**
+     * This method tests if the given element has a Child of type GLabel. This is
+     * the case for Task Elements. In this case the method returns the GLabel.
+     * Otherwise the method returns null.
+     *
+     * @return GLabel of an element or null if no GLabel was found
+     */
+    public static GLabel findCompartmentHeader(final BaseElement element) {
+
+        EList<GModelElement> childs = element.getChildren();
+        for (GModelElement child : childs) {
+            if (child instanceof GLabel) {
+                // return Optional.of(child);
+                return (GLabel) child;
+            }
+        }
+        // we did not found a GLabel
+        return null;
     }
 
     /**

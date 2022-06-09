@@ -33,6 +33,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 import com.google.inject.Inject;
 
@@ -61,16 +62,15 @@ public class BPMNApplyPropertiesUpdateOperationHandler
     @Override
     protected void executeOperation(final BPMNApplyPropertiesUpdateOperation operation) {
         long l = System.currentTimeMillis();
-        logger.info("....execute UpdateEvent Operation id: " + operation.getId());
         String jsonData = operation.getJsonData();
-        logger.info("....data= " + jsonData);
 
+        // validate GModel id
         Optional<BaseElement> element = modelState.getIndex().findElementByClass(operation.getId(), BaseElement.class);
         if (element.isEmpty()) {
             throw new RuntimeException("Cannot find BaseElement with id '" + operation.getId() + "'");
         }
 
-        // find the corresponding BPMN element
+        // validate BPMN element
         BPMNBaseElement bpmnElement = modelState.getBpmnModel().getContext().findBaseElementById(operation.getId());
         if (bpmnElement == null) {
             throw new IllegalArgumentException(
@@ -78,26 +78,32 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         }
         // parse json....
         JsonObject json = null;
-
         try (JsonReader reader = Json.createReader(new StringReader(jsonData))) {
             json = reader.readObject();
         } catch (JsonException e) {
             throw new RuntimeException("Cannot read json data : " + e.getMessage());
         }
 
-        // The Name Feature for Events and Gateways is handled separately
-        if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
-            // get name....
-            String nameValue = json.getString("name");
-            // did the name has changed?
-            if (nameValue != null && !nameValue.equals(bpmnElement.getName())) {
-                // now we update the GLabel associated with the Event directly.
+        // The Name Feature for Tasks, Events and Gateways is handled separately to
+        // avoid the need to recompute the full GModel
+        String nameValue = json.getString("name");
+        // did the name has changed?
+        if (nameValue != null && !nameValue.equals(bpmnElement.getName())) {
+            // Event or Gateway?
+            if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
+                // update the GLabel associated with the Event directly.
                 Optional<GLabel> label = modelState.getIndex().findElementByClass(operation.getId() + "_bpmnlabel",
                         GLabel.class);
                 if (!label.isEmpty()) {
                     label.get().setText(nameValue);
                 }
 
+            } else if (BPMNModel.isActivity(bpmnElement)) {
+                // update the task CompartmentHeader (GLabel)
+                GLabel label = BPMNBuilderHelper.findCompartmentHeader(element.get());
+                if (label != null) {
+                    label.setText(json.getString("name"));
+                }
             }
         }
 
@@ -112,7 +118,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             }
         }
 
-        logger.info("....execute UpdateEvent took " + (System.currentTimeMillis() - l) + "ms");
+        logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
         // we do not need to reset the modelState here!
         // modelState.reset();
