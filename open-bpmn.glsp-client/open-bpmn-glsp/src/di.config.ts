@@ -20,7 +20,6 @@ import {
     createClientContainer,
     DeleteElementContextMenuItemProvider,
     editLabelFeature,moveFeature,selectFeature,
-    //GridSnapper,
     LogLevel,
     overrideViewerOptions,
     RevealNamedElementActionProvider,

@@ -117,7 +117,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	protected createHeaderTitle(): HTMLElement {
 		const header = document.createElement('div');
 		header.classList.add('header-icon');
-		header.appendChild(createIcon('extensions')); 
+		header.appendChild(createIcon('extensions'));
 		this.headerTitle= document.createElement('span');
 		header.appendChild(this.headerTitle);
 		this.headerTitle.textContent='BPMN Properties';
@@ -172,6 +172,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	}
 
 	editModeChanged(_oldValue: string, _newValue: string): void {
+		// eslint-disable-next-line max-len
 		this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly }));
 	}
 
@@ -180,14 +181,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	 * and updates the property panel input fields
 	 */
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-		// first we need to verify if a Symbol/BPMNLabel combination was selected. 
+		// first we need to verify if a Symbol/BPMNLabel combination was selected.
 		// In this case we are only interested in the BPMNFlowElement and not in the label
 		if (selectedElements.length>1) {
-			const filteredArr = selectedElements.filter(val=>!val.endsWith('_bpmnlabel'))
+			const filteredArr = selectedElements.filter(val=>!val.endsWith('_bpmnlabel'));
 			selectedElements=filteredArr;
 		}
-		
-		// Check if we now have exactly one elemnt selected. Only in this case we show 
+
+		// Check if we now have exactly one elemnt selected. Only in this case we show
 		// a property panel.
 		if (selectedElements.length === 1) {
 			const element = root.index.getById(selectedElements[0]);
@@ -203,9 +204,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				console.log('======== > setup new property panel - selectionID=' + element.id);
 				// because the jsonFomrs send a onchange event after init we mark this state here
 				this.initForm = true;
-				
 				// update header
-				//this.header.insertAdjacentText('beforeend',element.type);
+				// this.header.insertAdjacentText('beforeend',element.type);
 				this.headerTitle.textContent=element.type;
 
 				// Build a generic JSONForms Property panel
@@ -232,7 +232,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						/>,
 						this.bodyDiv
 					);
-					
 				}
 			} else {
 				// element not defined!
@@ -266,7 +265,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	}
 
 	/*
-	 * This method is responsible to send the new data in a 
+	 * This method is responsible to send the new data in a
 	 * ApplyEditOperation Action to the server....
 	 */
 	setState(_newData: any): void {
@@ -280,7 +279,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData);
 		this.actionDispatcher.dispatch(action);
 	}
-
 }
 
 /**

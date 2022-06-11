@@ -78,7 +78,7 @@ export class BPMNElementSnapper implements ISnapper {
         return 10;
     }
 
-	/* Find a possible snapPoint. 
+	/* Find a possible snapPoint.
 	 * a SnapPoint is found if the x or y coordinates matching the position
 	 * of another element Node.
 	 * We are only interested in BPMNNode elemnets. For all other element we return
@@ -98,9 +98,9 @@ export class BPMNElementSnapper implements ISnapper {
 		const xSnap=(x-position.x);
 		const ySnap=(y-position.y);
 		// fix label ofset (only needed or Events and Gateways)?
-		if ((isEventNode(element) || isGatewayNode(element)) && (ySnap!=0 || xSnap!=0)) {
-			const label:any=element.root.index.getById(element.id + '_bpmnlabel');
-			if (label instanceof SLabel) {					
+		if ((isEventNode(element) || isGatewayNode(element)) && (ySnap!==0 || xSnap!==0)) {
+			const label: any=element.root.index.getById(element.id + '_bpmnlabel');
+			if (label instanceof SLabel) {			
 				// fix ofset of the lable position....
 				const ly=label.position.y+ySnap;
 				const lx=label.position.x +xSnap;
@@ -123,7 +123,8 @@ export class BPMNElementSnapper implements ISnapper {
 	 */
 	private findSnapPoint(modelElement: SModelElement): Point {
 		let root: any;
-		try {
+		try 
+		{
 			root = modelElement.root;
 		}
 		catch (e: unknown) {
@@ -167,7 +168,7 @@ export class BPMNElementSnapper implements ISnapper {
     /**
      * Returns true if the values are in a range of 10
      */
-	private isNear(p1: number, p2: number) {
+	private isNear(p1: number, p2: number): boolean {
 		const p3=Math.abs(p1-p2);
 		if (p3<this.snapRange) {
 			return true;
@@ -186,7 +187,7 @@ export class HelperLineListener extends MouseListener {
 
 	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
 		// check if target is relevant....
-		if (isBPMNNode(target) || target.type=='icon') {
+		if (isBPMNNode(target) || target.type==='icon') {
 			// switch into active mode
 			this.isActive = true;
 		} else {
