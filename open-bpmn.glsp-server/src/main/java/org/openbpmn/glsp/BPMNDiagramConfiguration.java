@@ -124,8 +124,9 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private ShapeTypeHint createStartEventHint() {
         List<String> definitions = Arrays.asList(new String[] { //
                 BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
-                BPMNTypes.EVENT_DEFINITION_TIMER, //
                 BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_ERROR, //
+                BPMNTypes.EVENT_DEFINITION_TIMER, //
                 BPMNTypes.EVENT_DEFINITION_MESSAGE });
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.START_EVENT, true, true, false, true);
         shapeTypeHint.setContainableElementTypeIds(definitions);
@@ -143,6 +144,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         List<String> definitions = Arrays.asList(new String[] { //
                 BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
                 BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_ERROR, //
+                BPMNTypes.EVENT_DEFINITION_TIMER, //
+                BPMNTypes.EVENT_DEFINITION_ESCALATION, //
+                BPMNTypes.EVENT_DEFINITION_CANCEL, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
                 BPMNTypes.EVENT_DEFINITION_TERMINATE });
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.END_EVENT, true, true, false, true);
         shapeTypeHint.setContainableElementTypeIds(definitions);
@@ -160,6 +166,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         List<String> definitions = Arrays.asList(new String[] { //
                 BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
                 BPMNTypes.EVENT_DEFINITION_LINK, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
+                BPMNTypes.EVENT_DEFINITION_TIMER, //
                 BPMNTypes.EVENT_DEFINITION_SIGNAL });
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.CATCH_EVENT, true, true, false, true);
         shapeTypeHint.setContainableElementTypeIds(definitions);
@@ -188,7 +196,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      * are sent to the client and used to validate whether certain operations for
      * edges are allowed without having to query the server again.
      * <p>
-     * TODO We need to define a EdgeTypeHint for all typs of flows in BPMN.
+     * TODO We need to define a EdgeTypeHint for all types of flows in BPMN.
      * Currently we only support the SequenceFlow
      *
      * @return List of all edge type hints for the diagram implementation.

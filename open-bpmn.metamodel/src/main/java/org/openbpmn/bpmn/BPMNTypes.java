@@ -25,10 +25,12 @@ public class BPMNTypes {
     public static final String EVENT_DEFINITION_COMPENSATION = "compensationEventDefinition";
     public static final String EVENT_DEFINITION_TIMER = "timerEventDefinition";
     public static final String EVENT_DEFINITION_SIGNAL = "signalEventDefinition";
+    public static final String EVENT_DEFINITION_ESCALATION = "escalationEventDefinition";
     public static final String EVENT_DEFINITION_MESSAGE = "messageEventDefinition";
     public static final String EVENT_DEFINITION_LINK = "linkEventDefinition";
     public static final String EVENT_DEFINITION_ERROR = "errorEventDefinition";
     public static final String EVENT_DEFINITION_TERMINATE = "terminateEventDefinition";
+    public static final String EVENT_DEFINITION_CANCEL = "cancelEventDefinition";
    
     // Multiple Event Definitions
     public static final String MULTIPLE_EVENT_DEFINITIONS = "multipleEventDefinition";

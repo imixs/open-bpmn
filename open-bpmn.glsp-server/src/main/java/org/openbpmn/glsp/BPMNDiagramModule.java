@@ -39,6 +39,7 @@ import org.openbpmn.bpmn.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.extension.DefaultBPMNEventExtension;
+import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
@@ -151,6 +152,7 @@ public class BPMNDiagramModule extends DiagramModule {
         // bind BPMN default extensions
         binding.addBinding().to(DefaultBPMNEventExtension.class);
         binding.addBinding().to(DefaultBPMNTaskExtension.class);
+        binding.addBinding().to(DefaultBPMNGatewayExtension.class);
 
     }
 

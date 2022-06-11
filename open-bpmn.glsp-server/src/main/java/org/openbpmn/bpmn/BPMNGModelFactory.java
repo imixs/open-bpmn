@@ -230,7 +230,9 @@ public class BPMNGModelFactory implements GModelFactory {
                         .build();
                 entityNodes.add(gatewayNode);
 
-                // now add a lable just for testing....
+                buildJSONFormsProperties(gatewayNode, gateway);
+
+                // now add a GLabel
                 GLabel label = null;
                 BPMNLabel bpmnLabel = gateway.getLabel();
                 if (bpmnLabel != null) {
@@ -275,7 +277,7 @@ public class BPMNGModelFactory implements GModelFactory {
         return newGModel;
     }
 
-    private void buildJSONFormsProperties(final GNode eventNode, final BPMNFlowElement bpmnElement) {
+    private void buildJSONFormsProperties(final GNode elementNode, final BPMNFlowElement bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
@@ -294,21 +296,21 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Build Data
         try (Writer writer = new StringWriter()) {
-            eventNode.getArgs().put("JSONFormsData", dataBuilder.build());
+            elementNode.getArgs().put("JSONFormsData", dataBuilder.build());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Build UISchema
         try (Writer writer = new StringWriter()) {
-            eventNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
+            elementNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Build Schema
         try (Writer writer = new StringWriter()) {
-            eventNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
+            elementNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -149,10 +149,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_LINK)));
         result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_MESSAGE, "Message",
                 new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_MESSAGE)));
-
         result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_SIGNAL, "Signal",
-                new TriggerEdgeCreationAction(BPMNTypes.EVENT_DEFINITION_SIGNAL)));
-
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_SIGNAL)));
         result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_TERMINATE, "Terminate",
                 new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_TERMINATE)));
         result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_TIMER, "Timer",
