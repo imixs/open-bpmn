@@ -93,6 +93,29 @@ public class TestUISchemaBuilder extends DefaultGModelState {
 
     }
 
+    /**
+     * A Category with mixed layout sections
+     */
+    @Test
+    public void testCategorizationMixed() {
+
+        UISchemaBuilder builder = new UISchemaBuilder(Layout.CATEGORIZATION);
+
+        builder.addCategory("Cat-1"). //
+                addLayout(Layout.HORIZONTAL). //
+                addElements(new String[] { "firstName", "lastName", "role" });
+
+        builder.addLayout(Layout.VERTICAL). //
+                addElements(new String[] { "age", "city" });
+
+        String json = builder.build();
+
+        assertNotNull(json);
+        // assertTrue(json.contains("#/properties/lastName"));
+        logger.info(json);
+
+    }
+
     @Test
     public void testCategorization2Sections() {
 
@@ -104,6 +127,37 @@ public class TestUISchemaBuilder extends DefaultGModelState {
                 addCategory("Cat-2"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("firstName", "lastName", "role");
+
+        String json = builder.build();
+
+        assertNotNull(json);
+
+        logger.info(json);
+
+    }
+
+    @Test
+    public void testCategorization2SectionsMixed() {
+
+        UISchemaBuilder builder = new UISchemaBuilder(Layout.CATEGORIZATION);
+
+        Map<String, String> multilineOption = new HashMap<>();
+        multilineOption.put("multi", "true");
+        builder. //
+                addCategory("General"). //
+                addLayout(Layout.HORIZONTAL). //
+                addElements("name"). //
+                addElement("documentation", "Documentation", multilineOption). //
+
+                addLayout(Layout.VERTICAL). //
+                addElements(new String[] { "age", "city" }). //
+
+                addCategory("Event"). //
+                addLayout(Layout.VERTICAL). //
+                addElements(new String[] { "a", "b" }). //
+
+                addCategory("Workflow"). //
+                addLayout(Layout.HORIZONTAL);
 
         String json = builder.build();
 

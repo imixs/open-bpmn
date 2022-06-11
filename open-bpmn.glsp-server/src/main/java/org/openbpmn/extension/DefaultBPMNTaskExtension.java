@@ -53,7 +53,6 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
         dataBuilder //
                 .addData("name", bpmnTask.getName()) //
-                .addData("category", "some cati") //
                 .addData("execution", "exec") //
                 .addData("documentation", "some test docu");
     }
@@ -67,7 +66,6 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
         schemaBuilder. //
                 addProperty("name", "string", "Please enter your name :-)"). //
-                addProperty("category", "string", null). //
                 addProperty("execution", "string", null). //
                 addProperty("documentation", "string", null);
 
@@ -86,10 +84,13 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
-                addElements("name", "category", "execution"). //
-                addCategory("Attributes"). //
+                addElements("name", "execution"). //
                 addLayout(Layout.VERTICAL). //
                 addElement("documentation", "Documentation", multilineOption). //
+
+                addCategory("Task"). //
+                addLayout(Layout.VERTICAL). //
+
                 addCategory("Workflow"). //
                 addLayout(Layout.HORIZONTAL);
 

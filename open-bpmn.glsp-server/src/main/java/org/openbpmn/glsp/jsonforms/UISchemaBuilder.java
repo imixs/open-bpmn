@@ -86,11 +86,13 @@ public class UISchemaBuilder {
         // close current controllsBuilder....
         if (controlsArrayBuilder != null && layoutContext != null) {
             layoutContext.add("elements", controlsArrayBuilder.build());
+            controlsArrayBuilder = null;
         }
 
         // close current layoutContext....
         if (layoutsArrayBuilder != null && layoutContext != null) {
-            this.layoutsArrayBuilder.add(layoutContext);
+            this.layoutsArrayBuilder.add(layoutContext.build());
+            layoutContext = null;
         }
 
         // close current groupContext....
@@ -98,12 +100,11 @@ public class UISchemaBuilder {
             if (layoutsArrayBuilder != null) {
                 groupContext.add("elements", layoutsArrayBuilder.build());
             }
-            groupArrayBuilder.add(groupContext);
+            groupArrayBuilder.add(groupContext.build());
         }
 
-        if (layoutsArrayBuilder == null) {
-            this.layoutsArrayBuilder = Json.createArrayBuilder();
-        }
+        // create new layoutsArrayBuilder
+        this.layoutsArrayBuilder = Json.createArrayBuilder();
 
         // create new groupContext
         groupContext = Json.createObjectBuilder(). //
@@ -118,6 +119,13 @@ public class UISchemaBuilder {
         // close current controllsBuilder....
         if (controlsArrayBuilder != null && layoutContext != null) {
             layoutContext.add("elements", controlsArrayBuilder.build());
+            controlsArrayBuilder = null;
+        }
+
+        // close current layoutContext....
+        if (layoutsArrayBuilder != null && layoutContext != null) {
+            this.layoutsArrayBuilder.add(layoutContext.build());
+            layoutContext = null;
         }
 
         // layout context
@@ -244,7 +252,7 @@ public class UISchemaBuilder {
 
             // close current layoutContext....
             if (layoutsArrayBuilder != null && layoutContext != null) {
-                this.layoutsArrayBuilder.add(layoutContext);
+                this.layoutsArrayBuilder.add(layoutContext.build());
             }
 
             // close current gourpContext

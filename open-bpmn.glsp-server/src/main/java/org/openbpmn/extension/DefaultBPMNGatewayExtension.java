@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import javax.json.JsonObject;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -35,10 +35,11 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
-    private static Logger logger = Logger.getLogger(DefaultBPMNEventExtension.class.getName());
+public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
-    public DefaultBPMNEventExtension() {
+    private static Logger logger = Logger.getLogger(DefaultBPMNGatewayExtension.class.getName());
+
+    public DefaultBPMNGatewayExtension() {
         super();
     }
 
@@ -48,12 +49,12 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnEvent) {
+    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnGateway) {
 
         dataBuilder. //
-                addData("name", bpmnEvent.getName()). //
-                addData("category", "some cati"). //
-                addData("documentation", bpmnEvent.getDocumentation());
+                addData("name", bpmnGateway.getName()). //
+                addData("documentation", bpmnGateway.getDocumentation()). //
+                addData("gatewaydirection", bpmnGateway.getAttribute("gatewayDirection"));
     }
 
     /**
@@ -61,11 +62,14 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      *
      */
     @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnEvent) {
+    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnGateway) {
+
+        String[] gatewayDirections = { "Converging", "Diverging", "Mixed", "Unspecified" };
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("documentation", "string", null);
+                addProperty("documentation", "string", "Element description"). //
+                addProperty("gatewaydirection", "string", null, gatewayDirections);
 
     }
 
@@ -75,29 +79,33 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      * @see UISchemaBuilder
      */
     @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnEvent) {
+    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnGateway) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
+
+        Map<String, String> radioOption = new HashMap<>();
+        multilineOption.put("format", "radio");
+
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
-                addElement("documentation", "Documentation", multilineOption). //
-                addCategory("Event"). //
+                addElement("gatewaydirection", "Direction", radioOption). //
+                addCategory("Attributes"). //
                 addLayout(Layout.VERTICAL). //
-
+                addElement("documentation", "Documentation", multilineOption). //
                 addCategory("Workflow"). //
                 addLayout(Layout.HORIZONTAL);
 
     }
 
     /**
-     * This Extension is for BPMNEvents only
+     * This Extension is for BPMNActivities only
      */
     @Override
     public boolean handles(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNEvent);
+        return (bpmnElement instanceof BPMNGateway);
     }
 
     @Override
@@ -114,8 +122,13 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
             logger.fine("...update feature = " + feature);
 
+            if ("gatewaydirection".equals(feature)) {
+                bpmnElement.setAttribute("gatewayDirection", value);
+                continue;
+            }
             // TODO implement Event features
         }
 
     }
+
 }

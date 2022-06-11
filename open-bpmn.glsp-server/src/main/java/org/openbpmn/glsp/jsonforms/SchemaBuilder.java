@@ -20,6 +20,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
@@ -50,7 +51,9 @@ public class SchemaBuilder {
     /**
      * Adds a new property
      *
-     * @param name - name of the data property
+     * @param name        - name of the data property
+     * @param type        - field type
+     * @param description - optional description
      * @return this
      */
     public SchemaBuilder addProperty(final String name, final String type, final String description) {
@@ -59,6 +62,40 @@ public class SchemaBuilder {
                 add("type", type);
         if (description != null && !description.isBlank()) {
             typeBuilder.add("description", description);
+        }
+
+        propertiesBuilder.add(name, typeBuilder);
+
+        return this;
+    }
+
+    /**
+     * Adds a new property
+     *
+     * @param name        - name of the data property
+     * @param type        - field type
+     * @param description - optional description
+     * @param options     - optional option list
+     * @return this
+     */
+    public SchemaBuilder addProperty(final String name, final String type, final String description,
+            final String[] options) {
+
+        JsonObjectBuilder typeBuilder = Json.createObjectBuilder(). //
+                add("type", type);
+        if (description != null && !description.isBlank()) {
+            typeBuilder.add("description", description);
+        }
+        /*
+         * Add a enum? <pre> "enum": [ "One", "Two", "Three" ] </pre>
+         *
+         */
+        if (options != null && options.length > 0) {
+            JsonArrayBuilder enumArrayBuilder = Json.createArrayBuilder();
+            for (String v : options) {
+                enumArrayBuilder.add(v);
+            }
+            typeBuilder.add("enum", enumArrayBuilder.build());
         }
 
         propertiesBuilder.add(name, typeBuilder);
