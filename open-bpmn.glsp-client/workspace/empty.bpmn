@@ -16,21 +16,27 @@
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
             <bpmndi:BPMNShape bpmnElement="event-9CFa9bU8vuWbUroQ" id="BPMNShape_CQyXFA">
-                <dc:Bounds height="40.0" width="40.0" x="100.0" y="95.0"/>
+                <dc:Bounds height="40.0" width="40.0" x="79.0" y="105.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_pR9EaA">
+                    <dc:Bounds x="72.765625" y="149.0"/>
+                </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="task-6R5gXhgNhfPU4Rt5" id="BPMNShape_Aru8pg">
-                <dc:Bounds height="50.0" width="110.0" x="220.0" y="95.0"/>
+                <dc:Bounds height="50.0" width="110.0" x="201.0" y="98.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="event-pkwwTXUsLjFedfSp" id="BPMNShape_WDy-3w">
-                <dc:Bounds height="40.0" width="40.0" x="435.0" y="105.0"/>
+                <dc:Bounds height="40.0" width="40.0" x="416.0" y="105.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_sD_ZoA">
+                    <dc:Bounds x="409.765625" y="149.0"/>
+                </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_d40QGw" id="BPMNEdge_wj-2sQ">
-                <di:waypoint x="120.0" y="115.0"/>
-                <di:waypoint x="275.0" y="120.0"/>
+                <di:waypoint x="99.0" y="125.0"/>
+                <di:waypoint x="256.0" y="123.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_GFGC7Q" id="BPMNEdge_PMRulQ">
-                <di:waypoint x="275.0" y="120.0"/>
-                <di:waypoint x="455.0" y="125.0"/>
+                <di:waypoint x="256.0" y="123.0"/>
+                <di:waypoint x="436.0" y="125.0"/>
             </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
