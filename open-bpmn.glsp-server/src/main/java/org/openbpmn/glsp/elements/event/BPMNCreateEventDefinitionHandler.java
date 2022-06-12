@@ -23,13 +23,13 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
+import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
@@ -49,8 +49,6 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
     @Inject
     protected ActionDispatcher actionDispatcher;
 
-    private String elementTypeId;
-
     /**
      * Default constructor
      * <p>
@@ -67,7 +65,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
         String eventID = null;
-        elementTypeId = operation.getElementTypeId();
+        String elementTypeId = operation.getElementTypeId();
         // now we add this definition directly into the BPMN Event element of the source
         // model
         Optional<GModelElement> container = this.getContainer(operation);

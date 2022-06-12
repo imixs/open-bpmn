@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.bpmn;
+package org.openbpmn.model;
 
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
@@ -29,6 +29,7 @@ import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 

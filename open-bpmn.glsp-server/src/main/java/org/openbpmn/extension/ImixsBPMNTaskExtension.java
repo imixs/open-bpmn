@@ -35,11 +35,11 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
+public class ImixsBPMNTaskExtension extends AbstractBPMNElementExtension {
 
-    private static Logger logger = Logger.getLogger(DefaultBPMNTaskExtension.class.getName());
+    private static Logger logger = Logger.getLogger(ImixsBPMNTaskExtension.class.getName());
 
-    public DefaultBPMNTaskExtension() {
+    public ImixsBPMNTaskExtension() {
         super();
     }
 
@@ -52,9 +52,9 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
     public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnTask) {
 
         dataBuilder //
-                .addData("name", bpmnTask.getName()) //
-                .addData("execution", "exec") //
-                .addData("documentation", "some test docu");
+                .addData("form", "blub") //
+                .addData("abstract", "exec") //
+                .addData("summary", "some test docu");
     }
 
     /**
@@ -65,9 +65,9 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
     public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnTask) {
 
         schemaBuilder. //
-                addProperty("name", "string", "Please enter your name :-)"). //
-                addProperty("execution", "string", null). //
-                addProperty("documentation", "string", null);
+                addProperty("form", "string", null). //
+                addProperty("abstract", "string", null). //
+                addProperty("summary", "string", null);
 
     }
 
@@ -82,14 +82,10 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
         uiSchemaBuilder. //
-                addCategory("General"). //
-                addLayout(Layout.HORIZONTAL). //
-                addElements("name", "execution"). //
-                addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption). //
 
-                addCategory("Task"). //
-                addLayout(Layout.VERTICAL); //
+                addCategory("Workflow"). //
+                addLayout(Layout.VERTICAL). //
+                addElements("form", "abstract", "summary");
 
     }
 
@@ -121,12 +117,13 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
     }
 
     @Override
-    public int getPriority() {
-        return 999999;
+    public String getKind() {
+        return "imixs";
     }
 
     @Override
-    public String getKind() {
-        return DEFAULT_EXTENSION_KIND;
+    public String getLabel() {
+        return "Imixs-Workflow";
     }
+
 }

@@ -33,6 +33,8 @@ import org.openbpmn.bpmn.elements.BPMNBaseElement;
 public abstract class AbstractBPMNElementExtension implements BPMNExtension {
     private static Logger logger = Logger.getLogger(AbstractBPMNElementExtension.class.getName());
 
+    public static String DEFAULT_EXTENSION_KIND = "DEFAULT_EXTENSION";
+
     /**
      * Default Implementation updates name and documentation only. Sub classes
      * should overwrite this method.
@@ -59,4 +61,15 @@ public abstract class AbstractBPMNElementExtension implements BPMNExtension {
         }
 
     }
+
+    /**
+     * Returns the Extension label to be used in the Tool Palete
+     *
+     * @return kind String per default
+     */
+    @Override
+    public String getLabel() {
+        return getKind();
+    }
+
 }

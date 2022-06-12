@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
@@ -31,6 +32,8 @@ import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.extension.AbstractBPMNElementExtension;
+import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
@@ -49,7 +52,11 @@ import com.google.inject.Inject;
 public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
     @Inject
+    protected Set<BPMNExtension> extensions;
+
+    @Inject
     protected OperationHandlerRegistry operationHandlerRegistry;
+
     private int counter;
 
     @Override
@@ -70,7 +77,10 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                         "symbol-property", "D"),
                 PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
                         "symbol-property", "E"),
-                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "F"));
+                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "F"),
+
+                PaletteItem.createPaletteGroup("extension-group", "Extensions", createPaletteExtensions(),
+                        "symbol-property", "G"));
 
     }
 
@@ -181,6 +191,30 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
         result.add(new PaletteItem(BPMNTypes.PARALLEL_GATEWAY, "Parallel",
                 new TriggerNodeCreationAction(BPMNTypes.PARALLEL_GATEWAY)));
+
+        return result;
+    }
+
+    /**
+     * This method creates a PaletteItem for each registered extension.
+     *
+     */
+    protected List<PaletteItem> createPaletteExtensions() {
+        List<PaletteItem> result = new ArrayList<>();
+        List<String> extensionKinds = new ArrayList<>();
+        if (extensions != null) {
+            for (BPMNExtension extension : extensions) {
+                // validate if the extension is no Default Extension kind.
+                if (!AbstractBPMNElementExtension.DEFAULT_EXTENSION_KIND.equals(extension.getKind())
+                        && !extensionKinds.contains(extension.getKind())) {
+
+                    result.add(new PaletteItem(extension.getKind(), extension.getLabel(),
+                            new TriggerNodeCreationAction("extension:" + extension.getKind())));
+                    // avoid duplicates
+                    extensionKinds.add(extension.getKind());
+                }
+            }
+        }
 
         return result;
     }

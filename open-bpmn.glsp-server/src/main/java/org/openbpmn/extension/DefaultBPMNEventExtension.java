@@ -118,4 +118,14 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
         }
 
     }
+
+    @Override
+    public int getPriority() {
+        return 999999;
+    }
+
+    @Override
+    public String getKind() {
+        return DEFAULT_EXTENSION_KIND;
+    }
 }

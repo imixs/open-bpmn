@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-package org.openbpmn.bpmn;
+package org.openbpmn.model;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -41,6 +41,8 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
+import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
@@ -286,6 +288,7 @@ public class BPMNGModelFactory implements GModelFactory {
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
+
                 if (extension.handles(bpmnElement)) {
                     extension.addFormsData(dataBuilder, bpmnElement);
                     extension.addCategories(uiSchemaBuilder, bpmnElement);

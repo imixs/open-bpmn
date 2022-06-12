@@ -25,13 +25,13 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

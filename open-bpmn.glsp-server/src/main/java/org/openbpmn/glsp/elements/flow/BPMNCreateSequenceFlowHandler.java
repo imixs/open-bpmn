@@ -20,13 +20,13 @@ import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
-import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
+import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

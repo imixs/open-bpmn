@@ -19,11 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.openbpmn.glsp.utils.GridSnapper;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -60,9 +58,9 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
      * @param operation
      * @return the absolute location where the element should be created.
      */
-    public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
-        return GridSnapper.snap(operation.getLocation());
-    }
+//    public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+//        return GridSnapper.snap(operation.getLocation());
+//    }
 
     /**
      * <p>

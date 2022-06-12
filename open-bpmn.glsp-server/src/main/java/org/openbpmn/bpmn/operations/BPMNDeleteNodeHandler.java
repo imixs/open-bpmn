@@ -19,12 +19,12 @@ import java.util.List;
 
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
-import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
+import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

@@ -30,9 +30,6 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.openbpmn.bpmn.BPMNGModelFactory;
-import org.openbpmn.bpmn.BPMNGModelState;
-import org.openbpmn.bpmn.BPMNSourceModelStorage;
 import org.openbpmn.bpmn.operations.BPMNApplyPropertiesUpdateOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.bpmn.operations.BPMNChangeRoutingPointsOperationHandler;
@@ -51,6 +48,9 @@ import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNModelValidator;
 import org.openbpmn.glsp.validators.LabelEditValidator;
+import org.openbpmn.model.BPMNGModelFactory;
+import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.model.BPMNSourceModelStorage;
 
 import com.google.inject.multibindings.Multibinder;
 
@@ -141,21 +141,6 @@ public class BPMNDiagramModule extends DiagramModule {
         configureBPMNExtensions(bpmnExtensionBinder);
     }
 
-    /**
-     * This method adds the BPMN default extensions
-     * <p>
-     * Overwrite this method to add custom BPMN Extensions
-     *
-     * @param binding
-     */
-    protected void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
-        // bind BPMN default extensions
-        binding.addBinding().to(DefaultBPMNEventExtension.class);
-        binding.addBinding().to(DefaultBPMNTaskExtension.class);
-        binding.addBinding().to(DefaultBPMNGatewayExtension.class);
-
-    }
-
     @Override
     protected Class<? extends ToolPaletteItemProvider> bindToolPaletteItemProvider() {
         return BPMNToolPaletteItemProvider.class;
@@ -191,6 +176,24 @@ public class BPMNDiagramModule extends DiagramModule {
     @Override
     public String getDiagramType() {
         return "bpmn-diagram";
+    }
+
+    /**
+     * This method adds the BPMN default extensions
+     * <p>
+     * Overwrite this method to add custom BPMN Extensions
+     *
+     * @param binding
+     */
+    protected void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
+        // bind BPMN default extensions
+        binding.addBinding().to(DefaultBPMNEventExtension.class);
+        binding.addBinding().to(DefaultBPMNTaskExtension.class);
+        binding.addBinding().to(DefaultBPMNGatewayExtension.class);
+
+        // Imixs Extensions
+        // binding.addBinding().to(ImixsBPMNTaskExtension.class);
+
     }
 
 }

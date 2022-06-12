@@ -28,12 +28,12 @@ import javax.json.JsonReader;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.openbpmn.bpmn.BPMNGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

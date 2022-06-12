@@ -18,11 +18,30 @@ package org.openbpmn.extension;
 import javax.json.JsonObject;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 
+/**
+ * The BPMNExtension is an extension point which allows you to add custom
+ * properties to any BPMN Element managed within the BPMN modeling tool.
+ *
+ * Extensions are a core functionality of BPMN 2.0. An Extension defines the
+ * ExtensionDefinition and ExtensionAttributeDefinition. The latter defines a
+ * list of attributes that can be attached to any BPMN element. The attribute
+ * list defines the name and type of the new attribute. This allows BPMN
+ * adopters to integrate any meta model into the BPMN meta model and reuse
+ * already existing model elements.
+ * <p>
+ * OpenBPMN adapts this concept with the BPMNExtension interface. As an adopter
+ * you can implement a new BPMNExtension and describe your properties in a
+ * separate schemata. The schemata are defined by the JSONForms project. This is
+ * a very flexible an easy to use extension mechanism.
+ *
+ *
+ * @author rsoika
+ *
+ */
 public interface BPMNExtension {
 
     /**
@@ -79,12 +98,13 @@ public interface BPMNExtension {
     void addSchema(SchemaBuilder schemaBuilder, BPMNBaseElement bpmnElement);
 
     /**
-     * Validates whether the given {@link BPMNFlowElement} can be handled by this
+     * Validates whether the given {@link BPMNBaseElement} can be handled by this
      * BPMN extension. The default implementation returns true. Implementations can
-     * accept only specific BPMN element types.
+     * accept only specific BPMN element types or elements containing specific BPMN
+     * 2.0 extensions.
      *
-     * @param bpmnElement The BPMNFlowElement that should be handled.
-     * @return `true` if the given bpmnElement can be handled, `false` otherwise.
+     * @param bpmnElement The BPMNBaseElement that should be handled.
+     * @return `true` if the given bpmnElement can be handled by this extension.
      */
     default boolean handles(final BPMNBaseElement bpmnElement) {
         return true;
@@ -92,7 +112,7 @@ public interface BPMNExtension {
 
     /**
      * Returns the priority of this action handler. The priority is used to derive
-     * the execution order if multiple action handlers should execute the same
+     * the execution order if multiple extension handlers should execute the same
      * {@link BPMNBaseElement}. The default priority is `0` and the priority is
      * sorted descending. This means handlers with a priority &gt; 0 are executed
      * before handlers with a default priority and handlers with a priority &lt; 0
@@ -112,4 +132,16 @@ public interface BPMNExtension {
      */
     void updateData(JsonObject json, BPMNBaseElement bpmnElement);
 
+    /**
+     * Unique identifier specifying the kind of Extension. The kind is used as the
+     * tag namespace
+     */
+    String getKind();
+
+    /**
+     * Returns the Extension label to be used in the Tool Palette
+     *
+     * @return String
+     */
+    String getLabel();
 }

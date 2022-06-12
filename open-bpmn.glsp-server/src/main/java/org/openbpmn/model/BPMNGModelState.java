@@ -13,9 +13,17 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.bpmn;
+package org.openbpmn.model;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.glsp.server.model.DefaultGModelState;
+import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.extension.BPMNExtension;
+
+import com.google.inject.Inject;
 
 /**
  * The BPMNGModelState extends the DefaultGModelState and provides the property
@@ -28,6 +36,10 @@ public class BPMNGModelState extends DefaultGModelState {
 
     private BPMNModel bpmnModel;
     private boolean initalized = false;
+    List<String> extensionKinds = new ArrayList<>();
+
+    @Inject
+    protected Set<BPMNExtension> extensions;
 
     public BPMNModel getBpmnModel() {
         return bpmnModel;
@@ -54,4 +66,24 @@ public class BPMNGModelState extends DefaultGModelState {
         this.initalized = false;
     }
 
+    /**
+     * Register all extensions kinds
+     *
+     * @return
+     */
+//    protected List<PaletteItem> registerExtensions() {
+//        List<PaletteItem> extensionKinds = new ArrayList<>();
+//
+//        if (extensions != null) {
+//            for (BPMNExtension extension : extensions) {
+//                // validate if the extension is no Default Extension kind.
+//                if (!AbstractBPMNElementExtension.DEFAULT_EXTENSION_KIND.equals(extension.getKind())
+//                        && !extensionKinds.contains(extension.getKind())) {
+//                    extensionKinds.add(extension.getKind());
+//                }
+//            }
+//        }
+//
+//        return result;
+//    }
 }

@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
+import org.openbpmn.model.BPMNGModelFactory;
 
 /**
  * This test loads a BPMN file and creates a GModel from the first process

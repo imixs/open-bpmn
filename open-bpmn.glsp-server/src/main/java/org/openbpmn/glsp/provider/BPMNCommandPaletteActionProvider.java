@@ -38,7 +38,6 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.bpmn.TaskNode;
-import org.openbpmn.glsp.utils.GridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
@@ -58,7 +57,9 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         }
         GModelIndex index = modelState.getIndex();
         List<String> selectedIds = editorContext.getSelectedElementIds();
-        Optional<GPoint> lastMousePosition = GridSnapper.snap(editorContext.getLastMousePosition());
+        // Optional<GPoint> lastMousePosition =
+        // GridSnapper.snap(editorContext.getLastMousePosition());
+        Optional<GPoint> lastMousePosition = editorContext.getLastMousePosition();
         Set<GModelElement> selectedElements = index.getAll(selectedIds);
 
         // Create node actions are always possible

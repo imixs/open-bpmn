@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.glsp.graph.DefaultTypes;
@@ -29,8 +30,12 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.extension.AbstractBPMNElementExtension;
+import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.utils.ModelTypes;
+
+import com.google.inject.Inject;
 
 /**
  * Provides configuration constants for a specific diagram implementation (i.e.
@@ -38,6 +43,8 @@ import org.openbpmn.glsp.utils.ModelTypes;
  * implementation is identified via its diagram type.
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
+    @Inject
+    protected Set<BPMNExtension> extensions;
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
@@ -110,6 +117,26 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         ShapeTypeHint catHint = new ShapeTypeHint(ModelTypes.POOL, true, true, true, true);
         catHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         nodeHints.add(catHint);
+
+        // Finally we add the Extension Hints...
+        if (extensions != null) {
+            for (BPMNExtension extension : extensions) {
+                // validate if the extension is no Default Extension kind.
+                if (!AbstractBPMNElementExtension.DEFAULT_EXTENSION_KIND.equals(extension.getKind())) {
+
+                    // now create a ShapeTypeHint for this extension
+                    ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.TASK, true, true, false, true);
+                    shapeTypeHint.setContainableElementTypeIds(
+                            Arrays.asList(new String[] { "extension:" + extension.getKind() }));
+//
+//                    if (extension.handles(Class<BPMNActivity>)) {
+//
+//                    }
+
+                    // extensionKinds.add(extension.getKind());
+                }
+            }
+        }
 
         return nodeHints;
     }
