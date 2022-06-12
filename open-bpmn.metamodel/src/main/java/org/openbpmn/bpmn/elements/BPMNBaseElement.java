@@ -97,23 +97,6 @@ public abstract class BPMNBaseElement {
     }
 
     /**
-     * This method sets a specific extension attribute. The extensionNamespace
-     * defines the attribute prafix within the BPMNElement:
-     * <p>
-     * {@code<bpmn2:task id="Task_1" imixs:processid="6100" name="Task 1">}
-     * 
-     * @param extensionNamespace
-     * @param attribute
-     * @param value
-     */
-    public void setExtensionAttribute(String extensionNamespace, String extensionURI,String attribute, String value) {
-        setAttribute(extensionNamespace + ":" + attribute, value);
-        
-        // verify the namespace prafix
-        this.model. addNamespace(extensionNamespace,extensionURI);
-    }
-
-    /**
      * Returns the Documentation
      * 
      * @return String - can be empty
@@ -213,6 +196,17 @@ public abstract class BPMNBaseElement {
     }
 
     /**
+     * Returns true when an attribute with a given name is specified on this BPMN
+     * element or has a default value, false otherwise.
+     * 
+     * @param name
+     * @return
+     */
+    public boolean hasAttribute(String name) {
+        return this.getElementNode().hasAttribute(name);
+    }
+
+    /**
      * Returns the corresponding dom element node
      * 
      * @return
@@ -229,6 +223,46 @@ public abstract class BPMNBaseElement {
      */
     public NamedNodeMap getAttributes() {
         return attributeMap;
+    }
+
+    /**
+     * This method sets a specific extension attribute. The extensionNamespace
+     * defines the attribute prefix within the BPMNElement:
+     * <p>
+     * {@code<bpmn2:task id="Task_1" imixs:processid="6100" name="Task 1">}
+     * 
+     * @param extensionNamespace
+     * @param attribute
+     * @param value
+     */
+    public void setExtensionAttribute(String extensionNamespace, String attribute, String value) {
+        setAttribute(extensionNamespace + ":" + attribute, value);
+    }
+
+    /**
+     * Returns the value of a given extension attribute by name.
+     * <p>
+     * 
+     * @param name
+     * @return
+     */
+    public String getExtensionAttribute(String extensionNamespace, String name) {
+        if (name == null || name.isEmpty() || attributeMap == null) {
+            return null;
+        }
+        return getElementNode().getAttribute(extensionNamespace + ":" + name);
+    }
+
+    /**
+     * Returns true when an attribute with a given extension namespace and name is
+     * specified on this BPMN element, false otherwise.
+     * 
+     * @param extensionNamespace
+     * @param attribute
+     * @return
+     */
+    public boolean hasExtensionAttribute(String extensionNamespace, String attribute) {
+        return hasAttribute(extensionNamespace + ":" + attribute);
     }
 
 }

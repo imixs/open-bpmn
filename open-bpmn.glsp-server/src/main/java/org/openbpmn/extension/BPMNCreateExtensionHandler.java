@@ -37,15 +37,15 @@ import com.google.inject.Inject;
 /**
  * OperationHandler to add a Extension to a BPMN Event node.
  * <p>
+ * During the call of method executeOperation, the corresponding extension is
+ * added to the source model element. Also the extension namespace is added to
+ * the model. Finally we reset the modelState.
+ * <p>
  * The extension IDs are loaded lazy in the method getHandledElementTypeIds.
  * This is because the extension are not yet registered when this
  * OperationHandler is created.
- * <p>
- * During the call of method executeOperation, the corresponding extension is
- * added to the source model element. Finally we reset the modelState.
  *
  * @author rsoika
- *
  */
 public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
 
@@ -118,11 +118,14 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                         for (BPMNExtension extension : extensions) {
 
                             if (extension.handlesElementTypeId(element.get().getType())) {
+                                // verify that the namespace is added to the model
+                                modelState.getBpmnModel().addNamespace(extension.getNamespace(),
+                                        extension.getNamespaceURI());
+                                // add the extension to the element
                                 extension.addExtension(bpmnElement);
                             }
                         }
                     }
-
                 }
             }
 

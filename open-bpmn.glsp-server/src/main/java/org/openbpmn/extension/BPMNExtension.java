@@ -54,7 +54,7 @@ public interface BPMNExtension {
     /**
      * Unique target namespace URI
      *
-     * @return
+     * @return String - namespace uri
      */
     String getNamespaceURI();
 
@@ -101,6 +101,13 @@ public interface BPMNExtension {
     default int getPriority() {
         return 0;
     }
+
+    /**
+     * Adds an extension to a given BPMN Element
+     *
+     * @param bpmnElement
+     */
+    void addExtension(BPMNBaseElement bpmnElement);
 
     /**
      * This Helper Method generates a JSON Object by adding the corresponding
@@ -162,12 +169,5 @@ public interface BPMNExtension {
      * @param bpmnElement - the BPMN element to be updated
      */
     void updateData(JsonObject json, BPMNBaseElement bpmnElement);
-
-    /**
-     * Adds an extension to a given BPMN Element
-     *
-     * @param bpmnElement
-     */
-    void addExtension(BPMNBaseElement bpmnElement);
 
 }

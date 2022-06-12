@@ -69,11 +69,24 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
     }
 
     /**
-     * This Extension is for BPMNActivities only
+     * This Extension is for BPMN Task Elements only
+     * <p>
+     * The method also verifies if the element has a imixs:processid attribute. This
+     * attribute is added in the 'addExtesnion' method call
      */
     @Override
     public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNActivity);
+
+        if (bpmnElement instanceof BPMNActivity) {
+            BPMNActivity task = (BPMNActivity) bpmnElement;
+            if (task.getType().equals(BPMNTypes.TASK)) {
+                // next check the extension attribute imixs:processid
+                if (task.hasAttribute(getNamespace() + ":processid")) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -81,7 +94,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      */
     @Override
     public void addExtension(final BPMNBaseElement bpmnElement) {
-        bpmnElement.setExtensionAttribute(getNamespace(), getNamespaceURI(), "processid", "100");
+        bpmnElement.setExtensionAttribute(getNamespace(), "processid", "100");
 
     }
 
