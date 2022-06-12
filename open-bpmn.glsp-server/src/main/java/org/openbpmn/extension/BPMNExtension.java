@@ -45,6 +45,64 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 public interface BPMNExtension {
 
     /**
+     * Unique identifier specifying the Extension namespace. The default namespace
+     * is 'bpmn2'. Implementations should overwrite this method.
+     *
+     */
+    String getNamespace();
+
+    /**
+     * Unique target namespace URI
+     *
+     * @return
+     */
+    String getNamespaceURI();
+
+    /**
+     * Returns the Extension label to be used in the Tool Palette
+     *
+     * @return String
+     */
+    String getLabel();
+
+    /**
+     * Returns true if the given ElementTypeID can be handled by this extension.
+     * This method is used to verify if a custom implementation of an extension can
+     * be applied to a BPMNModelElement.
+     *
+     * @param elementTypeId - the elementTypeId
+     * @return - true if the elementTypeId can be handled by this extension.
+     */
+    boolean handlesElementTypeId(String elementTypeId);
+
+    /**
+     * Validates whether the given {@link BPMNBaseElement} can be handled by this
+     * BPMN extension. The default implementation returns true. Implementations can
+     * accept only specific BPMN element types or elements containing specific BPMN
+     * 2.0 extensions.
+     *
+     * @param bpmnElement The BPMNBaseElement that should be handled.
+     * @return `true` if the given bpmnElement can be handled by this extension.
+     */
+    default boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+        return true;
+    }
+
+    /**
+     * Returns the priority of this action handler. The priority is used to derive
+     * the execution order if multiple extension handlers should execute the same
+     * {@link BPMNBaseElement}. The default priority is `0` and the priority is
+     * sorted descending. This means handlers with a priority &gt; 0 are executed
+     * before handlers with a default priority and handlers with a priority &lt; 0
+     * are executed afterwards.
+     *
+     * @return the priority as integer.
+     */
+    default int getPriority() {
+        return 0;
+    }
+
+    /**
      * This Helper Method generates a JSON Object by adding the corresponding
      * BPMNElement properties.
      * <p>
@@ -98,33 +156,6 @@ public interface BPMNExtension {
     void addSchema(SchemaBuilder schemaBuilder, BPMNBaseElement bpmnElement);
 
     /**
-     * Validates whether the given {@link BPMNBaseElement} can be handled by this
-     * BPMN extension. The default implementation returns true. Implementations can
-     * accept only specific BPMN element types or elements containing specific BPMN
-     * 2.0 extensions.
-     *
-     * @param bpmnElement The BPMNBaseElement that should be handled.
-     * @return `true` if the given bpmnElement can be handled by this extension.
-     */
-    default boolean handles(final BPMNBaseElement bpmnElement) {
-        return true;
-    }
-
-    /**
-     * Returns the priority of this action handler. The priority is used to derive
-     * the execution order if multiple extension handlers should execute the same
-     * {@link BPMNBaseElement}. The default priority is `0` and the priority is
-     * sorted descending. This means handlers with a priority &gt; 0 are executed
-     * before handlers with a default priority and handlers with a priority &lt; 0
-     * are executed afterwards.
-     *
-     * @return the priority as integer.
-     */
-    default int getPriority() {
-        return 0;
-    }
-
-    /**
      * Updates the properties of a BPMN Element
      *
      * @param json        - a JSON structure representing the data
@@ -133,15 +164,10 @@ public interface BPMNExtension {
     void updateData(JsonObject json, BPMNBaseElement bpmnElement);
 
     /**
-     * Unique identifier specifying the kind of Extension. The kind is used as the
-     * tag namespace
-     */
-    String getKind();
-
-    /**
-     * Returns the Extension label to be used in the Tool Palette
+     * Adds an extension to a given BPMN Element
      *
-     * @return String
+     * @param bpmnElement
      */
-    String getLabel();
+    void addExtension(BPMNBaseElement bpmnElement);
+
 }

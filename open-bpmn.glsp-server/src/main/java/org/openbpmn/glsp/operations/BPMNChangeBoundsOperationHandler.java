@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.bpmn.operations;
+package org.openbpmn.glsp.operations;
 
 import java.util.List;
 import java.util.Optional;

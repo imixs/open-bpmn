@@ -289,7 +289,7 @@ public class BPMNGModelFactory implements GModelFactory {
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
 
-                if (extension.handles(bpmnElement)) {
+                if (extension.handlesBPMNElement(bpmnElement)) {
                     extension.addFormsData(dataBuilder, bpmnElement);
                     extension.addCategories(uiSchemaBuilder, bpmnElement);
                     extension.addSchema(schemaBuilder, bpmnElement);

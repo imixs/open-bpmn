@@ -51,18 +51,6 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     }
 
     /**
-     * Return the absolute location where the element should be created.
-     * <p>
-     * We use a GirdSnapper to snap into a predefined layout
-     *
-     * @param operation
-     * @return the absolute location where the element should be created.
-     */
-//    public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
-//        return GridSnapper.snap(operation.getLocation());
-//    }
-
-    /**
      * <p>
      * Return the GModelElement that will contain the newly created node. It is
      * usually the target element ({@link CreateNodeOperation#getContainerId()}),

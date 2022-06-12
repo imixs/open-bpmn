@@ -31,8 +31,8 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.extension.AbstractBPMNElementExtension;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.utils.ModelTypes;
 
@@ -45,9 +45,12 @@ import com.google.inject.Inject;
  * different groups.
  * <p>
  * The class defines different palette groups
+ * <p>
+ * Note: some of the CreateOperationHandlers do not create new model elements
+ * but extend existing ones with additional behavior (e.g. Event Definitions or
+ * Extensions)
  *
  * @author rsoika
- *
  */
 public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
@@ -197,21 +200,24 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
     /**
      * This method creates a PaletteItem for each registered extension.
+     * <p>
+     * The BPMN default extensions are skpped.
      *
      */
     protected List<PaletteItem> createPaletteExtensions() {
         List<PaletteItem> result = new ArrayList<>();
-        List<String> extensionKinds = new ArrayList<>();
+        List<String> extensionNamespaces = new ArrayList<>();
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
-                // validate if the extension is no Default Extension kind.
-                if (!AbstractBPMNElementExtension.DEFAULT_EXTENSION_KIND.equals(extension.getKind())
-                        && !extensionKinds.contains(extension.getKind())) {
+                // validate if the extension is no Default Extension Namspace.
+                if (!BPMNNS.BPMN2.name().equals(extension.getNamespace())
+                        && !extensionNamespaces.contains(extension.getNamespace())) {
 
-                    result.add(new PaletteItem(extension.getKind(), extension.getLabel(),
-                            new TriggerNodeCreationAction("extension:" + extension.getKind())));
+                    String extensionID = "extension:" + extension.getNamespace();
+                    result.add(new PaletteItem(extensionID, extension.getLabel(),
+                            new TriggerNodeCreationAction(extensionID))); // BPMNTypes.BPMN_EXTENSION
                     // avoid duplicates
-                    extensionKinds.add(extension.getKind());
+                    extensionNamespaces.add(extension.getNamespace());
                 }
             }
         }

@@ -193,6 +193,18 @@ public class BPMNModel {
         return doc;
     }
 
+    /**
+     * Adds a new xml namespace if not yet defined
+     * 
+     * @param namespace
+     * @param uri
+     */
+    public void addNamespace(String namespace, String uri) {
+        if (!definitions.hasAttribute("xmlns:" + namespace)) {
+            definitions.setAttribute("xmlns:" + namespace, uri);
+        }
+    }
+
     public BPMNProcess getContext() {
 
         return context;
@@ -266,7 +278,7 @@ public class BPMNModel {
         logger.fine("..found " + processList.getLength() + " processes");
 
         for (int i = 0; i < processList.getLength(); i++) {
-            Node item = processList.item(i);
+            Element item = (Element) processList.item(i);
             context = new BPMNProcess(this, item);
             if (id != null && !id.equals(context.getId())) {
                 // not match of the requested processs ID
@@ -292,16 +304,17 @@ public class BPMNModel {
      * 
      * @param parent
      * @param nodeName
-     * @return - list of nodes. If no nodes were found, the method returns an empty list
+     * @return - list of nodes. If no nodes were found, the method returns an empty
+     *         list
      */
-    public static List<Node> findChildNodesByName(Node parent, String nodeName) {
-        List<Node> result = new ArrayList<Node>();
+    public static List<Element> findChildNodesByName(Element parent, String nodeName) {
+        List<Element> result = new ArrayList<Element>();
         if (parent != null && nodeName != null) {
             NodeList childs = parent.getChildNodes();
             for (int i = 0; i < childs.getLength(); i++) {
                 Node childNode = childs.item(i);
-                if (nodeName.equals(childNode.getNodeName())) {
-                    result.add(childNode);
+                if (childNode.getNodeType() == Node.ELEMENT_NODE && nodeName.equals(childNode.getNodeName())) {
+                    result.add((Element) childNode);
                 }
             }
         }
@@ -380,20 +393,21 @@ public class BPMNModel {
                         "</xsl:stylesheet>";
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-      
+
         Transformer transformer = transformerFactory.newTransformer();
 //        Transformer transformer = transformerFactory
 //                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
-       
+
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         // pretty print
-        // Note: The indent feature is not working correctly. It add unexpected new lines witch pollutes the output.
+        // Note: The indent feature is not working correctly. It add unexpected new
+        // lines witch pollutes the output.
         // for this reason we set indent to 'no'
         transformer.setOutputProperty(OutputKeys.INDENT, "no");
         transformer.transform(source, result);
-        
+
     }
 
     /**
@@ -522,6 +536,7 @@ public class BPMNModel {
      * This helper method returns a BPMNDI node for the given bpmnPlane. A BPMNDI
      * element is identified by the ID stored in the attribute bpmnElement
      * <p>
+     * 
      * <pre>
      *  {@code<bpmndi:BPMNShape id="BPMNShape_ihwxlQ" bpmnElement="event-1">}
      * </pre>

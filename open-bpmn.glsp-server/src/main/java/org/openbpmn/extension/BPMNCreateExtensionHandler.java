@@ -25,6 +25,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
@@ -35,6 +36,13 @@ import com.google.inject.Inject;
 
 /**
  * OperationHandler to add a Extension to a BPMN Event node.
+ * <p>
+ * The extension IDs are loaded lazy in the method getHandledElementTypeIds.
+ * This is because the extension are not yet registered when this
+ * OperationHandler is created.
+ * <p>
+ * During the call of method executeOperation, the corresponding extension is
+ * added to the source model element. Finally we reset the modelState.
  *
  * @author rsoika
  *
@@ -45,6 +53,8 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
 
     @Inject
     protected Set<BPMNExtension> extensions;
+
+    private List<String> extensionIds = null;
 
     @Inject
     protected BPMNGModelState modelState;
@@ -60,19 +70,26 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
      */
     public BPMNCreateExtensionHandler() {
         super();
-        // accept all possible Extensions
-        List<String> extensionKinds = new ArrayList<>();
-        if (extensions != null) {
+
+    }
+
+    /**
+     * Lazy loading of registered extension ids.
+     */
+    @Override
+    public List<String> getHandledElementTypeIds() {
+
+        if (extensionIds == null && extensions != null) {
+            extensionIds = new ArrayList<>();
             for (BPMNExtension extension : extensions) {
-                // validate if the extension is no Default Extension kind.
-                if (!AbstractBPMNElementExtension.DEFAULT_EXTENSION_KIND.equals(extension.getKind())
-                        && !extensionKinds.contains(extension.getKind())) {
-                    extensionKinds.add(extension.getKind());
+                String extensionID = "extension:" + extension.getNamespace();
+                // validate if the extension is no Default Extension Namspace.
+                if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) && !extensionIds.contains(extensionID)) {
+                    extensionIds.add(extensionID);
                 }
             }
         }
-
-        this.setHandledElementTypeIds(extensionKinds);
+        return extensionIds;
     }
 
     /**
@@ -82,11 +99,10 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
         String elementID = null;
-        String extensionID = operation.getElementTypeId();
         // now we add this extension directly into the BPMN element of the source
         // model
         Optional<GModelElement> container = this.getContainer(operation);
-
+        logger.info(" Extension Create Operation - elementTypeID=" + operation.getElementTypeId());
         if (container.isPresent()) {
             Optional<GModelElement> element = modelState.getIndex().get(container.get().getId());
             if (element.isPresent()) {
@@ -96,12 +112,18 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                 BPMNProcess process = modelState.getBpmnModel().getContext();
                 BPMNBaseElement bpmnElement = process.findBaseElementById(elementID);
                 if (bpmnElement != null) {
-                    // add the new definition
-                    logger.warning("sett extension nor yest implemented - " + elementID + " !!!");
-                } else {
-                    logger.warning("Element " + elementID + " does not exist in current source model!");
-                }
+                    // add the new extension
 
+                    if (extensions != null) {
+                        for (BPMNExtension extension : extensions) {
+
+                            if (extension.handlesElementTypeId(element.get().getType())) {
+                                extension.addExtension(bpmnElement);
+                            }
+                        }
+                    }
+
+                }
             }
 
         }

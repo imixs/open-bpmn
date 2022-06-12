@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
@@ -41,6 +42,24 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
     public DefaultBPMNTaskExtension() {
         super();
+    }
+
+    @Override
+    public boolean handlesElementTypeId(final String elementTypeId) {
+        return BPMNModel.BPMN_GATEWAYS.contains(elementTypeId);
+    }
+
+    /**
+     * This Extension is for BPMNActivities only
+     */
+    @Override
+    public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+        return (bpmnElement instanceof BPMNActivity);
+    }
+
+    @Override
+    public int getPriority() {
+        return 999999;
     }
 
     /**
@@ -93,14 +112,6 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
     }
 
-    /**
-     * This Extension is for BPMNActivities only
-     */
-    @Override
-    public boolean handles(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNActivity);
-    }
-
     @Override
     public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
@@ -120,13 +131,4 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
     }
 
-    @Override
-    public int getPriority() {
-        return 999999;
-    }
-
-    @Override
-    public String getKind() {
-        return DEFAULT_EXTENSION_KIND;
-    }
 }

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.bpmn.operations;
+package org.openbpmn.glsp.operations;
 
 import java.io.StringReader;
 import java.util.Optional;
@@ -112,7 +112,8 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
-                if (extension.handles(bpmnElement)) {
+                if (extension.handlesBPMNElement(bpmnElement)) {
+                    logger.info("...We need to update the BPMN Element with the extension " + extension.getNamespace());
                     extension.updateData(json, bpmnElement);
                 }
             }

@@ -22,7 +22,7 @@ import org.w3c.dom.NodeList;
  */
 public abstract class BPMNBaseElement {
     private NamedNodeMap attributeMap = null;
-    private Node elementNode = null;
+    private Element elementNode = null;
     protected BPMNModel model = null;
     private Element documentationNode = null;
 
@@ -37,7 +37,7 @@ public abstract class BPMNBaseElement {
      * @param node
      * @param model
      */
-    public BPMNBaseElement(BPMNModel model, Node node) {
+    public BPMNBaseElement(BPMNModel model, Element node) {
         super();
         this.model = model;
         this.elementNode = node;
@@ -97,6 +97,23 @@ public abstract class BPMNBaseElement {
     }
 
     /**
+     * This method sets a specific extension attribute. The extensionNamespace
+     * defines the attribute prafix within the BPMNElement:
+     * <p>
+     * {@code<bpmn2:task id="Task_1" imixs:processid="6100" name="Task 1">}
+     * 
+     * @param extensionNamespace
+     * @param attribute
+     * @param value
+     */
+    public void setExtensionAttribute(String extensionNamespace, String extensionURI,String attribute, String value) {
+        setAttribute(extensionNamespace + ":" + attribute, value);
+        
+        // verify the namespace prafix
+        this.model. addNamespace(extensionNamespace,extensionURI);
+    }
+
+    /**
      * Returns the Documentation
      * 
      * @return String - can be empty
@@ -104,11 +121,11 @@ public abstract class BPMNBaseElement {
     public String getDocumentation() {
         if (documentationNode == null) {
             // lazy loading of documentation element
-            List<Node> elementList = BPMNModel.findChildNodesByName(elementNode,
+            List<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
                     BPMNNS.BPMN2.prefix + ":documentation");
             if (elementList.size() > 0) {
                 // get the first one and update the value only
-                documentationNode = (Element) elementList.get(0);
+                documentationNode = elementList.get(0);
             }
         }
         if (documentationNode != null && documentationNode.getFirstChild() != null) {
@@ -120,12 +137,13 @@ public abstract class BPMNBaseElement {
 
     /**
      * Set the new documentation content for this element.
+     * 
      * @param content
      */
     public void setDocumentation(String content) {
         if (documentationNode == null) {
             // lazy loading of documentation element
-            List<Node> elementList = BPMNModel.findChildNodesByName(elementNode,
+            List<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
                     BPMNNS.BPMN2.prefix + ":documentation");
             if (elementList.size() == 0) {
                 // create new node
@@ -134,7 +152,7 @@ public abstract class BPMNBaseElement {
                 elementNode.appendChild(documentationNode);
             } else {
                 // get the first one and update the value only
-                documentationNode = (Element) elementList.get(0);
+                documentationNode = elementList.get(0);
             }
         }
         // remove old child nodes
@@ -159,13 +177,14 @@ public abstract class BPMNBaseElement {
         if (name == null || name.isEmpty() || attributeMap == null) {
             return null;
         }
-        for (int i = 0; i < attributeMap.getLength(); i++) {
-            Node node = attributeMap.item(i);
-            if (name.equals(node.getNodeName())) {
-                return node.getNodeValue();
-            }
-        }
-        return null;
+//        for (int i = 0; i < attributeMap.getLength(); i++) {
+//            Node node = attributeMap.item(i);
+//            if (name.equals(node.getNodeName())) {
+//                return node.getNodeValue();
+//            }
+//        }
+//        return null;
+        return getElementNode().getAttribute(name);
     }
 
     /**
@@ -180,13 +199,17 @@ public abstract class BPMNBaseElement {
         if (name == null || name.isEmpty() || attributeMap == null) {
             return;
         }
-        for (int i = 0; i < attributeMap.getLength(); i++) {
-            Node node = attributeMap.item(i);
-            if (name.equals(node.getNodeName())) {
-                // update the attribute value
-                node.setNodeValue(value);
-            }
-        }
+//        for (int i = 0; i < attributeMap.getLength(); i++) {
+//            Node node = attributeMap.item(i);
+//            if (name.equals(node.getNodeName())) {
+//                // update the attribute value
+//                node.setNodeValue(value);
+//                return;
+//            }
+//        }
+        // if we did not found the attribute, we add a new one...
+        this.getElementNode().setAttribute(name, value);
+
     }
 
     /**
@@ -194,7 +217,7 @@ public abstract class BPMNBaseElement {
      * 
      * @return
      */
-    public Node getElementNode() {
+    public Element getElementNode() {
         return elementNode;
     }
 

@@ -48,5 +48,6 @@ public class BPMNTypes {
     // others
     public static final String SEQUENCE_FLOW = "sequenceFlow";
     public static final String BPMN_LABEL = "BPMNLabel";
+    public static final String BPMN_EXTENSION = "BPMNExtension";
 }
 

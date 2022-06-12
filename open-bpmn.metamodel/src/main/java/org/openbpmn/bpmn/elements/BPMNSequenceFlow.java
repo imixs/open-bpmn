@@ -19,7 +19,7 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
     protected Element bpmnEdge = null;
     protected List<BPMNPoint> wayPoints = null;
 
-    public BPMNSequenceFlow(BPMNModel model, Node node) {
+    public BPMNSequenceFlow(BPMNModel model, Element node) {
         super(model, node);
         wayPoints = new ArrayList<BPMNPoint>();
 
@@ -42,8 +42,8 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
                 createBPMNEdge();
             } else {
                 // parse waypoints (di:waypoint)
-                List<Node> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,BPMNNS.DI.prefix + ":waypoint");
-                for (Node wayPoint : wayPoints) {
+                List<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,BPMNNS.DI.prefix + ":waypoint");
+                for (Element wayPoint : wayPoints) {
                     NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                     BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
                             wayPointattributeMap.getNamedItem("y").getNodeValue());

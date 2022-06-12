@@ -35,7 +35,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      * @param model
      * @throws BPMNModelException
      */
-    public BPMNFlowElement(BPMNModel model, Node node, String _type) throws BPMNModelException {
+    public BPMNFlowElement(BPMNModel model, Element node, String _type) throws BPMNModelException {
         super(model, node);
         this.type = _type;
         // find the BPMNShape element. If not defined create a new one

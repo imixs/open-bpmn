@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
@@ -35,12 +36,53 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class ImixsBPMNTaskExtension extends AbstractBPMNElementExtension {
+public class ImixsBPMNTaskExtension implements BPMNExtension {
 
     private static Logger logger = Logger.getLogger(ImixsBPMNTaskExtension.class.getName());
 
     public ImixsBPMNTaskExtension() {
         super();
+    }
+
+    @Override
+    public String getNamespace() {
+        return "imixs";
+    }
+
+    @Override
+    public String getNamespaceURI() {
+        return "http://www.imixs.org/bpmn2";
+    }
+
+    @Override
+    public String getLabel() {
+        return "Imixs-Workflow";
+    }
+
+    /**
+     * The ImixsBPMNTaskExtension can only be applied to a BPMN Task element
+     */
+    @Override
+    public boolean handlesElementTypeId(final String elementTypeId) {
+        return (BPMNTypes.START_EVENT.equals(elementTypeId) //
+                || BPMNTypes.TASK.equals(elementTypeId));
+    }
+
+    /**
+     * This Extension is for BPMNActivities only
+     */
+    @Override
+    public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+        return (bpmnElement instanceof BPMNActivity);
+    }
+
+    /**
+     * This method adds a unique identifier to the corresponding BPMNElement
+     */
+    @Override
+    public void addExtension(final BPMNBaseElement bpmnElement) {
+        bpmnElement.setExtensionAttribute(getNamespace(), getNamespaceURI(), "processid", "100");
+
     }
 
     /**
@@ -89,19 +131,8 @@ public class ImixsBPMNTaskExtension extends AbstractBPMNElementExtension {
 
     }
 
-    /**
-     * This Extension is for BPMNActivities only
-     */
-    @Override
-    public boolean handles(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNActivity);
-    }
-
     @Override
     public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
-
-        // default update of name and documentation
-        super.updateData(json, bpmnElement);
 
         // check custom features
         Set<String> features = json.keySet();
@@ -114,16 +145,6 @@ public class ImixsBPMNTaskExtension extends AbstractBPMNElementExtension {
             // TODO implement Event features
         }
 
-    }
-
-    @Override
-    public String getKind() {
-        return "imixs";
-    }
-
-    @Override
-    public String getLabel() {
-        return "Imixs-Workflow";
     }
 
 }

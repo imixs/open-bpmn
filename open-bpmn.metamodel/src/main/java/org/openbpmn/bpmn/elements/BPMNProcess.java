@@ -36,7 +36,7 @@ public class BPMNProcess extends BPMNBaseElement {
         super();
     }
 
-    public BPMNProcess(BPMNModel model, Node item) {
+    public BPMNProcess(BPMNModel model, Element item) {
         super(model, item);
     }
 

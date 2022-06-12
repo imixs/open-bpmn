@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
@@ -41,6 +42,19 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
     public DefaultBPMNGatewayExtension() {
         super();
+    }
+
+    @Override
+    public boolean handlesElementTypeId(final String elementTypeId) {
+        return BPMNModel.BPMN_GATEWAYS.contains(elementTypeId);
+    }
+
+    /**
+     * This Extension is for BPMNGateways only
+     */
+    @Override
+    public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+        return (bpmnElement instanceof BPMNGateway);
     }
 
     /**
@@ -100,14 +114,6 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
     }
 
-    /**
-     * This Extension is for BPMNActivities only
-     */
-    @Override
-    public boolean handles(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNGateway);
-    }
-
     @Override
     public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
@@ -136,8 +142,4 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
         return 999999;
     }
 
-    @Override
-    public String getKind() {
-        return DEFAULT_EXTENSION_KIND;
-    }
 }

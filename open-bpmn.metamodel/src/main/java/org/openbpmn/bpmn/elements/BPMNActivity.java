@@ -2,6 +2,7 @@ package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -24,7 +25,7 @@ public class BPMNActivity extends BPMNFlowElement {
     public final static double DEFAULT_HEIGHT = 50.0;
 
     
-    protected BPMNActivity(BPMNModel model, Node node, String type) throws BPMNModelException {
+    protected BPMNActivity(BPMNModel model, Element node, String type) throws BPMNModelException {
         super(model, node, type);
     }
 

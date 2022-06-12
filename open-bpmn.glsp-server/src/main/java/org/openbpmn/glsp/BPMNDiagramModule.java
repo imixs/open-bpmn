@@ -30,20 +30,22 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.openbpmn.bpmn.operations.BPMNApplyPropertiesUpdateOperationHandler;
-import org.openbpmn.bpmn.operations.BPMNChangeBoundsOperationHandler;
-import org.openbpmn.bpmn.operations.BPMNChangeRoutingPointsOperationHandler;
-import org.openbpmn.bpmn.operations.BPMNDeleteNodeHandler;
+import org.openbpmn.extension.BPMNCreateExtensionHandler;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
+import org.openbpmn.extension.ImixsBPMNTaskExtension;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
+import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
+import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
+import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
+import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNModelValidator;
@@ -128,6 +130,9 @@ public class BPMNDiagramModule extends DiagramModule {
         // GLSP Operation handlers for ModelUpdates
         binding.add(BPMNDeleteNodeHandler.class);
 
+        // Extension handler
+        binding.add(BPMNCreateExtensionHandler.class);
+
     }
 
     /**
@@ -139,6 +144,7 @@ public class BPMNDiagramModule extends DiagramModule {
         // create the BPMNExtension binder
         bpmnExtensionBinder = Multibinder.newSetBinder(binder(), BPMNExtension.class);
         configureBPMNExtensions(bpmnExtensionBinder);
+
     }
 
     @Override
@@ -191,8 +197,8 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNTaskExtension.class);
         binding.addBinding().to(DefaultBPMNGatewayExtension.class);
 
-        // Imixs Extensions
-        // binding.addBinding().to(ImixsBPMNTaskExtension.class);
+        // Imixs Extensions (just for testing)
+        binding.addBinding().to(ImixsBPMNTaskExtension.class);
 
     }
 

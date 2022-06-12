@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 
 /**
@@ -30,10 +31,8 @@ import org.openbpmn.bpmn.elements.BPMNBaseElement;
  * @author rsoika
  *
  */
-public abstract class AbstractBPMNElementExtension implements BPMNExtension {
+abstract class AbstractBPMNElementExtension implements BPMNExtension {
     private static Logger logger = Logger.getLogger(AbstractBPMNElementExtension.class.getName());
-
-    public static String DEFAULT_EXTENSION_KIND = "DEFAULT_EXTENSION";
 
     /**
      * Default Implementation updates name and documentation only. Sub classes
@@ -63,13 +62,34 @@ public abstract class AbstractBPMNElementExtension implements BPMNExtension {
     }
 
     /**
-     * Returns the Extension label to be used in the Tool Palete
+     * Returns the Extension label to be used in the Tool Palette. The default name
+     * is the namespace. Implementations should overwrite this method.
      *
-     * @return kind String per default
+     * @return namespace String per default
      */
     @Override
     public String getLabel() {
-        return getKind();
+        return getNamespace();
+    }
+
+    @Override
+    public void addExtension(final BPMNBaseElement bpmnElement) {
+        // no op for default extensions
+    }
+
+    /**
+     * Unique identifier specifying the Extension namespace. The default namespace
+     * is 'bpmn2'. Implementations should overwrite this method.
+     *
+     */
+    @Override
+    public String getNamespace() {
+        return BPMNNS.BPMN2.name();
+    }
+
+    @Override
+    public String getNamespaceURI() {
+        return "http://www.omg.org/spec/BPMN/20100524/MODEL";
     }
 
 }
