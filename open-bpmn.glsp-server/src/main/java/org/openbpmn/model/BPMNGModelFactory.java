@@ -42,6 +42,7 @@ import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
@@ -166,7 +167,7 @@ public class BPMNGModelFactory implements GModelFactory {
                         .position(point) //
                         .build();
 
-                buildJSONFormsProperties(taskNode, activity);
+                applyBPMNExtensions(taskNode, activity);
 
                 entityNodes.add(taskNode);
             }
@@ -201,7 +202,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     eventNode.setSymbol(symbol);
                 }
 
-                buildJSONFormsProperties(eventNode, event);
+                applyBPMNExtensions(eventNode, event);
 
                 entityNodes.add(eventNode);
 
@@ -232,7 +233,7 @@ public class BPMNGModelFactory implements GModelFactory {
                         .build();
                 entityNodes.add(gatewayNode);
 
-                buildJSONFormsProperties(gatewayNode, gateway);
+                applyBPMNExtensions(gatewayNode, gateway);
 
                 // now add a GLabel
                 GLabel label = null;
@@ -279,44 +280,83 @@ public class BPMNGModelFactory implements GModelFactory {
         return newGModel;
     }
 
-    private void buildJSONFormsProperties(final GNode elementNode, final BPMNFlowElement bpmnElement) {
+    /**
+     * This method apply all possible BPMNExtension to the GNode. This is to build
+     * the JSONForms Sections and add additional classes for non-default Extensions.
+     *
+     * @param elementNode
+     * @param bpmnElement
+     */
+    void applyBPMNExtensions(final GNode elementNode, final BPMNFlowElement bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
         SchemaBuilder schemaBuilder = new SchemaBuilder();
+        List<String> extensionNamespaces = new ArrayList<>();
 
+        /*
+         * Now we iterate over all extension to build the JSONForms sections. The
+         * extensions can be default extensions or external extension. For external
+         * extensions we also add a CSS class
+         */
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
-
                 if (extension.handlesBPMNElement(bpmnElement)) {
+                    // add JSONForms Schemata
                     extension.addFormsData(dataBuilder, bpmnElement);
                     extension.addCategories(uiSchemaBuilder, bpmnElement);
                     extension.addSchema(schemaBuilder, bpmnElement);
+
+                    // if the extension is not a Default Extension then we add the extension css
+                    // class
+                    if (!BPMNNS.BPMN2.name().equals(extension.getNamespace())
+                            && !extensionNamespaces.contains(extension.getNamespace())) {
+                        elementNode.getCssClasses().add("bpmnextension-" + extension.getNamespace());
+                        // avoid duplicates css classes
+                        extensionNamespaces.add(extension.getNamespace());
+                    }
                 }
             }
         }
 
-        // Build Data
+        // Build JSONForms Data
         try (Writer writer = new StringWriter()) {
             elementNode.getArgs().put("JSONFormsData", dataBuilder.build());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Build UISchema
+        // Build JSONForms UISchema
         try (Writer writer = new StringWriter()) {
             elementNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Build Schema
+        // Build JSONForms Schema
         try (Writer writer = new StringWriter()) {
             elementNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Finds an GModelElement by its ID in a given List of GModelElements. The
+     * method returns null if not element with the given ID exists.
+     *
+     * @param entityNodes - List of GModelElements
+     * @param id          - id to search for
+     * @return GModelElement - or null if no elment was found.
+     */
+    GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
+        for (GModelElement element : entityNodes) {
+            if (element.getId().equals(id)) {
+                return element;
+            }
+        }
+        return null;
     }
 
     /**
@@ -337,22 +377,5 @@ public class BPMNGModelFactory implements GModelFactory {
         }
         // we did not found a GPort
         return element;
-    }
-
-    /**
-     * Finds an GModelElement by its ID in a given List of GModelElements. The
-     * method returns null if not element with the given ID exists.
-     *
-     * @param entityNodes - List of GModelElements
-     * @param id          - id to search for
-     * @return GModelElement - or null if no elment was found.
-     */
-    GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
-        for (GModelElement element : entityNodes) {
-            if (element.getId().equals(id)) {
-                return element;
-            }
-        }
-        return null;
     }
 }

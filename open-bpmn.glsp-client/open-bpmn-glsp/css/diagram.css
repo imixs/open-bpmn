@@ -78,6 +78,10 @@
     fill: #425C81;
 }
 
+.task.bpmnextension-imixs > .sprotty-node {
+	fill: #7087a9;
+}
+
 /*** Events ***/
 
 .xxxxxxxxsprotty-node.event > text.heading {
