@@ -68,35 +68,18 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnTask) {
+    public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
-                .addData("name", bpmnTask.getName()) //
+                .addData("name", bpmnElement.getName()) //
                 .addData("execution", "exec") //
                 .addData("documentation", "some test docu");
-    }
-
-    /**
-     * Adds the default JSONForms schema for a BPMNEvent.
-     *
-     */
-    @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnTask) {
 
         schemaBuilder. //
                 addProperty("name", "string", "Please enter your name :-)"). //
                 addProperty("execution", "string", null). //
                 addProperty("documentation", "string", null);
-
-    }
-
-    /**
-     * This Helper Method generates the default UISchema for a BPMNEvent
-     *
-     * @see UISchemaBuilder
-     */
-    @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnTask) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
@@ -113,10 +96,10 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
     }
 
     @Override
-    public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
         // default update of name and documentation
-        super.updateData(json, bpmnElement);
+        super.updatePropertiesData(json, bpmnElement);
 
         // check custom features
         Set<String> features = json.keySet();

@@ -114,7 +114,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     logger.info("...We need to update the BPMN Element with the extension " + extension.getNamespace());
-                    extension.updateData(json, bpmnElement);
+                    extension.updatePropertiesData(json, bpmnElement);
                 }
             }
         }

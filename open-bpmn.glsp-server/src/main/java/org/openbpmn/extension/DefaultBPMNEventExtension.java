@@ -16,8 +16,10 @@
 package org.openbpmn.extension;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.json.JsonObject;
@@ -25,10 +27,12 @@ import javax.json.JsonObject;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.w3c.dom.Element;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -62,60 +66,78 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     }
 
     /**
-     * This Helper Method generates a JSON Object with the BPMNElement properties.
+     * This Helper Method generates a JSONForms Object with the BPMNElement
+     * properties.
      * <p>
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnEvent) {
+    public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder. //
-                addData("name", bpmnEvent.getName()). //
+                addData("name", bpmnElement.getName()). //
                 addData("category", "some cati"). //
-                addData("documentation", bpmnEvent.getDocumentation());
-    }
-
-    /**
-     * Adds the default JSONForms schema for a BPMNEvent.
-     *
-     */
-    @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnEvent) {
+                addData("documentation", bpmnElement.getDocumentation());
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
                 addProperty("documentation", "string", null);
 
+        if (bpmnElement instanceof BPMNEvent) {
+
+            BPMNEvent bpmnEvent = (BPMNEvent) bpmnElement;
+
+            Map<String, String> multilineOption = new HashMap<>();
+            multilineOption.put("multi", "true");
+
+            uiSchemaBuilder. //
+                    addCategory("General"). //
+                    addLayout(Layout.VERTICAL). //
+                    addElements("name"). //
+                    addElement("documentation", "Documentation", multilineOption);
+
+            // check Event Definitions
+            try {
+                List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
+                if (eventDefinitions.size() > 0) {
+                    uiSchemaBuilder. //
+                            addCategory("Event"). //
+                            addLayout(Layout.VERTICAL);
+
+                    for (Element definition : eventDefinitions) {
+
+                        // conditionalEventDefinition
+                        if ("conditionalEventDefinition".equals(definition.getLocalName())) {
+                            uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
+                            schemaBuilder.addProperty("formalExpression", "string", null);
+                        }
+
+                        // messageEventDefinition
+                        if ("messageEventDefinition".equals(definition.getLocalName())) {
+                            uiSchemaBuilder.addElement("message", "Message", null);
+                            schemaBuilder.addProperty("message", "string", null);
+                        }
+                    }
+                }
+
+            } catch (BPMNModelException e) {
+                logger.warning("Failed to compute EventDefinitions: " + e.getMessage());
+                if (logger.isLoggable(Level.FINE)) {
+                    e.printStackTrace();
+                }
+            }
+
+        } else {
+            logger.warning("BPMNEvent expected! - '" + bpmnElement.getId() + "' ");
+        }
     }
 
-    /**
-     * This Helper Method generates the default UISchema for a BPMNEvent
-     *
-     * @see UISchemaBuilder
-     */
     @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnEvent) {
-
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
-        uiSchemaBuilder. //
-                addCategory("General"). //
-                addLayout(Layout.HORIZONTAL). //
-                addElements("name"). //
-                addElement("documentation", "Documentation", multilineOption). //
-                addCategory("Event"). //
-                addLayout(Layout.VERTICAL). //
-
-                addCategory("Workflow"). //
-                addLayout(Layout.HORIZONTAL);
-
-    }
-
-    @Override
-    public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
         // default update of name and documentation
-        super.updateData(json, bpmnElement);
+        super.updatePropertiesData(json, bpmnElement);
 
         // check custom features
         Set<String> features = json.keySet();

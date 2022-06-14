@@ -57,26 +57,24 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
         return (bpmnElement instanceof BPMNGateway);
     }
 
+    @Override
+    public int getPriority() {
+        return 999999;
+    }
+
     /**
      * This Helper Method generates a JSON Object with the BPMNElement properties.
      * <p>
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnGateway) {
+    public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder. //
-                addData("name", bpmnGateway.getName()). //
-                addData("documentation", bpmnGateway.getDocumentation()). //
-                addData("gatewaydirection", bpmnGateway.getAttribute("gatewayDirection"));
-    }
-
-    /**
-     * Adds the default JSONForms schema for a BPMNEvent.
-     *
-     */
-    @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnGateway) {
+                addData("name", bpmnElement.getName()). //
+                addData("documentation", bpmnElement.getDocumentation()). //
+                addData("gatewaydirection", bpmnElement.getAttribute("gatewayDirection"));
 
         String[] gatewayDirections = { "Converging", "Diverging", "Mixed", "Unspecified" };
 
@@ -84,16 +82,6 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
                 addProperty("name", "string", null). //
                 addProperty("documentation", "string", "Element description"). //
                 addProperty("gatewaydirection", "string", null, gatewayDirections);
-
-    }
-
-    /**
-     * This Helper Method generates the default UISchema for a BPMNEvent
-     *
-     * @see UISchemaBuilder
-     */
-    @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnGateway) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
@@ -115,10 +103,10 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
     }
 
     @Override
-    public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
         // default update of name and documentation
-        super.updateData(json, bpmnElement);
+        super.updatePropertiesData(json, bpmnElement);
 
         // check custom features
         Set<String> features = json.keySet();
@@ -135,11 +123,6 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
             // TODO implement Event features
         }
 
-    }
-
-    @Override
-    public int getPriority() {
-        return 999999;
     }
 
 }

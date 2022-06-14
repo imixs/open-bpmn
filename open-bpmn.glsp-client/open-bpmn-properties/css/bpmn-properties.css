@@ -76,8 +76,15 @@
 }
 
 
+/* Scrollbar behavior in property details block */
 .bpmn-properties-body {
-    padding: 0px;
+	height: 100%;
 }
-
+.bpmn-properties-body .categorization {
+	height: 100%;
+}
+.bpmn-properties-body .categorization-detail {
+    overflow: auto;
+    margin-bottom: 28px;
+}
 

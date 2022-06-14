@@ -39,7 +39,7 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
      * should overwrite this method.
      */
     @Override
-    public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
         Set<String> features = json.keySet();
         String value = null;

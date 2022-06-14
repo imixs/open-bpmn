@@ -30,7 +30,7 @@
 
 .vertical-layout {
 	display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     padding: var(--jsonforms-padding);
 }

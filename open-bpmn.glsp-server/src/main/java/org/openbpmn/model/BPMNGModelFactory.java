@@ -67,6 +67,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
@@ -187,7 +188,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
                 // compute the symbol for the BPMNEvent
                 String symbol = null;
-                List<Node> eventDefinitionList = event.getEventDefinitions();
+                List<Element> eventDefinitionList = event.getEventDefinitions();
                 if (eventDefinitionList.size() > 0) {
                     for (Node eventDefinition : eventDefinitionList) {
                         if (symbol == null) {
@@ -304,9 +305,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     // add JSONForms Schemata
-                    extension.addFormsData(dataBuilder, bpmnElement);
-                    extension.addCategories(uiSchemaBuilder, bpmnElement);
-                    extension.addSchema(schemaBuilder, bpmnElement);
+                    extension.buildPropertiesForm(bpmnElement, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
                     // if the extension is not a Default Extension then we add the extension css
                     // class

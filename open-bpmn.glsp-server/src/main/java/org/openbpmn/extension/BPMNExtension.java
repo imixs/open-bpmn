@@ -110,64 +110,34 @@ public interface BPMNExtension {
     void addExtension(BPMNBaseElement bpmnElement);
 
     /**
-     * This Helper Method generates a JSON Object by adding the corresponding
-     * BPMNElement properties.
+     * This Helper Method is called to generate a JSON Forms Object by adding the
+     * corresponding BPMNElement properties.
      * <p>
      * You can add a new data field by calling
      * <p>
-     * {@code builder.add("myField","someData")}
-     * <p>
-     * This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the
-     * JsonForms
-     *
-     */
-    void addFormsData(DataBuilder dataBuilder, BPMNBaseElement bpmnElement);
-
-    /**
-     * This Helper Method adds categories to a JSONForms UISchema
-     * <p>
-     * You can add a new data field by calling
-     *
-     * <pre>
-     * {@code
-        uiSchemaBuilder. //
+     * {@code builder.add("myField","someData")
+     *         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name", "category"). //
-    }
-     * </pre>
+
+         schemaBuilder.addProperty("name", "string", "Please enter your name");
+     *
+     * }
      * <p>
      * This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the
      * JsonForms
      *
      */
-    void addCategories(UISchemaBuilder uiSchemaBuilder, BPMNBaseElement bpmnElement);
+    void buildPropertiesForm(BPMNBaseElement bpmnElement, DataBuilder dataBuilder, SchemaBuilder schemaBuilder,
+            UISchemaBuilder uiSchemaBuilder);
 
     /**
-     * This Helper Method adds new schema information to a JSONForms Schema
-     * <p>
-     * You can add a new data field by calling
-     *
-     * <pre>
-     * {@code
-         schemaBuilder.addProperty("name", "string", "Please enter your name");
-     *
-       }
-     * </pre>
-     *
-     *
-     * <p>
-     * This SchemaBuilder is used on the BPMNGmodelFactory to generate the JsonForms
-     *
-     */
-    void addSchema(SchemaBuilder schemaBuilder, BPMNBaseElement bpmnElement);
-
-    /**
-     * Updates the properties of a BPMN Element
+     * Updates the properties data of a BPMN Element
      *
      * @param json        - a JSON structure representing the data
      * @param bpmnElement - the BPMN element to be updated
      */
-    void updateData(JsonObject json, BPMNBaseElement bpmnElement);
+    void updatePropertiesData(JsonObject json, BPMNBaseElement bpmnElement);
 
 }

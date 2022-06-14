@@ -56,12 +56,13 @@ public class BPMNEvent extends BPMNFlowElement {
      * <p>
      * If the element has no EventDefinitions the method returns an empty list.
      * 
-     * @return - list of EventDefinitions - can be empty if no EventDefinitions exist
+     * @return - list of EventDefinitions - can be empty if no EventDefinitions
+     *         exist
      * @throws BPMNModelException
      */
-    public List<Node> getEventDefinitions() throws BPMNModelException {
+    public List<Element> getEventDefinitions() throws BPMNModelException {
 
-        List<Node> result = new ArrayList<Node>();
+        List<Element> result = new ArrayList<Element>();
 
         if (this.getElementNode() == null) {
             return result;
@@ -71,12 +72,14 @@ public class BPMNEvent extends BPMNFlowElement {
         NodeList childList = this.getElementNode().getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
-            // check the attribute bpmnElement
-            if (!child.getNodeName().isEmpty() && child.hasAttributes()) {
-                String name = child.getNodeName();
-                // check if this is a EventDefinition
-                if (name.endsWith("EventDefinition")) {
-                    result.add(child);
+            if (child.getNodeType() == Node.ELEMENT_NODE) {
+                // check the attribute bpmnElement
+                if (!child.getNodeName().isEmpty() && child.hasAttributes()) {
+                    String name = child.getNodeName();
+                    // check if this is a EventDefinition
+                    if (name.endsWith("EventDefinition")) {
+                        result.add((Element) child);
+                    }
                 }
             }
         }

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
+package org.imixs.openbpmn;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +26,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -119,35 +120,18 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void addFormsData(final DataBuilder dataBuilder, final BPMNBaseElement bpmnTask) {
+    public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
                 .addData("form", "blub") //
                 .addData("abstract", "exec") //
                 .addData("summary", "some test docu");
-    }
-
-    /**
-     * Adds the default JSONForms schema for a BPMNEvent.
-     *
-     */
-    @Override
-    public void addSchema(final SchemaBuilder schemaBuilder, final BPMNBaseElement bpmnTask) {
 
         schemaBuilder. //
                 addProperty("form", "string", null). //
                 addProperty("abstract", "string", null). //
                 addProperty("summary", "string", null);
-
-    }
-
-    /**
-     * This Helper Method generates the default UISchema for a BPMNEvent
-     *
-     * @see UISchemaBuilder
-     */
-    @Override
-    public void addCategories(final UISchemaBuilder uiSchemaBuilder, final BPMNBaseElement bpmnTask) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
@@ -160,7 +144,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
     }
 
     @Override
-    public void updateData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
 
         // check custom features
         Set<String> features = json.keySet();
