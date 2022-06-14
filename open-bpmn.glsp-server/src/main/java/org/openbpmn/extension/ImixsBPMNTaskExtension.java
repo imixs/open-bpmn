@@ -25,6 +25,7 @@ import javax.json.JsonObject;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -64,7 +65,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return (BPMNTypes.START_EVENT.equals(elementTypeId) //
+        return (BPMNTypes.CATCH_EVENT.equals(elementTypeId) //
                 || BPMNTypes.TASK.equals(elementTypeId));
     }
 
@@ -86,6 +87,15 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
                 }
             }
         }
+        if (bpmnElement instanceof BPMNEvent) {
+            BPMNEvent event = (BPMNEvent) bpmnElement;
+            if (event.getType().equals(BPMNTypes.CATCH_EVENT)) {
+                // next check the extension attribute imixs:processid
+                if (event.hasAttribute(getNamespace() + ":activityid")) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -94,8 +104,13 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      */
     @Override
     public void addExtension(final BPMNBaseElement bpmnElement) {
-        bpmnElement.setExtensionAttribute(getNamespace(), "processid", "100");
+        if (bpmnElement instanceof BPMNActivity) {
+            bpmnElement.setExtensionAttribute(getNamespace(), "processid", "100");
+        }
 
+        if (bpmnElement instanceof BPMNEvent) {
+            bpmnElement.setExtensionAttribute(getNamespace(), "activityid", "10");
+        }
     }
 
     /**

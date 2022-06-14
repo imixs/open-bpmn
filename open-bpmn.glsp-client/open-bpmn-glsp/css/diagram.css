@@ -79,7 +79,12 @@
 }
 
 .task.bpmnextension-imixs > .sprotty-node {
-	fill: #7087a9;
+	stroke: darkorange;
+	stroke-width: 1;
+}
+.event.bpmnextension-imixs > .sprotty-node {
+	stroke: darkorange;
+	stroke-width: 1;
 }
 
 /*** Events ***/

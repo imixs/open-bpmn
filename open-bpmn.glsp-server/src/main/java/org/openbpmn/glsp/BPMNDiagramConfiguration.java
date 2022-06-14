@@ -129,26 +129,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      * @return
      */
     private ShapeTypeHint createTaskHint(final String taskType) {
-
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(taskType, true, true, true, true);
 
-        // now add the containable Extensions
-        List<String> extensionTypeIds = new ArrayList<>();
-        // Test the Extension Hints...
-        if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
-                String extensionType = "extension:" + extension.getNamespace();
-                // validate if the extension is no Default Extension kind and if the extension
-                // can handle this task Type
-                if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) //
-                        && !extensionTypeIds.contains(extensionType) //
-                        && extension.handlesElementTypeId(taskType)) {
-                    extensionTypeIds.add(extensionType);
-                }
-            }
-        }
+        List<String> containables = new ArrayList<>();
+        // Add optional Extension Hints...
+        addExtensionHints(taskType, containables);
 
-        shapeTypeHint.setContainableElementTypeIds(extensionTypeIds);
+        shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
     }
 
@@ -172,18 +159,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         }));
 
         // Add optional Extension Hints...
-        if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
-                String extensionType = "extension:" + extension.getNamespace();
-                // validate if the extension is no Default Extension kind and if the extension
-                // can handle this task Type
-                if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) //
-                        && !containables.contains(extensionType) //
-                        && extension.handlesElementTypeId(BPMNTypes.START_EVENT)) {
-                    containables.add(extensionType);
-                }
-            }
-        }
+        addExtensionHints(BPMNTypes.START_EVENT, containables);
 
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.START_EVENT, true, true, false, true);
 
@@ -211,18 +187,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.END_EVENT, true, true, false, true);
 
         // Add optional Extension Hints...
-        if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
-                String extensionType = "extension:" + extension.getNamespace();
-                // validate if the extension is no Default Extension kind and if the extension
-                // can handle this task Type
-                if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) //
-                        && !containables.contains(extensionType) //
-                        && extension.handlesElementTypeId(BPMNTypes.END_EVENT)) {
-                    containables.add(extensionType);
-                }
-            }
-        }
+        addExtensionHints(BPMNTypes.END_EVENT, containables);
 
         shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
@@ -236,27 +201,20 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      * @return
      */
     private ShapeTypeHint createCatchEventHint() {
-        List<String> containables = Arrays.asList(new String[] { //
+        List<String> containables = new ArrayList<>();
+        // add Event Definitions
+        containables.addAll(Arrays.asList(new String[] { //
                 BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
                 BPMNTypes.EVENT_DEFINITION_LINK, //
                 BPMNTypes.EVENT_DEFINITION_MESSAGE, //
                 BPMNTypes.EVENT_DEFINITION_TIMER, //
-                BPMNTypes.EVENT_DEFINITION_SIGNAL });
+                BPMNTypes.EVENT_DEFINITION_SIGNAL //
+        }));
+
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.CATCH_EVENT, true, true, false, true);
 
         // Add optional Extension Hints...
-        if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
-                String extensionType = "extension:" + extension.getNamespace();
-                // validate if the extension is no Default Extension kind and if the extension
-                // can handle this task Type
-                if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) //
-                        && !containables.contains(extensionType) //
-                        && extension.handlesElementTypeId(BPMNTypes.CATCH_EVENT)) {
-                    containables.add(extensionType);
-                }
-            }
-        }
+        addExtensionHints(BPMNTypes.CATCH_EVENT, containables);
 
         shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
@@ -270,12 +228,30 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      * @return
      */
     private ShapeTypeHint createThrowEventHint() {
-        List<String> containables = Arrays.asList(new String[] { //
+        List<String> containables = new ArrayList<>();
+        // add Event Definitions
+        containables.addAll(Arrays.asList(new String[] { //
                 BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
                 BPMNTypes.EVENT_DEFINITION_LINK, //
-                BPMNTypes.EVENT_DEFINITION_SIGNAL });
+                BPMNTypes.EVENT_DEFINITION_SIGNAL //
+        }));
+
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.THROW_EVENT, true, true, false, true);
 
+        // Add optional Extension Hints...
+        addExtensionHints(BPMNTypes.THROW_EVENT, containables);
+        shapeTypeHint.setContainableElementTypeIds(containables);
+        return shapeTypeHint;
+    }
+
+    /**
+     * This helper method tests if a extension is supported and adds the
+     * corresponding extension type.
+     *
+     * @param bpmnType
+     * @param containables
+     */
+    private void addExtensionHints(final String bpmnType, final List<String> containables) {
         // Add optional Extension Hints...
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
@@ -284,14 +260,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
                 // can handle this task Type
                 if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) //
                         && !containables.contains(extensionType) //
-                        && extension.handlesElementTypeId(BPMNTypes.THROW_EVENT)) {
+                        && extension.handlesElementTypeId(bpmnType)) {
                     containables.add(extensionType);
                 }
             }
         }
-
-        shapeTypeHint.setContainableElementTypeIds(containables);
-        return shapeTypeHint;
+    
     }
 
     /**
