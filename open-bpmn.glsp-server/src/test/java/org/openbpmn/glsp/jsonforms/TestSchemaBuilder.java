@@ -55,4 +55,24 @@ public class TestSchemaBuilder extends DefaultGModelState {
 
     }
 
+    @Test
+    public void testArray() {
+
+        SchemaBuilder builder = new SchemaBuilder(). //
+                addProperty("name", "string", "Please enter your name"). //
+                addProperty("description", "string", null);
+
+        builder.addArray("comments");
+
+        builder.addProperty("user", "string", "", null);
+        builder.addProperty("date", "string", "", null);
+
+        String json = builder.build();
+
+        assertNotNull(json);
+
+        logger.info(json);
+
+    }
+
 }

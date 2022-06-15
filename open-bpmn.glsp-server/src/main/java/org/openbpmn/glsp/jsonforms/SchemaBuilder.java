@@ -40,6 +40,12 @@ public class SchemaBuilder {
 
     JsonObjectBuilder rootSchemaBuilder;
     JsonObjectBuilder propertiesBuilder;
+    // arrays
+    JsonObjectBuilder propertyArrayBuilder;
+    JsonObjectBuilder itemDingens;
+    JsonObjectBuilder propertyArrayItemBuilder;
+//    JsonObjectBuilder propertyArrayItemSubBuilder;
+    String arrayName = null;
 
     public SchemaBuilder() {
 
@@ -98,15 +104,58 @@ public class SchemaBuilder {
             typeBuilder.add("enum", enumArrayBuilder.build());
         }
 
-        propertiesBuilder.add(name, typeBuilder);
+        if (propertyArrayItemBuilder != null) {
+            propertyArrayItemBuilder.add(name, typeBuilder);
+        } else {
+            propertiesBuilder.add(name, typeBuilder);
+        }
+        return this;
+    }
+
+    /**
+     * Adds a new property array type
+     *
+     * @param name - name of the array property
+     * @return this
+     */
+    public SchemaBuilder addArray(final String name) {
+
+        // close old array builder if exits
+        closeArrayBuilder();
+
+        // create new array builder
+        propertyArrayBuilder = Json.createObjectBuilder();
+        propertyArrayBuilder.add("type", "array");
+
+        // create new property Item builder
+        itemDingens = Json.createObjectBuilder();
+        itemDingens.add("type", "object");
+
+        arrayName = name;
+        propertyArrayItemBuilder = Json.createObjectBuilder();
 
         return this;
+    }
+
+    /**
+     * Helper Method to close an open array builder
+     */
+    private void closeArrayBuilder() {
+        if (propertyArrayItemBuilder != null) {
+
+            itemDingens.add("properties", propertyArrayItemBuilder);
+            propertyArrayBuilder.add("items", itemDingens);
+            propertiesBuilder.add(arrayName, propertyArrayBuilder);
+
+        }
+
     }
 
     /**
      * Returns a String with the JSON UISchema
      */
     public String build() {
+        closeArrayBuilder();
 
         rootSchemaBuilder.add("properties", propertiesBuilder);
 
