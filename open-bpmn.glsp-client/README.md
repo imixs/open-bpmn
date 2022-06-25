@@ -40,7 +40,7 @@ With the option `-ff` you can force a full rebuild of the client components. Thi
 If you only want to clean up the workspace, you can run the script:
 
 	$ ./wipe-full.sh
-
+	$ ./build.sh -r
 
 ## Dependencies
 

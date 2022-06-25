@@ -66,10 +66,11 @@ To start the GLSP Client only, run:
 
 	$ ./build.sh -f
 
-With the option `-ff` you can force a full rebuild of the client components. This option will remove the yarn.lock file. 
+For a full rebuild run:
 
-	$ ./build.sh -ff
-	
+	$ ./wipe-full.sh
+	$ ./build.sh -r
+
 You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
 
 ## Development

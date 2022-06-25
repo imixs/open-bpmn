@@ -22,9 +22,7 @@ interface RatingProps {
   updateValue: (newValue: number) => void;
 }
 // eslint-disable-next-line max-len
-export const Rating: React.FC<RatingProps> = ({ id, value, updateValue }: any) => {
-  
-  return (
+export const Rating: React.FC<RatingProps> = ({ id, value, updateValue }: any) => (
     <div id='#/properties/rating' className='rating'>
       
       <div style={{ cursor: 'pointer', fontSize: '18px' }}>
@@ -35,5 +33,5 @@ export const Rating: React.FC<RatingProps> = ({ id, value, updateValue }: any) =
       </span> 
       </div>
     </div>
-  );
-};
+);
+

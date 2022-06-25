@@ -24,7 +24,7 @@ import {
 	EditorContextService,
 	EditModeListener,
 	TYPES,
-	SModelRoot,hasArguments
+	SModelRoot, hasArguments
 } from '@eclipse-glsp/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 
@@ -122,9 +122,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		const header = document.createElement('div');
 		header.classList.add('header-icon');
 		header.appendChild(createIcon('extensions'));
-		this.headerTitle= document.createElement('span');
+		this.headerTitle = document.createElement('span');
 		header.appendChild(this.headerTitle);
-		this.headerTitle.textContent='BPMN Properties';
+		this.headerTitle.textContent = 'BPMN Properties';
 		return header;
 	}
 
@@ -187,9 +187,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 	selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
 		// first we need to verify if a Symbol/BPMNLabel combination was selected.
 		// In this case we are only interested in the BPMNFlowElement and not in the label
-		if (selectedElements.length>1) {
-			const filteredArr = selectedElements.filter(val=>!val.endsWith('_bpmnlabel'));
-			selectedElements=filteredArr;
+		if (selectedElements.length > 1) {
+			const filteredArr = selectedElements.filter(val => !val.endsWith('_bpmnlabel'));
+			selectedElements = filteredArr;
 		}
 
 		// Check if we now have exactly one elemnt selected. Only in this case we show
@@ -210,7 +210,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 				this.initForm = true;
 				// update header
 				// this.header.insertAdjacentText('beforeend',element.type);
-				this.headerTitle.textContent=element.type;
+				this.headerTitle.textContent = element.type;
 
 				// Build a generic JSONForms Property panel
 				if (isBPMNNode(element)) {
@@ -220,20 +220,20 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					let bpmnPropertiesUISchema;
 					if (hasArguments(element)) {
 						// parse the jsonForms schema details
-						bpmnPropertiesData=JSON.parse(element.args.JSONFormsData+'');
-						bpmnPropertiesSchema=JSON.parse(element.args.JSONFormsSchema+'');
-						bpmnPropertiesUISchema=JSON.parse(element.args.JSONFormsUISchema+'');
+						bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
+						bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
+						bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
 					}
-					
+
 					// list of renderers declared outside the App component
 					const myRenderers = [
-					  ...vanillaRenderers,
-					  //register custom renderers
-					  { tester: ratingControlTester, renderer: RatingControl },
+						...vanillaRenderers,
+						//register custom renderers
+						{ tester: ratingControlTester, renderer: RatingControl },
 					];
 
-					
-					
+
+
 					// render JSONForm // vanillaRenderers
 					ReactDOM.render(
 						<JsonForms
@@ -250,13 +250,13 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 			} else {
 				// element not defined!
 				this.selectedElementId = '';
-				this.headerTitle.textContent='BPMN Properties';
+				this.headerTitle.textContent = 'BPMN Properties';
 			}
 		} else {
 			// no single element selected!
 			this.selectedElementId = '';
 			if (this.bodyDiv) {
-				this.headerTitle.textContent='BPMN Properties';
+				this.headerTitle.textContent = 'BPMN Properties';
 				if (!this.selectionService.hasSelectedElements()) {
 					// show an empty pane (or later the process panel)
 					if (this.bodyDiv) {

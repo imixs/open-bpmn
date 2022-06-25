@@ -120,7 +120,7 @@ public interface BPMNExtension {
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name", "category"). //
-
+    
          schemaBuilder.addProperty("name", "string", "Please enter your name");
      *
      * }
