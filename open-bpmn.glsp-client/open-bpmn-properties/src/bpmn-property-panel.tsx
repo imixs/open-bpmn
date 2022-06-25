@@ -44,6 +44,10 @@ import {
 	vanillaRenderers
 } from '@jsonforms/vanilla-renderers';
 
+//import {RatingControl} from './RatingControl';
+import RatingControl from './RatingControl'
+import ratingControlTester from './ratingControlTester'
+
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
 	static readonly KIND = 'enableBPMNPropertyPanel';
@@ -220,14 +224,24 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 						bpmnPropertiesSchema=JSON.parse(element.args.JSONFormsSchema+'');
 						bpmnPropertiesUISchema=JSON.parse(element.args.JSONFormsUISchema+'');
 					}
-					// render JSONForm
+					
+					// list of renderers declared outside the App component
+					const myRenderers = [
+					  ...vanillaRenderers,
+					  //register custom renderers
+					  { tester: ratingControlTester, renderer: RatingControl },
+					];
+
+					
+					
+					// render JSONForm // vanillaRenderers
 					ReactDOM.render(
 						<JsonForms
 							data={bpmnPropertiesData}
 							schema={bpmnPropertiesSchema}
 							uischema={bpmnPropertiesUISchema}
 							cells={vanillaCells}
-							renderers={vanillaRenderers}
+							renderers={myRenderers}
 							onChange={({ errors, data }) => this.setState({ data })}
 						/>,
 						this.bodyDiv

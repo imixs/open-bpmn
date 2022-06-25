@@ -176,7 +176,7 @@
 }
 
 .array-table-layout.control>table>thead {
-    display: none;
+    xdisplay: none;
 }
 
 .array-table-layout.control>table>tbody>tr>td>input {

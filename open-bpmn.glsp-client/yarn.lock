@@ -1044,27 +1044,27 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@jsonforms/core@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@jsonforms/core/-/core-3.0.0-beta.2.tgz#441cf5c331f749168ef9bf15223b2fd553dcc5e5"
-  integrity sha512-usquDE9ItW8BuY4ueeHilozop+OiiIh4mjMJzxWcgjtxbIDmIlV1zlS8KIxzi3SfOViCLiaip2/MSZVFT/YJ1A==
+"@jsonforms/core@3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@jsonforms/core/-/core-3.0.0-beta.4.tgz#93a0203752f1b079fd16d2c689a45058adf06a69"
+  integrity sha512-WTVniFdGgpk+czictFrjTuxFLP1vYx/81Hbl9BctzXsbymVzIdyom80CZeNMFKtWb9iP62kiUQpAUNiC5i1wTQ==
   dependencies:
     "@types/json-schema" "^7.0.3"
     ajv "^8.6.1"
     ajv-formats "^2.1.0"
     lodash "^4.17.15"
 
-"@jsonforms/react@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@jsonforms/react/-/react-3.0.0-beta.2.tgz#069d704a9ad6a9dfe65a0ccd841c5d86dfff8e1a"
-  integrity sha512-snMm6Q1s+PepKfihC9ADFEUej37DbcO9nrLw8AAPiEXFbKxje0FRZUfXChvk8oKuTJjjxDfeHbWaMcsBR9iabQ==
+"@jsonforms/react@3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@jsonforms/react/-/react-3.0.0-beta.4.tgz#6f8f156d3e4065b642178d227237c677ba0c9632"
+  integrity sha512-oy2y+tFIlSR87yuvFpfJ2UTuL99R7ihS1AY4fDUxCHFEVxIv7ocPS0trhfKyo5jWHB0Cde3Bkg5Gnpbu1ZOn1w==
   dependencies:
     lodash "^4.17.15"
 
-"@jsonforms/vanilla-renderers@3.0.0-beta.2":
-  version "3.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@jsonforms/vanilla-renderers/-/vanilla-renderers-3.0.0-beta.2.tgz#54373ac4ebf9678af04dfd8df873e48d9ba16bf9"
-  integrity sha512-qj1algf69QGq+3mEieH0SRAn9E6pX/GZmpSIro9TfVmg9JPMH4gjFqoimcGMGX86RqVLQuYwYKG6MCRHQjCwjQ==
+"@jsonforms/vanilla-renderers@3.0.0-beta.4":
+  version "3.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@jsonforms/vanilla-renderers/-/vanilla-renderers-3.0.0-beta.4.tgz#c9c94fbc49bb226bd041aa653b623fbd795b7e23"
+  integrity sha512-cFof/b6mItIJOiQkcGzs9KouYzMD9/Td4nJNvq7SW4uKOCssz+MF0AizgP8/OFNRn0Max5UXZrVCMzDOBnGC4A==
 
 "@lerna/add@4.0.0":
   version "4.0.0"

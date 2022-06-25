@@ -77,60 +77,66 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
         dataBuilder. //
                 addData("name", bpmnElement.getName()). //
-                addData("category", "some cati"). //
+                addData("rating", "3"). //
                 addData("documentation", bpmnElement.getDocumentation());
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
+                addProperty("rating", "integer", null). //
                 addProperty("documentation", "string", null);
 
-        if (bpmnElement instanceof BPMNEvent) {
+        BPMNEvent bpmnEvent = (BPMNEvent) bpmnElement;
 
-            BPMNEvent bpmnEvent = (BPMNEvent) bpmnElement;
+        Map<String, String> multilineOption = new HashMap<>();
+        multilineOption.put("multi", "true");
 
-            Map<String, String> multilineOption = new HashMap<>();
-            multilineOption.put("multi", "true");
+        uiSchemaBuilder. //
+                addCategory("General"). //
+                addLayout(Layout.VERTICAL). //
+                addElements("name"). //
+                addElements("rating"). //
+                addElement("documentation", "Documentation", multilineOption);
 
-            uiSchemaBuilder. //
-                    addCategory("General"). //
-                    addLayout(Layout.VERTICAL). //
-                    addElements("name"). //
-                    addElement("documentation", "Documentation", multilineOption);
+        // check Event Definitions
+        try {
+            List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
+            if (eventDefinitions.size() > 0) {
+                uiSchemaBuilder. //
+                        addCategory("Event"). //
+                        addLayout(Layout.VERTICAL);
+                uiSchemaBuilder.addElement("conditions", null);
+                // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
 
-            // check Event Definitions
-            try {
-                List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
-                if (eventDefinitions.size() > 0) {
-                    uiSchemaBuilder. //
-                            addCategory("Event"). //
-                            addLayout(Layout.VERTICAL);
+                schemaBuilder.addArray("conditions");
+                schemaBuilder.addProperty("formalExpression", "string", null, null);
+                schemaBuilder.addProperty("language", "string", null, null);
+                schemaBuilder.addProperty("condition", "string", null, null);
 
-                    for (Element definition : eventDefinitions) {
+                /*
+                 * Now we can create the data structure - each conditionalEventDefinition is
+                 * represented as a separate object
+                 */
+                dataBuilder.addArray("conditions");
+                for (Element definition : eventDefinitions) {
 
-                        // conditionalEventDefinition
-                        if ("conditionalEventDefinition".equals(definition.getLocalName())) {
-                            uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
-                            schemaBuilder.addProperty("formalExpression", "string", null);
-                        }
+                    if ("conditionalEventDefinition".equals(definition.getLocalName())) {
+                        dataBuilder.addObject();
 
-                        // messageEventDefinition
-                        if ("messageEventDefinition".equals(definition.getLocalName())) {
-                            uiSchemaBuilder.addElement("message", "Message", null);
-                            schemaBuilder.addProperty("message", "string", null);
-                        }
+                        dataBuilder.addData("formalExpression", "...some expression...");
+                        dataBuilder.addData("language", "java");
+                        dataBuilder.addData("condition", "blue");
                     }
-                }
 
-            } catch (BPMNModelException e) {
-                logger.warning("Failed to compute EventDefinitions: " + e.getMessage());
-                if (logger.isLoggable(Level.FINE)) {
-                    e.printStackTrace();
                 }
             }
 
-        } else {
-            logger.warning("BPMNEvent expected! - '" + bpmnElement.getId() + "' ");
+        } catch (BPMNModelException e) {
+            logger.warning("Failed to compute EventDefinitions: " + e.getMessage());
+            if (logger.isLoggable(Level.FINE)) {
+                e.printStackTrace();
+            }
         }
+
     }
 
     @Override

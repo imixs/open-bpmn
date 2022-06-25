@@ -18,8 +18,10 @@ package org.openbpmn.glsp.jsonforms;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.logging.Logger;
 
 import javax.json.Json;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
@@ -37,7 +39,13 @@ import javax.json.JsonObjectBuilder;
  */
 public class DataBuilder {
 
+    private static Logger logger = Logger.getLogger(DataBuilder.class.getName());
+
     JsonObjectBuilder jsonObjectBuilder;
+    // arrays
+    JsonArrayBuilder objectArrayBuilder;
+    JsonObjectBuilder objectArrayItemBuilder;
+    String objectName = null;
 
     public DataBuilder() {
 
@@ -53,8 +61,70 @@ public class DataBuilder {
      */
     public DataBuilder addData(final String name, final String value) {
 
-        jsonObjectBuilder.add(name, value);
+        if (objectArrayBuilder != null) {
+            if (objectArrayItemBuilder == null) {
+                objectArrayItemBuilder = Json.createObjectBuilder();
+            }
+            objectArrayItemBuilder.add(name, value);
+
+        } else {
+            jsonObjectBuilder.add(name, value);
+        }
         return this;
+
+    }
+
+    /**
+     * Adds a new property array type
+     *
+     * @param name - name of the array property
+     * @return this
+     */
+    public DataBuilder addArray(final String name) {
+
+        // close old array builder if exits
+        closeArrayBuilder();
+
+        // create new array builder
+        objectArrayBuilder = Json.createArrayBuilder();
+        objectName = name;
+
+        return this;
+    }
+
+    /**
+     * Adds a new object to an existing objectArrayBuilder
+     *
+     * @return this
+     */
+    public DataBuilder addObject() {
+
+        if (objectArrayBuilder != null) {
+            if (objectArrayItemBuilder != null) {
+                objectArrayBuilder.add(objectArrayItemBuilder);
+            }
+
+            objectArrayItemBuilder = Json.createObjectBuilder();
+        } else {
+            logger.severe("You can not add an object to an array if no array was defined before!");
+        }
+
+        return this;
+    }
+
+    /**
+     * Helper Method to close an open array builder
+     */
+    private void closeArrayBuilder() {
+        if (objectArrayItemBuilder != null) {
+
+            if (objectArrayItemBuilder != null) {
+                objectArrayBuilder.add(objectArrayItemBuilder);
+            }
+
+            jsonObjectBuilder.add(objectName, objectArrayBuilder);
+
+        }
 
     }
 
@@ -62,7 +132,7 @@ public class DataBuilder {
      * Returns a String with the JSON Data Schema
      */
     public String build() {
-
+        closeArrayBuilder();
         // write result
         JsonObject jsonObject = jsonObjectBuilder.build();
         String result = null;

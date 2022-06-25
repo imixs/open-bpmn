@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+	<bpmn2:process id="process_1">
+		<bpmn2:intermediateCatchEvent id="event-lp0MzHXbYh5u1sB9" name="Event-0">
+			<bpmn2:conditionalEventDefinition id="conditionalEventDefinition_y5sgmw"/>
+			<bpmn2:documentation id="documentation_avMoQQ"><![CDATA[asdfadf]]></bpmn2:documentation>
+			<bpmn2:conditionalEventDefinition id="conditionalEventDefinition_kXI8oA"/>
+			<bpmn2:messageEventDefinition id="messageEventDefinition_DsknIw"/>
+		</bpmn2:intermediateCatchEvent>
+		
+	</bpmn2:process>
+	<bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+		<bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
+			<bpmndi:BPMNShape bpmnElement="event-lp0MzHXbYh5u1sB9" id="BPMNShape_e9plAA">
+				<dc:Bounds height="36.0" width="36.0" x="106.0" y="43.0"/>
+				<bpmndi:BPMNLabel id="BPMNLabel_rKBSyg">
+					<dc:Bounds height="14.0" width="36.0" x="100.0" y="79.0"/>
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNShape>
+			
+		</bpmndi:BPMNPlane>
+	</bpmndi:BPMNDiagram>
+</bpmn2:definitions>

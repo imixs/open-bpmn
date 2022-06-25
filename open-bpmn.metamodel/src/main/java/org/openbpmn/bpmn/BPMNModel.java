@@ -72,6 +72,7 @@ public class BPMNModel {
     });
 
     public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
+            BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
             BPMNTypes.SCRIPT_TASK, //
             BPMNTypes.SEND_TASK, //

@@ -36,16 +36,16 @@ import org.junit.jupiter.api.Test;
  * @author rsoika
  *
  */
-public class TestSchemaBuilder extends DefaultGModelState {
+public class TestDataBuilder extends DefaultGModelState {
 
-    private static Logger logger = Logger.getLogger(TestSchemaBuilder.class.getName());
+    private static Logger logger = Logger.getLogger(TestDataBuilder.class.getName());
 
     @Test
     public void testSimple() {
 
-        SchemaBuilder builder = new SchemaBuilder(). //
-                addProperty("name", "string", "Please enter your name"). //
-                addProperty("description", "string", null);
+        DataBuilder builder = new DataBuilder(). //
+                addData("name", "John"). //
+                addData("description", "Hello World");
 
         String json = builder.build();
 
@@ -58,32 +58,21 @@ public class TestSchemaBuilder extends DefaultGModelState {
     @Test
     public void testArray() {
 
-        SchemaBuilder builder = new SchemaBuilder(). //
-                addProperty("name", "string", "Please enter your name"). //
-                addProperty("description", "string", null);
+        DataBuilder builder = new DataBuilder(). //
+                addData("name", "John"). //
+                addData("description", "Hello World");
 
         builder.addArray("comments");
 
-        builder.addProperty("user", "string", "", null);
-        builder.addProperty("date", "string", "", null);
+        // add first object
+        builder.addObject();
+        builder.addData("language", "javascript");
+        builder.addData("script", "1+1");
 
-        String json = builder.build();
-
-        assertNotNull(json);
-
-        logger.info(json);
-
-    }
-
-    @Test
-    public void testBPMNEventConditionalDefintionArray() {
-
-        SchemaBuilder builder = new SchemaBuilder(). //
-                addProperty("name", "string", null). //
-                addProperty("documentation", "string", null);
-
-        builder.addArray("conditions");
-        builder.addProperty("formalExpression", "string", null, null);
+        // add second object
+        builder.addObject();
+        builder.addData("language", "java");
+        builder.addData("script", "2+2");
 
         String json = builder.build();
 
