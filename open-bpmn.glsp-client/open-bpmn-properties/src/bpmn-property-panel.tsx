@@ -44,9 +44,9 @@ import {
 	vanillaRenderers
 } from '@jsonforms/vanilla-renderers';
 
-//import {RatingControl} from './RatingControl';
-import RatingControl from './RatingControl'
-import ratingControlTester from './ratingControlTester'
+import RatingControl from './RatingControl';
+import ratingControlTester from './ratingControlTester';
+import {BPMNEventDefinitionTester,BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
 
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
@@ -228,8 +228,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					// list of renderers declared outside the App component
 					const myRenderers = [
 						...vanillaRenderers,
-						//register custom renderers
+						//register custom renderers 
 						{ tester: ratingControlTester, renderer: RatingControl },
+						{ tester: BPMNEventDefinitionTester, renderer: BPMNEventDefinitionRenderer}
 					];
 
 
