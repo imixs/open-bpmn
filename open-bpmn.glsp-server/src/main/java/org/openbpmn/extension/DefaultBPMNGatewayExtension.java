@@ -87,7 +87,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
         multilineOption.put("multi", "true");
 
         Map<String, String> radioOption = new HashMap<>();
-        multilineOption.put("format", "radio");
+        radioOption.put("format", "radio");
 
         uiSchemaBuilder. //
                 addCategory("General"). //

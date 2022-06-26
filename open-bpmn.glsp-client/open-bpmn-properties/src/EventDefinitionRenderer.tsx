@@ -18,11 +18,10 @@ import * as React from 'react';
 import { withJsonFormsControlProps } from '@jsonforms/react';
 import {
   scopeEndsWith,
-  RankedTester,
   rankWith
 } from '@jsonforms/core';
 /**
- * This custom renderer provdes the detail form for BPMN Event Definition lists.
+ * This custom renderer provides the detail form for BPMN Event Definition lists.
  *
  */
 interface BPMNEventDefinitionProps {
@@ -38,13 +37,13 @@ interface BPMNEventDefinitionControlProps {
 
 // eslint-disable-next-line max-len
 const BPMNEventDefinitionsComponent: React.FC<BPMNEventDefinitionProps> = ({ value, updateValue }: any) => (
-    <div id='#/properties/rating' className='rating'>
+    <div id='#/properties/conditions' className='eventDefinitions'>
       
       <div style={{ cursor: 'pointer', fontSize: '18px' }}>
       <span
               onClick={() => updateValue(value)}
             >
-      Event Definitions {value} 
+      Event Definitions 
       </span> 
       </div>
     </div>
@@ -58,16 +57,12 @@ const BPMNEventDefinitionControl = ({ data, handleChange, path }: BPMNEventDefin
 );
 
 /**
- * Custom Renderer Tester for EventDefinitions
+ * Export the Custom Renderer and  Tester for EventDefinitions (eventdefinitions)
  */
-export const BPMNEventDefinitionTester: RankedTester = rankWith(
-  7,
-  scopeEndsWith('eventdefinitions')
-);
+export const BPMNEventDefinitionRenderer: any = { 
+  tester: rankWith(7,scopeEndsWith('conditions')), 
+  renderer: withJsonFormsControlProps(BPMNEventDefinitionControl)
+};
 
-/**
- * Custom Renderer for EventDefinitions
- */
-export const BPMNEventDefinitionRenderer: any = withJsonFormsControlProps(BPMNEventDefinitionControl);
 
 

@@ -46,7 +46,7 @@ import {
 
 import RatingControl from './RatingControl';
 import ratingControlTester from './ratingControlTester';
-import {BPMNEventDefinitionTester,BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
+import {BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
 
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
@@ -226,11 +226,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					}
 
 					// list of renderers declared outside the App component
-					const myRenderers = [
+					const bpmnRenderers = [
 						...vanillaRenderers,
 						//register custom renderers 
-						{ tester: ratingControlTester, renderer: RatingControl },
-						{ tester: BPMNEventDefinitionTester, renderer: BPMNEventDefinitionRenderer}
+						BPMNEventDefinitionRenderer,
+						{ tester: ratingControlTester, renderer: RatingControl }
 					];
 
 
@@ -242,7 +242,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 							schema={bpmnPropertiesSchema}
 							uischema={bpmnPropertiesUISchema}
 							cells={vanillaCells}
-							renderers={myRenderers}
+							renderers={bpmnRenderers}
 							onChange={({ errors, data }) => this.setState({ data })}
 						/>,
 						this.bodyDiv
