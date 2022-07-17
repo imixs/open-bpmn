@@ -11,7 +11,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@eclipse-glsp/client": "0.10.0-next.385713d.170"
+    "@eclipse-glsp/client": "^1.0.0"
   },  
   "files": [
     "lib",
