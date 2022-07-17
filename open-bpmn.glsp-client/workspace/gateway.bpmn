@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
     <bpmn2:process id="process_1">
-        <bpmn2:exclusiveGateway gatewayDirection="Mixed" id="gateway-wiwN41vbYeLp70IT" name="Gateway-1"><bpmn2:documentation id="documentation_FXzGgw"><![CDATA[asfasf]]></bpmn2:documentation></bpmn2:exclusiveGateway>
+        <bpmn2:exclusiveGateway gatewayDirection="Unspecified" id="gateway-wiwN41vbYeLp70IT" name="Gateway-1"><bpmn2:documentation id="documentation_FXzGgw"><![CDATA[asfasf]]></bpmn2:documentation></bpmn2:exclusiveGateway>
         
         
         

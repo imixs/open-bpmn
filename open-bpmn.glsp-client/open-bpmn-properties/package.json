@@ -6,9 +6,9 @@
   "dependencies": {
     "@eclipse-glsp/client": "0.10.0-next.385713d.170",
     "@open-bpmn/open-bpmn-model": "0.2.1",
-    "@jsonforms/core": "3.0.0-beta.4",
-    "@jsonforms/react": "3.0.0-beta.4",
-    "@jsonforms/vanilla-renderers": "3.0.0-beta.4",
+    "@jsonforms/core": "3.0.0-beta.5",
+    "@jsonforms/react": "3.0.0-beta.5",
+    "@jsonforms/vanilla-renderers": "3.0.0-beta.5",
     "balloon-css": "^0.5.0"
   },  
     "peerDependencies": {

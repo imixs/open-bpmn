@@ -98,13 +98,17 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addElement("documentation", "Documentation", multilineOption);
 
         // check Event Definitions
+        Map<String, String> arrayDetailOption = new HashMap<>();
+        // GENERATED HorizontalLayout
+        arrayDetailOption.put("detail", "GENERATED");
+
         try {
             List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
             if (eventDefinitions.size() > 0) {
                 uiSchemaBuilder. //
                         addCategory("Event"). //
                         addLayout(Layout.VERTICAL);
-                uiSchemaBuilder.addElement("conditions", null);
+                uiSchemaBuilder.addElement("conditions", "Conditions", arrayDetailOption);
                 // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
 
                 schemaBuilder.addArray("conditions");

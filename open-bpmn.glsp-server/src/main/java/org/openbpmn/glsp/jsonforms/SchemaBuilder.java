@@ -142,7 +142,7 @@ public class SchemaBuilder {
      */
     private void closeArrayBuilder() {
         if (propertyArrayItemBuilder != null) {
-
+             itemDingens.add("type", "object");
             itemDingens.add("properties", propertyArrayItemBuilder);
             propertyArrayBuilder.add("items", itemDingens);
             propertiesBuilder.add(arrayName, propertyArrayBuilder);
@@ -157,6 +157,7 @@ public class SchemaBuilder {
     public String build() {
         closeArrayBuilder();
 
+        rootSchemaBuilder.add("type", "object");
         rootSchemaBuilder.add("properties", propertiesBuilder);
 
         // write result

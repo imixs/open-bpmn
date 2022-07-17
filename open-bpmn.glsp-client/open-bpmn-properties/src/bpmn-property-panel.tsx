@@ -44,9 +44,9 @@ import {
 	vanillaRenderers
 } from '@jsonforms/vanilla-renderers';
 
-import RatingControl from './RatingControl';
-import ratingControlTester from './ratingControlTester';
-import {BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
+//import RatingControl from './RatingControl';
+//import ratingControlTester from './ratingControlTester';
+//import {BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
 
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
@@ -229,8 +229,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 					const bpmnRenderers = [
 						...vanillaRenderers,
 						//register custom renderers 
-						BPMNEventDefinitionRenderer,
-						{ tester: ratingControlTester, renderer: RatingControl }
+						//BPMNEventDefinitionRenderer,
+						//{ tester: ratingControlTester, renderer: RatingControl }
 					];
 
 
