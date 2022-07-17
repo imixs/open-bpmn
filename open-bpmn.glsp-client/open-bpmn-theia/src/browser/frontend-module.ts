@@ -19,7 +19,7 @@ import { BPMNLanguage } from '../common/bpmn-language';
 import { BPMNDiagramConfiguration } from './diagram/bpmn-diagram-configuration';
 
 export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
-    protected enableCopyPaste = true;
+    protected override enableCopyPaste = true;
     readonly diagramLanguage = BPMNLanguage;
 
     bindDiagramConfiguration(context: ContainerContext): void {

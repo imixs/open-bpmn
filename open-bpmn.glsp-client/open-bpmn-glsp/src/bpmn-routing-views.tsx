@@ -40,7 +40,7 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersections {
-	protected renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
+	protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
 		const additionals = super.renderAdditionals(edge, segments, context);
 		const p1 = segments[segments.length - 2];
 		const p2 = segments[segments.length - 1];
@@ -62,7 +62,7 @@ export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersection
 	 * The goal of this method is to render rounded corners. Therefore we compute always the next segment to decide
 	 * the corner angle.
 	 */
-	protected renderLine(edge: SEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
+	protected override renderLine(edge: SEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
 		let path = '';
 		// let radius = 10;
 		let radius = 10;

@@ -86,7 +86,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		return BPMNPropertyPanel.ID;
 	}
 
-	initialize(): boolean {
+	override initialize(): boolean {
 		return super.initialize();
 	}
 
@@ -98,7 +98,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 		this.createBody();
 	}
 
-	protected onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
+	protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
 		this.modelRootId = root.id;
 	}
 

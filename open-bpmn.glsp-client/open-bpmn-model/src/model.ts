@@ -45,7 +45,7 @@ export interface BPMNFlowElement {
 }
 
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel, BPMNFlowElement {
-	static readonly DEFAULT_FEATURES = [
+	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
 		selectFeature,
@@ -81,7 +81,7 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 
 /* CircularNode RectangularNode */
 export class EventNode extends CircularNode implements BPMNFlowElement {
-	static readonly DEFAULT_FEATURES = [
+	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
 		selectFeature,
@@ -100,7 +100,7 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 
 // DiamondNode
 export class GatewayNode extends DiamondNode implements Nameable, WithEditableLabel, BPMNFlowElement {
-	static readonly DEFAULT_FEATURES = [
+	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
 		selectFeature,
@@ -176,17 +176,16 @@ export class SequenceFlow extends SEdge {
 
 export class Icon extends SShapeElement implements LayoutContainer {
 	static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
-
 	layout: string;
-	layoutOptions?: { [key: string]: string | number | boolean };
-	size = {
+	override layoutOptions?: { [key: string]: string | number | boolean };
+	override size = {
 		width: 32,
 		height: 32
 	};
 }
 
 export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
-	static readonly DEFAULT_FEATURES = [
+	static override readonly DEFAULT_FEATURES = [
 		deletableFeature,
 		selectFeature,
 		boundsFeature,

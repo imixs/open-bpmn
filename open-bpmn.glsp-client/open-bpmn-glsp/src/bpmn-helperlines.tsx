@@ -48,8 +48,8 @@ const JSX = { createElement: svg };
  * to containing a list of helperLines.
  */
 export class HelperLinesElement extends SChildElement {
-	type: string;
-	id: string;
+	override type: string;
+	override id: string;
 	readonly helperLines: ReadonlyArray<HelperLine> = [];
 	constructor(type: string, id: string, helperLines: HelperLine[]) {
 		super();
