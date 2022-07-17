@@ -74,7 +74,7 @@ if [ "$buildBackend" == "true" ]; then
   echo "$(date +"[%T.%3N]") Build backend products"
   mvn clean install -DskipTests
   cd open-bpmn.glsp-server/target
-  java -jar open-bpmn.server-0.2.1-SNAPSHOT-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
+  java -jar open-bpmn.server-0.3.0-SNAPSHOT-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
   cd ../
 fi
 

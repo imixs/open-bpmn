@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "open-bpmn-app",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Web App for Open BPMN",
   "license": "(GPL-3.0)",     
   "dependencies": {
@@ -16,7 +16,7 @@
     "@theia/process": "1.24.0",
     "@theia/terminal": "1.24.0",
     "@theia/workspace": "1.24.0",
-    "@open-bpmn/open-bpmn-theia": "0.2.1"
+    "@open-bpmn/open-bpmn-theia": "0.3.0"
   },
   "scripts": {
     "prepare": "yarn build",

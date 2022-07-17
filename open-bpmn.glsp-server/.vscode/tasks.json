@@ -21,7 +21,7 @@
       "label": "Start BPMN GLSP Server",
       "type": "shell",
       "group": "test",
-      "command": "java -jar target/open-bpmn.server-0.2.1-SNAPSHOT-glsp.jar",
+      "command": "java -jar target/open-bpmn.server-0.3.0-SNAPSHOT-glsp.jar",
       "presentation": {
         "reveal": "always",
         "panel": "new"
