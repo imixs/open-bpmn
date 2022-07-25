@@ -13,12 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { injectable } from 'inversify';
 import {
-	ManhattanEdgeRouter,IAnchorComputer,SConnectableElement,PolylineEdgeRouter,
-	Bounds,almostEquals,
-	Point
+    almostEquals,
+    Bounds,
+    IAnchorComputer,
+    ManhattanEdgeRouter,
+    Point,
+    PolylineEdgeRouter,
+    SConnectableElement
 } from '@eclipse-glsp/client';
+import { injectable } from 'inversify';
 
 export const BPMN_ELEMENT_ANCHOR_KIND = 'bpmn-element';
 
@@ -31,8 +35,7 @@ export const BPMN_ELEMENT_ANCHOR_KIND = 'bpmn-element';
  */
 @injectable()
 export class BPMNElementAnchor implements IAnchorComputer {
-
-	static KIND = ManhattanEdgeRouter.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
+    static KIND = ManhattanEdgeRouter.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
 
     get kind(): string {
         return BPMNElementAnchor.KIND;
@@ -50,49 +53,52 @@ export class BPMNElementAnchor implements IAnchorComputer {
             height: b.height + 2 * offset
         };
         if (refPoint.x >= bounds.x && bounds.x + bounds.width >= refPoint.x) {
-            if (refPoint.y < bounds.y + 0.5 * bounds.height)
-            return { x: refPoint.x, y: bounds.y };
-            else
-            return { x: refPoint.x, y: bounds.y + bounds.height };
+            if (refPoint.y < bounds.y + 0.5 * bounds.height) {
+                return { x: refPoint.x, y: bounds.y };
+            } else {
+                return { x: refPoint.x, y: bounds.y + bounds.height };
+            }
         }
         if (refPoint.y >= bounds.y && bounds.y + bounds.height >= refPoint.y) {
-            if (refPoint.x < bounds.x + 0.5 * bounds.width)
-            return { x: bounds.x, y: refPoint.y };
-            else
-            return { x: bounds.x + bounds.width, y: refPoint.y };
+            if (refPoint.x < bounds.x + 0.5 * bounds.width) {
+                return { x: bounds.x, y: refPoint.y };
+            } else {
+                return { x: bounds.x + bounds.width, y: refPoint.y };
+            }
         }
         return Bounds.center(bounds);
     }
 }
 
-
 @injectable()
 export class BPMNPolylineElementAnchor implements IAnchorComputer {
-
-
     get kind(): string {
         return PolylineEdgeRouter.KIND + ':' + BPMN_ELEMENT_ANCHOR_KIND;
     }
 
-    getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number ): Point {
+    getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
         const bounds = connectable.bounds;
         const c = Bounds.center(bounds);
         const finder = new NearestPointFinder(c, refPoint);
         if (!almostEquals(c.y, refPoint.y)) {
             const xTop = this.getXIntersection(bounds.y, c, refPoint);
-            if (xTop >= bounds.x && xTop <= bounds.x + bounds.width)
+            if (xTop >= bounds.x && xTop <= bounds.x + bounds.width) {
                 finder.addCandidate(xTop, bounds.y - offset);
+            }
             const xBottom = this.getXIntersection(bounds.y + bounds.height, c, refPoint);
-            if (xBottom >= bounds.x && xBottom <= bounds.x + bounds.width)
+            if (xBottom >= bounds.x && xBottom <= bounds.x + bounds.width) {
                 finder.addCandidate(xBottom, bounds.y + bounds.height + offset);
+            }
         }
         if (!almostEquals(c.x, refPoint.x)) {
             const yLeft = this.getYIntersection(bounds.x, c, refPoint);
-            if (yLeft >= bounds.y && yLeft <= bounds.y + bounds.height)
+            if (yLeft >= bounds.y && yLeft <= bounds.y + bounds.height) {
                 finder.addCandidate(bounds.x - offset, yLeft);
+            }
             const yRight = this.getYIntersection(bounds.x + bounds.width, c, refPoint);
-            if (yRight >= bounds.y && yRight <= bounds.y + bounds.height)
+            if (yRight >= bounds.y && yRight <= bounds.y + bounds.height) {
                 finder.addCandidate(bounds.x + bounds.width + offset, yRight);
+            }
         }
         return finder.best;
     }
@@ -106,17 +112,15 @@ export class BPMNPolylineElementAnchor implements IAnchorComputer {
         const t = (xIntersection - centerPoint.x) / (point.x - centerPoint.x);
         return (point.y - centerPoint.y) * t + centerPoint.y;
     }
-
 }
 
 class NearestPointFinder {
     protected currentBest: Point | undefined;
     protected currentDist: number;
 
-    constructor(protected centerPoint: Point, protected refPoint: Point) {
-    }
+    constructor(protected centerPoint: Point, protected refPoint: Point) {}
 
-    addCandidate(x: number, y: number) {
+    addCandidate(x: number, y: number): void {
         const dx = this.refPoint.x - x;
         const dy = this.refPoint.y - y;
         const dist = dx * dx + dy * dy;
@@ -130,10 +134,10 @@ class NearestPointFinder {
     }
 
     get best(): Point {
-        if (this.currentBest === undefined)
+        if (this.currentBest === undefined) {
             return this.centerPoint;
-        else
+        } else {
             return this.currentBest;
+        }
     }
 }
-

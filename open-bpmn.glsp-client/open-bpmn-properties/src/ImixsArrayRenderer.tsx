@@ -14,135 +14,142 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 // import React from 'react';
-//import * as React from 'react';
-import React, { useMemo } from 'react';
-import range from 'lodash/range';
-import { JsonFormsDispatch } from '@jsonforms/react';
+// import * as React from 'react';
 import {
-  scopeEndsWith,ControlElement,Helpers,
-  rankWith,ArrayControlProps, composePaths, createDefaultValue, findUISchema
+    ArrayControlProps,
+    composePaths,
+    ControlElement,
+    createDefaultValue,
+    findUISchema,
+    Helpers,
+    JsonFormsUISchemaRegistryEntry,
+    rankWith,
+    scopeEndsWith
 } from '@jsonforms/core';
+import { JsonFormsDispatch } from '@jsonforms/react';
 import { VanillaRendererProps } from '@jsonforms/vanilla-renderers';
+import range from 'lodash/range';
+import React, { useMemo } from 'react';
 
-// We rename ''control'' into 'component' 
+export interface BPMNArrayComponentProps extends ArrayControlProps, VanillaRendererProps {
+    uischemas: JsonFormsUISchemaRegistryEntry[];
+    classNames: {
+        [className: string]: string;
+    };
+}
+// We rename ''control'' into 'component'
 const BPMNArrayComponent = ({
-  classNames,
-  data,
-  label,
-  path,
-  schema,
-  addItem,
-  uischema,
-  uischemas,
-  renderers,
-  rootSchema
-}: ArrayControlProps & VanillaRendererProps) => {
-  const childUiSchema = useMemo(
-    () => findUISchema(uischemas, schema, uischema.scope, path, undefined, uischema, rootSchema),
-    [uischemas, schema, uischema.scope, path, uischema, rootSchema]
-  );
-  return (
-    <div className={classNames.wrapper}>
-      <fieldset className={classNames.fieldSet}>
-        <legend>
-          <button
-            className={classNames.button}
-            onClick={addItem(path, createDefaultValue(schema))}
-          >
-            +
-          </button>
-          <label className={'array.label'}>{label}</label>
-        </legend>
-        <div className={classNames.children}>
-          {data ? (
-            range(0, data.length).map(index => {
-              const childPath = composePaths(path, `${index}`);
+    classNames,
+    data,
+    label,
+    path,
+    schema,
+    addItem,
+    uischema,
+    uischemas,
+    renderers,
+    rootSchema
+}: BPMNArrayComponentProps): JSX.Element => {
+    const childUiSchema = useMemo(
+        () => findUISchema(uischemas, schema, uischema.scope, path, undefined, uischema, rootSchema),
+        [uischemas, schema, uischema.scope, path, uischema, rootSchema]
+    );
+    return (
+        <div className={classNames.wrapper}>
+            <fieldset className={classNames.fieldSet}>
+                <legend>
+                    <button className={classNames.button} onClick={addItem(path, createDefaultValue(schema))}>
+                        +
+                    </button>
+                    <label className={'array.label'}>{label}</label>
+                </legend>
+                <div className={classNames.children}>
+                    {data ? (
+                        range(0, data.length).map(index => {
+                            const childPath = composePaths(path, `${index}`);
 
-              return (
-                <JsonFormsDispatch
-                  schema={schema}
-                  uischema={childUiSchema || uischema}
-                  path={childPath}
-                  key={childPath}
-                  renderers={renderers}
-                />
-              );
-            })
-          ) : (
-              <p>No data</p>
-            )}
+                            return (
+                                <JsonFormsDispatch
+                                    schema={schema}
+                                    uischema={childUiSchema || uischema}
+                                    path={childPath}
+                                    key={childPath}
+                                    renderers={renderers}
+                                />
+                            );
+                        })
+                    ) : (
+                        <p>No data</p>
+                    )}
+                </div>
+            </fieldset>
         </div>
-      </fieldset>
-    </div>
-  );
+    );
 };
 
+export interface BPMNArrayControlProps extends ArrayControlProps, VanillaRendererProps {
+    getStyleAsClassName(string: string, ...args: any[]): string;
+    uischemas: JsonFormsUISchemaRegistryEntry[];
+}
 // we rename 'ControlRenderer' into 'Control'
 // eslint-disable-next-line max-len
-const BPMNArrayControl =
-    ({
-        schema,
-        uischema,
-        data,
-        path,
-        rootSchema,
-        uischemas,
-        addItem,
-        getStyle,
-        getStyleAsClassName,
-        removeItems,
-        id,
-        visible,
-        enabled,
-        errors
-    }: ArrayControlProps & VanillaRendererProps) => {
-
-        const controlElement = uischema as ControlElement;
-        const labelDescription = Helpers.createLabelDescriptionFrom(controlElement, schema);
-        const label = labelDescription.show ? labelDescription.text : '';
-        const controlClassName =
-            `control ${(Helpers.convertToValidClassName(controlElement.scope))}`;
-        const fieldSetClassName = getStyleAsClassName('array.layout');
-        const buttonClassName = getStyleAsClassName('array.button');
-        const childrenClassName = getStyleAsClassName('array.children');
-        const classNames: { [className: string]: string } = {
-            wrapper: controlClassName,
-            fieldSet: fieldSetClassName,
-            button: buttonClassName,
-            children: childrenClassName
-        };
-
-        return (
-            <BPMNArrayComponent
-                errors={errors}
-                getStyle={getStyle}
-                getStyleAsClassName={getStyleAsClassName}
-                removeItems={removeItems}
-                classNames={classNames}
-                data={data}
-                label={label}
-                path={path}
-                addItem={addItem}
-                uischemas={uischemas}
-                uischema={uischema}
-                schema={schema}
-                rootSchema={rootSchema}
-                id={id}
-                visible={visible}
-                enabled={enabled}
-            />
-        );
+const BPMNArrayControl = ({
+    schema,
+    uischema,
+    data,
+    path,
+    rootSchema,
+    uischemas,
+    addItem,
+    getStyle,
+    getStyleAsClassName,
+    removeItems,
+    id,
+    visible,
+    enabled,
+    errors
+}: BPMNArrayControlProps): JSX.Element => {
+    const controlElement = uischema as ControlElement;
+    const labelDescription = Helpers.createLabelDescriptionFrom(controlElement, schema);
+    const label = labelDescription.show ? labelDescription.text ?? '' : '';
+    const controlClassName = `control ${Helpers.convertToValidClassName(controlElement.scope)}`;
+    const fieldSetClassName = getStyleAsClassName('array.layout');
+    const buttonClassName = getStyleAsClassName('array.button');
+    const childrenClassName = getStyleAsClassName('array.children');
+    const classNames: { [className: string]: string } = {
+        wrapper: controlClassName,
+        fieldSet: fieldSetClassName,
+        button: buttonClassName,
+        children: childrenClassName
     };
 
+    return (
+        <BPMNArrayComponent
+            errors={errors}
+            getStyle={getStyle}
+            getStyleAsClassName={getStyleAsClassName}
+            removeItems={removeItems}
+            classNames={classNames}
+            data={data}
+            label={label}
+            path={path}
+            addItem={addItem}
+            uischemas={uischemas}
+            uischema={uischema}
+            schema={schema}
+            rootSchema={rootSchema}
+            id={id}
+            visible={visible}
+            enabled={enabled}
+        />
+    );
+};
 
 /**
  * Export the Custom Renderer and  Tester for EventDefinitions (eventdefinitions)
  */
-export const BPMNEventDefinitionRendererPrio: any = { 
-  tester: rankWith(6,scopeEndsWith('conditions')), 
-  renderer: BPMNArrayControl
-  // withJsonFormsControlProps(BPMNArrayControl)
+export const BPMNEventDefinitionRendererPrio: any = {
+    tester: rankWith(6, scopeEndsWith('conditions')),
+    renderer: BPMNArrayControl
+    // withJsonFormsControlProps(BPMNArrayControl)
 };
-
-
-
