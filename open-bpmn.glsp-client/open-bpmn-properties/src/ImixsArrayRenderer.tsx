@@ -13,8 +13,6 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-// import React from 'react';
-// import * as React from 'react';
 import {
     ArrayControlProps,
     composePaths,
@@ -148,7 +146,7 @@ const BPMNArrayControl = ({
 /**
  * Export the Custom Renderer and  Tester for EventDefinitions (eventdefinitions)
  */
-export const BPMNEventDefinitionRendererPrio: any = {
+export const BPMNArrayRenderer: any = {
     tester: rankWith(6, scopeEndsWith('conditions')),
     renderer: BPMNArrayControl
     // withJsonFormsControlProps(BPMNArrayControl)
