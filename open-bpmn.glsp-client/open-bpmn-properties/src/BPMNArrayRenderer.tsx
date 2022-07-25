@@ -20,21 +20,25 @@ import {
     createDefaultValue,
     findUISchema,
     Helpers,
-    JsonFormsUISchemaRegistryEntry,
+    JsonFormsUISchemaRegistryEntry,JsonFormsRendererRegistryEntry,
     rankWith,
     scopeEndsWith
 } from '@jsonforms/core';
-import { JsonFormsDispatch } from '@jsonforms/react';
-import { VanillaRendererProps } from '@jsonforms/vanilla-renderers';
+import { JsonFormsDispatch,withJsonFormsArrayControlProps } from '@jsonforms/react';
+import { VanillaRendererProps,withVanillaControlProps } from '@jsonforms/vanilla-renderers';
 import range from 'lodash/range';
 import React, { useMemo } from 'react';
 
-export interface BPMNArrayComponentProps extends ArrayControlProps, VanillaRendererProps {
+/*export interface BPMNArrayComponentProps extends ArrayControlProps, VanillaRendererProps {
     uischemas: JsonFormsUISchemaRegistryEntry[];
     classNames: {
         [className: string]: string;
     };
-}
+}*/
+
+export interface BPMNArrayComponentProps extends ArrayControlProps, VanillaRendererProps {}
+// type BPMNArrayComponentProps = ArrayControlProps & VanillaRendererProps;
+
 // We rename ''control'' into 'component'
 const BPMNArrayComponent = ({
     classNames,
@@ -146,8 +150,7 @@ const BPMNArrayControl = ({
 /**
  * Export the Custom Renderer and  Tester for EventDefinitions (eventdefinitions)
  */
-export const BPMNArrayRenderer: any = {
-    tester: rankWith(6, scopeEndsWith('conditions')),
-    renderer: BPMNArrayControl
-    // withJsonFormsControlProps(BPMNArrayControl)
+export const BxPMNEventDefinitionRendererEntry: JsonFormsRendererRegistryEntry = {
+    tester: rankWith(7, scopeEndsWith('conditions')),
+    renderer: withVanillaControlProps(withJsonFormsArrayControlProps(BPMNArrayControl))
 };
