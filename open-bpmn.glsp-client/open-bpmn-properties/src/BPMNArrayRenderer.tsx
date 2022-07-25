@@ -111,9 +111,9 @@ const BPMNArrayControl = ({
     const labelDescription = Helpers.createLabelDescriptionFrom(controlElement, schema);
     const label = labelDescription.show ? labelDescription.text ?? '' : '';
     const controlClassName = `control ${Helpers.convertToValidClassName(controlElement.scope)}`;
-    const fieldSetClassName = getStyleAsClassName('array.layout');
-    const buttonClassName = getStyleAsClassName('array.button');
-    const childrenClassName = getStyleAsClassName('array.children');
+    const fieldSetClassName = 'array.layout';
+    const buttonClassName = 'array.button';
+    const childrenClassName = 'array.children';
     const classNames: { [className: string]: string } = {
         wrapper: controlClassName,
         fieldSet: fieldSetClassName,

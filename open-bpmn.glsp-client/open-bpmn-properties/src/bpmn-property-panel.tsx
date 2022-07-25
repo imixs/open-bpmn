@@ -42,7 +42,7 @@ import * as ReactDOM from 'react-dom';
 // import RatingControl from './RatingControl';
 // import ratingControlTester from './ratingControlTester';
 // import {BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
-import {BPMNArrayRenderer} from './ImixsArrayRenderer';
+import {BPMNArrayRenderer} from './BPMNArrayRenderer';
 
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
