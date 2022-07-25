@@ -2,7 +2,7 @@
   "name": "@open-bpmn/open-bpmn-properties",
   "version": "0.3.0",
   "description": "GLSP property panel for BPMN 2.0",
-  "license": "(GPL-3.0)",   
+  "license": "(GPL-3.0)",
   "dependencies": {
     "@eclipse-glsp/client": "^1.0.0",
     "@open-bpmn/open-bpmn-model": "0.3.0",
@@ -10,14 +10,14 @@
     "@jsonforms/react": "3.0.0-beta.5",
     "@jsonforms/vanilla-renderers": "3.0.0-beta.5",
     "balloon-css": "^0.5.0"
-  },  
-    "peerDependencies": {
+  },
+  "peerDependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
-  },  
+  },
   "scripts": {
     "prepare": "yarn clean && yarn build && yarn lint",
-    "clean": "rimraf lib",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "build": "tsc",
     "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
     "watch": "tsc -w"

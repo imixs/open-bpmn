@@ -5,7 +5,8 @@
     "outDir": "lib",
     "baseUrl": ".",
     "jsx": "react",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "esModuleInterop": true
   },
   "include": ["src"]
 }
