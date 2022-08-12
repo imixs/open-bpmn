@@ -42,12 +42,35 @@ If you only want to clean up the workspace, you can run the script:
 	$ ./wipe-full.sh
 	$ ./build.sh -r
 
-## Dependencies
+## JsonForms
 
-The open-bpmn-glsp client module depends on the following nodejs versions:
+We use the [JsonForms component](https://github.com/eclipsesource/jsonforms) to render the property panel of a selected BPMN element. 
+JsonForms provides different renderes to display form elements like Input fields and buttons in a common layout. In OpenBPMN we use the so called 'VanillaRenderer' to display the property form elements.
 
+If you want to contribute to this project or implement a new renderer components it is recommended to first create a fork of the JsonForms project so you can later start pull a request to contribute your code.
 
-TODO
+For a first time setup:
 
-......
-https://stackoverflow.com/questions/56838735/how-to-import-a-common-module-in-cra-using-yarn-workspaces
+* Install [node.js](https://nodejs.org/) (only Node 14 and npm 6 is currently supported)
+* Fork this repository on Github 
+* Clone this repository
+
+Now you can start building the project and run the examples. First of all you need to install the base dependencies, then run lerna and then build all packages. After that you can execute the example application.
+
+So starting from the root directory:
+
+	# reset and clean everything
+	git reset --hard
+	git clean -dfx
+
+	# build JSON Forms
+	npm ci
+	npm run init
+	npm run build
+
+	# e.g. Start React Vanilla example application
+	cd packages/vanilla && npm run dev
+
+Run the example from your web browser: http://localhost:8080/#array-with-detail
+
+<img src="../doc/images/jsonforms/example-01.png" />

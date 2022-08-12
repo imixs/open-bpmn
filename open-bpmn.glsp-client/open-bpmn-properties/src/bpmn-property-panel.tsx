@@ -42,7 +42,7 @@ import * as ReactDOM from 'react-dom';
 // import RatingControl from './RatingControl';
 // import ratingControlTester from './ratingControlTester';
 // import {BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
-import {BPMNArrayRenderer} from './BPMNArrayRenderer';
+//import {BPMNArrayRenderer} from './BPMNArrayRenderer';
 
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
@@ -227,7 +227,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                     const bpmnRenderers = [
                         ...vanillaRenderers,
                         // register custom renderers
-                        BPMNArrayRenderer
+                        //BPMNArrayRenderer
                         // { tester: ratingControlTester, renderer: RatingControl }
                     ];
 
