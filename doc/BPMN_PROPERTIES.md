@@ -25,9 +25,9 @@ The schemata is generated server side by the corresponding BPMN Extension by imp
 
 	
 	
-### Custom Renderer
+### Custom Renderer (deprecated)
 
-Most of the data to be displyed can be handled by JsonForms out of the box, so we only need to provide the corresponding schemata. But in some cases - e.g. the BPMN Event definitions - the corresponding input form is more complex. For this we implement a [custom renderer](https://jsonforms.io/docs/tutorial/custom-renderers) to provide an optimized input form. 
+Most of the data to be displayed can be handled by JsonForms out of the box, so we only need to provide the corresponding schemata. But in some cases - e.g. the BPMN Event definitions - the corresponding input form is more complex. For this we implement a [custom renderer](https://jsonforms.io/docs/tutorial/custom-renderers) to provide an optimized input form. 
 
 The custom renderer for Event definitions splits into tree parts:
 

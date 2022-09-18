@@ -191,7 +191,7 @@ public class BPMNDiagramModule extends DiagramModule {
      *
      * @param binding
      */
-    protected void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
+    public void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
         // bind BPMN default extensions
         binding.addBinding().to(DefaultBPMNEventExtension.class);
         binding.addBinding().to(DefaultBPMNTaskExtension.class);

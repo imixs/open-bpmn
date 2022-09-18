@@ -60,7 +60,6 @@ Now you can start building the project and run the examples. First of all you ne
 So starting from the root directory:
 
 	# reset and clean everything
-	git reset --hard
 	git clean -dfx
 
 	# build JSON Forms
@@ -69,7 +68,7 @@ So starting from the root directory:
 	npm run build
 
 	# e.g. Start React Vanilla example application
-	cd packages/vanilla && npm run dev
+	cd packages/vanilla && npm run dev 
 
 Run the example from your web browser: http://localhost:8080/#array-with-detail
 

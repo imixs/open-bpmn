@@ -22,6 +22,8 @@ One goal of *Open BPMN* is to not only provide a graphical modeling tool, but al
 
 Open Source Workflow Engines like [Imixs-Workflow](https://www.imixs.org) integrate Open BPMN into there tooling platforms and extend the core features of BPMN 2.0 with platform specific functionality. 
 
+[Learn more about Open BPMN Extensions.](./doc/BPMN_EXTENSIONS.md)
+
 ## Architecture
 
 Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/), an extensible open-source framework for building custom diagram editors based on web technologies.
