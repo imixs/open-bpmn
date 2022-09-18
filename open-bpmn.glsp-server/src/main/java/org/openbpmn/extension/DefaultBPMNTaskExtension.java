@@ -97,7 +97,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
             dataBuilder //
                     .addData("scriptformat", taskElement.getAttribute("scriptFormat")) //
-                    .addData("script", "");
+                    .addData("script", taskElement.getChildNodeContent("script"));
 
             schemaBuilder. //
                     addProperty("scriptformat", "string", "Format of the script"). //
@@ -133,7 +133,10 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 continue;
             }
 
-            // TODO implement Event features
+            if ("script".equals(feature)) {
+                bpmnElement.setChildNodeContent("script", value, null);
+                continue;
+            }
         }
 
     }

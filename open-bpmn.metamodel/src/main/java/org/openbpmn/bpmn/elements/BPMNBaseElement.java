@@ -149,6 +149,62 @@ public abstract class BPMNBaseElement {
     }
 
     /**
+     * Set the new childNode with a given content for this element in a CDATA
+     * element.
+     * <p>
+     * The id is optional and is only set if not null
+     * 
+     * @param nodeName name of the new child node
+     * @param content  the content
+     * @param id       optional id
+     */
+    public void setChildNodeContent(String nodeName, String content, String id) {
+        Element childNode = null;
+        // load the element
+        List<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
+        if (elementList.size() == 0) {
+            // create new node
+            childNode = model.createElement(BPMNNS.BPMN2, nodeName);
+            if (id != null && !id.isEmpty()) {
+                childNode.setAttribute("id", id);
+            }
+            elementNode.appendChild(childNode);
+        } else {
+            // get the first one and remove old values
+            childNode = elementList.get(0);
+            // remove old child nodes of the the node...
+            NodeList subChildList = childNode.getChildNodes();
+            for (int i = 0; i < subChildList.getLength(); i++) {
+                Node child = subChildList.item(i);
+                childNode.removeChild(child);
+            }
+        }
+
+        // set content as CDATA text
+        CDATASection cdata = getDoc().createCDATASection(content);
+        childNode.appendChild(cdata);
+    }
+
+    /**
+     * Returns the content of a given childNode as a string
+     * 
+     * @return String - can be empty
+     */
+    public String getChildNodeContent(String nodeName) {
+        Element childNode = null;
+        // lazy loading of documentation element
+        List<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
+        if (elementList.size() > 0) {
+            // get the first one and update the value only
+            childNode = elementList.get(0);
+            if (childNode.getFirstChild() != null) {
+                return childNode.getFirstChild().getNodeValue();
+            }
+        }
+        return ""; // no element found
+    }
+
+    /**
      * Returns the value of a given attribute by name.
      * <p>
      * The method operates directly on the attriubteMap loaded in the constructor.
