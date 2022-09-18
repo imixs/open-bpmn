@@ -3,7 +3,6 @@ package org.openbpmn.bpmn.elements;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * An Activity is work that is performed within a Business Process. An Activity

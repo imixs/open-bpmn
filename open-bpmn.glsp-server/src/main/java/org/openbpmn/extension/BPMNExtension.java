@@ -120,7 +120,7 @@ public interface BPMNExtension {
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name", "category"). //
-    
+
          schemaBuilder.addProperty("name", "string", "Please enter your name");
      *
      * }
@@ -133,7 +133,10 @@ public interface BPMNExtension {
             UISchemaBuilder uiSchemaBuilder);
 
     /**
-     * Updates the properties data of a BPMN Element
+     * Updates the properties data of a BPMN Element.
+     * <p>
+     * An extension can also update the given json object during this operation if
+     * needed.
      *
      * @param json        - a JSON structure representing the data
      * @param bpmnElement - the BPMN element to be updated

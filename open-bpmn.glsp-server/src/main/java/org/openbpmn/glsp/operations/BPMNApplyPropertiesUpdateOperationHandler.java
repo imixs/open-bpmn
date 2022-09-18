@@ -108,21 +108,20 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         }
 
         // Now call the extensions to update the property data according to the BPMN
-        // element
+        // element. The updatePropertiesData can also update the given JSON object!
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
-                    logger.info("...We need to update the BPMN Element with the extension " + extension.getNamespace());
                     extension.updatePropertiesData(json, bpmnElement);
                 }
             }
         }
 
+        // finally we need ot update the JSONFormsData property of the selected element
+        element.get().getArgs().put("JSONFormsData", json.toString());
         logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
-        // we do not need to reset the modelState here!
-        // modelState.reset();
     }
 
 }

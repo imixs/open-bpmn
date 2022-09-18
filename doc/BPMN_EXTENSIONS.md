@@ -48,6 +48,7 @@ This Method is called to generate a JSON Forms Object when the element is loaded
 
 You can add a new data field by calling
 
+```java
 	builder.add("myField","someData")
              uiSchemaBuilder. //
                 addCategory("General"). //
@@ -55,25 +56,26 @@ You can add a new data field by calling
                 addElements("name", "category"). //
     
      schemaBuilder.addProperty("name", "string", "Please enter your name");
+```
 
 This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the JsonForms
 
 
 ### updatePropertiesData
 
-Updates the properties data provided by the modeling tool in the corresponding BPMN Element
+Updates the properties data provided by the modeling tool in the corresponding BPMN Element. The method receives the BPMNElement and a json object containing all new values. An extension can also update the given json object during this operation if needed. 
 
 
 ## Register a BPMNExtension
 
 To register a BPMNExtension the method `configureBPMNExtensions` of the `BPMNDiagramModule` can be overwritten. In this method you can register new custom Extension:
 
+```java
     public void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
         // bind BPMN default extensions
         super.configureBPMNExtensions(binding);
 
         // register custom Extensions 
         binding.addBinding().to(MyBPMNTaskExtension.class);
-
     }
-
+```

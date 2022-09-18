@@ -94,12 +94,9 @@ public class BPMNGModelFactory implements GModelFactory {
 
     @Override
     public void createGModel() {
-        // call extension.....
-        if (extensions != null) {
-            System.out.println("-------_> Wir haben " + extensions.size() + "  BPMNExtensions :-)");
-
-        } else {
-            System.out.println("-------_> Wir haben KEINE BPMNExtension :-(((");
+        // verify extensions....
+        if (extensions == null || extensions.size() == 0) {
+            logger.warning("no BPMNExtension found! Check DiagramModule->configureBPMNExtensions");
         }
 
         if (!modelState.isInitalized()) {
@@ -126,7 +123,7 @@ public class BPMNGModelFactory implements GModelFactory {
             modelState.setInitalized(true);
             logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
         } else {
-            logger.info("===> createGModel skipped!");
+            logger.fine("===> createGModel skipped!");
         }
     }
 

@@ -80,12 +80,10 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
         dataBuilder. //
                 addData("name", bpmnElement.getName()). //
-                addData("rating", "3"). //
                 addData("documentation", bpmnElement.getDocumentation());
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("rating", "integer", null). //
                 addProperty("documentation", "string", null);
 
         BPMNEvent bpmnEvent = (BPMNEvent) bpmnElement;
@@ -97,7 +95,6 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addCategory("General"). //
                 addLayout(Layout.VERTICAL). //
                 addElements("name"). //
-                addElements("rating"). //
                 addElement("documentation", "Documentation", multilineOption);
 
         // check Event Definitions

@@ -96,7 +96,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         BPMNFlowElement taskElement = (BPMNFlowElement) bpmnElement;
         if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
             dataBuilder //
-                    .addData("scriptformat", "") //
+                    .addData("scriptformat", taskElement.getAttribute("scriptFormat")) //
                     .addData("script", "");
 
             schemaBuilder. //
@@ -109,6 +109,9 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                     addElements("scriptformat"). //
                     addElement("script", "Script", multilineOption); //
         }
+
+        // update corresponding GModelElement....
+
     }
 
     @Override
@@ -123,7 +126,12 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         for (String feature : features) {
             value = json.getString(feature);
 
-            logger.fine("...update feature = " + feature);
+            logger.info("...update feature = " + feature);
+
+            if ("scriptformat".equals(feature)) {
+                bpmnElement.setAttribute("scriptFormat", value);
+                continue;
+            }
 
             // TODO implement Event features
         }
