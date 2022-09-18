@@ -23,8 +23,10 @@ import java.util.logging.Logger;
 import javax.json.JsonObject;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -88,11 +90,25 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption). //
+                addElement("documentation", "Documentation", multilineOption);
 
-                addCategory("Task"). //
-                addLayout(Layout.VERTICAL); //
+        // Script-Task?
+        BPMNFlowElement taskElement = (BPMNFlowElement) bpmnElement;
+        if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
+            dataBuilder //
+                    .addData("scriptformat", "") //
+                    .addData("script", "");
 
+            schemaBuilder. //
+                    addProperty("scriptformat", "string", "Format of the script"). //
+                    addProperty("script", "string", "Script to be run when this Task is performed.");
+
+            uiSchemaBuilder. //
+                    addCategory("Script"). //
+                    addLayout(Layout.VERTICAL). //
+                    addElements("scriptformat"). //
+                    addElement("script", "Script", multilineOption); //
+        }
     }
 
     @Override
