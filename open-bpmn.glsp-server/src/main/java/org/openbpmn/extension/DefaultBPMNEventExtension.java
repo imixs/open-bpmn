@@ -47,6 +47,9 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
         super();
     }
 
+    /**
+     * Returns if this Extension can be applied to the given elementTypeID
+     */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
         return BPMNModel.BPMN_EVENTS.contains(elementTypeId);

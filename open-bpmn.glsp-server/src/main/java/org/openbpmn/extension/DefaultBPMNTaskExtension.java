@@ -73,20 +73,20 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
         dataBuilder //
                 .addData("name", bpmnElement.getName()) //
-                .addData("execution", "exec") //
-                .addData("documentation", "some test docu");
+                // .addData("execution", "exec") //
+                .addData("documentation", bpmnElement.getDocumentation());
 
         schemaBuilder. //
-                addProperty("name", "string", "Please enter your name :-)"). //
-                addProperty("execution", "string", null). //
-                addProperty("documentation", "string", null);
+                addProperty("name", "string", null). //
+                // addProperty("execution", "string", null). //
+                addProperty("documentation", "string", "Task description.");
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
-                addElements("name", "execution"). //
+                addElements("name"). //
                 addLayout(Layout.VERTICAL). //
                 addElement("documentation", "Documentation", multilineOption). //
 

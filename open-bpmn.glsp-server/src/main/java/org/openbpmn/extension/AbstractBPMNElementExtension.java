@@ -24,7 +24,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 
 /**
- * This is Abstract implementation proivides some core funtionallity like update
+ * This is Abstract implementation provides some core funtionallity like update
  * the data fields name and documentation which is identically for all
  * BPMNElements.
  *

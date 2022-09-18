@@ -44,7 +44,7 @@ Adds an extension to a given BPMN Element
 
 ### buildPropertiesForm
 
-This Helper Method is called to generate a JSON Forms Object by adding the corresponding BPMNElement properties.
+This Method is called to generate a JSON Forms Object when the element is loaded. The method adds the BPMNElement properties into a JSON Schema.
 
 You can add a new data field by calling
 
@@ -61,7 +61,7 @@ This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the JsonForm
 
 ### updatePropertiesData
 
-Updates the properties data of a BPMN Element
+Updates the properties data provided by the modeling tool in the corresponding BPMN Element
 
 
 ## Register a BPMNExtension
