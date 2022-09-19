@@ -41,9 +41,11 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
     private static final String H_GRAB = "hGrab";
     private static final String H_ALIGN = "hAlign";
 
-    public PoolNodeBuilder(final String name) {
-        super(ModelTypes.POOL);
+    public PoolNodeBuilder(final String type, final String name) {
+        super(type);
         this.name = name;
+        this.addCssClass("gateway");
+        this.addCssClass(type);
     }
 
     @Override
@@ -60,8 +62,8 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
         this.name = name;
     }
 
-    @Override
-    protected void setProperties(final Pool node) {
+    // @Override
+    protected void setPropertiesOLD(final Pool node) {
         super.setProperties(node);
         node.setName(name);
         node.setLayout(GConstants.Layout.VBOX);
@@ -71,6 +73,23 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
         node.getCssClasses().add("pool");
         node.getChildren().add(createLabelCompartment(node));
         node.getChildren().add(createStructCompartment(node));
+    }
+
+    @Override
+    public void setProperties(final Pool node) {
+        super.setProperties(node);
+        node.setName(name);
+
+        node.setLayout(GConstants.Layout.VBOX);
+        // Set min width/height
+        node.getLayoutOptions().put(H_ALIGN, "center");
+        node.getLayoutOptions().put(H_GRAB, false);
+        node.getLayoutOptions().put(V_GRAB, false);
+        node.getCssClasses().add("pool");
+
+        node.getChildren().add(createLabelCompartment(node));
+        node.getChildren().add(createStructCompartment(node));
+
     }
 
     private GCompartment createLabelCompartment(final Pool node) {

@@ -49,6 +49,7 @@ import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
@@ -56,11 +57,13 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
+import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.bpmn.SequenceFlow;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.elements.event.EventNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
+import org.openbpmn.glsp.elements.pool.PoolNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -153,6 +156,25 @@ public class BPMNGModelFactory implements GModelFactory {
 
         List<GModelElement> entityNodes = new ArrayList<>();
         try {
+
+            // Add all Pools
+            for (BPMNParticipant participant : process.getParticipants()) {
+                logger.info("participant: " + participant.getName());
+                BPMNPoint bpmnPoint = participant.getBounds().getPosition();
+                GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+
+                PoolNodeBuilder builder = new PoolNodeBuilder(participant.getType(), participant.getName());
+                // Build the GLSP Node....
+                Pool pool = builder //
+                        .id(participant.getId()) //
+                        .position(point) //
+                        .build();
+
+                // applyBPMNExtensions(taskNode, activity);
+
+                entityNodes.add(pool);
+            }
+
             // Add all Tasks
             for (BPMNActivity activity : process.getActivities()) {
                 logger.fine("activity: " + activity.getName());

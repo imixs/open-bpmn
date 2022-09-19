@@ -15,42 +15,66 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.pool;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.graph.builder.impl.GArguments;
-import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
+import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
-import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.model.BPMNGModelState;
+
+import com.google.inject.Inject;
 
 public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     private static Logger logger = Logger.getLogger(CreatePoolHandler.class.getName());
+    private String elementTypeId;
+
+    @Inject
+    protected BPMNGModelState modelState;
+
+    @Inject
+    protected ActionDispatcher actionDispatcher;
 
     public CreatePoolHandler() {
-        super(ModelTypes.POOL);
+        super(BPMNTypes.PARTICIPANT);
     }
 
-    protected PoolNodeBuilder builder(final Optional<GPoint> point, final GModelState modelState) {
-
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.POOL, "pool", modelState);
-        String name = "Pool " + nodeCounter;
-
-        return new PoolNodeBuilder(name) //
-                .position(point.orElse(null)).addArguments(GArguments.cornerRadius(5));
+    @Override
+    public void executeOperation(final CreateNodeOperation operation) {
+        elementTypeId = operation.getElementTypeId();
+        // now we add a new gateway into the source model
+        String gatewayID = "participant-" + BPMNModel.generateShortID();
+        logger.fine("===== > createNode participantID=" + gatewayID);
+        try {
+            BPMNProcess process = modelState.getBpmnModel().getContext();
+            BPMNParticipant participant = process.buildParticipant(gatewayID, getLabel(), operation.getElementTypeId());
+            Optional<GPoint> point = operation.getLocation();
+            if (point.isPresent()) {
+                participant.getBounds().updateLocation(point.get().getX(), point.get().getY());
+                participant.getBounds().updateDimension(BPMNParticipant.DEFAULT_WIDTH, BPMNParticipant.DEFAULT_HEIGHT);
+            }
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+        }
+        modelState.reset();
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
     }
 
     @Override
     public String getLabel() {
-        return "Pool";
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.POOL, elementTypeId, modelState);
+        nodeCounter++; // start with 1
+        return "Pool-" + nodeCounter;
     }
 
-    @Override
-    protected void executeOperation(final CreateNodeOperation operation) {
-        // TODO Auto-generated method stub
-        logger.warning("NOT YET IMPLEMENTED: CreatePoolHandler.executeOperation");
-    }
 }

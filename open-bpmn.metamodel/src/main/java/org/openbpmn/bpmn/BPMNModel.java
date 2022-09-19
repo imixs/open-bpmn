@@ -103,6 +103,13 @@ public class BPMNModel {
     });
 
     public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { BPMNTypes.SEQUENCE_FLOW });
+    
+    
+    
+    public static final String PARTICIPANT = "participant";
+    
+  
+    
 
     private Element definitions;
     private Document doc;
@@ -425,6 +432,19 @@ public class BPMNModel {
         return isActivity(element.getElementNode());
     }
 
+    
+    
+    /**
+     * Returns true if the node is an participant node.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isParticipant(Node node) {
+        return (PARTICIPANT.equals(node.getLocalName()));
+    }
+
+    
     /**
      * Returns true if the node is a gateway node.
      * 

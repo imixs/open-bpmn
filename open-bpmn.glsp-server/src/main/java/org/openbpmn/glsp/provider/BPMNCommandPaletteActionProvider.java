@@ -38,7 +38,6 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.bpmn.TaskNode;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -101,7 +100,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
                 // Pool
-                new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(ModelTypes.POOL,
+                new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(BPMNTypes.PARTICIPANT,
                         lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))
 
         ));

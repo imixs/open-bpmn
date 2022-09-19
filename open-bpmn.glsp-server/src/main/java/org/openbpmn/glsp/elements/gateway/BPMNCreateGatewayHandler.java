@@ -65,7 +65,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
-        // now we add this task into the source model
+        // now we add a new gateway into the source model
         String gatewayID = "gateway-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
         try {

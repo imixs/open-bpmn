@@ -34,7 +34,6 @@ import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.extension.BPMNExtension;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -179,7 +178,7 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPalettePools() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(ModelTypes.POOL)));
+        result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(BPMNTypes.PARTICIPANT)));
         return result;
     }
 
