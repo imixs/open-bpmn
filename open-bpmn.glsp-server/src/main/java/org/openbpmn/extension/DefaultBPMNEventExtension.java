@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javax.json.JsonObject;
 
@@ -72,7 +73,11 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      * This Helper Method generates a JSONForms Object with the BPMNElement
      * properties.
      * <p>
-     * This json object is used on the GLSP Client to generate the EMF JsonForms
+     * This JSON object is used on the GLSP Client to generate the EMF JsonForms
+     * <p>
+     * The method iterates over all eventDefinitions and adds a separate tab
+     * including definitions of this type. Note: an event can have multiple
+     * definitions of the same type.
      */
     @Override
     public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
@@ -97,47 +102,186 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addElements("name"). //
                 addElement("documentation", "Documentation", multilineOption);
 
-        // check Event Definitions
-        Map<String, String> arrayDetailOption = new HashMap<>();
-        // GENERATED HorizontalLayout
-        arrayDetailOption.put("detail", "GENERATED");
-
         try {
             List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
-            if (eventDefinitions.size() > 0) {
-                uiSchemaBuilder. //
-                        addCategory("Event"). //
-                        addLayout(Layout.VERTICAL);
-                uiSchemaBuilder.addElement("conditions", "Conditions", arrayDetailOption);
-                // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
+            // Conditional
+            List<Element> conditionalEventDefinitions = eventDefinitions.stream()
+                    .filter(c -> "conditionalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+            addConditionalEventDefinitions(conditionalEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
-                schemaBuilder.addArray("conditions");
-                schemaBuilder.addProperty("formalExpression", "string", null, null);
-                schemaBuilder.addProperty("language", "string", null, null);
-                schemaBuilder.addProperty("condition", "string", null, null);
+            // Signal
+            List<Element> signalEventDefinitions = eventDefinitions.stream()
+                    .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+            addSignalEventDefinitions(signalEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
-                /*
-                 * Now we can create the data structure - each conditionalEventDefinition is
-                 * represented as a separate object
-                 */
-                dataBuilder.addArray("conditions");
-                for (Element definition : eventDefinitions) {
-
-                    if ("conditionalEventDefinition".equals(definition.getLocalName())) {
-                        dataBuilder.addObject();
-
-                        dataBuilder.addData("formalExpression", "...some expression...");
-                        dataBuilder.addData("language", "java");
-                        dataBuilder.addData("condition", "blue");
-                    }
-
-                }
-            }
+            // Link
+            List<Element> linkEventDefinitions = eventDefinitions.stream()
+                    .filter(c -> "linkEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+            addLinkEventDefinitions(linkEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
         } catch (BPMNModelException e) {
             logger.warning("Failed to compute EventDefinitions: " + e.getMessage());
             if (logger.isLoggable(Level.FINE)) {
                 e.printStackTrace();
+            }
+        }
+
+//        // check Event Definitions
+//        Map<String, String> arrayDetailOption = new HashMap<>();
+//        // GENERATED HorizontalLayout
+//        arrayDetailOption.put("detail", "GENERATED");
+//        try {
+//
+//
+//            // conditionalEventDefinition
+//            List<Element> conditionalEventDefinitions = eventDefinitions.stream()
+//                    .filter(c -> "conditionalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+//
+//            if (conditionalEventDefinitions.size() > 0) {
+//                uiSchemaBuilder. //
+//                        addCategory("Conditions"). //
+//                        addLayout(Layout.VERTICAL);
+//                uiSchemaBuilder.addElement("conditions", "Conditions", arrayDetailOption);
+//                // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
+//
+//                schemaBuilder.addArray("conditions");
+//                schemaBuilder.addProperty("formalExpression", "string", null, null);
+//                schemaBuilder.addProperty("language", "string", null, null);
+//                schemaBuilder.addProperty("condition", "string", null, null);
+//
+//                /*
+//                 * Now we can create the data structure - each conditionalEventDefinition is
+//                 * represented as a separate object
+//                 */
+//                dataBuilder.addArray("conditions");
+//                for (Element definition : conditionalEventDefinitions) {
+//                    dataBuilder.addObject();
+//                    dataBuilder.addData("formalExpression", "...some expression...");
+//                    dataBuilder.addData("language", "java");
+//                    dataBuilder.addData("condition", "blue");
+//                }
+//            }
+//
+//        } catch (BPMNModelException e) {
+//            logger.warning("Failed to compute EventDefinitions: " + e.getMessage());
+//            if (logger.isLoggable(Level.FINE)) {
+//                e.printStackTrace();
+//            }
+//        }
+
+    }
+
+    /**
+     * Adds the ConditionalEvent definitions
+     *
+     * @param eventDefinitions
+     * @param dataBuilder
+     * @param schemaBuilder
+     * @param uiSchemaBuilder
+     */
+    private void addConditionalEventDefinitions(final List<Element> eventDefinitions, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
+        if (eventDefinitions.size() > 0) {
+            Map<String, String> arrayDetailOption = new HashMap<>();
+            // GENERATED HorizontalLayout
+            arrayDetailOption.put("detail", "GENERATED");
+
+            uiSchemaBuilder. //
+                    addCategory("Conditions"). //
+                    addLayout(Layout.VERTICAL);
+            uiSchemaBuilder.addElement("conditions", "Conditions", arrayDetailOption);
+            // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
+
+            schemaBuilder.addArray("conditions");
+            schemaBuilder.addProperty("formalExpression", "string", null, null);
+            schemaBuilder.addProperty("language", "string", null, null);
+            schemaBuilder.addProperty("condition", "string", null, null);
+
+            /*
+             * Now we can create the data structure - each conditionalEventDefinition is
+             * represented as a separate object
+             */
+            dataBuilder.addArray("conditions");
+            for (Element definition : eventDefinitions) {
+                dataBuilder.addObject();
+                dataBuilder.addData("formalExpression", "...some expression...");
+                dataBuilder.addData("language", "java");
+                dataBuilder.addData("condition", "blue");
+            }
+        }
+    }
+
+    /**
+     * Adds the SignalEvent definitions
+     *
+     * @param eventDefinitions
+     * @param dataBuilder
+     * @param schemaBuilder
+     * @param uiSchemaBuilder
+     */
+    private void addSignalEventDefinitions(final List<Element> eventDefinitions, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
+        if (eventDefinitions.size() > 0) {
+            Map<String, String> arrayDetailOption = new HashMap<>();
+            // GENERATED HorizontalLayout
+            arrayDetailOption.put("detail", "GENERATED");
+
+            uiSchemaBuilder. //
+                    addCategory("Signals"). //
+                    addLayout(Layout.VERTICAL);
+            uiSchemaBuilder.addElement("signals", "Signals", arrayDetailOption);
+            // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
+
+            schemaBuilder.addArray("signals");
+            schemaBuilder.addProperty("Signal", "string", null, null);
+
+            /*
+             * Now we can create the data structure - each conditionalEventDefinition is
+             * represented as a separate object
+             */
+            dataBuilder.addArray("signals");
+            for (Element definition : eventDefinitions) {
+                dataBuilder.addObject();
+                dataBuilder.addData("signal", "org.imixs.foo...");
+            }
+        }
+
+    }
+
+    /**
+     * Adds the LinkEvent definitions
+     *
+     * @param eventDefinitions
+     * @param dataBuilder
+     * @param schemaBuilder
+     * @param uiSchemaBuilder
+     */
+    private void addLinkEventDefinitions(final List<Element> eventDefinitions, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
+        if (eventDefinitions.size() > 0) {
+            Map<String, String> arrayDetailOption = new HashMap<>();
+            // GENERATED HorizontalLayout
+            arrayDetailOption.put("detail", "GENERATED");
+
+            uiSchemaBuilder. //
+                    addCategory("Link"). //
+                    addLayout(Layout.VERTICAL);
+            uiSchemaBuilder.addElement("links", "Links", arrayDetailOption);
+            // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
+
+            schemaBuilder.addArray("links");
+            schemaBuilder.addProperty("Name", "string", null, null);
+            schemaBuilder.addProperty("Target", "string", null, null);
+
+            /*
+             * Now we can create the data structure - each conditionalEventDefinition is
+             * represented as a separate object
+             */
+            dataBuilder.addArray("links");
+            for (Element definition : eventDefinitions) {
+                dataBuilder.addObject();
+                dataBuilder.addData("name", "MY_LINK");
+                dataBuilder.addData("target", "some target");
             }
         }
 
