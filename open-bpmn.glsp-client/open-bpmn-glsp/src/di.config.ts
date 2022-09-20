@@ -104,7 +104,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
-    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
+    // configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
+    configureModelElement(context, 'participant', PoolNode, RoundedCornerNodeView);
+
+	// TODO Kann das weg???
     configureModelElement(context, 'struct', SCompartment, StructureCompartmentView);
 
     // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);

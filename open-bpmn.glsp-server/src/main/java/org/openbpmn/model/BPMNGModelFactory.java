@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
+import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
@@ -162,15 +163,16 @@ public class BPMNGModelFactory implements GModelFactory {
                 logger.info("participant: " + participant.getName());
                 BPMNPoint bpmnPoint = participant.getBounds().getPosition();
                 GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-
                 PoolNodeBuilder builder = new PoolNodeBuilder(participant.getType(), participant.getName());
+                GDimension dimension = GraphUtil.dimension(participant.getBounds().getDimension().getWidth(),
+                        participant.getBounds().getDimension().getHeight());
+
                 // Build the GLSP Node....
                 Pool pool = builder //
                         .id(participant.getId()) //
                         .position(point) //
+                        .size(dimension) //
                         .build();
-
-                // applyBPMNExtensions(taskNode, activity);
 
                 entityNodes.add(pool);
             }
@@ -181,14 +183,17 @@ public class BPMNGModelFactory implements GModelFactory {
                 BPMNPoint bpmnPoint = activity.getBounds().getPosition();
                 GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
                 TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
+                GDimension dimension = GraphUtil.dimension(activity.getBounds().getDimension().getWidth(),
+                        activity.getBounds().getDimension().getHeight());
+
                 // Build the GLSP Node....
                 TaskNode taskNode = builder //
                         .id(activity.getId()) //
                         .position(point) //
+                        .size(dimension) //
                         .build();
-
+                // apply BPMN Extensions
                 applyBPMNExtensions(taskNode, activity);
-
                 entityNodes.add(taskNode);
             }
 
@@ -221,11 +226,10 @@ public class BPMNGModelFactory implements GModelFactory {
                     }
                     eventNode.setSymbol(symbol);
                 }
-
-                applyBPMNExtensions(eventNode, event);
-
                 entityNodes.add(eventNode);
 
+                // apply BPMN Extensions
+                applyBPMNExtensions(eventNode, event);
                 // now add a GLabel
                 GLabel label = null;
                 BPMNLabel bpmnLabel = event.getLabel();
@@ -252,7 +256,7 @@ public class BPMNGModelFactory implements GModelFactory {
                         .position(point) //
                         .build();
                 entityNodes.add(gatewayNode);
-
+                // apply BPMN Extensions
                 applyBPMNExtensions(gatewayNode, gateway);
 
                 // now add a GLabel

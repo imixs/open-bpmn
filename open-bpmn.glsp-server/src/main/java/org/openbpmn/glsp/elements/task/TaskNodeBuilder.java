@@ -17,6 +17,7 @@ package org.openbpmn.glsp.elements.task;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
@@ -53,11 +54,11 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
 
         node.setLayout(GConstants.Layout.HBOX);
         // Set min width/height
-        node.getLayoutOptions().put("minWidth", BPMNActivity.DEFAULT_WIDTH);
-        node.getLayoutOptions().put("minHeight", BPMNActivity.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNActivity.DEFAULT_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNActivity.DEFAULT_HEIGHT);
 
-        node.getLayoutOptions().put("hGap", 10);
-        node.getLayoutOptions().put("vAlign", "center");
+        node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));

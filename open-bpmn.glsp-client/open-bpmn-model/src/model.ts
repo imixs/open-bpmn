@@ -128,7 +128,6 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
 		const labelText = this.editableLabel?.text;
 		return labelText ? labelText : '<unknown>';
 	}
-
 }
 
 export namespace GatewayNode {
@@ -175,7 +174,11 @@ export class SequenceFlow extends SEdge {
 }
 
 export class Icon extends SShapeElement implements LayoutContainer {
-	static readonly DEFAULT_FEATURES = [boundsFeature, layoutContainerFeature, layoutableChildFeature, fadeFeature];
+	static readonly DEFAULT_FEATURES = [
+		boundsFeature,
+		layoutContainerFeature,
+		layoutableChildFeature,
+		fadeFeature];
 	layout: string;
 	override layoutOptions?: { [key: string]: string | number | boolean };
 	override size = {

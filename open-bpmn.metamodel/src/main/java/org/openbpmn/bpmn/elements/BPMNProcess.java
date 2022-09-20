@@ -530,6 +530,15 @@ public class BPMNProcess extends BPMNBaseElement {
         if (id == null || id.isEmpty()) {
             return null;
         }
+
+        Set<BPMNParticipant> listP = this.getParticipants();
+        for (BPMNParticipant element : listP) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+
+        
         Set<BPMNActivity> listA = this.getActivities();
         for (BPMNActivity element : listA) {
             if (id.equals(element.getId())) {
