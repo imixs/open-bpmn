@@ -31,10 +31,12 @@ import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
- * BPMN 2.0 Pool Element
+ * BPMN 2.0 Pool Element.
+ * <p>
+ * The method builds a GNode from a BPMNParticipant element. The builder is
+ * called from the method createGModelFromProcess of the BPMNGModelFactory.
  *
  * @author rsoika
- *
  */
 public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder> {
     private String name;
@@ -48,7 +50,6 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
         this.name = name;
         this.addCssClass("pool");
         this.addCssClass(type);
-
     }
 
     @Override
@@ -74,6 +75,9 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNParticipant.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNParticipant.DEFAULT_HEIGHT);
+
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");

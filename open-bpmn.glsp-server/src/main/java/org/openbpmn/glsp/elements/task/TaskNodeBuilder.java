@@ -24,6 +24,15 @@ import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
+/**
+ * BPMN 2.0 Task Element.
+ * <p>
+ * The method builds a GNode from a BPMNTask element. The builder is called from
+ * the method createGModelFromProcess of the BPMNGModelFactory.
+ *
+ * @author rsoika
+ *
+ */
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
     private final String name;
@@ -56,6 +65,9 @@ public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuil
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNActivity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNActivity.DEFAULT_HEIGHT);
+
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");

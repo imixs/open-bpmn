@@ -24,7 +24,10 @@ import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
- * The GatewayNodeBuilder defines the layout of BPMN gateways
+ * BPMN 2.0 Gateway Element.
+ * <p>
+ * The method builds a GNode from a BPMNGateway element. The builder is called
+ * from the method createGModelFromProcess of the BPMNGModelFactory.
  *
  * @author rsoika
  *
@@ -32,8 +35,6 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, GatewayNodeBuilder> {
 
     private final String name;
-
-    private final int SYMBOL_OFFSET = 10;
 
     public GatewayNodeBuilder(final String type, final String name) {
         super(type);

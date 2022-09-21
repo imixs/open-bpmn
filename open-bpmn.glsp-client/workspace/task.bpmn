@@ -1,38 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bpmn2:definitions
-	xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
-	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
-	xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
-	xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
-	xmlns:imixs="http://www.imixs.org/bpmn2"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	exporter="org.openbpmn" exporterVersion="1.0.0"
-	targetNamespace="http://org.openbpmn">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
 	<bpmn2:process id="process_1">
-		<bpmn2:manualTask id="task-j7zM8Vi0HosuiPPd"
-			name="Task-0" />
-		<bpmn2:task id="task-tSeratpd_B9NYCc3"
-			imixs:processid="100" name="Task-1" />
-		<bpmn2:task id="task-mPu__Ef5G7LTdXXE"
-			imixs:processid="100" name="Task-2" />
-	</bpmn2:process>
-	<bpmndi:BPMNDiagram id="BPMNDiagram_1"
-		name="Default Process Diagram">
-		<bpmndi:BPMNPlane bpmnElement="process_1"
-			id="BPMNPlane_process_1">
-			<bpmndi:BPMNShape
-				bpmnElement="task-j7zM8Vi0HosuiPPd" id="BPMNShape_IuCIXA">
-				<dc:Bounds height="50.0" width="110.0" x="122.0" y="87.0" />
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape
-				bpmnElement="task-tSeratpd_B9NYCc3" id="BPMNShape_Xs2FUA">
-				<dc:Bounds height="50.0" width="110.0" x="191.0" y="212.0" />
-			</bpmndi:BPMNShape>
-			<bpmndi:BPMNShape
-				bpmnElement="task-mPu__Ef5G7LTdXXE" id="BPMNShape_KNufrg">
-				<dc:Bounds height="50.0" width="110.0" x="379.0" y="132.0" />
-			</bpmndi:BPMNShape>
-		</bpmndi:BPMNPlane>
+		
+		
+		
+	<bpmn2:scriptTask id="task-u1HrsCR7mG0sUjtq" name="Task-0" scriptFormat="JavaScript"><bpmn2:documentation id="documentation__KHscA"><![CDATA[1
+ 2
+  3]]></bpmn2:documentation><bpmn2:script><![CDATA[if (1==1) 
+  return true;
+else 
+  return false;]]></bpmn2:script></bpmn2:scriptTask><bpmn2:sendTask id="task-WhLVYvRRmQDXRUN3" name="Task-1"/><bpmn2:participant id="participant-VtAWZtqGX8IUDknX" name="Pool-1"/></bpmn2:process>
+	<bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+		<bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
+			
+			
+			
+		<bpmndi:BPMNShape bpmnElement="task-u1HrsCR7mG0sUjtq" id="BPMNShape_BugluA"><dc:Bounds height="50.0" width="110.0" x="181.0" y="105.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-WhLVYvRRmQDXRUN3" id="BPMNShape_PtsqgQ"><dc:Bounds height="50.0" width="279.0" x="184.0" y="179.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="participant-VtAWZtqGX8IUDknX" id="BPMNShape_p6FOCg"><dc:Bounds height="319.0" width="613.0" x="22.5582275390625" y="300.0926818847656"/></bpmndi:BPMNShape></bpmndi:BPMNPlane>
 	</bpmndi:BPMNDiagram>
 </bpmn2:definitions>

@@ -27,13 +27,11 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
-import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.model.BPMNGModelState;
@@ -41,24 +39,23 @@ import org.openbpmn.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * This OperationHandler is used to update the BPMN model regarding new Bounds
- * of elements.
+ * This OperationHandler is used to update the BPMN model regarding BPMNBounds
+ * elements.
  * <p>
- * The operation synchronizes the BPMN Model and also the GModel. In this way we
- * avoid a complete new initialization of the GModel which is not necessary in
- * this scenario.
+ * The operation synchronizes the BPMN Model by updating the BPMNBounds element
+ * (position and dimension) for all BPMNFlow elements. In addition the operator
+ * also updates the GModel. In this way we avoid a complete new initialization
+ * of the GModel which is not necessary in this scenario.
  * <p>
- * For BPMN Event and Gateway elements we only update the position. Resize is
- * not supported for this kind of elements. But these elements have a special
- * handling of the corresponding label. In case only the label was moved (id
- * ends with "_bpmnlabel") then the method updates the Label position for these
- * elements in the BPMN source model. In case a event or gateway symbol was
- * selected, the label is moved automatically, because we select the label with
- * a selection listener in those cases. (See the client implementation
+ * For BPMN Event and Gateway elements we have in addition a special handling of
+ * the corresponding label. In case only the label was moved (id ends with
+ * "_bpmnlabel") then the method updates the Label position for these elements
+ * in the BPMN source model. In case a event or gateway symbol was selected, the
+ * label is moved automatically. This works because we select the label with a
+ * selection listener in those cases. (See the client implementation
  * BPMNLabelNodeSelectionListener)
  * <p>
- * For Activities (Tasks) and Participants (Pools) we also update the
- * dimensions. This is done by updating the node properties
+ * Updating the dimensions of a GNode is done by updating the node properties
  * GLayoutOptions.KEY_PREF_WIDTH and GLayoutOptions.KEY_PREF_HEIGHT. Calling
  * size() does not have any effect for GNodes with the HBox or VBox layout. See
  * also discussion here:
@@ -97,27 +94,22 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                         continue;
                     }
 
+                    // update BPMNElement position....
                     BPMNBounds bpmnBounds = bpmnFlowElement.getBounds();
-                    // Update BPMNElement position for all kind of BPMN elements
                     bpmnBounds.updateLocation(newPoint.getX(), newPoint.getY());
-                    // update GNode position
+                    // update GNode position....
                     gNode.setPosition(newPoint);
 
-                    // for Task and Pool Elements update also the dimensions
-                    if (bpmnFlowElement instanceof BPMNActivity || bpmnFlowElement instanceof BPMNParticipant) {
-                        bpmnBounds.updateDimension(newSize.getWidth(), newSize.getHeight());
-                        // Update GNode
-                        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
-                        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
-                        // calling the size method does not have an effect.
-                        // see:
-                        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-                        gNode.setSize(newSize);
-                    } else {
-                        // for all other elements update the position only
-                        // BPMNDimension dimension = bpmnBounds.getDimension();
-                        // bpmnBounds.updateDimension(dimension.getWidth(), dimension.getHeight());
-                    }
+                    // update BPMNElement dimension....
+                    bpmnBounds.updateDimension(newSize.getWidth(), newSize.getHeight());
+                    // Update GNode dimension....
+                    gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+                    gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+                    // calling the size method does not have an effect.
+                    // see:
+                    // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+                    gNode.setSize(newSize);
+
                 } else {
                     // test if we have a BPMNLable element was selected?
                     if (id.endsWith("_bpmnlabel")) {

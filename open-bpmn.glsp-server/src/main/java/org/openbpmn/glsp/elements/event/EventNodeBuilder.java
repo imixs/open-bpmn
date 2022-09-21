@@ -24,12 +24,14 @@ import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
+ * BPMN 2.0 Event Element.
+ * <p>
+ * The method builds a GNode from a BPMNEvent element. The builder is called
+ * from the method createGModelFromProcess of the BPMNGModelFactory.
+ * <p>
  * The EventNodeBuilder defines the layout and properties for all types of BPMN
- * Event elements
- * <p>
- * The radius of the circle symbol is 36. The label is below the symbol.
- * <p>
- * The EventNodeBuilder also creates JSONForms data and schema information.
+ * Event elements. The radius of the circle symbol is 36. The label is below the
+ * symbol.
  *
  * @author rsoika
  *

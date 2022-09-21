@@ -34,6 +34,14 @@ import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
+/**
+ * The BPMNCreateTaskHandler is a GLSP CreateNodeOperation bound to the
+ * DiagramModule and called when ever a BPMNTask is newly created within the
+ * model.
+ *
+ * @author rsoika
+ *
+ */
 public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
     private static Logger logger = Logger.getLogger(BPMNCreateTaskHandler.class.getName());

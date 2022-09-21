@@ -192,6 +192,7 @@ public class BPMNGModelFactory implements GModelFactory {
                         .position(point) //
                         .size(dimension) //
                         .build();
+
                 // apply BPMN Extensions
                 applyBPMNExtensions(taskNode, activity);
                 entityNodes.add(taskNode);
