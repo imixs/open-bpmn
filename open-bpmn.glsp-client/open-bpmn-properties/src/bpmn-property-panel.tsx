@@ -20,8 +20,8 @@ import {
     EditModeListener,
     EditorContextService,
     EnableDefaultToolsAction,
-    EnableToolsAction,
-    hasArguments,
+    EnableToolsAction,SModelElement,
+    hasArguments,MouseListener,
     SetUIExtensionVisibilityAction,
     SModelRoot,
     TYPES
@@ -39,16 +39,12 @@ import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-// import RatingControl from './RatingControl';
-// import ratingControlTester from './ratingControlTester';
-// import {BPMNEventDefinitionRenderer} from './EventDefinitionRenderer';
-//import {BPMNArrayRenderer} from './BPMNArrayRenderer';
-
 @injectable()
 export class EnableBPMNPropertyPanelAction implements Action {
     static readonly KIND = 'enableBPMNPropertyPanel';
     readonly kind = EnableBPMNPropertyPanelAction.KIND;
 }
+
 
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener {
@@ -71,6 +67,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
     @postConstruct()
     postConstruct(): void {
+	console.log('...running postConstruct');
         this.editorContext.register(this);
         this.selectionService.register(this);
     }
@@ -82,14 +79,15 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         return BPMNPropertyPanel.ID;
     }
 
-    override initialize(): boolean {
-        return super.initialize();
-    }
+//    override initialize(): boolean {
+//        return super.initialize();
+//    }
 
     /*
      * Initalize the elemnts of property panel
      */
-    protected initializeContents(_containerElement: HTMLElement): void {
+    protected override initializeContents(_containerElement: HTMLElement): void {
+	console.log('...running initializeContents');
         this.createHeader();
         this.createBody();
     }
@@ -130,6 +128,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
      * https://microsoft.github.io/vscode-codicons/dist/codicon.html
      */
     private createHeaderTools(): HTMLElement {
+	console.log('...running createHeaderTools');
         const headerTools = document.createElement('div');
         headerTools.classList.add('header-tools');
 
@@ -299,4 +298,18 @@ export function createIcon(codiconId: string): HTMLElement {
     const icon = document.createElement('i');
     icon.classList.add(...codiconCSSClasses(codiconId));
     return icon;
+}
+
+
+@injectable()
+export class BPMNPropertyMouseListener extends MouseListener {
+	@inject(BPMNPropertyPanel)
+    protected readonly proprtyPanel: BPMNPropertyPanel;
+    
+    override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
+	    console.log("...we have a double click");
+        // TODO your implementation
+        // this can return an action or get other services injected and call them on double-click
+        return [];
+    }
 }
