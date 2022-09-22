@@ -22,17 +22,14 @@ import {
     EnableDefaultToolsAction,
     EnableToolsAction,SModelElement,
     hasArguments,MouseListener,
-    SetUIExtensionVisibilityAction,
+    SetUIExtensionVisibilityAction,GLSPActionDispatcher,IActionHandler,
     SModelRoot,
     TYPES
 } from '@eclipse-glsp/client';
 import { inject, injectable, postConstruct } from 'inversify';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
-
 import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
-
 import { isBPMNNode } from '@open-bpmn/open-bpmn-model';
-
 // Import Instruction sReact and JsonForms
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
@@ -40,14 +37,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 @injectable()
-export class EnableBPMNPropertyPanelAction implements Action {
-    static readonly KIND = 'enableBPMNPropertyPanel';
-    readonly kind = EnableBPMNPropertyPanelAction.KIND;
-}
-
-
-@injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener {
+export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener, IActionHandler {
+  
     static readonly ID = 'bpmn-property-panel';
 
     @inject(TYPES.IActionDispatcher)
@@ -67,7 +58,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
     @postConstruct()
     postConstruct(): void {
-	console.log('...running postConstruct');
+		console.log('...running postConstruct');
         this.editorContext.register(this);
         this.selectionService.register(this);
     }
@@ -78,26 +69,29 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
     containerClass(): string {
         return BPMNPropertyPanel.ID;
     }
-
-//    override initialize(): boolean {
-//        return super.initialize();
-//    }
+    
+    handle(action: BPMNPropertyPanelAction): void | Action {
+        console.log(" ...... handle for BPMNPropertyPanelAction not yet implemented - info="+action.additionalInformation);
+    }
 
     /*
      * Initalize the elemnts of property panel
      */
     protected override initializeContents(_containerElement: HTMLElement): void {
-	console.log('...running initializeContents');
+		console.log('...running initializeContents');
         this.createHeader();
         this.createBody();
     }
 
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
+        console.log('....onBeforeShow - root.id='+root.id);
         this.modelRootId = root.id;
     }
 
     protected createHeader(): void {
+        console.log("....createHeader...");
         const headerCompartment = document.createElement('div');
+        console.log("...headerCompartment="+headerCompartment);
         headerCompartment.classList.add('bpmn-property-header');
         headerCompartment.append(this.createHeaderTitle());
         headerCompartment.appendChild(this.createHeaderTools());
@@ -300,15 +294,24 @@ export function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
+export class BPMNPropertyPanelAction implements Action {
+  static readonly KIND = "BPMNPropertyPanelAction";
+  kind = BPMNPropertyPanelAction.KIND;
+  constructor(public readonly additionalInformation: string) {}
+}
 
 @injectable()
 export class BPMNPropertyMouseListener extends MouseListener {
-	@inject(BPMNPropertyPanel)
-    protected readonly proprtyPanel: BPMNPropertyPanel;
+	@inject(TYPES.IActionDispatcher) 
+	protected actionDispatcher: GLSPActionDispatcher;
+	
+//	@inject(BPMNPropertyPanel)
+//  protected readonly proprtyPanel: BPMNPropertyPanel;
     
     override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
-	    console.log("...we have a double click");
+        console.log("...we have a double click event!");
         // TODO your implementation
+        this.actionDispatcher.dispatch(new BPMNPropertyPanelAction("toggle"));
         // this can return an action or get other services injected and call them on double-click
         return [];
     }

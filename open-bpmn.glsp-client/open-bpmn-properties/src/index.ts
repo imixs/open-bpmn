@@ -13,9 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { TYPES } from '@eclipse-glsp/client';
+import { TYPES,configureActionHandler } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
-import { BPMNPropertyPanel,BPMNPropertyMouseListener } from './bpmn-property-panel';
+import { BPMNPropertyPanel,BPMNPropertyMouseListener,BPMNPropertyPanelAction } from './bpmn-property-panel';
 // css styles
 import '../css/bpmn-properties.css';
 import '../css/jsonforms-theia.css';
@@ -24,4 +24,9 @@ export const bpmnPropertyModule = new ContainerModule((bind, unbind, isBound,reb
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     bind(TYPES.MouseListener).to(BPMNPropertyMouseListener);
+    // bind(BPMNPropertyPanelAction.KIND).to(BPMNPropertyPanel);
+
+	// register the actionHandler...
+    const context = { bind, unbind, isBound, rebind };
+    configureActionHandler(context, BPMNPropertyPanelAction.KIND, BPMNPropertyPanel);
 });
