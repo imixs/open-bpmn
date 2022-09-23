@@ -87,4 +87,31 @@
     overflow: auto;
     margin-bottom: 28px;
 }
+/* Button layout in property details block */
+.bpmn-properties-body .categorization-detail button {
+	float:right;
+	color: var(--theia-button-foreground);
+    background-color: var(--theia-button-background);
+    cursor: pointer;
+    border: none;
+    padding: 4px 9px;
+    margin: 0 1px;
+}
+.bpmn-properties-body .categorization-detail button:focus {
+    outline: 1px solid var(--theia-focusBorder);
+    outline-offset: 1px;
+}
+.bpmn-properties-body .categorization-detail button:hover {
+    background-color: var(--theia-button-hoverBackground);
+}
+.bpmn-properties-body .categorization-detail .child-controls {
+	float:right;
+	border-bottom: 1px solid #aaa;
+    width: 100%;
+    padding-bottom: 5px;
+}
 
+
+.bpmn-properties-body .categorization-detail .vertical-layout {
+	clear: both;
+}

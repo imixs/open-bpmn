@@ -9,6 +9,11 @@
 
 	<name>Imixs Open BPMN</name>
 
+	<modules>
+		<module>open-bpmn.metamodel</module>
+		<module>open-bpmn.glsp-server</module>
+	</modules>
+	
 	<organization>
 		<name>Imixs Software Solutions GmbH</name>
 		<url>http://www.imixs.com</url>
@@ -57,8 +62,6 @@
 
 
 
-	<modules>
-		<module>open-bpmn.metamodel</module>
-	</modules>
+
 </project>
 
