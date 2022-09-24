@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
@@ -26,6 +28,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
@@ -49,6 +52,12 @@ public class BPMNModel {
     private static final SecureRandom random = new SecureRandom();
     private static final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
     private BPMNProcess context = null;
+    protected Set<BPMNParticipant> participants = null;
+    protected Set<BPMNProcess> processes = null;
+
+    protected Element collaborationElement = null;
+
+    public static final String PARTICIPANT = "participant";
 
     public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
@@ -108,8 +117,6 @@ public class BPMNModel {
 
     public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { BPMNTypes.SEQUENCE_FLOW });
 
-    public static final String PARTICIPANT = "participant";
-
     private Element definitions;
     private Document doc;
 
@@ -141,16 +148,19 @@ public class BPMNModel {
         setNameSpaceUri(BPMNNS.BPMNDI, "http://www.omg.org/spec/BPMN/20100524/DI");
         setNameSpaceUri(BPMNNS.DI, "http://www.omg.org/spec/DD/20100524/DI");
         setNameSpaceUri(BPMNNS.DC, "http://www.omg.org/spec/DD/20100524/DC");
-
     }
 
     /**
      * This method instantiates a new BPMN model based on a given
      * org.w3c.dom.Document. The method parses the BPMN namespaces.
+     * <p>
+     * The method throws a BPMNModelException in case the model file dose not show a
+     * valid BPMN 2.0 structure.
      * 
      * @param doc
+     * @throws BPMNModelException
      */
-    public BPMNModel(Document doc) {
+    public BPMNModel(Document doc) throws BPMNModelException {
         this();
         if (doc != null) {
             this.doc = doc;
@@ -189,6 +199,61 @@ public class BPMNModel {
             if (diagramList != null && diagramList.getLength() > 0) {
                 bpmnDiagram = diagramList.item(0);
             }
+
+            // init the participant list
+            loadParticipants();
+
+        }
+    }
+
+    /**
+     * This helper method loads the participant elements from a collaboration
+     * diagram located in the 'bpmn2:collaboration' section. This section is
+     * optional. If the model is not a collaboration model the method
+     * getPaticpants() returns null
+     * 
+     * @throws BPMNModelException
+     * 
+     */
+    private void loadParticipants() throws BPMNModelException {
+        participants = new HashSet<BPMNParticipant>();
+        NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
+        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+
+            // we only take the first collaboration element (this is what is expected)
+            collaborationElement = (Element) collaborationNodeList.item(0);
+            // now find all participants...
+            NodeList participantList = collaborationElement.getElementsByTagName(BPMNNS.BPMN2.prefix + ":participant");
+            logger.fine("..found " + participantList.getLength() + " participants");
+            for (int i = 0; i < participantList.getLength(); i++) {
+                Element item = (Element) participantList.item(i);
+                BPMNParticipant participant;
+                participant = new BPMNParticipant(this, item, null);
+                // set processRef
+                participant.setProcessRef(item.getAttribute("processRef"));
+                participants.add(participant);
+            }
+        }
+    }
+
+    /**
+     * This helper method loads the process elements from the current model. If the
+     * model does not yet contain any process the method getProcesses() returns null
+     * 
+     * @param string
+     * @return BPMNProcess instance
+     * @throws BPMNModelException
+     */
+    public void loadProcesses(String id) throws BPMNModelException {
+        processes = new HashSet<BPMNProcess>();
+        // find process
+        NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
+        if (processList != null && processList.getLength() > 0) {
+            for (int i = 0; i < processList.getLength(); i++) {
+                Element item = (Element) processList.item(i);
+                BPMNProcess bpmnProcess = new BPMNProcess(this, item);
+                processes.add(bpmnProcess);
+            }
         }
     }
 
@@ -212,9 +277,36 @@ public class BPMNModel {
         }
     }
 
+    /**
+     * Returns the current process context
+     * 
+     * @return
+     */
     public BPMNProcess getContext() {
 
         return context;
+    }
+
+    public Set<BPMNParticipant> getParticipants() {
+        if (participants == null) {
+            participants = new HashSet<BPMNParticipant>();
+        }
+        return participants;
+    }
+
+    public void setParticipants(Set<BPMNParticipant> participants) {
+        this.participants = participants;
+    }
+
+    public Set<BPMNProcess> getProcesses() {
+        if (processes==null) {
+            processes=new  HashSet<BPMNProcess>();
+        }
+        return processes;
+    }
+
+    public void setProcesses(Set<BPMNProcess> processes) {
+        this.processes = processes;
     }
 
     public Node getBpmnDiagram() {
@@ -223,6 +315,85 @@ public class BPMNModel {
 
     public void setBpmnDiagram(Node bpmnDiagram) {
         this.bpmnDiagram = bpmnDiagram;
+    }
+
+    /**
+     * This method returns true if the current model contains a COllaborationDiagram
+     * 
+     * @return
+     */
+    public boolean isCollaborationDiagram() {
+        return collaborationElement != null;
+    }
+
+    /**
+     * Builds a new BPMNParticipant element and adds this element into the
+     * definition list.
+     * <p>
+     * The method verifies if a the model already has a bpmn2:collaboration section.
+     * If not, the method creates one.
+     * 
+     * In addition the method creates a corresponding Process element also added
+     * into the definition list. context.
+     * 
+     * 
+     * <p>
+     * <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
+     * <bpmn2:participant id="Participant_1" name="Pool 1"/>
+     * 
+     * @param id
+     * @param name
+     * @param type - EventType
+     * @throws BPMNModelException
+     */
+    public BPMNParticipant buildParticipant(String id, String name) throws BPMNModelException {
+
+        // first verify if the model already is a Collaboration model. If not we create
+        // a bpmn2:collaboration
+        // if (model.getParticipants().(bpmnPlane))
+
+        // <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
+        if (!this.isCollaborationDiagram()) {
+            // create a default collaboration element
+            collaborationElement = createElement(BPMNNS.BPMN2, "collaboration");
+            collaborationElement.setAttribute("id", "Collaboration_1");
+            collaborationElement.setAttribute("name", "Default Collaboration");
+            this.definitions.insertBefore(collaborationElement, bpmnDiagram);
+        }
+
+        // create a new Dom node...
+        Element participantNode = createElement(BPMNNS.BPMN2, "participant");
+        participantNode.setAttribute("id", id);
+        participantNode.setAttribute("name", name);
+
+        this.collaborationElement.appendChild(participantNode);
+        // add BPMNParticipant instance
+        BPMNParticipant bpmnParticipant = this.addParticipant(participantNode);
+
+        // now add the corresponding Process
+        // <bpmn2:process id="Process_2" name="Non-initiating Process"
+        // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
+       int processNumber=this.getProcesses().size()+1;
+        BPMNProcess process = buildProcess("Process_"+processNumber, "Process "+processNumber);
+        process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
+        
+        bpmnParticipant.setProcessRef(process.getId());
+
+        return bpmnParticipant;
+
+    }
+
+    /**
+     * Adds a new BPMNGateway from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     * @throws BPMNModelException
+     */
+    private BPMNParticipant addParticipant(Element element) throws BPMNModelException {
+        BPMNParticipant participant = new BPMNParticipant(this, element, element.getLocalName());
+        getParticipants().add(participant); 
+        return participant;
     }
 
     /**
@@ -244,14 +415,16 @@ public class BPMNModel {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNProcess buildProcess(String id) throws BPMNModelException {
+    public BPMNProcess buildProcess(String id, String name) throws BPMNModelException {
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
         Element process = createElement(BPMNNS.BPMN2, "process");
         logger.fine(process.getNodeName());
         logger.fine(process.getLocalName());
         logger.fine(process.getNamespaceURI());
         process.setAttribute("id", id);
-        // definitions.appendChild(process);
+        if (name != null) {
+            process.setAttribute("name", name);
+        }
         definitions.insertBefore(process, this.getBpmnDiagram());
 
         // add bpmndi:BPMNPlane
@@ -263,6 +436,8 @@ public class BPMNModel {
         // definitions.insertBefore(bpmnPlane,this.getBpmnDiagram());
 
         BPMNProcess bpmnProcess = openContext(id);
+        this.getProcesses().add(bpmnProcess);
+        
         // new BPMNProcess(this, process);
         return bpmnProcess;
     }

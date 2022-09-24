@@ -28,7 +28,7 @@ public class BPMNProcess extends BPMNBaseElement {
     protected Set<BPMNActivity> activities = null;
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
-    protected Set<BPMNParticipant> participants = null;
+ 
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
 
     protected Node bpmnPlane = null;
@@ -84,17 +84,6 @@ public class BPMNProcess extends BPMNBaseElement {
 
     public void setGateways(Set<BPMNGateway> gateways) {
         this.gateways = gateways;
-    }
-
-    public Set<BPMNParticipant> getParticipants() {
-        if (participants == null) {
-            participants = new HashSet<BPMNParticipant>();
-        }
-        return participants;
-    }
-
-    public void setParticipants(Set<BPMNParticipant> participants) {
-        this.participants = participants;
     }
 
     public Set<BPMNSequenceFlow> getSequenceFlows() {
@@ -240,45 +229,6 @@ public class BPMNProcess extends BPMNBaseElement {
         return gateway;
     }
 
-    //
-
-    /**
-     * Builds a new BPMNParticipant element and adds this element into this process
-     * context.
-     * <p>
-     * <bpmn2:participant id="Participant_1" name="Pool 1"/>
-     * 
-     * @param id
-     * @param name
-     * @param type - EventType
-     * @throws BPMNModelException
-     */
-    public BPMNParticipant buildParticipant(String id, String name, String type) throws BPMNModelException {
-        // create a new Dom node...
-        Element eventElement = model.createElement(BPMNNS.BPMN2, type);
-        eventElement.setAttribute("id", id);
-        eventElement.setAttribute("name", name);
-
-        this.getElementNode().appendChild(eventElement);
-
-        // add BPMNGateway instance
-        BPMNParticipant participant = this.addParticipant(eventElement);
-        return participant;
-
-    }
-
-    /**
-     * Adds a new BPMNGateway from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     * @throws BPMNModelException
-     */
-    private BPMNParticipant addParticipant(Element element) throws BPMNModelException {
-        BPMNParticipant participant = new BPMNParticipant(model, element, element.getLocalName());
-        getParticipants().add(participant);
-        return participant;
-    }
 
     /**
      * Adds a new SequenceFlow
@@ -531,7 +481,7 @@ public class BPMNProcess extends BPMNBaseElement {
             return null;
         }
 
-        Set<BPMNParticipant> listP = this.getParticipants();
+        Set<BPMNParticipant> listP = getModel().getParticipants();
         for (BPMNParticipant element : listP) {
             if (id.equals(element.getId())) {
                 return element;
@@ -630,8 +580,6 @@ public class BPMNProcess extends BPMNBaseElement {
                 this.addGateway((Element) child);
             } else if (BPMNModel.isSequenceFlow(child)) {
                 this.addSequenceFlow((Element) child);
-            } else if (BPMNModel.isParticipant(child)) {
-                this.addParticipant((Element) child);
             } else {
                 // unsupported node type
             }

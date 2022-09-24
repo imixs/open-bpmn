@@ -84,7 +84,7 @@ public class TestDeleteModel {
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
-            model.buildProcess("process_1");
+            model.buildProcess("process_1","Process 1");
 
             BPMNProcess processContext = model.openContext("process_1");
             assertNotNull(processContext);

@@ -18,7 +18,7 @@ public class BPMNBounds {
      * <p>
      * <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
      * </p>
-     * 
+     *  
      * @param width
      * @throws BPMNMissingElementException
      */

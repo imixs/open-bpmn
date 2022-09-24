@@ -1,6 +1,7 @@
 package org.openbpmn.metamodel.examples;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
@@ -56,7 +57,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            model.buildProcess("process_1");
+            model.buildProcess("process_1",null);
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -81,7 +82,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.buildProcess("process_1");
+            BPMNProcess processContext = model.buildProcess("process_1",null);
 
             assertNotNull(processContext);
 
@@ -116,7 +117,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            model.buildProcess("process_1");
+            model.buildProcess("process_1",null);
 
             BPMNProcess processContext = model.openContext("process_1");
             assertNotNull(processContext);
@@ -156,7 +157,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            model.buildProcess("process_1");
+            model.buildProcess("process_1",null);
 
             BPMNProcess processContext = model.openContext("process_1");
             assertNotNull(processContext);
@@ -177,6 +178,40 @@ public class TestCreateModel {
         model.save(out);
         logger.info("...model created sucessful: " + out);
 
+    }
+    
+    
+    
+
+    /**
+     * This test class tests creating a Collaboration model and some elements
+     */
+    @Test
+    public void testCreateCollaborationModel() {
+        String out = "src/test/resources/create-collaboration_1.bpmn";
+
+        logger.info("...create collaboration model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        try {
+            model.buildParticipant("participant_1", "Sales Team");
+            model.buildParticipant("participant_2", "Management");
+            
+            
+            assertTrue(model.isCollaborationDiagram());
+           
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        assertNotNull(model);
+
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
     }
 
 }

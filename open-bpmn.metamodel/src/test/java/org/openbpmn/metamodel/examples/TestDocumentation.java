@@ -39,7 +39,7 @@ public class TestDocumentation {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.buildProcess("process_1");
+            BPMNProcess processContext = model.buildProcess("process_1","Process 1");
 
             assertNotNull(processContext);
 

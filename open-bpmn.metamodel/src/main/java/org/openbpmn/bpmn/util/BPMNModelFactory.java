@@ -82,12 +82,12 @@ public class BPMNModelFactory {
             // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
             Element bpmnDiagram = model.createElement(BPMNNS.BPMNDI, "BPMNDiagram");
             bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
-            bpmnDiagram.setAttribute("name", "Default Process Diagram");
+            bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
             definitions.appendChild(bpmnDiagram);
             model.setBpmnDiagram(bpmnDiagram);
 
             return model;
-        } catch (ParserConfigurationException e1) {
+        } catch (ParserConfigurationException | BPMNModelException e1) {
 
             e1.printStackTrace();
         }
@@ -144,13 +144,13 @@ public class BPMNModelFactory {
                 // create a default model
                 BPMNModel defaultModel = BPMNModelFactory
                         .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
-                defaultModel.buildProcess("process_1");
+                defaultModel.buildProcess("process_1","Process 1");
                 return defaultModel;
             }
 
             
             
-         // parse XML file
+            // parse XML file
             DocumentBuilder db = docFactory.newDocumentBuilder();
             // read from a project's resources folder
           
