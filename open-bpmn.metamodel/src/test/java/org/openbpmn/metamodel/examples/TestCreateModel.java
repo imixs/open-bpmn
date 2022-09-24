@@ -57,7 +57,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            model.buildProcess("process_1",null);
+            model.buildProcess("process_1","Sales");
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -119,7 +119,7 @@ public class TestCreateModel {
         try {
             model.buildProcess("process_1",null);
 
-            BPMNProcess processContext = model.openContext("process_1");
+            BPMNProcess processContext = model.openProcess("process_1");
             assertNotNull(processContext);
 
             // add a start and end event
@@ -159,7 +159,7 @@ public class TestCreateModel {
         try {
             model.buildProcess("process_1",null);
 
-            BPMNProcess processContext = model.openContext("process_1");
+            BPMNProcess processContext = model.openProcess("process_1");
             assertNotNull(processContext);
 
             // add a start and end event

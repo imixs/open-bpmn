@@ -87,7 +87,7 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
         assertNotNull(model);
-        assertEquals("process_1", model.openContext(null).getId());
+        assertEquals("process_1", model.openProcess(null).getId());
 
         model.save(out);
         logger.info("...blank model created sucessful: " + out);

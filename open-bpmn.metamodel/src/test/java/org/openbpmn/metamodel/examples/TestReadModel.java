@@ -40,7 +40,7 @@ public class TestReadModel {
     @Test
     public void testModelElements() {
         try {
-            BPMNProcess process = model.openContext(null);
+            BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
             assertEquals(2, process.getActivities().size());
             assertEquals(2, process.getEvents().size());

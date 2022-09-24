@@ -50,7 +50,7 @@ public class TestReadCollaborationModel {
 
   
         try {
-            BPMNProcess process = model.openContext("Process_1");
+            BPMNProcess process = model.openProcess("Process_1");
             
             // we expect 1 Task element in this process
             assertEquals(1,process.getActivities().size());

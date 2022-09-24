@@ -42,7 +42,7 @@ public class TestDeleteModel {
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
 
-            BPMNProcess process = model.openContext(null);
+            BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class TestDeleteModel {
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
 
-            BPMNProcess process = model.openContext(null);
+            BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
             process.deleteEvent("StartEvent_1");
         } catch (BPMNModelException e) {
@@ -86,7 +86,7 @@ public class TestDeleteModel {
 
             model.buildProcess("process_1","Process 1");
 
-            BPMNProcess processContext = model.openContext("process_1");
+            BPMNProcess processContext = model.openProcess("process_1");
             assertNotNull(processContext);
 
             // add a start and end event
@@ -104,7 +104,6 @@ public class TestDeleteModel {
             fail();
         }
 
-        // logger.info("...model update sucessful: " + out);
     }
 
 }

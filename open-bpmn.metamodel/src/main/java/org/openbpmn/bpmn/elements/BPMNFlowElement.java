@@ -1,13 +1,10 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 /**
  * The FlowElement is the abstract super class for all elements that can appear
@@ -23,10 +20,9 @@ import org.w3c.dom.Node;
 public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     protected String type = null;
-    protected BPMNBounds bounds = null;
+    protected BPMNProcess bpmnProcess = null;
     protected BPMNLabel label = null;
-    protected Element bpmnShape = null;
- 
+
     /**
      * Creates a new BPMNFlowElement
      * 
@@ -35,23 +31,24 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      * @param model
      * @throws BPMNModelException
      */
-    public BPMNFlowElement(BPMNModel model, Element node, String _type) throws BPMNModelException {
+    public BPMNFlowElement(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess)
+            throws BPMNModelException {
         super(model, node);
         this.type = _type;
+        this.bpmnProcess = _bpmnProcess;
         // find the BPMNShape element. If not defined create a new one
-        if (model.getContext() != null) {
-            bpmnShape = (Element) BPMNModel.findBPMNPlaneElement(model.getContext().bpmnPlane,
-                   "BPMNShape", getId());
+        if (bpmnProcess != null) {
+            bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
             if (bpmnShape == null) {
                 // create shape element
-                bpmnShape = buildBPMNShape();
+                bpmnShape = model.buildBPMNShape(this); 
                 this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
-                // create BPMNLabel 
-                label=this.getLabel();
-                if (label!=null) {
+                // create BPMNLabel
+                label = this.getLabel();
+                if (label != null) {
                     // set default position
-                    //BPMNPoint pos = this.getBounds().getPosition();
-                    label.updateLocation(0.0,0.0);
+                    // BPMNPoint pos = this.getBounds().getPosition();
+                    label.updateLocation(0.0, 0.0);
                 }
             }
         }
@@ -75,6 +72,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     /**
      * Returns the BPMN sub type
+     * 
      * @return
      */
     public String getType() {
@@ -83,6 +81,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
 
     /**
      * Set the BPMN sub type
+     * 
      * @param type
      */
     public void setType(String type) {
@@ -100,68 +99,15 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         if (isEvent() || isGateway()) {
             if (label == null) {
                 // lazy loading of bounds from a given bpmnShape
-                label = new BPMNLabel(model,this.bpmnShape);
+                label = new BPMNLabel(model, this.bpmnShape);
             }
         }
         return label;
     }
 
     /**
-     * Returns the BPMNShape bounds.
-     * 
-     * @return
-     * @throws BPMNMissingElementException
-     */
-    public BPMNBounds getBounds() throws BPMNMissingElementException {
-        if (bounds == null) {
-            // lazy loading of bounds from a given bpmnShape
-            bounds = new BPMNBounds(this.bpmnShape, model);
-        }
-        return bounds;
-    }
-
-    /**
-     * Updates the BPMN Shape bounds.
-     * 
-     * @param x
-     * @param y
-     * @param height
-     * @param width
-     * @return
-     * @throws BPMNMissingElementException
-     */
-    public BPMNBounds setBounds(double x, double y, double height, double width) throws BPMNMissingElementException {
-        // init bound if not yet loaded
-        getBounds();
-
-        // update bounds
-        bounds.updateDimension( width, height);
-        bounds.updateLocation(x, y);
-       
-
-        return bounds;
-    }
-
-    /**
-     * Returns the BPMNShape element
-     * 
-     * @return
-     */
-    public Element getBpmnShape() {
-        return bpmnShape;
-    }
-
-    /**
-     * Set the BPMNShape element
-     * 
-     * @param bpmnShape
-     */
-    public void setBpmnShape(Element bpmnShape) {
-        this.bpmnShape = bpmnShape;
-    }
-
-    /**
      * Returns true if the element is an BPMN Event
+     * 
      * @return
      */
     public boolean isEvent() {
@@ -173,9 +119,9 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         );
     }
 
-
     /**
      * Returns true if the element is an BPMN Gateway
+     * 
      * @return
      */
     public boolean isGateway() {
@@ -187,29 +133,4 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
         );
     }
 
-    /**
-     * Creates a BPMN shape node for this element
-     * <p>
-     * <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
-     * 
-     * @throws BPMNMissingElementException
-     */
-    protected Element buildBPMNShape() throws BPMNModelException {
-        if (bpmnShape != null) {
-            BPMNModel.getLogger().warning("bpmnShape already exits");
-            return bpmnShape;
-        }
-        if (model.getContext().bpmnPlane == null) {
-            throw new BPMNMissingElementException("Missing bpmnPlane in current model context");
-        }
-        if (this.getId() != null) {
-            bpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
-            bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
-            bpmnShape.setAttribute("bpmnElement", this.getId());
-            model.getContext().bpmnPlane.appendChild(bpmnShape);
-            return bpmnShape;
-        } else {
-            throw new BPMNInvalidReferenceException("Missing ID attribute");
-        }
-    }
 }

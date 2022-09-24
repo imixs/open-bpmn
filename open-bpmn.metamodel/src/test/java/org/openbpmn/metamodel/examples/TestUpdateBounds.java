@@ -44,7 +44,7 @@ public class TestUpdateBounds {
         logger.info("...read model");
         try {
             // read tasks....
-            BPMNProcess process = model.openContext(null);
+            BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
             BPMNActivity task1 = (BPMNActivity) process.findBaseElementById("Task_1");

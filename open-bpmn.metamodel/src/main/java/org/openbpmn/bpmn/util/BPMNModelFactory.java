@@ -85,6 +85,8 @@ public class BPMNModelFactory {
             bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
             definitions.appendChild(bpmnDiagram);
             model.setBpmnDiagram(bpmnDiagram);
+            
+          
 
             return model;
         } catch (ParserConfigurationException | BPMNModelException e1) {

@@ -42,7 +42,7 @@ public class TestUpdateRoutingPoints {
         logger.info("...read model");
         try {
             // read Sequcen....
-            BPMNProcess process = model.openContext(null);
+            BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
             // udpate routing points for SequenceFlow_1

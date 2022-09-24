@@ -24,8 +24,8 @@ public class BPMNActivity extends BPMNFlowElement {
     public final static double DEFAULT_HEIGHT = 50.0;
 
     
-    protected BPMNActivity(BPMNModel model, Element node, String type) throws BPMNModelException {
-        super(model, node, type);
+    protected BPMNActivity(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
+        super(model, node, type,bpmnProcess);
     }
 
     @Override

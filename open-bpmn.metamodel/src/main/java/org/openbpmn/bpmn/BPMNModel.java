@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,6 +31,8 @@ import javax.xml.xpath.XPathFactory;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -51,7 +54,11 @@ public class BPMNModel {
 
     private static final SecureRandom random = new SecureRandom();
     private static final Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
-    private BPMNProcess context = null;
+
+    private Document doc;
+    private Element definitions;
+    private Node bpmnDiagram;
+    protected Element bpmnPlane = null;
     protected Set<BPMNParticipant> participants = null;
     protected Set<BPMNProcess> processes = null;
 
@@ -116,11 +123,6 @@ public class BPMNModel {
     });
 
     public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { BPMNTypes.SEQUENCE_FLOW });
-
-    private Element definitions;
-    private Document doc;
-
-    private Node bpmnDiagram;
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
 
@@ -200,8 +202,15 @@ public class BPMNModel {
                 bpmnDiagram = diagramList.item(0);
             }
 
-            // init the participant list
-            loadParticipants();
+            // find BPMNPlane
+            NodeList planeList = doc.getElementsByTagName(BPMNNS.BPMNDI.prefix + ":BPMNPlane");
+            if (planeList != null && planeList.getLength() > 0) {
+                bpmnPlane = (Element) planeList.item(0);
+            }
+
+            // init the participant and process list
+            loadParticipantList();
+            loadProcessList();
 
         }
     }
@@ -215,7 +224,7 @@ public class BPMNModel {
      * @throws BPMNModelException
      * 
      */
-    private void loadParticipants() throws BPMNModelException {
+    private void loadParticipantList() throws BPMNModelException {
         participants = new HashSet<BPMNParticipant>();
         NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
@@ -228,7 +237,7 @@ public class BPMNModel {
             for (int i = 0; i < participantList.getLength(); i++) {
                 Element item = (Element) participantList.item(i);
                 BPMNParticipant participant;
-                participant = new BPMNParticipant(this, item, null);
+                participant = new BPMNParticipant(this, item);
                 // set processRef
                 participant.setProcessRef(item.getAttribute("processRef"));
                 participants.add(participant);
@@ -244,7 +253,7 @@ public class BPMNModel {
      * @return BPMNProcess instance
      * @throws BPMNModelException
      */
-    public void loadProcesses(String id) throws BPMNModelException {
+    private void loadProcessList() throws BPMNModelException {
         processes = new HashSet<BPMNProcess>();
         // find process
         NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
@@ -277,16 +286,6 @@ public class BPMNModel {
         }
     }
 
-    /**
-     * Returns the current process context
-     * 
-     * @return
-     */
-    public BPMNProcess getContext() {
-
-        return context;
-    }
-
     public Set<BPMNParticipant> getParticipants() {
         if (participants == null) {
             participants = new HashSet<BPMNParticipant>();
@@ -299,8 +298,8 @@ public class BPMNModel {
     }
 
     public Set<BPMNProcess> getProcesses() {
-        if (processes==null) {
-            processes=new  HashSet<BPMNProcess>();
+        if (processes == null) {
+            processes = new HashSet<BPMNProcess>();
         }
         return processes;
     }
@@ -315,6 +314,14 @@ public class BPMNModel {
 
     public void setBpmnDiagram(Node bpmnDiagram) {
         this.bpmnDiagram = bpmnDiagram;
+    }
+
+    public Element getBpmnPlane() {
+        return bpmnPlane;
+    }
+
+    public void setBpmnPlane(Element bpmnPlane) {
+        this.bpmnPlane = bpmnPlane;
     }
 
     /**
@@ -368,15 +375,18 @@ public class BPMNModel {
 
         this.collaborationElement.appendChild(participantNode);
         // add BPMNParticipant instance
-        BPMNParticipant bpmnParticipant = this.addParticipant(participantNode);
+        BPMNParticipant bpmnParticipant = new BPMNParticipant(this, participantNode);
+        getParticipants().add(bpmnParticipant);
+        
+       // BPMNParticipant bpmnParticipant = this.addParticipant(participantNode);
 
         // now add the corresponding Process
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
-       int processNumber=this.getProcesses().size()+1;
-        BPMNProcess process = buildProcess("Process_"+processNumber, "Process "+processNumber);
+        int processNumber = this.getProcesses().size() + 1;
+        BPMNProcess process = buildProcess("Process_" + processNumber, "Process " + processNumber);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
-        
+
         bpmnParticipant.setProcessRef(process.getId());
 
         return bpmnParticipant;
@@ -390,15 +400,15 @@ public class BPMNModel {
      * @return
      * @throws BPMNModelException
      */
-    private BPMNParticipant addParticipant(Element element) throws BPMNModelException {
-        BPMNParticipant participant = new BPMNParticipant(this, element, element.getLocalName());
-        getParticipants().add(participant); 
-        return participant;
-    }
+//    private BPMNParticipant addParticipant(Element element) throws BPMNModelException {
+//        BPMNParticipant participant = new BPMNParticipant(this, element);
+//        getParticipants().add(participant);
+//        return participant;
+//    }
 
     /**
      * Builds a new BPMNProcess element and adds this into this model instance. This
-     * method also generates the BPMNPlane
+     * method also generates a default BPMNPlane if not yet created
      * <p>
      * 
      * <pre>
@@ -427,24 +437,51 @@ public class BPMNModel {
         }
         definitions.insertBefore(process, this.getBpmnDiagram());
 
-        // add bpmndi:BPMNPlane
-        // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
-        Element bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
-        bpmnPlane.setAttribute("id", "BPMNPlane_" + id);
-        bpmnPlane.setAttribute("bpmnElement", id);
-        this.getBpmnDiagram().appendChild(bpmnPlane);
-        // definitions.insertBefore(bpmnPlane,this.getBpmnDiagram());
-
-        BPMNProcess bpmnProcess = openContext(id);
+        BPMNProcess bpmnProcess =new BPMNProcess(this, process);
         this.getProcesses().add(bpmnProcess);
+
+        // add an empty BPMNPlane tag
+        // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
+        if (bpmnPlane == null) {
+            bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
+            bpmnPlane.setAttribute("id", "BPMNPlane_1");
+            bpmnPlane.setAttribute("bpmnElement", id);
+            this.getBpmnDiagram().appendChild(bpmnPlane);
+        }
+
         
-        // new BPMNProcess(this, process);
         return bpmnProcess;
     }
 
     /**
-     * This Method opens a BPMN context (e.g. a Process) with the given ID. The
-     * method returns null if no process with the given ID exists.
+     * Creates a BPMN shape node for this element
+     * <p>
+     * <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
+     * 
+     * @throws BPMNMissingElementException
+     */
+    public Element buildBPMNShape(BPMNBaseElement bpmnElement) throws BPMNModelException {
+        Element bpmnShape;
+        if (getBpmnPlane() == null) {
+            throw new BPMNMissingElementException("Missing bpmnPlane in current model context");
+        }
+        if (bpmnElement.getId() != null) {
+            bpmnShape = createElement(BPMNNS.BPMNDI, "BPMNShape");
+            bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
+            bpmnShape.setAttribute("bpmnElement", bpmnElement.getId());
+            getBpmnPlane().appendChild(bpmnShape);
+            return bpmnShape;
+        } else {
+            throw new BPMNInvalidReferenceException("Missing ID attribute");
+        }
+    }
+
+    /**
+     * This Method opens a BPMNProcess with the given ID and initializes all BPMN
+     * elements of the Process. This is a lazy loading mechanism to avoid loading
+     * the full model if not needed.
+     * <p>
+     * The method returns null if no process with the given ID exists.
      * <p>
      * In case no ID is provided (null) the method returns the first (default)
      * process from the model.
@@ -453,26 +490,21 @@ public class BPMNModel {
      * @return BPMNProcess instance
      * @throws BPMNModelException
      */
-    public BPMNProcess openContext(String id) throws BPMNModelException {
+    public BPMNProcess openProcess(String id) throws BPMNModelException {
+        BPMNProcess result = null;
+        if (processes != null) {
+            Iterator<BPMNProcess> it = processes.iterator();
 
-        // find process
-        NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
-        logger.fine("..found " + processList.getLength() + " processes");
-
-        for (int i = 0; i < processList.getLength(); i++) {
-            Element item = (Element) processList.item(i);
-            context = new BPMNProcess(this, item);
-            if (id != null && !id.equals(context.getId())) {
-                // not match of the requested processs ID
-                continue;
+            while (it.hasNext()) {
+                result = it.next();
+                if (id==null || id.equals(result.getId())) {
+                    // init process (initialize all BPMN Elements)
+                    result.init();
+                    break;
+                }
             }
-            context.setBpmnPlane(findBpmnPlane(bpmnDiagram, context.getId()));
-
-            context.init();
-            return context;
         }
-
-        return null;
+        return result;
     }
 
     public Element createElement(BPMNNS ns, String type) {
@@ -553,56 +585,6 @@ public class BPMNModel {
     }
 
     /**
-     * Helper method to write the dom document to an output stream
-     * <p>
-     * We also call the helper method 'clearBlankLines' to get rid of unnecessary
-     * white space. See also discussion here
-     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
-     * 
-     * @param doc
-     * @param output
-     * @throws TransformerException
-     */
-    private void writeXml(Document doc, OutputStream output) throws TransformerException {
-        // clenup blank lines
-        clearBlankLines();
-
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(output);
-        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-        transformer.transform(source, result);
-    }
-
-    /**
-     * This helper method use XPath to find all whitespace-only TEXT nodes in the
-     * current doucment, iterate through them and remove each one from its parent
-     * (using getParentNode().removeChild()). Something like this would do (doc
-     * would be your DOM document object):
-     * 
-     * See:
-     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
-     * 
-     * @param element
-     */
-    private void clearBlankLines() {
-        try {
-            XPath xp = XPathFactory.newInstance().newXPath();
-            NodeList nl;
-            nl = (NodeList) xp.evaluate("//text()[normalize-space(.)='']", doc, XPathConstants.NODESET);
-            for (int i = 0; i < nl.getLength(); ++i) {
-                Node node = nl.item(i);
-                node.getParentNode().removeChild(node);
-            }
-        } catch (XPathExpressionException e) {
-            logger.warning("Failed to clean blank up lines during save: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Returns true if the node is an activity node.
      * 
      * @param node
@@ -665,18 +647,15 @@ public class BPMNModel {
     }
 
     /**
-     * This method finds a bpmndi:BPMNPlane within a bpmn2:definitions. The Id is a
-     * reference to a bpmn2:process. In some cases bpmn2:definitions contains only
-     * one bpmndi:BPMNPlane without a reference to a process (default plane) in this
-     * case, if no matching plane with the given id was found the method returns the
-     * default plane.
+     * This helper method finds the bpmndi:BPMNPlane within the bpmnDiagram. In some
+     * cases a diagramm may contains more then one plane. Also in such cases we do
+     * care and return the first plane
      * 
      * <pre>
      * {@code
-     * <bpmn2:definitions >
-     *   <bpmn2:process id="Process_1" name="Process 1" isExecutable="false"> ...
-     *   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-     *      <bpmndi:BPMNPlane id="BPMNPlane_1">
+     *   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name=
+    "Default Collaboration Diagram">
+     *     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
      *      
      * }</pre
      * 
@@ -685,57 +664,33 @@ public class BPMNModel {
      * @param id
      * @return
      */
-    public static Node findBpmnPlane(Node bpmnDefinitions, String id) {
-        if (id == null || id.isEmpty() || bpmnDefinitions == null) {
-            return null;
-        }
-
-        String diagramID = "";
-        if (bpmnDefinitions.getAttributes() != null && bpmnDefinitions.getAttributes().getNamedItem("id") != null) {
-            diagramID = bpmnDefinitions.getAttributes().getNamedItem("id").getNodeValue();
-        }
-
-        String name = BPMNNS.BPMNDI.prefix + ":BPMNPlane";
-        Node defaultBpmnPlane = null;
-        NodeList childList = bpmnDefinitions.getChildNodes();
-        for (int i = 0; i < childList.getLength(); i++) {
-            Node child = childList.item(i);
-
-            // check the attribute bpmnElement
-            if (name.equals(child.getNodeName()) && child.hasAttributes()) {
-                // get attributes names and values
-                NamedNodeMap attributesMap = child.getAttributes();
-                Node bpmnElement = attributesMap.getNamedItem("bpmnElement");
-                if (bpmnElement != null) {
-                    if (id.equals(bpmnElement.getNodeValue())) {
-                        // found by id
-                        return child;
-                    }
-                } else {
-                    // set default plane
-                    defaultBpmnPlane = child;
-                }
-
-            }
-
-        }
-        // return defaultPlane or null if no plane was found!
-        if (defaultBpmnPlane == null) {
-            logger.warning("No BPMNPlane for " + id + " found in " + diagramID);
-            return null;
-        }
-        // Fallback to default bpmnPlane....
-        String bpmnPlaneID = "";
-        if (defaultBpmnPlane.getAttributes() != null && defaultBpmnPlane.getAttributes().getNamedItem("id") != null) {
-            bpmnPlaneID = defaultBpmnPlane.getAttributes().getNamedItem("id").getNodeValue();
-        }
-        logger.warning(
-                "No BPMNPlane for " + id + " found in " + diagramID + " - fallback to default plane " + bpmnPlaneID);
-        return defaultBpmnPlane;
-    }
+//    private Element findBpmnPlane() {
+//        if ( bpmnDiagram == null) {
+//            return null;
+//        }
+// 
+//        Element defaultBpmnPlane = null;
+//        NodeList childList = bpmnDiagram.getChildNodes();
+//        
+//        for (int i = 0; i < childList.getLength(); i++) {
+//            Node child = childList.item(i);
+//            if ((BPMNNS.BPMNDI.prefix + ":BPMNPlane").equals(child.getNodeName())) {
+//                defaultBpmnPlane = (Element) child;
+//                break;
+//            }
+//        }
+//      
+//        // return defaultPlane or null if no plane was found!
+//        if (defaultBpmnPlane == null) {
+//            logger.warning("No BPMNPlane found in bpmnDiagram");
+//            return null;
+//        }
+//        
+//        return defaultBpmnPlane;
+//    }
 
     /**
-     * This helper method returns a BPMNDI node for the given bpmnPlane. A BPMNDI
+     * This helper method returns a BPMNDI node for the given bpmnElement. A BPMNDI
      * element is identified by the ID stored in the attribute bpmnElement
      * <p>
      * 
@@ -746,9 +701,9 @@ public class BPMNModel {
      * 
      * @param bpmnPlane - the bpmnPlane Element
      * @param nodeName  - name of the element
-     * @param id        - the id referign to the main BPMN element
+     * @param id        - the id referring to the main BPMN element
      */
-    public static Node findBPMNPlaneElement(Node bpmnPlane, String nodeName, String id) {
+    public Node findBPMNPlaneElement(String nodeName, String id) {
         if (id == null || id.isEmpty() || bpmnPlane == null || nodeName == null) {
             return null;
         }
@@ -781,6 +736,56 @@ public class BPMNModel {
      */
     public static Logger getLogger() {
         return logger;
+    }
+
+    /**
+     * Helper method to write the dom document to an output stream
+     * <p>
+     * We also call the helper method 'clearBlankLines' to get rid of unnecessary
+     * white space. See also discussion here
+     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
+     * 
+     * @param doc
+     * @param output
+     * @throws TransformerException
+     */
+    private void writeXml(Document doc, OutputStream output) throws TransformerException {
+        // clenup blank lines
+        clearBlankLines();
+    
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource source = new DOMSource(doc);
+        StreamResult result = new StreamResult(output);
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.transform(source, result);
+    }
+
+    /**
+     * This helper method use XPath to find all whitespace-only TEXT nodes in the
+     * current doucment, iterate through them and remove each one from its parent
+     * (using getParentNode().removeChild()). Something like this would do (doc
+     * would be your DOM document object):
+     * 
+     * See:
+     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
+     * 
+     * @param element
+     */
+    private void clearBlankLines() {
+        try {
+            XPath xp = XPathFactory.newInstance().newXPath();
+            NodeList nl;
+            nl = (NodeList) xp.evaluate("//text()[normalize-space(.)='']", doc, XPathConstants.NODESET);
+            for (int i = 0; i < nl.getLength(); ++i) {
+                Node node = nl.item(i);
+                node.getParentNode().removeChild(node);
+            }
+        } catch (XPathExpressionException e) {
+            logger.warning("Failed to clean blank up lines during save: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }

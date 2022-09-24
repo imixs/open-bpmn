@@ -72,7 +72,7 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_CDATA.bpmn");
-           BPMNProcess process = model.openContext(null);
+           BPMNProcess process = model.openProcess(null);
            BPMNEvent startEvent = (BPMNEvent) process.findBaseElementById("start_1");
            assertEquals("Some text with \n"
                    + "<markup>code</markup>!",startEvent.getDocumentation());
@@ -94,7 +94,7 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_TEXT.bpmn");
-           BPMNProcess process = model.openContext(null);
+           BPMNProcess process = model.openProcess(null);
            BPMNEvent startEvent = (BPMNEvent) process.findBaseElementById("start_1");
            assertEquals("Some text with",startEvent.getDocumentation());
         } catch (BPMNModelException e) {

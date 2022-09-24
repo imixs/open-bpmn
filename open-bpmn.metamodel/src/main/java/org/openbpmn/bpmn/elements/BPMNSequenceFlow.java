@@ -13,14 +13,15 @@ import org.w3c.dom.NodeList;
 
 public class BPMNSequenceFlow extends BPMNBaseElement {
     private static Logger logger = Logger.getLogger(BPMNSequenceFlow.class.getName());
-
+    protected BPMNProcess bpmnProcess = null;
     protected String sourceRef = null;
     protected String targetRef = null;
     protected Element bpmnEdge = null;
     protected List<BPMNPoint> wayPoints = null;
 
-    public BPMNSequenceFlow(BPMNModel model, Element node) {
+    public BPMNSequenceFlow(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
         super(model, node);
+        this.bpmnProcess = _bpmnProcess;
         wayPoints = new ArrayList<BPMNPoint>();
 
         this.sourceRef = this.getAttribute("sourceRef");
@@ -32,17 +33,16 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         if (targetRef == null || targetRef.isEmpty()) {
             logger.warning("Missing targetRef!");
         }
-        
-     // find the BPMNShape element. If not defined create a new one
-        if (model.getContext() != null) {
-            bpmnEdge = (Element) BPMNModel.findBPMNPlaneElement(model.getContext().bpmnPlane,
-                     "BPMNEdge", getId());
+
+        // find the BPMNShape element. If not defined create a new one
+        if (bpmnProcess != null) {
+            bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
             if (bpmnEdge == null) {
                 // create shape element
                 createBPMNEdge();
             } else {
                 // parse waypoints (di:waypoint)
-                List<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,BPMNNS.DI.prefix + ":waypoint");
+                List<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, BPMNNS.DI.prefix + ":waypoint");
                 for (Element wayPoint : wayPoints) {
                     NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                     BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
@@ -63,27 +63,29 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
 
     /**
      * Returns the sourc ref ID
+     * 
      * @return
      */
     public String getSourceRef() {
         return sourceRef;
     }
-    
+
     /**
      * Returns the Connected BPMN source element
+     * 
      * @return
      */
     public BPMNFlowElement getSourceElement() {
-        return this.model.getContext().findBPMNFlowElementById(sourceRef);
+        return this.bpmnProcess.findBPMNFlowElementById(sourceRef);
     }
-    
-    
+
     public void setSourceRef(String sourceRef) {
         this.sourceRef = sourceRef;
     }
 
     /**
      * Returns the target ref id
+     * 
      * @return
      */
     public String getTargetRef() {
@@ -96,10 +98,11 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
 
     /**
      * Returns the Connected BPMN target element
+     * 
      * @return
      */
     public BPMNFlowElement getTargetElement() {
-        return this.model.getContext().findBPMNFlowElementById(targetRef);
+        return this.bpmnProcess.findBPMNFlowElementById(targetRef);
     }
 
     public List<BPMNPoint> getWayPoints() {
@@ -139,7 +142,6 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         this.wayPoints.add(wayPoint);
     }
 
-  
     /**
      * Removes all wayPoints form this BPMNSequenceFlow
      */
@@ -155,7 +157,7 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
             }
         }
         // remove nodes form Edge element...
-        for (Node element: deletionList) {
+        for (Node element : deletionList) {
             bpmnEdge.removeChild(element);
         }
         // reset wayPoints
@@ -171,14 +173,14 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         if (bpmnEdge != null) {
             BPMNModel.getLogger().warning("bpmnShape already exits");
         }
-        if (model.getContext().bpmnPlane == null) {
-            BPMNModel.getLogger().warning("Missing bpmnPlane in current model context");
+        if (model.getBpmnPlane() == null) {
+            BPMNModel.getLogger().warning("Missing bpmnPlane in current diagram context");
         }
         if (this.getId() != null) {
             bpmnEdge = model.createElement(BPMNNS.BPMNDI, "BPMNEdge");
             bpmnEdge.setAttribute("id", BPMNModel.generateShortID("BPMNEdge"));
             bpmnEdge.setAttribute("bpmnElement", this.getId());
-            model.getContext().bpmnPlane.appendChild(bpmnEdge);
+            model.getBpmnPlane().appendChild(bpmnEdge);
         } else {
             BPMNModel.getLogger().warning("Missing ID attribute!");
         }

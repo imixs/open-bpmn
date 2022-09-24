@@ -23,7 +23,7 @@ This file contains no processes and no elements. You can easily extend the model
 
 ```java
 	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-	model.addProcess("process_1");
+	BPMNProcess processContext = model.buildProcess("process_1","Sales");
 	model.save("src/test/resources/create-process_1.bpmn");
 ```
 
@@ -33,8 +33,7 @@ With a process instance you can add elements to the process:
 
 ```java
 	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-	model.addProcess("process_1");
-	BPMNProcess processContext = model.openContext("process_1");
+	BPMNProcess processContext = model.buildProcess("process_1","Marketing");
 	processContext.addEvent("start_1","Start",EventType.START);
 	processContext.addEvent("end_1","End",EventType.END);
 	processContext.addTask("task_1","Task",TaskType.TASK);
@@ -54,9 +53,9 @@ To load a model instance and add a new Process into the model you just need this
 	// load model
 	BPMNModel model = BPMNModelFactory.read("/process_1-empty-1.bpmn");
 	// open default process....
-	BPMNProcess process = model.openContext(null);
+	BPMNProcess defaultProcess = model.openProcess(null);
 	// add a second process
-	model.addProcess("P-000002");
+	BPMNProcess secondProcess = model.buildProcess("P-000002","Example");
 	// store the model
 	model.save("src/test/resources/process_1-update-1.bpmn");
 ```

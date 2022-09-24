@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,7 +17,7 @@ import org.w3c.dom.NodeList;
  * provides a list of attributes with at least an id and a documentation. Other
  * element types can extend the attribute list.
  * <p>
- * A BPMNFlowElement holds a reference to the bpmnShape element
+ * A BPMNBaseElement holds a reference to an optional bpmnShape element
  * 
  * @author rsoika
  */
@@ -25,7 +26,9 @@ public abstract class BPMNBaseElement {
     private Element elementNode = null;
     protected BPMNModel model = null;
     private Element documentationNode = null;
-
+    protected Element bpmnShape = null;
+    protected BPMNBounds bounds = null;
+    
     public BPMNBaseElement() {
         super();
     }
@@ -321,4 +324,59 @@ public abstract class BPMNBaseElement {
         return hasAttribute(extensionNamespace + ":" + attribute);
     }
 
+
+    /**
+     * Returns the BPMNShape bounds.
+     * 
+     * @return
+     * @throws BPMNMissingElementException
+     */
+    public BPMNBounds getBounds() throws BPMNMissingElementException {
+        if (bounds == null) {
+            // lazy loading of bounds from a given bpmnShape
+            bounds = new BPMNBounds(this.bpmnShape, model);
+        }
+        return bounds;
+    }
+
+    /**
+     * Updates the BPMN Shape bounds.
+     * 
+     * @param x
+     * @param y
+     * @param height
+     * @param width
+     * @return
+     * @throws BPMNMissingElementException
+     */
+    public BPMNBounds setBounds(double x, double y, double height, double width) throws BPMNMissingElementException {
+        // init bound if not yet loaded
+        getBounds();
+
+        // update bounds
+        bounds.updateDimension( width, height);
+        bounds.updateLocation(x, y);
+       
+
+        return bounds;
+    }
+
+    /**
+     * Returns the BPMNShape element
+     * 
+     * @return
+     */
+    public Element getBpmnShape() {
+        return bpmnShape;
+    }
+
+    /**
+     * Set the BPMNShape element
+     * 
+     * @param bpmnShape
+     */
+    public void setBpmnShape(Element bpmnShape) {
+        this.bpmnShape = bpmnShape;
+    }
+   
 }

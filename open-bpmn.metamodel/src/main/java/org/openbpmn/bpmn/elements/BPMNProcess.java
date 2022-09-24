@@ -28,10 +28,8 @@ public class BPMNProcess extends BPMNBaseElement {
     protected Set<BPMNActivity> activities = null;
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
- 
-    protected Set<BPMNSequenceFlow> sequenceFlows = null;
 
-    protected Node bpmnPlane = null;
+    protected Set<BPMNSequenceFlow> sequenceFlows = null;
 
     public BPMNProcess() {
         super();
@@ -41,9 +39,42 @@ public class BPMNProcess extends BPMNBaseElement {
         super(model, item);
     }
 
-    public BPMNModel getModel() {
-        return model;
+    /**
+     * This method parses the content of the process element and adds all tasks,
+     * gateways and events. This is a lazy loading mechanism called by the BPMNModel
+     * method OpenProcess()
+     * 
+     * @throws BPMNModelException
+     */
+    public void init() throws BPMNModelException {
+        // now find all relevant bpmn meta elements
+        NodeList childs = this.getElementNode().getChildNodes();
+        for (int j = 0; j < childs.getLength(); j++) {
+            Node child = childs.item(j);
+            if (child.getNodeType() != Node.ELEMENT_NODE) {
+                // continue if not a new element node
+                continue;
+            }
+
+            // check element type
+            if (BPMNModel.isActivity(child)) {
+                this.addActivity((Element) child);
+            } else if (BPMNModel.isEvent(child)) {
+                this.addEvent((Element) child);
+            } else if (BPMNModel.isGateway(child)) {
+                this.addGateway((Element) child);
+            } else if (BPMNModel.isSequenceFlow(child)) {
+                this.addSequenceFlow((Element) child);
+            } else {
+                // unsupported node type
+            }
+        }
+
     }
+
+//    public BPMNModel getModel() {
+//        return super.getModel();
+//    }
 
     public Set<BPMNActivity> getActivities() {
         if (activities == null) {
@@ -54,14 +85,6 @@ public class BPMNProcess extends BPMNBaseElement {
 
     public void setActivities(Set<BPMNActivity> activities) {
         this.activities = activities;
-    }
-
-    public Node getBpmnPlane() {
-        return bpmnPlane;
-    }
-
-    public void setBpmnPlane(Node bpmnPlane) {
-        this.bpmnPlane = bpmnPlane;
     }
 
     public Set<BPMNEvent> getEvents() {
@@ -137,19 +160,6 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Adds a new BPMNTask from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     * @throws BPMNModelException
-     */
-    private BPMNActivity addActivity(Element element) throws BPMNModelException {
-        BPMNActivity task = new BPMNActivity(model, element, element.getLocalName());
-        getActivities().add(task);
-        return task;
-    }
-
-    /**
      * Builds a new BPMNEvent element and adds this element into this process
      * context.
      * <p>
@@ -167,25 +177,12 @@ public class BPMNProcess extends BPMNBaseElement {
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         this.getElementNode().appendChild(eventElement);
-
+    
         // add BPMNEvent instance
         BPMNEvent event = this.addEvent(eventElement);
-
+    
         return event;
-
-    }
-
-    /**
-     * Adds a new BPMNEvent from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     * @throws BPMNModelException
-     */
-    private BPMNEvent addEvent(Element element) throws BPMNModelException {
-        BPMNEvent event = new BPMNEvent(model, element, element.getLocalName());
-        getEvents().add(event);
-        return event;
+    
     }
 
     /**
@@ -215,20 +212,6 @@ public class BPMNProcess extends BPMNBaseElement {
         return gateway;
 
     }
-
-    /**
-     * Adds a new BPMNGateway from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     * @throws BPMNModelException
-     */
-    private BPMNGateway addGateway(Element element) throws BPMNModelException {
-        BPMNGateway gateway = new BPMNGateway(model, element, element.getLocalName());
-        getGateways().add(gateway);
-        return gateway;
-    }
-
 
     /**
      * Adds a new SequenceFlow
@@ -285,18 +268,6 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Adds a new BPMNEvent from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     */
-    private BPMNSequenceFlow addSequenceFlow(Element element) {
-        BPMNSequenceFlow flow = new BPMNSequenceFlow(model, element);
-        getSequenceFlows().add(flow);
-        return flow;
-    }
-
-    /**
      * Deletes a BPMNTask element from this context.
      * <p>
      * 
@@ -318,7 +289,7 @@ public class BPMNProcess extends BPMNBaseElement {
         // finally delete the task element and the shape
         this.getElementNode().removeChild(task.getElementNode());
         if (task.getBpmnShape() != null) {
-            this.getBpmnPlane().removeChild(task.getBpmnShape());
+            model.getBpmnPlane().removeChild(task.getBpmnShape());
         }
 
         this.getActivities().remove(task);
@@ -346,7 +317,7 @@ public class BPMNProcess extends BPMNBaseElement {
         // finally delete the task element and the shape
         this.getElementNode().removeChild(event.getElementNode());
         if (event.getBpmnShape() != null) {
-            this.getBpmnPlane().removeChild(event.getBpmnShape());
+            model.getBpmnPlane().removeChild(event.getBpmnShape());
         }
 
         this.getEvents().remove(event);
@@ -374,7 +345,7 @@ public class BPMNProcess extends BPMNBaseElement {
         // finally delete the task element and the shape
         this.getElementNode().removeChild(getway.getElementNode());
         if (getway.getBpmnShape() != null) {
-            this.getBpmnPlane().removeChild(getway.getBpmnShape());
+            model.getBpmnPlane().removeChild(getway.getBpmnShape());
         }
 
         this.getGateways().remove(getway);
@@ -432,7 +403,7 @@ public class BPMNProcess extends BPMNBaseElement {
         // Finally delete the flow element and the edge
         this.getElementNode().removeChild(seqenceFlow.getElementNode());
         if (seqenceFlow.getBpmnEdge() != null) {
-            this.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
+            model.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
         }
 
         this.getSequenceFlows().remove(seqenceFlow);
@@ -481,14 +452,6 @@ public class BPMNProcess extends BPMNBaseElement {
             return null;
         }
 
-        Set<BPMNParticipant> listP = getModel().getParticipants();
-        for (BPMNParticipant element : listP) {
-            if (id.equals(element.getId())) {
-                return element;
-            }
-        }
-
-        
         Set<BPMNActivity> listA = this.getActivities();
         for (BPMNActivity element : listA) {
             if (id.equals(element.getId())) {
@@ -536,6 +499,57 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
+     * Adds a new BPMNTask from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     * @throws BPMNModelException
+     */
+    private BPMNActivity addActivity(Element element) throws BPMNModelException {
+        BPMNActivity task = new BPMNActivity(model, element, element.getLocalName(), this);
+        getActivities().add(task);
+        return task;
+    }
+
+    /**
+     * Adds a new BPMNEvent from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     * @throws BPMNModelException
+     */
+    private BPMNEvent addEvent(Element element) throws BPMNModelException {
+        BPMNEvent event = new BPMNEvent(model, element, element.getLocalName(), this);
+        getEvents().add(event);
+        return event;
+    }
+
+    /**
+     * Adds a new BPMNGateway from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     * @throws BPMNModelException
+     */
+    private BPMNGateway addGateway(Element element) throws BPMNModelException {
+        BPMNGateway gateway = new BPMNGateway(model, element, element.getLocalName(), this);
+        getGateways().add(gateway);
+        return gateway;
+    }
+
+    /**
+     * Adds a new BPMNEvent from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     */
+    private BPMNSequenceFlow addSequenceFlow(Element element) {
+        BPMNSequenceFlow flow = new BPMNSequenceFlow(model, element, this);
+        getSequenceFlows().add(flow);
+        return flow;
+    }
+
+    /**
      * Returns a list of sequenceFlows associated with a given FlowElement
      * 
      * @param id of a flowElement
@@ -553,38 +567,6 @@ public class BPMNProcess extends BPMNBaseElement {
             }
         }
         return result;
-    }
-
-    /**
-     * This method parses the content of the process element and adds all tasks,
-     * gateways and events
-     * 
-     * @throws BPMNModelException
-     */
-    public void init() throws BPMNModelException {
-        // now find all relevant bpmn meta elements
-        NodeList childs = this.getElementNode().getChildNodes();
-        for (int j = 0; j < childs.getLength(); j++) {
-            Node child = childs.item(j);
-            if (child.getNodeType() != Node.ELEMENT_NODE) {
-                // continue if not a new element node
-                continue;
-            }
-
-            // check element type
-            if (BPMNModel.isActivity(child)) {
-                this.addActivity((Element) child);
-            } else if (BPMNModel.isEvent(child)) {
-                this.addEvent((Element) child);
-            } else if (BPMNModel.isGateway(child)) {
-                this.addGateway((Element) child);
-            } else if (BPMNModel.isSequenceFlow(child)) {
-                this.addSequenceFlow((Element) child);
-            } else {
-                // unsupported node type
-            }
-        }
-
     }
 
 }

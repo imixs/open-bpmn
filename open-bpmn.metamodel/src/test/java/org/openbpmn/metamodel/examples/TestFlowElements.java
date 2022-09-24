@@ -48,7 +48,7 @@ public class TestFlowElements {
             }
 
             // read tasks....
-            BPMNProcess process = model.openContext(null);
+            BPMNProcess process = model.openProcess(null);
 
             assertNotNull(process);
             logger.info("...Process ID=" + process.getAttribute("id"));
