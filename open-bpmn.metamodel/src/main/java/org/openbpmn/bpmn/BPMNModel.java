@@ -20,6 +20,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -103,13 +107,8 @@ public class BPMNModel {
     });
 
     public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { BPMNTypes.SEQUENCE_FLOW });
-    
-    
-    
+
     public static final String PARTICIPANT = "participant";
-    
-  
-    
 
     private Element definitions;
     private Document doc;
@@ -147,7 +146,7 @@ public class BPMNModel {
 
     /**
      * This method instantiates a new BPMN model based on a given
-     * org.w3c.dom.Document. The method parses the BPMN namespaces. If
+     * org.w3c.dom.Document. The method parses the BPMN namespaces.
      * 
      * @param doc
      */
@@ -339,6 +338,7 @@ public class BPMNModel {
             if (doc == null) {
                 logger.severe("...unable to save file - doc is null!");
             }
+
             writeXml(doc, output);
         } catch (TransformerException | IOException e) {
             e.printStackTrace();
@@ -379,43 +379,52 @@ public class BPMNModel {
 
     /**
      * Helper method to write the dom document to an output stream
+     * <p>
+     * We also call the helper method 'clearBlankLines' to get rid of unnecessary
+     * white space. See also discussion here
+     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
      * 
      * @param doc
      * @param output
      * @throws TransformerException
      */
-    @SuppressWarnings("unused")
-    private static void writeXml(Document doc, OutputStream output) throws TransformerException {
-
-        String IDENTITY_XSLT_WITH_INDENT = // workaround to remove newlines - does not work for cdata
-                "<xsl:stylesheet version='1.0' " + //
-                        "xmlns:xsl='http://www.w3.org/1999/XSL/Transform' xmlns:bpmn2=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:dc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\">"
-                        + //
-                        "<xsl:output indent=\"yes\" cdata-section-elements=\"cdata-other-elements\"/>" + //
-                        "<xsl:strip-space elements=\"*\"/>" + //
-                        " <xsl:template match=\"@*|node()\">" + //
-                        "   <xsl:copy>" + //
-                        "      <xsl:apply-templates select=\"@*|node()\"/>" + //
-                        "    </xsl:copy>" + //
-                        " </xsl:template>" + //
-                        "</xsl:stylesheet>";
+    private void writeXml(Document doc, OutputStream output) throws TransformerException {
+        // clenup blank lines
+        clearBlankLines();
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-
         Transformer transformer = transformerFactory.newTransformer();
-//        Transformer transformer = transformerFactory
-//                .newTransformer(new StreamSource(new StringReader(IDENTITY_XSLT_WITH_INDENT)));
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
-
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        // pretty print
-        // Note: The indent feature is not working correctly. It add unexpected new
-        // lines witch pollutes the output.
-        // for this reason we set indent to 'no'
-        transformer.setOutputProperty(OutputKeys.INDENT, "no");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.transform(source, result);
+    }
 
+    /**
+     * This helper method use XPath to find all whitespace-only TEXT nodes in the
+     * current doucment, iterate through them and remove each one from its parent
+     * (using getParentNode().removeChild()). Something like this would do (doc
+     * would be your DOM document object):
+     * 
+     * See:
+     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
+     * 
+     * @param element
+     */
+    private void clearBlankLines() {
+        try {
+            XPath xp = XPathFactory.newInstance().newXPath();
+            NodeList nl;
+            nl = (NodeList) xp.evaluate("//text()[normalize-space(.)='']", doc, XPathConstants.NODESET);
+            for (int i = 0; i < nl.getLength(); ++i) {
+                Node node = nl.item(i);
+                node.getParentNode().removeChild(node);
+            }
+        } catch (XPathExpressionException e) {
+            logger.warning("Failed to clean blank up lines during save: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -432,8 +441,6 @@ public class BPMNModel {
         return isActivity(element.getElementNode());
     }
 
-    
-    
     /**
      * Returns true if the node is an participant node.
      * 
@@ -444,7 +451,6 @@ public class BPMNModel {
         return (PARTICIPANT.equals(node.getLocalName()));
     }
 
-    
     /**
      * Returns true if the node is a gateway node.
      * 
