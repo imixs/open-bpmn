@@ -55,7 +55,7 @@ public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHa
 
     @Override
     public void executeOperation(final ChangeRoutingPointsOperation operation) {
-        BPMNProcess context = modelState.getBpmnModel().getContext();
+        BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
         List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
         try {
             for (ElementAndRoutingPoints routingPoint : routingPoints) {

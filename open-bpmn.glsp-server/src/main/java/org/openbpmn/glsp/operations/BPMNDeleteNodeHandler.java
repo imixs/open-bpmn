@@ -44,21 +44,21 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             System.out.println("...delete Element " + id);
 
             // Update the source model
-            BPMNBaseElement baseElement = modelState.getBpmnModel().getContext().findBaseElementById(id);
+            BPMNBaseElement baseElement = modelState.getBpmnModel().openDefaultProcess().findBaseElementById(id);
             if (baseElement == null) {
                 System.out.println("...no BPMN elmenet with id: " + id + " found!");
             }
             if (baseElement instanceof BPMNActivity) {
-                modelState.getBpmnModel().getContext().deleteTask(id);
+                modelState.getBpmnModel().openDefaultProcess().deleteTask(id);
             }
             if (baseElement instanceof BPMNEvent) {
-                modelState.getBpmnModel().getContext().deleteEvent(id);
+                modelState.getBpmnModel().openDefaultProcess().deleteEvent(id);
             }
             if (baseElement instanceof BPMNGateway) {
-                modelState.getBpmnModel().getContext().deleteGateway(id);
+                modelState.getBpmnModel().openDefaultProcess().deleteGateway(id);
             }
             if (baseElement instanceof BPMNSequenceFlow) {
-                modelState.getBpmnModel().getContext().deleteSequenceFlow(id);
+                modelState.getBpmnModel().openDefaultProcess().deleteSequenceFlow(id);
             }
         }
 

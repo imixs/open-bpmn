@@ -109,7 +109,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                 elementID = element.get().getId();
                 logger.info("===== > add extension for element id: " + elementID);
 
-                BPMNProcess process = modelState.getBpmnModel().getContext();
+                BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
                 BPMNBaseElement bpmnElement = process.findBaseElementById(elementID);
                 if (bpmnElement != null) {
                     // add the new extension

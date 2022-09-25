@@ -76,7 +76,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
                 eventID = eventElement.get().getId();
                 logger.info("===== > event id: " + eventID);
                 try {
-                    BPMNProcess process = modelState.getBpmnModel().getContext();
+                    BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
                     BPMNEvent bpmnEvent = (BPMNEvent) process.findBaseElementById(eventID);
                     if (bpmnEvent != null) {
                         // add the new definition

@@ -56,7 +56,7 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
-        BPMNProcess process = modelState.getBpmnModel().getContext();
+        BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
         try {
             Optional<BaseElement> element = null;
             String targetId = operation.getTargetElementId();
@@ -72,7 +72,7 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
             if (element.isPresent()) {
                 sourceId = element.get().getId();
             }
-            process.buildSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
+            process.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
 
             modelState.reset();
         } catch (BPMNModelException e) {

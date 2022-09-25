@@ -71,7 +71,8 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         }
 
         // validate BPMN element
-        BPMNBaseElement bpmnElement = modelState.getBpmnModel().getContext().findBaseElementById(operation.getId());
+        BPMNBaseElement bpmnElement = modelState.getBpmnModel().openDefaultProcess()
+                .findBaseElementById(operation.getId());
         if (bpmnElement == null) {
             throw new IllegalArgumentException(
                     "BPMN Element with id " + operation.getId() + " is not defined in current model!");

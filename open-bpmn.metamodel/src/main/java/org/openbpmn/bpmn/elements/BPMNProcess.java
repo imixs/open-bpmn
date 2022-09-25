@@ -43,6 +43,8 @@ public class BPMNProcess extends BPMNBaseElement {
     protected Set<BPMNGateway> gateways = null;
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
 
+    private boolean initalized = false;
+
     public BPMNProcess() {
         super();
     }
@@ -85,31 +87,32 @@ public class BPMNProcess extends BPMNBaseElement {
      * @throws BPMNModelException
      */
     public void init() throws BPMNModelException {
-        // now find all relevant bpmn meta elements
-        NodeList childs = this.getElementNode().getChildNodes();
-        for (int j = 0; j < childs.getLength(); j++) {
-            Node child = childs.item(j);
-            if (child.getNodeType() != Node.ELEMENT_NODE) {
-                // continue if not a new element node
-                continue;
-            }
+        if (!initalized) {
+            // now find all relevant bpmn meta elements
+            NodeList childs = this.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() != Node.ELEMENT_NODE) {
+                    // continue if not a new element node
+                    continue;
+                }
 
-            // check element type
-            if (BPMNModel.isActivity(child)) {
-                this.createBPMNActivityByNode((Element) child);
-            } else if (BPMNModel.isEvent(child)) {
-                this.createBPMNEventByNode((Element) child);
-            } else if (BPMNModel.isGateway(child)) {
-                this.createBPMNGatewayByNode((Element) child);
-            } else if (BPMNModel.isSequenceFlow(child)) {
-                this.createBPMNSequenceFlowByNode((Element) child);
-            } else {
-                // unsupported node type
+                // check element type
+                if (BPMNModel.isActivity(child)) {
+                    this.createBPMNActivityByNode((Element) child);
+                } else if (BPMNModel.isEvent(child)) {
+                    this.createBPMNEventByNode((Element) child);
+                } else if (BPMNModel.isGateway(child)) {
+                    this.createBPMNGatewayByNode((Element) child);
+                } else if (BPMNModel.isSequenceFlow(child)) {
+                    this.createBPMNSequenceFlowByNode((Element) child);
+                } else {
+                    // unsupported node type
+                }
             }
+            initalized = true;
         }
-
     }
-
 
     public Set<BPMNActivity> getActivities() {
         if (activities == null) {
@@ -184,16 +187,17 @@ public class BPMNProcess extends BPMNBaseElement {
     public BPMNActivity addTask(String id, String name, String type) throws BPMNModelException {
 
         // verify id
-        if (id==null || id.isEmpty()) {
-            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID,"id must not be empty or null!");
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNActivity node: getActivities()) {
+        for (BPMNActivity node : getActivities()) {
             if (node.getId().equals(id)) {
-                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,"id '" + id + "' is already in use!");
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
             }
         }
-        
+
         // create a new Dom node...
         Element taskElement = model.createElement(BPMNNS.BPMN2, type);
         taskElement.setAttribute("id", id);
@@ -560,8 +564,8 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Creates a new BPMNEvent from a existing BPMN Node and adds the
-     * BPMNEvent into the event list
+     * Creates a new BPMNEvent from a existing BPMN Node and adds the BPMNEvent into
+     * the event list
      * 
      * Adds a new BPMNEvent from a existing Element Node
      * 

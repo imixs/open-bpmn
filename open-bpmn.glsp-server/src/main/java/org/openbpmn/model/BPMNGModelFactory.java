@@ -40,7 +40,6 @@ import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -108,15 +107,11 @@ public class BPMNGModelFactory implements GModelFactory {
             GGraph newGModel = null;
             BPMNModel model = modelState.getBpmnModel();
             if (model != null) {
-                try {
-                    BPMNProcess process = model.openContext(null);
-                    if (process != null) {
-                        newGModel = createGModelFromProcess(process, modelState);
-                        modelState.updateRoot(newGModel);
-                        modelState.getRoot().setRevision(-1);
-                    }
-                } catch (BPMNModelException e) {
-                    e.printStackTrace();
+                BPMNProcess process = model.openDefaultProcess();
+                if (process != null) {
+                    newGModel = createGModelFromProcess(process);
+                    modelState.updateRoot(newGModel);
+                    modelState.getRoot().setRevision(-1);
                 }
             }
             if (newGModel == null) {
@@ -150,20 +145,19 @@ public class BPMNGModelFactory implements GModelFactory {
      * The method is called by the {@link BPMNGModelFactory}
      *
      * @param process
-     * @param modelState
      * @return new GGraph
      */
-    public GGraph createGModelFromProcess(final BPMNProcess process, final GModelState modelState) {
+    public GGraph createGModelFromProcess(final BPMNProcess process) {
 
         List<GModelElement> entityNodes = new ArrayList<>();
         try {
-
+            Set<BPMNParticipant> participants = modelState.getBpmnModel().getParticipants();
             // Add all Pools
-            for (BPMNParticipant participant : process.getParticipants()) {
+            for (BPMNParticipant participant : participants) {
                 logger.info("participant: " + participant.getName());
                 BPMNPoint bpmnPoint = participant.getBounds().getPosition();
                 GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                PoolNodeBuilder builder = new PoolNodeBuilder(participant.getType(), participant.getName());
+                PoolNodeBuilder builder = new PoolNodeBuilder(BPMNTypes.PARTICIPANT, participant.getName());
                 GDimension dimension = GraphUtil.dimension(participant.getBounds().getDimension().getWidth(),
                         participant.getBounds().getDimension().getHeight());
 

@@ -27,7 +27,6 @@ import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -53,21 +52,25 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
         // now we add a new gateway into the source model
-        String gatewayID = "participant-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode participantID=" + gatewayID);
+        String participantID = "participant-" + BPMNModel.generateShortID();
+        logger.fine("===== > createNode participantID=" + participantID);
         try {
-            BPMNProcess process = modelState.getBpmnModel().getContext();
-            BPMNParticipant participant = process.buildParticipant(gatewayID, getLabel(), operation.getElementTypeId());
+            // TODO - Wrong method call
+            // BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
+            // Element definitions = modelState.getBpmnModel().getDefinitions();
+
+            BPMNParticipant participant = modelState.getBpmnModel().addParticipant(participantID, getLabel());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 participant.getBounds().updateLocation(point.get().getX(), point.get().getY());
                 participant.getBounds().updateDimension(BPMNParticipant.DEFAULT_WIDTH, BPMNParticipant.DEFAULT_HEIGHT);
+                participant.createPool();
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(participantID)));
     }
 
     @Override

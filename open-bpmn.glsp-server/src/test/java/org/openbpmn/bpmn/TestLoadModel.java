@@ -49,9 +49,9 @@ public class TestLoadModel {
         // we expect one child
         assertNotNull(model);
 
-        BPMNProcess process = model.openContext(null);
+        BPMNProcess process = model.openProcess(null);
         assertNotNull(process);
-        GGraph newGModel = new BPMNGModelFactory().createGModelFromProcess(process, null);
+        GGraph newGModel = new BPMNGModelFactory().createGModelFromProcess(process);
 
         assertNotNull(newGModel);
     }

@@ -72,8 +72,8 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         String eventID = "event-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode eventnodeID=" + eventID);
         try {
-            BPMNProcess process = modelState.getBpmnModel().getContext();
-            BPMNEvent event = process.buildEvent(eventID, getLabel(), operation.getElementTypeId());
+            BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
+            BPMNEvent event = process.addEvent(eventID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 event.getBounds().updateLocation(point.get().getX(), point.get().getY());

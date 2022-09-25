@@ -73,7 +73,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
     @Override
     public void executeOperation(final ChangeBoundsOperation operation) {
 
-        BPMNProcess context = modelState.getBpmnModel().getContext();
+        BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
         // iterate over all new Bounds...
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();

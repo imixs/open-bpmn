@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -65,13 +66,18 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     protected void executeOperation(final CreateNodeOperation operation) {
+
+        GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
+
+        logger.info(" ==> Wir setzten das Task Element in den Container : " + container.getId());
+
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String taskID = "task-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode tasknodeID=" + taskID);
         try {
-            BPMNProcess process = modelState.getBpmnModel().getContext();
-            BPMNActivity task = process.buildTask(taskID, getLabel(), operation.getElementTypeId());
+            BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
+            BPMNActivity task = process.addTask(taskID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 task.getBounds().updateLocation(point.get().getX(), point.get().getY());
@@ -83,6 +89,16 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(taskID)));
     }
+
+//    @Override
+//    public void executeOperation(final CreateNodeOperation operation) {
+//       GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
+//       Optional<GPoint> absoluteLocation = getLocation(operation);
+//       Optional<GPoint> relativeLocation = getRelativeLocation(operation, absoluteLocation, container);
+//       GModelElement element = createNode(relativeLocation, operation.getArgs());
+//       container.getChildren().add(element);
+//       actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(element.getId())));
+//    }
 
     @Override
     public String getLabel() {
