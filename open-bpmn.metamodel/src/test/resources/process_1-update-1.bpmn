@@ -3,7 +3,6 @@
     <bpmn2:process id="process_10005"/>
     <bpmn2:process id="P-000002"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
-        <bpmndi:BPMNPlane bpmnElement="process_10005" id="BPMNPlane_process_10005"/>
-        <bpmndi:BPMNPlane bpmnElement="P-000002" id="BPMNPlane_P-000002"/>
+        <bpmndi:BPMNPlane bpmnElement="process_10005" id="BPMNPlane_1"/>
     </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

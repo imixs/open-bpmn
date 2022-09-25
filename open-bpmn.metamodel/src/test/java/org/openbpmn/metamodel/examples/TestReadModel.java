@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -27,21 +27,20 @@ public class TestReadModel {
 
     static BPMNModel model = null;
 
-    @BeforeAll
-    public static void init() throws BPMNModelException {
-        logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
-
-    }
-
     /**
-     * This test creates a bpmn file
+     * This test reads a simple bpmn file
      */
     @Test
-    public void testModelElements() {
+    public void testReadSimpleModel() {
         try {
-            BPMNProcess process = model.openProcess(null);
+            logger.info("...read model");
+            model = BPMNModelFactory.read("/refmodel-1.bpmn");
+
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
+            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC,process.getProcessType());
+            
+            
             assertEquals(2, process.getActivities().size());
             assertEquals(2, process.getEvents().size());
 
@@ -52,6 +51,86 @@ public class TestReadModel {
             BPMNLabel label = startEvent.getLabel();
             assertNotNull(label);
             assertEquals(84.0, label.getPosition().getX());
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        logger.info("...model read sucessful: ");
+    }
+
+    
+    /**
+     * This test reads a collaboration bpmn file containing 2 participants but no default process.
+     * We expect the a model creates a default process 
+     */
+    @Test
+    public void testReadCollaborationModelWithoutDefault() {
+        try {
+            logger.info("...read model");
+            model = BPMNModelFactory.read("/refmodel-2.bpmn");
+            
+            // we expect 3 Processes
+            assertEquals(3, model.getProcesses().size());
+
+            BPMNProcess defaultProcess = model.openDefaultProcess();
+            assertNotNull(defaultProcess);
+            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC,defaultProcess.getProcessType());
+            // no activities expected
+            assertEquals(0, defaultProcess.getActivities().size());
+            
+            // Open process 1
+            BPMNProcess process1 = model.openProcess("Process_1");
+            assertEquals(1, process1.getActivities().size());
+            assertEquals(2, process1.getEvents().size());
+
+            BPMNFlowElement startEvent = process1.findBPMNFlowElementById("StartEvent_1");
+            assertNotNull(startEvent);
+
+            // test the label position of the event
+            BPMNLabel label = startEvent.getLabel();
+            assertNotNull(label);
+            assertEquals(146.0, label.getPosition().getX());
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        logger.info("...model read sucessful: ");
+    }
+    
+    
+    /**
+     * This test reads a collaboration bpmn file containing 3 participants including a default process.
+     * 
+     */
+    @Test
+    public void testReadCollaborationModelWithDefault() {
+        try {
+            logger.info("...read model");
+            model = BPMNModelFactory.read("/refmodel-3.bpmn");
+            
+            // we expect 3 Processes
+            assertEquals(3, model.getProcesses().size());
+
+            // verify Default Process
+            BPMNProcess defaultProcess = model.openDefaultProcess();
+            assertNotNull(defaultProcess);
+            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC,defaultProcess.getProcessType());
+            assertEquals("Process_3",defaultProcess.getId());
+            assertEquals("Default Pool Process",defaultProcess.getName());
+            // 1 activities expected
+            assertEquals(1, defaultProcess.getActivities().size());
+            
+            // verify process 1
+            BPMNProcess process1 = model.openProcess("Process_1");
+            assertEquals(1, process1.getActivities().size());
+            assertEquals(2, process1.getEvents().size());
+            BPMNFlowElement startEvent = process1.findBPMNFlowElementById("StartEvent_1");
+            assertNotNull(startEvent);
+
+            // test the label position of the event
+            BPMNLabel label = startEvent.getLabel();
+            assertNotNull(label);
+            assertEquals(146.0, label.getPosition().getX());
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -19,24 +20,60 @@ import org.w3c.dom.NodeList;
  * the objective of carrying out work. In BPMN a Process is depicted as a graph
  * of Flow Elements, which are a set of Activities, Events, Gateways, and
  * Sequence Flows that define finite execution semantics.
+ * <p>
+ * The processType defines the level of abstraction modeled by this Process. A
+ * “private Process“ is modeled within a Pool showing those flow elements that
+ * are relevant to a specific “internal“ part of the organization.
+ * <p>
+ * A “public Process“ is modeled without a surrounding Pool and shows only those
+ * flow elements that are relevant to “external“ consumers. By default
+ * processType “none” meaning undefined is not used by OpenBPMN.
+ * 
+ * Note: Each processType can be used within a Collaboration .
  * 
  * @author rsoika
  *
  */
 public class BPMNProcess extends BPMNBaseElement {
 
+    protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<BPMNActivity> activities = null;
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
-
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
 
     public BPMNProcess() {
         super();
     }
 
-    public BPMNProcess(BPMNModel model, Element item) {
-        super(model, item);
+    /**
+     * The method creates a BPMNProcess instance form a bpmn2:process model element.
+     * <p>
+     * The method also verify the processType attribute and defaults to 'Public' if
+     * no processType is set or is invalid.
+     * 
+     * @param model
+     * @param element
+     */
+    public BPMNProcess(BPMNModel model, Element element, String processType) {
+        super(model, element);
+
+        // set public if not yet specified
+        if (processType == null || processType.isEmpty() || (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(processType)
+                && !BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType))) {
+            BPMNModel.getLogger().warning("bpmn2:process does not define a valid processType - default to 'Public'");
+            processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
+            element.setAttribute("processType", processType);
+        }
+        setProcessType(processType);
+    }
+
+    public String getProcessType() {
+        return processType;
+    }
+
+    public void setProcessType(String processType) {
+        this.processType = processType;
     }
 
     /**
@@ -177,12 +214,12 @@ public class BPMNProcess extends BPMNBaseElement {
         eventElement.setAttribute("id", id);
         eventElement.setAttribute("name", name);
         this.getElementNode().appendChild(eventElement);
-    
+
         // add BPMNEvent instance
         BPMNEvent event = this.addEvent(eventElement);
-    
+
         return event;
-    
+
     }
 
     /**

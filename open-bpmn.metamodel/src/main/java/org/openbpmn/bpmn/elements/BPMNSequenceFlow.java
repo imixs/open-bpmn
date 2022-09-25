@@ -25,12 +25,12 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         wayPoints = new ArrayList<BPMNPoint>();
 
         this.sourceRef = this.getAttribute("sourceRef");
-        if (sourceRef == null || sourceRef.isEmpty()) {
+        if (sourceRef.isEmpty()) {
             logger.warning("Missing sourceRef!");
         }
 
         this.targetRef = this.getAttribute("targetRef");
-        if (targetRef == null || targetRef.isEmpty()) {
+        if (targetRef.isEmpty()) {
             logger.warning("Missing targetRef!");
         }
 

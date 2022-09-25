@@ -10,17 +10,17 @@
         <bpmn2:sequenceFlow id="SequenceFlow_2" sourceRef="task_1" targetRef="end_1"/>
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
-        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
-            <bpmndi:BPMNShape bpmnElement="end_1" id="BPMNShape_pqGzhg">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="end_1" id="BPMNShape_1-wEKQ">
                 <dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0"/>
-                <bpmndi:BPMNLabel id="BPMNLabel_rIfZ5Q">
+                <bpmndi:BPMNLabel id="BPMNLabel_DzOv1Q">
                     <dc:Bounds x="0.0" y="0.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_FWwDrA">
+            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_KvWU9w">
                 <dc:Bounds height="60.0" width="140.0" x="10.0" y="10.0"/>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_SDO2kA">
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_zvNpoQ">
                 <di:waypoint x="80.0" y="40.0"/>
                 <di:waypoint x="18.0" y="18.0"/>
             </bpmndi:BPMNEdge>

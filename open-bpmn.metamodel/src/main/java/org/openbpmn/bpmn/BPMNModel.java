@@ -215,57 +215,6 @@ public class BPMNModel {
         }
     }
 
-    /**
-     * This helper method loads the participant elements from a collaboration
-     * diagram located in the 'bpmn2:collaboration' section. This section is
-     * optional. If the model is not a collaboration model the method
-     * getPaticpants() returns null
-     * 
-     * @throws BPMNModelException
-     * 
-     */
-    private void loadParticipantList() throws BPMNModelException {
-        participants = new HashSet<BPMNParticipant>();
-        NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
-        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
-
-            // we only take the first collaboration element (this is what is expected)
-            collaborationElement = (Element) collaborationNodeList.item(0);
-            // now find all participants...
-            NodeList participantList = collaborationElement.getElementsByTagName(BPMNNS.BPMN2.prefix + ":participant");
-            logger.fine("..found " + participantList.getLength() + " participants");
-            for (int i = 0; i < participantList.getLength(); i++) {
-                Element item = (Element) participantList.item(i);
-                BPMNParticipant participant;
-                participant = new BPMNParticipant(this, item);
-                // set processRef
-                participant.setProcessRef(item.getAttribute("processRef"));
-                participants.add(participant);
-            }
-        }
-    }
-
-    /**
-     * This helper method loads the process elements from the current model. If the
-     * model does not yet contain any process the method getProcesses() returns null
-     * 
-     * @param string
-     * @return BPMNProcess instance
-     * @throws BPMNModelException
-     */
-    private void loadProcessList() throws BPMNModelException {
-        processes = new HashSet<BPMNProcess>();
-        // find process
-        NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
-        if (processList != null && processList.getLength() > 0) {
-            for (int i = 0; i < processList.getLength(); i++) {
-                Element item = (Element) processList.item(i);
-                BPMNProcess bpmnProcess = new BPMNProcess(this, item);
-                processes.add(bpmnProcess);
-            }
-        }
-    }
-
     public Element getDefinitions() {
         return definitions;
     }
@@ -377,14 +326,15 @@ public class BPMNModel {
         // add BPMNParticipant instance
         BPMNParticipant bpmnParticipant = new BPMNParticipant(this, participantNode);
         getParticipants().add(bpmnParticipant);
-        
-       // BPMNParticipant bpmnParticipant = this.addParticipant(participantNode);
+
+        // BPMNParticipant bpmnParticipant = this.addParticipant(participantNode);
 
         // now add the corresponding Process
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
         int processNumber = this.getProcesses().size() + 1;
-        BPMNProcess process = buildProcess("Process_" + processNumber, "Process " + processNumber);
+        BPMNProcess process = buildProcess("Process_" + processNumber, "Process " + processNumber,
+                BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
 
         bpmnParticipant.setProcessRef(process.getId());
@@ -420,24 +370,36 @@ public class BPMNModel {
      * }
      * </pre>
      * 
+     * <p>
+     * The method also expects a process type (public|private). If not type is
+     * specified the method builds a public default process.
+     * 
      * @param id
      * @param name
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNProcess buildProcess(String id, String name) throws BPMNModelException {
+    public BPMNProcess buildProcess(String id, String name, String type) throws BPMNModelException {
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
         Element process = createElement(BPMNNS.BPMN2, "process");
         logger.fine(process.getNodeName());
         logger.fine(process.getLocalName());
         logger.fine(process.getNamespaceURI());
         process.setAttribute("id", id);
+        // set optional name
         if (name != null) {
             process.setAttribute("name", name);
         }
+
+        // set type
+        if (type == null || type.isEmpty()) {
+            type = BPMNTypes.PROCESS_TYPE_PUBLIC;
+        }
+        process.setAttribute("processType", type);
+
         definitions.insertBefore(process, this.getBpmnDiagram());
 
-        BPMNProcess bpmnProcess =new BPMNProcess(this, process);
+        BPMNProcess bpmnProcess = new BPMNProcess(this, process, type);
         this.getProcesses().add(bpmnProcess);
 
         // add an empty BPMNPlane tag
@@ -449,7 +411,6 @@ public class BPMNModel {
             this.getBpmnDiagram().appendChild(bpmnPlane);
         }
 
-        
         return bpmnProcess;
     }
 
@@ -483,28 +444,56 @@ public class BPMNModel {
      * <p>
      * The method returns null if no process with the given ID exists.
      * <p>
-     * In case no ID is provided (null) the method returns the first (default)
-     * process from the model.
+     * In case no ID is provided (null) the method returns the first public
+     * (default) process from the model.
      * 
      * @param string
      * @return BPMNProcess instance
      * @throws BPMNModelException
      */
     public BPMNProcess openProcess(String id) throws BPMNModelException {
-        BPMNProcess result = null;
+        BPMNProcess process = null;
         if (processes != null) {
             Iterator<BPMNProcess> it = processes.iterator();
 
             while (it.hasNext()) {
-                result = it.next();
-                if (id==null || id.equals(result.getId())) {
-                    // init process (initialize all BPMN Elements)
-                    result.init();
-                    break;
+                BPMNProcess p = it.next();
+                // default process?
+                if (id == null || id.isEmpty()) {
+                    if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())) {
+                        // we take the first public process (should only exists once in the model)
+                        process = p;
+                        break;
+                    }
+                } else {
+                    // verify process by id
+                    if (id.equals(p.getId())) {
+                        process = p;
+                        break;
+                    }
                 }
             }
         }
-        return result;
+
+        // if we found a matching process than we initialize it
+        if (process != null) {
+            process.init();
+        }
+        return process;
+    }
+
+    /**
+     * This Method opens the public default BPMNProcess and initializes all BPMN
+     * elements of the Process. The default process always exists and is not
+     * embedded in a Pool.
+     */
+    public BPMNProcess openDefaultProcess() {
+        try {
+            return openProcess(null);
+        } catch (BPMNModelException e) {
+            logger.warning("no default process defined!");
+            return null;
+        }
     }
 
     public Element createElement(BPMNNS ns, String type) {
@@ -739,6 +728,97 @@ public class BPMNModel {
     }
 
     /**
+     * This helper method loads the participant elements from a collaboration
+     * diagram located in the 'bpmn2:collaboration' section. This section is
+     * optional. If the model is not a collaboration model the method
+     * getPaticpants() returns null
+     * 
+     * @throws BPMNModelException
+     * 
+     */
+    private void loadParticipantList() throws BPMNModelException {
+        participants = new HashSet<BPMNParticipant>();
+        NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
+        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+
+            // we only take the first collaboration element (this is what is expected)
+            collaborationElement = (Element) collaborationNodeList.item(0);
+            // now find all participants...
+            NodeList participantList = collaborationElement.getElementsByTagName(BPMNNS.BPMN2.prefix + ":participant");
+            logger.fine("..found " + participantList.getLength() + " participants");
+            for (int i = 0; i < participantList.getLength(); i++) {
+                Element item = (Element) participantList.item(i);
+                BPMNParticipant participant;
+                participant = new BPMNParticipant(this, item);
+                // set processRef
+                participant.setProcessRef(item.getAttribute("processRef"));
+                participants.add(participant);
+            }
+        }
+    }
+
+    /**
+     * This helper method loads the process elements from the current model. If the
+     * model does not yet contain any process the method getProcesses() returns null
+     * <p>
+     * The method also verify the attribute processType. If the processType is not
+     * set and but the process ID is listed in the optional list of participants the
+     * processType will be set to 'Private'.
+     * 
+     * @param string
+     * @return BPMNProcess instance
+     * @throws BPMNModelException
+     */
+    private void loadProcessList() throws BPMNModelException {
+        processes = new HashSet<BPMNProcess>();
+        int publicCount = 0;
+
+        // find process
+        NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
+        if (processList != null && processList.getLength() > 0) {
+            for (int i = 0; i < processList.getLength(); i++) {
+                Element item = (Element) processList.item(i);
+                String id = item.getAttribute("id");
+                if (id == null) {
+                    id = "";
+                }
+                String processType = item.getAttribute("processType");
+                if (processType.isEmpty()) {
+                    // we do not have a process Type provided. We now verify
+                    // if the process ID is listed in the list of participants.
+                    // If the participant has a shape (Pool) than the type is 'Private'. Otherwise
+                    // it seems to be the public default process
+                    for (BPMNParticipant participant : participants) {
+                        if (id.equals(participant.getProcessRef())) {
+                            // do we have a pool for this participant?
+                            if (participant.getBpmnShape() != null) {
+                                processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
+                            } else {
+                                // no Pool - so we assume this is the public process
+                                processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
+                                publicCount++;
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                BPMNProcess bpmnProcess = new BPMNProcess(this, item, processType);
+                processes.add(bpmnProcess);
+            }
+        }
+
+        // if we do not have a process at all or a public default process is missing in
+        // the participant list, we create a default process now
+        if (publicCount == 0) {
+            buildProcess("process_" + (processes.size() + 1), "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+        } else if (publicCount > 1) {
+            getLogger().warning("Invalid model structure! The model contains more than one public process instance!");
+        }
+
+    }
+
+    /**
      * Helper method to write the dom document to an output stream
      * <p>
      * We also call the helper method 'clearBlankLines' to get rid of unnecessary
@@ -752,7 +832,7 @@ public class BPMNModel {
     private void writeXml(Document doc, OutputStream output) throws TransformerException {
         // clenup blank lines
         clearBlankLines();
-    
+
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(doc);

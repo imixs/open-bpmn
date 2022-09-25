@@ -1,5 +1,6 @@
 package org.openbpmn.metamodel.examples;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -25,7 +26,8 @@ public class TestCreateModel {
     private static Logger logger = Logger.getLogger(TestCreateModel.class.getName());
 
     /**
-     * This test creates a bpmn file
+     * This test creates a bpmn file. The model instance creates a public default
+     * process automatically which can be opened by calling openDefaultProcess()
      */
     @Test
     public void testCreateEmptyModel() {
@@ -37,7 +39,11 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         assertNotNull(model);
-
+        
+        BPMNProcess defaultProcess = model.openDefaultProcess();
+        assertNotNull(defaultProcess);
+        assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC,defaultProcess.getProcessType());
+        
         model.save(out);
         logger.info("...model created sucessful: " + out);
     }
@@ -57,7 +63,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            model.buildProcess("process_1","Sales");
+            model.buildProcess("process_1", "Sales",BPMNTypes.PROCESS_TYPE_PUBLIC);
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -82,7 +88,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.buildProcess("process_1",null);
+            BPMNProcess processContext = model.buildProcess("process_1", null,BPMNTypes.PROCESS_TYPE_PUBLIC);
 
             assertNotNull(processContext);
 
@@ -117,7 +123,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            model.buildProcess("process_1",null);
+            model.buildProcess("process_1", null,BPMNTypes.PROCESS_TYPE_PUBLIC);
 
             BPMNProcess processContext = model.openProcess("process_1");
             assertNotNull(processContext);
@@ -157,7 +163,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            model.buildProcess("process_1",null);
+            model.buildProcess("process_1", null,BPMNTypes.PROCESS_TYPE_PUBLIC);
 
             BPMNProcess processContext = model.openProcess("process_1");
             assertNotNull(processContext);
@@ -167,7 +173,7 @@ public class TestCreateModel {
             processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
             BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().updateLocation(10.0, 10.0);
-            task.getBounds().updateDimension( 140.0, 60.0);
+            task.getBounds().updateDimension(140.0, 60.0);
             processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
         } catch (BPMNModelException e) {
@@ -179,9 +185,6 @@ public class TestCreateModel {
         logger.info("...model created sucessful: " + out);
 
     }
-    
-    
-    
 
     /**
      * This test class tests creating a Collaboration model and some elements
@@ -200,10 +203,9 @@ public class TestCreateModel {
         try {
             model.buildParticipant("participant_1", "Sales Team");
             model.buildParticipant("participant_2", "Management");
-            
-            
+
             assertTrue(model.isCollaborationDiagram());
-           
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();

@@ -5,6 +5,11 @@ package org.openbpmn.bpmn;
 
 public class BPMNTypes {
 
+    // Process Types
+    public static final String PROCESS_TYPE_PUBLIC = "Public";
+    public static final String PROCESS_TYPE_PRIVATE = "Private";
+    public static final String PROCESS_TYPE_NONE = "None";
+    
     // Task
     public static final String USER_TASK = "userTask";
     public static final String SCRIPT_TASK = "scriptTask";

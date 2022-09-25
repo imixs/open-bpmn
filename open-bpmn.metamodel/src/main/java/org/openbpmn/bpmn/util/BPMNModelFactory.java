@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -86,6 +87,8 @@ public class BPMNModelFactory {
             definitions.appendChild(bpmnDiagram);
             model.setBpmnDiagram(bpmnDiagram);
             
+            // add an empty public default process
+            model.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
           
 
             return model;
@@ -146,19 +149,15 @@ public class BPMNModelFactory {
                 // create a default model
                 BPMNModel defaultModel = BPMNModelFactory
                         .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
-                defaultModel.buildProcess("process_1","Process 1");
+                // add an empty public default process
+                defaultModel.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
                 return defaultModel;
             }
 
-            
-            
             // parse XML file
             DocumentBuilder db = docFactory.newDocumentBuilder();
             // read from a project's resources folder
-          
             Document doc = db.parse(is);
-            
-            
             Element root = doc.getDocumentElement();
             if (!"bpmn2:definitions".equals(root.getNodeName())) {
                 logger.severe("Missing root element 'bpmn2:definitions'!");
