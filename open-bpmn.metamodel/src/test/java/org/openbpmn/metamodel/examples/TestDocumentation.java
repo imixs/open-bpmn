@@ -42,7 +42,7 @@ public class TestDocumentation {
             BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
             // add a start and end event
-            BPMNEvent bpmnElement = processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            BPMNEvent bpmnElement = processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
 
             // add a documentation - we expect a CDATA tag
             String value = "Some text with \n<markup>code</markup>\n Finish!";

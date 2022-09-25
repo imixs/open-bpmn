@@ -1,8 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
@@ -32,14 +30,13 @@ public class BPMNParticipant extends BPMNBaseElement {
     }
 
     /**
-     * This method creates a Pool with a corresponding bpmnShape
-     * The method throws a exception if the participant is not 
+     * This method creates a Pool with a corresponding bpmnShape The method throws a
+     * exception if the participant is not
      * 
      * @throws BPMNModelException
      */
     public void createPool() throws BPMNModelException {
-        
-         
+
         if (bpmnShape == null) {
             // create shape element
             bpmnShape = model.buildBPMNShape(this);
@@ -52,6 +49,21 @@ public class BPMNParticipant extends BPMNBaseElement {
                 label.updateLocation(0.0, 0.0);
             }
         }
+    }
+
+    /**
+     * Returns the initialized BPMNProcess of this participant or returns null if no
+     * proces exists
+     * 
+     * @return BPMNProcess
+     */
+    public BPMNProcess openProcess() {
+        try {
+            return model.openProcess(processRef);
+        } catch (BPMNModelException e) {
+            BPMNModel.getLogger().severe("Participant process '" + processRef + "' not fund!");
+        }
+        return null;
     }
 
     public String getProcessRef() {

@@ -31,24 +31,12 @@ This file contains a default process with no elements. With the default process 
 	model.save("src/test/resources/create-process_1.bpmn");
 ```
 
-## Collaboration Model
-
-If a BPMN model contains more than one process it is called a collaboration model. This model defines Participants where each holds one process. 
-You can easily extend the model to a collaboration model and create additional Participants:
-
-```java
-	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-	BPMNProcess processContext = model.addParticipant("participant_1", "Sales Team");
-	model.save("src/test/resources/create-process_1.bpmn");
-```
-        
-
-
 
 
 ### Load a existing Model
 
-To load a model instance and add a new Process into the model you just need this:
+To load a model instance call the 'load' method. Again you can open the default process with  "openDefaultProcess" or you can 
+open a proces by its id:
 
 ```java
 	// load model
@@ -60,4 +48,21 @@ To load a model instance and add a new Process into the model you just need this
 	// store the model
 	model.save("src/test/resources/process_1-update-1.bpmn");
 ```
+
+
+## Collaboration Model
+
+If a BPMN model contains more than one process it is called a collaboration model. This model defines Participants where each holds one process. 
+You can easily extend the simple model to a collaboration model and create additional Participants:
+
+```java
+	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+	BPMNProcess processContext = model.addParticipant("participant_1", "Sales Team");
+	model.save("src/test/resources/create-process_1.bpmn");
+```
+**Note:** Each participant contains it own process. You can open the participant process by calling 'openProcess()' or you can open the process by its ID. In addition the model also contains a default process which is also called the 'Public' process which is not contianed in a Pool
+        
+
+
+
 

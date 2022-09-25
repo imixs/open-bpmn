@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -21,7 +22,7 @@ public class TestCreateDom {
         logger.info("...creating new empty model");
 
         BPMNModel model1 = BPMNModelFactory.createInstance("demo", "1.0.0", "http://org.openbpmn");
-        model1.buildProcess("process_10005",null,null);
+        model1.openDefaultProcess().addTask("task-1", "Task", BPMNTypes.TASK);
              
         model1.save("src/test/resources/process_1-empty-1.bpmn");
         logger.info("...model creation sucessful");

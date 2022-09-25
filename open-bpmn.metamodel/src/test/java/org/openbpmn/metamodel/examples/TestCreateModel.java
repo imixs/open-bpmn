@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -39,11 +40,11 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         assertNotNull(model);
-        
+
         BPMNProcess defaultProcess = model.openDefaultProcess();
         assertNotNull(defaultProcess);
-        assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC,defaultProcess.getProcessType());
-        
+        assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
+
         model.save(out);
         logger.info("...model created sucessful: " + out);
     }
@@ -52,7 +53,7 @@ public class TestCreateModel {
      * This test creates a bpmn file with a process definition
      */
     @Test
-    public void testCreateEmptyModelWithAdditionalProcess() {
+    public void testCreateEmptyModelAndAddNewTask() {
         String out = "src/test/resources/create-process_2.bpmn";
 
         logger.info("...create empty model");
@@ -63,13 +64,14 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            model.buildProcess("process_2", "Sales",BPMNTypes.PROCESS_TYPE_PUBLIC);
+            BPMNProcess process = model.openDefaultProcess();
+            process.addTask("task_1", "Task-1", null);
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
         assertNotNull(model);
-        assertEquals(2,model.getProcesses().size());
+        assertEquals(1, model.getProcesses().size());
 
         model.save(out);
         logger.info("...model created sucessful: " + out);
@@ -90,17 +92,17 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
             BPMNProcess processContext = model.openDefaultProcess();
-            
+
             assertNotNull(processContext);
-            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC,processContext.getProcessType());
+            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, processContext.getProcessType());
 
             // add a start and end event
-            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
-            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
-            processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+            processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+            processContext.addTask("task_1", "Task", BPMNTypes.TASK);
 
-            processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
-            processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+            processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -129,14 +131,14 @@ public class TestCreateModel {
             assertNotNull(processContext);
 
             // add a start and end event
-            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
-            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
-            processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
-            processContext.buildEvent("cathEvent_1", "Catch Event", BPMNTypes.CATCH_EVENT);
-            processContext.buildGateway("gateway_1", "Gateway", BPMNTypes.EXCLUSIVE_GATEWAY);
+            processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+            processContext.addTask("task_1", "Task", BPMNTypes.TASK);
+            processContext.addEvent("cathEvent_1", "Catch Event", BPMNTypes.CATCH_EVENT);
+            processContext.addGateway("gateway_1", "Gateway", BPMNTypes.EXCLUSIVE_GATEWAY);
 
-            processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
-            processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+            processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -167,13 +169,13 @@ public class TestCreateModel {
             assertNotNull(processContext);
 
             // add a start and end event
-            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
-            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
-            BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+            processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+            BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().updateLocation(10.0, 10.0);
             task.getBounds().updateDimension(140.0, 60.0);
-            processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
-            processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+            processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -199,12 +201,20 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            model.addParticipant("participant_1", "Sales Team");
-            model.addParticipant("participant_2", "Management");
+            assertEquals(1, model.getProcesses().size());
+            
+            // create two participants
+            BPMNParticipant participantSales = model.addParticipant("participant_1", "Sales Team");
+            BPMNParticipant participantManagement = model.addParticipant("participant_2", "Management");
 
             assertTrue(model.isCollaborationDiagram());
-            assertEquals(3,model.getProcesses().size());
-            assertEquals(3,model.getParticipants().size());
+            assertEquals(3, model.getProcesses().size());
+            
+            // the default process should now be part of the participant list too
+            assertEquals(3, model.getParticipants().size());
+            
+            // add a task
+            participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
 
         } catch (BPMNModelException e) {
             e.printStackTrace();

@@ -12,7 +12,6 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -58,34 +57,7 @@ public class TestReadModel {
         logger.info("...model read sucessful: ");
     }
 
-    /**
-     * This test reads a bpmn file with a process definition and tries to create an
-     * additional process with the same id.
-     * <p>
-     * A DUPLICATE_ID exception is expected.
-     * 
-     */
-    @Test
-    public void testDupplicateProcessID() {
-        logger.info("...read model");
-        try {
-            model = BPMNModelFactory.read("/refmodel-1.bpmn");
-            assertEquals(1, model.getProcesses().size());
-            // try to create a dupplication process
-            model.buildProcess("process_1", "Process 1", null);
-
-            // exception expected
-            fail();
-
-        } catch (BPMNInvalidIDException e) {
-            logger.warning(e.getMessage());
-            assertEquals(BPMNInvalidIDException.DUPLICATE_ID, e.getErrorCode());
-        } catch (BPMNModelException e) {
-
-            e.printStackTrace();
-            fail();
-        }
-    }
+   
 
     /**
      * This test reads a collaboration bpmn file containing 2 participants but no

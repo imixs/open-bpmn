@@ -86,14 +86,14 @@ public class TestDeleteModel {
             assertNotNull(processContext);
 
             // add a start and end event
-            processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
-            processContext.buildEvent("end_1", "End", BPMNTypes.END_EVENT);
-            BPMNActivity task = processContext.buildTask("task_1", "Task", BPMNTypes.TASK);
+            processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+            BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().updateLocation(10.0, 10.0);
             task.getBounds().updateDimension( 140.0, 60.0);
 
-            processContext.buildSequenceFlow("SequenceFlow_1", "start_1", "task_1");
-            processContext.buildSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+            processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
             processContext.deleteTask("task_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();

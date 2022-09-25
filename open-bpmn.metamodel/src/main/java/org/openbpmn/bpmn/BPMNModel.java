@@ -312,13 +312,13 @@ public class BPMNModel {
      * @param id
      * @param name
      * @param type - EventType
+     * @return the BPMNParticipant
      * @throws BPMNModelException
      */
     public BPMNParticipant addParticipant(String id, String name) throws BPMNModelException {
 
         // first verify if the model already is a Collaboration model. If not we create
         // a bpmn2:collaboration
-        // if (model.getParticipants().(bpmnPlane))
 
         // <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
         if (!this.isCollaborationDiagram()) {
@@ -326,7 +326,22 @@ public class BPMNModel {
             collaborationElement = createElement(BPMNNS.BPMN2, "collaboration");
             collaborationElement.setAttribute("id", "Collaboration_1");
             collaborationElement.setAttribute("name", "Default Collaboration");
-            this.definitions.insertBefore(collaborationElement, bpmnDiagram);
+            //this.definitions.insertBefore(collaborationElement, bpmnDiagram);
+            this.definitions.insertBefore(collaborationElement, definitions.getFirstChild());
+            
+            // Now we migrate all existing processes into the new collaboration element....
+            for (BPMNProcess existingProcess: processes) {
+                Element migratedParticipantNode = createElement(BPMNNS.BPMN2, "participant");
+                migratedParticipantNode.setAttribute("id", BPMNModel.generateShortID("participant"));
+                migratedParticipantNode.setAttribute("name", existingProcess.getName());
+                migratedParticipantNode.setAttribute("processRef",existingProcess.getId());
+                
+                collaborationElement.appendChild(migratedParticipantNode);
+                existingProcess.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
+                // finally add a new BPMNParticipatn to the paticipant list
+                getParticipants().add(new BPMNParticipant(this, migratedParticipantNode));
+            }
+            
         }
 
         // create a new Dom node...
@@ -345,7 +360,7 @@ public class BPMNModel {
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
         int processNumber = this.getProcesses().size() + 1;
-        BPMNProcess process = buildProcess("Process_" + processNumber, "Process " + processNumber,
+        BPMNProcess process = buildProcess("process_" + processNumber, "Process " + processNumber,
                 BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
 
@@ -380,7 +395,7 @@ public class BPMNModel {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNProcess buildProcess(String id, String name, String type) throws BPMNModelException {
+    protected BPMNProcess buildProcess(String id, String name, String type) throws BPMNModelException {
         
         if (id==null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID,"id must not be empty or null!");

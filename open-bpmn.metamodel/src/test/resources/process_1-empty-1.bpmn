@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
-    <bpmn2:process id="process_1" name="Default Process" processType="Public"/>
-    <bpmn2:process id="process_10005" processType="Public"/>
+    <bpmn2:process id="process_1" name="Default Process" processType="Public">
+        <bpmn2:task id="task-1" name="Task"/>
+    </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
-        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1"/>
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="task-1" id="BPMNShape_fY-UFw">
+                <dc:Bounds height="110.0" width="50.0" x="0.0" y="0.0"/>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
