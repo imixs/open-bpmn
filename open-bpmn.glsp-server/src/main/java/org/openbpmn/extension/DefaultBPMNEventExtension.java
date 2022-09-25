@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,6 @@ import javax.json.JsonObject;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -102,29 +100,21 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addElements("name"). //
                 addElement("documentation", "Documentation", multilineOption);
 
-        try {
-            List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
-            // Conditional
-            List<Element> conditionalEventDefinitions = eventDefinitions.stream()
-                    .filter(c -> "conditionalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
-            addConditionalEventDefinitions(conditionalEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
+        List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
+        // Conditional
+        List<Element> conditionalEventDefinitions = eventDefinitions.stream()
+                .filter(c -> "conditionalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+        addConditionalEventDefinitions(conditionalEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
-            // Signal
-            List<Element> signalEventDefinitions = eventDefinitions.stream()
-                    .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
-            addSignalEventDefinitions(signalEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
+        // Signal
+        List<Element> signalEventDefinitions = eventDefinitions.stream()
+                .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+        addSignalEventDefinitions(signalEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
-            // Link
-            List<Element> linkEventDefinitions = eventDefinitions.stream()
-                    .filter(c -> "linkEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
-            addLinkEventDefinitions(linkEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
-
-        } catch (BPMNModelException e) {
-            logger.warning("Failed to compute EventDefinitions: " + e.getMessage());
-            if (logger.isLoggable(Level.FINE)) {
-                e.printStackTrace();
-            }
-        }
+        // Link
+        List<Element> linkEventDefinitions = eventDefinitions.stream()
+                .filter(c -> "linkEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+        addLinkEventDefinitions(linkEventDefinitions, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
 //        // check Event Definitions
 //        Map<String, String> arrayDetailOption = new HashMap<>();

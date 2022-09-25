@@ -53,6 +53,7 @@ import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventNode;
@@ -95,6 +96,8 @@ public class BPMNGModelFactory implements GModelFactory {
     @Inject
     protected Set<BPMNExtension> extensions;
 
+    private BPMNModel bpmnModel;
+
     @Override
     public void createGModel() {
         // verify extensions....
@@ -104,16 +107,10 @@ public class BPMNGModelFactory implements GModelFactory {
 
         if (!modelState.isInitalized()) {
             long l = System.currentTimeMillis();
-            GGraph newGModel = null;
-            BPMNModel model = modelState.getBpmnModel();
-            if (model != null) {
-                BPMNProcess process = model.openDefaultProcess();
-                if (process != null) {
-                    newGModel = createGModelFromProcess(process);
-                    modelState.updateRoot(newGModel);
-                    modelState.getRoot().setRevision(-1);
-                }
-            }
+            GGraph newGModel = buildGGraph(getBpmnModel());
+            modelState.updateRoot(newGModel);
+            modelState.getRoot().setRevision(-1);
+
             if (newGModel == null) {
                 logger.warning("Unable to create model - no processes found - creating an empty model");
                 createNewEmptyRoot("process_0");
@@ -124,6 +121,22 @@ public class BPMNGModelFactory implements GModelFactory {
         } else {
             logger.fine("===> createGModel skipped!");
         }
+    }
+
+    /**
+     * Getter method also used by jUnit tests
+     *
+     * @return BPMNModel
+     */
+    public BPMNModel getBpmnModel() {
+        if (bpmnModel == null) {
+            bpmnModel = modelState.getBpmnModel();
+        }
+        return bpmnModel;
+    }
+
+    public void setBpmnModel(final BPMNModel bpmnModel) {
+        this.bpmnModel = bpmnModel;
     }
 
     /**
@@ -140,163 +153,195 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
-     * This method creates a GModel form a BPMN process instance
+     * This method creates a GModel form the current BPMNModel instance
      * <p>
-     * The method is called by the {@link BPMNGModelFactory}
+     * There are two diagram types currently supported
+     * <ul>
+     * <li>simple model contains only one default process
+     * <li>collaboration model contains a participant list and at least one default
+     * process
+     * <p>
      *
-     * @param process
      * @return new GGraph
      */
-    public GGraph createGModelFromProcess(final BPMNProcess process) {
+    public GGraph buildGGraph(final BPMNModel model) {
 
-        List<GModelElement> entityNodes = new ArrayList<>();
+        List<GModelElement> gNodeList = new ArrayList<>();
         try {
-            Set<BPMNParticipant> participants = modelState.getBpmnModel().getParticipants();
-            // Add all Pools
-            for (BPMNParticipant participant : participants) {
-                logger.info("participant: " + participant.getName());
-                BPMNPoint bpmnPoint = participant.getBounds().getPosition();
-                GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                PoolNodeBuilder builder = new PoolNodeBuilder(BPMNTypes.PARTICIPANT, participant.getName());
-                GDimension dimension = GraphUtil.dimension(participant.getBounds().getDimension().getWidth(),
-                        participant.getBounds().getDimension().getHeight());
 
-                // Build the GLSP Node....
-                Pool pool = builder //
-                        .id(participant.getId()) //
-                        .position(point) //
-                        .size(dimension) //
-                        .build();
+            // In case we have collaboration diagram we iterate over all participants and
+            // create a pool if the contained process is private.Otherwise we create the
+            // default process
+            if (model.isCollaborationDiagram()) {
+                Set<BPMNParticipant> participants = model.getParticipants();
 
-                entityNodes.add(pool);
-            }
+                for (BPMNParticipant participant : participants) {
+                    logger.info(
+                            "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
+                    BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
+                    // Add a Pool if the process is private
+                    if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
+                        BPMNPoint bpmnPoint = participant.getBounds().getPosition();
+                        GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+                        PoolNodeBuilder builder = new PoolNodeBuilder(BPMNTypes.PARTICIPANT, participant.getName());
+                        GDimension dimension = GraphUtil.dimension(participant.getBounds().getDimension().getWidth(),
+                                participant.getBounds().getDimension().getHeight());
 
-            // Add all Tasks
-            for (BPMNActivity activity : process.getActivities()) {
-                logger.fine("activity: " + activity.getName());
-                BPMNPoint bpmnPoint = activity.getBounds().getPosition();
-                GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
-                GDimension dimension = GraphUtil.dimension(activity.getBounds().getDimension().getWidth(),
-                        activity.getBounds().getDimension().getHeight());
+                        // Build the GLSP Node....
+                        Pool pool = builder //
+                                .id(participant.getId()) //
+                                .position(point) //
+                                .size(dimension) //
+                                .build();
 
-                // Build the GLSP Node....
-                TaskNode taskNode = builder //
-                        .id(activity.getId()) //
-                        .position(point) //
-                        .size(dimension) //
-                        .build();
-
-                // apply BPMN Extensions
-                applyBPMNExtensions(taskNode, activity);
-                entityNodes.add(taskNode);
-            }
-
-            // Add all Events...
-            for (BPMNEvent event : process.getEvents()) {
-                logger.fine("event: " + event.getName());
-
-                BPMNPoint bpmnPoint = event.getBounds().getPosition();
-                GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
-                // Build the GLSP Node....
-                EventNode eventNode = builder //
-                        .id(event.getId()) //
-                        .position(point) //
-                        .build();
-
-                // compute the symbol for the BPMNEvent
-                String symbol = null;
-                List<Element> eventDefinitionList = event.getEventDefinitions();
-                if (eventDefinitionList.size() > 0) {
-                    for (Node eventDefinition : eventDefinitionList) {
-                        if (symbol == null) {
-                            symbol = eventDefinition.getLocalName();
-                        } else {
-                            // we already have a symbol - Switch ot Multiple Symbol?
-                            if (!symbol.equals(eventDefinition.getLocalName())) {
-                                symbol = BPMNTypes.MULTIPLE_EVENT_DEFINITIONS;
-                            }
-                        }
+                        gNodeList.add(pool);
+                        addBPMNProcess(bpmnProcess, gNodeList);
+                    } else {
+                        // add default process without a pool
+                        addBPMNProcess(bpmnProcess, gNodeList);
                     }
-                    eventNode.setSymbol(symbol);
                 }
-                entityNodes.add(eventNode);
-
-                // apply BPMN Extensions
-                applyBPMNExtensions(eventNode, event);
-                // now add a GLabel
-                GLabel label = null;
-                BPMNLabel bpmnLabel = event.getLabel();
-                if (bpmnLabel != null) {
-                    label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(),
-                            bpmnLabel.getPosition().getX() - 3, bpmnLabel.getPosition().getY());
-                } else {
-                    // create default position
-                    label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), point.getX() - 3,
-                            point.getY() + 36);
-                }
-                entityNodes.add(label);
+            } else {
+                // simple model - build GModel from default process
+                BPMNProcess bpmnProcess = model.openDefaultProcess();
+                addBPMNProcess(bpmnProcess, gNodeList);
             }
 
-            // Add all Gateways...
-            for (BPMNGateway gateway : process.getGateways()) {
-                logger.fine("gateway: " + gateway.getName());
-                BPMNPoint bpmnPoint = gateway.getBounds().getPosition();
-                GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
-                // Build the GLSP Node....
-                GatewayNode gatewayNode = builder //
-                        .id(gateway.getId()) //
-                        .position(point) //
-                        .build();
-                entityNodes.add(gatewayNode);
-                // apply BPMN Extensions
-                applyBPMNExtensions(gatewayNode, gateway);
-
-                // now add a GLabel
-                GLabel label = null;
-                BPMNLabel bpmnLabel = gateway.getLabel();
-                if (bpmnLabel != null) {
-                    label = BPMNBuilderHelper.createBPMNLabel(gateway.getId(), gatewayNode.getName(),
-                            bpmnLabel.getPosition().getX() - 5, bpmnLabel.getPosition().getY());
-                } else {
-                    // create default position
-                    label = BPMNBuilderHelper.createBPMNLabel(gateway.getId(), gatewayNode.getName(), point.getX() - 5,
-                            point.getY() + 50);
-                }
-                entityNodes.add(label);
-            }
-
-            // Add all SequenceFlows
-            for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
-                SequenceFlowBuilder builder = new SequenceFlowBuilder();
-                GModelElement target = findElementById(entityNodes, sequenceFlow.getTargetRef());
-                if (target != null) {
-                    builder.target(findPort(target));
-                }
-                GModelElement source = findElementById(entityNodes, sequenceFlow.getSourceRef());
-                if (source != null) {
-                    builder.source(findPort(source));
-                }
-                builder.id(sequenceFlow.getId());
-                SequenceFlow sequenceFlowEdge = builder.build();
-                for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
-                    GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
-                    sequenceFlowEdge.getRoutingPoints().add(point);
-                }
-                entityNodes.add(sequenceFlowEdge);
-            }
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
         // add to root node...
         GGraph newGModel = new GGraphBuilder() //
-                .id(process.getId()) //
-                .addAll(entityNodes) //
+                .id("root_" + BPMNModel.generateShortID()) //
+                .addAll(gNodeList) //
                 .build();
 
         return newGModel;
+    }
+
+    /**
+     * This helper method adds all flow elements contained in a BPMNProcess to a
+     * entityNodes List
+     *
+     */
+    private void addBPMNProcess(final BPMNProcess process, final List<GModelElement> gNodeList)
+            throws BPMNMissingElementException {
+        // Add all Tasks
+        for (BPMNActivity activity : process.getActivities()) {
+            logger.fine("activity: " + activity.getName());
+            BPMNPoint bpmnPoint = activity.getBounds().getPosition();
+            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+            TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
+            GDimension dimension = GraphUtil.dimension(activity.getBounds().getDimension().getWidth(),
+                    activity.getBounds().getDimension().getHeight());
+
+            // Build the GLSP Node....
+            TaskNode taskNode = builder //
+                    .id(activity.getId()) //
+                    .position(point) //
+                    .size(dimension) //
+                    .build();
+
+            // apply BPMN Extensions
+            applyBPMNExtensions(taskNode, activity);
+            gNodeList.add(taskNode);
+        }
+
+        // Add all Events...
+        for (BPMNEvent event : process.getEvents()) {
+            logger.fine("event: " + event.getName());
+
+            BPMNPoint bpmnPoint = event.getBounds().getPosition();
+            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+            EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
+            // Build the GLSP Node....
+            EventNode eventNode = builder //
+                    .id(event.getId()) //
+                    .position(point) //
+                    .build();
+
+            // compute the symbol for the BPMNEvent
+            String symbol = null;
+            List<Element> eventDefinitionList = event.getEventDefinitions();
+            if (eventDefinitionList.size() > 0) {
+                for (Node eventDefinition : eventDefinitionList) {
+                    if (symbol == null) {
+                        symbol = eventDefinition.getLocalName();
+                    } else {
+                        // we already have a symbol - Switch ot Multiple Symbol?
+                        if (!symbol.equals(eventDefinition.getLocalName())) {
+                            symbol = BPMNTypes.MULTIPLE_EVENT_DEFINITIONS;
+                        }
+                    }
+                }
+                eventNode.setSymbol(symbol);
+            }
+            gNodeList.add(eventNode);
+
+            // apply BPMN Extensions
+            applyBPMNExtensions(eventNode, event);
+            // now add a GLabel
+            GLabel label = null;
+            BPMNLabel bpmnLabel = event.getLabel();
+            if (bpmnLabel != null) {
+                label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(),
+                        bpmnLabel.getPosition().getX() - 3, bpmnLabel.getPosition().getY());
+            } else {
+                // create default position
+                label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), point.getX() - 3,
+                        point.getY() + 36);
+            }
+            gNodeList.add(label);
+        }
+
+        // Add all Gateways...
+        for (BPMNGateway gateway : process.getGateways()) {
+            logger.fine("gateway: " + gateway.getName());
+            BPMNPoint bpmnPoint = gateway.getBounds().getPosition();
+            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+            GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
+            // Build the GLSP Node....
+            GatewayNode gatewayNode = builder //
+                    .id(gateway.getId()) //
+                    .position(point) //
+                    .build();
+            gNodeList.add(gatewayNode);
+            // apply BPMN Extensions
+            applyBPMNExtensions(gatewayNode, gateway);
+
+            // now add a GLabel
+            GLabel label = null;
+            BPMNLabel bpmnLabel = gateway.getLabel();
+            if (bpmnLabel != null) {
+                label = BPMNBuilderHelper.createBPMNLabel(gateway.getId(), gatewayNode.getName(),
+                        bpmnLabel.getPosition().getX() - 5, bpmnLabel.getPosition().getY());
+            } else {
+                // create default position
+                label = BPMNBuilderHelper.createBPMNLabel(gateway.getId(), gatewayNode.getName(), point.getX() - 5,
+                        point.getY() + 50);
+            }
+            gNodeList.add(label);
+        }
+
+        // Add all SequenceFlows
+        for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
+            SequenceFlowBuilder builder = new SequenceFlowBuilder();
+            GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
+            if (target != null) {
+                builder.target(findPort(target));
+            }
+            GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
+            if (source != null) {
+                builder.source(findPort(source));
+            }
+            builder.id(sequenceFlow.getId());
+            SequenceFlow sequenceFlowEdge = builder.build();
+            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
+                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+                sequenceFlowEdge.getRoutingPoints().add(point);
+            }
+            gNodeList.add(sequenceFlowEdge);
+        }
     }
 
     /**

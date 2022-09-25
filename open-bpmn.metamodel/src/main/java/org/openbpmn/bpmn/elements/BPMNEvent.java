@@ -60,7 +60,7 @@ public class BPMNEvent extends BPMNFlowElement {
      *         exist
      * @throws BPMNModelException
      */
-    public List<Element> getEventDefinitions() throws BPMNModelException {
+    public List<Element> getEventDefinitions()  {
 
         List<Element> result = new ArrayList<Element>();
 

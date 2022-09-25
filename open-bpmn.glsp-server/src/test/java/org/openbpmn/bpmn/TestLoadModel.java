@@ -27,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.eclipse.glsp.graph.GGraph;
 import org.junit.jupiter.api.Test;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.openbpmn.model.BPMNGModelFactory;
@@ -46,13 +45,11 @@ public class TestLoadModel {
         BPMNModel model = BPMNModelFactory.read("/bpmn/process_1.bpmn");
 
         System.out.println("------");
-        // we expect one child
         assertNotNull(model);
 
-        BPMNProcess process = model.openProcess(null);
-        assertNotNull(process);
-        GGraph newGModel = new BPMNGModelFactory().createGModelFromProcess(process);
-
+        BPMNGModelFactory modelFactory = new BPMNGModelFactory();
+        modelFactory.setBpmnModel(model);
+        GGraph newGModel = modelFactory.buildGGraph(model);
         assertNotNull(newGModel);
     }
 

@@ -581,7 +581,11 @@ public class BPMNModel {
     public static String generateShortID() {
         byte[] buffer = new byte[12];
         random.nextBytes(buffer);
-        return encoder.encodeToString(buffer);
+        String id=encoder.encodeToString(buffer);
+        // remove -_
+        id=id.replace("-","0");
+        id=id.replace("_","0");
+        return id;
 
     }
 
