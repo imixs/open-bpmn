@@ -30,7 +30,7 @@ public class TestUpdateRoutingPoints {
     @BeforeAll
     public static void init() throws BPMNModelException {
         logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
+        model = BPMNModelFactory.read("/refmodel-1.bpmn");
     }
 
     /**

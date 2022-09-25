@@ -29,28 +29,29 @@
 package org.openbpmn.bpmn.exceptions;
 
 /**
- * The BPMNMissingElementException is thrown in case the current BPMN model is
- * missing an expected element node.
+ * The BPMNInvalidIDException is thrown in case the id of an Element is missing
+ * or invalid.
  * 
  * @author rsoika
  * 
  */
-public class BPMNMissingElementException extends BPMNModelException {
+public class BPMNInvalidIDException extends BPMNModelException {
 
-    public static final String MISSING_ELEMENT = "MISSING_ELEMENT";
     public static final String MISSING_ID = "MISSING_ID";
+    public static final String DUPLICATE_ID = "DUPLICATE_ID";
+    public static final String INVALID_ID = "INVALID_ID";
 
     private static final long serialVersionUID = 1L;
 
-    public BPMNMissingElementException(String message) {
-        super(MISSING_ELEMENT, message);
+    public BPMNInvalidIDException(String message) {
+        super(INVALID_ID, message);
     }
 
-    public BPMNMissingElementException(String aErrorCode, String message) {
+    public BPMNInvalidIDException(String aErrorCode, String message) {
         super(aErrorCode, message);
     }
 
-    public BPMNMissingElementException(String aErrorCode, String message, Exception e) {
+    public BPMNInvalidIDException(String aErrorCode, String message, Exception e) {
         super(aErrorCode, message, e);
     }
 

@@ -29,7 +29,7 @@ public class TestDeleteModel {
     @BeforeAll
     public static void init() throws BPMNModelException {
         logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
+        model = BPMNModelFactory.read("/refmodel-1.bpmn");
 
     }
 
@@ -40,8 +40,7 @@ public class TestDeleteModel {
     public void testDeleteTask() {
         String out = "src/test/resources/delete-process_1.bpmn";
         try {
-            BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
-
+            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
             BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
@@ -59,7 +58,7 @@ public class TestDeleteModel {
     public void testDeleteTaskAndStartEvent() {
         String out = "src/test/resources/delete-process_2.bpmn";
         try {
-            BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
+            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
 
             BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
@@ -83,10 +82,7 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-
-            model.buildProcess("process_1","Process 1");
-
-            BPMNProcess processContext = model.openProcess("process_1");
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event

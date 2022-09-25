@@ -31,6 +31,7 @@ import javax.xml.xpath.XPathFactory;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -158,6 +159,9 @@ public class BPMNModel {
      * <p>
      * The method throws a BPMNModelException in case the model file dose not show a
      * valid BPMN 2.0 structure.
+     * <p>
+     * If the given model does not include a bpmndi:BPMNDiagram section the method
+     * will create an empty default diagram.
      * 
      * @param doc
      * @throws BPMNModelException
@@ -200,6 +204,15 @@ public class BPMNModel {
             NodeList diagramList = doc.getElementsByTagName(BPMNNS.BPMNDI.prefix + ":BPMNDiagram");
             if (diagramList != null && diagramList.getLength() > 0) {
                 bpmnDiagram = diagramList.item(0);
+            } else {
+                // no diagram included - so we create an empty one
+                getLogger().warning("No bpmndi:BPMNDiagram found - created default diagram");
+                // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+                Element bpmnDiagram = createElement(BPMNNS.BPMNDI, "BPMNDiagram");
+                bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
+                bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
+                definitions.appendChild(bpmnDiagram);
+                setBpmnDiagram(bpmnDiagram);
             }
 
             // find BPMNPlane
@@ -283,8 +296,7 @@ public class BPMNModel {
     }
 
     /**
-     * Builds a new BPMNParticipant element and adds this element into the
-     * definition list.
+     * Adds a new BPMNParticipant element and the corresponding BPMNProcess to the model.
      * <p>
      * The method verifies if a the model already has a bpmn2:collaboration section.
      * If not, the method creates one.
@@ -302,7 +314,7 @@ public class BPMNModel {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNParticipant buildParticipant(String id, String name) throws BPMNModelException {
+    public BPMNParticipant addParticipant(String id, String name) throws BPMNModelException {
 
         // first verify if the model already is a Collaboration model. If not we create
         // a bpmn2:collaboration
@@ -344,19 +356,6 @@ public class BPMNModel {
     }
 
     /**
-     * Adds a new BPMNGateway from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     * @throws BPMNModelException
-     */
-//    private BPMNParticipant addParticipant(Element element) throws BPMNModelException {
-//        BPMNParticipant participant = new BPMNParticipant(this, element);
-//        getParticipants().add(participant);
-//        return participant;
-//    }
-
-    /**
      * Builds a new BPMNProcess element and adds this into this model instance. This
      * method also generates a default BPMNPlane if not yet created
      * <p>
@@ -373,6 +372,8 @@ public class BPMNModel {
      * <p>
      * The method also expects a process type (public|private). If not type is
      * specified the method builds a public default process.
+     * <p>
+     * A BPMNModelException is thrown if the given id is already in use.
      * 
      * @param id
      * @param name
@@ -380,6 +381,16 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     public BPMNProcess buildProcess(String id, String name, String type) throws BPMNModelException {
+        
+        if (id==null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID,"id must not be empty or null!");
+        }
+        // verify id
+        for (BPMNProcess process: processes) {
+            if (process.getId().equals(id)) {
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,"id '" + id + "' is already in use!");
+            }
+        }
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
         Element process = createElement(BPMNNS.BPMN2, "process");
         logger.fine(process.getNodeName());
@@ -810,7 +821,7 @@ public class BPMNModel {
 
         // if we do not have a process at all or a public default process is missing in
         // the participant list, we create a default process now
-        if (publicCount == 0) {
+        if (processes.size() == 0 || (participants.size() > 0 && publicCount == 0)) {
             buildProcess("process_" + (processes.size() + 1), "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
         } else if (publicCount > 1) {
             getLogger().warning("Invalid model structure! The model contains more than one public process instance!");

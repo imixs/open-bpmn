@@ -38,7 +38,7 @@ package org.openbpmn.bpmn.exceptions;
 public abstract class BPMNModelException extends Exception {
 
     private static final long serialVersionUID = 1L;
-
+  
     protected String errorContext = "UNDEFINED";
     protected String errorCode = "UNDEFINED";
 

@@ -77,18 +77,11 @@ public class BPMNModelFactory {
             definitions.setAttribute("exporterVersion", exporterVersion);
             definitions.setAttribute("targetNamespace", targetNamespace);
             doc.appendChild(definitions);
+            
             BPMNModel model = new BPMNModel(doc);
-
-            // add an empty BPMNDiagram tag
-            // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
-            Element bpmnDiagram = model.createElement(BPMNNS.BPMNDI, "BPMNDiagram");
-            bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
-            bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
-            definitions.appendChild(bpmnDiagram);
-            model.setBpmnDiagram(bpmnDiagram);
             
             // add an empty public default process
-            model.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+          //  model.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
           
 
             return model;
@@ -150,7 +143,7 @@ public class BPMNModelFactory {
                 BPMNModel defaultModel = BPMNModelFactory
                         .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
                 // add an empty public default process
-                defaultModel.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+                //defaultModel.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
                 return defaultModel;
             }
 

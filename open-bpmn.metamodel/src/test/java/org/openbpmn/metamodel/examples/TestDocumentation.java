@@ -39,17 +39,13 @@ public class TestDocumentation {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.buildProcess("process_1","Process 1");
-
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
-
             // add a start and end event
             BPMNEvent bpmnElement = processContext.buildEvent("start_1", "Start", BPMNTypes.START_EVENT);
 
             // add a documentation - we expect a CDATA tag
-
             String value = "Some text with \n<markup>code</markup>\n Finish!";
-        
             bpmnElement.setDocumentation(value);
 
         } catch (BPMNModelException e) {

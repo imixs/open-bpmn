@@ -40,7 +40,7 @@ public class TestFlowElements {
 
         logger.info("...read model");
         try {
-            BPMNModel model = BPMNModelFactory.read("/refmodel-process_2.bpmn");
+            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
             System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
             System.out.println("------");
             if (model.getDoc().hasChildNodes()) {

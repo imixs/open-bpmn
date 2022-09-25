@@ -27,39 +27,33 @@ public class TestReadCollaborationModel {
 
     static BPMNModel model = null;
 
-    @BeforeAll
-    public static void init() throws BPMNModelException {
-        logger.info("...read collaboration model");
-        model = BPMNModelFactory.read("/collaboration_1.bpmn");
-    }
-
     /**
      * This the collaboration model
      */
     @Test
-    public void testModelElements() {
-
-        // we expect the existence of 2 process elements
-
-        Set<BPMNParticipant> participants = model.getParticipants();
-        assertNotNull(participants);
-        assertEquals(2, participants.size());
-        
-        // get first participant and load the process context
-        BPMNParticipant bpmnParticipant= participants.iterator().next();
-
-  
+    public void testReadCollaborationModel() {
+        logger.info("...read collaboration model");
         try {
+            model = BPMNModelFactory.read("/collaboration_1.bpmn");
+            // we expect the existence of 2 process elements
+
+            Set<BPMNParticipant> participants = model.getParticipants();
+            assertNotNull(participants);
+            assertEquals(2, participants.size());
+
+            // get first participant and load the process context
+            BPMNParticipant bpmnParticipant = participants.iterator().next();
+
             BPMNProcess process = model.openProcess("Process_1");
-            
+
             // we expect 1 Task element in this process
-            assertEquals(1,process.getActivities().size());
+            assertEquals(1, process.getActivities().size());
         } catch (BPMNModelException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
             fail();
         }
-        
+
         logger.info("...model read sucessful: ");
     }
 

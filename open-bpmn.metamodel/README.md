@@ -19,27 +19,28 @@ The following example shows how to create a empty BPMN model file:
 	model.save("src/test/resources/create-process_1.bpmn");
 ```
 
-This file contains no processes and no elements. You can easily extend the model and create a process instance with the ID 'process_1'
-
-```java
-	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-	BPMNProcess processContext = model.buildProcess("process_1","Sales");
-	model.save("src/test/resources/create-process_1.bpmn");
-```
-
-
-With a process instance you can add elements to the process:
+This file contains a default process with no elements. With the default process instance you can add BPMN flow elements:
 
 
 ```java
 	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-	BPMNProcess processContext = model.buildProcess("process_1","Marketing");
+	BPMNProcess processContext = model.openDefaultProcess();
 	processContext.addEvent("start_1","Start",EventType.START);
 	processContext.addEvent("end_1","End",EventType.END);
 	processContext.addTask("task_1","Task",TaskType.TASK);
 	model.save("src/test/resources/create-process_1.bpmn");
 ```
 
+## Collaboration Model
+
+If a BPMN model contains more than one process it is called a collaboration model. This model defines Participants where each holds one process. 
+You can easily extend the model to a collaboration model and create additional Participants:
+
+```java
+	BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+	BPMNProcess processContext = model.addParticipant("participant_1", "Sales Team");
+	model.save("src/test/resources/create-process_1.bpmn");
+```
         
 
 
