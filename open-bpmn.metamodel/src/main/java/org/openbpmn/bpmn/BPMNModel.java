@@ -924,6 +924,10 @@ public class BPMNModel {
                             break;
                         }
                     }
+                } else {
+                    if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
+                        publicCount++;
+                    }
                 }
 
                 BPMNProcess bpmnProcess = new BPMNProcess(this, item, processType);
