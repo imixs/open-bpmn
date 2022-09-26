@@ -22,7 +22,7 @@ import {
     EnableDefaultToolsAction,
     EnableToolsAction,SModelElement,
     hasArguments,MouseListener,
-    SetUIExtensionVisibilityAction,GLSPActionDispatcher,IActionHandler,
+    SetUIExtensionVisibilityAction,GLSPActionDispatcher,
     SModelRoot,
     TYPES
 } from '@eclipse-glsp/client';
@@ -37,7 +37,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 @injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener, IActionHandler {
+export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener { // IActionHandler 
   
     static readonly ID = 'bpmn-property-panel';
 
@@ -70,9 +70,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         return BPMNPropertyPanel.ID;
     }
     
-    handle(action: BPMNPropertyPanelAction): void | Action {
-        console.log(" ...... handle for BPMNPropertyPanelAction not yet implemented - info="+action.additionalInformation);
-    }
+    // disabled because this breaks the UI Extension
+    // handle(action: BPMNPropertyPanelAction): void | Action {
+    //     console.log(" ...... handle for BPMNPropertyPanelAction not yet implemented - info="+action.additionalInformation);
+    // }
 
     /*
      * Initalize the elemnts of property panel

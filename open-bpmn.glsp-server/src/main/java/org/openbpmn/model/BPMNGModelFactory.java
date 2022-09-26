@@ -183,11 +183,11 @@ public class BPMNGModelFactory implements GModelFactory {
                     if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
                         BPMNPoint bpmnPoint = participant.getBounds().getPosition();
                         GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                        PoolNodeBuilder builder = new PoolNodeBuilder(BPMNTypes.PARTICIPANT, participant.getName());
+                        PoolNodeBuilder builder = new PoolNodeBuilder(participant.getName());
                         GDimension dimension = GraphUtil.dimension(participant.getBounds().getDimension().getWidth(),
                                 participant.getBounds().getDimension().getHeight());
 
-                        // Build the GLSP Node....
+                        // Build the corresponding GLSP Pool Node....
                         Pool pool = builder //
                                 .id(participant.getId()) //
                                 .position(point) //

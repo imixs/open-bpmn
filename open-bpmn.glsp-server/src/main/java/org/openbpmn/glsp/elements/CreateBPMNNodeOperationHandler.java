@@ -81,7 +81,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
 
     protected Optional<GCompartment> getCategoryCompartment(final Pool category) {
         return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
-                .filter(comp -> ModelTypes.STRUCTURE.equals(comp.getType())).findFirst();
+                .filter(comp -> ModelTypes.CONTAINER.equals(comp.getType())).findFirst();
     }
 
 }

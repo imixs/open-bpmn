@@ -178,7 +178,7 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPalettePools() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(BPMNTypes.PARTICIPANT)));
+        result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(BPMNTypes.POOL)));
         return result;
     }
 

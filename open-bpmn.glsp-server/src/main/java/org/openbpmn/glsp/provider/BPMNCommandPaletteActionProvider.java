@@ -100,7 +100,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
 
                 // Pool
-                new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(BPMNTypes.PARTICIPANT,
+                new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(BPMNTypes.POOL,
                         lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))
 
         ));

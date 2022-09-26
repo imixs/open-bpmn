@@ -35,7 +35,7 @@ import org.openbpmn.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * OperationHandler to create a new Participant with a Pool element.
+ * OperationHandler to create a new BPMNParticipant within the BPMN Model.
  *
  * @author rsoika
  *
@@ -51,7 +51,7 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     protected ActionDispatcher actionDispatcher;
 
     public CreatePoolHandler() {
-        super(BPMNTypes.PARTICIPANT);
+        super(BPMNTypes.POOL);
     }
 
     @Override
@@ -59,10 +59,10 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
         elementTypeId = operation.getElementTypeId();
         // now we add a new gateway into the source model
         String participantID = BPMNModel.generateShortID("participant");
-        logger.fine("===== > createNode participantID=" + participantID);
+        logger.fine("===== > createNode poolID=" + participantID);
         try {
-            // add new BPMNParticipant to model
-            BPMNParticipant participant = modelState.getBpmnModel().addParticipant(participantID, getLabel());
+            // add a new BPMNParticipant to BPMN model
+            BPMNParticipant participant = modelState.getBpmnModel().addParticipant(getLabel());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 // create a Pool and set the bounds

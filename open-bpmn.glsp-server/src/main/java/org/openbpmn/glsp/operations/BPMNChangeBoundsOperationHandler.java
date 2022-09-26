@@ -27,12 +27,12 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
+import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.model.BPMNGModelState;
 
@@ -73,7 +73,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
     @Override
     public void executeOperation(final ChangeBoundsOperation operation) {
 
-        BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
+        // BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
         // iterate over all new Bounds...
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
@@ -82,51 +82,54 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 GPoint newPoint = elementBound.getNewPosition();
                 GDimension newSize = elementBound.getNewSize();
                 // find the corresponding BPMN and GNode element
-                BPMNFlowElement bpmnFlowElement = context.findBPMNFlowElementById(id);
-                if (bpmnFlowElement != null) {
-                    GNode gNode = null;
+
+                BPMNBounds bpmnBounds = modelState.getBpmnModel().findBPMNBoundsById(id);
+                if (bpmnBounds != null) {
+                    // find the corresponding GNode element and update the dimension and position...
                     Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
                     if (_node.isPresent()) {
-                        gNode = _node.get();
+                        GNode gNode = _node.get();
+                        // update GNode position....
+                        gNode.setPosition(newPoint);
+                        // Update GNode dimension....
+                        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+                        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+                        // calling the size method does not have an effect.
+                        // see:
+                        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+                        gNode.setSize(newSize);
                     } else {
                         // this case should not happen!
-                        logger.warning("Node Element '" + id + "' not found in current modelState!");
-                        continue;
+                        logger.warning("GNode '" + id + "' not found in current modelState!");
                     }
 
-                    // update BPMNElement position....
-                    BPMNBounds bpmnBounds = bpmnFlowElement.getBounds();
+                    // finally update BPMNElement bounds....
                     bpmnBounds.updateLocation(newPoint.getX(), newPoint.getY());
-                    // update GNode position....
-                    gNode.setPosition(newPoint);
-
-                    // update BPMNElement dimension....
                     bpmnBounds.updateDimension(newSize.getWidth(), newSize.getHeight());
-                    // Update GNode dimension....
-                    gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
-                    gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
-                    // calling the size method does not have an effect.
-                    // see:
-                    // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-                    gNode.setSize(newSize);
-
                 } else {
                     // test if we have a BPMNLable element was selected?
                     if (id.endsWith("_bpmnlabel")) {
-                        // yes - so we update the BPMN model information
-                        bpmnFlowElement = context
-                                .findBPMNFlowElementById(id.substring(0, id.lastIndexOf("_bpmnlabel")));
-                        if (bpmnFlowElement != null) {
-                            if (bpmnFlowElement instanceof BPMNEvent || bpmnFlowElement instanceof BPMNGateway) {
-                                BPMNLabel label = bpmnFlowElement.getLabel();
-                                label.updateLocation(newPoint.getX(), newPoint.getY());
-                            }
-                        }
-                        // finally update the GLabel position
+                        // yes, update the GLabel position
                         Optional<GLabel> _node = modelState.getIndex().findElementByClass(id, GLabel.class);
                         if (_node.isPresent()) {
                             GLabel node = _node.get();
+                            // update GNode position....
                             node.setPosition(newPoint);
+                        } else {
+                            // this case should not happen!
+                            logger.warning("GLabel '" + id + "' not found in current modelState!");
+                        }
+
+                        // update the BPMN model information
+                        String labelID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
+                        BPMNBaseElement bpmnBaseElement = modelState.getBpmnModel().findBPMNBaseElementById(labelID);
+                        if (bpmnBaseElement != null) {
+                            if (bpmnBaseElement instanceof BPMNEvent || bpmnBaseElement instanceof BPMNGateway) {
+                                BPMNLabel label = ((BPMNFlowElement) bpmnBaseElement).getLabel();
+                                if (label != null) {
+                                    label.updateLocation(newPoint.getX(), newPoint.getY());
+                                }
+                            }
                         }
                     }
 

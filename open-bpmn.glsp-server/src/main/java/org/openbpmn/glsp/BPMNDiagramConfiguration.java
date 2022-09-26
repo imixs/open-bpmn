@@ -62,14 +62,14 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON);
         // mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
-        mappings.put(ModelTypes.STRUCTURE, GraphPackage.Literals.GCOMPARTMENT);
+        mappings.put(ModelTypes.CONTAINER, GraphPackage.Literals.GCOMPARTMENT);
 
         // BPMN Types
         mappings.put(BPMNTypes.TASK, BpmnPackage.Literals.TASK_NODE);
         mappings.put(BPMNTypes.GATEWAY, BpmnPackage.Literals.GATEWAY_NODE);
         mappings.put(BPMNTypes.EVENT, BpmnPackage.Literals.EVENT_NODE);
         mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW);
-        mappings.put(BPMNTypes.PARTICIPANT, BpmnPackage.Literals.POOL);
+        mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL);
 
         return mappings;
     }
@@ -114,7 +114,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(new ShapeTypeHint(BPMNTypes.INCLUSIVE_GATEWAY, true, true, false, true));
 
         // Add Pool
-        ShapeTypeHint catHint = new ShapeTypeHint(BPMNTypes.PARTICIPANT, true, true, true, true);
+        ShapeTypeHint catHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
         catHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         nodeHints.add(catHint);
 

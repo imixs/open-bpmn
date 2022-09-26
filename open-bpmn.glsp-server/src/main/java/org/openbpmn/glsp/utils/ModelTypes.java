@@ -22,7 +22,6 @@ public final class ModelTypes {
     public static final String LABEL_HEADING = "label:heading";
     public static final String COMP_HEADER = "comp:header";
     public static final String ICON = "icon";
-    // public static final String POOL = "pool";
-    public static final String STRUCTURE = "struct";
+    public static final String CONTAINER = "container"; // used within Pools
 
 }
