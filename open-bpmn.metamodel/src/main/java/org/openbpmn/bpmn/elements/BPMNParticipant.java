@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 
 /**
  * A BPMNParticipant is a container for a BPMNProcess. A BPMNParticipant can
- * contain a bpmnShape element which is in this case a BPMN Pool IF a
+ * contain a bpmnShape element which is in this case a BPMN Pool. If a
  * BPMNParticipant does not contain a bpmnShape (Pool) this indicates that this
  * is the public default process
  * 
@@ -30,19 +30,17 @@ public class BPMNParticipant extends BPMNBaseElement {
     }
 
     /**
-     * This method creates a Pool with a corresponding bpmnShape The method throws a
-     * exception if the participant is not
+     * This method creates a BPMNShape for this participant. The shape element
+     * represents the Pool within the BPMNDiagram section.
      * 
      * @throws BPMNModelException
      */
     public void createPool() throws BPMNModelException {
-
         if (bpmnShape == null) {
             // create shape element
             bpmnShape = model.buildBPMNShape(this);
             this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
             // create BPMNLabel
-
             if (label != null) {
                 // set default position
                 // BPMNPoint pos = this.getBounds().getPosition();

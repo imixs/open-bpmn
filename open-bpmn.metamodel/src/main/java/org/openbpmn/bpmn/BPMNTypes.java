@@ -2,7 +2,11 @@ package org.openbpmn.bpmn;
 
 
 
-
+/**
+ * The BPMNTypes provides constants defining the visual elements contained in a BPMNDiagram.  
+ * @author rsoika
+ *
+ */
 public class BPMNTypes {
 
     // Process Types
@@ -51,7 +55,8 @@ public class BPMNTypes {
 
     
     // others  
-    public static final String PARTICIPANT = "participant";
+    //public static final String xPARTICIPANT = "participant";
+    public static final String POOL = "pool";
     public static final String SEQUENCE_FLOW = "sequenceFlow";
     public static final String BPMN_LABEL = "BPMNLabel";
     public static final String BPMN_EXTENSION = "BPMNExtension";

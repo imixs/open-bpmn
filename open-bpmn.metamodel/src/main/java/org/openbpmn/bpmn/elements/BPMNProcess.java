@@ -491,7 +491,7 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Finds a BPMNFlowElement by ID
+     * Finds a BPMNFlowElement by ID within the current process.
      * <p>
      * If no element with the given ID exists, the method returns null.
      * 

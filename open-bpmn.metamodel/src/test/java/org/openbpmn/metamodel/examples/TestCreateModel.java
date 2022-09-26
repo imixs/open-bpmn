@@ -202,17 +202,17 @@ public class TestCreateModel {
 
         try {
             assertEquals(1, model.getProcesses().size());
-            
+
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("participant_1", "Sales Team");
-            BPMNParticipant participantManagement = model.addParticipant("participant_2", "Management");
+            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            BPMNParticipant participantManagement = model.addParticipant("Management");
 
             assertTrue(model.isCollaborationDiagram());
             assertEquals(3, model.getProcesses().size());
-            
+
             // the default process should now be part of the participant list too
             assertEquals(3, model.getParticipants().size());
-            
+
             // add a task
             participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
 

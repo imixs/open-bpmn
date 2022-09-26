@@ -29,6 +29,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
@@ -296,13 +297,16 @@ public class BPMNModel {
     }
 
     /**
-     * Adds a new BPMNParticipant element and the corresponding BPMNProcess to the model.
+     * Adds a new BPMNParticipant element and the corresponding BPMNProcess to the
+     * model.
      * <p>
      * The method verifies if a the model already has a bpmn2:collaboration section.
      * If not, the method creates one.
-     * 
-     * In addition the method creates a corresponding Process element also added
-     * into the definition list. context.
+     * <p>
+     * In case the diagram type switches from a process diagram to a collaboration
+     * diagram, the method also updates the attribute 'bpmnElement' of the bpmnPlane
+     * to the new created bpmn2:collaboration element id.
+     *
      * 
      * 
      * <p>
@@ -315,55 +319,55 @@ public class BPMNModel {
      * @return the BPMNParticipant
      * @throws BPMNModelException
      */
-    public BPMNParticipant addParticipant(String id, String name) throws BPMNModelException {
+    public BPMNParticipant addParticipant(String name) throws BPMNModelException {
 
         // first verify if the model already is a Collaboration model. If not we create
         // a bpmn2:collaboration
-
-        // <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
         if (!this.isCollaborationDiagram()) {
-            // create a default collaboration element
+            logger.info("Migrating Process Diagram to Collaboration Diagram.");
+            // create the default collaboration element
+            String collaborationID = "collaboration_1";
             collaborationElement = createElement(BPMNNS.BPMN2, "collaboration");
-            collaborationElement.setAttribute("id", "Collaboration_1");
+            collaborationElement.setAttribute("id", collaborationID);
             collaborationElement.setAttribute("name", "Default Collaboration");
-            //this.definitions.insertBefore(collaborationElement, bpmnDiagram);
             this.definitions.insertBefore(collaborationElement, definitions.getFirstChild());
-            
+            // update the BPMNPlane attribute 'bpmnElement' which now references the
+            // collaboration element
+            this.getBpmnPlane().setAttribute("bpmnElement", collaborationID);
+
             // Now we migrate all existing processes into the new collaboration element....
-            for (BPMNProcess existingProcess: processes) {
+            for (BPMNProcess existingProcess : processes) {
                 Element migratedParticipantNode = createElement(BPMNNS.BPMN2, "participant");
-                migratedParticipantNode.setAttribute("id", BPMNModel.generateShortID("participant"));
+                String participantID = BPMNModel.generateShortID("participant");
+                migratedParticipantNode.setAttribute("id", participantID);
                 migratedParticipantNode.setAttribute("name", existingProcess.getName());
-                migratedParticipantNode.setAttribute("processRef",existingProcess.getId());
-                
+                migratedParticipantNode.setAttribute("processRef", existingProcess.getId());
+
                 collaborationElement.appendChild(migratedParticipantNode);
                 existingProcess.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
                 // finally add a new BPMNParticipatn to the paticipant list
                 getParticipants().add(new BPMNParticipant(this, migratedParticipantNode));
             }
-            
+
         }
 
         // create a new Dom node...
         Element participantNode = createElement(BPMNNS.BPMN2, "participant");
-        participantNode.setAttribute("id", id);
+        String participantID = BPMNModel.generateShortID("participant");
+        participantNode.setAttribute("id", participantID);
         participantNode.setAttribute("name", name);
-
         this.collaborationElement.appendChild(participantNode);
         // add BPMNParticipant instance
         BPMNParticipant bpmnParticipant = new BPMNParticipant(this, participantNode);
         getParticipants().add(bpmnParticipant);
 
-        // BPMNParticipant bpmnParticipant = this.addParticipant(participantNode);
-
         // now add the corresponding Process
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
         int processNumber = this.getProcesses().size() + 1;
-        BPMNProcess process = buildProcess("process_" + processNumber, "Process " + processNumber,
+        BPMNProcess process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
                 BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
-
         bpmnParticipant.setProcessRef(process.getId());
 
         return bpmnParticipant;
@@ -396,14 +400,15 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     protected BPMNProcess buildProcess(String id, String name, String type) throws BPMNModelException {
-        
-        if (id==null || id.isEmpty()) {
-            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID,"id must not be empty or null!");
+
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNProcess process: processes) {
+        for (BPMNProcess process : processes) {
             if (process.getId().equals(id)) {
-                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,"id '" + id + "' is already in use!");
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
             }
         }
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
@@ -528,6 +533,90 @@ public class BPMNModel {
     }
 
     /**
+     * Finds a BPMNBaseElement by ID within this model. The method verifies all
+     * existing Processes and its contained BPMNFlowElements.
+     * <p>
+     * If no element with the given ID exists, the method returns null.
+     * 
+     * @param id - the BPMN Element id
+     * @return
+     */
+    public BPMNBaseElement findBPMNBaseElementById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+        // iterate over all processes
+        Set<BPMNProcess> processList = this.getProcesses();
+        for (BPMNProcess process : processList) {
+            if (id.equals(process.getId())) {
+                // the id matches a Process
+                return process;
+            } else {
+                // analyze the content of the process
+                BPMNBaseElement baseElement = process.findBaseElementById(id);
+                if (baseElement != null) {
+                    return baseElement;
+                }
+            }
+        }
+
+        // no corresponding element found!
+        return null;
+    }
+
+    /**
+     * This method returns the BPMNBounds element of a BPMNBaseElement with the
+     * given ID. This finder method can be used to just adjust the Bounds in the
+     * Diagram section of a model.
+     * <p>
+     * In case of a process diagram, the method verfies all FlowElements within the
+     * default process.
+     * <p>
+     * In case of a collaboration diagram, the method verifies all Participants and
+     * also all FlowElements within the corresponding processes.
+     * <p>
+     * If no element with the given ID exists, the method returns null.
+     * 
+     * @param id         - the BPMN Element id
+     * @param deepSearch - if true also containing elements like Pools are analyzed.
+     * @return
+     */
+    public BPMNBounds findBPMNBoundsById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+        try {
+            if (isCollaborationDiagram()) {
+                // iterate over all participants
+                Set<BPMNParticipant> participantList = this.getParticipants();
+                for (BPMNParticipant participant : participantList) {
+                    if (id.equals(participant.getId())) {
+                        // the id matches the participant
+                        return participant.getBounds();
+                    } else {
+                        // analyze the content of the process
+                        BPMNBaseElement baseElement = participant.openProcess().findBaseElementById(id);
+                        if (baseElement != null) {
+                            return baseElement.getBounds();
+                        }
+                    }
+                }
+            } else {
+                // just analyze the default process
+                BPMNBaseElement baseElement = openDefaultProcess().findBaseElementById(id);
+                if (baseElement != null) {
+                    return baseElement.getBounds();
+                }
+            }
+        } catch (BPMNMissingElementException e) {
+            logger.warning("Failed to found Bounds for element '" + id + "' : " + e.getMessage());
+        }
+
+        // no corresponding element found!
+        return null;
+    }
+
+    /**
      * This helper method returns a set of child nodes by name from a given parent
      * node.
      * 
@@ -581,10 +670,10 @@ public class BPMNModel {
     public static String generateShortID() {
         byte[] buffer = new byte[12];
         random.nextBytes(buffer);
-        String id=encoder.encodeToString(buffer);
+        String id = encoder.encodeToString(buffer);
         // remove -_
-        id=id.replace("-","0");
-        id=id.replace("_","0");
+        id = id.replace("-", "0");
+        id = id.replace("_", "0");
         return id;
 
     }
@@ -599,7 +688,11 @@ public class BPMNModel {
     public static String generateShortID(String prefix) {
         byte[] buffer = new byte[4];
         random.nextBytes(buffer);
-        return prefix + "_" + encoder.encodeToString(buffer);
+        String id = encoder.encodeToString(buffer);
+        // remove -_
+        id = id.replace("-", "0");
+        id = id.replace("_", "0");
+        return prefix + "_" + id;
 
     }
 
