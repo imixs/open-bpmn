@@ -533,7 +533,7 @@ public class BPMNModel {
     }
 
     /**
-     * Finds a BPMNBaseElement by ID within this model. The method verifies all
+     * Finds a BPMNBaseElement by ID within this model. The method iterates over all
      * existing Processes and its contained BPMNFlowElements.
      * <p>
      * If no element with the given ID exists, the method returns null.
@@ -610,6 +610,32 @@ public class BPMNModel {
             }
         } catch (BPMNMissingElementException e) {
             logger.warning("Failed to found Bounds for element '" + id + "' : " + e.getMessage());
+        }
+
+        // no corresponding element found!
+        return null;
+    }
+
+    /**
+     * Finds a BPMNParticipant by its id
+     * 
+     * @param id
+     * @return
+     */
+    public BPMNParticipant findBPMNParticipantById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
+        }
+
+        if (isCollaborationDiagram()) {
+            // iterate over all participants
+            Set<BPMNParticipant> participantList = this.getParticipants();
+            for (BPMNParticipant participant : participantList) {
+                if (id.equals(participant.getId())) {
+                    // the id matches the participant
+                    return participant;
+                }
+            }
         }
 
         // no corresponding element found!

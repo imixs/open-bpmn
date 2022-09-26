@@ -129,11 +129,11 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
         layoutOptions.put(H_ALIGN, "left");
         layoutOptions.put(H_GRAB, true);
         layoutOptions.put(V_GRAB, true);
-        GCompartmentBuilder structCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
-                .id(node.getId() + "_struct") //
+        GCompartmentBuilder containerCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
+                .id(node.getId() + "_container") //
                 .layout(GConstants.Layout.FREEFORM) //
                 .layoutOptions(layoutOptions);
-        return structCompartmentBuilder //
+        return containerCompartmentBuilder //
                 .build();
     }
 }

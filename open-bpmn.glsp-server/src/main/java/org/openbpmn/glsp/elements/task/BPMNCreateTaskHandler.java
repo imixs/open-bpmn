@@ -27,6 +27,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -76,12 +77,34 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         String taskID = "task-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode tasknodeID=" + taskID);
         try {
-            BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
-            BPMNActivity task = process.addTask(taskID, getLabel(), operation.getElementTypeId());
-            Optional<GPoint> point = operation.getLocation();
-            if (point.isPresent()) {
-                task.getBounds().updateLocation(point.get().getX(), point.get().getY());
-                task.getBounds().updateDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+            // find the process - either the default process for Root container or the
+            // corresponding participant process
+            BPMNProcess bpmnProcess = null;
+            // is it the root?
+            if (modelState.getRoot().getId().equals(container.getId())) {
+                bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
+            } else {
+                // it should be a participant container
+                if (container.getId().startsWith("participant_")) {
+                    // compute participant
+                    String participantID = container.getId().substring(0, container.getId().lastIndexOf("_"));
+                    BPMNParticipant bpmnParticipant = modelState.getBpmnModel().findBPMNParticipantById(participantID);
+                    if (bpmnParticipant != null) {
+                        bpmnProcess = bpmnParticipant.openProcess();
+                    }
+                }
+            }
+
+            if (bpmnProcess != null) {
+                BPMNActivity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
+                Optional<GPoint> point = operation.getLocation();
+                if (point.isPresent()) {
+                    task.getBounds().updateLocation(point.get().getX(), point.get().getY());
+                    task.getBounds().updateDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+                }
+            } else {
+                // should not happen
+                logger.severe("Unable to find a vaild BPMNElement to place the new node: " + elementTypeId);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();

@@ -74,9 +74,9 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
         Optional<GModelElement> container = modelState.getIndex().get(operation.getContainerId());
         // super.getContainer(operation);
         // If the container is a Category node, find its structure compartment
-        Optional<GModelElement> structCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
+        Optional<GModelElement> containerCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
                 .flatMap(this::getCategoryCompartment);
-        return structCompt.isPresent() ? structCompt : container;
+        return containerCompt.isPresent() ? containerCompt : container;
     }
 
     protected Optional<GCompartment> getCategoryCompartment(final Pool category) {

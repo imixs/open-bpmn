@@ -28,6 +28,7 @@ import javax.inject.Inject;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
+import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GLabel;
@@ -195,7 +196,16 @@ public class BPMNGModelFactory implements GModelFactory {
                                 .build();
 
                         gNodeList.add(pool);
-                        addBPMNProcess(bpmnProcess, gNodeList);
+
+                        // find container
+                        GCompartment container = BPMNBuilderHelper.findContainerCompartment(pool);
+                        if (container != null) {
+                            addBPMNProcess(bpmnProcess, container.getChildren());
+                        } else {
+                            logger.warning("No Container compartment not found for current pool!");
+                            // default to root
+                            addBPMNProcess(bpmnProcess, gNodeList);
+                        }
                     } else {
                         // add default process without a pool
                         addBPMNProcess(bpmnProcess, gNodeList);
