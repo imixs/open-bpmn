@@ -17,6 +17,7 @@ package org.openbpmn.glsp.elements.pool;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
@@ -25,31 +26,57 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.model.BPMNGModelFactory;
 
 /**
  * BPMN 2.0 Pool Element.
  * <p>
- * The method builds a GNode from a BPMNParticipant element. The builder is
- * called from the method createGModelFromProcess of the BPMNGModelFactory.
+ * The method builds a GNode Pool element from a BPMNParticipant element. The
+ * builder is called from the method createGModelFromProcess of the
+ * BPMNGModelFactory.
  *
  * @author rsoika
  */
 public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder> {
+
+    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
+
     private String name;
 
     private static final String V_GRAB = "vGrab";
     private static final String H_GRAB = "hGrab";
     private static final String H_ALIGN = "hAlign";
 
-    public PoolNodeBuilder(final String name) {
+//    public PoolNodeBuilder(final String name) {
+//        super(BPMNTypes.POOL);
+//        this.name = name;
+//        this.addCssClass("pool");
+//        this.addCssClass(type);
+//    }
+
+    public PoolNodeBuilder(final BPMNParticipant participant) {
         super(BPMNTypes.POOL);
-        this.name = name;
-        this.addCssClass("pool");
+        this.name = participant.getName();
+        this.id = participant.getId();
+        try {
+            BPMNBounds bpmnPoolBounds = participant.getBounds();
+            this.position = GraphUtil.point(bpmnPoolBounds.getPosition().getX(), bpmnPoolBounds.getPosition().getY());
+            this.size = GraphUtil.dimension(bpmnPoolBounds.getDimension().getWidth(),
+                    bpmnPoolBounds.getDimension().getHeight());
+        } catch (BPMNMissingElementException e) {
+            // should not happen
+            logger.severe("BPMNParticipant does not support a BPMNBounds object!");
+        }
+
+        // set css style
         this.addCssClass(type);
     }
 
