@@ -28,7 +28,6 @@ import javax.inject.Inject;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GLabel;
@@ -46,6 +45,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
@@ -158,63 +158,73 @@ public class BPMNGModelFactory implements GModelFactory {
      * <p>
      * There are two diagram types currently supported
      * <ul>
-     * <li>simple model contains only one default process
-     * <li>collaboration model contains a participant list and at least one default
-     * process
+     * <li>'Process Diagram' contains only one default process
+     * <li>'Collaboration Diagram' contains a participant list with Pools and at
+     * least one default process
      * <p>
+     * The GPoint of a BPMNFlowElement contained in a BPMNParticipant element need
+     * to be computed relative to the GPoint of the Pool
      *
      * @return new GGraph
      */
     public GGraph buildGGraph(final BPMNModel model) {
 
-        List<GModelElement> gNodeList = new ArrayList<>();
+        List<GModelElement> gRootNodeList = new ArrayList<>();
         try {
 
             // In case we have collaboration diagram we iterate over all participants and
-            // create a pool if the contained process is private.Otherwise we create the
+            // create a pool if the contained process is private. Otherwise we create the
             // default process
             if (model.isCollaborationDiagram()) {
                 Set<BPMNParticipant> participants = model.getParticipants();
-
                 for (BPMNParticipant participant : participants) {
-                    logger.info(
+                    logger.fine(
                             "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
                     BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
                     // Add a Pool if the process is private
                     if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
-                        BPMNPoint bpmnPoint = participant.getBounds().getPosition();
-                        GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-                        PoolNodeBuilder builder = new PoolNodeBuilder(participant.getName());
-                        GDimension dimension = GraphUtil.dimension(participant.getBounds().getDimension().getWidth(),
-                                participant.getBounds().getDimension().getHeight());
+                        // get the Reference GPoint and the GDimension from the Participant Pool Element
+                        // BPMNPoint bpmnPoint = participant.getBounds().getPosition();
+                        BPMNBounds bpmnPoolBounds = participant.getBounds();
+                        GPoint refPoint = GraphUtil.point(bpmnPoolBounds.getPosition().getX(),
+                                bpmnPoolBounds.getPosition().getY());
+                        GDimension dimension = GraphUtil.dimension(bpmnPoolBounds.getDimension().getWidth(),
+                                bpmnPoolBounds.getDimension().getHeight());
+
+                        List<GModelElement> childList = addBPMNProcess(bpmnProcess, refPoint);
 
                         // Build the corresponding GLSP Pool Node....
+                        PoolNodeBuilder builder = new PoolNodeBuilder(participant.getName());
                         Pool pool = builder //
                                 .id(participant.getId()) //
-                                .position(point) //
-                                .size(dimension) //
+                                .position(refPoint) //
+                                .addAll(childList).size(dimension) //
                                 .build();
 
-                        gNodeList.add(pool);
+                        gRootNodeList.add(pool);
 
                         // find container
-                        GCompartment container = BPMNBuilderHelper.findContainerCompartment(pool);
-                        if (container != null) {
-                            addBPMNProcess(bpmnProcess, container.getChildren());
-                        } else {
-                            logger.warning("No Container compartment not found for current pool!");
-                            // default to root
-                            addBPMNProcess(bpmnProcess, gNodeList);
-                        }
+//                        GCompartment container = BPMNBuilderHelper.findContainerCompartment(pool);
+//                        if (container != null) {
+//
+//                            container.getChildren().addAll();
+//                            // addBPMNProcess(bpmnProcess, container.getChildren());
+//                        } else {
+//                            logger.warning("No Container compartment not found for current pool!");
+//                            // default to root
+//                            gNodeList.addAll(addBPMNProcess(bpmnProcess, null));
+//                        }
                     } else {
                         // add default process without a pool
-                        addBPMNProcess(bpmnProcess, gNodeList);
+                        // addBPMNProcess(bpmnProcess, gNodeList);
+                        gRootNodeList.addAll(addBPMNProcess(bpmnProcess, null));
                     }
                 }
             } else {
-                // simple model - build GModel from default process
+                // We have a simple 'Process Diagram' type - build the GModel from default
+                // process
                 BPMNProcess bpmnProcess = model.openDefaultProcess();
-                addBPMNProcess(bpmnProcess, gNodeList);
+                gRootNodeList.addAll(addBPMNProcess(bpmnProcess, null));
             }
 
         } catch (BPMNModelException e) {
@@ -223,24 +233,29 @@ public class BPMNGModelFactory implements GModelFactory {
         // add to root node...
         GGraph newGModel = new GGraphBuilder() //
                 .id("root_" + BPMNModel.generateShortID()) //
-                .addAll(gNodeList) //
+                .addAll(gRootNodeList) //
                 .build();
 
         return newGModel;
     }
 
     /**
-     * This helper method adds all flow elements contained in a BPMNProcess to a
-     * entityNodes List
+     * This helper method returns a GModelElement list from all BPMNFlowElments
+     * contained in a given BPMNProcess.
+     * <p>
+     * If a GCompartment is provided, the position of the BPMNFlowElement will be
+     * computed relative to the position to the container
      *
      */
-    private void addBPMNProcess(final BPMNProcess process, final List<GModelElement> gNodeList)
+    private List<GModelElement> addBPMNProcess(final BPMNProcess process, final GPoint refPoint)
             throws BPMNMissingElementException {
+
+        List<GModelElement> gNodeList = new ArrayList<>();
+
         // Add all Tasks
         for (BPMNActivity activity : process.getActivities()) {
             logger.fine("activity: " + activity.getName());
-            BPMNPoint bpmnPoint = activity.getBounds().getPosition();
-            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+            GPoint point = computeGPoint(activity.getBounds(), refPoint);
             TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
             GDimension dimension = GraphUtil.dimension(activity.getBounds().getDimension().getWidth(),
                     activity.getBounds().getDimension().getHeight());
@@ -261,8 +276,7 @@ public class BPMNGModelFactory implements GModelFactory {
         for (BPMNEvent event : process.getEvents()) {
             logger.fine("event: " + event.getName());
 
-            BPMNPoint bpmnPoint = event.getBounds().getPosition();
-            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+            GPoint point = computeGPoint(event.getBounds(), refPoint);
             EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
             // Build the GLSP Node....
             EventNode eventNode = builder //
@@ -278,7 +292,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     if (symbol == null) {
                         symbol = eventDefinition.getLocalName();
                     } else {
-                        // we already have a symbol - Switch ot Multiple Symbol?
+                        // we already have a symbol - Switch to Multiple Symbol?
                         if (!symbol.equals(eventDefinition.getLocalName())) {
                             symbol = BPMNTypes.MULTIPLE_EVENT_DEFINITIONS;
                         }
@@ -307,8 +321,7 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all Gateways...
         for (BPMNGateway gateway : process.getGateways()) {
             logger.fine("gateway: " + gateway.getName());
-            BPMNPoint bpmnPoint = gateway.getBounds().getPosition();
-            GPoint point = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+            GPoint point = computeGPoint(gateway.getBounds(), refPoint);
             GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
             // Build the GLSP Node....
             GatewayNode gatewayNode = builder //
@@ -352,6 +365,36 @@ public class BPMNGModelFactory implements GModelFactory {
             }
             gNodeList.add(sequenceFlowEdge);
         }
+
+        return gNodeList;
+    }
+
+    /**
+     * This method computes a GPoint based on a BPMNBounds object.
+     * <p>
+     * In case an optional Pool is provided the coordinates are computed relative to
+     * the Pool position within the diagram.
+     *
+     * @param bpmnBounds
+     * @param gPointReference
+     * @return
+     */
+    private GPoint computeGPoint(final BPMNBounds bpmnBounds, final GPoint refPoint) {
+
+        BPMNPoint bpmnPoint = bpmnBounds.getPosition();
+        GPoint result = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
+
+        // if we have a container, than we compute the relative position
+        if (refPoint != null) {
+            // GCompartment container = BPMNBuilderHelper.findContainerCompartment(pool);
+            // pool.getPosition()
+            result.setX(result.getX() - refPoint.getX());
+            result.setY(result.getY() - refPoint.getY());
+            // result.setY(10);
+        }
+
+        return result;
+
     }
 
     /**
