@@ -1,5 +1,6 @@
 package org.openbpmn.metamodel.examples;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -90,11 +92,56 @@ public class TestDeleteModel {
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
             BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().updateLocation(10.0, 10.0);
-            task.getBounds().updateDimension( 140.0, 60.0);
+            task.getBounds().updateDimension(140.0, 60.0);
 
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
             processContext.deleteTask("task_1");
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+    }
+
+    /**
+     * This test build new model one participant and a task. The test delete
+     * participant - we expect the task is also deleted, but we still have a default
+     * process and a collaboration diagram.
+     */
+    @Test
+    public void testDeleteParticipant() {
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        try {
+            BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+            BPMNProcess defaultProcess = model.openDefaultProcess();
+            assertNotNull(defaultProcess);
+
+            // create Participant
+            BPMNParticipant sales = model.addParticipant("Sales");
+
+            // add Task
+            BPMNProcess privateProcess = sales.openProcess();
+            // add a start and end event
+            privateProcess.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            privateProcess.addEvent("end_1", "End", BPMNTypes.END_EVENT);
+            privateProcess.addTask("task_1", "Task", BPMNTypes.TASK);
+            privateProcess.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
+            privateProcess.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
+
+            // we expect 3 Flow elements and 2 Processes
+            assertEquals(3, privateProcess.getBPMNFlowElements().size());
+            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getParticipants().size());
+
+            // now delete the Participant
+            model.deleteBPMNParticipant(sales);
+            assertEquals(1, model.getParticipants().size());
+            assertEquals(1, model.getProcesses().size());
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();

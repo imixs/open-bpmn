@@ -527,6 +527,27 @@ public class BPMNModel {
         }
     }
 
+    /**
+     * Deletes a BPMNParticipant element from this model.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteBPMNParticipant(BPMNParticipant participant) {
+        if (participant != null) {
+            BPMNProcess process=participant.openProcess();
+            this.definitions.removeChild(process.getElementNode());
+            if (participant.hasPool()) {
+                this.bpmnPlane.removeChild(participant.getBpmnShape());
+            }
+            this.collaborationElement.removeChild(participant.getElementNode());
+            // remove the participant with its elements
+            this.getProcesses().remove(process);
+            this.getParticipants().remove(participant);
+        }
+
+    }
+
     public Element createElement(BPMNNS ns, String type) {
         Element element = this.getDoc().createElementNS(getNameSpaceUri(ns), ns.prefix + ":" + type);
         return element;

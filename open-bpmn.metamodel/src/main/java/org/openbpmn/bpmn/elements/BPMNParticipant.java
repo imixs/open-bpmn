@@ -49,6 +49,9 @@ public class BPMNParticipant extends BPMNBaseElement {
         }
     }
 
+    public boolean hasPool() {
+        return (bpmnShape != null);
+    }
     /**
      * Returns the initialized BPMNProcess of this participant or returns null if no
      * proces exists

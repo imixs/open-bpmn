@@ -114,6 +114,26 @@ public class BPMNProcess extends BPMNBaseElement {
         }
     }
 
+    
+    /**
+     * Returns all BPMNFlowElements contained in this process
+     * 
+     * @return
+     */
+    public Set<BPMNFlowElement> getBPMNFlowElements() {
+        HashSet<BPMNFlowElement> result = new HashSet<BPMNFlowElement>();
+        
+        result.addAll(this.getActivities());
+        result.addAll(this.getEvents());
+        result.addAll(this.getGateways());
+        return result;
+    }
+    
+    /**
+     * Returns all BPMNActivity elements contained in this process
+     * 
+     * @return
+     */
     public Set<BPMNActivity> getActivities() {
         if (activities == null) {
             activities = new HashSet<BPMNActivity>();
