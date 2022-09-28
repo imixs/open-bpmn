@@ -55,13 +55,6 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
     private static final String H_GRAB = "hGrab";
     private static final String H_ALIGN = "hAlign";
 
-//    public PoolNodeBuilder(final String name) {
-//        super(BPMNTypes.POOL);
-//        this.name = name;
-//        this.addCssClass("pool");
-//        this.addCssClass(type);
-//    }
-
     public PoolNodeBuilder(final BPMNParticipant participant) {
         super(BPMNTypes.POOL);
         this.name = participant.getName();

@@ -101,6 +101,8 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
                 if (point.isPresent()) {
                     task.getBounds().updateLocation(point.get().getX(), point.get().getY());
                     task.getBounds().updateDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+
+                    logger.info("....Drop Position = " + point.get().getX() + " " + point.get().getY());
                 }
             } else {
                 // should not happen

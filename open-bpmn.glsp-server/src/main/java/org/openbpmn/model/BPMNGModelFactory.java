@@ -28,7 +28,6 @@ import javax.inject.Inject;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
@@ -315,16 +314,11 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all Tasks
         for (BPMNActivity activity : process.getActivities()) {
             logger.fine("activity: " + activity.getName());
+            // compute relative position
             GPoint point = computeGPoint(activity.getBounds(), participant);
-            TaskNodeBuilder builder = new TaskNodeBuilder(activity.getType(), activity.getName());
-            GDimension dimension = GraphUtil.dimension(activity.getBounds().getDimension().getWidth(),
-                    activity.getBounds().getDimension().getHeight());
-
-            // Build the GLSP Node....
-            TaskNode taskNode = builder //
-                    .id(activity.getId()) //
+            // build GNode
+            TaskNode taskNode = new TaskNodeBuilder(activity) //
                     .position(point) //
-                    .size(dimension) //
                     .build();
 
             // apply BPMN Extensions
@@ -335,12 +329,10 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all Events...
         for (BPMNEvent event : process.getEvents()) {
             logger.fine("event: " + event.getName());
-
+            // compute relative position
             GPoint point = computeGPoint(event.getBounds(), participant);
-            EventNodeBuilder builder = new EventNodeBuilder(event.getType(), event.getName());
-            // Build the GLSP Node....
-            EventNode eventNode = builder //
-                    .id(event.getId()) //
+            // build GNode
+            EventNode eventNode = new EventNodeBuilder(event) //
                     .position(point) //
                     .build();
 
@@ -382,12 +374,12 @@ public class BPMNGModelFactory implements GModelFactory {
         for (BPMNGateway gateway : process.getGateways()) {
             logger.fine("gateway: " + gateway.getName());
             GPoint point = computeGPoint(gateway.getBounds(), participant);
-            GatewayNodeBuilder builder = new GatewayNodeBuilder(gateway.getType(), gateway.getName());
+
             // Build the GLSP Node....
-            GatewayNode gatewayNode = builder //
-                    .id(gateway.getId()) //
+            GatewayNode gatewayNode = new GatewayNodeBuilder(gateway) //
                     .position(point) //
                     .build();
+
             gNodeList.add(gatewayNode);
             // apply BPMN Extensions
             applyBPMNExtensions(gatewayNode, gateway);

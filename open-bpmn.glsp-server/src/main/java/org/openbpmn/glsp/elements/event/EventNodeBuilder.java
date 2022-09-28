@@ -40,9 +40,12 @@ public class EventNodeBuilder extends AbstractGNodeBuilder<EventNode, EventNodeB
 
     private final String name;
 
-    public EventNodeBuilder(final String type, final String name) {
-        super(type);
-        this.name = name;
+    public EventNodeBuilder(final BPMNEvent event) {
+        super(event.getType());
+        this.name = event.getName();
+        this.id = event.getId();
+
+        // set Layout options
         this.addCssClass("event");
         this.addCssClass(type);
     }

@@ -15,14 +15,20 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
+import java.util.logging.Logger;
+
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.TaskNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.model.BPMNGModelFactory;
 
 /**
  * BPMN 2.0 Task Element.
@@ -35,15 +41,27 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
  */
 public class TaskNodeBuilder extends AbstractGNodeBuilder<TaskNode, TaskNodeBuilder> {
 
+    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
+
     private final String name;
 
-    public TaskNodeBuilder(final String type, final String name) {
-        super(type);
-        this.name = name;
+    public TaskNodeBuilder(final BPMNActivity activity) {
+        super(activity.getType());
+        this.name = activity.getName();
+        this.id = activity.getId();
+
+        try {
+            BPMNBounds bpmnBounds = activity.getBounds();
+            this.size = GraphUtil.dimension(bpmnBounds.getDimension().getWidth(),
+                    bpmnBounds.getDimension().getHeight());
+        } catch (BPMNMissingElementException e) {
+            // should not happen
+            logger.severe("BPMNActivity does not support a BPMNBounds object!");
+        }
+        // set Layout options
         this.addCssClass("task");
         this.addCssClass(type);
         this.addArguments(GArguments.cornerRadius(5));
-
     }
 
     @Override

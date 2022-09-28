@@ -36,9 +36,19 @@ public class GatewayNodeBuilder extends AbstractGNodeBuilder<GatewayNode, Gatewa
 
     private final String name;
 
-    public GatewayNodeBuilder(final String type, final String name) {
-        super(type);
-        this.name = name;
+//    public GatewayNodeBuilder(final String type, final String name) {
+//        super(type);
+//        this.name = name;
+//        this.addCssClass("gateway");
+//        this.addCssClass(type);
+//    }
+
+    public GatewayNodeBuilder(final BPMNGateway gateway) {
+        super(gateway.getType());
+        this.name = gateway.getName();
+        this.id = gateway.getId();
+
+        // set Layout options
         this.addCssClass("gateway");
         this.addCssClass(type);
     }
