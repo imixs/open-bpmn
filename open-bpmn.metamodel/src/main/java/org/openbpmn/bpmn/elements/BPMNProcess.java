@@ -480,6 +480,28 @@ public class BPMNProcess extends BPMNBaseElement {
         this.getSequenceFlows().remove(seqenceFlow);
     }
 
+    
+    /**
+     * Deletes a BPMNBase element from this process
+     * @param id
+     */
+    public void deleteBPMNBaseElement(String id) {
+        
+        BPMNBaseElement baseElement = findBaseElementById(id);
+        if (baseElement instanceof BPMNActivity) {
+            this.deleteTask(id);
+        }
+        if (baseElement instanceof BPMNEvent) {
+            this.deleteEvent(id);
+        }
+        if (baseElement instanceof BPMNGateway) {
+            this.deleteGateway(id);
+        }
+        if (baseElement instanceof BPMNSequenceFlow) {
+            this.deleteSequenceFlow(id);
+        }
+    }
+    
     /**
      * Finds a BPMNBaseElement by given id.
      * <p>

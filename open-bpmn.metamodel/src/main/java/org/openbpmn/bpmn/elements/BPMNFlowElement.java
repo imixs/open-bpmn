@@ -41,7 +41,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
             bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
             if (bpmnShape == null) {
                 // create shape element
-                bpmnShape = model.buildBPMNShape(this); 
+                bpmnShape = model.buildBPMNShape(this);
                 this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
                 // create BPMNLabel
                 label = this.getLabel();
@@ -52,6 +52,15 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the BPMNProcess this element belongs to.
+     * 
+     * @return
+     */
+    public BPMNProcess getBpmnProcess() {
+        return bpmnProcess;
     }
 
     /**

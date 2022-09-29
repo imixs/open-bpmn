@@ -19,11 +19,10 @@ import java.util.List;
 
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
-import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNGateway;
-import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
+import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -41,24 +40,23 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             System.out.println("Elements to delete are not specified");
         }
         for (String id : elementIds) {
-            System.out.println("...delete Element " + id);
-
             // Update the source model
-            BPMNBaseElement baseElement = modelState.getBpmnModel().openDefaultProcess().findBaseElementById(id);
-            if (baseElement == null) {
-                System.out.println("...no BPMN elmenet with id: " + id + " found!");
-            }
-            if (baseElement instanceof BPMNActivity) {
-                modelState.getBpmnModel().openDefaultProcess().deleteTask(id);
-            }
-            if (baseElement instanceof BPMNEvent) {
-                modelState.getBpmnModel().openDefaultProcess().deleteEvent(id);
-            }
-            if (baseElement instanceof BPMNGateway) {
-                modelState.getBpmnModel().openDefaultProcess().deleteGateway(id);
-            }
-            if (baseElement instanceof BPMNSequenceFlow) {
-                modelState.getBpmnModel().openDefaultProcess().deleteSequenceFlow(id);
+            System.out.println("...delete Element " + id);
+            // test if the element is a participant or a FlowElement
+            BPMNParticipant participant = modelState.getBpmnModel().findBPMNParticipantById(id);
+            if (participant != null) {
+                // delete participant with the pool and all contained elements
+                modelState.getBpmnModel().deleteBPMNParticipant(participant);
+            } else {
+                // find the bpmnFlowElement
+                BPMNBaseElement baseElement = modelState.getBpmnModel().findBPMNBaseElementById(id);
+                if (baseElement != null && baseElement instanceof BPMNFlowElement) {
+                    // open the corresponding process
+                    BPMNProcess process = ((BPMNFlowElement) baseElement).getBpmnProcess();
+                    process.deleteBPMNBaseElement(id);
+                } else {
+                    System.out.println("...no BPMN elmenet with id: " + id + " found!");
+                }
             }
         }
 

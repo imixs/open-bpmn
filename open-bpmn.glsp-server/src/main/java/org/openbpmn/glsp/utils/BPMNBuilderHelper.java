@@ -18,15 +18,12 @@ package org.openbpmn.glsp.utils;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.bpmn.Icon;
-import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.elements.IconBuilder;
 
 /**
@@ -77,24 +74,24 @@ public class BPMNBuilderHelper {
         return null;
     }
 
-    /**
-     * This method returns the Container compartment of a Pool GNode.
-     *
-     * @param pool
-     * @return Container GCompartment of the pool or null if no Container was found
-     */
-    public static GCompartment findContainerCompartment(final Pool pool) {
-        EList<EObject> contentList = pool.eContents();
-        for (EObject o : contentList) {
-            if (o instanceof GCompartment) {
-                GCompartment compat = (GCompartment) o;
-                if (ModelTypes.CONTAINER.equals(compat.getType())) {
-                    return compat;
-                }
-            }
-        }
-        return null;
-    }
+//    /**
+//     * This method returns the Container compartment of a Pool GNode.
+//     *
+//     * @param pool
+//     * @return Container GCompartment of the pool or null if no Container was found
+//     */
+//    public static GCompartment findContainerCompartment(final Pool pool) {
+//        EList<EObject> contentList = pool.eContents();
+//        for (EObject o : contentList) {
+//            if (o instanceof GCompartment) {
+//                GCompartment compat = (GCompartment) o;
+//                if (ModelTypes.CONTAINER.equals(compat.getType())) {
+//                    return compat;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Creates a moveable BPMNLabel. This element is used for Event and Gateway

@@ -17,6 +17,7 @@ package org.openbpmn.glsp.operations;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GDimension;
@@ -33,6 +34,8 @@ import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.model.BPMNGModelState;
 
@@ -72,19 +75,23 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
     @Override
     public void executeOperation(final ChangeBoundsOperation operation) {
-
-        // BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
         // iterate over all new Bounds...
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
             for (ElementAndBounds elementBound : elementBounds) {
                 String id = elementBound.getElementId();
+
                 GPoint newPoint = elementBound.getNewPosition();
                 GDimension newSize = elementBound.getNewSize();
+
                 // find the corresponding BPMN and GNode element
 
+                logger.info("...bounds update for: " + id);
                 BPMNBounds bpmnBounds = modelState.getBpmnModel().findBPMNBoundsById(id);
                 if (bpmnBounds != null) {
+                    double offsetX = newPoint.getX() - bpmnBounds.getPosition().getX();
+                    double offsetY = newPoint.getY() - bpmnBounds.getPosition().getY();
+
                     // find the corresponding GNode element and update the dimension and position...
                     Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
                     if (_node.isPresent()) {
@@ -106,6 +113,15 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                     // finally update BPMNElement bounds....
                     bpmnBounds.updateLocation(newPoint.getX(), newPoint.getY());
                     bpmnBounds.updateDimension(newSize.getWidth(), newSize.getHeight());
+
+                    // if we have a Participant element selected than we need to iterate over all
+                    // embedded BPMNFlow Elements and update the bounds too.
+                    BPMNParticipant participant = modelState.getBpmnModel().findBPMNParticipantById(id);
+                    if (participant != null) {
+                        logger.info("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
+                        updateProcessElementBounds(participant.openProcess(), offsetX, offsetY);
+                    }
+
                 } else {
                     // test if we have a BPMNLable element was selected?
                     if (id.endsWith("_bpmnlabel")) {
@@ -140,6 +156,30 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
+    }
+
+    /**
+     * This method updates the position for all BPMNFlowElements contained in a pool
+     * given a x and y offset.
+     *
+     * @param process
+     * @param participant
+     * @throws BPMNMissingElementException
+     */
+    void updateProcessElementBounds(final BPMNProcess process, final double offsetX, final double offsetY) {
+        Set<BPMNFlowElement> bpmnFlowElements = process.getBPMNFlowElements();
+        // Add all Tasks
+        for (BPMNFlowElement flowElement : bpmnFlowElements) {
+            logger.info("update element bounds: " + flowElement.getId());
+            try {
+                BPMNBounds bounds = flowElement.getBounds();
+                if (bounds != null) {
+                    bounds.updateLocation(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
+                }
+            } catch (BPMNMissingElementException e) {
+                logger.warning("Failed to update FlowElement bounds for : " + flowElement.getId());
+            }
+        }
     }
 
 }

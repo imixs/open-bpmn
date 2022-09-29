@@ -69,8 +69,10 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         String gatewayID = "gateway-" + BPMNModel.generateShortID();
         logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
         try {
-            BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
-            BPMNGateway gateway = process.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
+            // find the process - either the default process for Root container or the
+            // corresponding participant process
+            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
+            BPMNGateway gateway = bpmnProcess.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 gateway.getBounds().updateLocation(point.get().getX(), point.get().getY());

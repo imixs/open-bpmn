@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -27,7 +26,6 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -68,10 +66,6 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
     @Override
     protected void executeOperation(final CreateNodeOperation operation) {
 
-        GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
-
-        logger.info(" ==> Wir setzten das Task Element in den Container : " + container.getId());
-
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String taskID = "task-" + BPMNModel.generateShortID();
@@ -79,22 +73,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
-            BPMNProcess bpmnProcess = null;
-            // is it the root?
-            if (modelState.getRoot().getId().equals(container.getId())) {
-                bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
-            } else {
-                // it should be a participant container
-                if (container.getId().startsWith("participant_")) {
-                    // compute participant
-                    String participantID = container.getId().substring(0, container.getId().lastIndexOf("_"));
-                    BPMNParticipant bpmnParticipant = modelState.getBpmnModel().findBPMNParticipantById(participantID);
-                    if (bpmnParticipant != null) {
-                        bpmnProcess = bpmnParticipant.openProcess();
-                    }
-                }
-            }
-
+            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
             if (bpmnProcess != null) {
                 BPMNActivity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
                 Optional<GPoint> point = operation.getLocation();
@@ -114,16 +93,6 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(taskID)));
     }
-
-//    @Override
-//    public void executeOperation(final CreateNodeOperation operation) {
-//       GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
-//       Optional<GPoint> absoluteLocation = getLocation(operation);
-//       Optional<GPoint> relativeLocation = getRelativeLocation(operation, absoluteLocation, container);
-//       GModelElement element = createNode(relativeLocation, operation.getArgs());
-//       container.getChildren().add(element);
-//       actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(element.getId())));
-//    }
 
     @Override
     public String getLabel() {

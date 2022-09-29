@@ -17,15 +17,19 @@ package org.openbpmn.glsp.elements;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.Pool;
+import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.utils.ModelTypes;
+import org.openbpmn.model.BPMNGModelState;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -39,9 +43,10 @@ import com.google.inject.Inject;
  */
 public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation>
         implements CreateNodeOperationHandler {
+    private static Logger logger = Logger.getLogger(BPMNCreateTaskHandler.class.getName());
 
     @Inject
-    protected GModelState modelState;
+    protected BPMNGModelState modelState;
 
     public CreateBPMNNodeOperationHandler(final String elementTypeId) {
         super(elementTypeId);
@@ -82,6 +87,38 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     protected Optional<GCompartment> getCategoryCompartment(final Pool category) {
         return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
                 .filter(comp -> ModelTypes.CONTAINER.equals(comp.getType())).findFirst();
+    }
+
+    /**
+     * Helper method computes the container BPMNProcess for a CreateNodeOperation.
+     * The method first computes the GModel container Element. Than the method tests
+     * if the container is the Model root or a BPMNPool. In the later case the
+     * method computes the BPMNProcess from the corresponding BPMNParticipant.
+     *
+     * @param operation - a CreateNodeOperation
+     * @return the corresponding BPMNProcess
+     */
+    public BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation) {
+        GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
+        String containerId = container.getId();
+        logger.info(" ==> Container ID : " + container.getId());
+
+        BPMNProcess bpmnProcess = null;
+        // is it the root?
+        if (modelState.getRoot().getId().equals(containerId)) {
+            bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
+        } else {
+            // it should be a participant container
+            if (containerId.startsWith("participant_")) {
+                // compute participant
+                String participantID = containerId.substring(0, containerId.lastIndexOf("_"));
+                BPMNParticipant bpmnParticipant = modelState.getBpmnModel().findBPMNParticipantById(participantID);
+                if (bpmnParticipant != null) {
+                    bpmnProcess = bpmnParticipant.openProcess();
+                }
+            }
+        }
+        return bpmnProcess;
     }
 
 }
