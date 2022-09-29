@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.directediting.RequestEditValidationAction;
 import org.eclipse.glsp.server.features.directediting.ValidationStatus;
 import org.eclipse.glsp.server.model.GModelState;
-import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
 
 import com.google.inject.Inject;
 
@@ -54,7 +54,7 @@ public class LabelEditValidator implements ContextEditValidator {
         String id = action.getModelElementId();
         logger.fine("...validate Element: " + id);
         // test if this element is a BaseElement with the property 'name'
-        Optional<BaseElement> element = modelState.getIndex().findElementByClass(id, BaseElement.class);
+        Optional<BaseElementGNode> element = modelState.getIndex().findElementByClass(id, BaseElementGNode.class);
         if (!element.isEmpty()) {
             // We have a BaseElemtn, update the name attribute
             element.get().setName(text);

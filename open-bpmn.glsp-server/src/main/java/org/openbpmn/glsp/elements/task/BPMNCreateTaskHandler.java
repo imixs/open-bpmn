@@ -96,7 +96,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_NODE, elementTypeId, modelState);
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.TASK_GNODE, elementTypeId, modelState);
         return "Task-" + nodeCounter;
     }
 

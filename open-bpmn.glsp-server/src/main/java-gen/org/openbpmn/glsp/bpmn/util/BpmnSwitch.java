@@ -76,194 +76,194 @@ public class BpmnSwitch<T> extends Switch<T> {
     @Override
     protected T doSwitch(int classifierID, EObject theEObject) {
         switch (classifierID) {
-            case BpmnPackage.BASE_ELEMENT: {
-                BaseElement baseElement = (BaseElement)theEObject;
-                T result = caseBaseElement(baseElement);
-                if (result == null) result = caseGNode(baseElement);
-                if (result == null) result = caseGShapeElement(baseElement);
-                if (result == null) result = caseGEdgeLayoutable(baseElement);
-                if (result == null) result = caseGLayouting(baseElement);
-                if (result == null) result = caseGModelElement(baseElement);
-                if (result == null) result = caseGBoundsAware(baseElement);
-                if (result == null) result = caseGArgumentable(baseElement);
+            case BpmnPackage.BASE_ELEMENT_GNODE: {
+                BaseElementGNode baseElementGNode = (BaseElementGNode)theEObject;
+                T result = caseBaseElementGNode(baseElementGNode);
+                if (result == null) result = caseGNode(baseElementGNode);
+                if (result == null) result = caseGShapeElement(baseElementGNode);
+                if (result == null) result = caseGEdgeLayoutable(baseElementGNode);
+                if (result == null) result = caseGLayouting(baseElementGNode);
+                if (result == null) result = caseGModelElement(baseElementGNode);
+                if (result == null) result = caseGBoundsAware(baseElementGNode);
+                if (result == null) result = caseGArgumentable(baseElementGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.FLOW_ELEMENT: {
-                FlowElement flowElement = (FlowElement)theEObject;
-                T result = caseFlowElement(flowElement);
-                if (result == null) result = caseBaseElement(flowElement);
-                if (result == null) result = caseGNode(flowElement);
-                if (result == null) result = caseGShapeElement(flowElement);
-                if (result == null) result = caseGEdgeLayoutable(flowElement);
-                if (result == null) result = caseGLayouting(flowElement);
-                if (result == null) result = caseGModelElement(flowElement);
-                if (result == null) result = caseGBoundsAware(flowElement);
-                if (result == null) result = caseGArgumentable(flowElement);
+            case BpmnPackage.FLOW_ELEMENT_GNODE: {
+                FlowElementGNode flowElementGNode = (FlowElementGNode)theEObject;
+                T result = caseFlowElementGNode(flowElementGNode);
+                if (result == null) result = caseBaseElementGNode(flowElementGNode);
+                if (result == null) result = caseGNode(flowElementGNode);
+                if (result == null) result = caseGShapeElement(flowElementGNode);
+                if (result == null) result = caseGEdgeLayoutable(flowElementGNode);
+                if (result == null) result = caseGLayouting(flowElementGNode);
+                if (result == null) result = caseGModelElement(flowElementGNode);
+                if (result == null) result = caseGBoundsAware(flowElementGNode);
+                if (result == null) result = caseGArgumentable(flowElementGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.TASK_NODE: {
-                TaskNode taskNode = (TaskNode)theEObject;
-                T result = caseTaskNode(taskNode);
-                if (result == null) result = caseFlowElement(taskNode);
-                if (result == null) result = caseBaseElement(taskNode);
-                if (result == null) result = caseGNode(taskNode);
-                if (result == null) result = caseGShapeElement(taskNode);
-                if (result == null) result = caseGEdgeLayoutable(taskNode);
-                if (result == null) result = caseGLayouting(taskNode);
-                if (result == null) result = caseGModelElement(taskNode);
-                if (result == null) result = caseGBoundsAware(taskNode);
-                if (result == null) result = caseGArgumentable(taskNode);
+            case BpmnPackage.TASK_GNODE: {
+                TaskGNode taskGNode = (TaskGNode)theEObject;
+                T result = caseTaskGNode(taskGNode);
+                if (result == null) result = caseFlowElementGNode(taskGNode);
+                if (result == null) result = caseBaseElementGNode(taskGNode);
+                if (result == null) result = caseGNode(taskGNode);
+                if (result == null) result = caseGShapeElement(taskGNode);
+                if (result == null) result = caseGEdgeLayoutable(taskGNode);
+                if (result == null) result = caseGLayouting(taskGNode);
+                if (result == null) result = caseGModelElement(taskGNode);
+                if (result == null) result = caseGBoundsAware(taskGNode);
+                if (result == null) result = caseGArgumentable(taskGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.GATEWAY_NODE: {
-                GatewayNode gatewayNode = (GatewayNode)theEObject;
-                T result = caseGatewayNode(gatewayNode);
-                if (result == null) result = caseFlowElement(gatewayNode);
-                if (result == null) result = caseBaseElement(gatewayNode);
-                if (result == null) result = caseGNode(gatewayNode);
-                if (result == null) result = caseGShapeElement(gatewayNode);
-                if (result == null) result = caseGEdgeLayoutable(gatewayNode);
-                if (result == null) result = caseGLayouting(gatewayNode);
-                if (result == null) result = caseGModelElement(gatewayNode);
-                if (result == null) result = caseGBoundsAware(gatewayNode);
-                if (result == null) result = caseGArgumentable(gatewayNode);
+            case BpmnPackage.GATEWAY_GNODE: {
+                GatewayGNode gatewayGNode = (GatewayGNode)theEObject;
+                T result = caseGatewayGNode(gatewayGNode);
+                if (result == null) result = caseFlowElementGNode(gatewayGNode);
+                if (result == null) result = caseBaseElementGNode(gatewayGNode);
+                if (result == null) result = caseGNode(gatewayGNode);
+                if (result == null) result = caseGShapeElement(gatewayGNode);
+                if (result == null) result = caseGEdgeLayoutable(gatewayGNode);
+                if (result == null) result = caseGLayouting(gatewayGNode);
+                if (result == null) result = caseGModelElement(gatewayGNode);
+                if (result == null) result = caseGBoundsAware(gatewayGNode);
+                if (result == null) result = caseGArgumentable(gatewayGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.EVENT_NODE: {
-                EventNode eventNode = (EventNode)theEObject;
-                T result = caseEventNode(eventNode);
-                if (result == null) result = caseFlowElement(eventNode);
-                if (result == null) result = caseBaseElement(eventNode);
-                if (result == null) result = caseGNode(eventNode);
-                if (result == null) result = caseGShapeElement(eventNode);
-                if (result == null) result = caseGEdgeLayoutable(eventNode);
-                if (result == null) result = caseGLayouting(eventNode);
-                if (result == null) result = caseGModelElement(eventNode);
-                if (result == null) result = caseGBoundsAware(eventNode);
-                if (result == null) result = caseGArgumentable(eventNode);
+            case BpmnPackage.EVENT_GNODE: {
+                EventGNode eventGNode = (EventGNode)theEObject;
+                T result = caseEventGNode(eventGNode);
+                if (result == null) result = caseFlowElementGNode(eventGNode);
+                if (result == null) result = caseBaseElementGNode(eventGNode);
+                if (result == null) result = caseGNode(eventGNode);
+                if (result == null) result = caseGShapeElement(eventGNode);
+                if (result == null) result = caseGEdgeLayoutable(eventGNode);
+                if (result == null) result = caseGLayouting(eventGNode);
+                if (result == null) result = caseGModelElement(eventGNode);
+                if (result == null) result = caseGBoundsAware(eventGNode);
+                if (result == null) result = caseGArgumentable(eventGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.LABEL: {
-                Label label = (Label)theEObject;
-                T result = caseLabel(label);
-                if (result == null) result = caseBaseElement(label);
-                if (result == null) result = caseGNode(label);
-                if (result == null) result = caseGShapeElement(label);
-                if (result == null) result = caseGEdgeLayoutable(label);
-                if (result == null) result = caseGLayouting(label);
-                if (result == null) result = caseGModelElement(label);
-                if (result == null) result = caseGBoundsAware(label);
-                if (result == null) result = caseGArgumentable(label);
+            case BpmnPackage.LABEL_GNODE: {
+                LabelGNode labelGNode = (LabelGNode)theEObject;
+                T result = caseLabelGNode(labelGNode);
+                if (result == null) result = caseBaseElementGNode(labelGNode);
+                if (result == null) result = caseGNode(labelGNode);
+                if (result == null) result = caseGShapeElement(labelGNode);
+                if (result == null) result = caseGEdgeLayoutable(labelGNode);
+                if (result == null) result = caseGLayouting(labelGNode);
+                if (result == null) result = caseGModelElement(labelGNode);
+                if (result == null) result = caseGBoundsAware(labelGNode);
+                if (result == null) result = caseGArgumentable(labelGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.DATA_OBJECT: {
-                DataObject dataObject = (DataObject)theEObject;
-                T result = caseDataObject(dataObject);
-                if (result == null) result = caseBaseElement(dataObject);
-                if (result == null) result = caseGNode(dataObject);
-                if (result == null) result = caseGShapeElement(dataObject);
-                if (result == null) result = caseGEdgeLayoutable(dataObject);
-                if (result == null) result = caseGLayouting(dataObject);
-                if (result == null) result = caseGModelElement(dataObject);
-                if (result == null) result = caseGBoundsAware(dataObject);
-                if (result == null) result = caseGArgumentable(dataObject);
+            case BpmnPackage.DATA_OBJECT_GNODE: {
+                DataObjectGNode dataObjectGNode = (DataObjectGNode)theEObject;
+                T result = caseDataObjectGNode(dataObjectGNode);
+                if (result == null) result = caseBaseElementGNode(dataObjectGNode);
+                if (result == null) result = caseGNode(dataObjectGNode);
+                if (result == null) result = caseGShapeElement(dataObjectGNode);
+                if (result == null) result = caseGEdgeLayoutable(dataObjectGNode);
+                if (result == null) result = caseGLayouting(dataObjectGNode);
+                if (result == null) result = caseGModelElement(dataObjectGNode);
+                if (result == null) result = caseGBoundsAware(dataObjectGNode);
+                if (result == null) result = caseGArgumentable(dataObjectGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.MESSAGE: {
-                Message message = (Message)theEObject;
-                T result = caseMessage(message);
-                if (result == null) result = caseBaseElement(message);
-                if (result == null) result = caseGNode(message);
-                if (result == null) result = caseGShapeElement(message);
-                if (result == null) result = caseGEdgeLayoutable(message);
-                if (result == null) result = caseGLayouting(message);
-                if (result == null) result = caseGModelElement(message);
-                if (result == null) result = caseGBoundsAware(message);
-                if (result == null) result = caseGArgumentable(message);
+            case BpmnPackage.MESSAGE_GNODE: {
+                MessageGNode messageGNode = (MessageGNode)theEObject;
+                T result = caseMessageGNode(messageGNode);
+                if (result == null) result = caseBaseElementGNode(messageGNode);
+                if (result == null) result = caseGNode(messageGNode);
+                if (result == null) result = caseGShapeElement(messageGNode);
+                if (result == null) result = caseGEdgeLayoutable(messageGNode);
+                if (result == null) result = caseGLayouting(messageGNode);
+                if (result == null) result = caseGModelElement(messageGNode);
+                if (result == null) result = caseGBoundsAware(messageGNode);
+                if (result == null) result = caseGArgumentable(messageGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.GROUP: {
-                Group group = (Group)theEObject;
-                T result = caseGroup(group);
-                if (result == null) result = caseBaseElement(group);
-                if (result == null) result = caseGNode(group);
-                if (result == null) result = caseGShapeElement(group);
-                if (result == null) result = caseGEdgeLayoutable(group);
-                if (result == null) result = caseGLayouting(group);
-                if (result == null) result = caseGModelElement(group);
-                if (result == null) result = caseGBoundsAware(group);
-                if (result == null) result = caseGArgumentable(group);
+            case BpmnPackage.GROUP_GNODE: {
+                GroupGNode groupGNode = (GroupGNode)theEObject;
+                T result = caseGroupGNode(groupGNode);
+                if (result == null) result = caseBaseElementGNode(groupGNode);
+                if (result == null) result = caseGNode(groupGNode);
+                if (result == null) result = caseGShapeElement(groupGNode);
+                if (result == null) result = caseGEdgeLayoutable(groupGNode);
+                if (result == null) result = caseGLayouting(groupGNode);
+                if (result == null) result = caseGModelElement(groupGNode);
+                if (result == null) result = caseGBoundsAware(groupGNode);
+                if (result == null) result = caseGArgumentable(groupGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.TEXT_ANNOTATION: {
-                TextAnnotation textAnnotation = (TextAnnotation)theEObject;
-                T result = caseTextAnnotation(textAnnotation);
-                if (result == null) result = caseBaseElement(textAnnotation);
-                if (result == null) result = caseGNode(textAnnotation);
-                if (result == null) result = caseGShapeElement(textAnnotation);
-                if (result == null) result = caseGEdgeLayoutable(textAnnotation);
-                if (result == null) result = caseGLayouting(textAnnotation);
-                if (result == null) result = caseGModelElement(textAnnotation);
-                if (result == null) result = caseGBoundsAware(textAnnotation);
-                if (result == null) result = caseGArgumentable(textAnnotation);
+            case BpmnPackage.TEXT_ANNOTATION_GNODE: {
+                TextAnnotationGNode textAnnotationGNode = (TextAnnotationGNode)theEObject;
+                T result = caseTextAnnotationGNode(textAnnotationGNode);
+                if (result == null) result = caseBaseElementGNode(textAnnotationGNode);
+                if (result == null) result = caseGNode(textAnnotationGNode);
+                if (result == null) result = caseGShapeElement(textAnnotationGNode);
+                if (result == null) result = caseGEdgeLayoutable(textAnnotationGNode);
+                if (result == null) result = caseGLayouting(textAnnotationGNode);
+                if (result == null) result = caseGModelElement(textAnnotationGNode);
+                if (result == null) result = caseGBoundsAware(textAnnotationGNode);
+                if (result == null) result = caseGArgumentable(textAnnotationGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.POOL: {
-                Pool pool = (Pool)theEObject;
-                T result = casePool(pool);
-                if (result == null) result = caseBaseElement(pool);
-                if (result == null) result = caseGNode(pool);
-                if (result == null) result = caseGShapeElement(pool);
-                if (result == null) result = caseGEdgeLayoutable(pool);
-                if (result == null) result = caseGLayouting(pool);
-                if (result == null) result = caseGModelElement(pool);
-                if (result == null) result = caseGBoundsAware(pool);
-                if (result == null) result = caseGArgumentable(pool);
+            case BpmnPackage.POOL_GNODE: {
+                PoolGNode poolGNode = (PoolGNode)theEObject;
+                T result = casePoolGNode(poolGNode);
+                if (result == null) result = caseBaseElementGNode(poolGNode);
+                if (result == null) result = caseGNode(poolGNode);
+                if (result == null) result = caseGShapeElement(poolGNode);
+                if (result == null) result = caseGEdgeLayoutable(poolGNode);
+                if (result == null) result = caseGLayouting(poolGNode);
+                if (result == null) result = caseGModelElement(poolGNode);
+                if (result == null) result = caseGBoundsAware(poolGNode);
+                if (result == null) result = caseGArgumentable(poolGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.LANE: {
-                Lane lane = (Lane)theEObject;
-                T result = caseLane(lane);
-                if (result == null) result = caseBaseElement(lane);
-                if (result == null) result = caseGNode(lane);
-                if (result == null) result = caseGShapeElement(lane);
-                if (result == null) result = caseGEdgeLayoutable(lane);
-                if (result == null) result = caseGLayouting(lane);
-                if (result == null) result = caseGModelElement(lane);
-                if (result == null) result = caseGBoundsAware(lane);
-                if (result == null) result = caseGArgumentable(lane);
+            case BpmnPackage.LANE_GMODE: {
+                LaneGMode laneGMode = (LaneGMode)theEObject;
+                T result = caseLaneGMode(laneGMode);
+                if (result == null) result = caseBaseElementGNode(laneGMode);
+                if (result == null) result = caseGNode(laneGMode);
+                if (result == null) result = caseGShapeElement(laneGMode);
+                if (result == null) result = caseGEdgeLayoutable(laneGMode);
+                if (result == null) result = caseGLayouting(laneGMode);
+                if (result == null) result = caseGModelElement(laneGMode);
+                if (result == null) result = caseGBoundsAware(laneGMode);
+                if (result == null) result = caseGArgumentable(laneGMode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.ICON: {
-                Icon icon = (Icon)theEObject;
-                T result = caseIcon(icon);
-                if (result == null) result = caseGCompartment(icon);
-                if (result == null) result = caseGShapeElement(icon);
-                if (result == null) result = caseGLayouting(icon);
-                if (result == null) result = caseGModelElement(icon);
-                if (result == null) result = caseGBoundsAware(icon);
-                if (result == null) result = caseGArgumentable(icon);
+            case BpmnPackage.ICON_GNODE: {
+                IconGNode iconGNode = (IconGNode)theEObject;
+                T result = caseIconGNode(iconGNode);
+                if (result == null) result = caseGCompartment(iconGNode);
+                if (result == null) result = caseGShapeElement(iconGNode);
+                if (result == null) result = caseGLayouting(iconGNode);
+                if (result == null) result = caseGModelElement(iconGNode);
+                if (result == null) result = caseGBoundsAware(iconGNode);
+                if (result == null) result = caseGArgumentable(iconGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.SEQUENCE_FLOW: {
-                SequenceFlow sequenceFlow = (SequenceFlow)theEObject;
-                T result = caseSequenceFlow(sequenceFlow);
-                if (result == null) result = caseGEdge(sequenceFlow);
-                if (result == null) result = caseGModelElement(sequenceFlow);
-                if (result == null) result = caseGArgumentable(sequenceFlow);
+            case BpmnPackage.SEQUENCE_FLOW_GNODE: {
+                SequenceFlowGNode sequenceFlowGNode = (SequenceFlowGNode)theEObject;
+                T result = caseSequenceFlowGNode(sequenceFlowGNode);
+                if (result == null) result = caseGEdge(sequenceFlowGNode);
+                if (result == null) result = caseGModelElement(sequenceFlowGNode);
+                if (result == null) result = caseGArgumentable(sequenceFlowGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -272,212 +272,212 @@ public class BpmnSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Base Element</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Base Element GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Base Element</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Base Element GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseBaseElement(BaseElement object) {
+    public T caseBaseElementGNode(BaseElementGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Flow Element</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Flow Element GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Flow Element</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Flow Element GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseFlowElement(FlowElement object) {
+    public T caseFlowElementGNode(FlowElementGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Task Node</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Task GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Task Node</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Task GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTaskNode(TaskNode object) {
+    public T caseTaskGNode(TaskGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Gateway Node</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Gateway GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Gateway Node</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Gateway GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseGatewayNode(GatewayNode object) {
+    public T caseGatewayGNode(GatewayGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Event Node</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Event GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Event Node</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Event GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseEventNode(EventNode object) {
+    public T caseEventGNode(EventGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Label GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Label</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Label GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseLabel(Label object) {
+    public T caseLabelGNode(LabelGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Data Object</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Data Object GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Data Object</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Data Object GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseDataObject(DataObject object) {
+    public T caseDataObjectGNode(DataObjectGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Message</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Message GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Message</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Message GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseMessage(Message object) {
+    public T caseMessageGNode(MessageGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Group</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Group GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Group</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Group GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseGroup(Group object) {
+    public T caseGroupGNode(GroupGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Text Annotation</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Text Annotation GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Text Annotation</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Text Annotation GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseTextAnnotation(TextAnnotation object) {
+    public T caseTextAnnotationGNode(TextAnnotationGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Pool</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Pool GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Pool</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Pool GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T casePool(Pool object) {
+    public T casePoolGNode(PoolGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Lane</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Lane GMode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Lane</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Lane GMode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseLane(Lane object) {
+    public T caseLaneGMode(LaneGMode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Icon</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Icon GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Icon</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Icon GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseIcon(Icon object) {
+    public T caseIconGNode(IconGNode object) {
         return null;
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Sequence Flow</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Sequence Flow GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Sequence Flow</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Sequence Flow GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseSequenceFlow(SequenceFlow object) {
+    public T caseSequenceFlowGNode(SequenceFlowGNode object) {
         return null;
     }
 

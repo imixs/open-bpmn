@@ -22,9 +22,9 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.glsp.bpmn.BaseElement;
-import org.openbpmn.glsp.bpmn.Icon;
-import org.openbpmn.glsp.elements.IconBuilder;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.IconGNode;
+import org.openbpmn.glsp.elements.IconGNodeBuilder;
 
 /**
  * The BPMNBuilderHelper provides helper methods to create GNode Elements
@@ -36,8 +36,8 @@ public class BPMNBuilderHelper {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNBuilderHelper.class.getName());
 
-    public static Icon createCompartmentIcon(final BaseElement node) {
-        return new IconBuilder(). //
+    public static IconGNode createCompartmentIcon(final BaseElementGNode node) {
+        return new IconGNodeBuilder(). //
                 id(node.getId() + "_icon"). //
                 build();
     }
@@ -48,7 +48,7 @@ public class BPMNBuilderHelper {
      * @param node
      * @return GPort
      */
-    public static GLabel createCompartmentHeader(final BaseElement node) {
+    public static GLabel createCompartmentHeader(final BaseElementGNode node) {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header") //
                 .text(node.getName()).build();
@@ -61,7 +61,7 @@ public class BPMNBuilderHelper {
      *
      * @return GLabel of an element or null if no GLabel was found
      */
-    public static GLabel findCompartmentHeader(final BaseElement element) {
+    public static GLabel findCompartmentHeader(final BaseElementGNode element) {
 
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {

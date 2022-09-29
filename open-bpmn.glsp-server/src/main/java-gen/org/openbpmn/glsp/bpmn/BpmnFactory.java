@@ -22,130 +22,130 @@ public interface BpmnFactory extends EFactory {
     BpmnFactory eINSTANCE = org.openbpmn.glsp.bpmn.impl.BpmnFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Base Element</em>'.
+     * Returns a new object of class '<em>Base Element GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Base Element</em>'.
+     * @return a new object of class '<em>Base Element GNode</em>'.
      * @generated
      */
-    BaseElement createBaseElement();
+    BaseElementGNode createBaseElementGNode();
 
     /**
-     * Returns a new object of class '<em>Flow Element</em>'.
+     * Returns a new object of class '<em>Flow Element GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Flow Element</em>'.
+     * @return a new object of class '<em>Flow Element GNode</em>'.
      * @generated
      */
-    FlowElement createFlowElement();
+    FlowElementGNode createFlowElementGNode();
 
     /**
-     * Returns a new object of class '<em>Task Node</em>'.
+     * Returns a new object of class '<em>Task GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Task Node</em>'.
+     * @return a new object of class '<em>Task GNode</em>'.
      * @generated
      */
-    TaskNode createTaskNode();
+    TaskGNode createTaskGNode();
 
     /**
-     * Returns a new object of class '<em>Gateway Node</em>'.
+     * Returns a new object of class '<em>Gateway GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Gateway Node</em>'.
+     * @return a new object of class '<em>Gateway GNode</em>'.
      * @generated
      */
-    GatewayNode createGatewayNode();
+    GatewayGNode createGatewayGNode();
 
     /**
-     * Returns a new object of class '<em>Event Node</em>'.
+     * Returns a new object of class '<em>Event GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Event Node</em>'.
+     * @return a new object of class '<em>Event GNode</em>'.
      * @generated
      */
-    EventNode createEventNode();
+    EventGNode createEventGNode();
 
     /**
-     * Returns a new object of class '<em>Label</em>'.
+     * Returns a new object of class '<em>Label GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Label</em>'.
+     * @return a new object of class '<em>Label GNode</em>'.
      * @generated
      */
-    Label createLabel();
+    LabelGNode createLabelGNode();
 
     /**
-     * Returns a new object of class '<em>Data Object</em>'.
+     * Returns a new object of class '<em>Data Object GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Data Object</em>'.
+     * @return a new object of class '<em>Data Object GNode</em>'.
      * @generated
      */
-    DataObject createDataObject();
+    DataObjectGNode createDataObjectGNode();
 
     /**
-     * Returns a new object of class '<em>Message</em>'.
+     * Returns a new object of class '<em>Message GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Message</em>'.
+     * @return a new object of class '<em>Message GNode</em>'.
      * @generated
      */
-    Message createMessage();
+    MessageGNode createMessageGNode();
 
     /**
-     * Returns a new object of class '<em>Group</em>'.
+     * Returns a new object of class '<em>Group GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Group</em>'.
+     * @return a new object of class '<em>Group GNode</em>'.
      * @generated
      */
-    Group createGroup();
+    GroupGNode createGroupGNode();
 
     /**
-     * Returns a new object of class '<em>Text Annotation</em>'.
+     * Returns a new object of class '<em>Text Annotation GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Text Annotation</em>'.
+     * @return a new object of class '<em>Text Annotation GNode</em>'.
      * @generated
      */
-    TextAnnotation createTextAnnotation();
+    TextAnnotationGNode createTextAnnotationGNode();
 
     /**
-     * Returns a new object of class '<em>Pool</em>'.
+     * Returns a new object of class '<em>Pool GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Pool</em>'.
+     * @return a new object of class '<em>Pool GNode</em>'.
      * @generated
      */
-    Pool createPool();
+    PoolGNode createPoolGNode();
 
     /**
-     * Returns a new object of class '<em>Lane</em>'.
+     * Returns a new object of class '<em>Lane GMode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Lane</em>'.
+     * @return a new object of class '<em>Lane GMode</em>'.
      * @generated
      */
-    Lane createLane();
+    LaneGMode createLaneGMode();
 
     /**
-     * Returns a new object of class '<em>Icon</em>'.
+     * Returns a new object of class '<em>Icon GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Icon</em>'.
+     * @return a new object of class '<em>Icon GNode</em>'.
      * @generated
      */
-    Icon createIcon();
+    IconGNode createIconGNode();
 
     /**
-     * Returns a new object of class '<em>Sequence Flow</em>'.
+     * Returns a new object of class '<em>Sequence Flow GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Sequence Flow</em>'.
+     * @return a new object of class '<em>Sequence Flow GNode</em>'.
      * @generated
      */
-    SequenceFlow createSequenceFlow();
+    SequenceFlowGNode createSequenceFlowGNode();
 
     /**
      * Returns the package supported by this factory.

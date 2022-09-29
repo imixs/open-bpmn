@@ -79,7 +79,7 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.POOL, elementTypeId, modelState);
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.POOL_GNODE, elementTypeId, modelState);
         nodeCounter++; // start with 1
         return "Pool-" + nodeCounter;
     }

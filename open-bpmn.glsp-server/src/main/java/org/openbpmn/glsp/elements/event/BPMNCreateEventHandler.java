@@ -94,7 +94,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.EVENT_NODE, elementTypeId, modelState);
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.EVENT_GNODE, elementTypeId, modelState);
         return "Event-" + nodeCounter;
     }
 

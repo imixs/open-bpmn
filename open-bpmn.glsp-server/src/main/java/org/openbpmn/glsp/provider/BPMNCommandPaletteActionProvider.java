@@ -35,9 +35,9 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.glsp.bpmn.EventNode;
-import org.openbpmn.glsp.bpmn.GatewayNode;
-import org.openbpmn.glsp.bpmn.TaskNode;
+import org.openbpmn.glsp.bpmn.EventGNode;
+import org.openbpmn.glsp.bpmn.GatewayGNode;
+import org.openbpmn.glsp.bpmn.TaskGNode;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -109,13 +109,13 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         if (selectedElements.size() == 1) {
             GModelElement element = selectedElements.iterator().next();
             if (element instanceof GNode) {
-                actions.addAll(createEdgeActions((GNode) element, index.getAllByClass(TaskNode.class)));
+                actions.addAll(createEdgeActions((GNode) element, index.getAllByClass(TaskGNode.class)));
             }
         } else if (selectedElements.size() == 2) {
             Iterator<GModelElement> iterator = selectedElements.iterator();
             GModelElement firstElement = iterator.next();
             GModelElement secondElement = iterator.next();
-            if (firstElement instanceof TaskNode && secondElement instanceof TaskNode) {
+            if (firstElement instanceof TaskGNode && secondElement instanceof TaskGNode) {
                 GNode firstNode = (GNode) firstElement;
                 GNode secondNode = (GNode) secondElement;
                 actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
@@ -156,16 +156,16 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
     }
 
     private String getLabel(final GNode node) {
-        if (node instanceof TaskNode) {
-            return ((TaskNode) node).getName();
+        if (node instanceof TaskGNode) {
+            return ((TaskGNode) node).getName();
         }
 
-        if (node instanceof EventNode) {
-            return ((EventNode) node).getName();
+        if (node instanceof EventGNode) {
+            return ((EventGNode) node).getName();
         }
 
-        if (node instanceof GatewayNode) {
-            return ((GatewayNode) node).getName();
+        if (node instanceof GatewayGNode) {
+            return ((GatewayGNode) node).getName();
         }
         return node.getId();
     }

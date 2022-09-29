@@ -24,7 +24,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
 import org.openbpmn.model.BPMNGModelState;
 
@@ -58,17 +58,17 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
         }
         BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
         try {
-            Optional<BaseElement> element = null;
+            Optional<BaseElementGNode> element = null;
             String targetId = operation.getTargetElementId();
             // find GNode
-            element = modelState.getIndex().findElementByClass(targetId, BaseElement.class);
+            element = modelState.getIndex().findElementByClass(targetId, BaseElementGNode.class);
             if (element.isPresent()) {
                 targetId = element.get().getId();
             }
 
             String sourceId = operation.getSourceElementId();
             // find GNode
-            element = modelState.getIndex().findElementByClass(sourceId, BaseElement.class);
+            element = modelState.getIndex().findElementByClass(sourceId, BaseElementGNode.class);
             if (element.isPresent()) {
                 sourceId = element.get().getId();
             }

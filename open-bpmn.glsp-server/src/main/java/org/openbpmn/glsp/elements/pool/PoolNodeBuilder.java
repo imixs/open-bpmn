@@ -32,9 +32,8 @@ import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
-import org.openbpmn.glsp.bpmn.Pool;
+import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.utils.ModelTypes;
-import org.openbpmn.model.BPMNGModelFactory;
 
 /**
  * BPMN 2.0 Pool Element.
@@ -45,9 +44,9 @@ import org.openbpmn.model.BPMNGModelFactory;
  *
  * @author rsoika
  */
-public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder> {
+public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBuilder> {
 
-    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
+    private static Logger logger = Logger.getLogger(PoolNodeBuilder.class.getName());
 
     private String name;
 
@@ -74,8 +73,8 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
     }
 
     @Override
-    protected Pool instantiate() {
-        return BpmnFactory.eINSTANCE.createPool();
+    protected PoolGNode instantiate() {
+        return BpmnFactory.eINSTANCE.createPoolGNode();
     }
 
     @Override
@@ -88,7 +87,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
     }
 
     @Override
-    public void setProperties(final Pool node) {
+    public void setProperties(final PoolGNode node) {
         super.setProperties(node);
         node.setName(name);
 
@@ -114,7 +113,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
      * @param node
      * @return
      */
-    private GCompartment createHeaderCompartment(final Pool node) {
+    private GCompartment createHeaderCompartment(final PoolGNode node) {
         Map<String, Object> layoutOptions = new HashMap<>();
 
         return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
@@ -131,7 +130,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
      * @param node
      * @return
      */
-    private GLabel createLabel(final Pool node) {
+    private GLabel createLabel(final PoolGNode node) {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header_label") //
                 .text(node.getName()) //
@@ -144,7 +143,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<Pool, PoolNodeBuilder>
      * @param node
      * @return
      */
-    private GCompartment createContainerCompartment(final Pool node) {
+    private GCompartment createContainerCompartment(final PoolGNode node) {
         Map<String, Object> layoutOptions = new HashMap<>();
         layoutOptions.put(H_ALIGN, "left");
         layoutOptions.put(H_GRAB, true);

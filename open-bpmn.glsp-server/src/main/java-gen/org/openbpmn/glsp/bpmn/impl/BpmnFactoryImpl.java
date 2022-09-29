@@ -56,20 +56,20 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case BpmnPackage.BASE_ELEMENT: return createBaseElement();
-            case BpmnPackage.FLOW_ELEMENT: return createFlowElement();
-            case BpmnPackage.TASK_NODE: return createTaskNode();
-            case BpmnPackage.GATEWAY_NODE: return createGatewayNode();
-            case BpmnPackage.EVENT_NODE: return createEventNode();
-            case BpmnPackage.LABEL: return createLabel();
-            case BpmnPackage.DATA_OBJECT: return createDataObject();
-            case BpmnPackage.MESSAGE: return createMessage();
-            case BpmnPackage.GROUP: return createGroup();
-            case BpmnPackage.TEXT_ANNOTATION: return createTextAnnotation();
-            case BpmnPackage.POOL: return createPool();
-            case BpmnPackage.LANE: return createLane();
-            case BpmnPackage.ICON: return createIcon();
-            case BpmnPackage.SEQUENCE_FLOW: return createSequenceFlow();
+            case BpmnPackage.BASE_ELEMENT_GNODE: return createBaseElementGNode();
+            case BpmnPackage.FLOW_ELEMENT_GNODE: return createFlowElementGNode();
+            case BpmnPackage.TASK_GNODE: return createTaskGNode();
+            case BpmnPackage.GATEWAY_GNODE: return createGatewayGNode();
+            case BpmnPackage.EVENT_GNODE: return createEventGNode();
+            case BpmnPackage.LABEL_GNODE: return createLabelGNode();
+            case BpmnPackage.DATA_OBJECT_GNODE: return createDataObjectGNode();
+            case BpmnPackage.MESSAGE_GNODE: return createMessageGNode();
+            case BpmnPackage.GROUP_GNODE: return createGroupGNode();
+            case BpmnPackage.TEXT_ANNOTATION_GNODE: return createTextAnnotationGNode();
+            case BpmnPackage.POOL_GNODE: return createPoolGNode();
+            case BpmnPackage.LANE_GMODE: return createLaneGMode();
+            case BpmnPackage.ICON_GNODE: return createIconGNode();
+            case BpmnPackage.SEQUENCE_FLOW_GNODE: return createSequenceFlowGNode();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -80,9 +80,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public BaseElement createBaseElement() {
-        BaseElementImpl baseElement = new BaseElementImpl();
-        return baseElement;
+    public BaseElementGNode createBaseElementGNode() {
+        BaseElementGNodeImpl baseElementGNode = new BaseElementGNodeImpl();
+        return baseElementGNode;
     }
 
     /**
@@ -90,9 +90,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public FlowElement createFlowElement() {
-        FlowElementImpl flowElement = new FlowElementImpl();
-        return flowElement;
+    public FlowElementGNode createFlowElementGNode() {
+        FlowElementGNodeImpl flowElementGNode = new FlowElementGNodeImpl();
+        return flowElementGNode;
     }
 
     /**
@@ -100,9 +100,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TaskNode createTaskNode() {
-        TaskNodeImpl taskNode = new TaskNodeImpl();
-        return taskNode;
+    public TaskGNode createTaskGNode() {
+        TaskGNodeImpl taskGNode = new TaskGNodeImpl();
+        return taskGNode;
     }
 
     /**
@@ -110,9 +110,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public GatewayNode createGatewayNode() {
-        GatewayNodeImpl gatewayNode = new GatewayNodeImpl();
-        return gatewayNode;
+    public GatewayGNode createGatewayGNode() {
+        GatewayGNodeImpl gatewayGNode = new GatewayGNodeImpl();
+        return gatewayGNode;
     }
 
     /**
@@ -120,9 +120,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EventNode createEventNode() {
-        EventNodeImpl eventNode = new EventNodeImpl();
-        return eventNode;
+    public EventGNode createEventGNode() {
+        EventGNodeImpl eventGNode = new EventGNodeImpl();
+        return eventGNode;
     }
 
     /**
@@ -130,9 +130,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Label createLabel() {
-        LabelImpl label = new LabelImpl();
-        return label;
+    public LabelGNode createLabelGNode() {
+        LabelGNodeImpl labelGNode = new LabelGNodeImpl();
+        return labelGNode;
     }
 
     /**
@@ -140,9 +140,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public DataObject createDataObject() {
-        DataObjectImpl dataObject = new DataObjectImpl();
-        return dataObject;
+    public DataObjectGNode createDataObjectGNode() {
+        DataObjectGNodeImpl dataObjectGNode = new DataObjectGNodeImpl();
+        return dataObjectGNode;
     }
 
     /**
@@ -150,9 +150,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Message createMessage() {
-        MessageImpl message = new MessageImpl();
-        return message;
+    public MessageGNode createMessageGNode() {
+        MessageGNodeImpl messageGNode = new MessageGNodeImpl();
+        return messageGNode;
     }
 
     /**
@@ -160,9 +160,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Group createGroup() {
-        GroupImpl group = new GroupImpl();
-        return group;
+    public GroupGNode createGroupGNode() {
+        GroupGNodeImpl groupGNode = new GroupGNodeImpl();
+        return groupGNode;
     }
 
     /**
@@ -170,9 +170,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public TextAnnotation createTextAnnotation() {
-        TextAnnotationImpl textAnnotation = new TextAnnotationImpl();
-        return textAnnotation;
+    public TextAnnotationGNode createTextAnnotationGNode() {
+        TextAnnotationGNodeImpl textAnnotationGNode = new TextAnnotationGNodeImpl();
+        return textAnnotationGNode;
     }
 
     /**
@@ -180,9 +180,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Pool createPool() {
-        PoolImpl pool = new PoolImpl();
-        return pool;
+    public PoolGNode createPoolGNode() {
+        PoolGNodeImpl poolGNode = new PoolGNodeImpl();
+        return poolGNode;
     }
 
     /**
@@ -190,9 +190,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Lane createLane() {
-        LaneImpl lane = new LaneImpl();
-        return lane;
+    public LaneGMode createLaneGMode() {
+        LaneGModeImpl laneGMode = new LaneGModeImpl();
+        return laneGMode;
     }
 
     /**
@@ -200,9 +200,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Icon createIcon() {
-        IconImpl icon = new IconImpl();
-        return icon;
+    public IconGNode createIconGNode() {
+        IconGNodeImpl iconGNode = new IconGNodeImpl();
+        return iconGNode;
     }
 
     /**
@@ -210,9 +210,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SequenceFlow createSequenceFlow() {
-        SequenceFlowImpl sequenceFlow = new SequenceFlowImpl();
-        return sequenceFlow;
+    public SequenceFlowGNode createSequenceFlowGNode() {
+        SequenceFlowGNodeImpl sequenceFlowGNode = new SequenceFlowGNodeImpl();
+        return sequenceFlowGNode;
     }
 
     /**

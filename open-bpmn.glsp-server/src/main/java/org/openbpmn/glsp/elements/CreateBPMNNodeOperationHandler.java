@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.glsp.bpmn.Pool;
+import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.utils.ModelTypes;
 import org.openbpmn.model.BPMNGModelState;
@@ -79,12 +79,12 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
         Optional<GModelElement> container = modelState.getIndex().get(operation.getContainerId());
         // super.getContainer(operation);
         // If the container is a Category node, find its structure compartment
-        Optional<GModelElement> containerCompt = container.filter(Pool.class::isInstance).map(Pool.class::cast)
-                .flatMap(this::getCategoryCompartment);
+        Optional<GModelElement> containerCompt = container.filter(PoolGNode.class::isInstance)
+                .map(PoolGNode.class::cast).flatMap(this::getPoolCompartment);
         return containerCompt.isPresent() ? containerCompt : container;
     }
 
-    protected Optional<GCompartment> getCategoryCompartment(final Pool category) {
+    protected Optional<GCompartment> getPoolCompartment(final PoolGNode category) {
         return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
                 .filter(comp -> ModelTypes.CONTAINER.equals(comp.getType())).findFirst();
     }

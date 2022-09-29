@@ -39,9 +39,9 @@
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
             <bpmndi:BPMNShape bpmnElement="event-j-rL7M63v0jDL695" id="BPMNShape_qpdO4g">
-                <dc:Bounds height="36.0" width="36.0" x="260.0" y="120.0"/>
+                <dc:Bounds height="36.0" width="36.0" x="261.0" y="120.0"/>
                 <bpmndi:BPMNLabel id="BPMNLabel_CLIthw">
-                    <dc:Bounds height="14.0" width="36.0" x="257.0" y="156.0"/>
+                    <dc:Bounds height="14.0" width="36.0" x="257.0" y="158.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="task-JBnCG872PbjazwAC" id="BPMNShape_LsI0bA">
@@ -54,8 +54,10 @@
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_FSi52A" id="BPMNEdge_gB5J0Q">
-                <di:waypoint x="278.0" y="138.0"/>
-                <di:waypoint x="449.0" y="138.0"/>
+                                
+            
+                <di:waypoint x="279.0" y="138.0"/>
+                <di:waypoint x="453.0" y="138.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_ph3wBA" id="BPMNEdge_nuxWeg">
                 <di:waypoint x="449.0" y="138.0"/>

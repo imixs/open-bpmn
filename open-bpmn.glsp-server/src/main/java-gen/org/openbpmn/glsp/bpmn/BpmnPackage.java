@@ -58,14 +58,14 @@ public interface BpmnPackage extends EPackage {
     BpmnPackage eINSTANCE = org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl.init();
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl <em>Base Element</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.BaseElementGNodeImpl <em>Base Element GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.BaseElementImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getBaseElement()
+     * @see org.openbpmn.glsp.bpmn.impl.BaseElementGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getBaseElementGNode()
      * @generated
      */
-    int BASE_ELEMENT = 0;
+    int BASE_ELEMENT_GNODE = 0;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -74,7 +74,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__ARGS = GraphPackage.GNODE__ARGS;
+    int BASE_ELEMENT_GNODE__ARGS = GraphPackage.GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -83,7 +83,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__ID = GraphPackage.GNODE__ID;
+    int BASE_ELEMENT_GNODE__ID = GraphPackage.GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -92,7 +92,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__CSS_CLASSES = GraphPackage.GNODE__CSS_CLASSES;
+    int BASE_ELEMENT_GNODE__CSS_CLASSES = GraphPackage.GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -101,7 +101,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__CHILDREN = GraphPackage.GNODE__CHILDREN;
+    int BASE_ELEMENT_GNODE__CHILDREN = GraphPackage.GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -110,7 +110,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__PARENT = GraphPackage.GNODE__PARENT;
+    int BASE_ELEMENT_GNODE__PARENT = GraphPackage.GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -119,7 +119,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__TRACE = GraphPackage.GNODE__TRACE;
+    int BASE_ELEMENT_GNODE__TRACE = GraphPackage.GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -128,7 +128,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__TYPE = GraphPackage.GNODE__TYPE;
+    int BASE_ELEMENT_GNODE__TYPE = GraphPackage.GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -137,7 +137,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__POSITION = GraphPackage.GNODE__POSITION;
+    int BASE_ELEMENT_GNODE__POSITION = GraphPackage.GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -146,7 +146,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__SIZE = GraphPackage.GNODE__SIZE;
+    int BASE_ELEMENT_GNODE__SIZE = GraphPackage.GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -155,7 +155,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__EDGE_PLACEMENT = GraphPackage.GNODE__EDGE_PLACEMENT;
+    int BASE_ELEMENT_GNODE__EDGE_PLACEMENT = GraphPackage.GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -164,7 +164,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__LAYOUT = GraphPackage.GNODE__LAYOUT;
+    int BASE_ELEMENT_GNODE__LAYOUT = GraphPackage.GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -173,7 +173,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__LAYOUT_OPTIONS = GraphPackage.GNODE__LAYOUT_OPTIONS;
+    int BASE_ELEMENT_GNODE__LAYOUT_OPTIONS = GraphPackage.GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -182,35 +182,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT__NAME = GraphPackage.GNODE_FEATURE_COUNT + 0;
+    int BASE_ELEMENT_GNODE__NAME = GraphPackage.GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Base Element</em>' class.
+     * The number of structural features of the '<em>Base Element GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT_FEATURE_COUNT = GraphPackage.GNODE_FEATURE_COUNT + 1;
+    int BASE_ELEMENT_GNODE_FEATURE_COUNT = GraphPackage.GNODE_FEATURE_COUNT + 1;
 
     /**
-     * The number of operations of the '<em>Base Element</em>' class.
+     * The number of operations of the '<em>Base Element GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int BASE_ELEMENT_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
+    int BASE_ELEMENT_GNODE_OPERATION_COUNT = GraphPackage.GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl <em>Flow Element</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementGNodeImpl <em>Flow Element GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.FlowElementImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getFlowElement()
+     * @see org.openbpmn.glsp.bpmn.impl.FlowElementGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getFlowElementGNode()
      * @generated
      */
-    int FLOW_ELEMENT = 1;
+    int FLOW_ELEMENT_GNODE = 1;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -219,7 +219,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__ARGS = BASE_ELEMENT__ARGS;
+    int FLOW_ELEMENT_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -228,7 +228,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__ID = BASE_ELEMENT__ID;
+    int FLOW_ELEMENT_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -237,7 +237,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int FLOW_ELEMENT_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -246,7 +246,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int FLOW_ELEMENT_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -255,7 +255,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__PARENT = BASE_ELEMENT__PARENT;
+    int FLOW_ELEMENT_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -264,7 +264,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__TRACE = BASE_ELEMENT__TRACE;
+    int FLOW_ELEMENT_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -273,7 +273,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__TYPE = BASE_ELEMENT__TYPE;
+    int FLOW_ELEMENT_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -282,7 +282,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__POSITION = BASE_ELEMENT__POSITION;
+    int FLOW_ELEMENT_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -291,7 +291,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__SIZE = BASE_ELEMENT__SIZE;
+    int FLOW_ELEMENT_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -300,7 +300,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int FLOW_ELEMENT_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -309,7 +309,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int FLOW_ELEMENT_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -318,7 +318,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int FLOW_ELEMENT_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -327,7 +327,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__NAME = BASE_ELEMENT__NAME;
+    int FLOW_ELEMENT_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
      * The feature id for the '<em><b>Symbol</b></em>' attribute.
@@ -336,35 +336,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT__SYMBOL = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int FLOW_ELEMENT_GNODE__SYMBOL = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Flow Element</em>' class.
+     * The number of structural features of the '<em>Flow Element GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 1;
+    int FLOW_ELEMENT_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 1;
 
     /**
-     * The number of operations of the '<em>Flow Element</em>' class.
+     * The number of operations of the '<em>Flow Element GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FLOW_ELEMENT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int FLOW_ELEMENT_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.TaskNodeImpl <em>Task Node</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.TaskGNodeImpl <em>Task GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.TaskNodeImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTaskNode()
+     * @see org.openbpmn.glsp.bpmn.impl.TaskGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTaskGNode()
      * @generated
      */
-    int TASK_NODE = 2;
+    int TASK_GNODE = 2;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -373,7 +373,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__ARGS = FLOW_ELEMENT__ARGS;
+    int TASK_GNODE__ARGS = FLOW_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -382,7 +382,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__ID = FLOW_ELEMENT__ID;
+    int TASK_GNODE__ID = FLOW_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -391,7 +391,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__CSS_CLASSES = FLOW_ELEMENT__CSS_CLASSES;
+    int TASK_GNODE__CSS_CLASSES = FLOW_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -400,7 +400,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__CHILDREN = FLOW_ELEMENT__CHILDREN;
+    int TASK_GNODE__CHILDREN = FLOW_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -409,7 +409,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__PARENT = FLOW_ELEMENT__PARENT;
+    int TASK_GNODE__PARENT = FLOW_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -418,7 +418,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__TRACE = FLOW_ELEMENT__TRACE;
+    int TASK_GNODE__TRACE = FLOW_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -427,7 +427,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__TYPE = FLOW_ELEMENT__TYPE;
+    int TASK_GNODE__TYPE = FLOW_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -436,7 +436,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__POSITION = FLOW_ELEMENT__POSITION;
+    int TASK_GNODE__POSITION = FLOW_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -445,7 +445,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__SIZE = FLOW_ELEMENT__SIZE;
+    int TASK_GNODE__SIZE = FLOW_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -454,7 +454,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__EDGE_PLACEMENT = FLOW_ELEMENT__EDGE_PLACEMENT;
+    int TASK_GNODE__EDGE_PLACEMENT = FLOW_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -463,7 +463,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__LAYOUT = FLOW_ELEMENT__LAYOUT;
+    int TASK_GNODE__LAYOUT = FLOW_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -472,7 +472,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__LAYOUT_OPTIONS = FLOW_ELEMENT__LAYOUT_OPTIONS;
+    int TASK_GNODE__LAYOUT_OPTIONS = FLOW_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -481,7 +481,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__NAME = FLOW_ELEMENT__NAME;
+    int TASK_GNODE__NAME = FLOW_ELEMENT_GNODE__NAME;
 
     /**
      * The feature id for the '<em><b>Symbol</b></em>' attribute.
@@ -490,35 +490,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TASK_NODE__SYMBOL = FLOW_ELEMENT__SYMBOL;
+    int TASK_GNODE__SYMBOL = FLOW_ELEMENT_GNODE__SYMBOL;
 
     /**
-     * The number of structural features of the '<em>Task Node</em>' class.
+     * The number of structural features of the '<em>Task GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TASK_NODE_FEATURE_COUNT = FLOW_ELEMENT_FEATURE_COUNT + 0;
+    int TASK_GNODE_FEATURE_COUNT = FLOW_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Task Node</em>' class.
+     * The number of operations of the '<em>Task GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TASK_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
+    int TASK_GNODE_OPERATION_COUNT = FLOW_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.GatewayGNodeImpl <em>Gateway GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGatewayNode()
+     * @see org.openbpmn.glsp.bpmn.impl.GatewayGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGatewayGNode()
      * @generated
      */
-    int GATEWAY_NODE = 3;
+    int GATEWAY_GNODE = 3;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -527,7 +527,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__ARGS = FLOW_ELEMENT__ARGS;
+    int GATEWAY_GNODE__ARGS = FLOW_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -536,7 +536,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__ID = FLOW_ELEMENT__ID;
+    int GATEWAY_GNODE__ID = FLOW_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -545,7 +545,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__CSS_CLASSES = FLOW_ELEMENT__CSS_CLASSES;
+    int GATEWAY_GNODE__CSS_CLASSES = FLOW_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -554,7 +554,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__CHILDREN = FLOW_ELEMENT__CHILDREN;
+    int GATEWAY_GNODE__CHILDREN = FLOW_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -563,7 +563,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__PARENT = FLOW_ELEMENT__PARENT;
+    int GATEWAY_GNODE__PARENT = FLOW_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -572,7 +572,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__TRACE = FLOW_ELEMENT__TRACE;
+    int GATEWAY_GNODE__TRACE = FLOW_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -581,7 +581,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__TYPE = FLOW_ELEMENT__TYPE;
+    int GATEWAY_GNODE__TYPE = FLOW_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -590,7 +590,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__POSITION = FLOW_ELEMENT__POSITION;
+    int GATEWAY_GNODE__POSITION = FLOW_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -599,7 +599,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__SIZE = FLOW_ELEMENT__SIZE;
+    int GATEWAY_GNODE__SIZE = FLOW_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -608,7 +608,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__EDGE_PLACEMENT = FLOW_ELEMENT__EDGE_PLACEMENT;
+    int GATEWAY_GNODE__EDGE_PLACEMENT = FLOW_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -617,7 +617,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__LAYOUT = FLOW_ELEMENT__LAYOUT;
+    int GATEWAY_GNODE__LAYOUT = FLOW_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -626,7 +626,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__LAYOUT_OPTIONS = FLOW_ELEMENT__LAYOUT_OPTIONS;
+    int GATEWAY_GNODE__LAYOUT_OPTIONS = FLOW_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -635,7 +635,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__NAME = FLOW_ELEMENT__NAME;
+    int GATEWAY_GNODE__NAME = FLOW_ELEMENT_GNODE__NAME;
 
     /**
      * The feature id for the '<em><b>Symbol</b></em>' attribute.
@@ -644,35 +644,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE__SYMBOL = FLOW_ELEMENT__SYMBOL;
+    int GATEWAY_GNODE__SYMBOL = FLOW_ELEMENT_GNODE__SYMBOL;
 
     /**
-     * The number of structural features of the '<em>Gateway Node</em>' class.
+     * The number of structural features of the '<em>Gateway GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE_FEATURE_COUNT = FLOW_ELEMENT_FEATURE_COUNT + 0;
+    int GATEWAY_GNODE_FEATURE_COUNT = FLOW_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Gateway Node</em>' class.
+     * The number of operations of the '<em>Gateway GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GATEWAY_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
+    int GATEWAY_GNODE_OPERATION_COUNT = FLOW_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.EventNodeImpl <em>Event Node</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.EventGNodeImpl <em>Event GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.EventNodeImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getEventNode()
+     * @see org.openbpmn.glsp.bpmn.impl.EventGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getEventGNode()
      * @generated
      */
-    int EVENT_NODE = 4;
+    int EVENT_GNODE = 4;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -681,7 +681,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__ARGS = FLOW_ELEMENT__ARGS;
+    int EVENT_GNODE__ARGS = FLOW_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -690,7 +690,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__ID = FLOW_ELEMENT__ID;
+    int EVENT_GNODE__ID = FLOW_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -699,7 +699,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__CSS_CLASSES = FLOW_ELEMENT__CSS_CLASSES;
+    int EVENT_GNODE__CSS_CLASSES = FLOW_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -708,7 +708,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__CHILDREN = FLOW_ELEMENT__CHILDREN;
+    int EVENT_GNODE__CHILDREN = FLOW_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -717,7 +717,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__PARENT = FLOW_ELEMENT__PARENT;
+    int EVENT_GNODE__PARENT = FLOW_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -726,7 +726,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__TRACE = FLOW_ELEMENT__TRACE;
+    int EVENT_GNODE__TRACE = FLOW_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -735,7 +735,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__TYPE = FLOW_ELEMENT__TYPE;
+    int EVENT_GNODE__TYPE = FLOW_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -744,7 +744,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__POSITION = FLOW_ELEMENT__POSITION;
+    int EVENT_GNODE__POSITION = FLOW_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -753,7 +753,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__SIZE = FLOW_ELEMENT__SIZE;
+    int EVENT_GNODE__SIZE = FLOW_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -762,7 +762,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__EDGE_PLACEMENT = FLOW_ELEMENT__EDGE_PLACEMENT;
+    int EVENT_GNODE__EDGE_PLACEMENT = FLOW_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -771,7 +771,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__LAYOUT = FLOW_ELEMENT__LAYOUT;
+    int EVENT_GNODE__LAYOUT = FLOW_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -780,7 +780,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__LAYOUT_OPTIONS = FLOW_ELEMENT__LAYOUT_OPTIONS;
+    int EVENT_GNODE__LAYOUT_OPTIONS = FLOW_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -789,7 +789,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__NAME = FLOW_ELEMENT__NAME;
+    int EVENT_GNODE__NAME = FLOW_ELEMENT_GNODE__NAME;
 
     /**
      * The feature id for the '<em><b>Symbol</b></em>' attribute.
@@ -798,35 +798,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int EVENT_NODE__SYMBOL = FLOW_ELEMENT__SYMBOL;
+    int EVENT_GNODE__SYMBOL = FLOW_ELEMENT_GNODE__SYMBOL;
 
     /**
-     * The number of structural features of the '<em>Event Node</em>' class.
+     * The number of structural features of the '<em>Event GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EVENT_NODE_FEATURE_COUNT = FLOW_ELEMENT_FEATURE_COUNT + 0;
+    int EVENT_GNODE_FEATURE_COUNT = FLOW_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Event Node</em>' class.
+     * The number of operations of the '<em>Event GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int EVENT_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
+    int EVENT_GNODE_OPERATION_COUNT = FLOW_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LabelImpl <em>Label</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LabelGNodeImpl <em>Label GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.LabelImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLabel()
+     * @see org.openbpmn.glsp.bpmn.impl.LabelGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLabelGNode()
      * @generated
      */
-    int LABEL = 5;
+    int LABEL_GNODE = 5;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -835,7 +835,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__ARGS = BASE_ELEMENT__ARGS;
+    int LABEL_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -844,7 +844,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__ID = BASE_ELEMENT__ID;
+    int LABEL_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -853,7 +853,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int LABEL_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -862,7 +862,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int LABEL_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -871,7 +871,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__PARENT = BASE_ELEMENT__PARENT;
+    int LABEL_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -880,7 +880,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__TRACE = BASE_ELEMENT__TRACE;
+    int LABEL_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -889,7 +889,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__TYPE = BASE_ELEMENT__TYPE;
+    int LABEL_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -898,7 +898,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__POSITION = BASE_ELEMENT__POSITION;
+    int LABEL_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -907,7 +907,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__SIZE = BASE_ELEMENT__SIZE;
+    int LABEL_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -916,7 +916,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int LABEL_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -925,7 +925,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int LABEL_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -934,7 +934,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int LABEL_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -943,35 +943,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LABEL__NAME = BASE_ELEMENT__NAME;
+    int LABEL_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Label</em>' class.
+     * The number of structural features of the '<em>Label GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LABEL_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int LABEL_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Label</em>' class.
+     * The number of operations of the '<em>Label GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LABEL_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int LABEL_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.DataObjectImpl <em>Data Object</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.DataObjectGNodeImpl <em>Data Object GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.DataObjectImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getDataObject()
+     * @see org.openbpmn.glsp.bpmn.impl.DataObjectGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getDataObjectGNode()
      * @generated
      */
-    int DATA_OBJECT = 6;
+    int DATA_OBJECT_GNODE = 6;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -980,7 +980,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__ARGS = BASE_ELEMENT__ARGS;
+    int DATA_OBJECT_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -989,7 +989,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__ID = BASE_ELEMENT__ID;
+    int DATA_OBJECT_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -998,7 +998,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int DATA_OBJECT_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1007,7 +1007,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int DATA_OBJECT_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1016,7 +1016,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__PARENT = BASE_ELEMENT__PARENT;
+    int DATA_OBJECT_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1025,7 +1025,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__TRACE = BASE_ELEMENT__TRACE;
+    int DATA_OBJECT_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1034,7 +1034,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__TYPE = BASE_ELEMENT__TYPE;
+    int DATA_OBJECT_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1043,7 +1043,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__POSITION = BASE_ELEMENT__POSITION;
+    int DATA_OBJECT_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1052,7 +1052,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__SIZE = BASE_ELEMENT__SIZE;
+    int DATA_OBJECT_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1061,7 +1061,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int DATA_OBJECT_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1070,7 +1070,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int DATA_OBJECT_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1079,7 +1079,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int DATA_OBJECT_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1088,35 +1088,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int DATA_OBJECT__NAME = BASE_ELEMENT__NAME;
+    int DATA_OBJECT_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Data Object</em>' class.
+     * The number of structural features of the '<em>Data Object GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_OBJECT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int DATA_OBJECT_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Data Object</em>' class.
+     * The number of operations of the '<em>Data Object GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATA_OBJECT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int DATA_OBJECT_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.MessageImpl <em>Message</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.MessageGNodeImpl <em>Message GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.MessageImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessage()
+     * @see org.openbpmn.glsp.bpmn.impl.MessageGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessageGNode()
      * @generated
      */
-    int MESSAGE = 7;
+    int MESSAGE_GNODE = 7;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1125,7 +1125,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__ARGS = BASE_ELEMENT__ARGS;
+    int MESSAGE_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1134,7 +1134,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__ID = BASE_ELEMENT__ID;
+    int MESSAGE_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1143,7 +1143,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int MESSAGE_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1152,7 +1152,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int MESSAGE_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1161,7 +1161,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__PARENT = BASE_ELEMENT__PARENT;
+    int MESSAGE_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1170,7 +1170,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__TRACE = BASE_ELEMENT__TRACE;
+    int MESSAGE_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1179,7 +1179,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__TYPE = BASE_ELEMENT__TYPE;
+    int MESSAGE_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1188,7 +1188,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__POSITION = BASE_ELEMENT__POSITION;
+    int MESSAGE_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1197,7 +1197,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__SIZE = BASE_ELEMENT__SIZE;
+    int MESSAGE_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1206,7 +1206,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int MESSAGE_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1215,7 +1215,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int MESSAGE_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1224,7 +1224,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int MESSAGE_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1233,35 +1233,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int MESSAGE__NAME = BASE_ELEMENT__NAME;
+    int MESSAGE_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Message</em>' class.
+     * The number of structural features of the '<em>Message GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MESSAGE_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int MESSAGE_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Message</em>' class.
+     * The number of operations of the '<em>Message GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int MESSAGE_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int MESSAGE_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.GroupImpl <em>Group</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.GroupGNodeImpl <em>Group GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.GroupImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGroup()
+     * @see org.openbpmn.glsp.bpmn.impl.GroupGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGroupGNode()
      * @generated
      */
-    int GROUP = 8;
+    int GROUP_GNODE = 8;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1270,7 +1270,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__ARGS = BASE_ELEMENT__ARGS;
+    int GROUP_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1279,7 +1279,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__ID = BASE_ELEMENT__ID;
+    int GROUP_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1288,7 +1288,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int GROUP_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1297,7 +1297,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int GROUP_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1306,7 +1306,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__PARENT = BASE_ELEMENT__PARENT;
+    int GROUP_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1315,7 +1315,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__TRACE = BASE_ELEMENT__TRACE;
+    int GROUP_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1324,7 +1324,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__TYPE = BASE_ELEMENT__TYPE;
+    int GROUP_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1333,7 +1333,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__POSITION = BASE_ELEMENT__POSITION;
+    int GROUP_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1342,7 +1342,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__SIZE = BASE_ELEMENT__SIZE;
+    int GROUP_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1351,7 +1351,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int GROUP_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1360,7 +1360,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int GROUP_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1369,7 +1369,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int GROUP_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1378,35 +1378,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int GROUP__NAME = BASE_ELEMENT__NAME;
+    int GROUP_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Group</em>' class.
+     * The number of structural features of the '<em>Group GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GROUP_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int GROUP_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Group</em>' class.
+     * The number of operations of the '<em>Group GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int GROUP_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int GROUP_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl <em>Text Annotation</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.TextAnnotationGNodeImpl <em>Text Annotation GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTextAnnotation()
+     * @see org.openbpmn.glsp.bpmn.impl.TextAnnotationGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTextAnnotationGNode()
      * @generated
      */
-    int TEXT_ANNOTATION = 9;
+    int TEXT_ANNOTATION_GNODE = 9;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1415,7 +1415,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__ARGS = BASE_ELEMENT__ARGS;
+    int TEXT_ANNOTATION_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1424,7 +1424,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__ID = BASE_ELEMENT__ID;
+    int TEXT_ANNOTATION_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1433,7 +1433,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int TEXT_ANNOTATION_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1442,7 +1442,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int TEXT_ANNOTATION_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1451,7 +1451,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__PARENT = BASE_ELEMENT__PARENT;
+    int TEXT_ANNOTATION_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1460,7 +1460,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__TRACE = BASE_ELEMENT__TRACE;
+    int TEXT_ANNOTATION_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1469,7 +1469,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__TYPE = BASE_ELEMENT__TYPE;
+    int TEXT_ANNOTATION_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1478,7 +1478,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__POSITION = BASE_ELEMENT__POSITION;
+    int TEXT_ANNOTATION_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1487,7 +1487,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__SIZE = BASE_ELEMENT__SIZE;
+    int TEXT_ANNOTATION_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1496,7 +1496,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int TEXT_ANNOTATION_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1505,7 +1505,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int TEXT_ANNOTATION_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1514,7 +1514,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int TEXT_ANNOTATION_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1523,35 +1523,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION__NAME = BASE_ELEMENT__NAME;
+    int TEXT_ANNOTATION_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Text Annotation</em>' class.
+     * The number of structural features of the '<em>Text Annotation GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int TEXT_ANNOTATION_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Text Annotation</em>' class.
+     * The number of operations of the '<em>Text Annotation GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TEXT_ANNOTATION_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int TEXT_ANNOTATION_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.PoolImpl <em>Pool</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.PoolGNodeImpl <em>Pool GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.PoolImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPool()
+     * @see org.openbpmn.glsp.bpmn.impl.PoolGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPoolGNode()
      * @generated
      */
-    int POOL = 10;
+    int POOL_GNODE = 10;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1560,7 +1560,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__ARGS = BASE_ELEMENT__ARGS;
+    int POOL_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1569,7 +1569,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__ID = BASE_ELEMENT__ID;
+    int POOL_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1578,7 +1578,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int POOL_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1587,7 +1587,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int POOL_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1596,7 +1596,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__PARENT = BASE_ELEMENT__PARENT;
+    int POOL_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1605,7 +1605,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__TRACE = BASE_ELEMENT__TRACE;
+    int POOL_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1614,7 +1614,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__TYPE = BASE_ELEMENT__TYPE;
+    int POOL_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1623,7 +1623,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__POSITION = BASE_ELEMENT__POSITION;
+    int POOL_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1632,7 +1632,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__SIZE = BASE_ELEMENT__SIZE;
+    int POOL_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1641,7 +1641,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int POOL_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1650,7 +1650,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int POOL_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1659,7 +1659,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int POOL_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1668,35 +1668,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int POOL__NAME = BASE_ELEMENT__NAME;
+    int POOL_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Pool</em>' class.
+     * The number of structural features of the '<em>Pool GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POOL_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int POOL_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Pool</em>' class.
+     * The number of operations of the '<em>Pool GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int POOL_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int POOL_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LaneImpl <em>Lane</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LaneGModeImpl <em>Lane GMode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.LaneImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLane()
+     * @see org.openbpmn.glsp.bpmn.impl.LaneGModeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLaneGMode()
      * @generated
      */
-    int LANE = 11;
+    int LANE_GMODE = 11;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1705,7 +1705,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__ARGS = BASE_ELEMENT__ARGS;
+    int LANE_GMODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1714,7 +1714,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__ID = BASE_ELEMENT__ID;
+    int LANE_GMODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1723,7 +1723,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+    int LANE_GMODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1732,7 +1732,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__CHILDREN = BASE_ELEMENT__CHILDREN;
+    int LANE_GMODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1741,7 +1741,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__PARENT = BASE_ELEMENT__PARENT;
+    int LANE_GMODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1750,7 +1750,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__TRACE = BASE_ELEMENT__TRACE;
+    int LANE_GMODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1759,7 +1759,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__TYPE = BASE_ELEMENT__TYPE;
+    int LANE_GMODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1768,7 +1768,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__POSITION = BASE_ELEMENT__POSITION;
+    int LANE_GMODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1777,7 +1777,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__SIZE = BASE_ELEMENT__SIZE;
+    int LANE_GMODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1786,7 +1786,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+    int LANE_GMODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1795,7 +1795,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__LAYOUT = BASE_ELEMENT__LAYOUT;
+    int LANE_GMODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1804,7 +1804,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+    int LANE_GMODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1813,35 +1813,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE__NAME = BASE_ELEMENT__NAME;
+    int LANE_GMODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Lane</em>' class.
+     * The number of structural features of the '<em>Lane GMode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LANE_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+    int LANE_GMODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Lane</em>' class.
+     * The number of operations of the '<em>Lane GMode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LANE_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+    int LANE_GMODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.IconImpl <em>Icon</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.IconGNodeImpl <em>Icon GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.IconImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIcon()
+     * @see org.openbpmn.glsp.bpmn.impl.IconGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIconGNode()
      * @generated
      */
-    int ICON = 12;
+    int ICON_GNODE = 12;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1850,7 +1850,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__ARGS = GraphPackage.GCOMPARTMENT__ARGS;
+    int ICON_GNODE__ARGS = GraphPackage.GCOMPARTMENT__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1859,7 +1859,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__ID = GraphPackage.GCOMPARTMENT__ID;
+    int ICON_GNODE__ID = GraphPackage.GCOMPARTMENT__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1868,7 +1868,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__CSS_CLASSES = GraphPackage.GCOMPARTMENT__CSS_CLASSES;
+    int ICON_GNODE__CSS_CLASSES = GraphPackage.GCOMPARTMENT__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1877,7 +1877,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__CHILDREN = GraphPackage.GCOMPARTMENT__CHILDREN;
+    int ICON_GNODE__CHILDREN = GraphPackage.GCOMPARTMENT__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1886,7 +1886,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__PARENT = GraphPackage.GCOMPARTMENT__PARENT;
+    int ICON_GNODE__PARENT = GraphPackage.GCOMPARTMENT__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1895,7 +1895,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__TRACE = GraphPackage.GCOMPARTMENT__TRACE;
+    int ICON_GNODE__TRACE = GraphPackage.GCOMPARTMENT__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1904,7 +1904,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__TYPE = GraphPackage.GCOMPARTMENT__TYPE;
+    int ICON_GNODE__TYPE = GraphPackage.GCOMPARTMENT__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1913,7 +1913,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__POSITION = GraphPackage.GCOMPARTMENT__POSITION;
+    int ICON_GNODE__POSITION = GraphPackage.GCOMPARTMENT__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1922,7 +1922,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__SIZE = GraphPackage.GCOMPARTMENT__SIZE;
+    int ICON_GNODE__SIZE = GraphPackage.GCOMPARTMENT__SIZE;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1931,7 +1931,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__LAYOUT = GraphPackage.GCOMPARTMENT__LAYOUT;
+    int ICON_GNODE__LAYOUT = GraphPackage.GCOMPARTMENT__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1940,35 +1940,35 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ICON__LAYOUT_OPTIONS = GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
+    int ICON_GNODE__LAYOUT_OPTIONS = GraphPackage.GCOMPARTMENT__LAYOUT_OPTIONS;
 
     /**
-     * The number of structural features of the '<em>Icon</em>' class.
+     * The number of structural features of the '<em>Icon GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ICON_FEATURE_COUNT = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 0;
+    int ICON_GNODE_FEATURE_COUNT = GraphPackage.GCOMPARTMENT_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Icon</em>' class.
+     * The number of operations of the '<em>Icon GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ICON_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
+    int ICON_GNODE_OPERATION_COUNT = GraphPackage.GCOMPARTMENT_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowGNodeImpl <em>Sequence Flow GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlow()
+     * @see org.openbpmn.glsp.bpmn.impl.SequenceFlowGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlowGNode()
      * @generated
      */
-    int SEQUENCE_FLOW = 13;
+    int SEQUENCE_FLOW_GNODE = 13;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1977,7 +1977,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__ARGS = GraphPackage.GEDGE__ARGS;
+    int SEQUENCE_FLOW_GNODE__ARGS = GraphPackage.GEDGE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1986,7 +1986,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__ID = GraphPackage.GEDGE__ID;
+    int SEQUENCE_FLOW_GNODE__ID = GraphPackage.GEDGE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1995,7 +1995,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
+    int SEQUENCE_FLOW_GNODE__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -2004,7 +2004,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__CHILDREN = GraphPackage.GEDGE__CHILDREN;
+    int SEQUENCE_FLOW_GNODE__CHILDREN = GraphPackage.GEDGE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2013,7 +2013,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__PARENT = GraphPackage.GEDGE__PARENT;
+    int SEQUENCE_FLOW_GNODE__PARENT = GraphPackage.GEDGE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -2022,7 +2022,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__TRACE = GraphPackage.GEDGE__TRACE;
+    int SEQUENCE_FLOW_GNODE__TRACE = GraphPackage.GEDGE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -2031,7 +2031,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__TYPE = GraphPackage.GEDGE__TYPE;
+    int SEQUENCE_FLOW_GNODE__TYPE = GraphPackage.GEDGE__TYPE;
 
     /**
      * The feature id for the '<em><b>Routing Points</b></em>' containment reference list.
@@ -2040,7 +2040,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
+    int SEQUENCE_FLOW_GNODE__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
 
     /**
      * The feature id for the '<em><b>Source Id</b></em>' attribute.
@@ -2049,7 +2049,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
+    int SEQUENCE_FLOW_GNODE__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
 
     /**
      * The feature id for the '<em><b>Target Id</b></em>' attribute.
@@ -2058,7 +2058,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
+    int SEQUENCE_FLOW_GNODE__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
 
     /**
      * The feature id for the '<em><b>Source</b></em>' reference.
@@ -2067,7 +2067,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__SOURCE = GraphPackage.GEDGE__SOURCE;
+    int SEQUENCE_FLOW_GNODE__SOURCE = GraphPackage.GEDGE__SOURCE;
 
     /**
      * The feature id for the '<em><b>Target</b></em>' reference.
@@ -2076,7 +2076,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__TARGET = GraphPackage.GEDGE__TARGET;
+    int SEQUENCE_FLOW_GNODE__TARGET = GraphPackage.GEDGE__TARGET;
 
     /**
      * The feature id for the '<em><b>Router Kind</b></em>' attribute.
@@ -2085,7 +2085,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
+    int SEQUENCE_FLOW_GNODE__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2094,7 +2094,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__NAME = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+    int SEQUENCE_FLOW_GNODE__NAME = GraphPackage.GEDGE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Condition</b></em>' attribute.
@@ -2103,7 +2103,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+    int SEQUENCE_FLOW_GNODE__CONDITION = GraphPackage.GEDGE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>Default Flow</b></em>' attribute.
@@ -2112,221 +2112,221 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW__DEFAULT_FLOW = GraphPackage.GEDGE_FEATURE_COUNT + 2;
+    int SEQUENCE_FLOW_GNODE__DEFAULT_FLOW = GraphPackage.GEDGE_FEATURE_COUNT + 2;
 
     /**
-     * The number of structural features of the '<em>Sequence Flow</em>' class.
+     * The number of structural features of the '<em>Sequence Flow GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 3;
+    int SEQUENCE_FLOW_GNODE_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 3;
 
     /**
-     * The number of operations of the '<em>Sequence Flow</em>' class.
+     * The number of operations of the '<em>Sequence Flow GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SEQUENCE_FLOW_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
+    int SEQUENCE_FLOW_GNODE_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
 
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.BaseElement <em>Base Element</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.BaseElementGNode <em>Base Element GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Base Element</em>'.
-     * @see org.openbpmn.glsp.bpmn.BaseElement
+     * @return the meta object for class '<em>Base Element GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.BaseElementGNode
      * @generated
      */
-    EClass getBaseElement();
+    EClass getBaseElementGNode();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.BaseElement#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.BaseElementGNode#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see org.openbpmn.glsp.bpmn.BaseElement#getName()
-     * @see #getBaseElement()
+     * @see org.openbpmn.glsp.bpmn.BaseElementGNode#getName()
+     * @see #getBaseElementGNode()
      * @generated
      */
-    EAttribute getBaseElement_Name();
+    EAttribute getBaseElementGNode_Name();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.FlowElement <em>Flow Element</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.FlowElementGNode <em>Flow Element GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Flow Element</em>'.
-     * @see org.openbpmn.glsp.bpmn.FlowElement
+     * @return the meta object for class '<em>Flow Element GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.FlowElementGNode
      * @generated
      */
-    EClass getFlowElement();
+    EClass getFlowElementGNode();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.FlowElement#getSymbol <em>Symbol</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.FlowElementGNode#getSymbol <em>Symbol</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Symbol</em>'.
-     * @see org.openbpmn.glsp.bpmn.FlowElement#getSymbol()
-     * @see #getFlowElement()
+     * @see org.openbpmn.glsp.bpmn.FlowElementGNode#getSymbol()
+     * @see #getFlowElementGNode()
      * @generated
      */
-    EAttribute getFlowElement_Symbol();
+    EAttribute getFlowElementGNode_Symbol();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TaskNode <em>Task Node</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TaskGNode <em>Task GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Task Node</em>'.
-     * @see org.openbpmn.glsp.bpmn.TaskNode
+     * @return the meta object for class '<em>Task GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.TaskGNode
      * @generated
      */
-    EClass getTaskNode();
+    EClass getTaskGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.GatewayNode <em>Gateway Node</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.GatewayGNode <em>Gateway GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Gateway Node</em>'.
-     * @see org.openbpmn.glsp.bpmn.GatewayNode
+     * @return the meta object for class '<em>Gateway GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.GatewayGNode
      * @generated
      */
-    EClass getGatewayNode();
+    EClass getGatewayGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.EventNode <em>Event Node</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.EventGNode <em>Event GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Event Node</em>'.
-     * @see org.openbpmn.glsp.bpmn.EventNode
+     * @return the meta object for class '<em>Event GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.EventGNode
      * @generated
      */
-    EClass getEventNode();
+    EClass getEventGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Label <em>Label</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.LabelGNode <em>Label GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Label</em>'.
-     * @see org.openbpmn.glsp.bpmn.Label
+     * @return the meta object for class '<em>Label GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.LabelGNode
      * @generated
      */
-    EClass getLabel();
+    EClass getLabelGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.DataObject <em>Data Object</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.DataObjectGNode <em>Data Object GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Data Object</em>'.
-     * @see org.openbpmn.glsp.bpmn.DataObject
+     * @return the meta object for class '<em>Data Object GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.DataObjectGNode
      * @generated
      */
-    EClass getDataObject();
+    EClass getDataObjectGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Message <em>Message</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.MessageGNode <em>Message GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Message</em>'.
-     * @see org.openbpmn.glsp.bpmn.Message
+     * @return the meta object for class '<em>Message GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.MessageGNode
      * @generated
      */
-    EClass getMessage();
+    EClass getMessageGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Group <em>Group</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.GroupGNode <em>Group GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Group</em>'.
-     * @see org.openbpmn.glsp.bpmn.Group
+     * @return the meta object for class '<em>Group GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.GroupGNode
      * @generated
      */
-    EClass getGroup();
+    EClass getGroupGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TextAnnotation <em>Text Annotation</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TextAnnotationGNode <em>Text Annotation GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Text Annotation</em>'.
-     * @see org.openbpmn.glsp.bpmn.TextAnnotation
+     * @return the meta object for class '<em>Text Annotation GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.TextAnnotationGNode
      * @generated
      */
-    EClass getTextAnnotation();
+    EClass getTextAnnotationGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Pool <em>Pool</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.PoolGNode <em>Pool GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Pool</em>'.
-     * @see org.openbpmn.glsp.bpmn.Pool
+     * @return the meta object for class '<em>Pool GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.PoolGNode
      * @generated
      */
-    EClass getPool();
+    EClass getPoolGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Lane <em>Lane</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.LaneGMode <em>Lane GMode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Lane</em>'.
-     * @see org.openbpmn.glsp.bpmn.Lane
+     * @return the meta object for class '<em>Lane GMode</em>'.
+     * @see org.openbpmn.glsp.bpmn.LaneGMode
      * @generated
      */
-    EClass getLane();
+    EClass getLaneGMode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Icon <em>Icon</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.IconGNode <em>Icon GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Icon</em>'.
-     * @see org.openbpmn.glsp.bpmn.Icon
+     * @return the meta object for class '<em>Icon GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.IconGNode
      * @generated
      */
-    EClass getIcon();
+    EClass getIconGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.SequenceFlow <em>Sequence Flow</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.SequenceFlowGNode <em>Sequence Flow GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Sequence Flow</em>'.
-     * @see org.openbpmn.glsp.bpmn.SequenceFlow
+     * @return the meta object for class '<em>Sequence Flow GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.SequenceFlowGNode
      * @generated
      */
-    EClass getSequenceFlow();
+    EClass getSequenceFlowGNode();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlow#getName <em>Name</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlowGNode#getName <em>Name</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Name</em>'.
-     * @see org.openbpmn.glsp.bpmn.SequenceFlow#getName()
-     * @see #getSequenceFlow()
+     * @see org.openbpmn.glsp.bpmn.SequenceFlowGNode#getName()
+     * @see #getSequenceFlowGNode()
      * @generated
      */
-    EAttribute getSequenceFlow_Name();
+    EAttribute getSequenceFlowGNode_Name();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlow#getCondition <em>Condition</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlowGNode#getCondition <em>Condition</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Condition</em>'.
-     * @see org.openbpmn.glsp.bpmn.SequenceFlow#getCondition()
-     * @see #getSequenceFlow()
+     * @see org.openbpmn.glsp.bpmn.SequenceFlowGNode#getCondition()
+     * @see #getSequenceFlowGNode()
      * @generated
      */
-    EAttribute getSequenceFlow_Condition();
+    EAttribute getSequenceFlowGNode_Condition();
 
     /**
-     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlow#isDefaultFlow <em>Default Flow</em>}'.
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.SequenceFlowGNode#isDefaultFlow <em>Default Flow</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the attribute '<em>Default Flow</em>'.
-     * @see org.openbpmn.glsp.bpmn.SequenceFlow#isDefaultFlow()
-     * @see #getSequenceFlow()
+     * @see org.openbpmn.glsp.bpmn.SequenceFlowGNode#isDefaultFlow()
+     * @see #getSequenceFlowGNode()
      * @generated
      */
-    EAttribute getSequenceFlow_DefaultFlow();
+    EAttribute getSequenceFlowGNode_DefaultFlow();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -2352,14 +2352,14 @@ public interface BpmnPackage extends EPackage {
      */
     interface Literals {
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.BaseElementImpl <em>Base Element</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.BaseElementGNodeImpl <em>Base Element GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.BaseElementImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getBaseElement()
+         * @see org.openbpmn.glsp.bpmn.impl.BaseElementGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getBaseElementGNode()
          * @generated
          */
-        EClass BASE_ELEMENT = eINSTANCE.getBaseElement();
+        EClass BASE_ELEMENT_GNODE = eINSTANCE.getBaseElementGNode();
 
         /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -2367,17 +2367,17 @@ public interface BpmnPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute BASE_ELEMENT__NAME = eINSTANCE.getBaseElement_Name();
+        EAttribute BASE_ELEMENT_GNODE__NAME = eINSTANCE.getBaseElementGNode_Name();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementImpl <em>Flow Element</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.FlowElementGNodeImpl <em>Flow Element GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.FlowElementImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getFlowElement()
+         * @see org.openbpmn.glsp.bpmn.impl.FlowElementGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getFlowElementGNode()
          * @generated
          */
-        EClass FLOW_ELEMENT = eINSTANCE.getFlowElement();
+        EClass FLOW_ELEMENT_GNODE = eINSTANCE.getFlowElementGNode();
 
         /**
          * The meta object literal for the '<em><b>Symbol</b></em>' attribute feature.
@@ -2385,127 +2385,127 @@ public interface BpmnPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute FLOW_ELEMENT__SYMBOL = eINSTANCE.getFlowElement_Symbol();
+        EAttribute FLOW_ELEMENT_GNODE__SYMBOL = eINSTANCE.getFlowElementGNode_Symbol();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TaskNodeImpl <em>Task Node</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TaskGNodeImpl <em>Task GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.TaskNodeImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTaskNode()
+         * @see org.openbpmn.glsp.bpmn.impl.TaskGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTaskGNode()
          * @generated
          */
-        EClass TASK_NODE = eINSTANCE.getTaskNode();
+        EClass TASK_GNODE = eINSTANCE.getTaskGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl <em>Gateway Node</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.GatewayGNodeImpl <em>Gateway GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.GatewayNodeImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGatewayNode()
+         * @see org.openbpmn.glsp.bpmn.impl.GatewayGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGatewayGNode()
          * @generated
          */
-        EClass GATEWAY_NODE = eINSTANCE.getGatewayNode();
+        EClass GATEWAY_GNODE = eINSTANCE.getGatewayGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.EventNodeImpl <em>Event Node</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.EventGNodeImpl <em>Event GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.EventNodeImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getEventNode()
+         * @see org.openbpmn.glsp.bpmn.impl.EventGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getEventGNode()
          * @generated
          */
-        EClass EVENT_NODE = eINSTANCE.getEventNode();
+        EClass EVENT_GNODE = eINSTANCE.getEventGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LabelImpl <em>Label</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LabelGNodeImpl <em>Label GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.LabelImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLabel()
+         * @see org.openbpmn.glsp.bpmn.impl.LabelGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLabelGNode()
          * @generated
          */
-        EClass LABEL = eINSTANCE.getLabel();
+        EClass LABEL_GNODE = eINSTANCE.getLabelGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.DataObjectImpl <em>Data Object</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.DataObjectGNodeImpl <em>Data Object GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.DataObjectImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getDataObject()
+         * @see org.openbpmn.glsp.bpmn.impl.DataObjectGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getDataObjectGNode()
          * @generated
          */
-        EClass DATA_OBJECT = eINSTANCE.getDataObject();
+        EClass DATA_OBJECT_GNODE = eINSTANCE.getDataObjectGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.MessageImpl <em>Message</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.MessageGNodeImpl <em>Message GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.MessageImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessage()
+         * @see org.openbpmn.glsp.bpmn.impl.MessageGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessageGNode()
          * @generated
          */
-        EClass MESSAGE = eINSTANCE.getMessage();
+        EClass MESSAGE_GNODE = eINSTANCE.getMessageGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.GroupImpl <em>Group</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.GroupGNodeImpl <em>Group GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.GroupImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGroup()
+         * @see org.openbpmn.glsp.bpmn.impl.GroupGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGroupGNode()
          * @generated
          */
-        EClass GROUP = eINSTANCE.getGroup();
+        EClass GROUP_GNODE = eINSTANCE.getGroupGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl <em>Text Annotation</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TextAnnotationGNodeImpl <em>Text Annotation GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTextAnnotation()
+         * @see org.openbpmn.glsp.bpmn.impl.TextAnnotationGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTextAnnotationGNode()
          * @generated
          */
-        EClass TEXT_ANNOTATION = eINSTANCE.getTextAnnotation();
+        EClass TEXT_ANNOTATION_GNODE = eINSTANCE.getTextAnnotationGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.PoolImpl <em>Pool</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.PoolGNodeImpl <em>Pool GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.PoolImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPool()
+         * @see org.openbpmn.glsp.bpmn.impl.PoolGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPoolGNode()
          * @generated
          */
-        EClass POOL = eINSTANCE.getPool();
+        EClass POOL_GNODE = eINSTANCE.getPoolGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LaneImpl <em>Lane</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LaneGModeImpl <em>Lane GMode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.LaneImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLane()
+         * @see org.openbpmn.glsp.bpmn.impl.LaneGModeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLaneGMode()
          * @generated
          */
-        EClass LANE = eINSTANCE.getLane();
+        EClass LANE_GMODE = eINSTANCE.getLaneGMode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.IconImpl <em>Icon</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.IconGNodeImpl <em>Icon GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.IconImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIcon()
+         * @see org.openbpmn.glsp.bpmn.impl.IconGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIconGNode()
          * @generated
          */
-        EClass ICON = eINSTANCE.getIcon();
+        EClass ICON_GNODE = eINSTANCE.getIconGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl <em>Sequence Flow</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.SequenceFlowGNodeImpl <em>Sequence Flow GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.SequenceFlowImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlow()
+         * @see org.openbpmn.glsp.bpmn.impl.SequenceFlowGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlowGNode()
          * @generated
          */
-        EClass SEQUENCE_FLOW = eINSTANCE.getSequenceFlow();
+        EClass SEQUENCE_FLOW_GNODE = eINSTANCE.getSequenceFlowGNode();
 
         /**
          * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -2513,7 +2513,7 @@ public interface BpmnPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SEQUENCE_FLOW__NAME = eINSTANCE.getSequenceFlow_Name();
+        EAttribute SEQUENCE_FLOW_GNODE__NAME = eINSTANCE.getSequenceFlowGNode_Name();
 
         /**
          * The meta object literal for the '<em><b>Condition</b></em>' attribute feature.
@@ -2521,7 +2521,7 @@ public interface BpmnPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SEQUENCE_FLOW__CONDITION = eINSTANCE.getSequenceFlow_Condition();
+        EAttribute SEQUENCE_FLOW_GNODE__CONDITION = eINSTANCE.getSequenceFlowGNode_Condition();
 
         /**
          * The meta object literal for the '<em><b>Default Flow</b></em>' attribute feature.
@@ -2529,7 +2529,7 @@ public interface BpmnPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute SEQUENCE_FLOW__DEFAULT_FLOW = eINSTANCE.getSequenceFlow_DefaultFlow();
+        EAttribute SEQUENCE_FLOW_GNODE__DEFAULT_FLOW = eINSTANCE.getSequenceFlowGNode_DefaultFlow();
 
     }
 

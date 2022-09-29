@@ -12,22 +12,22 @@ import org.eclipse.glsp.graph.GraphPackage;
 
 import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 
-import org.openbpmn.glsp.bpmn.BaseElement;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
-import org.openbpmn.glsp.bpmn.DataObject;
-import org.openbpmn.glsp.bpmn.EventNode;
-import org.openbpmn.glsp.bpmn.FlowElement;
-import org.openbpmn.glsp.bpmn.GatewayNode;
-import org.openbpmn.glsp.bpmn.Group;
-import org.openbpmn.glsp.bpmn.Icon;
-import org.openbpmn.glsp.bpmn.Label;
-import org.openbpmn.glsp.bpmn.Lane;
-import org.openbpmn.glsp.bpmn.Message;
-import org.openbpmn.glsp.bpmn.Pool;
-import org.openbpmn.glsp.bpmn.SequenceFlow;
-import org.openbpmn.glsp.bpmn.TaskNode;
-import org.openbpmn.glsp.bpmn.TextAnnotation;
+import org.openbpmn.glsp.bpmn.DataObjectGNode;
+import org.openbpmn.glsp.bpmn.EventGNode;
+import org.openbpmn.glsp.bpmn.FlowElementGNode;
+import org.openbpmn.glsp.bpmn.GatewayGNode;
+import org.openbpmn.glsp.bpmn.GroupGNode;
+import org.openbpmn.glsp.bpmn.IconGNode;
+import org.openbpmn.glsp.bpmn.LabelGNode;
+import org.openbpmn.glsp.bpmn.LaneGMode;
+import org.openbpmn.glsp.bpmn.MessageGNode;
+import org.openbpmn.glsp.bpmn.PoolGNode;
+import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
+import org.openbpmn.glsp.bpmn.TaskGNode;
+import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,98 +41,98 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass baseElementEClass = null;
+    private EClass baseElementGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass flowElementEClass = null;
+    private EClass flowElementGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass taskNodeEClass = null;
+    private EClass taskGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass gatewayNodeEClass = null;
+    private EClass gatewayGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass eventNodeEClass = null;
+    private EClass eventGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass labelEClass = null;
+    private EClass labelGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass dataObjectEClass = null;
+    private EClass dataObjectGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass messageEClass = null;
+    private EClass messageGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass groupEClass = null;
+    private EClass groupGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass textAnnotationEClass = null;
+    private EClass textAnnotationGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass poolEClass = null;
+    private EClass poolGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass laneEClass = null;
+    private EClass laneGModeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass iconEClass = null;
+    private EClass iconGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass sequenceFlowEClass = null;
+    private EClass sequenceFlowGNodeEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -206,8 +206,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getBaseElement() {
-        return baseElementEClass;
+    public EClass getBaseElementGNode() {
+        return baseElementGNodeEClass;
     }
 
     /**
@@ -215,8 +215,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBaseElement_Name() {
-        return (EAttribute)baseElementEClass.getEStructuralFeatures().get(0);
+    public EAttribute getBaseElementGNode_Name() {
+        return (EAttribute)baseElementGNodeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -224,8 +224,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getFlowElement() {
-        return flowElementEClass;
+    public EClass getFlowElementGNode() {
+        return flowElementGNodeEClass;
     }
 
     /**
@@ -233,8 +233,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFlowElement_Symbol() {
-        return (EAttribute)flowElementEClass.getEStructuralFeatures().get(0);
+    public EAttribute getFlowElementGNode_Symbol() {
+        return (EAttribute)flowElementGNodeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -242,8 +242,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getTaskNode() {
-        return taskNodeEClass;
+    public EClass getTaskGNode() {
+        return taskGNodeEClass;
     }
 
     /**
@@ -251,8 +251,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getGatewayNode() {
-        return gatewayNodeEClass;
+    public EClass getGatewayGNode() {
+        return gatewayGNodeEClass;
     }
 
     /**
@@ -260,8 +260,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getEventNode() {
-        return eventNodeEClass;
+    public EClass getEventGNode() {
+        return eventGNodeEClass;
     }
 
     /**
@@ -269,8 +269,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getLabel() {
-        return labelEClass;
+    public EClass getLabelGNode() {
+        return labelGNodeEClass;
     }
 
     /**
@@ -278,8 +278,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getDataObject() {
-        return dataObjectEClass;
+    public EClass getDataObjectGNode() {
+        return dataObjectGNodeEClass;
     }
 
     /**
@@ -287,8 +287,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getMessage() {
-        return messageEClass;
+    public EClass getMessageGNode() {
+        return messageGNodeEClass;
     }
 
     /**
@@ -296,8 +296,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getGroup() {
-        return groupEClass;
+    public EClass getGroupGNode() {
+        return groupGNodeEClass;
     }
 
     /**
@@ -305,8 +305,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getTextAnnotation() {
-        return textAnnotationEClass;
+    public EClass getTextAnnotationGNode() {
+        return textAnnotationGNodeEClass;
     }
 
     /**
@@ -314,8 +314,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getPool() {
-        return poolEClass;
+    public EClass getPoolGNode() {
+        return poolGNodeEClass;
     }
 
     /**
@@ -323,8 +323,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getLane() {
-        return laneEClass;
+    public EClass getLaneGMode() {
+        return laneGModeEClass;
     }
 
     /**
@@ -332,8 +332,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getIcon() {
-        return iconEClass;
+    public EClass getIconGNode() {
+        return iconGNodeEClass;
     }
 
     /**
@@ -341,8 +341,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSequenceFlow() {
-        return sequenceFlowEClass;
+    public EClass getSequenceFlowGNode() {
+        return sequenceFlowGNodeEClass;
     }
 
     /**
@@ -350,8 +350,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSequenceFlow_Name() {
-        return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(0);
+    public EAttribute getSequenceFlowGNode_Name() {
+        return (EAttribute)sequenceFlowGNodeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -359,8 +359,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSequenceFlow_Condition() {
-        return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(1);
+    public EAttribute getSequenceFlowGNode_Condition() {
+        return (EAttribute)sequenceFlowGNodeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -368,8 +368,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSequenceFlow_DefaultFlow() {
-        return (EAttribute)sequenceFlowEClass.getEStructuralFeatures().get(2);
+    public EAttribute getSequenceFlowGNode_DefaultFlow() {
+        return (EAttribute)sequenceFlowGNodeEClass.getEStructuralFeatures().get(2);
     }
 
     /**
@@ -400,38 +400,38 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         isCreated = true;
 
         // Create classes and their features
-        baseElementEClass = createEClass(BASE_ELEMENT);
-        createEAttribute(baseElementEClass, BASE_ELEMENT__NAME);
+        baseElementGNodeEClass = createEClass(BASE_ELEMENT_GNODE);
+        createEAttribute(baseElementGNodeEClass, BASE_ELEMENT_GNODE__NAME);
 
-        flowElementEClass = createEClass(FLOW_ELEMENT);
-        createEAttribute(flowElementEClass, FLOW_ELEMENT__SYMBOL);
+        flowElementGNodeEClass = createEClass(FLOW_ELEMENT_GNODE);
+        createEAttribute(flowElementGNodeEClass, FLOW_ELEMENT_GNODE__SYMBOL);
 
-        taskNodeEClass = createEClass(TASK_NODE);
+        taskGNodeEClass = createEClass(TASK_GNODE);
 
-        gatewayNodeEClass = createEClass(GATEWAY_NODE);
+        gatewayGNodeEClass = createEClass(GATEWAY_GNODE);
 
-        eventNodeEClass = createEClass(EVENT_NODE);
+        eventGNodeEClass = createEClass(EVENT_GNODE);
 
-        labelEClass = createEClass(LABEL);
+        labelGNodeEClass = createEClass(LABEL_GNODE);
 
-        dataObjectEClass = createEClass(DATA_OBJECT);
+        dataObjectGNodeEClass = createEClass(DATA_OBJECT_GNODE);
 
-        messageEClass = createEClass(MESSAGE);
+        messageGNodeEClass = createEClass(MESSAGE_GNODE);
 
-        groupEClass = createEClass(GROUP);
+        groupGNodeEClass = createEClass(GROUP_GNODE);
 
-        textAnnotationEClass = createEClass(TEXT_ANNOTATION);
+        textAnnotationGNodeEClass = createEClass(TEXT_ANNOTATION_GNODE);
 
-        poolEClass = createEClass(POOL);
+        poolGNodeEClass = createEClass(POOL_GNODE);
 
-        laneEClass = createEClass(LANE);
+        laneGModeEClass = createEClass(LANE_GMODE);
 
-        iconEClass = createEClass(ICON);
+        iconGNodeEClass = createEClass(ICON_GNODE);
 
-        sequenceFlowEClass = createEClass(SEQUENCE_FLOW);
-        createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__NAME);
-        createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__CONDITION);
-        createEAttribute(sequenceFlowEClass, SEQUENCE_FLOW__DEFAULT_FLOW);
+        sequenceFlowGNodeEClass = createEClass(SEQUENCE_FLOW_GNODE);
+        createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__NAME);
+        createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__CONDITION);
+        createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__DEFAULT_FLOW);
     }
 
     /**
@@ -465,54 +465,54 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        baseElementEClass.getESuperTypes().add(theGraphPackage.getGNode());
-        flowElementEClass.getESuperTypes().add(this.getBaseElement());
-        taskNodeEClass.getESuperTypes().add(this.getFlowElement());
-        gatewayNodeEClass.getESuperTypes().add(this.getFlowElement());
-        eventNodeEClass.getESuperTypes().add(this.getFlowElement());
-        labelEClass.getESuperTypes().add(this.getBaseElement());
-        dataObjectEClass.getESuperTypes().add(this.getBaseElement());
-        messageEClass.getESuperTypes().add(this.getBaseElement());
-        groupEClass.getESuperTypes().add(this.getBaseElement());
-        textAnnotationEClass.getESuperTypes().add(this.getBaseElement());
-        poolEClass.getESuperTypes().add(this.getBaseElement());
-        laneEClass.getESuperTypes().add(this.getBaseElement());
-        iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
-        sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        baseElementGNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
+        flowElementGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        taskGNodeEClass.getESuperTypes().add(this.getFlowElementGNode());
+        gatewayGNodeEClass.getESuperTypes().add(this.getFlowElementGNode());
+        eventGNodeEClass.getESuperTypes().add(this.getFlowElementGNode());
+        labelGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        dataObjectGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        messageGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        groupGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        textAnnotationGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        poolGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        laneGModeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        iconGNodeEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
+        sequenceFlowGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
 
         // Initialize classes, features, and operations; add parameters
-        initEClass(baseElementEClass, BaseElement.class, "BaseElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBaseElement_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(baseElementGNodeEClass, BaseElementGNode.class, "BaseElementGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBaseElementGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElementGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(flowElementEClass, FlowElement.class, "FlowElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getFlowElement_Symbol(), ecorePackage.getEString(), "symbol", null, 0, 1, FlowElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(flowElementGNodeEClass, FlowElementGNode.class, "FlowElementGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getFlowElementGNode_Symbol(), ecorePackage.getEString(), "symbol", null, 0, 1, FlowElementGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(taskNodeEClass, TaskNode.class, "TaskNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(taskGNodeEClass, TaskGNode.class, "TaskGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(gatewayNodeEClass, GatewayNode.class, "GatewayNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(gatewayGNodeEClass, GatewayGNode.class, "GatewayGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(eventNodeEClass, EventNode.class, "EventNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(eventGNodeEClass, EventGNode.class, "EventGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(labelGNodeEClass, LabelGNode.class, "LabelGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(dataObjectEClass, DataObject.class, "DataObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(dataObjectGNodeEClass, DataObjectGNode.class, "DataObjectGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(messageGNodeEClass, MessageGNode.class, "MessageGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(groupGNodeEClass, GroupGNode.class, "GroupGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(textAnnotationEClass, TextAnnotation.class, "TextAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(textAnnotationGNodeEClass, TextAnnotationGNode.class, "TextAnnotationGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(poolGNodeEClass, PoolGNode.class, "PoolGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(laneEClass, Lane.class, "Lane", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(laneGModeEClass, LaneGMode.class, "LaneGMode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(iconGNodeEClass, IconGNode.class, "IconGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(sequenceFlowEClass, SequenceFlow.class, "SequenceFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSequenceFlow_Name(), ecorePackage.getEString(), "name", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSequenceFlow_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSequenceFlow_DefaultFlow(), ecorePackage.getEBoolean(), "defaultFlow", null, 0, 1, SequenceFlow.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(sequenceFlowGNodeEClass, SequenceFlowGNode.class, "SequenceFlowGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getSequenceFlowGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSequenceFlowGNode_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getSequenceFlowGNode_DefaultFlow(), ecorePackage.getEBoolean(), "defaultFlow", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

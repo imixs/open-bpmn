@@ -57,16 +57,16 @@ import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
-import org.openbpmn.glsp.bpmn.EventNode;
-import org.openbpmn.glsp.bpmn.GatewayNode;
-import org.openbpmn.glsp.bpmn.Pool;
-import org.openbpmn.glsp.bpmn.SequenceFlow;
-import org.openbpmn.glsp.bpmn.TaskNode;
-import org.openbpmn.glsp.elements.event.EventNodeBuilder;
-import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
-import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
+import org.openbpmn.glsp.bpmn.EventGNode;
+import org.openbpmn.glsp.bpmn.GatewayGNode;
+import org.openbpmn.glsp.bpmn.PoolGNode;
+import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
+import org.openbpmn.glsp.bpmn.TaskGNode;
+import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
+import org.openbpmn.glsp.elements.flow.SequenceFlowGNodeBuilder;
+import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.PoolNodeBuilder;
-import org.openbpmn.glsp.elements.task.TaskNodeBuilder;
+import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -189,7 +189,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
                         List<GModelElement> childList = computeGModelElements(bpmnProcess, participant);
 
-                        Pool pool = new PoolNodeBuilder(participant) //
+                        PoolGNode pool = new PoolNodeBuilder(participant) //
                                 .addAll(childList) //
                                 .build();
 
@@ -318,7 +318,7 @@ public class BPMNGModelFactory implements GModelFactory {
             // compute relative position
             GPoint point = computeRelativeGPoint(activity.getBounds(), participant);
             // build GNode
-            TaskNode taskNode = new TaskNodeBuilder(activity) //
+            TaskGNode taskNode = new TaskGNodeBuilder(activity) //
                     .position(point) //
                     .build();
 
@@ -334,7 +334,7 @@ public class BPMNGModelFactory implements GModelFactory {
             GPoint point = computeRelativeGPoint(event.getBounds(), participant);
             // build GNode
             logger.info("event point: " + point.getX() + " , " + point.getY());
-            EventNode eventNode = new EventNodeBuilder(event) //
+            EventGNode eventNode = new EventGNodeBuilder(event) //
                     .position(point) //
                     .build();
 
@@ -395,7 +395,7 @@ public class BPMNGModelFactory implements GModelFactory {
             GPoint point = computeRelativeGPoint(gateway.getBounds(), participant);
 
             // Build the GLSP Node....
-            GatewayNode gatewayNode = new GatewayNodeBuilder(gateway) //
+            GatewayGNode gatewayNode = new GatewayGNodeBuilder(gateway) //
                     .position(point) //
                     .build();
 
@@ -419,7 +419,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all SequenceFlows
         for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
-            SequenceFlowBuilder builder = new SequenceFlowBuilder();
+            SequenceFlowGNodeBuilder builder = new SequenceFlowGNodeBuilder();
             GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
             if (target != null) {
                 builder.target(computeGPort(target));
@@ -429,7 +429,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 builder.source(computeGPort(source));
             }
             builder.id(sequenceFlow.getId());
-            SequenceFlow sequenceFlowEdge = builder.build();
+            SequenceFlowGNode sequenceFlowEdge = builder.build();
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
                 GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
                 sequenceFlowEdge.getRoutingPoints().add(point);

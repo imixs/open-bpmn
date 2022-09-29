@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.gateway;
+package org.openbpmn.glsp.elements.label;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,8 +25,7 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -36,14 +35,16 @@ import org.openbpmn.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * OperationHandler to create a new gateway.
+ * The BPMNCreateTaskHandler is a GLSP CreateNodeOperation bound to the
+ * DiagramModule and called when ever a BPMNTask is newly created within the
+ * model.
  *
  * @author rsoika
  *
  */
-public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateLabelHandler extends CreateBPMNNodeOperationHandler {
 
-    private static Logger logger = Logger.getLogger(BPMNCreateGatewayHandler.class.getName());
+    private static Logger logger = Logger.getLogger(BPMNCreateLabelHandler.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
@@ -58,42 +59,45 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
      * <p>
      * We use this constructor to overwrite the handledElementTypeIds
      */
-    public BPMNCreateGatewayHandler() {
-        super(BPMNModel.BPMN_GATEWAYS);
+    public BPMNCreateLabelHandler() {
+        super(BPMNModel.BPMN_TASKS);
     }
 
     @Override
-    public void executeOperation(final CreateNodeOperation operation) {
+    protected void executeOperation(final CreateNodeOperation operation) {
+
         elementTypeId = operation.getElementTypeId();
-        // now we add a new gateway into the source model
-        String gatewayID = "gateway-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
+        // now we add this task into the source model
+        String taskID = "task-" + BPMNModel.generateShortID();
+        logger.fine("===== > createNode tasknodeID=" + taskID);
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
             BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
-            BPMNGateway gateway = bpmnProcess.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
-            Optional<GPoint> point = operation.getLocation();
-            if (point.isPresent()) {
-                gateway.getBounds().updateLocation(point.get().getX(), point.get().getY());
-                gateway.getBounds().updateDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
-                // set label data
-                gateway.getLabel().updateLocation(point.get().getX() - 3,
-                        point.get().getY() + gateway.getDefaultHeigth() + BPMNEvent.LABEL_OFFSET);
-                gateway.getLabel().updateDimension(BPMNEvent.DEFAULT_WIDTH, 14);
+            if (bpmnProcess != null) {
+                BPMNActivity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
+                Optional<GPoint> point = operation.getLocation();
+                if (point.isPresent()) {
+                    task.getBounds().updateLocation(point.get().getX(), point.get().getY());
+                    task.getBounds().updateDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+
+                    logger.info("....Drop Position = " + point.get().getX() + " " + point.get().getY());
+                }
+            } else {
+                // should not happen
+                logger.severe("Unable to find a vaild BPMNElement to place the new node: " + elementTypeId);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(taskID)));
     }
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.GATEWAY_GNODE, elementTypeId, modelState);
-        nodeCounter++; // start with 1
-        return "Gateway-" + nodeCounter;
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.LABEL_GNODE, elementTypeId, modelState);
+        return "Task-" + nodeCounter;
     }
 
 }

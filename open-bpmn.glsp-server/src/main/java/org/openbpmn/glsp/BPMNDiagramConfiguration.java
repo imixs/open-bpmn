@@ -60,16 +60,16 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         // Layout Model types
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-        mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON);
+        mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON_GNODE);
         // mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
         mappings.put(ModelTypes.CONTAINER, GraphPackage.Literals.GCOMPARTMENT);
 
         // BPMN Types
-        mappings.put(BPMNTypes.TASK, BpmnPackage.Literals.TASK_NODE);
-        mappings.put(BPMNTypes.GATEWAY, BpmnPackage.Literals.GATEWAY_NODE);
-        mappings.put(BPMNTypes.EVENT, BpmnPackage.Literals.EVENT_NODE);
-        mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW);
-        mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL);
+        mappings.put(BPMNTypes.TASK, BpmnPackage.Literals.TASK_GNODE);
+        mappings.put(BPMNTypes.GATEWAY, BpmnPackage.Literals.GATEWAY_GNODE);
+        mappings.put(BPMNTypes.EVENT, BpmnPackage.Literals.EVENT_GNODE);
+        mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW_GNODE);
+        mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
 
         return mappings;
     }

@@ -7,27 +7,27 @@
   <foreignModel>bpmn-glsp.ecore</foreignModel>
   <genPackages prefix="Bpmn" basePackage="org.openbpmn.glsp" disposableProviderFactory="true"
       ecorePackage="bpmn-glsp.ecore#/">
-    <genClasses ecoreClass="bpmn-glsp.ecore#//BaseElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BaseElement/name"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//BaseElementGNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BaseElementGNode/name"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//FlowElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//FlowElement/symbol"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//FlowElementGNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//FlowElementGNode/symbol"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//TaskNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//GatewayNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//EventNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//Label"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//DataObject"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//Message"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//Group"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//TextAnnotation"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//Pool"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//Lane"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//Icon"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//SequenceFlow">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlow/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlow/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlow/defaultFlow"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//TaskGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//GatewayGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//EventGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//LabelGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//DataObjectGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//MessageGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//GroupGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//TextAnnotationGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//PoolGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//LaneGMode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//IconGNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//SequenceFlowGNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/condition"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/defaultFlow"/>
     </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
