@@ -92,6 +92,24 @@ We use nodejs on Linux Debian during development. To manage version of node js s
 
 For development with Eclipse Theia the expected version is ">=10.11.0 <13". For that reason we tested with following version 12.22.10.
 
+
+### How to update the pom version
+
+Bumping the version number of OpenBPMN you can use a script.
+
+* First create an issiue in bugzilla
+* Next you can use the script changeVersion.sh
+
+Specify the old and the new version like this:
+
+	changeVersion.sh <oldVersionString> <newVersionString>"
+
+Example:
+
+	$ cd git/org.eclipse.bpmn2-modeler
+	$ ./scripts/changeVersion.sh 1.5.1-SNAPSHOT 1.5.2-SNAPSHOT
+
+Finally commit your changes
 	
 	 
 
