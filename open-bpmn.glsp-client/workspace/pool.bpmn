@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:collaboration id="collaboration_9FI8yw" name="Default Collaboration">
+        <bpmn2:participant id="participant_3LbKBw" name="Default Process" processRef="process_1"/>
+        <bpmn2:participant id="participant_nIUXaA" name="Pool-1" processRef="process__SvP_g"/>
+    </bpmn2:collaboration>
+    <bpmn2:process definitionalCollaborationRef="collaboration_9FI8yw" id="process_1" name="Default Process" processType="Public">
+        <bpmn2:manualTask id="task-UrjV0E1G1jM1LvqF" name="Task-0"/>
+        <bpmn2:startEvent id="event-4w2xeKGrQFSUNCe0" name="Event-0"/>
+    </bpmn2:process>
+    <bpmn2:process definitionalCollaborationRef="collaboration_9FI8yw" id="process__SvP_g" name="Process 2" processType="Private">
+        <bpmn2:scriptTask id="task-BF3m33U191Ag4o7c" name="Task-1"/>
+        <bpmn2:sendTask id="task-hHpoVOYbP0Sy0SUd" name="Task-2"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="collaboration_9FI8yw" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="task-UrjV0E1G1jM1LvqF" id="BPMNShape_kNxynw">
+                <dc:Bounds height="50.0" width="110.0" x="136.0" y="38.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="participant_nIUXaA" id="BPMNShape_nqvgUw">
+                <dc:Bounds height="375.0" width="964.0" x="72.0" y="134.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-BF3m33U191Ag4o7c" id="BPMNShape_W7DN4A">
+                <dc:Bounds height="50.0" width="110.0" x="93.0" y="-121.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-hHpoVOYbP0Sy0SUd" id="BPMNShape_ErNZqA">
+                <dc:Bounds height="50.0" width="110.0" x="262.0" y="-121.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event-4w2xeKGrQFSUNCe0" id="BPMNShape_O4vR0A">
+                <dc:Bounds height="36.0" width="36.0" x="188.0" y="283.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_tjq1mQ">
+                    <dc:Bounds height="14.0" width="36.0" x="185.0" y="319.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

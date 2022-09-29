@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
-    <bpmn2:process id="process_1">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1" processType="Public">
         <bpmn2:startEvent id="event-qsTs3pwtoD_KuarJ" name="Start Event">
             <bpmn2:messageEventDefinition id="messageEventDefinition_Y3Pkbg"/>
             <bpmn2:outgoing>SequenceFlow_DluZ0w</bpmn2:outgoing>
@@ -51,13 +52,14 @@
         <bpmn2:sequenceFlow id="SequenceFlow_JBytiw" sourceRef="event-uknzqassL4vCovYu" targetRef="task-QPIGCYMfw_QDb6gr"/>
         <bpmn2:sequenceFlow id="SequenceFlow_qILMuw" sourceRef="gateway-x-5pgIVJdmbuowHl" targetRef="event-uknzqassL4vCovYu"/>
         <bpmn2:sequenceFlow id="SequenceFlow_mPvQTA" sourceRef="task-QPIGCYMfw_QDb6gr" targetRef="task-OhxXDbiZnXmPN4mn"/>
+            
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
             <bpmndi:BPMNShape bpmnElement="event-qsTs3pwtoD_KuarJ" id="BPMNShape_uy8uYw">
-                <dc:Bounds height="36.0" width="36.0" x="93.0" y="72.0"/>
+                <dc:Bounds height="36.0" width="36.0" x="91.0" y="72.0"/>
                 <bpmndi:BPMNLabel id="BPMNLabel_aqTFrA">
-                    <dc:Bounds height="14.0" width="36.0" x="81.0" y="111.0"/>
+                    <dc:Bounds height="14.0" width="36.0" x="76.0" y="111.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="event-Lf0tC291FgQtlKAA" id="BPMNShape_fVG2vg">
@@ -82,7 +84,7 @@
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_DluZ0w" id="BPMNEdge_KdVyIw">
-                <di:waypoint x="111.0" y="90.0"/>
+                <di:waypoint x="109.0" y="90.0"/>
                 <di:waypoint x="269.0" y="90.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_VcdThQ" id="BPMNEdge_c25vtw">
@@ -137,6 +139,7 @@
                 <di:waypoint x="476.0" y="353.0"/>
                 <di:waypoint x="476.0" y="234.0"/>
             </bpmndi:BPMNEdge>
+                    
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

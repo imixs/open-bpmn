@@ -1,3 +1,47 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn"><bpmn2:process id="process_1"><bpmn2:manualTask id="task-YAEqgL_eXWLhdvyQ" name="a"><bpmn2:documentation id="documentation_T8BWYA"><![CDATA[abc]]></bpmn2:documentation></bpmn2:manualTask><bpmn2:scriptTask id="task-Voo7Ch2xfW1yIr4z" name="b" scriptFormat="Java"><bpmn2:documentation id="documentation_YRVgKQ"/><bpmn2:script><![CDATA[return true;
-// comment]]></bpmn2:script></bpmn2:scriptTask><bpmn2:sendTask id="task-H86bUD849kOPOzCW" name="Task-2"/><bpmn2:serviceTask id="task-ScboJEUi4a7tBP9p" name="Task-3"/><bpmn2:task id="task-nWxL5rQD5qLrTPnS" name="Task-4"/><bpmn2:userTask id="task-x_tuYHiAf56HOK4C" name="Task-5"/><bpmn2:scriptTask id="task-EEitL33Vn37vGRhd" name="Task-6" scriptFormat="PHP2"><bpmn2:documentation id="documentation_iVilPQ"/><bpmn2:script><![CDATA[if(1==1)
-  return true;]]></bpmn2:script></bpmn2:scriptTask></bpmn2:process><bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram"><bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1"><bpmndi:BPMNShape bpmnElement="task-YAEqgL_eXWLhdvyQ" id="BPMNShape_3gLJ_Q"><dc:Bounds height="50.0" width="121.9384183883667" x="71.03079080581665" y="70.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-Voo7Ch2xfW1yIr4z" id="BPMNShape_rI_NHg"><dc:Bounds height="50.0" width="110.0" x="266.0" y="70.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-H86bUD849kOPOzCW" id="BPMNShape_KTzb-Q"><dc:Bounds height="50.0" width="110.0" x="456.0" y="70.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-ScboJEUi4a7tBP9p" id="BPMNShape_zN4S5w"><dc:Bounds height="50.0" width="110.0" x="77.0" y="175.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-nWxL5rQD5qLrTPnS" id="BPMNShape_7JOgIg"><dc:Bounds height="50.0" width="110.0" x="456.0" y="175.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-x_tuYHiAf56HOK4C" id="BPMNShape_D9Fa3A"><dc:Bounds height="50.0" width="110.0" x="266.0" y="175.0"/></bpmndi:BPMNShape><bpmndi:BPMNShape bpmnElement="task-EEitL33Vn37vGRhd" id="BPMNShape_zysIsQ"><dc:Bounds height="50.0" width="110.0" x="626.0" y="70.0"/></bpmndi:BPMNShape></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn2:definitions>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1">
+        <bpmn2:manualTask id="task-YAEqgL_eXWLhdvyQ" name="a">
+            <bpmn2:documentation id="documentation_T8BWYA"><![CDATA[abc]]></bpmn2:documentation>
+        </bpmn2:manualTask>
+        <bpmn2:scriptTask id="task-Voo7Ch2xfW1yIr4z" name="b" scriptFormat="Java">
+            <bpmn2:documentation id="documentation_YRVgKQ"/>
+            <bpmn2:script><![CDATA[return true;
+// comment]]></bpmn2:script>
+        </bpmn2:scriptTask>
+        <bpmn2:sendTask id="task-H86bUD849kOPOzCW" name="Task-2"/>
+        <bpmn2:serviceTask id="task-ScboJEUi4a7tBP9p" name="Task-3"/>
+        <bpmn2:task id="task-nWxL5rQD5qLrTPnS" name="Task-4"/>
+        <bpmn2:userTask id="task-x_tuYHiAf56HOK4C" name="Task-5"/>
+        <bpmn2:scriptTask id="task-EEitL33Vn37vGRhd" name="Task-6" scriptFormat="PHP2">
+            <bpmn2:documentation id="documentation_iVilPQ"/>
+            <bpmn2:script><![CDATA[if(1==1)
+  return true;]]></bpmn2:script>
+        </bpmn2:scriptTask>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
+            <bpmndi:BPMNShape bpmnElement="task-YAEqgL_eXWLhdvyQ" id="BPMNShape_3gLJ_Q">
+                <dc:Bounds height="50.0" width="121.9384183883667" x="71.03079080581665" y="70.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-Voo7Ch2xfW1yIr4z" id="BPMNShape_rI_NHg">
+                <dc:Bounds height="50.0" width="110.0" x="266.0" y="70.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-H86bUD849kOPOzCW" id="BPMNShape_KTzb-Q">
+                <dc:Bounds height="50.0" width="110.0" x="456.0" y="70.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-ScboJEUi4a7tBP9p" id="BPMNShape_zN4S5w">
+                <dc:Bounds height="50.0" width="110.0" x="77.0" y="175.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-nWxL5rQD5qLrTPnS" id="BPMNShape_7JOgIg">
+                <dc:Bounds height="50.0" width="110.0" x="456.0" y="175.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-x_tuYHiAf56HOK4C" id="BPMNShape_D9Fa3A">
+                <dc:Bounds height="50.0" width="110.0" x="266.0" y="175.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task-EEitL33Vn37vGRhd" id="BPMNShape_zysIsQ">
+                <dc:Bounds height="50.0" width="110.0" x="626.0" y="70.0"/>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
