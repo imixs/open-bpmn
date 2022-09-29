@@ -37,6 +37,7 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.operations.OperationHandler;
@@ -61,7 +62,6 @@ import org.openbpmn.glsp.bpmn.GatewayNode;
 import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.bpmn.SequenceFlow;
 import org.openbpmn.glsp.bpmn.TaskNode;
-import org.openbpmn.glsp.elements.event.EventLabelBuilder;
 import org.openbpmn.glsp.elements.event.EventNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayNodeBuilder;
@@ -375,16 +375,16 @@ public class BPMNGModelFactory implements GModelFactory {
 //            GLabel label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), labelPoint.getX(),
 //                    labelPoint.getY());
 
-//            GLabel label = new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
-//                    .id(event.getId() + "_bpmnlabel") //
-//                    .position(labelPoint) //
-//                    .text(eventNode.getName()) //
-//                    .build();
-
-            GLabel label = new EventLabelBuilder(event) //
+            GLabel label = new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
+                    .id(event.getId() + "_bpmnlabel") //
                     .position(labelPoint) //
-                    .text("test-i") //
+                    .text(eventNode.getName()) //
                     .build();
+
+//            GLabel label = new EventLabelBuilder(event) //
+//                    .position(labelPoint) //
+//                    .text("test-i") //
+//                    .build();
 
             gNodeList.add(label);
         }

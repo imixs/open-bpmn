@@ -67,6 +67,51 @@ public interface BpmnFactory extends EFactory {
     EventNode createEventNode();
 
     /**
+     * Returns a new object of class '<em>Label</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Label</em>'.
+     * @generated
+     */
+    Label createLabel();
+
+    /**
+     * Returns a new object of class '<em>Data Object</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Data Object</em>'.
+     * @generated
+     */
+    DataObject createDataObject();
+
+    /**
+     * Returns a new object of class '<em>Message</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Message</em>'.
+     * @generated
+     */
+    Message createMessage();
+
+    /**
+     * Returns a new object of class '<em>Group</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Group</em>'.
+     * @generated
+     */
+    Group createGroup();
+
+    /**
+     * Returns a new object of class '<em>Text Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Text Annotation</em>'.
+     * @generated
+     */
+    TextAnnotation createTextAnnotation();
+
+    /**
      * Returns a new object of class '<em>Pool</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -74,6 +119,15 @@ public interface BpmnFactory extends EFactory {
      * @generated
      */
     Pool createPool();
+
+    /**
+     * Returns a new object of class '<em>Lane</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Lane</em>'.
+     * @generated
+     */
+    Lane createLane();
 
     /**
      * Returns a new object of class '<em>Icon</em>'.

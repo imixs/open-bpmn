@@ -10,7 +10,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="TaskNode" eSuperTypes="#//FlowElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="GatewayNode" eSuperTypes="#//FlowElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="EventNode" eSuperTypes="#//FlowElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Label" eSuperTypes="#//BaseElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataObject" eSuperTypes="#//BaseElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Message" eSuperTypes="#//BaseElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Group" eSuperTypes="#//BaseElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextAnnotation" eSuperTypes="#//BaseElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Pool" eSuperTypes="#//BaseElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Lane" eSuperTypes="#//BaseElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Icon" eSuperTypes="glsp-graph.ecore#//GCompartment"/>
   <eClassifiers xsi:type="ecore:EClass" name="SequenceFlow" eSuperTypes="glsp-graph.ecore#//GEdge">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

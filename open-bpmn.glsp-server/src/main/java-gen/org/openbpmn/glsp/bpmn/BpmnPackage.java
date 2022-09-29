@@ -819,6 +819,731 @@ public interface BpmnPackage extends EPackage {
     int EVENT_NODE_OPERATION_COUNT = FLOW_ELEMENT_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LabelImpl <em>Label</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.LabelImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLabel()
+     * @generated
+     */
+    int LABEL = 5;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Label</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Label</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LABEL_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.DataObjectImpl <em>Data Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.DataObjectImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getDataObject()
+     * @generated
+     */
+    int DATA_OBJECT = 6;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Data Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Data Object</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_OBJECT_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.MessageImpl <em>Message</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.MessageImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessage()
+     * @generated
+     */
+    int MESSAGE = 7;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Message</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Message</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.GroupImpl <em>Group</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.GroupImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGroup()
+     * @generated
+     */
+    int GROUP = 8;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Group</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Group</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GROUP_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl <em>Text Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTextAnnotation()
+     * @generated
+     */
+    int TEXT_ANNOTATION = 9;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Text Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Text Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TEXT_ANNOTATION_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.PoolImpl <em>Pool</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -826,7 +1551,7 @@ public interface BpmnPackage extends EPackage {
      * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getPool()
      * @generated
      */
-    int POOL = 5;
+    int POOL = 10;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -964,6 +1689,151 @@ public interface BpmnPackage extends EPackage {
     int POOL_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LaneImpl <em>Lane</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.LaneImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLane()
+     * @generated
+     */
+    int LANE = 11;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__ARGS = BASE_ELEMENT__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__ID = BASE_ELEMENT__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__CSS_CLASSES = BASE_ELEMENT__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__CHILDREN = BASE_ELEMENT__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__PARENT = BASE_ELEMENT__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__TRACE = BASE_ELEMENT__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__TYPE = BASE_ELEMENT__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Position</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__POSITION = BASE_ELEMENT__POSITION;
+
+    /**
+     * The feature id for the '<em><b>Size</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__SIZE = BASE_ELEMENT__SIZE;
+
+    /**
+     * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__EDGE_PLACEMENT = BASE_ELEMENT__EDGE_PLACEMENT;
+
+    /**
+     * The feature id for the '<em><b>Layout</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__LAYOUT = BASE_ELEMENT__LAYOUT;
+
+    /**
+     * The feature id for the '<em><b>Layout Options</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__LAYOUT_OPTIONS = BASE_ELEMENT__LAYOUT_OPTIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE__NAME = BASE_ELEMENT__NAME;
+
+    /**
+     * The number of structural features of the '<em>Lane</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE_FEATURE_COUNT = BASE_ELEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of operations of the '<em>Lane</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LANE_OPERATION_COUNT = BASE_ELEMENT_OPERATION_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.IconImpl <em>Icon</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -971,7 +1841,7 @@ public interface BpmnPackage extends EPackage {
      * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getIcon()
      * @generated
      */
-    int ICON = 6;
+    int ICON = 12;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1098,7 +1968,7 @@ public interface BpmnPackage extends EPackage {
      * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getSequenceFlow()
      * @generated
      */
-    int SEQUENCE_FLOW = 7;
+    int SEQUENCE_FLOW = 13;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1336,6 +2206,56 @@ public interface BpmnPackage extends EPackage {
     EClass getEventNode();
 
     /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Label <em>Label</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Label</em>'.
+     * @see org.openbpmn.glsp.bpmn.Label
+     * @generated
+     */
+    EClass getLabel();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.DataObject <em>Data Object</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Data Object</em>'.
+     * @see org.openbpmn.glsp.bpmn.DataObject
+     * @generated
+     */
+    EClass getDataObject();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Message <em>Message</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Message</em>'.
+     * @see org.openbpmn.glsp.bpmn.Message
+     * @generated
+     */
+    EClass getMessage();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Group <em>Group</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Group</em>'.
+     * @see org.openbpmn.glsp.bpmn.Group
+     * @generated
+     */
+    EClass getGroup();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.TextAnnotation <em>Text Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Text Annotation</em>'.
+     * @see org.openbpmn.glsp.bpmn.TextAnnotation
+     * @generated
+     */
+    EClass getTextAnnotation();
+
+    /**
      * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Pool <em>Pool</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1344,6 +2264,16 @@ public interface BpmnPackage extends EPackage {
      * @generated
      */
     EClass getPool();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Lane <em>Lane</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Lane</em>'.
+     * @see org.openbpmn.glsp.bpmn.Lane
+     * @generated
+     */
+    EClass getLane();
 
     /**
      * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.Icon <em>Icon</em>}'.
@@ -1488,6 +2418,56 @@ public interface BpmnPackage extends EPackage {
         EClass EVENT_NODE = eINSTANCE.getEventNode();
 
         /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LabelImpl <em>Label</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.LabelImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLabel()
+         * @generated
+         */
+        EClass LABEL = eINSTANCE.getLabel();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.DataObjectImpl <em>Data Object</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.DataObjectImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getDataObject()
+         * @generated
+         */
+        EClass DATA_OBJECT = eINSTANCE.getDataObject();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.MessageImpl <em>Message</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.MessageImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessage()
+         * @generated
+         */
+        EClass MESSAGE = eINSTANCE.getMessage();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.GroupImpl <em>Group</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.GroupImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getGroup()
+         * @generated
+         */
+        EClass GROUP = eINSTANCE.getGroup();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl <em>Text Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.TextAnnotationImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getTextAnnotation()
+         * @generated
+         */
+        EClass TEXT_ANNOTATION = eINSTANCE.getTextAnnotation();
+
+        /**
          * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.PoolImpl <em>Pool</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -1496,6 +2476,16 @@ public interface BpmnPackage extends EPackage {
          * @generated
          */
         EClass POOL = eINSTANCE.getPool();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LaneImpl <em>Lane</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.LaneImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLane()
+         * @generated
+         */
+        EClass LANE = eINSTANCE.getLane();
 
         /**
          * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.IconImpl <em>Icon</em>}' class.

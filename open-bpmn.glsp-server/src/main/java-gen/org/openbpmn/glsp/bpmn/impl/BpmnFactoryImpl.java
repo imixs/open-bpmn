@@ -61,7 +61,13 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
             case BpmnPackage.TASK_NODE: return createTaskNode();
             case BpmnPackage.GATEWAY_NODE: return createGatewayNode();
             case BpmnPackage.EVENT_NODE: return createEventNode();
+            case BpmnPackage.LABEL: return createLabel();
+            case BpmnPackage.DATA_OBJECT: return createDataObject();
+            case BpmnPackage.MESSAGE: return createMessage();
+            case BpmnPackage.GROUP: return createGroup();
+            case BpmnPackage.TEXT_ANNOTATION: return createTextAnnotation();
             case BpmnPackage.POOL: return createPool();
+            case BpmnPackage.LANE: return createLane();
             case BpmnPackage.ICON: return createIcon();
             case BpmnPackage.SEQUENCE_FLOW: return createSequenceFlow();
             default:
@@ -124,9 +130,69 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    public Label createLabel() {
+        LabelImpl label = new LabelImpl();
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public DataObject createDataObject() {
+        DataObjectImpl dataObject = new DataObjectImpl();
+        return dataObject;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Message createMessage() {
+        MessageImpl message = new MessageImpl();
+        return message;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Group createGroup() {
+        GroupImpl group = new GroupImpl();
+        return group;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TextAnnotation createTextAnnotation() {
+        TextAnnotationImpl textAnnotation = new TextAnnotationImpl();
+        return textAnnotation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public Pool createPool() {
         PoolImpl pool = new PoolImpl();
         return pool;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Lane createLane() {
+        LaneImpl lane = new LaneImpl();
+        return lane;
     }
 
     /**

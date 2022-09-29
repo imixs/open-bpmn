@@ -98,8 +98,32 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
                 return createEventNodeAdapter();
             }
             @Override
+            public Adapter caseLabel(Label object) {
+                return createLabelAdapter();
+            }
+            @Override
+            public Adapter caseDataObject(DataObject object) {
+                return createDataObjectAdapter();
+            }
+            @Override
+            public Adapter caseMessage(Message object) {
+                return createMessageAdapter();
+            }
+            @Override
+            public Adapter caseGroup(Group object) {
+                return createGroupAdapter();
+            }
+            @Override
+            public Adapter caseTextAnnotation(TextAnnotation object) {
+                return createTextAnnotationAdapter();
+            }
+            @Override
             public Adapter casePool(Pool object) {
                 return createPoolAdapter();
+            }
+            @Override
+            public Adapter caseLane(Lane object) {
+                return createLaneAdapter();
             }
             @Override
             public Adapter caseIcon(Icon object) {
@@ -236,6 +260,76 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Label <em>Label</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.Label
+     * @generated
+     */
+    public Adapter createLabelAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.DataObject <em>Data Object</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.DataObject
+     * @generated
+     */
+    public Adapter createDataObjectAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Message <em>Message</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.Message
+     * @generated
+     */
+    public Adapter createMessageAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Group <em>Group</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.Group
+     * @generated
+     */
+    public Adapter createGroupAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.TextAnnotation <em>Text Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.TextAnnotation
+     * @generated
+     */
+    public Adapter createTextAnnotationAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Pool <em>Pool</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -246,6 +340,20 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createPoolAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.Lane <em>Lane</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.Lane
+     * @generated
+     */
+    public Adapter createLaneAdapter() {
         return null;
     }
 

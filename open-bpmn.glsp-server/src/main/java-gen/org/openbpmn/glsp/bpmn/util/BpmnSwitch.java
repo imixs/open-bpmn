@@ -148,6 +148,76 @@ public class BpmnSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case BpmnPackage.LABEL: {
+                Label label = (Label)theEObject;
+                T result = caseLabel(label);
+                if (result == null) result = caseBaseElement(label);
+                if (result == null) result = caseGNode(label);
+                if (result == null) result = caseGShapeElement(label);
+                if (result == null) result = caseGEdgeLayoutable(label);
+                if (result == null) result = caseGLayouting(label);
+                if (result == null) result = caseGModelElement(label);
+                if (result == null) result = caseGBoundsAware(label);
+                if (result == null) result = caseGArgumentable(label);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BpmnPackage.DATA_OBJECT: {
+                DataObject dataObject = (DataObject)theEObject;
+                T result = caseDataObject(dataObject);
+                if (result == null) result = caseBaseElement(dataObject);
+                if (result == null) result = caseGNode(dataObject);
+                if (result == null) result = caseGShapeElement(dataObject);
+                if (result == null) result = caseGEdgeLayoutable(dataObject);
+                if (result == null) result = caseGLayouting(dataObject);
+                if (result == null) result = caseGModelElement(dataObject);
+                if (result == null) result = caseGBoundsAware(dataObject);
+                if (result == null) result = caseGArgumentable(dataObject);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BpmnPackage.MESSAGE: {
+                Message message = (Message)theEObject;
+                T result = caseMessage(message);
+                if (result == null) result = caseBaseElement(message);
+                if (result == null) result = caseGNode(message);
+                if (result == null) result = caseGShapeElement(message);
+                if (result == null) result = caseGEdgeLayoutable(message);
+                if (result == null) result = caseGLayouting(message);
+                if (result == null) result = caseGModelElement(message);
+                if (result == null) result = caseGBoundsAware(message);
+                if (result == null) result = caseGArgumentable(message);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BpmnPackage.GROUP: {
+                Group group = (Group)theEObject;
+                T result = caseGroup(group);
+                if (result == null) result = caseBaseElement(group);
+                if (result == null) result = caseGNode(group);
+                if (result == null) result = caseGShapeElement(group);
+                if (result == null) result = caseGEdgeLayoutable(group);
+                if (result == null) result = caseGLayouting(group);
+                if (result == null) result = caseGModelElement(group);
+                if (result == null) result = caseGBoundsAware(group);
+                if (result == null) result = caseGArgumentable(group);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BpmnPackage.TEXT_ANNOTATION: {
+                TextAnnotation textAnnotation = (TextAnnotation)theEObject;
+                T result = caseTextAnnotation(textAnnotation);
+                if (result == null) result = caseBaseElement(textAnnotation);
+                if (result == null) result = caseGNode(textAnnotation);
+                if (result == null) result = caseGShapeElement(textAnnotation);
+                if (result == null) result = caseGEdgeLayoutable(textAnnotation);
+                if (result == null) result = caseGLayouting(textAnnotation);
+                if (result == null) result = caseGModelElement(textAnnotation);
+                if (result == null) result = caseGBoundsAware(textAnnotation);
+                if (result == null) result = caseGArgumentable(textAnnotation);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case BpmnPackage.POOL: {
                 Pool pool = (Pool)theEObject;
                 T result = casePool(pool);
@@ -159,6 +229,20 @@ public class BpmnSwitch<T> extends Switch<T> {
                 if (result == null) result = caseGModelElement(pool);
                 if (result == null) result = caseGBoundsAware(pool);
                 if (result == null) result = caseGArgumentable(pool);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case BpmnPackage.LANE: {
+                Lane lane = (Lane)theEObject;
+                T result = caseLane(lane);
+                if (result == null) result = caseBaseElement(lane);
+                if (result == null) result = caseGNode(lane);
+                if (result == null) result = caseGShapeElement(lane);
+                if (result == null) result = caseGEdgeLayoutable(lane);
+                if (result == null) result = caseGLayouting(lane);
+                if (result == null) result = caseGModelElement(lane);
+                if (result == null) result = caseGBoundsAware(lane);
+                if (result == null) result = caseGArgumentable(lane);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -263,6 +347,81 @@ public class BpmnSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Label</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Label</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLabel(Label object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Data Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Data Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDataObject(DataObject object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Message</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Message</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMessage(Message object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Group</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Group</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseGroup(Group object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Text Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Text Annotation</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseTextAnnotation(TextAnnotation object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Pool</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -274,6 +433,21 @@ public class BpmnSwitch<T> extends Switch<T> {
      * @generated
      */
     public T casePool(Pool object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Lane</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Lane</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLane(Lane object) {
         return null;
     }
 

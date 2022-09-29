@@ -8,10 +8,15 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: 
+Export-Package: org.eclipse.glsp.graph,
+ org.eclipse.glsp.graph.impl,
+ org.eclipse.glsp.graph.util,
  org.openbpmn.glsp.bpmn,
  org.openbpmn.glsp.bpmn.impl,
- org.openbpmn.glsp.bpmn.util
+ org.openbpmn.glsp.bpmn.util,
+ org.openbpmn.glsp.graph,
+ org.openbpmn.glsp.graph.impl,
+ org.openbpmn.glsp.graph.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport

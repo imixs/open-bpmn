@@ -16,7 +16,13 @@
     <genClasses ecoreClass="bpmn-glsp.ecore#//TaskNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//GatewayNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//EventNode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//Label"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//DataObject"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//Message"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//Group"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//TextAnnotation"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//Pool"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//Lane"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//Icon"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//SequenceFlow">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlow/name"/>

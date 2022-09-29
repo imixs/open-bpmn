@@ -15,13 +15,19 @@ import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 import org.openbpmn.glsp.bpmn.BaseElement;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.DataObject;
 import org.openbpmn.glsp.bpmn.EventNode;
 import org.openbpmn.glsp.bpmn.FlowElement;
 import org.openbpmn.glsp.bpmn.GatewayNode;
+import org.openbpmn.glsp.bpmn.Group;
 import org.openbpmn.glsp.bpmn.Icon;
+import org.openbpmn.glsp.bpmn.Label;
+import org.openbpmn.glsp.bpmn.Lane;
+import org.openbpmn.glsp.bpmn.Message;
 import org.openbpmn.glsp.bpmn.Pool;
 import org.openbpmn.glsp.bpmn.SequenceFlow;
 import org.openbpmn.glsp.bpmn.TaskNode;
+import org.openbpmn.glsp.bpmn.TextAnnotation;
 
 /**
  * <!-- begin-user-doc -->
@@ -70,7 +76,49 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass labelEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass dataObjectEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass messageEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass groupEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass textAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass poolEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass laneEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -221,8 +269,62 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getLabel() {
+        return labelEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getDataObject() {
+        return dataObjectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getMessage() {
+        return messageEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getGroup() {
+        return groupEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getTextAnnotation() {
+        return textAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getPool() {
         return poolEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getLane() {
+        return laneEClass;
     }
 
     /**
@@ -310,7 +412,19 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
 
         eventNodeEClass = createEClass(EVENT_NODE);
 
+        labelEClass = createEClass(LABEL);
+
+        dataObjectEClass = createEClass(DATA_OBJECT);
+
+        messageEClass = createEClass(MESSAGE);
+
+        groupEClass = createEClass(GROUP);
+
+        textAnnotationEClass = createEClass(TEXT_ANNOTATION);
+
         poolEClass = createEClass(POOL);
+
+        laneEClass = createEClass(LANE);
 
         iconEClass = createEClass(ICON);
 
@@ -356,7 +470,13 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         taskNodeEClass.getESuperTypes().add(this.getFlowElement());
         gatewayNodeEClass.getESuperTypes().add(this.getFlowElement());
         eventNodeEClass.getESuperTypes().add(this.getFlowElement());
+        labelEClass.getESuperTypes().add(this.getBaseElement());
+        dataObjectEClass.getESuperTypes().add(this.getBaseElement());
+        messageEClass.getESuperTypes().add(this.getBaseElement());
+        groupEClass.getESuperTypes().add(this.getBaseElement());
+        textAnnotationEClass.getESuperTypes().add(this.getBaseElement());
         poolEClass.getESuperTypes().add(this.getBaseElement());
+        laneEClass.getESuperTypes().add(this.getBaseElement());
         iconEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
         sequenceFlowEClass.getESuperTypes().add(theGraphPackage.getGEdge());
 
@@ -373,7 +493,19 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
 
         initEClass(eventNodeEClass, EventNode.class, "EventNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+        initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(dataObjectEClass, DataObject.class, "DataObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(messageEClass, Message.class, "Message", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(textAnnotationEClass, TextAnnotation.class, "TextAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
         initEClass(poolEClass, Pool.class, "Pool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(laneEClass, Lane.class, "Lane", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(iconEClass, Icon.class, "Icon", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
