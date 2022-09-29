@@ -51,6 +51,7 @@ find * -name 'package.json' | xargs perl -pi -e "s/\"\@open-bpmn\/open-bpmn-thei
 find * -name 'lerna.json' | xargs perl -pi -e "s/\"version\": \"${SOURCE_VERSION}\",/\"version\": \"$TARGET_VERSION\",/g"
 find * -name 'launch.json' | xargs perl -pi -e "s/\"version\": \"${SOURCE_VERSION}\",/\"version\": \"$TARGET_VERSION\",/g"
 find * -name 'bpmn-glsp-server-contribution.ts' | xargs perl -pi -e "s/open-bpmn.server-${SOURCE_VERSION}/open-bpmn.server-$TARGET_VERSION/g"
+find * -name 'build.sh' | xargs perl -pi -e "s/open-bpmn.server-${SOURCE_VERSION}/open-bpmn.server-$TARGET_VERSION/g"
 
 
 echo "DONE!"
