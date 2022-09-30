@@ -44,6 +44,35 @@ import { Bounds } from 'sprotty-protocol';
 export interface BPMNFlowElement {
 }
 
+export class LabelNode extends RectangularNode implements Nameable, WithEditableLabel{
+	static override readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+
+	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+		const label = this.children.find(element => element.type === 'label:heading');
+		if (label && isEditableLabel(label)) {
+			return label;
+		}
+		return undefined;
+	}
+
+	get name(): string {
+		const labelText = this.editableLabel?.text;
+		return labelText ? labelText : '<unknown>';
+	}
+}
+
 export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel, BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
@@ -95,11 +124,12 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 	];
 	symbol?: string;
 	name?: string;
+	documentation: string;
 
 }
 
-// DiamondNode
-export class GatewayNode extends DiamondNode implements Nameable, WithEditableLabel, BPMNFlowElement {
+// DiamondNode  //  Nameable, WithEditableLabel,
+export class GatewayNode extends DiamondNode implements BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -110,12 +140,11 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
 		fadeFeature,
 		hoverFeedbackFeature,
 		popupFeature,
-		nameFeature,
-		withEditLabelFeature
+		nameFeature
 	];
 	category?: string;
 	documentation: string;
-
+/*
 	get editableLabel(): (SChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
 		if (label && isEditableLabel(label)) {
@@ -128,8 +157,10 @@ export class GatewayNode extends DiamondNode implements Nameable, WithEditableLa
 		const labelText = this.editableLabel?.text;
 		return labelText ? labelText : '<unknown>';
 	}
+	*/
 }
 
+/*
 export namespace GatewayNode {
 	export namespace Type {
 		export const EXLUSIVE = 'exclusiveNode';
@@ -138,6 +169,7 @@ export namespace GatewayNode {
 		export const UNDEFINED = 'undefined';
 	}
 }
+*/
 
 /*
  * Helper Methods to determind if a ModelElement is of a specific type

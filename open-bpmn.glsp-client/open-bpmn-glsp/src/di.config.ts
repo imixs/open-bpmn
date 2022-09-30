@@ -19,7 +19,7 @@ import {
     ConsoleLogger,
     createClientContainer,
     DeleteElementContextMenuItemProvider,
-    editLabelFeature,moveFeature,selectFeature,
+    editLabelFeature,
     LogLevel,
     overrideViewerOptions,
     RevealNamedElementActionProvider,
@@ -37,6 +37,7 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
+	LabelNode,
 	GatewayNode,
 	PoolNode,
 	Icon,
@@ -80,35 +81,39 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
 
     configureDefaultModelElements(context);
-    configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'sendTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'serviceTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'scriptTask', TaskNode, RoundedCornerNodeView);
 
-    configureModelElement(context, 'startEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'endEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'intermediateCatchEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'intermediateThrowEvent', EventNode, CircularNodeView);
+    //configureModelElement(context, 'label', LabelNode, RoundedCornerNodeView);
+    //configureModelElement(context, 'BPMNLabel', SLabel, SLabelView, { enable: [editLabelFeature,selectFeature,moveFeature] });
+    configureModelElement(context, 'bpmn:label', LabelNode, RoundedCornerNodeView);
 
-    configureModelElement(context, 'exclusiveGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'inclusiveGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'parallelGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'complexGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'bpmn:task', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'bpmn:manualTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'bpmn:userTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'bpmn:sendTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'bpmn:serviceTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'bpmn:scriptTask', TaskNode, RoundedCornerNodeView);
+
+    configureModelElement(context, 'bpmn:startEvent', EventNode, CircularNodeView);
+    configureModelElement(context, 'bpmn:endEvent', EventNode, CircularNodeView);
+    configureModelElement(context, 'bpmn:intermediateCatchEvent', EventNode, CircularNodeView);
+    configureModelElement(context, 'bpmn:intermediateThrowEvent', EventNode, CircularNodeView);
+
+    configureModelElement(context, 'bpmn:exclusiveGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'bpmn:inclusiveGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'bpmn:parallelGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'bpmn:complexGateway', GatewayNode, DiamondNodeView);
 
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
-    configureModelElement(context, 'BPMNLabel', SLabel, SLabelView, { enable: [editLabelFeature,selectFeature,moveFeature] });
 
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
-    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
+    configureModelElement(context, 'bpmn:pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'container', SCompartment, StructureCompartmentView);
 
     // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
-    configureModelElement(context, 'sequenceFlow', SequenceFlow, BPMNSequenceFlowView);
+    configureModelElement(context, 'bpmn:sequenceFlow', SequenceFlow, BPMNSequenceFlowView);
 
 });
 

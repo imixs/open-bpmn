@@ -32,7 +32,7 @@ public class SequenceFlowGNodeBuilder extends AbstractGEdgeBuilder<SequenceFlowG
     private String condition;
 
     public SequenceFlowGNodeBuilder() {
-        super(BPMNTypes.SEQUENCE_FLOW);
+        super("bpmn:" + BPMNTypes.SEQUENCE_FLOW);
     }
 
     public SequenceFlowGNodeBuilder condition(final String condition) {
