@@ -7,6 +7,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * A BPMNLabel is accociated with a BPMNFlowElement which can provide independent bounds and styles
+ * @author rsoika
+ *
+ */
 public class BPMNLabel {
 
     private Element bounds = null;
@@ -28,7 +33,7 @@ public class BPMNLabel {
     public BPMNLabel(BPMNModel model, Node _bpmnShape) throws BPMNMissingElementException {
         this.model = model;
         this.bpmnShape = _bpmnShape;
-
+        
         if (this.bpmnShape == null) {
             throw new BPMNMissingElementException("Missing bpmnShape ");
         }

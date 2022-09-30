@@ -29,7 +29,6 @@ import javax.inject.Inject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GNode;
@@ -37,7 +36,6 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.operations.OperationHandler;
@@ -59,19 +57,20 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
+import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowGNodeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
+import org.openbpmn.glsp.elements.label.LabelGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.PoolNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -375,18 +374,23 @@ public class BPMNGModelFactory implements GModelFactory {
 //            GLabel label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), labelPoint.getX(),
 //                    labelPoint.getY());
 
-            GLabel label = new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
-                    .id(event.getId() + "_bpmnlabel") //
-                    .position(labelPoint) //
-                    .text(eventNode.getName()) //
-                    .build();
+//            GLabel label = new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
+//                    .id(event.getId() + "_bpmnlabel") //
+//                    .position(labelPoint) //
+//                    .text(eventNode.getName()) //
+//                    .build();
 
 //            GLabel label = new EventLabelBuilder(event) //
 //                    .position(labelPoint) //
 //                    .text("test-i") //
 //                    .build();
 
-            gNodeList.add(label);
+            // now we build the LabelGNode
+            LabelGNode labelNode = new LabelGNodeBuilder(event.getName(), bpmnLabel) //
+                    .position(labelPoint) //
+                    .build();
+
+            gNodeList.add(labelNode);
         }
 
         // Add all Gateways...
@@ -404,17 +408,23 @@ public class BPMNGModelFactory implements GModelFactory {
             applyBPMNExtensions(gatewayNode, gateway);
 
             // now add a GLabel
-            GLabel label = null;
+            // GLabel label = null;
             BPMNLabel bpmnLabel = gateway.getLabel();
+            GPoint labelPoint = null;
             if (bpmnLabel != null) {
-                label = BPMNBuilderHelper.createBPMNLabel(gateway.getId(), gatewayNode.getName(),
-                        bpmnLabel.getPosition().getX() - 5, bpmnLabel.getPosition().getY());
+                labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX() - 3, bpmnLabel.getPosition().getY());
+
             } else {
-                // create default position
-                label = BPMNBuilderHelper.createBPMNLabel(gateway.getId(), gatewayNode.getName(), point.getX() - 5,
-                        point.getY() + 50);
+                labelPoint = GraphUtil.point(point.getX() - 3, point.getY() + 36);
             }
-            gNodeList.add(label);
+            // compute relative point...
+            labelPoint = computeRelativeGPoint(labelPoint, participant);
+            logger.info("label point: " + labelPoint.getX() + " , " + labelPoint.getY());
+
+            LabelGNode labelNode = new LabelGNodeBuilder(gateway.getName(), bpmnLabel) //
+                    .position(labelPoint) //
+                    .build();
+            gNodeList.add(labelNode);
         }
 
         // Add all SequenceFlows

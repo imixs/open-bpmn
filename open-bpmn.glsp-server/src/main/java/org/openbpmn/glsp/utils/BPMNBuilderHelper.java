@@ -21,7 +21,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.elements.IconGNodeBuilder;
@@ -51,7 +50,8 @@ public class BPMNBuilderHelper {
     public static GLabel createCompartmentHeader(final BaseElementGNode node) {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header") //
-                .text(node.getName()).build();
+                .text(node.getName()) //
+                .build();
     }
 
     /**
@@ -98,12 +98,12 @@ public class BPMNBuilderHelper {
      * Nodes
      *
      */
-    public static GLabel createBPMNLabel(final String id, final String name, final Double x, final Double y) {
-        return new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
-                .id(id + "_bpmnlabel") //
-                .position(x, y) //
-                .text(name) //
-                .build();
-    }
+//    public static GLabel createBPMNLabel(final String id, final String name, final Double x, final Double y) {
+//        return new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
+//                .id(id + "_bpmnlabel") //
+//                .position(x, y) //
+//                .text(name) //
+//                .build();
+//    }
 
 }
