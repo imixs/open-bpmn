@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.event;
 
-import java.util.Arrays;
-
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -43,12 +41,12 @@ public class EventGNodeBuilder extends AbstractGNodeBuilder<EventGNode, EventGNo
     private final String name;
 
     public EventGNodeBuilder(final BPMNEvent event) {
-        super("bpmn:" + event.getType());
+        super(event.getType());
         this.name = event.getName();
         this.id = event.getId();
 
         // set Layout options
-        this.addCssClasses(Arrays.asList(type.split(":")));
+        this.addCssClass(type);
         this.addCssClass("event");
     }
 

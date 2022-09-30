@@ -67,14 +67,14 @@
     fill: transparent;
 }
 
-.bpmn.label > .sprotty-node {
+.BPMNLabel > .sprotty-node {
 	fill: transparent;
 }
 
-.bpmn.label > .sprotty-label.heading {
+.BPMNLabel > .sprotty-label.heading {
 	fill: var(--theia-titleBar-activeForeground);
 }
-.bpmn.label > .sprotty-node.mouseover {
+.BPMNLabel > .sprotty-node.mouseover {
 	fill: var(--theia-activityBar-background);
 }
 

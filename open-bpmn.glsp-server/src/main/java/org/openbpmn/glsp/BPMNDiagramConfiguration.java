@@ -47,6 +47,17 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     protected Set<BPMNExtension> extensions;
 
     /**
+     * Returns the diagram type of the diagram implementation that corresponds to
+     * this configuration.
+     *
+     * @return The diagram type.
+     */
+    @Override
+    public String getDiagramType() {
+        return "BPMN 2.0";
+    }
+
+    /**
      * Returns the type mappings for the diagram implementation. Type mappings are
      * used by GSON to construct the correct {@link EClass} based on the "type"
      * property of the JSON object.
@@ -75,17 +86,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     }
 
     /**
-     * Returns the diagram type of the diagram implementation that corresponds to
-     * this configuration.
-     *
-     * @return The diagram type.
-     */
-    @Override
-    public String getDiagramType() {
-        return "BPMN 2.0";
-    }
-
-    /**
      * Returns the shape type hints for the diagram implementation. Shape type hints
      * are sent to the client and used to validate whether certain operations for
      * shapes/nodes are allowed without having to query the server again.
@@ -110,15 +110,48 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createThrowEventHint());
 
         // Gateway ShapeEventTypes
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.EXCLUSIVE_GATEWAY, true, true, false, true));
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.INCLUSIVE_GATEWAY, true, true, false, true));
+        nodeHints.add(createGatewayHint(BPMNTypes.EXCLUSIVE_GATEWAY));
+        nodeHints.add(createGatewayHint(BPMNTypes.INCLUSIVE_GATEWAY));
+        nodeHints.add(createGatewayHint(BPMNTypes.PARALLEL_GATEWAY));
+        nodeHints.add(createGatewayHint(BPMNTypes.EVENT_GATEWAY));
+        nodeHints.add(createGatewayHint(BPMNTypes.COMPLEX_GATEWAY));
 
         // Add Pool
-        ShapeTypeHint catHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
-        catHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
-        nodeHints.add(catHint);
+        nodeHints.add(createPoolHint());
 
         return nodeHints;
+    }
+
+    /**
+     * Returns the edge type hints for the diagram implementation. Edge type hints
+     * are sent to the client and used to validate whether certain operations for
+     * edges are allowed without having to query the server again.
+     * <p>
+     * Note: here we need to add the :bpmn prefix which is used in the diagram.
+     * <p>
+     * TODO We need to define a EdgeTypeHint for all types of flows in BPMN.
+     * Currently we only support the SequenceFlow
+     *
+     * @return List of all edge type hints for the diagram implementation.
+     */
+    @Override
+    public List<EdgeTypeHint> getEdgeTypeHints() {
+        List<EdgeTypeHint> edgeHints = new ArrayList<>();
+
+        // SequenceFLow
+        EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
+
+        sequenceFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        sequenceFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        edgeHints.add(sequenceFlowHint);
+
+        return edgeHints;
+    }
+
+    private ShapeTypeHint createPoolHint() {
+        ShapeTypeHint catHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
+        catHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        return catHint;
     }
 
     /**
@@ -137,6 +170,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
+    }
+
+    private ShapeTypeHint createGatewayHint(final String gatewayType) {
+        ShapeTypeHint hint = new ShapeTypeHint(gatewayType, true, true, false, true);
+        return hint;
     }
 
     /**
@@ -266,29 +304,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
             }
         }
 
-    }
-
-    /**
-     * Returns the edge type hints for the diagram implementation. Edge type hints
-     * are sent to the client and used to validate whether certain operations for
-     * edges are allowed without having to query the server again.
-     * <p>
-     * TODO We need to define a EdgeTypeHint for all types of flows in BPMN.
-     * Currently we only support the SequenceFlow
-     *
-     * @return List of all edge type hints for the diagram implementation.
-     */
-    @Override
-    public List<EdgeTypeHint> getEdgeTypeHints() {
-        List<EdgeTypeHint> edgeHints = new ArrayList<>();
-
-        // SequenceFLow
-        EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
-        sequenceFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
-        sequenceFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
-        edgeHints.add(sequenceFlowHint);
-
-        return edgeHints;
     }
 
     /**

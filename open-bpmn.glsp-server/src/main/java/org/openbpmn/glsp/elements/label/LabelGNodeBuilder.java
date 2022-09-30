@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.label;
 
-import java.util.Arrays;
-
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -44,13 +42,13 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
     private final String name;
 
     public LabelGNodeBuilder(final String _name, final BPMNLabel bpmnLabel) {
-        super("bpmn:" + BPMNTypes.LABEL);
+        super(BPMNTypes.BPMNLABEL);
         this.name = _name;
         if (bpmnLabel != null) {
             this.size = GraphUtil.dimension(bpmnLabel.getDimension().getWidth(), bpmnLabel.getDimension().getHeight());
         }
         // set Layout options
-        this.addCssClasses(Arrays.asList(type.split(":")));
+        this.addCssClass(type);
     }
 
     @Override

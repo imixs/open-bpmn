@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
@@ -47,7 +46,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
     private final String name;
 
     public TaskGNodeBuilder(final BPMNActivity activity) {
-        super("bpmn:" + activity.getType());
+        super(activity.getType());
         this.name = activity.getName();
         this.id = activity.getId();
 
@@ -60,7 +59,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
             logger.severe("BPMNActivity does not support a BPMNBounds object!");
         }
         // set Layout options
-        this.addCssClasses(Arrays.asList(type.split(":")));
+        this.addCssClass(type);
         this.addCssClass("task");
 
         this.addArguments(GArguments.cornerRadius(5));

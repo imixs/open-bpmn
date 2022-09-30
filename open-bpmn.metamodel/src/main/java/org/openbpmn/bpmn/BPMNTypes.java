@@ -58,7 +58,7 @@ public class BPMNTypes {
     //public static final String xPARTICIPANT = "participant";
     public static final String POOL = "pool";
     public static final String SEQUENCE_FLOW = "sequenceFlow";
-    public static final String LABEL = "label";
+    public static final String BPMNLABEL = "BPMNLabel";
     public static final String EXTENSION = "extension";
 }
 

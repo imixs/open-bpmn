@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.gateway;
 
-import java.util.Arrays;
-
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -39,12 +37,12 @@ public class GatewayGNodeBuilder extends AbstractGNodeBuilder<GatewayGNode, Gate
     private final String name;
 
     public GatewayGNodeBuilder(final BPMNGateway gateway) {
-        super("bpmn:" + gateway.getType());
+        super(gateway.getType());
         this.name = gateway.getName();
         this.id = gateway.getId();
 
         // set Layout options
-        this.addCssClasses(Arrays.asList(type.split(":")));
+        this.addCssClass(type);
         this.addCssClass("gateway");
     }
 

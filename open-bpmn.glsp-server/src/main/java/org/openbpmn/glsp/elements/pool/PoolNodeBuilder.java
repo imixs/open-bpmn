@@ -55,7 +55,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBui
     private static final String H_ALIGN = "hAlign";
 
     public PoolNodeBuilder(final BPMNParticipant participant) {
-        super("bpmn:" + BPMNTypes.POOL);
+        super(BPMNTypes.POOL);
         this.name = participant.getName();
         this.id = participant.getId();
         try {
