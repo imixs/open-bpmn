@@ -360,14 +360,8 @@ public class BPMNGModelFactory implements GModelFactory {
             // now add a GLabel
 
             BPMNLabel bpmnLabel = event.getLabel();
+            GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
 
-            GPoint labelPoint = null;
-            if (bpmnLabel != null) {
-                labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX() - 3, bpmnLabel.getPosition().getY());
-
-            } else {
-                labelPoint = GraphUtil.point(point.getX() - 3, point.getY() + 36);
-            }
             // compute relative point...
             labelPoint = computeRelativeGPoint(labelPoint, participant);
             logger.info("label point: " + labelPoint.getX() + " , " + labelPoint.getY());

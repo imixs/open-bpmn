@@ -26,6 +26,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -80,10 +81,11 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             if (point.isPresent()) {
                 event.getBounds().updateLocation(point.get().getX(), point.get().getY());
                 event.getBounds().updateDimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
-                // set label data
-                event.getLabel().updateLocation(point.get().getX() - 3,
-                        point.get().getY() + event.getDefaultHeigth() + BPMNEvent.LABEL_OFFSET);
-                event.getLabel().updateDimension(BPMNEvent.DEFAULT_WIDTH, 14);
+                // set label bounds
+                double x = point.get().getX() + (BPMNEvent.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double y = point.get().getY() + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
+                event.getLabel().updateLocation(x, y);
+                event.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();

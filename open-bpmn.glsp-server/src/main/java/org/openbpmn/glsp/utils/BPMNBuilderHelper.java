@@ -74,36 +74,4 @@ public class BPMNBuilderHelper {
         return null;
     }
 
-//    /**
-//     * This method returns the Container compartment of a Pool GNode.
-//     *
-//     * @param pool
-//     * @return Container GCompartment of the pool or null if no Container was found
-//     */
-//    public static GCompartment findContainerCompartment(final Pool pool) {
-//        EList<EObject> contentList = pool.eContents();
-//        for (EObject o : contentList) {
-//            if (o instanceof GCompartment) {
-//                GCompartment compat = (GCompartment) o;
-//                if (ModelTypes.CONTAINER.equals(compat.getType())) {
-//                    return compat;
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
-    /**
-     * Creates a moveable BPMNLabel. This element is used for Event and Gateway
-     * Nodes
-     *
-     */
-//    public static GLabel createBPMNLabel(final String id, final String name, final Double x, final Double y) {
-//        return new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
-//                .id(id + "_bpmnlabel") //
-//                .position(x, y) //
-//                .text(name) //
-//                .build();
-//    }
-
 }

@@ -36,17 +36,24 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
  */
 public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNodeBuilder> {
 
-    public final static double DEFAULT_WIDTH = 100.0;
-    public final static double DEFAULT_HEIGHT = 60.0;
-
     private final String name;
 
     public LabelGNodeBuilder(final String _name, final BPMNLabel bpmnLabel) {
         super(BPMNTypes.BPMNLABEL);
         this.name = _name;
-        if (bpmnLabel != null) {
-            this.size = GraphUtil.dimension(bpmnLabel.getDimension().getWidth(), bpmnLabel.getDimension().getHeight());
+
+        double width = BPMNLabel.DEFAULT_WIDTH;
+        double height = BPMNLabel.DEFAULT_HEIGHT;
+        // We only take the width/height from the BPMNBounds if it is greater than the
+        // defaults
+        if (bpmnLabel != null && bpmnLabel.getDimension().getWidth() > width) {
+            width = bpmnLabel.getDimension().getWidth();
         }
+        if (bpmnLabel != null && bpmnLabel.getDimension().getHeight() > height) {
+            height = bpmnLabel.getDimension().getHeight();
+        }
+        this.size = GraphUtil.dimension(width, height);
+
         // set Layout options
         this.addCssClass(type);
     }
@@ -70,19 +77,16 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.HBOX);
+        node.setLayout(GConstants.Layout.VBOX);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         // Set min width/height
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, DEFAULT_WIDTH);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, DEFAULT_HEIGHT);
-
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNLabel.DEFAULT_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNLabel.DEFAULT_HEIGHT);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");
-
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
-
     }
 
 }

@@ -72,7 +72,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON_GNODE);
-        // mappings.put(ModelTypes.EVENT_PORT, GraphPackage.Literals.GPORT);
         mappings.put(ModelTypes.CONTAINER, GraphPackage.Literals.GCOMPARTMENT);
 
         // BPMN Types
@@ -116,8 +115,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createGatewayHint(BPMNTypes.EVENT_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.COMPLEX_GATEWAY));
 
-        // Add Pool
+        // Pool ShapeEventTypes
         nodeHints.add(createPoolHint());
+
+        // BPMNLabel ShapeEventTypes
+        nodeHints.add(createBPMNLabelHint());
 
         return nodeHints;
     }
@@ -175,6 +177,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private ShapeTypeHint createGatewayHint(final String gatewayType) {
         ShapeTypeHint hint = new ShapeTypeHint(gatewayType, true, true, false, true);
         return hint;
+    }
+
+    private ShapeTypeHint createBPMNLabelHint() {
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.BPMNLABEL, true, true, true, true);
+
+        return shapeTypeHint;
     }
 
     /**
