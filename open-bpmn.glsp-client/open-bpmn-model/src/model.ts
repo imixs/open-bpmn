@@ -38,7 +38,7 @@ import {
 	WithEditableLabel,
 	withEditLabelFeature
 } from '@eclipse-glsp/client';
-import { Bounds } from 'sprotty-protocol';
+// import { Bounds } from 'sprotty-protocol';
 // import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export interface BPMNFlowElement {
@@ -89,9 +89,9 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 	];
 
 	// return the default bounds
-	get symbolBounds(): Bounds {
-		return this.bounds;
-	}
+//	get symbolBounds(): Bounds {
+//		return this.bounds;
+//	}
 
 	get editableLabel(): (SChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');

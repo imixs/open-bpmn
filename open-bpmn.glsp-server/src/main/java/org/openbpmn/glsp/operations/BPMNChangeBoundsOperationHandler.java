@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GDimension;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
@@ -37,6 +36,7 @@ import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -86,7 +86,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
                 // find the corresponding BPMN and GNode element
 
-                logger.info("...bounds update for: " + id);
+                logger.fine("...bounds update for: " + id);
                 BPMNBounds bpmnBounds = modelState.getBpmnModel().findBPMNBoundsById(id);
                 if (bpmnBounds != null) {
                     double offsetX = newPoint.getX() - bpmnBounds.getPosition().getX();
@@ -126,14 +126,14 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                     // test if we have a BPMNLable element was selected?
                     if (id.endsWith("_bpmnlabel")) {
                         // yes, update the GLabel position
-                        Optional<GLabel> _node = modelState.getIndex().findElementByClass(id, GLabel.class);
+                        Optional<LabelGNode> _node = modelState.getIndex().findElementByClass(id, LabelGNode.class);
                         if (_node.isPresent()) {
-                            GLabel node = _node.get();
+                            LabelGNode node = _node.get();
                             // update GNode position....
                             node.setPosition(newPoint);
                         } else {
                             // this case should not happen!
-                            logger.warning("GLabel '" + id + "' not found in current modelState!");
+                            logger.warning("LabelGNode '" + id + "' not found in current modelState!");
                         }
 
                         // update the BPMN model information

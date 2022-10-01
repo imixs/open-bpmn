@@ -332,7 +332,7 @@ public class BPMNGModelFactory implements GModelFactory {
             // compute relative position
             GPoint point = computeRelativeGPoint(event.getBounds(), participant);
             // build GNode
-            logger.info("event point: " + point.getX() + " , " + point.getY());
+            logger.fine("event point: " + point.getX() + " , " + point.getY());
             EventGNode eventNode = new EventGNodeBuilder(event) //
                     .position(point) //
                     .build();
@@ -354,33 +354,16 @@ public class BPMNGModelFactory implements GModelFactory {
                 eventNode.setSymbol(symbol);
             }
             gNodeList.add(eventNode);
-
             // apply BPMN Extensions
             applyBPMNExtensions(eventNode, event);
-            // now add a GLabel
 
+            // now add a GLabel
             BPMNLabel bpmnLabel = event.getLabel();
             GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
-
             // compute relative point...
             labelPoint = computeRelativeGPoint(labelPoint, participant);
-            logger.info("label point: " + labelPoint.getX() + " , " + labelPoint.getY());
-//            GLabel label = BPMNBuilderHelper.createBPMNLabel(event.getId(), eventNode.getName(), labelPoint.getX(),
-//                    labelPoint.getY());
-
-//            GLabel label = new GLabelBuilder(BPMNTypes.BPMN_LABEL) //
-//                    .id(event.getId() + "_bpmnlabel") //
-//                    .position(labelPoint) //
-//                    .text(eventNode.getName()) //
-//                    .build();
-
-//            GLabel label = new EventLabelBuilder(event) //
-//                    .position(labelPoint) //
-//                    .text("test-i") //
-//                    .build();
-
             // now we build the LabelGNode
-            LabelGNode labelNode = new LabelGNodeBuilder(event.getName(), bpmnLabel) //
+            LabelGNode labelNode = new LabelGNodeBuilder(event) //
                     .position(labelPoint) //
                     .build();
 
@@ -402,20 +385,11 @@ public class BPMNGModelFactory implements GModelFactory {
             applyBPMNExtensions(gatewayNode, gateway);
 
             // now add a GLabel
-            // GLabel label = null;
             BPMNLabel bpmnLabel = gateway.getLabel();
-            GPoint labelPoint = null;
-            if (bpmnLabel != null) {
-                labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX() - 3, bpmnLabel.getPosition().getY());
-
-            } else {
-                labelPoint = GraphUtil.point(point.getX() - 3, point.getY() + 36);
-            }
+            GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
             // compute relative point...
             labelPoint = computeRelativeGPoint(labelPoint, participant);
-            logger.info("label point: " + labelPoint.getX() + " , " + labelPoint.getY());
-
-            LabelGNode labelNode = new LabelGNodeBuilder(gateway.getName(), bpmnLabel) //
+            LabelGNode labelNode = new LabelGNodeBuilder(gateway) //
                     .position(labelPoint) //
                     .build();
             gNodeList.add(labelNode);
@@ -456,28 +430,9 @@ public class BPMNGModelFactory implements GModelFactory {
      * @throws BPMNMissingElementException
      */
     GPoint computeRelativeGPoint(final BPMNBounds bpmnBounds, final BPMNParticipant participant) {
-
         BPMNPoint bpmnPoint = bpmnBounds.getPosition();
         GPoint result = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
-
         return computeRelativeGPoint(result, participant);
-
-//        // compute relative position if we have a container...
-//        if (participant != null) {
-//            try {
-//                BPMNBounds bpmnPoolBounds = participant.getBounds();
-//                GPoint poolGPoint = GraphUtil.point(bpmnPoolBounds.getPosition().getX(),
-//                        bpmnPoolBounds.getPosition().getY());
-//                result.setX(result.getX() - poolGPoint.getX());
-//                result.setY(result.getY() - poolGPoint.getY());
-//
-//            } catch (BPMNMissingElementException e) {
-//                logger.severe("Failed to compute relative GPoint of Pool element: " + e.getMessage());
-//            }
-//        }
-//
-//        return result;
-
     }
 
     GPoint computeRelativeGPoint(final GPoint basisPoint, final BPMNParticipant participant) {
@@ -489,14 +444,11 @@ public class BPMNGModelFactory implements GModelFactory {
                         bpmnPoolBounds.getPosition().getY());
                 basisPoint.setX(basisPoint.getX() - poolGPoint.getX());
                 basisPoint.setY(basisPoint.getY() - poolGPoint.getY());
-
             } catch (BPMNMissingElementException e) {
                 logger.severe("Failed to compute relative GPoint of Pool element: " + e.getMessage());
             }
         }
-
         return basisPoint;
-
     }
 
     /**
