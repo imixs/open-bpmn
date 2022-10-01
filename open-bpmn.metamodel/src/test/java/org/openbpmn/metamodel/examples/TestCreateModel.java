@@ -189,6 +189,7 @@ public class TestCreateModel {
     /**
      * This test class tests creating a Collaboration model and some elements
      */
+    @SuppressWarnings("unused")
     @Test
     public void testCreateCollaborationModel() {
         String out = "src/test/resources/create-collaboration_1.bpmn";

@@ -7,31 +7,40 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * The BPMNBounds object represents bounds of a Shape
+ * <p>
+ * e.g.: 
+ * <p>{@code  
+ * <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
+ * }
+ * </p>
+ * A dc:Bounds element is part of a bpmndi:BPMNShape or bpmndi:BPMNLabel
+ * 
+ * @author rsoika
+ *
+ */
 public class BPMNBounds {
 
     private Element elementNode = null;
-    private Node bpmnShape = null;
-    protected BPMNModel model = null;
 
     /**
      * Creates the bounds out of the bpmn elemnet
      * <p>
      * <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
      * </p>
-     *  
+     * 
      * @param width
      * @throws BPMNMissingElementException
      */
-    public BPMNBounds(Node _bpmnShape, BPMNModel model) throws BPMNMissingElementException {
-        this.model = model;
-        this.bpmnShape = _bpmnShape;
-
-        if (this.bpmnShape == null) {
-            throw new BPMNMissingElementException("Missing bpmnShape ");
+    public BPMNBounds(Node _bpmndiElement, BPMNModel model) throws BPMNMissingElementException {
+        Node bpmndiElement = _bpmndiElement;
+        if (bpmndiElement == null) {
+            throw new BPMNMissingElementException("Missing bpmndi element ");
         }
 
-        // find the dc:Bounds inside the given bpmnShape
-        NodeList childList = bpmnShape.getChildNodes();
+        // find the dc:Bounds inside the given bpmndi elmeent
+        NodeList childList = bpmndiElement.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
             if ((BPMNNS.DC.prefix + ":Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
@@ -44,12 +53,12 @@ public class BPMNBounds {
         if (elementNode == null) {
             // <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
             elementNode = model.createElement(BPMNNS.DC, "Bounds");
-            bpmnShape.appendChild(elementNode);
+            bpmndiElement.appendChild(elementNode);
         }
 
     }
 
-    public void updateDimension( double width, double height) {
+    public void updateDimension(double width, double height) {
         // update attributes
         elementNode.setAttribute("width", "" + width);
         elementNode.setAttribute("height", "" + height);

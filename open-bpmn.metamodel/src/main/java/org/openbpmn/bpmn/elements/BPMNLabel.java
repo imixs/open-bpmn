@@ -8,16 +8,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * A BPMNLabel is accociated with a BPMNFlowElement which can provide independent bounds and styles
+ * A BPMNLabel is accociated with a BPMNFlowElement which can provide
+ * independent bounds and styles
+ * 
  * @author rsoika
  *
  */
 public class BPMNLabel {
-    
+
     public final static double DEFAULT_WIDTH = 110.0;
     public final static double DEFAULT_HEIGHT = 20.0;
 
-    private Element bounds = null;
+    protected BPMNBounds bounds = null;
     private Element label = null;
     private Node bpmnShape = null;
     protected BPMNModel model = null;
@@ -36,7 +38,7 @@ public class BPMNLabel {
     public BPMNLabel(BPMNModel model, Node _bpmnShape) throws BPMNMissingElementException {
         this.model = model;
         this.bpmnShape = _bpmnShape;
-        
+
         if (this.bpmnShape == null) {
             throw new BPMNMissingElementException("Missing bpmnShape ");
         }
@@ -48,17 +50,8 @@ public class BPMNLabel {
             if ((BPMNNS.BPMNDI.prefix + ":BPMNLabel").equals(child.getNodeName())) {
                 label = (Element) child;
                 // find the dc:Bounds element of the label...
-                NodeList labelChildList = label.getChildNodes();
-                for (int j = 0; j < labelChildList.getLength(); j++) {
-                    Node labelchild = labelChildList.item(j);
-                    if ((BPMNNS.DC.prefix + ":Bounds").equals(labelchild.getNodeName()) && labelchild.hasAttributes()) {
-                        bounds = (Element) labelchild;
-                        break;
-                    }
-                    if (bounds != null) {
-                        break;
-                    }
-                }
+
+                bounds = new BPMNBounds(label, model);
 
             }
         }
@@ -73,11 +66,20 @@ public class BPMNLabel {
             label = model.createElement(BPMNNS.BPMNDI, "BPMNLabel");
             label.setAttribute("id", BPMNModel.generateShortID("BPMNLabel"));
             bpmnShape.appendChild(label);
-            bounds = model.createElement(BPMNNS.DC, "Bounds");
-            label.appendChild(bounds);
+//            Element _dcounds = model.createElement(BPMNNS.DC, "Bounds");
+//            label.appendChild(_dcounds);
+            bounds = new BPMNBounds(label, model);
         }
-        
-        
+    }
+
+    /**
+     * Returns the BPMNShape bounds.
+     * 
+     * @return
+     * @throws BPMNMissingElementException
+     */
+    public BPMNBounds getBounds() throws BPMNMissingElementException {
+        return bounds;
     }
 
     /**
@@ -87,22 +89,20 @@ public class BPMNLabel {
      * @param y
      */
     public void updateLocation(double x, double y) {
-        bounds.setAttribute("x", "" + x);
-        bounds.setAttribute("y", "" + y);
+        bounds.updateLocation(x, y);
     }
 
-    public void updateDimension( double width, double height) {
+    public void updateDimension(double width, double height) {
         // update attributes
-        bounds.setAttribute("width", "" + width);
-        bounds.setAttribute("height", "" + height);
+        bounds.updateDimension(width, height);
     }
-    
+
     public BPMNPoint getPosition() {
-        return new BPMNPoint(bounds.getAttribute("x"), bounds.getAttribute("y"));
+        return bounds.getPosition();
     }
 
     public BPMNDimension getDimension() {
-        return new BPMNDimension(bounds.getAttribute("width"), bounds.getAttribute("height"));
+        return bounds.getDimension();
     }
 
     /**
@@ -116,12 +116,6 @@ public class BPMNLabel {
         Double _x = point.getX() + (size.getWidth() * 0.5);
         Double _y = point.getY() + (size.getHeight() * 0.5);
         return new BPMNPoint(_x.intValue(), _y.intValue());
-    }
-
-    @Override
-    public String toString() {
-        return "x=" + bounds.getAttribute("x") + " y=" + bounds.getAttribute("y") + " width="
-                + bounds.getAttribute("width") + " heigth=" + bounds.getAttribute("height");
     }
 
 }
