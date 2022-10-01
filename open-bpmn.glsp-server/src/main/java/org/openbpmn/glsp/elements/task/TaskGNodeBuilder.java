@@ -26,7 +26,9 @@ import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
+import org.openbpmn.glsp.elements.IconGNodeBuilder;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 import org.openbpmn.model.BPMNGModelFactory;
 
@@ -80,7 +82,9 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.HBOX);
+        node.setLayout(GConstants.Layout.VBOX);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNActivity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNActivity.DEFAULT_HEIGHT);
@@ -88,10 +92,15 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");
+        node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
 
-        node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
+        IconGNode taskIcon = new IconGNodeBuilder(). //
+                id(node.getId() + "_icon"). //
+                layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.LEFT)). //
+                build();
+
+        node.getChildren().add(taskIcon);
+        // node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
         node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
 
     }

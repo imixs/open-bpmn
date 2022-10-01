@@ -20,11 +20,10 @@ import {
     isBoundsAware,
     ISnapper,
     MouseListener,
-    SLabel,
     SModelElement,
     SModelRoot
 } from '@eclipse-glsp/client';
-import { isBPMNNode, isEventNode, isGatewayNode } from '@open-bpmn/open-bpmn-model';
+import { isBPMNNode, isEventNode, isGatewayNode, LabelNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { CommandExecutionContext, CommandReturn, getAbsoluteBounds, IView, RenderingContext, SChildElement, svg, TYPES } from 'sprotty';
@@ -100,7 +99,7 @@ export class BPMNElementSnapper implements ISnapper {
         // fix label ofset (only needed or Events and Gateways)?
         if ((isEventNode(element) || isGatewayNode(element)) && (ySnap !== 0 || xSnap !== 0)) {
             const label: any = element.root.index.getById(element.id + '_bpmnlabel');
-            if (label instanceof SLabel) {
+            if (label instanceof LabelNode) {
                 // fix ofset of the lable position....
                 const ly = label.position.y + ySnap;
                 const lx = label.position.x + xSnap;
