@@ -1,4 +1,4 @@
-package org.openbpmn.metamodel;
+package org.openbpmn.metamodel.test.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;

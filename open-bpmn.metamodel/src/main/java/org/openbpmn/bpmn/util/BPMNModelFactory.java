@@ -12,8 +12,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

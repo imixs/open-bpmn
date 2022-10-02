@@ -1,4 +1,4 @@
-package org.openbpmn.metamodel.examples;
+package org.openbpmn.metamodel.test.elements;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -25,9 +25,9 @@ import org.openbpmn.bpmn.util.BPMNModelFactory;
  * @author rsoika
  *
  */
-public class TestLanes {
+public class TestBPMNLanes {
 
-    private static Logger logger = Logger.getLogger(TestLanes.class.getName());
+    private static Logger logger = Logger.getLogger(TestBPMNLanes.class.getName());
 
     static BPMNModel model = null;
 
@@ -52,7 +52,7 @@ public class TestLanes {
             assertNotNull(bpmnFlowElement);
             
             // read laneset.....
-            assertEquals(1, process.getLanes());
+            assertEquals(1, process.getLanes().size());
            
 
         } catch (BPMNModelException e) {

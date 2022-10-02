@@ -67,6 +67,7 @@ public class BPMNModel {
     protected Element collaborationElement = null;
 
     public static final String PARTICIPANT = "participant";
+    public static final String LANESET = "laneSet";
 
     public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
@@ -502,7 +503,7 @@ public class BPMNModel {
             }
         }
 
-        // if we found a matching process than we initialize it
+        // if we found a matching process than we can initialize it
         if (process != null) {
             process.init();
         }
@@ -764,6 +765,16 @@ public class BPMNModel {
     }
 
     /**
+     * Returns true if the node is an LaneSet node.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isLaneSet(Node node) {
+     return (LANESET.equals(node.getLocalName()));
+    }
+
+    /**
      * Returns true if the node is a gateway node.
      * 
      * @param node
@@ -800,49 +811,7 @@ public class BPMNModel {
     public static boolean isSequenceFlow(Node node) {
         return (BPMN_SQUENCEFLOWS.contains(node.getLocalName()));
     }
-
-    /**
-     * This helper method finds the bpmndi:BPMNPlane within the bpmnDiagram. In some
-     * cases a diagramm may contains more then one plane. Also in such cases we do
-     * care and return the first plane
-     * 
-     * <pre>
-     * {@code
-     *   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name=
-    "Default Collaboration Diagram">
-     *     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
-     *      
-     * }</pre
-     * 
-     * @param bpmnDefinitions
-     * @param nodeName
-     * @param id
-     * @return
-     */
-//    private Element findBpmnPlane() {
-//        if ( bpmnDiagram == null) {
-//            return null;
-//        }
-// 
-//        Element defaultBpmnPlane = null;
-//        NodeList childList = bpmnDiagram.getChildNodes();
-//        
-//        for (int i = 0; i < childList.getLength(); i++) {
-//            Node child = childList.item(i);
-//            if ((BPMNNS.BPMNDI.prefix + ":BPMNPlane").equals(child.getNodeName())) {
-//                defaultBpmnPlane = (Element) child;
-//                break;
-//            }
-//        }
-//      
-//        // return defaultPlane or null if no plane was found!
-//        if (defaultBpmnPlane == null) {
-//            logger.warning("No BPMNPlane found in bpmnDiagram");
-//            return null;
-//        }
-//        
-//        return defaultBpmnPlane;
-//    }
+    
 
     /**
      * This helper method returns a BPMNDI node for the given bpmnElement. A BPMNDI
@@ -1044,5 +1013,6 @@ public class BPMNModel {
             e.printStackTrace();
         }
     }
+
 
 }

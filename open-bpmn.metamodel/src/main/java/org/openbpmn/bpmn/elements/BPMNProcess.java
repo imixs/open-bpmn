@@ -108,6 +108,8 @@ public class BPMNProcess extends BPMNBaseElement {
                     this.createBPMNGatewayByNode((Element) child);
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
+                } else if (BPMNModel.isLaneSet(child)) {
+                    this.createBPMNLanesByNode((Element) child);
                 } else {
                     // unsupported node type
                 }
@@ -734,13 +736,31 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Creates a new BPMNActivity from a existing BPMN Node and adds the
-     * BPMNActivity into the activity list
+     * Parses a LaneSet Node and creates a set of BPMNLane objects
+     * <p>
+     * 
+     * <pre>
+     * {@code
+        <bpmn2:laneSet id="laneset_1" name="Lane Set 1">
+          <bpmn2:lane id="lane_3upqyg" name="Lane 1">
+            <bpmn2:flowNodeRef>task_1</bpmn2:flowNodeRef>
+          </bpmn2:lane>
+        </bpmn2:laneSet>
+     * }
      * 
      * @param element - a bpmn node
      * @return
      * @throws BPMNModelException
      */
+    private void createBPMNLanesByNode(Element laneSet) {
+        // find Child Nodes
+        List<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, BPMNNS.BPMN2.prefix + ":lane");
+        for (Element _lane : laneNodes) {
+            BPMNLane bpmnLane=new BPMNLane(model, _lane);
+            this.getLanes().add(bpmnLane);
+        }
+    }
+
     private BPMNActivity createBPMNActivityByNode(Element element) throws BPMNModelException {
         BPMNActivity task = new BPMNActivity(model, element, element.getLocalName(), this);
         getActivities().add(task);

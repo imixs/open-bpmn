@@ -2,7 +2,6 @@ package org.openbpmn.metamodel.examples;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -187,7 +187,7 @@ public class TestCreateModel {
     }
 
     /**
-     * This test class tests creating a Collaboration model and some elements
+     * This test shows how creating a Collaboration model
      */
     @SuppressWarnings("unused")
     @Test
@@ -202,17 +202,9 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            assertEquals(1, model.getProcesses().size());
-
             // create two participants
             BPMNParticipant participantSales = model.addParticipant("Sales Team");
             BPMNParticipant participantManagement = model.addParticipant("Management");
-
-            assertTrue(model.isCollaborationDiagram());
-            assertEquals(3, model.getProcesses().size());
-
-            // the default process should now be part of the participant list too
-            assertEquals(3, model.getParticipants().size());
 
             // add a task
             participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
@@ -222,7 +214,46 @@ public class TestCreateModel {
             fail();
         }
         assertNotNull(model);
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+    }
 
+    
+
+    /**
+     * This test shows how creating a Collaboration model with Lanes
+     */
+    @SuppressWarnings("unused")
+    @Test
+    public void testCreateCollaborationModelWithLanes() {
+        String out = "src/test/resources/create-collaboration_2.bpmn";
+
+        logger.info("...create collaboration model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        try {
+            // create two participants
+            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            BPMNParticipant participantManagement = model.addParticipant("Management");
+
+            BPMNProcess salesProcess=participantSales.openProcess();
+            // add a BPMNLane
+            BPMNLane lane1=salesProcess.addLane(model, "Europe");
+            BPMNLane lane2=salesProcess.addLane(model, "United States");
+            
+            // add a task
+            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            lane1.insert(task);
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        assertNotNull(model);
         model.save(out);
         logger.info("...model created sucessful: " + out);
     }
