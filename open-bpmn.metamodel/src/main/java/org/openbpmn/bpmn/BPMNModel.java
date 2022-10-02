@@ -288,7 +288,7 @@ public class BPMNModel {
     }
 
     /**
-     * This method returns true if the current model contains a COllaborationDiagram
+     * This method returns true if the current model contains a CollaborationDiagram
      * 
      * @return
      */
@@ -306,16 +306,12 @@ public class BPMNModel {
      * In case the diagram type switches from a process diagram to a collaboration
      * diagram, the method also updates the attribute 'bpmnElement' of the bpmnPlane
      * to the new created bpmn2:collaboration element id.
-     *
-     * 
-     * 
      * <p>
+     * {@code
      * <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
      * <bpmn2:participant id="Participant_1" name="Pool 1"/>
-     * 
-     * @param id
+     * }
      * @param name
-     * @param type - EventType
      * @return the BPMNParticipant
      * @throws BPMNModelException
      */
@@ -895,6 +891,13 @@ public class BPMNModel {
      */
     public static Logger getLogger() {
         return logger;
+    }
+    
+    public static void log(String message) {
+        logger.info(message);
+    }
+    public static void debug(String message) {
+        logger.info(message);
     }
 
     /**

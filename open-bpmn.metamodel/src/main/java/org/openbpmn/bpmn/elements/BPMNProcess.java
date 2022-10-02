@@ -42,6 +42,8 @@ public class BPMNProcess extends BPMNBaseElement {
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
+    protected Set<BPMNLane> lanes = null;
+    protected Element laneSet = null;
 
     private boolean initalized = false;
 
@@ -114,7 +116,6 @@ public class BPMNProcess extends BPMNBaseElement {
         }
     }
 
-    
     /**
      * Returns all BPMNFlowElements contained in this process
      * 
@@ -122,13 +123,13 @@ public class BPMNProcess extends BPMNBaseElement {
      */
     public Set<BPMNFlowElement> getBPMNFlowElements() {
         HashSet<BPMNFlowElement> result = new HashSet<BPMNFlowElement>();
-        
+
         result.addAll(this.getActivities());
         result.addAll(this.getEvents());
         result.addAll(this.getGateways());
         return result;
     }
-    
+
     /**
      * Returns all BPMNActivity elements contained in this process
      * 
@@ -194,8 +195,7 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
-     * Creates a new BPMNTask element and adds the element into this process
-     * context.
+     * Creates a new BPMNTask element.
      * <p>
      * <bpmn2:sendTask id="SendTask_1" name="Send Task 1">
      * 
@@ -226,6 +226,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         // add BPMNEvent instance
         BPMNActivity task = this.createBPMNActivityByNode(taskElement);
+
         return task;
     }
 
@@ -242,6 +243,19 @@ public class BPMNProcess extends BPMNBaseElement {
      * @throws BPMNModelException
      */
     public BPMNEvent addEvent(String id, String name, String type) throws BPMNModelException {
+
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
+        // verify id
+        for (BPMNEvent node : getEvents()) {
+            if (node.getId().equals(id)) {
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
+            }
+        }
+
         // create a new Dom node...
         Element eventElement = model.createElement(BPMNNS.BPMN2, type);
         eventElement.setAttribute("id", id);
@@ -268,6 +282,17 @@ public class BPMNProcess extends BPMNBaseElement {
      * @throws BPMNModelException
      */
     public BPMNGateway addGateway(String id, String name, String type) throws BPMNModelException {
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
+        // verify id
+        for (BPMNGateway node : getGateways()) {
+            if (node.getId().equals(id)) {
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
+            }
+        }
         // create a new Dom node...
         Element eventElement = model.createElement(BPMNNS.BPMN2, type);
         eventElement.setAttribute("id", id);
@@ -336,6 +361,123 @@ public class BPMNProcess extends BPMNBaseElement {
         flow.addWayPoint(targetElement.getBounds().getCenter());
         return flow;
 
+    }
+
+    /**
+     * Creates a new BPMNLane element and adds the element into this process
+     * context.
+     * <p>
+     * The method verifies if a the process already has a bpmn2:laneSet section. If
+     * not, the method creates one.
+     * <p>
+     * {@code
+     * <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
+     * <bpmn2:lane id="Lane_1" name="Lane 1">
+     * }
+     * 
+     * @param model - current model instance
+     * @param name  - name of the Lane
+     * @return BPMNLane
+     * @throws BPMNMissingElementException
+     */
+    public BPMNLane addLane(BPMNModel model, String name) throws BPMNMissingElementException {
+        // first verify if the process already contains a LaneSet. If not we create
+        // a bpmn2:laneSet
+        if (this.laneSet == null) {
+
+            BPMNModel.log("create laneset...");
+            // create the default collaboration element
+            String laneSetID = "laneset_1";
+            laneSet = model.createElement(BPMNNS.BPMN2, "laneSet");
+            laneSet.setAttribute("id", laneSetID);
+            laneSet.setAttribute("name", "Lane Set 1");
+            this.getElementNode().insertBefore(laneSet, this.getElementNode().getFirstChild());
+        }
+        // add the new Lane
+        Element lane = model.createElement(BPMNNS.BPMN2, "lane");
+        String laneId = BPMNModel.generateShortID("lane");
+        lane.setAttribute("id", laneId);
+        lane.setAttribute("name", name);
+        laneSet.appendChild(lane);
+
+        // add shape
+        // create shape element
+        /*
+         * <bpmndi:BPMNShape id="BPMNShape_Lane_1" bpmnElement="Lane_1"
+         * isHorizontal="true"> <dc:Bounds height="150.0" width="500.0" x="130.0"
+         * y="100.0"/> </bpmndi:BPMNShape>
+         */
+        Element lanebpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
+        lanebpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
+        lanebpmnShape.setAttribute("bpmnElement", laneId);
+        model.getBpmnPlane().appendChild(lanebpmnShape);
+
+        bounds = new BPMNBounds(lanebpmnShape, model);
+        bounds.updateDimension(this.bounds.getDimension().getWidth(), this.bounds.getDimension().getHeight());
+
+        BPMNModel.debug("new lane '" + laneId + "' added");
+
+        BPMNLane bpmnLane = new BPMNLane(model, lane);
+        this.getLanes().add(bpmnLane);
+        return bpmnLane;
+    }
+
+    /**
+     * Returns a BPMNLane by a LaneID. The method throws a
+     * BPMNInvalidReferenceException if a lane with the given ID does not exist is
+     * this process.
+     * <p>
+     * {@code
+     *  <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
+          <bpmn2:lane id="Lane_1" name="Lane 1">
+             <bpmn2:flowNodeRef>StartEvent_4</bpmn2:flowNodeRef>
+        }
+     * 
+     * @param element
+     * @param laneId
+     * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException
+     */
+    public BPMNLane findLane(String laneId) throws BPMNInvalidReferenceException, BPMNMissingElementException {
+        if (laneId == null || laneId.isEmpty()) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE, "laneId not set");
+        }
+        if (laneSet == null || laneId.isEmpty()) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "process '" + this.getId() + "' does not define a laneSet");
+        }
+        // find the lane
+        List<Element> lanes = BPMNModel.findChildNodesByName(laneSet, "bpmn2:lane");
+        Element lane = null;
+        for (Element _lane : lanes) {
+            if (laneId.equals(_lane.getAttribute("id"))) {
+                lane = _lane;
+                break;
+            }
+        }
+        if (lane == null) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "lane '" + laneId + "' not defined in current laneSet");
+        }
+
+        return new BPMNLane(model, lane);
+
+    }
+
+    /**
+     * Returns true if the process contains a laneset
+     * 
+     * @return
+     */
+    public boolean hasLanes() {
+        return (lanes != null);
+    }
+
+    public Set<BPMNLane> getLanes() {
+        if (lanes == null) {
+            lanes = new HashSet<BPMNLane>();
+        }
+        return lanes;
     }
 
     /**
@@ -480,13 +622,13 @@ public class BPMNProcess extends BPMNBaseElement {
         this.getSequenceFlows().remove(seqenceFlow);
     }
 
-    
     /**
      * Deletes a BPMNBase element from this process
+     * 
      * @param id
      */
     public void deleteBPMNBaseElement(String id) {
-        
+
         BPMNBaseElement baseElement = findBaseElementById(id);
         if (baseElement instanceof BPMNActivity) {
             this.deleteTask(id);
@@ -501,7 +643,7 @@ public class BPMNProcess extends BPMNBaseElement {
             this.deleteSequenceFlow(id);
         }
     }
-    
+
     /**
      * Finds a BPMNBaseElement by given id.
      * <p>

@@ -66,8 +66,6 @@ public class BPMNLabel {
             label = model.createElement(BPMNNS.BPMNDI, "BPMNLabel");
             label.setAttribute("id", BPMNModel.generateShortID("BPMNLabel"));
             bpmnShape.appendChild(label);
-//            Element _dcounds = model.createElement(BPMNNS.DC, "Bounds");
-//            label.appendChild(_dcounds);
             bounds = new BPMNBounds(label, model);
         }
     }

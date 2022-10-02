@@ -1,6 +1,8 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
@@ -83,4 +85,8 @@ public class BPMNParticipant extends BPMNBaseElement {
     public double getDefaultHeigth() {
         return DEFAULT_HEIGHT;
     }
+
+    
+    
+  
 }
