@@ -338,6 +338,21 @@ public abstract class BPMNBaseElement {
         }
         return bounds;
     }
+    
+    public void setPosition(double x, double y) {
+        try {
+            this.getBounds().setPosition(x, y);
+        } catch (BPMNMissingElementException e) {
+            BPMNModel.error("Failed to update bounds position for element '"+this.getId() + "'");
+        }
+    }
+    public void setDimension(double width, double height) {
+        try {
+            this.getBounds().setDimension( width, height);
+        } catch (BPMNMissingElementException e) {
+            BPMNModel.error("Failed to update bounds position for element '"+this.getId() + "'");
+        }
+    }
 
     /**
      * Updates the BPMN Shape bounds.
@@ -349,13 +364,13 @@ public abstract class BPMNBaseElement {
      * @return
      * @throws BPMNMissingElementException
      */
-    public BPMNBounds setBounds(double x, double y, double height, double width) throws BPMNMissingElementException {
+    public BPMNBounds setBounds(double x, double y, double width, double height) throws BPMNMissingElementException {
         // init bound if not yet loaded
         getBounds();
 
         // update bounds
-        bounds.updateDimension( width, height);
-        bounds.updateLocation(x, y);
+        bounds.setDimension( width, height);
+        bounds.setPosition(x, y);
        
 
         return bounds;

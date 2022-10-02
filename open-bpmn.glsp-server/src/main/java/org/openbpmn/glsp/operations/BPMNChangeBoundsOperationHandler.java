@@ -117,9 +117,9 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                     logger.info("wir aktuallsieren gNode: " + gNode.getId());
 
                     // finally update BPMNElement bounds....
-                    bpmnBounds.updateLocation(bpmnBounds.getPosition().getX() + offsetX,
+                    bpmnBounds.setPosition(bpmnBounds.getPosition().getX() + offsetX,
                             bpmnBounds.getPosition().getY() + offsetY);
-                    bpmnBounds.updateDimension(newSize.getWidth(), newSize.getHeight());
+                    bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
 
                     // if we have a Participant element selected than we need to iterate also over
                     // all
@@ -173,7 +173,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             try {
                 BPMNBounds bounds = flowElement.getBounds();
                 if (bounds != null) {
-                    bounds.updateLocation(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
+                    bounds.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
                 }
                 // if the flowElemen has a BPMNLabel element we adjust position of the label too
                 BPMNLabel bpmnLabel = flowElement.getLabel();

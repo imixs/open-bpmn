@@ -75,8 +75,8 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
             BPMNGateway gateway = bpmnProcess.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
-                gateway.getBounds().updateLocation(point.get().getX(), point.get().getY());
-                gateway.getBounds().updateDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
+                gateway.getBounds().setPosition(point.get().getX(), point.get().getY());
+                gateway.getBounds().setDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
                 // set label data
                 gateway.getLabel().updateLocation(point.get().getX() - 3,
                         point.get().getY() + gateway.getDefaultHeigth() + BPMNEvent.LABEL_OFFSET);

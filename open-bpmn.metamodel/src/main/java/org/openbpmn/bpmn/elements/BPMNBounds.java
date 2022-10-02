@@ -58,23 +58,6 @@ public class BPMNBounds {
 
     }
 
-    public void updateDimension(double width, double height) {
-        // update attributes
-        elementNode.setAttribute("width", "" + width);
-        elementNode.setAttribute("height", "" + height);
-    }
-
-    /**
-     * Updates the x y position
-     * 
-     * @param x
-     * @param y
-     */
-    public void updateLocation(double x, double y) {
-        elementNode.setAttribute("x", "" + x);
-        elementNode.setAttribute("y", "" + y);
-    }
-
     /**
      * Returns the Bounds element
      * 
@@ -84,12 +67,29 @@ public class BPMNBounds {
         return elementNode;
     }
 
-    public BPMNPoint getPosition() {
-        return new BPMNPoint(elementNode.getAttribute("x"), elementNode.getAttribute("y"));
+    public void setDimension(double width, double height) {
+        // update attributes
+        elementNode.setAttribute("width", "" + width);
+        elementNode.setAttribute("height", "" + height);
     }
 
     public BPMNDimension getDimension() {
         return new BPMNDimension(elementNode.getAttribute("width"), elementNode.getAttribute("height"));
+    }
+
+    /**
+     * Updates the x y position
+     * 
+     * @param x
+     * @param y
+     */
+    public void setPosition(double x, double y) {
+        elementNode.setAttribute("x", "" + x);
+        elementNode.setAttribute("y", "" + y);
+    }
+
+    public BPMNPoint getPosition() {
+        return new BPMNPoint(elementNode.getAttribute("x"), elementNode.getAttribute("y"));
     }
 
     /**

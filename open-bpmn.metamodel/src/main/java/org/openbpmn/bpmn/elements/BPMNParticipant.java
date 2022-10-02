@@ -29,25 +29,6 @@ public class BPMNParticipant extends BPMNBaseElement {
 
     }
 
-    /**
-     * This method creates a BPMNShape for this participant. The shape element
-     * represents the Pool within the BPMNDiagram section.
-     * 
-     * @throws BPMNModelException
-     */
-    public void createPool() throws BPMNModelException {
-        if (bpmnShape == null) {
-            // create shape element
-            bpmnShape = model.buildBPMNShape(this);
-            this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
-            // create BPMNLabel
-            if (label != null) {
-                // set default position
-                // BPMNPoint pos = this.getBounds().getPosition();
-                label.updateLocation(0.0, 0.0);
-            }
-        }
-    }
 
     public boolean hasPool() {
         return (bpmnShape != null);

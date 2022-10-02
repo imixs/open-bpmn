@@ -87,12 +87,12 @@ public class BPMNLabel {
      * @param y
      */
     public void updateLocation(double x, double y) {
-        bounds.updateLocation(x, y);
+        bounds.setPosition(x, y);
     }
 
     public void updateDimension(double width, double height) {
         // update attributes
-        bounds.updateDimension(width, height);
+        bounds.setDimension(width, height);
     }
 
     public BPMNPoint getPosition() {

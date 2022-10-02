@@ -78,8 +78,8 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
                 BPMNActivity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
                 Optional<GPoint> point = operation.getLocation();
                 if (point.isPresent()) {
-                    task.getBounds().updateLocation(point.get().getX(), point.get().getY());
-                    task.getBounds().updateDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+                    task.getBounds().setPosition(point.get().getX(), point.get().getY());
+                    task.getBounds().setDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
 
                     logger.info("....Drop Position = " + point.get().getX() + " " + point.get().getY());
                 }

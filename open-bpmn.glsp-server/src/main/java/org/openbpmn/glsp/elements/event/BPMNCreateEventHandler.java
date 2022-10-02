@@ -79,8 +79,8 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             BPMNEvent event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
-                event.getBounds().updateLocation(point.get().getX(), point.get().getY());
-                event.getBounds().updateDimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
+                event.getBounds().setPosition(point.get().getX(), point.get().getY());
+                event.getBounds().setDimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
                 // set label bounds
                 double x = point.get().getX() + (BPMNEvent.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
                 double y = point.get().getY() + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;

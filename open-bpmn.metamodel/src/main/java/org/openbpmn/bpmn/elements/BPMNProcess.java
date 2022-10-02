@@ -383,6 +383,12 @@ public class BPMNProcess extends BPMNBaseElement {
      * @throws BPMNMissingElementException
      */
     public BPMNLane addLane(BPMNModel model, String name) throws BPMNMissingElementException {
+
+        if (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(this.getProcessType())) {
+            throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
+                    "Lanes can only be added to a private process instance");
+        }
+
         // first verify if the process already contains a LaneSet. If not we create
         // a bpmn2:laneSet
         if (this.laneSet == null) {
@@ -402,24 +408,31 @@ public class BPMNProcess extends BPMNBaseElement {
         lane.setAttribute("name", name);
         laneSet.appendChild(lane);
 
-        // add shape
-        // create shape element
-        /*
-         * <bpmndi:BPMNShape id="BPMNShape_Lane_1" bpmnElement="Lane_1"
-         * isHorizontal="true"> <dc:Bounds height="150.0" width="500.0" x="130.0"
-         * y="100.0"/> </bpmndi:BPMNShape>
-         */
-        Element lanebpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
-        lanebpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
-        lanebpmnShape.setAttribute("bpmnElement", laneId);
-        model.getBpmnPlane().appendChild(lanebpmnShape);
-
-        bounds = new BPMNBounds(lanebpmnShape, model);
-        bounds.updateDimension(this.bounds.getDimension().getWidth(), this.bounds.getDimension().getHeight());
-
         BPMNModel.debug("new lane '" + laneId + "' added");
-
         BPMNLane bpmnLane = new BPMNLane(model, lane);
+
+        // Set the Lane Bounds
+        BPMNParticipant bpmnParticipant = model.findBPMNParticipantByProcessId(this.getId());
+        if (bpmnParticipant != null) {
+            // add shape
+            // create shape element
+            /*
+             * <bpmndi:BPMNShape id="BPMNShape_Lane_1" bpmnElement="Lane_1"
+             * isHorizontal="true"> <dc:Bounds height="150.0" width="500.0" x="130.0"
+             * y="100.0"/> </bpmndi:BPMNShape>
+             */
+            Element lanebpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
+            lanebpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
+            lanebpmnShape.setAttribute("bpmnElement", laneId);
+            model.getBpmnPlane().appendChild(lanebpmnShape);
+            bpmnLane.setBpmnShape(lanebpmnShape);
+
+            BPMNBounds poolBounds = bpmnParticipant.getBounds();
+            bpmnLane.getBounds().setDimension(poolBounds.getDimension().getWidth(),
+                    poolBounds.getDimension().getHeight());
+            bpmnLane.getBounds().setPosition(poolBounds.getPosition().getX()+50, poolBounds.getPosition().getY());
+        }
+
         this.getLanes().add(bpmnLane);
         return bpmnLane;
     }
@@ -756,7 +769,7 @@ public class BPMNProcess extends BPMNBaseElement {
         // find Child Nodes
         List<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, BPMNNS.BPMN2.prefix + ":lane");
         for (Element _lane : laneNodes) {
-            BPMNLane bpmnLane=new BPMNLane(model, _lane);
+            BPMNLane bpmnLane = new BPMNLane(model, _lane);
             this.getLanes().add(bpmnLane);
         }
     }

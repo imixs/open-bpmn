@@ -32,7 +32,7 @@ public class TestCreateModel {
      */
     @Test
     public void testCreateEmptyModel() {
-        String out = "src/test/resources/create-process_1.bpmn";
+        String out = "src/test/resources/output/process-example-1.bpmn";
         logger.info("...create empty model");
 
         String exporter = "demo";
@@ -54,7 +54,7 @@ public class TestCreateModel {
      */
     @Test
     public void testCreateEmptyModelAndAddNewTask() {
-        String out = "src/test/resources/create-process_2.bpmn";
+        String out = "src/test/resources/output/process-example-2.bpmn";
 
         logger.info("...create empty model");
 
@@ -83,7 +83,7 @@ public class TestCreateModel {
      */
     @Test
     public void testCreateModelWithProcessAndElements() {
-        String out = "src/test/resources/create-process_3.bpmn";
+        String out = "src/test/resources/output/process-example-3.bpmn";
         logger.info("...create empty model");
 
         String exporter = "demo";
@@ -119,7 +119,7 @@ public class TestCreateModel {
      */
     @Test
     public void testCreateModelWithProcessAndGatewayElements() {
-        String out = "src/test/resources/create-process_5.bpmn";
+        String out = "src/test/resources/output/process-example-5.bpmn";
         logger.info("...create empty model");
 
         String exporter = "demo";
@@ -157,7 +157,7 @@ public class TestCreateModel {
      */
     @Test
     public void testCreateModelWithProcessAndElementsLayout() {
-        String out = "src/test/resources/create-process_4.bpmn";
+        String out = "src/test/resources/output/process-example-4.bpmn";
         logger.info("...create empty model");
 
         String exporter = "demo";
@@ -172,8 +172,8 @@ public class TestCreateModel {
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
             BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
-            task.getBounds().updateLocation(10.0, 10.0);
-            task.getBounds().updateDimension(140.0, 60.0);
+            task.getBounds().setPosition(10.0, 10.0);
+            task.getBounds().setDimension(140.0, 60.0);
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
         } catch (BPMNModelException e) {
@@ -189,10 +189,9 @@ public class TestCreateModel {
     /**
      * This test shows how creating a Collaboration model
      */
-    @SuppressWarnings("unused")
     @Test
     public void testCreateCollaborationModel() {
-        String out = "src/test/resources/create-collaboration_1.bpmn";
+        String out = "src/test/resources/output/collaboration-example-1.bpmn";
 
         logger.info("...create collaboration model");
 
@@ -204,10 +203,10 @@ public class TestCreateModel {
         try {
             // create two participants
             BPMNParticipant participantSales = model.addParticipant("Sales Team");
-            BPMNParticipant participantManagement = model.addParticipant("Management");
-
+           
             // add a task
-            participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            task.setPosition(60, 40);
 
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -226,7 +225,7 @@ public class TestCreateModel {
     @SuppressWarnings("unused")
     @Test
     public void testCreateCollaborationModelWithLanes() {
-        String out = "src/test/resources/create-collaboration_2.bpmn";
+        String out = "src/test/resources/output/collaboration-example-2.bpmn";
 
         logger.info("...create collaboration model");
 
@@ -238,15 +237,18 @@ public class TestCreateModel {
         try {
             // create two participants
             BPMNParticipant participantSales = model.addParticipant("Sales Team");
-            BPMNParticipant participantManagement = model.addParticipant("Management");
-
+            participantSales.setBounds(10,10,500,200);
+            
             BPMNProcess salesProcess=participantSales.openProcess();
             // add a BPMNLane
             BPMNLane lane1=salesProcess.addLane(model, "Europe");
             BPMNLane lane2=salesProcess.addLane(model, "United States");
+            lane1.setBounds(40,10,470,100);
+            lane2.setBounds(40,110,470,100);
             
             // add a task
             BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            task.setPosition(100, 40);
             lane1.insert(task);
 
         } catch (BPMNModelException e) {

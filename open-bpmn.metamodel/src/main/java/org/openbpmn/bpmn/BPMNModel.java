@@ -30,6 +30,7 @@ import javax.xml.xpath.XPathFactory;
 
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
@@ -312,6 +313,7 @@ public class BPMNModel {
      * <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
      * <bpmn2:participant id="Participant_1" name="Pool 1"/>
      * }
+     * 
      * @param name
      * @return the BPMNParticipant
      * @throws BPMNModelException
@@ -366,9 +368,30 @@ public class BPMNModel {
                 BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
         bpmnParticipant.setProcessRef(process.getId());
+        // create the pool
+        createPool(bpmnParticipant);
 
         return bpmnParticipant;
 
+    }
+
+    /**
+     * This method creates a BPMNShape for this participant. The shape element
+     * represents the Pool within the BPMNDiagram section.
+     * 
+     * @throws BPMNModelException
+     */
+    private void createPool(BPMNParticipant bpmnParticipant) throws BPMNModelException {
+        if (!bpmnParticipant.hasPool()) {
+            // create shape element
+            Element poolShape = this.buildBPMNShape(bpmnParticipant);
+            bpmnParticipant.setBpmnShape(poolShape);
+            bpmnParticipant.setBounds(10.0, 10.0, bpmnParticipant.getDefaultWidth(),
+                    bpmnParticipant.getDefaultHeigth());
+            // create BPMNLabel
+            BPMNLabel bpmnLabel = new BPMNLabel(this, poolShape);
+            bpmnLabel.updateLocation(10.0, 10.0);
+        }
     }
 
     /**
@@ -532,7 +555,7 @@ public class BPMNModel {
      */
     public void deleteBPMNParticipant(BPMNParticipant participant) {
         if (participant != null) {
-            BPMNProcess process=participant.openProcess();
+            BPMNProcess process = participant.openProcess();
             this.definitions.removeChild(process.getElementNode());
             if (participant.hasPool()) {
                 this.bpmnPlane.removeChild(participant.getBpmnShape());
@@ -661,6 +684,27 @@ public class BPMNModel {
     }
 
     /**
+     * Finds a corresponding BPMNParticipant by a processID
+     * 
+     * @param id
+     * @return
+     */
+    public BPMNParticipant findBPMNParticipantByProcessId(String processId) {
+        if (processId == null || processId.isEmpty()) {
+            return null;
+        }
+        if (isCollaborationDiagram()) {
+            for (BPMNParticipant _participant : participants) {
+                if (processId.equals(_participant.getProcessRef())) {
+                    return _participant;
+                }
+            }
+        }
+        // no corresponding element found!
+        return null;
+    }
+
+    /**
      * This helper method returns a set of child nodes by name from a given parent
      * node.
      * 
@@ -771,7 +815,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isLaneSet(Node node) {
-     return (LANESET.equals(node.getLocalName()));
+        return (LANESET.equals(node.getLocalName()));
     }
 
     /**
@@ -811,7 +855,6 @@ public class BPMNModel {
     public static boolean isSequenceFlow(Node node) {
         return (BPMN_SQUENCEFLOWS.contains(node.getLocalName()));
     }
-    
 
     /**
      * This helper method returns a BPMNDI node for the given bpmnElement. A BPMNDI
@@ -861,10 +904,19 @@ public class BPMNModel {
     public static Logger getLogger() {
         return logger;
     }
-    
+
     public static void log(String message) {
         logger.info(message);
     }
+
+    public static void warning(String message) {
+        logger.warning(message);
+    }
+
+    public static void error(String message) {
+        logger.severe(message);
+    }
+
     public static void debug(String message) {
         logger.info(message);
     }
@@ -1013,6 +1065,5 @@ public class BPMNModel {
             e.printStackTrace();
         }
     }
-
 
 }
