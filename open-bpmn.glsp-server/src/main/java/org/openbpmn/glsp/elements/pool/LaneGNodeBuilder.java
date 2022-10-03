@@ -150,6 +150,7 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeB
         GCompartmentBuilder containerCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
                 .id(node.getId() + "_container") //
                 .layout(GConstants.Layout.FREEFORM) //
+                .size(0, 0) //
                 .layoutOptions(layoutOptions);
         return containerCompartmentBuilder //
                 .build();

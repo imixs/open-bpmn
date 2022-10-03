@@ -116,15 +116,33 @@
 }
 
 .pool > .sprotty-node {
-    fill: #34466199;
+    fill: var(--theia-titleBar-activeBackground);
+    opacity: 40%;
     stroke: var(--theia-focusBorder);
     stroke-width: 0.4;
+
+    outline-color: var(--theia-focusBorder);
+    outline-style: solid;
+    outline-width: 1px;
+    outline-offset: -1px;    
+}
+.pool > .sprotty-node.mouseover {
+	 opacity: 70%;
 }
 
 .lane > .sprotty-node {
     fill: none;
     stroke: var(--theia-focusBorder);
     stroke-width: 0.4;
+    
+    outline-color: var(--theia-focusBorder);
+    outline-style: solid;
+    outline-width: 1px;
+    outline-offset: -1px;
+}
+
+.pool .header .sprotty-label {
+    fill: var(--theia-titleBar-activeForeground);
 }
 
 

@@ -44,9 +44,9 @@ import org.openbpmn.glsp.utils.ModelTypes;
  *
  * @author rsoika
  */
-public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBuilder> {
+public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeBuilder> {
 
-    private static Logger logger = Logger.getLogger(PoolNodeBuilder.class.getName());
+    private static Logger logger = Logger.getLogger(PoolGNodeBuilder.class.getName());
 
     private String name;
 
@@ -54,7 +54,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBui
     private static final String H_GRAB = "hGrab";
     private static final String H_ALIGN = "hAlign";
 
-    public PoolNodeBuilder(final BPMNParticipant participant) {
+    public PoolGNodeBuilder(final BPMNParticipant participant) {
         super(BPMNTypes.POOL);
         this.name = participant.getName();
         this.id = participant.getId();
@@ -78,7 +78,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBui
     }
 
     @Override
-    protected PoolNodeBuilder self() {
+    protected PoolGNodeBuilder self() {
         return this;
     }
 
@@ -93,8 +93,8 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBui
 
         node.setLayout(GConstants.Layout.VBOX);
         // Set min width/height for the Pool element
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNParticipant.DEFAULT_WIDTH);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNParticipant.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNParticipant.MIN_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNParticipant.MIN_HEIGHT);
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
@@ -150,6 +150,7 @@ public class PoolNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolNodeBui
         layoutOptions.put(V_GRAB, true);
         GCompartmentBuilder containerCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
                 .id(node.getId() + "_container") //
+                .size(0, 0) //
                 .layout(GConstants.Layout.FREEFORM) //
                 .layoutOptions(layoutOptions);
         return containerCompartmentBuilder //

@@ -31,6 +31,7 @@ import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNLabel;
+import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -98,7 +99,8 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 // first we compute the x/x offset
                 double offsetX = newPoint.getX() - gNode.getPosition().getX();
                 double offsetY = newPoint.getY() - gNode.getPosition().getY();
-                logger.fine("...bounds update for: " + id + " Offset= x:" + offsetX + " y:" + offsetY);
+                logger.info("...bounds update for: " + id + " Offset= x:" + offsetX + " y:" + offsetY + " width: "
+                        + newSize.getWidth() + " height: " + newSize.getHeight());
 
                 // Update GNode according to the new position....
                 gNode.setPosition(newPoint);
@@ -114,7 +116,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 BPMNBounds bpmnBounds = modelState.getBpmnModel().findBPMNBoundsById(id);
                 if (bpmnBounds != null) {
                     // find the corresponding GNode element and update the dimension and position...
-                    logger.info("wir aktuallsieren gNode: " + gNode.getId());
+                    logger.info("...update gNode: " + gNode.getId());
 
                     // finally update BPMNElement bounds....
                     bpmnBounds.setPosition(bpmnBounds.getPosition().getX() + offsetX,
@@ -165,9 +167,20 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      * @param participant
      * @throws BPMNMissingElementException
      */
-    void updateProcessElementBounds(final BPMNProcess process, final double offsetX, final double offsetY) {
+    void updateProcessElementBounds(final BPMNProcess process, final double offsetX, final double offsetY)
+            throws BPMNMissingElementException {
+
+        // update all Lanes
+        Set<BPMNLane> bpmnLaness = process.getLanes();
+        for (BPMNLane lane : bpmnLaness) {
+            BPMNBounds bounds = lane.getBounds();
+            if (bounds != null) {
+                bounds.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
+            }
+        }
+
+        // Update all FlowElements
         Set<BPMNFlowElement> bpmnFlowElements = process.getBPMNFlowElements();
-        // Add all Tasks
         for (BPMNFlowElement flowElement : bpmnFlowElements) {
             logger.info("update element bounds: " + flowElement.getId());
             try {
