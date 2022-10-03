@@ -411,7 +411,7 @@ public class BPMNProcess extends BPMNBaseElement {
         BPMNModel.debug("new lane '" + laneId + "' added");
         BPMNLane bpmnLane = new BPMNLane(model, lane);
 
-        // Set the Lane Bounds
+        // Autocompute the Lane Bounds
         BPMNParticipant bpmnParticipant = model.findBPMNParticipantByProcessId(this.getId());
         if (bpmnParticipant != null) {
             // add shape
@@ -421,6 +421,19 @@ public class BPMNProcess extends BPMNBaseElement {
              * isHorizontal="true"> <dc:Bounds height="150.0" width="500.0" x="130.0"
              * y="100.0"/> </bpmndi:BPMNShape>
              */
+
+            // if the pool already contains lanes, than we autoincrease the height of the
+            // pool
+            double currentWidth = bpmnParticipant.getBounds().getDimension().getWidth();
+            double currentHeight = bpmnParticipant.getBounds().getDimension().getHeight();
+            double expansion = 0;
+            int currentLaneCount = this.getLanes().size();
+            if (currentLaneCount > 0) {
+                // increase height...
+                expansion = currentHeight / currentLaneCount;
+                bpmnParticipant.getBounds().setDimension(currentWidth, currentHeight + expansion); 
+            }
+
             Element lanebpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
             lanebpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
             lanebpmnShape.setAttribute("bpmnElement", laneId);
@@ -428,9 +441,24 @@ public class BPMNProcess extends BPMNBaseElement {
             bpmnLane.setBpmnShape(lanebpmnShape);
 
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
-            bpmnLane.getBounds().setDimension(poolBounds.getDimension().getWidth(),
-                    poolBounds.getDimension().getHeight());
-            bpmnLane.getBounds().setPosition(poolBounds.getPosition().getX()+50, poolBounds.getPosition().getY());
+
+            double laneX = poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET;
+            double laneY = poolBounds.getPosition().getY();
+            if (currentLaneCount > 0) {
+                laneY=laneY+ (currentLaneCount* expansion);
+            }
+            
+            double laneWidth = poolBounds.getDimension().getWidth() - BPMNParticipant.POOL_OFFSET;
+            double laneHeight = poolBounds.getDimension().getHeight() / (currentLaneCount+1);
+            if (currentLaneCount > 0) {
+                // overlap lanes by 1 pixel
+                laneY--;
+                laneHeight++;
+            }
+
+            bpmnLane.getBounds().setDimension(laneWidth, laneHeight);
+            bpmnLane.getBounds().setPosition(laneX, laneY);
+
         }
 
         this.getLanes().add(bpmnLane);

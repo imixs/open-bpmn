@@ -44,7 +44,6 @@ public class BPMNTypes {
     // Multiple Event Definitions
     public static final String MULTIPLE_EVENT_DEFINITIONS = "multipleEventDefinition";
     
-    
     // Gateway
     public static final String GATEWAY = "gateway"; 
     public static final String EXCLUSIVE_GATEWAY = "exclusiveGateway";
@@ -52,11 +51,10 @@ public class BPMNTypes {
     public static final String EVENT_GATEWAY = "eventGateway";
     public static final String PARALLEL_GATEWAY = "parallelGateway";
     public static final String COMPLEX_GATEWAY = "complexGateway";
-
     
     // others  
-    //public static final String xPARTICIPANT = "participant";
     public static final String POOL = "pool";
+    public static final String LANE = "lane";
     public static final String SEQUENCE_FLOW = "sequenceFlow";
     public static final String BPMNLABEL = "BPMNLabel";
     public static final String EXTENSION = "extension";

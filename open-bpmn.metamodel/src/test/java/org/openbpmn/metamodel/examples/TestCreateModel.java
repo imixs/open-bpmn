@@ -237,14 +237,12 @@ public class TestCreateModel {
         try {
             // create two participants
             BPMNParticipant participantSales = model.addParticipant("Sales Team");
-            participantSales.setBounds(10,10,500,200);
+            participantSales.setBounds(10,10,500,100);
             
             BPMNProcess salesProcess=participantSales.openProcess();
             // add a BPMNLane
             BPMNLane lane1=salesProcess.addLane(model, "Europe");
             BPMNLane lane2=salesProcess.addLane(model, "United States");
-            lane1.setBounds(40,10,470,100);
-            lane2.setBounds(40,110,470,100);
             
             // add a task
             BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);

@@ -11,6 +11,8 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -29,7 +31,7 @@ public class TestCollaborationModel {
     static BPMNModel model = null;
 
     /**
-     * This the collaboration model
+     * This test reads a collaboration model
      */
     @SuppressWarnings("unused")
     @Test
@@ -58,14 +60,13 @@ public class TestCollaborationModel {
         logger.info("...model read sucessful: ");
     }
 
-
     /**
      * This test class tests creating a Collaboration model and some elements
      */
     @SuppressWarnings("unused")
     @Test
     public void testCreateCollaborationModel() {
-        String out = "src/test/resources/create-collaboration_1.bpmn";
+        String out = "src/test/resources/collaboration-test-1.bpmn";
 
         logger.info("...create collaboration model");
 
@@ -96,6 +97,118 @@ public class TestCollaborationModel {
         }
         assertNotNull(model);
 
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+    }
+
+    /**
+     * This test shows how creating a Collaboration model with position information
+     */
+    @Test
+    public void testCreateCollaborationModelWithPosition() {
+        String out = "src/test/resources/output/collaboration-test-2.bpmn";
+
+        logger.info("...create collaboration model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        try {
+            // create two participants
+            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+
+            // add a task
+            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            task.setPosition(60, 40);
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        assertNotNull(model);
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+    }
+
+    /**
+     * This test shows how creating a Collaboration model with Lanes and positions
+     */
+    @Test
+    public void testCreateCollaborationModelWithLanesAndPosition() {
+        String out = "src/test/resources/output/collaboration-test-3.bpmn";
+
+        logger.info("...create collaboration model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        try {
+            // create two participants
+            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            participantSales.setBounds(10, 10, 500, 200);
+
+            BPMNProcess salesProcess = participantSales.openProcess();
+            // add a BPMNLane
+            BPMNLane lane1 = salesProcess.addLane(model, "Europe");
+            BPMNLane lane2 = salesProcess.addLane(model, "United States");
+            lane1.setBounds(40, 10, 470, 100);
+            lane2.setBounds(40, 110, 470, 100);
+
+            // add a task
+            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            task.setPosition(100, 40);
+            lane1.insert(task);
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        assertNotNull(model);
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+    }
+
+    /**
+     * This test shows how creating a Collaboration model with Lanes but without
+     * positions. The positions of the lanes should be computed by the model.
+     */
+    @SuppressWarnings("unused")
+    @Test
+    public void testCreateCollaborationModelWithLanesWithoutPosition() {
+        String out = "src/test/resources/output/collaboration-test-4.bpmn";
+
+        logger.info("...create collaboration model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        try {
+            // create two participants
+            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            participantSales.setBounds(10, 10, 500, 200);
+
+            BPMNProcess salesProcess = participantSales.openProcess();
+            // add a BPMNLane
+            BPMNLane lane1 = salesProcess.addLane(model, "Europe");
+            BPMNLane lane2 = salesProcess.addLane(model, "United States");
+            BPMNLane lane3 = salesProcess.addLane(model, "Africa");
+
+            // add a task
+            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            task.setPosition(100, 40);
+            lane1.insert(task);
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        assertNotNull(model);
         model.save(out);
         logger.info("...model created sucessful: " + out);
     }
