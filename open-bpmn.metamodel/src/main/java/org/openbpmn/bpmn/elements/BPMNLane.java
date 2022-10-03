@@ -36,6 +36,11 @@ import org.w3c.dom.Text;
  */
 public class BPMNLane extends BPMNBaseElement {
 
+    public final static double MIN_WIDTH = 270.0;
+    public final static double MIN_HEIGHT = 100.0;
+    public final static double DEFAULT_WIDTH = 470.0;
+    public final static double DEFAULT_HEIGHT = 150.0;
+    
     /**
      * Creates a BPMNLane out of the bpmn elemnet
      * <p>
@@ -47,7 +52,8 @@ public class BPMNLane extends BPMNBaseElement {
      */
     public BPMNLane(BPMNModel model, Element node) {
         super(model, node);
-
+        // find the BPMNShape element. 
+        bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
     }
 
     /**

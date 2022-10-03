@@ -48,6 +48,7 @@ import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
+import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -58,6 +59,7 @@ import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
+import org.openbpmn.glsp.bpmn.LaneGMode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
@@ -65,7 +67,8 @@ import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowGNodeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
 import org.openbpmn.glsp.elements.label.LabelGNodeBuilder;
-import org.openbpmn.glsp.elements.pool.PoolNodeBuilder;
+import org.openbpmn.glsp.elements.pool.LaneGNodeBuilder;
+import org.openbpmn.glsp.elements.pool.PoolGNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -188,7 +191,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
                         List<GModelElement> childList = computeGModelElements(bpmnProcess, participant);
 
-                        PoolGNode pool = new PoolNodeBuilder(participant) //
+                        PoolGNode pool = new PoolGNodeBuilder(participant) //
                                 .addAll(childList) //
                                 .build();
 
@@ -297,8 +300,8 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
-     * This helper method returns a GModelElement list from all BPMNFlowElements
-     * contained in a given BPMNProcess.
+     * This helper method returns a GModelElement list from all BPMNLanes and
+     * BPMNFlowElements contained in a given BPMNProcess.
      * <p>
      * If an optional BPMNParticipant is provided, than the position of the
      * GModelElement will be computed relative to the position to the GModel Pool
@@ -310,6 +313,19 @@ public class BPMNGModelFactory implements GModelFactory {
             throws BPMNMissingElementException {
 
         List<GModelElement> gNodeList = new ArrayList<>();
+
+        // Add all Lanes
+        for (BPMNLane lane : process.getLanes()) {
+            logger.info("lane: " + lane.getName());
+            // compute relative position
+            GPoint point = computeRelativeGPoint(lane.getBounds(), participant);
+            // build GNode
+            LaneGMode laneNode = new LaneGNodeBuilder(lane) //
+                    .position(point) //
+                    .build();
+
+            gNodeList.add(laneNode);
+        }
 
         // Add all Tasks
         for (BPMNActivity activity : process.getActivities()) {

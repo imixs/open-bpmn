@@ -387,8 +387,8 @@ public class BPMNModel {
             // create shape element
             Element poolShape = this.buildBPMNShape(bpmnParticipant);
             bpmnParticipant.setBpmnShape(poolShape);
-            bpmnParticipant.setBounds(10.0, 10.0, bpmnParticipant.getDefaultWidth(),
-                    bpmnParticipant.getDefaultHeigth());
+            bpmnParticipant.setBounds(10.0, 10.0, BPMNParticipant.DEFAULT_WIDTH,
+                    BPMNParticipant.DEFAULT_HEIGHT);
             // create BPMNLabel
             BPMNLabel bpmnLabel = new BPMNLabel(this, poolShape);
             bpmnLabel.updateLocation(10.0, 10.0);
@@ -684,6 +684,33 @@ public class BPMNModel {
         return null;
     }
 
+//    /**
+//     * Finds a BPMNLane by its id
+//     * 
+//     * @param id
+//     * @return
+//     */
+//    public BPMNParticipant findBPMNLaneById(String id) {
+//        if (id == null || id.isEmpty()) {
+//            return null;
+//        }
+//
+//        if (isCollaborationDiagram()) {
+//            // iterate over all participants
+//            Set<BPMNParticipant> participantList = this.getp.getParticipants();
+//            for (BPMNParticipant participant : participantList) {
+//                if (id.equals(participant.getId())) {
+//                    // the id matches the participant
+//                    return participant;
+//                }
+//            }
+//        }
+//
+//        // no corresponding element found!
+//        return null;
+//    }
+
+    
     /**
      * Finds a corresponding BPMNParticipant by a processID
      * 

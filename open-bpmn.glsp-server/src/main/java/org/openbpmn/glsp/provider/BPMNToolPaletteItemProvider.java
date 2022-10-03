@@ -179,6 +179,7 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
         List<PaletteItem> result = new ArrayList<>();
         result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(BPMNTypes.POOL)));
+        result.add(new PaletteItem("lane", "Lane", new TriggerNodeCreationAction(BPMNTypes.LANE)));
         return result;
     }
 

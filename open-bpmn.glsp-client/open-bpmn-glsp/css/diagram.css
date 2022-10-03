@@ -117,10 +117,15 @@
 
 .pool > .sprotty-node {
     fill: #34466199;
+    stroke: var(--theia-focusBorder);
+    stroke-width: 0.4;
 }
 
-
-
+.lane > .sprotty-node {
+    fill: none;
+    stroke: var(--theia-focusBorder);
+    stroke-width: 0.4;
+}
 
 
 /* sequence flow */

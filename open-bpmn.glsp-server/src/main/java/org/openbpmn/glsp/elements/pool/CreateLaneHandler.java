@@ -16,17 +16,16 @@
 package org.openbpmn.glsp.elements.pool;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.BPMNLane;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -40,8 +39,8 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
-    private static Logger logger = Logger.getLogger(CreatePoolHandler.class.getName());
+public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
+    private static Logger logger = Logger.getLogger(CreateLaneHandler.class.getName());
     private String elementTypeId;
 
     @Inject
@@ -50,37 +49,36 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     @Inject
     protected ActionDispatcher actionDispatcher;
 
-    public CreatePoolHandler() {
-        super(BPMNTypes.POOL);
+    public CreateLaneHandler() {
+        super(BPMNTypes.LANE);
     }
 
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
+        logger.info("===== > created lane....");
         elementTypeId = operation.getElementTypeId();
-        // now we add a new participant into the source model
-        String participantID = BPMNModel.generateShortID("participant");
-        logger.fine("===== > createNode poolID=" + participantID);
+        // now we add a new lane into the source model
+        String laneID = BPMNModel.generateShortID("lane");
         try {
-            // add a new BPMNParticipant to BPMN model
-            BPMNParticipant participant = modelState.getBpmnModel().addParticipant(getLabel());
-            Optional<GPoint> point = operation.getLocation();
-            if (point.isPresent()) {
-                // set the bounds
-                participant.getBounds().setPosition(point.get().getX(), point.get().getY());
-                participant.getBounds().setDimension(BPMNParticipant.DEFAULT_WIDTH, BPMNParticipant.DEFAULT_HEIGHT);
+            // find the process - should be the corresponding participant process
+            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
+            if (bpmnProcess != null) {
+                BPMNLane bpmnLane = bpmnProcess.addLane(modelState.getBpmnModel(),
+                        "Lane " + (bpmnProcess.getLanes().size() + 1));
+                logger.info("===== > created lane=" + bpmnLane.getId());
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(participantID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(laneID)));
     }
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.POOL_GNODE, elementTypeId, modelState);
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.LANE_GMODE, elementTypeId, modelState);
         nodeCounter++; // start with 1
-        return "Pool-" + nodeCounter;
+        return "Lane-" + nodeCounter;
     }
 
 }

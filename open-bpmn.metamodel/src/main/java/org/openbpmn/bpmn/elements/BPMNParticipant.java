@@ -15,6 +15,8 @@ import org.w3c.dom.Element;
  */
 public class BPMNParticipant extends BPMNBaseElement {
 
+    public final static double MIN_WIDTH = 300.0;
+    public final static double MIN_HEIGHT = 100.0;
     public final static double DEFAULT_WIDTH = 500.0;
     public final static double DEFAULT_HEIGHT = 150.0;
     public final static double POOL_OFFSET = 30.0;
@@ -24,11 +26,8 @@ public class BPMNParticipant extends BPMNBaseElement {
 
     public BPMNParticipant(BPMNModel model, Element node) throws BPMNModelException {
         super(model, node);
-
-        // find the BPMNShape element. If not defined create a new one
-
+        // find the BPMNShape element. 
         bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
-
     }
 
 
@@ -58,16 +57,5 @@ public class BPMNParticipant extends BPMNBaseElement {
         this.processRef = processRef;
         this.getElementNode().setAttribute("processRef", processRef);
     }
-
-    public double getDefaultWidth() {
-        return DEFAULT_WIDTH;
-    }
-
-    public double getDefaultHeigth() {
-        return DEFAULT_HEIGHT;
-    }
-
-    
-    
   
 }

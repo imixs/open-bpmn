@@ -431,7 +431,7 @@ public class BPMNProcess extends BPMNBaseElement {
             if (currentLaneCount > 0) {
                 // increase height...
                 expansion = currentHeight / currentLaneCount;
-                bpmnParticipant.getBounds().setDimension(currentWidth, currentHeight + expansion); 
+                bpmnParticipant.getBounds().setDimension(currentWidth, currentHeight + expansion);
             }
 
             Element lanebpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
@@ -445,11 +445,11 @@ public class BPMNProcess extends BPMNBaseElement {
             double laneX = poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET;
             double laneY = poolBounds.getPosition().getY();
             if (currentLaneCount > 0) {
-                laneY=laneY+ (currentLaneCount* expansion);
+                laneY = laneY + (currentLaneCount * expansion);
             }
-            
+
             double laneWidth = poolBounds.getDimension().getWidth() - BPMNParticipant.POOL_OFFSET;
-            double laneHeight = poolBounds.getDimension().getHeight() / (currentLaneCount+1);
+            double laneHeight = poolBounds.getDimension().getHeight() / (currentLaneCount + 1);
             if (currentLaneCount > 0) {
                 // overlap lanes by 1 pixel
                 laneY--;
@@ -521,6 +521,32 @@ public class BPMNProcess extends BPMNBaseElement {
             lanes = new HashSet<BPMNLane>();
         }
         return lanes;
+    }
+
+    /**
+     * Deletes a BPMNLane and all referred element from this process.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteLane(String id) {
+        BPMNLane lane = (BPMNLane) findBaseElementById(id);
+        if (lane == null) {
+            // does not exist
+            return;
+        }
+
+        List<String> flowElementList = lane.getFlowElementIDs();
+        for (String flowEleemntID : flowElementList) {
+            this.deleteBPMNBaseElement(flowEleemntID);
+        }
+
+        // finally delete the task element and the shape
+        this.getElementNode().removeChild(lane.getElementNode());
+        if (lane.getBpmnShape() != null) {
+            model.getBpmnPlane().removeChild(lane.getBpmnShape());
+        }
+        this.getLanes().remove(lane);
     }
 
     /**
@@ -673,6 +699,9 @@ public class BPMNProcess extends BPMNBaseElement {
     public void deleteBPMNBaseElement(String id) {
 
         BPMNBaseElement baseElement = findBaseElementById(id);
+        if (baseElement instanceof BPMNLane) {
+            this.deleteLane(id);
+        }
         if (baseElement instanceof BPMNActivity) {
             this.deleteTask(id);
         }
@@ -699,15 +728,22 @@ public class BPMNProcess extends BPMNBaseElement {
         if (id == null || id.isEmpty()) {
             return null;
         }
-
-        // test flowElements...
+        
+        // test Lanes...
+        Set<BPMNLane> lanes = this.getLanes();
+        for (BPMNLane element : lanes) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+    
+        // test FlowElements...
         BPMNBaseElement result = findBPMNFlowElementById(id);
-
         if (result != null) {
             return result;
         }
 
-        // test sequence flows
+        // test SequenceFlows
         result = this.findBPMNSequenceFlowById(id);
         if (result != null) {
             return result;

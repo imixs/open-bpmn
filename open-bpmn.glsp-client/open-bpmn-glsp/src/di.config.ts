@@ -40,6 +40,7 @@ import {
 	LabelNode,
 	GatewayNode,
 	PoolNode,
+	LaneNode,
 	Icon,
 	TaskNode,
 	EventNode,
@@ -75,15 +76,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     // bind the BPMN AnchorComputer
     bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
-   // bind(TYPES.IAnchorComputer).to(BPMNPolylineElementAnchor).inSingletonScope();
-
+    // bind(TYPES.IAnchorComputer).to(BPMNPolylineElementAnchor).inSingletonScope();
     // bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
     // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
 
     configureDefaultModelElements(context);
 
-    //configureModelElement(context, 'label', LabelNode, RoundedCornerNodeView);
-    //configureModelElement(context, 'BPMNLabel', SLabel, SLabelView, { enable: [editLabelFeature,selectFeature,moveFeature] });
     configureModelElement(context, 'BPMNLabel', LabelNode, RoundedCornerNodeView);
 
     configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
@@ -110,6 +108,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'icon', Icon, IconView);
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
+    configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
     configureModelElement(context, 'container', SCompartment, StructureCompartmentView);
 
     // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);

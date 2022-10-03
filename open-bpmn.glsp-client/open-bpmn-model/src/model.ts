@@ -144,32 +144,7 @@ export class GatewayNode extends DiamondNode implements BPMNFlowElement {
 	];
 	category?: string;
 	documentation: string;
-/*
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
-		const label = this.children.find(element => element.type === 'label:heading');
-		if (label && isEditableLabel(label)) {
-			return label;
-		}
-		return undefined;
-	}
-
-	get name(): string {
-		const labelText = this.editableLabel?.text;
-		return labelText ? labelText : '<unknown>';
-	}
-	*/
 }
-
-/*
-export namespace GatewayNode {
-	export namespace Type {
-		export const EXLUSIVE = 'exclusiveNode';
-		export const INCLUSIVE = 'inclusiveNode';
-		export const PARALLEL = 'parallelNode';
-		export const UNDEFINED = 'undefined';
-	}
-}
-*/
 
 /*
  * Helper Methods to determind if a ModelElement is of a specific type
@@ -220,6 +195,31 @@ export class Icon extends SShapeElement implements LayoutContainer {
 }
 
 export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
+	static override readonly DEFAULT_FEATURES = [
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+
+	name = '';
+
+	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+		const label = this.children.find(element => element.type === 'label:heading');
+		if (label && isEditableLabel(label)) {
+			return label;
+		}
+		return undefined;
+	}
+}
+
+export class LaneNode extends RectangularNode implements Nameable, WithEditableLabel {
 	static override readonly DEFAULT_FEATURES = [
 		deletableFeature,
 		selectFeature,

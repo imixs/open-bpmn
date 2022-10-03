@@ -40,6 +40,7 @@ import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
+import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
@@ -119,8 +120,9 @@ public class BPMNDiagramModule extends DiagramModule {
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);
 
-        // Pools
+        // Pools & Lanes
         binding.add(CreatePoolHandler.class);
+        binding.add(CreateLaneHandler.class);
 
         // binding.remove(LayoutOperationHandler.class);
 
@@ -199,7 +201,5 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Imixs Extensions (just for testing)
         binding.addBinding().to(ImixsBPMNTaskExtension.class);
-
     }
-
 }

@@ -80,6 +80,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(BPMNTypes.EVENT, BpmnPackage.Literals.EVENT_GNODE);
         mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW_GNODE);
         mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
+        mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GMODE);
 
         return mappings;
     }
@@ -118,6 +119,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // Pool ShapeEventTypes
         nodeHints.add(createPoolHint());
+        nodeHints.add(createLaneHint());
 
         // BPMNLabel ShapeEventTypes
         nodeHints.add(createBPMNLabelHint());
@@ -152,9 +154,19 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     }
 
     private ShapeTypeHint createPoolHint() {
-        ShapeTypeHint catHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
-        catHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
-        return catHint;
+        ShapeTypeHint poolHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
+        List<String> elementList = new ArrayList<>();
+        elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        elementList.add(BPMNModel.LANE);
+
+        poolHint.setContainableElementTypeIds(elementList);
+        return poolHint;
+    }
+
+    private ShapeTypeHint createLaneHint() {
+        ShapeTypeHint laneHint = new ShapeTypeHint(BPMNTypes.LANE, true, true, false, true);
+        laneHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        return laneHint;
     }
 
     /**
