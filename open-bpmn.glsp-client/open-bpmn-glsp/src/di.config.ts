@@ -28,7 +28,7 @@ import {
     SCompartmentView,
     SLabel,CircularNodeView,DiamondNodeView,
     SLabelView,configureView,
-    StructureCompartmentView,configureCommand,
+    configureCommand,
     TYPES
 } from '@eclipse-glsp/client';
 // import { DefaultTypes } from '@eclipse-glsp/protocol';
@@ -47,7 +47,7 @@ import {
 	SequenceFlow,
 	BPMNElementAnchor
 } from '@open-bpmn/open-bpmn-model';
-import { IconView,BPMNLabelNodeSelectionListener } from './bpmn-element-views';
+import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNElementSnapper } from './bpmn-helperlines';
 
@@ -107,9 +107,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
+    configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
+
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
-    configureModelElement(context, 'container', SCompartment, StructureCompartmentView);
+    // configureModelElement(context, 'container', SCompartment, StructureCompartmentView);
+    configureModelElement(context, 'container', SCompartment, SCompartmentView);
 
     // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
     configureModelElement(context, 'sequenceFlow', SequenceFlow, BPMNSequenceFlowView);

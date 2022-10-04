@@ -15,12 +15,17 @@
  ********************************************************************************/
 package org.openbpmn.glsp.utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
+import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.elements.IconGNodeBuilder;
@@ -51,6 +56,29 @@ public class BPMNBuilderHelper {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header") //
                 .text(node.getName()) //
+                .build();
+    }
+
+    /**
+     * Creates the Header for a BPMNPool or BPMNLane
+     *
+     * @param node
+     * @return GCompartment
+     */
+    public static GCompartment createBPMNContainerHeader(final BaseElementGNode node) {
+        Map<String, Object> layoutOptions = new HashMap<>();
+
+        GLabel glabel = new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+                .id(node.getId() + "_header_label") //
+                .text(node.getName()) //
+                .build();
+
+        return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
+                .id(node.getId() + "_header") //
+                .layout(GConstants.Layout.HBOX) //
+                .layoutOptions(layoutOptions) //
+                .add(glabel) //
+                .addCssClass("label") //
                 .build();
     }
 

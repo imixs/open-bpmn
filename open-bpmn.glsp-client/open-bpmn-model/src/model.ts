@@ -88,11 +88,6 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 		withEditLabelFeature
 	];
 
-	// return the default bounds
-//	get symbolBounds(): Bounds {
-//		return this.bounds;
-//	}
-
 	get editableLabel(): (SChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
 		if (label && isEditableLabel(label)) {
@@ -152,6 +147,18 @@ export class GatewayNode extends DiamondNode implements BPMNFlowElement {
  */
 export function isTaskNode(element: SModelElement): element is TaskNode {
 	return element instanceof TaskNode || false;
+}
+
+export function isPoolNode(element: SModelElement): element is PoolNode {
+	return element instanceof PoolNode || false;
+}
+
+export function isContainerNode(element: SModelElement): element is LaneNode | PoolNode {
+	return (element instanceof LaneNode || element instanceof PoolNode) || false;
+}
+
+export function isLaneNode(element: SModelElement): element is LaneNode {
+	return element instanceof LaneNode || false;
 }
 
 export function isEventNode(element: SModelElement): element is EventNode {

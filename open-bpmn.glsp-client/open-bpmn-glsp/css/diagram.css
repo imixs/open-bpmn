@@ -141,10 +141,11 @@
     outline-offset: -1px;
 }
 
-.pool .header .sprotty-label {
+.pool .header text {
+	font-weight: normal;
+    font-size: 0.7em;
     fill: var(--theia-titleBar-activeForeground);
 }
-
 
 /* sequence flow */
 .sprotty-edge.sequenceflow:not(.selected),

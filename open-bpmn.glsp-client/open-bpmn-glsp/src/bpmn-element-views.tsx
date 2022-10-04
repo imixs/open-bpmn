@@ -24,7 +24,7 @@ import {
     TYPES
 } from '@eclipse-glsp/client';
 import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
-import { Icon, isBPMNLabelNode, isEventNode, isGatewayNode, isTaskNode } from '@open-bpmn/open-bpmn-model';
+import { Icon, isContainerNode, isBPMNLabelNode, isEventNode, isGatewayNode, isTaskNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { findParentByFeature, ShapeView, svg } from 'sprotty';
@@ -173,6 +173,35 @@ export class IconView extends ShapeView {
         return vnode;
     }
 }
+
+/*
+ * The ContainerHeaderView is used to show the label in a BPMNPool or BPMNLane element
+ *
+ * The label is displayed vertical on the left side of the container
+ */
+@injectable()
+export class ContainerHeaderView extends ShapeView {
+    render(element: Icon, context: RenderingContext): VNode | undefined {
+        if (!this.isVisible(element, context)) {
+            return undefined;
+        }
+
+        const containerNode = findParentByFeature(element,isContainerNode);
+        let containerLabel='undefined';
+        if (containerNode) {
+	        containerLabel=containerNode.name;
+        }
+        const vnode: any = (
+            <g>
+                <text transform={'scale(1),translate(14,0),rotate(-90)'}>{containerLabel}</text>
+            </g>
+        );
+       
+        return vnode;
+    }
+}
+
+
 
 /**
  * This selectionListener selects an associated BPMNLabel of a

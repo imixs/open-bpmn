@@ -33,6 +33,7 @@ import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.PoolGNode;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
@@ -91,7 +92,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.VBOX);
+        node.setLayout(GConstants.Layout.HBOX);
         // Set min width/height for the Pool element
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNParticipant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNParticipant.MIN_HEIGHT);
@@ -101,8 +102,9 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");
+        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, "center");
 
-        node.getChildren().add(createHeaderCompartment(node));
+        node.getChildren().add(BPMNBuilderHelper.createBPMNContainerHeader(node));
         node.getChildren().add(createContainerCompartment(node));
 
     }
@@ -121,6 +123,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
                 .layout(GConstants.Layout.HBOX) //
                 .layoutOptions(layoutOptions) //
                 .add(createLabel(node)) //
+                .addCssClass("container-label") //
                 .build();
     }
 
@@ -145,15 +148,15 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
      */
     private GCompartment createContainerCompartment(final PoolGNode node) {
         Map<String, Object> layoutOptions = new HashMap<>();
-        layoutOptions.put(H_ALIGN, "left");
+
         layoutOptions.put(H_GRAB, true);
         layoutOptions.put(V_GRAB, true);
-        GCompartmentBuilder containerCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
+
+        // DefaultTypes.NODE ModelTypes.CONTAINER
+        return new GCompartmentBuilder(ModelTypes.CONTAINER) //
                 .id(node.getId() + "_container") //
-                .size(0, 0) //
                 .layout(GConstants.Layout.FREEFORM) //
-                .layoutOptions(layoutOptions);
-        return containerCompartmentBuilder //
+                .layoutOptions(layoutOptions) //
                 .build();
     }
 }
