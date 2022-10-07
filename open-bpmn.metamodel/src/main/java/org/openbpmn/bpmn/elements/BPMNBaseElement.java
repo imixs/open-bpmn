@@ -1,6 +1,6 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.List;
+import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -107,11 +107,11 @@ public abstract class BPMNBaseElement {
     public String getDocumentation() {
         if (documentationNode == null) {
             // lazy loading of documentation element
-            List<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
+            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
                     BPMNNS.BPMN2.prefix + ":documentation");
             if (elementList.size() > 0) {
                 // get the first one and update the value only
-                documentationNode = elementList.get(0);
+                documentationNode = elementList.iterator().next();
             }
         }
         if (documentationNode != null && documentationNode.getFirstChild() != null) {
@@ -129,7 +129,7 @@ public abstract class BPMNBaseElement {
     public void setDocumentation(String content) {
         if (documentationNode == null) {
             // lazy loading of documentation element
-            List<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
+            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
                     BPMNNS.BPMN2.prefix + ":documentation");
             if (elementList.size() == 0) {
                 // create new node
@@ -138,7 +138,7 @@ public abstract class BPMNBaseElement {
                 elementNode.appendChild(documentationNode);
             } else {
                 // get the first one and update the value only
-                documentationNode = elementList.get(0);
+                documentationNode = elementList.iterator().next();
             }
         }
         // remove old child nodes
@@ -164,7 +164,7 @@ public abstract class BPMNBaseElement {
     public void setChildNodeContent(String nodeName, String content, String id) {
         Element childNode = null;
         // load the element
-        List<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
+        Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
         if (elementList.size() == 0) {
             // create new node
             childNode = model.createElement(BPMNNS.BPMN2, nodeName);
@@ -174,7 +174,7 @@ public abstract class BPMNBaseElement {
             elementNode.appendChild(childNode);
         } else {
             // get the first one and remove old values
-            childNode = elementList.get(0);
+            childNode = elementList.iterator().next();
             // remove old child nodes of the the node...
             NodeList subChildList = childNode.getChildNodes();
             for (int i = 0; i < subChildList.getLength(); i++) {
@@ -196,10 +196,10 @@ public abstract class BPMNBaseElement {
     public String getChildNodeContent(String nodeName) {
         Element childNode = null;
         // lazy loading of documentation element
-        List<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
+        Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
         if (elementList.size() > 0) {
             // get the first one and update the value only
-            childNode = elementList.get(0);
+            childNode = elementList.iterator().next();
             if (childNode.getFirstChild() != null) {
                 return childNode.getFirstChild().getNodeValue();
             }

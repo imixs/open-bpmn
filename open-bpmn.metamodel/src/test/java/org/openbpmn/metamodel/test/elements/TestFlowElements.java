@@ -78,9 +78,9 @@ public class TestFlowElements {
             assertEquals("Task_1", sequenceFlow.getTargetRef());
 
             // test waypoints
-            List<BPMNPoint> wayPoints = sequenceFlow.getWayPoints();
+            Set<BPMNPoint> wayPoints = sequenceFlow.getWayPoints();
             assertNotNull(wayPoints);
-            BPMNPoint wayPoint = wayPoints.get(0);
+            BPMNPoint wayPoint = wayPoints.iterator().next();
             assertEquals(118.0, wayPoint.getX());
             assertEquals(136.0, wayPoint.getY());
         } catch (BPMNModelException e) {

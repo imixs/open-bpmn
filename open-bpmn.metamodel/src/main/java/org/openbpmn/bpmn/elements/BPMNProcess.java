@@ -1,8 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
@@ -124,7 +123,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @return
      */
     public Set<BPMNFlowElement> getBPMNFlowElements() {
-        HashSet<BPMNFlowElement> result = new HashSet<BPMNFlowElement>();
+        Set<BPMNFlowElement> result = new LinkedHashSet<BPMNFlowElement>();
 
         result.addAll(this.getActivities());
         result.addAll(this.getEvents());
@@ -139,7 +138,7 @@ public class BPMNProcess extends BPMNBaseElement {
      */
     public Set<BPMNActivity> getActivities() {
         if (activities == null) {
-            activities = new HashSet<BPMNActivity>();
+            activities = new LinkedHashSet<BPMNActivity>();
         }
         return activities;
     }
@@ -150,7 +149,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
     public Set<BPMNEvent> getEvents() {
         if (events == null) {
-            events = new HashSet<BPMNEvent>();
+            events = new LinkedHashSet<BPMNEvent>();
         }
         return events;
     }
@@ -161,7 +160,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
     public Set<BPMNGateway> getGateways() {
         if (gateways == null) {
-            gateways = new HashSet<BPMNGateway>();
+            gateways = new LinkedHashSet<BPMNGateway>();
         }
         return gateways;
     }
@@ -172,7 +171,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
     public Set<BPMNSequenceFlow> getSequenceFlows() {
         if (sequenceFlows == null) {
-            sequenceFlows = new HashSet<BPMNSequenceFlow>();
+            sequenceFlows = new LinkedHashSet<BPMNSequenceFlow>();
         }
         return sequenceFlows;
     }
@@ -424,9 +423,9 @@ public class BPMNProcess extends BPMNBaseElement {
 
             // if the pool already contains lanes, than we autoincrease the height of the
             // pool
-            double currentWidth = bpmnParticipant.getBounds().getDimension().getWidth();
-            double currentHeight = bpmnParticipant.getBounds().getDimension().getHeight();
-            double expansion = 0;
+            int currentWidth = (int) bpmnParticipant.getBounds().getDimension().getWidth();
+            int currentHeight = (int) bpmnParticipant.getBounds().getDimension().getHeight();
+            int expansion = 0;
             int currentLaneCount = this.getLanes().size();
             if (currentLaneCount > 0) {
                 // increase height...
@@ -442,18 +441,18 @@ public class BPMNProcess extends BPMNBaseElement {
 
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
 
-            double laneX = poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET;
-            double laneY = poolBounds.getPosition().getY();
+            int laneX = (int) (poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET);
+            int laneY = (int) poolBounds.getPosition().getY();
             if (currentLaneCount > 0) {
                 laneY = laneY + (currentLaneCount * expansion);
             }
 
-            double laneWidth = poolBounds.getDimension().getWidth() - BPMNParticipant.POOL_OFFSET;
-            double laneHeight = poolBounds.getDimension().getHeight() / (currentLaneCount + 1);
+            int laneWidth = (int) (poolBounds.getDimension().getWidth() - BPMNParticipant.POOL_OFFSET);
+            int laneHeight = (int) (poolBounds.getDimension().getHeight() / (currentLaneCount + 1));
             if (currentLaneCount > 0) {
                 // overlap lanes by 1 pixel
-                laneY--;
-                laneHeight++;
+                // laneY--;
+                // laneHeight++;
             }
 
             bpmnLane.getBounds().setDimension(laneWidth, laneHeight);
@@ -490,7 +489,7 @@ public class BPMNProcess extends BPMNBaseElement {
                     "process '" + this.getId() + "' does not define a laneSet");
         }
         // find the lane
-        List<Element> lanes = BPMNModel.findChildNodesByName(laneSet, "bpmn2:lane");
+        Set<Element> lanes = BPMNModel.findChildNodesByName(laneSet, "bpmn2:lane");
         Element lane = null;
         for (Element _lane : lanes) {
             if (laneId.equals(_lane.getAttribute("id"))) {
@@ -518,9 +517,13 @@ public class BPMNProcess extends BPMNBaseElement {
 
     public Set<BPMNLane> getLanes() {
         if (lanes == null) {
-            lanes = new HashSet<BPMNLane>();
+            lanes = new LinkedHashSet<BPMNLane>();
         }
         return lanes;
+    }
+
+    public void setLanes(Set<BPMNLane> lanes) {
+        this.lanes = lanes;
     }
 
     /**
@@ -536,7 +539,7 @@ public class BPMNProcess extends BPMNBaseElement {
             return;
         }
 
-        List<String> flowElementList = lane.getFlowElementIDs();
+        Set<String> flowElementList = lane.getFlowElementIDs();
         for (String flowEleemntID : flowElementList) {
             this.deleteBPMNBaseElement(flowEleemntID);
         }
@@ -561,7 +564,7 @@ public class BPMNProcess extends BPMNBaseElement {
             // does not exist
             return;
         }
-        List<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(task.getId());
+        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(task.getId());
 
         // remove all flows
         for (BPMNSequenceFlow flow : flowList) {
@@ -589,7 +592,7 @@ public class BPMNProcess extends BPMNBaseElement {
             // does not exist
             return;
         }
-        List<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(event.getId());
+        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(event.getId());
 
         // remove all flows
         for (BPMNSequenceFlow flow : flowList) {
@@ -617,7 +620,7 @@ public class BPMNProcess extends BPMNBaseElement {
             // does not exist
             return;
         }
-        List<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(getway.getId());
+        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(getway.getId());
 
         // remove all flows
         for (BPMNSequenceFlow flow : flowList) {
@@ -728,7 +731,7 @@ public class BPMNProcess extends BPMNBaseElement {
         if (id == null || id.isEmpty()) {
             return null;
         }
-        
+
         // test Lanes...
         Set<BPMNLane> lanes = this.getLanes();
         for (BPMNLane element : lanes) {
@@ -736,7 +739,7 @@ public class BPMNProcess extends BPMNBaseElement {
                 return element;
             }
         }
-    
+
         // test FlowElements...
         BPMNBaseElement result = findBPMNFlowElementById(id);
         if (result != null) {
@@ -830,8 +833,9 @@ public class BPMNProcess extends BPMNBaseElement {
      * @throws BPMNModelException
      */
     private void createBPMNLanesByNode(Element laneSet) {
+        this.laneSet = laneSet;
         // find Child Nodes
-        List<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, BPMNNS.BPMN2.prefix + ":lane");
+        Set<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, BPMNNS.BPMN2.prefix + ":lane");
         for (Element _lane : laneNodes) {
             BPMNLane bpmnLane = new BPMNLane(model, _lane);
             this.getLanes().add(bpmnLane);
@@ -891,8 +895,8 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id of a flowElement
      * @return list of SequenceFlows
      */
-    private List<BPMNSequenceFlow> findSequenceFlowsByElementId(String id) {
-        List<BPMNSequenceFlow> result = new ArrayList<BPMNSequenceFlow>();
+    private Set<BPMNSequenceFlow> findSequenceFlowsByElementId(String id) {
+        Set<BPMNSequenceFlow> result = new LinkedHashSet<BPMNSequenceFlow>();
         if (id == null || id.isEmpty()) {
             return result;
         }
@@ -903,6 +907,59 @@ public class BPMNProcess extends BPMNBaseElement {
             }
         }
         return result;
+    }
+
+    /**
+     * This method inserts a lane before a target lane within an existing laneset. A
+     * client need to re-initalize the process after an insert.
+     * 
+     * @param laneTest
+     * @param lane2
+     */
+    public void insertLaneBefore(BPMNLane laneTest, BPMNLane lane2) {
+
+        this.laneSet.insertBefore(laneTest.getElementNode(), lane2.getElementNode());
+        // reorder the BPMNLanes
+        BPMNParticipant bpmnParticipant = model.findBPMNParticipantByProcessId(this.getId());
+        LinkedHashSet<BPMNLane> newOrderedLaneSet = new LinkedHashSet<BPMNLane>();
+        Iterator<BPMNLane> laneIterator = this.lanes.iterator();
+        while (laneIterator.hasNext()) {
+            BPMNLane aLane = laneIterator.next();
+            if (!aLane.getId().equals(laneTest.getId()) && !aLane.getId().equals(lane2.getId())) {
+                newOrderedLaneSet.add(aLane);
+                continue;
+            }
+            if (aLane.getId().equals(lane2.getId())) {
+                newOrderedLaneSet.add(laneTest);
+                newOrderedLaneSet.add(aLane);
+                continue;
+            }
+            if (aLane.getId().equals(laneTest.getId())) {
+                continue;
+            }
+        }
+
+        this.setLanes(newOrderedLaneSet);
+        try { // now recompute the position of the lanes according to their order within the
+              // laneset
+            BPMNBounds poolBounds = bpmnParticipant.getBounds();
+            int bpmnLaneX = (int) (poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET);
+            int bpmnLaneY = (int) poolBounds.getPosition().getY();
+            Iterator<BPMNLane> laneSetIterator = this.getLanes().iterator();
+            while (laneSetIterator.hasNext()) {
+                // get BPMNBounds and GNode for this lane...
+                BPMNLane lane = laneSetIterator.next();
+                // System.out.println(" --->" + lane.getId() + " new yPos="+bpmnLaneY);
+                BPMNBounds bpmnLaneBounds = lane.getBounds();
+                // Update absolute BPMN position
+                bpmnLaneBounds.setPosition(bpmnLaneX, bpmnLaneY);
+                // adjust laneY for the next iteration
+                bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
+            }
+        } catch (BPMNMissingElementException e) {
+            BPMNModel.error("Error updating bonds for LaneSet: " + e.getMessage());
+        }
+
     }
 
 }

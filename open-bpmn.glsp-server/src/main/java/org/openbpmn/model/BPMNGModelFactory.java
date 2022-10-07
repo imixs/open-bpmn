@@ -355,7 +355,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // compute the symbol for the BPMNEvent
             String symbol = null;
-            List<Element> eventDefinitionList = event.getEventDefinitions();
+            Set<Element> eventDefinitionList = event.getEventDefinitions();
             if (eventDefinitionList.size() > 0) {
                 for (Node eventDefinition : eventDefinitionList) {
                     if (symbol == null) {

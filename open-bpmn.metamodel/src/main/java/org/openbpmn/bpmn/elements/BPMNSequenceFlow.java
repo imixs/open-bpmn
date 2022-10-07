@@ -1,7 +1,9 @@
 package org.openbpmn.bpmn.elements;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
@@ -17,12 +19,12 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
     protected String sourceRef = null;
     protected String targetRef = null;
     protected Element bpmnEdge = null;
-    protected List<BPMNPoint> wayPoints = null;
+    protected Set<BPMNPoint> wayPoints = null;
 
     public BPMNSequenceFlow(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
         super(model, node);
         this.bpmnProcess = _bpmnProcess;
-        wayPoints = new ArrayList<BPMNPoint>();
+        wayPoints = new LinkedHashSet<BPMNPoint>();
 
         this.sourceRef = this.getAttribute("sourceRef");
         if (sourceRef.isEmpty()) {
@@ -42,7 +44,7 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
                 createBPMNEdge();
             } else {
                 // parse waypoints (di:waypoint)
-                List<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, BPMNNS.DI.prefix + ":waypoint");
+                Set<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, BPMNNS.DI.prefix + ":waypoint");
                 for (Element wayPoint : wayPoints) {
                     NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                     BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
@@ -105,11 +107,11 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
         return this.bpmnProcess.findBPMNFlowElementById(targetRef);
     }
 
-    public List<BPMNPoint> getWayPoints() {
+    public Set<BPMNPoint> getWayPoints() {
         return wayPoints;
     }
 
-    public void setWayPoints(List<BPMNPoint> wayPoints) {
+    public void setWayPoints(Set<BPMNPoint> wayPoints) {
         this.wayPoints = wayPoints;
     }
 

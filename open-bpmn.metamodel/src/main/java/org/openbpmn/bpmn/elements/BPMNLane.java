@@ -1,7 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -85,7 +85,7 @@ public class BPMNLane extends BPMNBaseElement {
      */
     public boolean contains(BPMNFlowElement bpmnElement) {
         // get all bpmn2:flowNodeRef
-        List<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
+        Set<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
                 BPMNNS.BPMN2.prefix + ":flowNodeRef");
         for (Element element : refs) {
             if (bpmnElement.getId().equals(element.getTextContent())) {
@@ -100,10 +100,10 @@ public class BPMNLane extends BPMNBaseElement {
      * Returns a list of a all BPMNFlowElement IDs contained by this lane
      * 
      * @return - list of ids
-     */
-    public List<String> getFlowElementIDs() {
-        List<String> result = new ArrayList<String>();
-        List<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
+     */ 
+    public Set<String> getFlowElementIDs() {
+        Set<String> result = new LinkedHashSet<String>();
+        Set<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
                 BPMNNS.BPMN2.prefix + ":flowNodeRef");
         for (Element element : refs) {
             result.add(element.getTextContent());
@@ -111,4 +111,5 @@ public class BPMNLane extends BPMNBaseElement {
         return result;
     }
 
+    
 }

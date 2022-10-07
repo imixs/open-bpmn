@@ -57,10 +57,10 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeB
         this.name = lane.getName();
         this.id = lane.getId();
         try {
-            BPMNBounds bpmnPoolBounds = lane.getBounds();
-            this.position = GraphUtil.point(bpmnPoolBounds.getPosition().getX(), bpmnPoolBounds.getPosition().getY());
-            this.size = GraphUtil.dimension(bpmnPoolBounds.getDimension().getWidth(),
-                    bpmnPoolBounds.getDimension().getHeight());
+            BPMNBounds bpmnLaneBounds = lane.getBounds();
+            this.position = GraphUtil.point(bpmnLaneBounds.getPosition().getX(), bpmnLaneBounds.getPosition().getY());
+            this.size = GraphUtil.dimension(bpmnLaneBounds.getDimension().getWidth(),
+                    bpmnLaneBounds.getDimension().getHeight());
         } catch (BPMNMissingElementException e) {
             // should not happen
             logger.severe("BPMNLane does not support a BPMNBounds object!");

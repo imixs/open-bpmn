@@ -66,6 +66,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
                 BPMNLane bpmnLane = bpmnProcess.addLane(modelState.getBpmnModel(),
                         "Lane " + (bpmnProcess.getLanes().size() + 1));
                 logger.info("===== > created lane=" + bpmnLane.getId());
+
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();

@@ -1,7 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -60,9 +60,9 @@ public class BPMNEvent extends BPMNFlowElement {
      *         exist
      * @throws BPMNModelException
      */
-    public List<Element> getEventDefinitions()  {
+    public Set<Element> getEventDefinitions()  {
 
-        List<Element> result = new ArrayList<Element>();
+        Set<Element> result = new LinkedHashSet<Element>();
 
         if (this.getElementNode() == null) {
             return result;

@@ -100,7 +100,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addElements("name"). //
                 addElement("documentation", "Documentation", multilineOption);
 
-        List<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
+        Set<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
         // Conditional
         List<Element> conditionalEventDefinitions = eventDefinitions.stream()
                 .filter(c -> "conditionalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());

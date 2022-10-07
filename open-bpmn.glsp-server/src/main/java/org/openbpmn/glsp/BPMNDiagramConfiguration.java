@@ -163,8 +163,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         return poolHint;
     }
 
+    /**
+     * Lanes are not moveable...
+     *
+     * @return
+     */
     private ShapeTypeHint createLaneHint() {
-        ShapeTypeHint laneHint = new ShapeTypeHint(BPMNTypes.LANE, true, true, false, true);
+        ShapeTypeHint laneHint = new ShapeTypeHint(BPMNTypes.LANE, false, true, false, true);
         laneHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         return laneHint;
     }

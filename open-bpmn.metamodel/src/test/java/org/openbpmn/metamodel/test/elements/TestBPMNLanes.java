@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
@@ -33,7 +33,7 @@ public class TestBPMNLanes {
 
 
     /**
-     * This test verifies bounds of the start event
+     * This test verifies the participant structure
      */
     @Test
     public void testReadLanes() {
@@ -69,7 +69,7 @@ public class TestBPMNLanes {
      */
     @Test
     public void testCreateCollaborationModelWithLane() {
-        String out = "src/test/resources/create-laneset_1.bpmn";
+        String out = "src/test/resources/output/create-laneset_1.bpmn";
 
         logger.info("...create collaboration model with lane");
 
@@ -100,10 +100,10 @@ public class TestBPMNLanes {
             
             assertTrue(lane.contains(task));
             
-            List<String> flowElementList = lane.getFlowElementIDs();
+            Set<String> flowElementList = lane.getFlowElementIDs();
             assertNotNull(flowElementList);
             assertEquals(1,flowElementList.size());
-            assertEquals("task_1",flowElementList.get(0));
+            assertEquals("task_1",flowElementList.iterator().next());
           
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -115,5 +115,46 @@ public class TestBPMNLanes {
         logger.info("...model created sucessful: " + out);
     }
 
+    
+    
+
+    /**
+     * This test loads a model and inserts a new Lane before an existing
+     */
+    @Test
+    public void testInsertNewLaneBeforeOther() {
+        String out = "src/test/resources/output/create-laneset_2.bpmn";
+
+        logger.info("...read model");
+        try {
+            model = BPMNModelFactory.read("/refmodel-5.bpmn");
+     
+            BPMNParticipant participant = model.findBPMNParticipantById("Participant_1");
+            assertNotNull(participant);
+            
+            BPMNProcess process = participant.openProcess();
+            assertNotNull(process);
+
+            
+            // add new Lane...
+            BPMNLane laneTest = process.addLane(model, "Lane Test");
+            assertNotNull(laneTest);
+            // read laneset.....
+            assertEquals(3, process.getLanes().size());
+            
+            
+            // insert new test-lane before Lane 2
+            BPMNLane lane2 = process.findLane("Lane_2");
+          process.insertLaneBefore(laneTest, lane2) ;// laneTest.insertBefore(lane2);
+           
+            model.save(out);
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+    
+    
 
 }

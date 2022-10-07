@@ -6,12 +6,11 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -254,7 +253,7 @@ public class BPMNModel {
 
     public Set<BPMNParticipant> getParticipants() {
         if (participants == null) {
-            participants = new HashSet<BPMNParticipant>();
+            participants = new LinkedHashSet<BPMNParticipant>();
         }
         return participants;
     }
@@ -265,7 +264,7 @@ public class BPMNModel {
 
     public Set<BPMNProcess> getProcesses() {
         if (processes == null) {
-            processes = new HashSet<BPMNProcess>();
+            processes = new LinkedHashSet<BPMNProcess>();
         }
         return processes;
     }
@@ -684,32 +683,6 @@ public class BPMNModel {
         return null;
     }
 
-//    /**
-//     * Finds a BPMNLane by its id
-//     * 
-//     * @param id
-//     * @return
-//     */
-//    public BPMNParticipant findBPMNLaneById(String id) {
-//        if (id == null || id.isEmpty()) {
-//            return null;
-//        }
-//
-//        if (isCollaborationDiagram()) {
-//            // iterate over all participants
-//            Set<BPMNParticipant> participantList = this.getp.getParticipants();
-//            for (BPMNParticipant participant : participantList) {
-//                if (id.equals(participant.getId())) {
-//                    // the id matches the participant
-//                    return participant;
-//                }
-//            }
-//        }
-//
-//        // no corresponding element found!
-//        return null;
-//    }
-
     
     /**
      * Finds a corresponding BPMNParticipant by a processID
@@ -741,8 +714,8 @@ public class BPMNModel {
      * @return - list of nodes. If no nodes were found, the method returns an empty
      *         list
      */
-    public static List<Element> findChildNodesByName(Element parent, String nodeName) {
-        List<Element> result = new ArrayList<Element>();
+    public static Set<Element> findChildNodesByName(Element parent, String nodeName) {
+        Set<Element> result = new LinkedHashSet<Element>();
         if (parent != null && nodeName != null) {
             NodeList childs = parent.getChildNodes();
             for (int i = 0; i < childs.getLength(); i++) {
@@ -959,7 +932,7 @@ public class BPMNModel {
      * 
      */
     private void loadParticipantList() throws BPMNModelException {
-        participants = new HashSet<BPMNParticipant>();
+        participants = new LinkedHashSet<BPMNParticipant>();
         NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
 
@@ -992,7 +965,7 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     private void loadProcessList() throws BPMNModelException {
-        processes = new HashSet<BPMNProcess>();
+        processes = new LinkedHashSet<BPMNProcess>();
         int publicCount = 0;
 
         // find process
