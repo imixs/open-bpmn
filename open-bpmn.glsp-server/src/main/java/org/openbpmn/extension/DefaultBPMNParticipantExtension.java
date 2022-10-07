@@ -22,11 +22,9 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
-import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -38,17 +36,17 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  * @author rsoika
  *
  */
-public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtension {
 
-    private static Logger logger = Logger.getLogger(DefaultBPMNTaskExtension.class.getName());
+    private static Logger logger = Logger.getLogger(DefaultBPMNParticipantExtension.class.getName());
 
-    public DefaultBPMNTaskExtension() {
+    public DefaultBPMNParticipantExtension() {
         super();
     }
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNModel.BPMN_TASKS.contains(elementTypeId);
+        return BPMNTypes.POOL.equals(elementTypeId);
     }
 
     /**
@@ -56,7 +54,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
      */
     @Override
     public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNActivity);
+        return (bpmnElement instanceof BPMNParticipant);
     }
 
     @Override
@@ -81,7 +79,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         schemaBuilder. //
                 addProperty("name", "string", null). //
                 // addProperty("execution", "string", null). //
-                addProperty("documentation", "string", "Task description.");
+                addProperty("documentation", "string", "Participant description.");
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
@@ -91,24 +89,6 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 addElements("name"). //
                 addLayout(Layout.VERTICAL). //
                 addElement("documentation", "Documentation", multilineOption);
-
-        // Script-Task?
-        BPMNFlowElement taskElement = (BPMNFlowElement) bpmnElement;
-        if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
-            dataBuilder //
-                    .addData("scriptformat", taskElement.getAttribute("scriptFormat")) //
-                    .addData("script", taskElement.getChildNodeContent("script"));
-
-            schemaBuilder. //
-                    addProperty("scriptformat", "string", "Format of the script"). //
-                    addProperty("script", "string", "Script to be run when this Task is performed.");
-
-            uiSchemaBuilder. //
-                    addCategory("Script"). //
-                    addLayout(Layout.VERTICAL). //
-                    addElements("scriptformat"). //
-                    addElement("script", "Script", multilineOption); //
-        }
 
         // update corresponding GModelElement....
 
@@ -128,15 +108,6 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
             logger.info("...update feature = " + feature);
 
-            if ("scriptformat".equals(feature)) {
-                bpmnElement.setAttribute("scriptFormat", value);
-                continue;
-            }
-
-            if ("script".equals(feature)) {
-                bpmnElement.setChildNodeContent("script", value, null);
-                continue;
-            }
         }
 
     }

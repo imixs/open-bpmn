@@ -29,7 +29,6 @@ import {
 import { inject, injectable, postConstruct } from 'inversify';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
-import { isBPMNNode } from '@open-bpmn/open-bpmn-model';
 // Import Instruction sReact and JsonForms
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
@@ -204,25 +203,23 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                 // this.header.insertAdjacentText('beforeend',element.type);
                 this.headerTitle.textContent = element.type;
 
-                // Build a generic JSONForms Property panel
-                if (isBPMNNode(element)) {
-                    // BPMN Node selected, collect JSONForms schemata....
-                    let bpmnPropertiesData;
-                    let bpmnPropertiesSchema;
-                    let bpmnPropertiesUISchema;
-                    if (hasArguments(element)) {
-                        // parse the jsonForms schema details
-                        bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
-                        bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
-                        bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
-                    }
-
+                
+                 // BPMN Node selected, collect JSONForms schemata....
+                 let bpmnPropertiesData;
+                 let bpmnPropertiesSchema;
+                 let bpmnPropertiesUISchema;
+                 if (hasArguments(element)) {
+                     // parse the jsonForms schema details
+                     bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
+                     bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
+                     bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
+                 }
+                // Build a generic JSONForms Property panel if we have at least an UISchema
+                if (bpmnPropertiesUISchema) {
                     // list of renderers declared outside the App component
                     const bpmnRenderers = [
                         ...vanillaRenderers,
-                        // register custom renderers
-                        //BPMNArrayRenderer
-                        // { tester: ratingControlTester, renderer: RatingControl }
+                        // optional register custom renderers...
                     ];
 
                     // render JSONForm // vanillaRenderers

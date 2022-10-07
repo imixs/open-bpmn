@@ -180,7 +180,7 @@ export function isBPMNLabelNode(element: SModelElement): element is SModelElemen
 * which is a Task, Event or Gateway node
 */
 export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
-    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode;
+    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode || element instanceof PoolNode;
 }
 
 export class SequenceFlow extends SEdge {

@@ -6,11 +6,11 @@
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
-            <bpmndi:BPMNShape bpmnElement="task-1" id="BPMNShape_AekULA">
-                <dc:Bounds height="110.0" width="50.0" x="0.0" y="0.0"/>
+            <bpmndi:BPMNShape bpmnElement="task-1" id="BPMNShape_3aQTUQ">
+                <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="task-2" id="BPMNShape_bSMJ0w">
-                <dc:Bounds height="110.0" width="50.0" x="0.0" y="0.0"/>
+            <bpmndi:BPMNShape bpmnElement="task-2" id="BPMNShape_3EAKlA">
+                <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
             </bpmndi:BPMNShape>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>

@@ -17,6 +17,7 @@ package org.openbpmn.glsp.utils;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.util.EList;
@@ -29,6 +30,7 @@ import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.elements.IconGNodeBuilder;
+import org.openbpmn.model.BPMNGModelState;
 
 /**
  * The BPMNBuilderHelper provides helper methods to create GNode Elements
@@ -73,6 +75,8 @@ public class BPMNBuilderHelper {
                 .text(node.getName()) //
                 .build();
 
+//        GLabel glabel = createCompartmentHeader(node);
+
         return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
                 .id(node.getId() + "_header") //
                 .layout(GConstants.Layout.HBOX) //
@@ -97,6 +101,25 @@ public class BPMNBuilderHelper {
                 // return Optional.of(child);
                 return (GLabel) child;
             }
+        }
+        // we did not found a GLabel
+        return null;
+    }
+
+    public static GLabel findPoolLabel(final BPMNGModelState modelState, final String poolID) {
+
+        Optional<GModelElement> elementHeader = modelState.getIndex().get(poolID + "_header");
+        if (elementHeader.isPresent()) {
+
+            GModelElement headerElement = elementHeader.get();
+            EList<GModelElement> childs = headerElement.getChildren();
+            for (GModelElement child : childs) {
+                if (child instanceof GLabel) {
+                    // return Optional.of(child);
+                    return (GLabel) child;
+                }
+            }
+
         }
         // we did not found a GLabel
         return null;

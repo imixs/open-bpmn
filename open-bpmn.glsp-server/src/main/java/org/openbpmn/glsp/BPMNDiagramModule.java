@@ -35,6 +35,7 @@ import org.openbpmn.extension.BPMNCreateExtensionHandler;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.extension.DefaultBPMNGatewayExtension;
+import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
@@ -198,6 +199,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNEventExtension.class);
         binding.addBinding().to(DefaultBPMNTaskExtension.class);
         binding.addBinding().to(DefaultBPMNGatewayExtension.class);
+        binding.addBinding().to(DefaultBPMNParticipantExtension.class);
 
         // Imixs Extensions (just for testing)
         binding.addBinding().to(ImixsBPMNTaskExtension.class);

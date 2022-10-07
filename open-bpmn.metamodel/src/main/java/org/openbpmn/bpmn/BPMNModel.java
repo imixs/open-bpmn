@@ -586,6 +586,13 @@ public class BPMNModel {
         if (id == null || id.isEmpty()) {
             return null;
         }
+        
+        // test for participant...
+        BPMNParticipant participant = this.findBPMNParticipantById(id);
+        if (participant!=null) {
+            return participant;
+        }
+        
         // iterate over all processes
         Set<BPMNProcess> processList = this.getProcesses();
         for (BPMNProcess process : processList) {

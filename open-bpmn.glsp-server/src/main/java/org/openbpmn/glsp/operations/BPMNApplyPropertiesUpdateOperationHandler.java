@@ -72,8 +72,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         }
 
         // validate BPMN element
-        BPMNBaseElement bpmnElement = modelState.getBpmnModel().openDefaultProcess()
-                .findBaseElementById(operation.getId());
+        BPMNBaseElement bpmnElement = modelState.getBpmnModel().findBPMNBaseElementById(operation.getId());
         if (bpmnElement == null) {
             throw new IllegalArgumentException(
                     "BPMN Element with id " + operation.getId() + " is not defined in current model!");
@@ -106,6 +105,9 @@ public class BPMNApplyPropertiesUpdateOperationHandler
                 if (label != null) {
                     label.setText(json.getString("name"));
                 }
+            } else if (BPMNModel.isParticipant(bpmnElement.getElementNode())) {
+                // udpate the gNode name property
+                element.get().setName(nameValue);
             }
         }
 
@@ -120,7 +122,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             }
         }
 
-        // finally we need ot update the JSONFormsData property of the selected element
+        // finally we need to update the JSONFormsData property of the selected element
         element.get().getArgs().put("JSONFormsData", json.toString());
         logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 

@@ -19,7 +19,7 @@ import {
     getSubType,
     RenderingContext,
     SelectAction,
-    setAttr,
+    setAttr,SShapeElement,
     SModelRoot,
     TYPES
 } from '@eclipse-glsp/client';
@@ -181,7 +181,7 @@ export class IconView extends ShapeView {
  */
 @injectable()
 export class ContainerHeaderView extends ShapeView {
-    render(element: Icon, context: RenderingContext): VNode | undefined {
+    render(element: SShapeElement, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }
@@ -192,10 +192,17 @@ export class ContainerHeaderView extends ShapeView {
 	        containerLabel=containerNode.name;
         }
         const vnode: any = (
-            <g>
-                <text transform={'scale(1),translate(14,0),rotate(-90)'}>{containerLabel}</text>
+            <g class-node={true}>
+                <text class-sprotty-label={true} transform={'scale(1),translate(14,0),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
+        
+       // const vnode = <text class-sprotty-label={true}>{containerLabel}</text>;
+        const subType = getSubType(element);
+        if (subType) {
+            setAttr(vnode, 'class', subType);
+        }
+        
        
         return vnode;
     }
