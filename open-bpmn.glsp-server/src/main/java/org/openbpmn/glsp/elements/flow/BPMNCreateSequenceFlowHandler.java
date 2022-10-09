@@ -56,7 +56,8 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
-        BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
+        // BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
+
         try {
             Optional<BaseElementGNode> element = null;
             String targetId = operation.getTargetElementId();
@@ -72,7 +73,16 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
             if (element.isPresent()) {
                 sourceId = element.get().getId();
             }
-            process.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
+
+            // Verify that both Elements are members of the same process...
+            String sourceProcessId = modelState.getBpmnModel().findBPMNBaseElementById(sourceId).getProcessId();
+            String targetProcessId = modelState.getBpmnModel().findBPMNBaseElementById(targetId).getProcessId();
+            if (sourceProcessId == null || !sourceProcessId.equals(targetProcessId)) {
+                throw new IllegalArgumentException("Target and Source Element are not members of the same process!");
+            }
+            // open the process and create the sequence flow...
+            BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
+            bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
 
             modelState.reset();
         } catch (BPMNModelException e) {

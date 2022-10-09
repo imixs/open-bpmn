@@ -28,7 +28,7 @@ public abstract class BPMNBaseElement {
     private Element documentationNode = null;
     protected Element bpmnShape = null;
     protected BPMNBounds bounds = null;
-    
+
     public BPMNBaseElement() {
         super();
     }
@@ -79,6 +79,18 @@ public abstract class BPMNBaseElement {
      */
     public String getId() {
         return getAttribute("id");
+    }
+
+    /**
+     * This method returns the corresponding BPMNProcess ID for this BPMNBaseElement.
+     * 
+     * @param bpmynElement
+     * @return
+     */
+    public String getProcessId() {
+        // get the parent node of the element
+        Element parent = (Element) getElementNode().getParentNode();
+        return parent.getAttribute("id");
     }
 
     /**
@@ -324,7 +336,6 @@ public abstract class BPMNBaseElement {
         return hasAttribute(extensionNamespace + ":" + attribute);
     }
 
-
     /**
      * Returns the BPMNShape bounds.
      * 
@@ -338,19 +349,20 @@ public abstract class BPMNBaseElement {
         }
         return bounds;
     }
-    
+
     public void setPosition(double x, double y) {
         try {
             this.getBounds().setPosition(x, y);
         } catch (BPMNMissingElementException e) {
-            BPMNModel.error("Failed to update bounds position for element '"+this.getId() + "'");
+            BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
         }
     }
+
     public void setDimension(double width, double height) {
         try {
-            this.getBounds().setDimension( width, height);
+            this.getBounds().setDimension(width, height);
         } catch (BPMNMissingElementException e) {
-            BPMNModel.error("Failed to update bounds position for element '"+this.getId() + "'");
+            BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
         }
     }
 
@@ -369,9 +381,8 @@ public abstract class BPMNBaseElement {
         getBounds();
 
         // update bounds
-        bounds.setDimension( width, height);
+        bounds.setDimension(width, height);
         bounds.setPosition(x, y);
-       
 
         return bounds;
     }
@@ -393,5 +404,5 @@ public abstract class BPMNBaseElement {
     public void setBpmnShape(Element bpmnShape) {
         this.bpmnShape = bpmnShape;
     }
-   
+
 }

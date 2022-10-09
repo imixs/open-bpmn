@@ -34,9 +34,6 @@ import com.google.inject.Inject;
 public abstract class CreateBPMNEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation>
         implements CreateEdgeOperationHandler {
 
-//public abstract class AbstractGModelCreateEdgeOperationHandler extends AbstractCreateOperationHandler<CreateEdgeOperation>
-//    implements CreateEdgeOperationHandler {
-
     @Inject
     protected GModelState modelState;
 
@@ -51,5 +48,4 @@ public abstract class CreateBPMNEdgeOperationHandler extends AbstractCreateOpera
     public CreateBPMNEdgeOperationHandler(final List<String> handledElementTypeIds) {
         super(handledElementTypeIds);
     }
-
 }

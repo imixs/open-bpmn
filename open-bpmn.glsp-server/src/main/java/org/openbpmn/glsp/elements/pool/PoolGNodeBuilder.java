@@ -20,10 +20,8 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -115,30 +113,30 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
      * @param node
      * @return
      */
-    private GCompartment createHeaderCompartment(final PoolGNode node) {
-        Map<String, Object> layoutOptions = new HashMap<>();
-
-        return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
-                .id(node.getId() + "_header") //
-                .layout(GConstants.Layout.HBOX) //
-                .layoutOptions(layoutOptions) //
-                .add(createLabel(node)) //
-                .addCssClass("container-label") //
-                .build();
-    }
-
-    /**
-     * Creates a GLabel
-     *
-     * @param node
-     * @return
-     */
-    private GLabel createLabel(final PoolGNode node) {
-        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-                .id(node.getId() + "_header_label") //
-                .text(node.getName()) //
-                .build();
-    }
+//    private GCompartment createHeaderCompartment(final PoolGNode node) {
+//        Map<String, Object> layoutOptions = new HashMap<>();
+//
+//        return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
+//                .id(node.getId() + "_header") //
+//                .layout(GConstants.Layout.HBOX) //
+//                .layoutOptions(layoutOptions) //
+//                .add(createLabel(node)) //
+//                .addCssClass("container-label") //
+//                .build();
+//    }
+//
+//    /**
+//     * Creates a GLabel
+//     *
+//     * @param node
+//     * @return
+//     */
+//    private GLabel createLabel(final PoolGNode node) {
+//        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+//                .id(node.getId() + "_header_label") //
+//                .text(node.getName()) //
+//                .build();
+//    }
 
     /**
      * Creates the Container compartment used for the process BPMNFlowElements
@@ -150,7 +148,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         Map<String, Object> layoutOptions = new HashMap<>();
 
         layoutOptions.put(H_GRAB, true);
-        layoutOptions.put(V_GRAB, true);
+        // layoutOptions.put(V_GRAB, true);
 
         // DefaultTypes.NODE ModelTypes.CONTAINER
         return new GCompartmentBuilder(ModelTypes.CONTAINER) //

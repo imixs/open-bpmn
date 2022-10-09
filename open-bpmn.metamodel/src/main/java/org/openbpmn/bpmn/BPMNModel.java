@@ -386,8 +386,7 @@ public class BPMNModel {
             // create shape element
             Element poolShape = this.buildBPMNShape(bpmnParticipant);
             bpmnParticipant.setBpmnShape(poolShape);
-            bpmnParticipant.setBounds(10.0, 10.0, BPMNParticipant.DEFAULT_WIDTH,
-                    BPMNParticipant.DEFAULT_HEIGHT);
+            bpmnParticipant.setBounds(10.0, 10.0, BPMNParticipant.DEFAULT_WIDTH, BPMNParticipant.DEFAULT_HEIGHT);
             // create BPMNLabel
             BPMNLabel bpmnLabel = new BPMNLabel(this, poolShape);
             bpmnLabel.updateLocation(10.0, 10.0);
@@ -586,13 +585,13 @@ public class BPMNModel {
         if (id == null || id.isEmpty()) {
             return null;
         }
-        
+
         // test for participant...
         BPMNParticipant participant = this.findBPMNParticipantById(id);
-        if (participant!=null) {
+        if (participant != null) {
             return participant;
         }
-        
+
         // iterate over all processes
         Set<BPMNProcess> processList = this.getProcesses();
         for (BPMNProcess process : processList) {
@@ -612,6 +611,7 @@ public class BPMNModel {
         return null;
     }
 
+  
     /**
      * This method returns the BPMNBounds element of a BPMNBaseElement with the
      * given ID. This finder method can be used to just adjust the Bounds in the
@@ -690,7 +690,6 @@ public class BPMNModel {
         return null;
     }
 
-    
     /**
      * Finds a corresponding BPMNParticipant by a processID
      * 

@@ -26,9 +26,12 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.elements.IconGNodeBuilder;
+import org.openbpmn.model.BPMNGModelState;
 
 /**
  * The BPMNBuilderHelper provides helper methods to create GNode Elements
@@ -68,11 +71,6 @@ public class BPMNBuilderHelper {
     public static GCompartment createBPMNContainerHeader(final BaseElementGNode node) {
         Map<String, Object> layoutOptions = new HashMap<>();
 
-//        GLabel glabel = new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-//                .id(node.getId() + "_header_label") //
-//                .text(node.getName()) //
-//                .build();
-
         return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
                 .id(node.getId() + "_header") //
                 .layout(GConstants.Layout.HBOX) //
@@ -102,23 +100,35 @@ public class BPMNBuilderHelper {
         return null;
     }
 
-//    private static GLabel findPoolLabel(final BPMNGModelState modelState, final String poolID) {
-//
-//        Optional<GModelElement> elementHeader = modelState.getIndex().get(poolID + "_header");
-//        if (elementHeader.isPresent()) {
-//
-//            GModelElement headerElement = elementHeader.get();
-//            EList<GModelElement> childs = headerElement.getChildren();
-//            for (GModelElement child : childs) {
-//                if (child instanceof GLabel) {
-//                    // return Optional.of(child);
-//                    return (GLabel) child;
-//                }
-//            }
-//
-//        }
-//        // we did not found a GLabel
-//        return null;
-//    }
+    /**
+     * Helper method computes the container BPMNProcess for a CreateNodeOperation.
+     * The method first computes the GModel container Element. Than the method tests
+     * if the container is the Model root or a BPMNPool. In the later case the
+     * method computes the BPMNProcess from the corresponding BPMNParticipant.
+     *
+     * @param modelState - current model state
+     * @param container  - the GModeElement
+     * @return the corresponding BPMNProcess
+     */
+    public static BPMNProcess findProcessByContainer(final BPMNGModelState modelState, final GModelElement container) {
+        String containerId = container.getId();
+        logger.info(" ==> Container ID : " + container.getId());
 
+        BPMNProcess bpmnProcess = null;
+        // is it the root?
+        if (modelState.getRoot().getId().equals(containerId)) {
+            bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
+        } else {
+            // it should be a participant container
+            if (containerId.startsWith("participant_")) {
+                // compute participant
+                String participantID = containerId.substring(0, containerId.lastIndexOf("_"));
+                BPMNParticipant bpmnParticipant = modelState.getBpmnModel().findBPMNParticipantById(participantID);
+                if (bpmnParticipant != null) {
+                    bpmnProcess = bpmnParticipant.openProcess();
+                }
+            }
+        }
+        return bpmnProcess;
+    }
 }
