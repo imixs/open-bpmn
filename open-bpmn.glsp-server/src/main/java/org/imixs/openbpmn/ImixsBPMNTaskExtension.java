@@ -27,6 +27,7 @@ import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -144,7 +145,8 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
+            final BaseElementGNode gNodeElement) {
 
         // check custom features
         Set<String> features = json.keySet();

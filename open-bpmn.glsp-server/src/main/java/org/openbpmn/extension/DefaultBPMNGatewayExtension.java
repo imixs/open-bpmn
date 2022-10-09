@@ -17,18 +17,27 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.eclipse.glsp.graph.GLabel;
+import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.model.BPMNGModelState;
+
+import com.google.inject.Inject;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -38,7 +47,11 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
  */
 public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
+    @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(DefaultBPMNGatewayExtension.class.getName());
+
+    @Inject
+    protected BPMNGModelState modelState;
 
     public DefaultBPMNGatewayExtension() {
         super();
@@ -94,30 +107,39 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
                 addElement("gatewaydirection", "Direction", radioOption). //
-                addCategory("Attributes"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption). //
-                addCategory("Workflow"). //
-                addLayout(Layout.HORIZONTAL);
+                addElement("documentation", "Documentation", multilineOption);
 
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
+            final BaseElementGNode gNodeElement) {
 
-        // default update of name and documentation
-        super.updatePropertiesData(json, bpmnElement);
-
-        // check custom features
         Set<String> features = json.keySet();
-        String value = null;
         for (String feature : features) {
-            value = json.getString(feature);
 
-            logger.fine("...update feature = " + feature);
+            if ("name".equals(feature)) {
+                bpmnElement.setName(json.getString(feature));
+                // Update Label...
+                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
+                if (!label.isEmpty()) {
+                    LabelGNode lgn = (LabelGNode) label.get();
+                    GLabel glabel = BPMNBuilderHelper.findCompartmentHeader((lgn));
+                    if (glabel != null) {
+                        glabel.setText(json.getString(feature));
+                    }
+                }
+
+                continue;
+            }
+            if ("documentation".equals(feature)) {
+                bpmnElement.setDocumentation(json.getString(feature));
+                continue;
+            }
 
             if ("gatewaydirection".equals(feature)) {
-                bpmnElement.setAttribute("gatewayDirection", value);
+                bpmnElement.setAttribute("gatewayDirection", json.getString(feature));
                 continue;
             }
             // TODO implement Event features

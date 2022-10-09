@@ -15,11 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
-import java.util.Set;
-import java.util.logging.Logger;
-
-import javax.json.JsonObject;
-
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 
@@ -32,34 +27,6 @@ import org.openbpmn.bpmn.elements.BPMNBaseElement;
  *
  */
 abstract class AbstractBPMNElementExtension implements BPMNExtension {
-    private static Logger logger = Logger.getLogger(AbstractBPMNElementExtension.class.getName());
-
-    /**
-     * Default Implementation updates name and documentation only. Sub classes
-     * should overwrite this method.
-     */
-    @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
-
-        Set<String> features = json.keySet();
-        String value = null;
-        for (String feature : features) {
-            value = json.getString(feature);
-
-            logger.fine("...update feature = " + feature);
-            if ("name".equals(feature)) {
-                bpmnElement.setName(value);
-                continue;
-            }
-
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(value);
-                continue;
-            }
-
-        }
-
-    }
 
     /**
      * Returns the Extension label to be used in the Tool Palette. The default name

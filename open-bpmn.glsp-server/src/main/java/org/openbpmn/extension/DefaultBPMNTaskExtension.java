@@ -22,15 +22,18 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.eclipse.glsp.graph.GLabel;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -115,26 +118,35 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement) {
+    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
+            final BaseElementGNode gNodeElement) {
 
         // default update of name and documentation
-        super.updatePropertiesData(json, bpmnElement);
 
-        // check custom features
         Set<String> features = json.keySet();
-        String value = null;
         for (String feature : features) {
-            value = json.getString(feature);
+            if ("name".equals(feature)) {
+                // update the task CompartmentHeader (GLabel)
+                GLabel label = BPMNBuilderHelper.findCompartmentHeader((gNodeElement));
+                if (label != null) {
+                    label.setText(json.getString(feature));
+                }
+                continue;
+            }
+            if ("documentation".equals(feature)) {
+                bpmnElement.setDocumentation(json.getString(feature));
+                continue;
+            }
 
             logger.info("...update feature = " + feature);
 
             if ("scriptformat".equals(feature)) {
-                bpmnElement.setAttribute("scriptFormat", value);
+                bpmnElement.setAttribute("scriptFormat", json.getString(feature));
                 continue;
             }
 
             if ("script".equals(feature)) {
-                bpmnElement.setChildNodeContent("script", value, null);
+                bpmnElement.setChildNodeContent("script", json.getString(feature), null);
                 continue;
             }
         }

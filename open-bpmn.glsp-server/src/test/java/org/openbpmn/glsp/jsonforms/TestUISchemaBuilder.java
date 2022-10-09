@@ -30,6 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
@@ -192,6 +197,67 @@ public class TestUISchemaBuilder extends DefaultGModelState {
     }
 
     /**
+     * Test the LaneSet layout
+     */
+    @Test
+    public void testLaneSetLayout() {
+
+        UISchemaBuilder builder = new UISchemaBuilder(Layout.CATEGORIZATION);
+
+        Map<String, Object> arrayDetailOption = new HashMap<>();
+
+        // detail : 'GENERATED'
+        // arrayDetailOption.put("detail", "GENERATED");
+
+//        "type": "HorizontalLayout",
+//        "elements": [
+//            {
+//                "type": "Control",
+//                "scope": "#/properties/name"
+//            },
+//            {
+//                "type": "Control",
+//                "scope": "#/properties/documentation",
+//                "label": "Documentation",
+//                "options": {
+//                    "multi": true
+//                }
+//            }
+//        ]
+
+        JsonObjectBuilder layoutBuilder = Json.createObjectBuilder().add("type", "HorizontalLayout");
+        JsonArrayBuilder controlsArrayBuilder = Json.createArrayBuilder();
+
+        JsonObject multiOptions = Json.createObjectBuilder() //
+                .add("multi", true).build();
+
+        controlsArrayBuilder //
+                .add(Json.createObjectBuilder() //
+                        .add("type", "Control") //
+                        .add("scope", "#/properties/name"))//
+                .add(Json.createObjectBuilder() //
+                        .add("type", "Control") //
+                        .add("scope", "#/properties/documentation") //
+                        .add("label", "Documentation") //
+                        .add("options", multiOptions) //
+                );
+        layoutBuilder.add("elements", controlsArrayBuilder);
+        JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
+                add("detail", layoutBuilder.build());
+
+        builder.addCategory("Lanes") //
+                .addLayout(Layout.VERTICAL);
+
+        builder.addElementWithOptions("lanes", "Lanes", detailBuilder.build());
+
+        String json = builder.build();
+
+        assertNotNull(json);
+
+        logger.info(json);
+    }
+
+    /**
      * Test create controls with options
      */
     @Test
@@ -210,6 +276,51 @@ public class TestUISchemaBuilder extends DefaultGModelState {
         assertNotNull(json);
 
         logger.info(json);
+
+    }
+
+    /**
+     * Test build a native json structure for array details
+     */
+    @Test
+    public void testDetailBuilder() {
+//  detail : {
+//      "type": "HorizontalLayout",
+//      "elements": [
+//          {
+//              "type": "Control",
+//              "scope": "#/properties/name"
+//          },
+//          {
+//              "type": "Control",
+//              "scope": "#/properties/documentation",
+//              "label": "Documentation",
+//              "options": {
+//                  "multi": true
+//              }
+//          }
+//      ]
+//    }
+
+        JsonObjectBuilder layoutBuilder = Json.createObjectBuilder().add("type", "HorizontalLayout");
+
+        JsonArrayBuilder controlsArrayBuilder = Json.createArrayBuilder();
+
+        JsonObjectBuilder controlBuilder = Json.createObjectBuilder(). //
+                add("type", "Control"). //
+                add("scope", "#/properties/");
+
+        controlsArrayBuilder.add(controlBuilder);
+
+        layoutBuilder.add("elements", controlsArrayBuilder);
+
+        JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
+                add("detail", layoutBuilder.build());
+
+        JsonObject jsonObject = detailBuilder.build();
+
+        assertNotNull(jsonObject);
+        logger.info("" + jsonObject);
 
     }
 }

@@ -226,6 +226,48 @@ public class UISchemaBuilder {
     }
 
     /**
+     * Adds a control into the current layout context
+     *
+     * @param item    - item name
+     * @param label   - optional label
+     * @param options - optional options
+     * @return this
+     */
+    public UISchemaBuilder addElementWithOptions(final String item, final String label, final JsonObject details) {
+
+        if (layoutContext == null) {
+            // add a default layout context
+            this.addLayout(Layout.VERTICAL);
+        }
+
+        // do we already have a controlArray builder?
+        if (controlsArrayBuilder == null) {
+            // create a new one
+            controlsArrayBuilder = Json.createArrayBuilder();
+        }
+
+        JsonObjectBuilder controlBuilder = Json.createObjectBuilder(). //
+                add("type", "Control"). //
+                add("scope", "#/properties/" + item);
+
+        // add optional description?
+        if (label != null && !label.isBlank()) {
+            controlBuilder.add("label", label);
+        }
+
+        // add optional options?
+        if (details != null) {
+
+            controlBuilder.add("options", details);
+        }
+
+        controlsArrayBuilder.add(controlBuilder);
+
+        return this;
+
+    }
+
+    /**
      * Adds a list of control elements
      *
      * @param controls

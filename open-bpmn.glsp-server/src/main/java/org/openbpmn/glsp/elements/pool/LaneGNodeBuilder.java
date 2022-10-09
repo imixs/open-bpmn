@@ -15,13 +15,9 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.pool;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -32,7 +28,6 @@ import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LaneGMode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
-import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
  * BPMN 2.0 Pool Element.
@@ -103,7 +98,7 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeB
         // node.getChildren().add(createHeaderCompartment(node));
         node.getChildren().add(BPMNBuilderHelper.createBPMNContainerHeader(node));
 
-        node.getChildren().add(createContainerCompartment(node));
+        // node.getChildren().add(createContainerCompartment(node));
 
     }
 
@@ -143,17 +138,18 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeB
      * @param node
      * @return
      */
-    private GCompartment createContainerCompartment(final LaneGMode node) {
-        Map<String, Object> layoutOptions = new HashMap<>();
-        layoutOptions.put(H_ALIGN, "left");
-        layoutOptions.put(H_GRAB, true);
-        layoutOptions.put(V_GRAB, true);
-        GCompartmentBuilder containerCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
-                .id(node.getId() + "_container") //
-                .layout(GConstants.Layout.FREEFORM) //
-                .size(0, 0) //
-                .layoutOptions(layoutOptions);
-        return containerCompartmentBuilder //
-                .build();
-    }
+//    private GCompartment createContainerCompartment(final LaneGMode node) {
+//        Map<String, Object> layoutOptions = new HashMap<>();
+//        layoutOptions.put(H_ALIGN, "left");
+//        layoutOptions.put(H_GRAB, true);
+//        layoutOptions.put(V_GRAB, true);
+//        GCompartmentBuilder containerCompartmentBuilder = new GCompartmentBuilder(ModelTypes.CONTAINER) //
+//                .id(node.getId() + "_container") //
+//                .layout(GConstants.Layout.FREEFORM) //
+//                .size(0, 0) //
+//                .layoutOptions(layoutOptions);
+//        return containerCompartmentBuilder //
+//                .build();
+//    }
+
 }

@@ -25,14 +25,12 @@ import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -87,29 +85,29 @@ public class BPMNApplyPropertiesUpdateOperationHandler
 
         // The Name Feature for Tasks, Events and Gateways is handled separately to
         // avoid the need to recompute the full GModel
-        String nameValue = json.getString("name");
-        // did the name has changed?
-        if (nameValue != null && !nameValue.equals(bpmnElement.getName())) {
-            // Event or Gateway?
-            if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
-                // update the GLabel associated with the Event directly.
-                Optional<GLabel> label = modelState.getIndex().findElementByClass(operation.getId() + "_bpmnlabel",
-                        GLabel.class);
-                if (!label.isEmpty()) {
-                    label.get().setText(nameValue);
-                }
-
-            } else if (BPMNModel.isActivity(bpmnElement)) {
-                // update the task CompartmentHeader (GLabel)
-                GLabel label = BPMNBuilderHelper.findCompartmentHeader(element.get());
-                if (label != null) {
-                    label.setText(json.getString("name"));
-                }
-            } else if (BPMNModel.isParticipant(bpmnElement.getElementNode())) {
-                // udpate the gNode name property
-                element.get().setName(nameValue);
-            }
-        }
+//        String nameValue = json.getString("name");
+//        // did the name has changed?
+//        if (nameValue != null && !nameValue.equals(bpmnElement.getName())) {
+//            // Event or Gateway?
+//            if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
+//                // update the GLabel associated with the Event directly.
+//                Optional<GLabel> label = modelState.getIndex().findElementByClass(operation.getId() + "_bpmnlabel",
+//                        GLabel.class);
+//                if (!label.isEmpty()) {
+//                    label.get().setText(nameValue);
+//                }
+//
+//            } else if (BPMNModel.isActivity(bpmnElement)) {
+//                // update the task CompartmentHeader (GLabel)
+//                GLabel label = BPMNBuilderHelper.findCompartmentHeader(element.get());
+//                if (label != null) {
+//                    label.setText(json.getString("name"));
+//                }
+//            } else if (BPMNModel.isParticipant(bpmnElement.getElementNode())) {
+//                // udpate the gNode name property
+//                element.get().setName(nameValue);
+//            }
+//        }
 
         // Now call the extensions to update the property data according to the BPMN
         // element. The updatePropertiesData can also update the given JSON object!
@@ -117,7 +115,16 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
-                    extension.updatePropertiesData(json, bpmnElement);
+
+                    if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
+                        // update the GLabel associated with the Event directly.
+//                        Optional<GLabel> label = modelState.getIndex()
+//                                .findElementByClass(operation.getId() + "_bpmnlabel", GLabel.class);
+//                        extension.updatePropertiesData(json, bpmnElement, label.get());
+                        extension.updatePropertiesData(json, bpmnElement, element.get());
+                    } else {
+                        extension.updatePropertiesData(json, bpmnElement, element.get());
+                    }
                 }
             }
         }
