@@ -16,10 +16,10 @@
 package org.openbpmn.glsp.elements.flow;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
+import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
  * BPMN SequenceFlow
@@ -45,8 +45,9 @@ public class SequenceFlowGNodeBuilder extends AbstractGEdgeBuilder<SequenceFlowG
         super.setProperties(edge);
         edge.setCondition(condition);
 
-        edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
-        // edge.setRouterKind("bpmn");
+        // set the custom BPMN Router Kind
+        // edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
+        edge.setRouterKind(ModelTypes.BPMN_ROUTER_KIND);
     }
 
     @Override

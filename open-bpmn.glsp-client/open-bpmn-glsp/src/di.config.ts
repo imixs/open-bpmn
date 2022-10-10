@@ -49,6 +49,8 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
+import { BPMNEdgeRouter } from './bpmn-edge-router';
+import { BPMNEllipticAnchor,BPMNRectangularAnchor,BPMNDiamondAnchor } from './bpmn-anchors';
 import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNElementSnapper } from './bpmn-helperlines';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
@@ -61,6 +63,13 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.ISnapper).to(GridSnapper);
     // bind(TYPES.ISnapper).to(BPMNGridSnapper);
     bind(TYPES.ISnapper).to(BPMNElementSnapper);
+
+    // BPMN Router
+    bind(BPMNEdgeRouter).toSelf().inSingletonScope();
+    bind(TYPES.IEdgeRouter).toService(BPMNEdgeRouter);
+    bind(TYPES.IAnchorComputer).to(BPMNEllipticAnchor).inSingletonScope();
+    bind(TYPES.IAnchorComputer).to(BPMNRectangularAnchor).inSingletonScope();
+    bind(TYPES.IAnchorComputer).to(BPMNDiamondAnchor).inSingletonScope();
 
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
