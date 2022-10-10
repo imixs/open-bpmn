@@ -66,7 +66,7 @@ public class TestCollaborationModel {
     @SuppressWarnings("unused")
     @Test
     public void testCreateCollaborationModel() {
-        String out = "src/test/resources/collaboration-test-1.bpmn";
+        String out = "src/test/resources/output/collaboration-test-1.bpmn";
 
         logger.info("...create collaboration model");
 
