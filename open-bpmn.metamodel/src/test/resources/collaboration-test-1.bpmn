@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+    <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
+        <bpmn2:participant id="participant_TZ1zrA" name="Default Process" processRef="process_1"/>
+        <bpmn2:participant id="participant_S4MHzg" name="Sales Team" processRef="process_oTRaEQ"/>
+        <bpmn2:participant id="participant_OeAPDQ" name="Management" processRef="process_05zCmg"/>
+    </bpmn2:collaboration>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="Default Process" processType="Public"/>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_oTRaEQ" name="Process 2" processType="Private">
+        <bpmn2:task id="task_1" name="Task"/>
+    </bpmn2:process>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_05zCmg" name="Process 3" processType="Private"/>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="participant_S4MHzg" id="BPMNShape_4nO1yQ">
+                <dc:Bounds height="200.0" width="800.0" x="10.0" y="10.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_2Sy1bw">
+                    <dc:Bounds x="10.0" y="10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="participant_OeAPDQ" id="BPMNShape_BfE7iw">
+                <dc:Bounds height="200.0" width="800.0" x="10.0" y="10.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_TsEPgw">
+                    <dc:Bounds x="10.0" y="10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_HIr30Q">
+                <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

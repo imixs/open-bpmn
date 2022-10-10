@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
     <bpmn2:process id="process_1" name="Default Process" processType="Public">
-        <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway-E5ljxyWzu4Io7mc5" name="Gateway-1"/>
-        <bpmn2:inclusiveGateway gatewayDirection="Diverging" id="gateway-ZlLXAiOjPnUORrrc" name="Gateway-2"/>
-        <bpmn2:parallelGateway gatewayDirection="Diverging" id="gateway-MHvRaNwEZQ9y0YeS" name="Gateway-3"/>
+                
+        
+    
+        <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway-mZE2rTfy0BvqcxJD" name="Gateway-1"/>
+        <bpmn2:inclusiveGateway gatewayDirection="Diverging" id="gateway-nQfNI8li0BPgxm2v" name="Gateway-2"/>
+        <bpmn2:parallelGateway gatewayDirection="Diverging" id="gateway-20QvpJo0Ak06hLE0" name="Gateway-3"/>
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
-            <bpmndi:BPMNShape bpmnElement="gateway-E5ljxyWzu4Io7mc5" id="BPMNShape_NWj9HA">
-                <dc:Bounds height="50.0" width="50.0" x="138.0" y="58.0"/>
-                <bpmndi:BPMNLabel id="BPMNLabel_lrADUw">
-                    <dc:Bounds height="14.0" width="36.0" x="122.0" y="111.0"/>
+                        
+            
+        
+            <bpmndi:BPMNShape bpmnElement="gateway-mZE2rTfy0BvqcxJD" id="BPMNShape_Lx0U6Q">
+                <dc:Bounds height="50.0" width="50.0" x="88.0" y="99.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_SKQLLg">
+                    <dc:Bounds height="14.0" width="36.0" x="85.0" y="149.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="gateway-ZlLXAiOjPnUORrrc" id="BPMNShape_wYqJ0A">
-                <dc:Bounds height="50.0" width="50.0" x="281.0" y="58.0"/>
-                <bpmndi:BPMNLabel id="BPMNLabel_NY8wHA">
-                    <dc:Bounds height="14.0" width="36.0" x="268.0" y="132.0"/>
+            <bpmndi:BPMNShape bpmnElement="gateway-nQfNI8li0BPgxm2v" id="BPMNShape_uX1Z7w">
+                <dc:Bounds height="50.0" width="50.0" x="274.0" y="99.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_CUpu0w">
+                    <dc:Bounds height="14.0" width="36.0" x="271.0" y="149.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
-            <bpmndi:BPMNShape bpmnElement="gateway-MHvRaNwEZQ9y0YeS" id="BPMNShape_KQYg3w">
-                <dc:Bounds height="50.0" width="50.0" x="428.0" y="58.0"/>
-                <bpmndi:BPMNLabel id="BPMNLabel_L9QJGA">
-                    <dc:Bounds height="14.0" width="36.0" x="413.0" y="165.0"/>
+            <bpmndi:BPMNShape bpmnElement="gateway-20QvpJo0Ak06hLE0" id="BPMNShape_nDR50Q">
+                <dc:Bounds height="50.0" width="50.0" x="442.0" y="99.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_HthiQg">
+                    <dc:Bounds height="14.0" width="36.0" x="439.0" y="149.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
         </bpmndi:BPMNPlane>
