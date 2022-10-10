@@ -1,0 +1,40 @@
+ {
+	"type": "Categorization",
+	"elements": [
+		{
+			"type": "Category",
+			"label": "Lanes",
+			"elements": [
+				{
+					"type": "VerticalLayout",
+					"elements": [
+						{
+							"type": "Control",
+							"scope": "#/properties/lanes",
+							"label": "Lanes",
+							"options": {
+								"detail": {
+									"type": "HorizontalLayout",
+									"elements": [
+										{
+											"type": "Control",
+											"scope": "#/properties/name"
+										},
+										{
+											"type": "Control",
+											"scope": "#/properties/documentation",
+											"label": "Documentation",
+											"options": {
+												"multi": true
+											}
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
