@@ -24,7 +24,7 @@ public class TestCreateDom {
         BPMNModel model1 = BPMNModelFactory.createInstance("demo", "1.0.0", "http://org.openbpmn");
         model1.openDefaultProcess().addTask("task-1", "Task", BPMNTypes.TASK);
              
-        model1.save("src/test/resources/process_1-empty-1.bpmn");
+        model1.save("src/test/resources/output/process_1-empty-1.bpmn");
         logger.info("...model creation sucessful");
     }
 

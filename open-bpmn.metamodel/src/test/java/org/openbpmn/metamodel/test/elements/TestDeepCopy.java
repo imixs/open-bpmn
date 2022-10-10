@@ -33,7 +33,7 @@ public class TestDeepCopy {
      */
     @Test
     public void testCreateModelWithProcessAndElementsLayout() {
-        String out = "src/test/resources/clone-process_4.bpmn";
+        String out = "src/test/resources/output/clone-process_4.bpmn";
         logger.info("...create empty model");
 
         String exporter = "demo";

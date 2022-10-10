@@ -31,7 +31,7 @@ public class TestModifyDom {
             // add a new task....
             model.openDefaultProcess().addTask("task-2", "Task", BPMNTypes.TASK);
             // store the model
-            model.save("src/test/resources/process_1-update-1.bpmn");
+            model.save("src/test/resources/output/process_1-update-1.bpmn");
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
