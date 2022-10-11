@@ -54,6 +54,15 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
             }
         }
     }
+    
+    /**
+     * Returns the BPMNProcess this element belongs to.
+     * 
+     * @return
+     */
+    public BPMNProcess getBpmnProcess() {
+        return bpmnProcess;
+    }
 
     public Element getBpmnEdge() {
         return bpmnEdge;

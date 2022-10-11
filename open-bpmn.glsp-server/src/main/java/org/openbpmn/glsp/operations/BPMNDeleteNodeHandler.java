@@ -25,6 +25,7 @@ import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -67,9 +68,17 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
                 // open the corresponding process
                 BPMNProcess process = ((BPMNFlowElement) baseElement).getBpmnProcess();
                 process.deleteBPMNBaseElement(id);
-            } else {
-                logger.warning("...no BPMN elmenet with id: " + id + " found!");
+                continue;
             }
+
+            if (baseElement != null && baseElement instanceof BPMNSequenceFlow) {
+                // open the corresponding process
+                BPMNProcess process = ((BPMNSequenceFlow) baseElement).getBpmnProcess();
+                process.deleteSequenceFlow(id);
+                continue;
+            }
+
+            logger.warning("...no BPMN elmenet with id: " + id + " found!");
 
         }
 

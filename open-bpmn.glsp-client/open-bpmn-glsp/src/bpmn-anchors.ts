@@ -41,6 +41,7 @@ export class BPMNRectangularAnchor implements IAnchorComputer {
     }
 
     getAnchor(connectable: SConnectableElement, refPoint: Point, offset: number): Point {
+        console.log('....compute BPMNRectangulaAnchor....');
         const b = connectable.bounds;
         if (b.width <= 0 || b.height <= 0) {
             return b;
@@ -81,6 +82,7 @@ export class BPMNDiamondAnchor implements IAnchorComputer {
     }
 
     getAnchor(connectable: SConnectableElement, refPoint: Point, offset = 0): Point {
+        console.log('....compute BPMNDimondAnchor....');
         const b = connectable.bounds;
         if (b.width <= 0 || b.height <= 0) {
             return b;
@@ -142,6 +144,7 @@ export class BPMNEllipticAnchor implements IAnchorComputer {
     }
 
     getAnchor(connectable: SConnectableElement, refPoint: Point, offset = 0): Point {
+        console.log('....compute BPMNEllipticAnchor....');
         const b = connectable.bounds;
         if (b.width <= 0 || b.height <= 0) {
             return b;
@@ -171,6 +174,8 @@ export class BPMNEllipticAnchor implements IAnchorComputer {
             else
                 x += dx;
         }
+
+        console.log('..... anchor= '+x + ','+y);
         return { x, y };
     }
 }

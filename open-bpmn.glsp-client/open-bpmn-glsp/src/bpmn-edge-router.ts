@@ -27,8 +27,12 @@ import {
     Point,
     ResolvedHandleMove,
     SRoutingHandle,
-    Side
+    Side,
+    ActionDispatcher,
+    TYPES,
+    ChangeRoutingPointsOperation
 } from '@eclipse-glsp/client';
+import { inject } from 'inversify';
 
 /****************************************************************************
  * The BPMNEdgeRouter is a custom implementation of the Sprotty
@@ -41,6 +45,9 @@ export interface BPMNRouterOptions extends LinearRouteOptions {
 export class BPMNEdgeRouter extends AbstractEdgeRouter {
 
     static readonly KIND = 'bpmn';
+
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: ActionDispatcher;
 
     get kind() {
         return BPMNEdgeRouter.KIND;
@@ -59,6 +66,9 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
         if (!edge.source || !edge.target) {
             return [];
         }
+        console.log('..wir haben aktuell '+edge.routingPoints.length + ' routing points');
+        const initRoutingPoints=(edge.routingPoints.length===0);
+
         const routedCorners = this.createRoutedCorners(edge);
         const sourceRefPoint = routedCorners[0]
             || translatePoint(Bounds.center(edge.target.bounds), edge.target.parent, edge.parent);
@@ -73,6 +83,19 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
         routedPoints.push({ kind: 'source', ...sourceAnchor});
         routedCorners.forEach(corner => routedPoints.push(corner));
         routedPoints.push({ kind: 'target', ...targetAnchor});
+
+		let r: RoutedPoint;
+        for (r of routedPoints) {
+          console.log('.... point : '+r.x + ',' + r.y);
+        }
+
+        // send a ChangeRoutingPointsOperation in case the routing points were computed the frist time
+        if (initRoutingPoints) {
+          const action=ChangeRoutingPointsOperation.create([{ elementId:edge.id,newRoutingPoints:routedPoints}]);
+          this.actionDispatcher.dispatch(action);
+          console.log('changeRoutingPoints action send.....');
+        }
+
         return routedPoints;
     }
 

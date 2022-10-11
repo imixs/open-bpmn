@@ -358,8 +358,8 @@ public class BPMNProcess extends BPMNBaseElement {
         // add BPMNGateway instance
         BPMNSequenceFlow flow = this.createBPMNSequenceFlowByNode(sequenceFlow);
         // add default waypoints
-        flow.addWayPoint(sourceElement.getBounds().getCenter());
-        flow.addWayPoint(targetElement.getBounds().getCenter());
+        //flow.addWayPoint(sourceElement.getBounds().getCenter());
+        //flow.addWayPoint(targetElement.getBounds().getCenter());
         return flow;
 
     }
