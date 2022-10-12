@@ -62,11 +62,11 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
     }
 
     route(edge: SRoutableElement): RoutedPoint[] {
-        console.log('....computing BPMN route....');
+        //console.log('!!!!!!....computing BPMN route....');
         if (!edge.source || !edge.target) {
             return [];
         }
-        console.log('..wir haben aktuell '+edge.routingPoints.length + ' routing points');
+        //console.log('..wir haben aktuell '+edge.routingPoints.length + ' routing points');
         const initRoutingPoints=(edge.routingPoints.length===0);
 
         const routedCorners = this.createRoutedCorners(edge);
@@ -84,10 +84,10 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
         routedCorners.forEach(corner => routedPoints.push(corner));
         routedPoints.push({ kind: 'target', ...targetAnchor});
 
-		let r: RoutedPoint;
+		/*let r: RoutedPoint;
         for (r of routedPoints) {
           console.log('.... point : '+r.x + ',' + r.y);
-        }
+        }*/
 
         // send a ChangeRoutingPointsOperation in case the routing points were computed the frist time
         if (initRoutingPoints) {
@@ -119,6 +119,7 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
     }
 
     createRoutingHandles(edge: SRoutableElement) {
+	    console.log('OOOOOOOOO....createRoutingHandles...');
         const routedPoints = this.route(edge);
         this.commitRoute(edge, routedPoints);
         if (routedPoints.length > 0) {
@@ -148,7 +149,7 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
         }
     }
 
-    protected applyInnerHandleMoves(edge: SRoutableElement, moves: ResolvedHandleMove[]){
+    protected override applyInnerHandleMoves(edge: SRoutableElement, moves: ResolvedHandleMove[]): void {
         const route = this.route(edge);
         const routingPoints = edge.routingPoints;
         const minimalPointDistance = this.getOptions(edge).minimalPointDistance;
@@ -160,10 +161,12 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
             switch (handle.kind) {
                 case 'manhattan-50%':
                     if (index < 0) {
-                        if (almostEquals(route[0].x, route[1].x))
-                            this.alignX(routingPoints, 0, correctedX);
-                        else
-                            this.alignY(routingPoints, 0, correctedY);
+                        if (routingPoints.length === 0) {
+                            routingPoints.push({ x: correctedX, y: correctedY });
+                            move.handle.pointIndex = 0;
+                        }
+                        else if (almostEquals(route[0].x, route[1].x)) { this.alignX(routingPoints, 0, correctedX); }
+                        else { this.alignY(routingPoints, 0, correctedY); }
                     } else if (index < routingPoints.length - 1) {
                         if (almostEquals(routingPoints[index].x, routingPoints[index + 1].x)) {
                             this.alignX(routingPoints, index, correctedX);
@@ -173,6 +176,44 @@ export class BPMNEdgeRouter extends AbstractEdgeRouter {
                             this.alignY(routingPoints, index + 1, correctedY);
                         }
                     } else {
+                        if (almostEquals(route[route.length - 2].x, route[route.length - 1].x)) {
+                            this.alignX(routingPoints, routingPoints.length - 1, correctedX);
+                        }
+                        else { this.alignY(routingPoints, routingPoints.length - 1, correctedY); }
+                    }
+                    break;
+            }
+        });
+    }
+
+    protected xapplyInnerHandleMoves(edge: SRoutableElement, moves: ResolvedHandleMove[]){
+        const route = this.route(edge);
+        const routingPoints = edge.routingPoints;
+        const minimalPointDistance = this.getOptions(edge).minimalPointDistance;
+        moves.forEach(move => {
+            const handle = move.handle;
+            const index = handle.pointIndex;
+            const correctedX = this.correctX(routingPoints, index, move.toPosition.x, minimalPointDistance);
+            const correctedY = this.correctY(routingPoints, index, move.toPosition.y, minimalPointDistance);
+            switch (handle.kind) {
+                case 'manhattan-50%':
+                    if (index < 0) {
+	                    console.log('___bin Fall A');
+                        if (almostEquals(route[0].x, route[1].x))
+                            this.alignX(routingPoints, 0, correctedX);
+                        else
+                            this.alignY(routingPoints, 0, correctedY);
+                    } else if (index < routingPoints.length - 1) {
+	                    console.log('___bin Fall B');
+                        if (almostEquals(routingPoints[index].x, routingPoints[index + 1].x)) {
+                            this.alignX(routingPoints, index, correctedX);
+                            this.alignX(routingPoints, index + 1, correctedX);
+                        } else {
+                            this.alignY(routingPoints, index, correctedY);
+                            this.alignY(routingPoints, index + 1, correctedY);
+                        }
+                    } else {
+	                    console.log('___bin Fall C');
                         if (almostEquals(route[route.length - 2].x, route[route.length - 1].x))
                             this.alignX(routingPoints, routingPoints.length - 1, correctedX);
                         else
