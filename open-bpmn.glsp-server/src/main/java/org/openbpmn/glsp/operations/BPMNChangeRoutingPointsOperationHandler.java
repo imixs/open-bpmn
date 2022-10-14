@@ -15,10 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GEdge;
@@ -26,12 +24,9 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -64,94 +59,19 @@ public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHa
                 String id = routingPoint.getElementId();
                 BPMNSequenceFlow bpmnSequenceFlow = context.findBPMNSequenceFlowById(id);
                 if (bpmnSequenceFlow != null) {
+
                     List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
-                    ArrayList<BPMNPoint> newBPMNWayPoints = new ArrayList<>();
-
-                    System.out.println("===== Computing New WayPoint Data: " + id + " =======");
-                    // add source point
-                    BPMNFlowElement bpmnFlowElement = bpmnSequenceFlow.getSourceElement();
-                    if (bpmnFlowElement != null) {
-                        BPMNBounds bounds;
-
-                        bounds = bpmnFlowElement.getBounds();
-
-                        BPMNPoint center = bounds.getCenter();
-                        newBPMNWayPoints.add(center);
-                    }
-                    // add the new routing points (can be empty)
                     for (GPoint point : newGLSPRoutingPoints) {
-                        newBPMNWayPoints.add(new BPMNPoint(point.getX(), point.getY()));
-                    }
-                    // add target point
-                    bpmnFlowElement = bpmnSequenceFlow.getTargetElement();
-                    if (bpmnFlowElement != null) {
-                        BPMNBounds bounds = bpmnFlowElement.getBounds();
-                        BPMNPoint center = bounds.getCenter();
-                        newBPMNWayPoints.add(center);
+                        logger.info("    new Routing point x=" + point.getX() + " y=" + point.getY());
                     }
 
-                    // Now we have the new WayPoint List for the BPMN SequenceFlow element.....
-                    // remove existing routing points...
-                    bpmnSequenceFlow.clearWayPoints();
-                    // add new ones
-                    for (BPMNPoint bpmnPoint : newBPMNWayPoints) {
-                        System.out.println("    Routing point x=" + bpmnPoint.getX() + " y=" + bpmnPoint.getY());
-                        bpmnSequenceFlow.addWayPoint(bpmnPoint);
-                    }
-
-                    // finally we update the GModel. Here we just update the routing points
-                    // for the GEdge and skip the source and target points as these points
-                    // are not relevant for the GModel
+                    // update the GModel.
                     Optional<GEdge> _edge = modelState.getIndex().findElementByClass(id, GEdge.class);
                     if (_edge.isPresent()) {
+                        logger.info("===== Updating GLSP RoutingPoints =======");
                         GEdge edge = _edge.get();
                         edge.getRoutingPoints().clear();
-                        System.out.println("===== Updating GLSP RoutingPoints =======");
-                        for (GPoint gPoint : newGLSPRoutingPoints) {
-                            System.out.println("    Routing point x=" + gPoint.getX() + " y=" + gPoint.getY());
-                        }
                         edge.getRoutingPoints().addAll(newGLSPRoutingPoints);
-                    }
-
-                }
-            }
-        } catch (BPMNMissingElementException e) {
-            e.printStackTrace();
-        }
-        // no more action - the GModel is now up to date
-
-    }
-
-    // @Override
-    public void newexecuteOperation(final ChangeRoutingPointsOperation operation) {
-
-        BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
-        List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
-        try {
-            for (ElementAndRoutingPoints routingPoint : routingPoints) {
-
-                String id = routingPoint.getElementId();
-                BPMNSequenceFlow bpmnSequenceFlow = context.findBPMNSequenceFlowById(id);
-                if (bpmnSequenceFlow != null) {
-
-                    List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
-
-                    // finally we update the GModel. Here we just update the routing points
-                    // for the GEdge and skip the source and target points as these points
-                    // are not relevant for the GModel
-                    Optional<GEdge> _edge = modelState.getIndex().findElementByClass(id, GEdge.class);
-                    if (_edge.isPresent()) {
-                        GEdge edge = _edge.get();
-                        edge.getRoutingPoints().clear();
-                        System.out.println("===== Updating GLSP RoutingPoints =======");
-                        edge.getRoutingPoints().addAll(newGLSPRoutingPoints);
-                    }
-
-                    Set<BPMNPoint> bpmnWayPoints = bpmnSequenceFlow.getWayPoints();
-
-                    if (!hasRoutingChanged(newGLSPRoutingPoints, bpmnWayPoints)) {
-                        logger.info("===> NO ROUTING CHANGE - NO UPDATE NEEDD");
-                        continue;
                     }
 
                     System.out.println("===== Updating BPMN WayPoints  =======");
@@ -159,7 +79,6 @@ public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHa
                     // add the new routing points
                     for (GPoint point : newGLSPRoutingPoints) {
                         BPMNPoint bpmnPoint = new BPMNPoint(point.getX(), point.getY());
-                        System.out.println("    Routing point x=" + bpmnPoint.getX() + " y=" + bpmnPoint.getY());
                         bpmnSequenceFlow.addWayPoint(bpmnPoint);
                     }
 
@@ -169,33 +88,6 @@ public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHa
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
-
-    }
-
-    /**
-     * This helper method compares a list of GLSP RoutingPoints with the list of
-     * BPMN WayPoints. The method returns true if the GLSP routing points differ
-     * from the BPMN way points.
-     *
-     * @return
-     */
-    private boolean hasRoutingChanged(final List<GPoint> glspRoutingPoints, final Set<BPMNPoint> bpmnWayPoints) {
-
-        // compare size
-        if (bpmnWayPoints == null || glspRoutingPoints.size() != bpmnWayPoints.size()) {
-            return true;
-        }
-        int i = 0;
-        for (BPMNPoint bpmnWayPoint : bpmnWayPoints) {
-            GPoint glspRoutingPoint = glspRoutingPoints.get(i);
-            if (glspRoutingPoint.getX() != bpmnWayPoint.getX() || glspRoutingPoint.getY() != bpmnWayPoint.getY()) {
-                return true;
-            }
-
-            i++;
-        }
-
-        return false;
 
     }
 
