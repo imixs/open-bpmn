@@ -25,8 +25,8 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -77,10 +77,11 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
             if (point.isPresent()) {
                 gateway.getBounds().setPosition(point.get().getX(), point.get().getY());
                 gateway.getBounds().setDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
-                // set label data
-                gateway.getLabel().updateLocation(point.get().getX() - 3,
-                        point.get().getY() + gateway.getDefaultHeigth() + BPMNEvent.LABEL_OFFSET);
-                gateway.getLabel().updateDimension(BPMNEvent.DEFAULT_WIDTH, 14);
+                // set label bounds
+                double x = point.get().getX() + (BPMNGateway.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double y = point.get().getY() + BPMNGateway.DEFAULT_HEIGHT + BPMNGateway.LABEL_OFFSET;
+                gateway.getLabel().updateLocation(x, y);
+                gateway.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
