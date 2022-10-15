@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.pool;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GCompartment;
@@ -48,10 +46,6 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
     private static Logger logger = Logger.getLogger(PoolGNodeBuilder.class.getName());
 
     private String name;
-
-    private static final String V_GRAB = "vGrab";
-    private static final String H_GRAB = "hGrab";
-    private static final String H_ALIGN = "hAlign";
 
     public PoolGNodeBuilder(final BPMNParticipant participant) {
         super(BPMNTypes.POOL);
@@ -94,49 +88,13 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         // Set min width/height for the Pool element
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNParticipant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNParticipant.MIN_HEIGHT);
-
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
-
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, "center");
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, "center");
 
         node.getChildren().add(BPMNBuilderHelper.createBPMNContainerHeader(node));
         node.getChildren().add(createContainerCompartment(node));
 
     }
-
-    /**
-     * Creates the Header with the GLabel
-     *
-     * @param node
-     * @return
-     */
-//    private GCompartment createHeaderCompartment(final PoolGNode node) {
-//        Map<String, Object> layoutOptions = new HashMap<>();
-//
-//        return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
-//                .id(node.getId() + "_header") //
-//                .layout(GConstants.Layout.HBOX) //
-//                .layoutOptions(layoutOptions) //
-//                .add(createLabel(node)) //
-//                .addCssClass("container-label") //
-//                .build();
-//    }
-//
-//    /**
-//     * Creates a GLabel
-//     *
-//     * @param node
-//     * @return
-//     */
-//    private GLabel createLabel(final PoolGNode node) {
-//        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-//                .id(node.getId() + "_header_label") //
-//                .text(node.getName()) //
-//                .build();
-//    }
 
     /**
      * Creates the Container compartment used for the process BPMNFlowElements
@@ -145,16 +103,10 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
      * @return
      */
     private GCompartment createContainerCompartment(final PoolGNode node) {
-        Map<String, Object> layoutOptions = new HashMap<>();
-
-        layoutOptions.put(H_GRAB, true);
-        // layoutOptions.put(V_GRAB, true);
-
         // DefaultTypes.NODE ModelTypes.CONTAINER
         return new GCompartmentBuilder(ModelTypes.CONTAINER) //
                 .id(node.getId() + "_container") //
                 .layout(GConstants.Layout.FREEFORM) //
-                .layoutOptions(layoutOptions) //
                 .build();
     }
 }

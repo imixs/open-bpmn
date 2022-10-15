@@ -25,7 +25,7 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
-import org.eclipse.glsp.graph.util.GConstants;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
@@ -42,6 +42,10 @@ import org.openbpmn.model.BPMNGModelState;
 public class BPMNBuilderHelper {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNBuilderHelper.class.getName());
+
+    private static final String V_GRAB = "vGrab";
+    private static final String H_GRAB = "hGrab";
+    private static final String H_ALIGN = "hAlign";
 
     public static IconGNode createCompartmentIcon(final BaseElementGNode node) {
         return new IconGNodeBuilder(). //
@@ -70,12 +74,12 @@ public class BPMNBuilderHelper {
      */
     public static GCompartment createBPMNContainerHeader(final BaseElementGNode node) {
         Map<String, Object> layoutOptions = new HashMap<>();
+        layoutOptions.put(V_GRAB, true);
+        layoutOptions.put(GLayoutOptions.KEY_V_ALIGN, "center");
 
         return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
                 .id(node.getId() + "_header") //
-                .layout(GConstants.Layout.HBOX) //
                 .layoutOptions(layoutOptions) //
-                // .add(glabel) //
                 .addCssClass("label") //
                 .build();
     }
