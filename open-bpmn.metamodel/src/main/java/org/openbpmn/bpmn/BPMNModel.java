@@ -555,6 +555,8 @@ public class BPMNModel {
     public void deleteBPMNParticipant(BPMNParticipant participant) {
         if (participant != null) {
             BPMNProcess process = participant.openProcess();
+            
+            process.deleteAllElements();
             this.definitions.removeChild(process.getElementNode());
             if (participant.hasPool()) {
                 this.bpmnPlane.removeChild(participant.getBpmnShape());

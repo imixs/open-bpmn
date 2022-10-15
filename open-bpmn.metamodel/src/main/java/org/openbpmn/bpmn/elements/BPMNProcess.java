@@ -527,6 +527,23 @@ public class BPMNProcess extends BPMNBaseElement {
     }
 
     /**
+     * This method deletes all BPMNBase elements and Lanes form the process
+     * 
+     */
+    public void deleteAllElements() {
+        // first delete all lanes 
+        Set<BPMNLane> bpmnLanes = this.getLanes();
+        for (BPMNLane lane: bpmnLanes) {
+            this.deleteLane(lane.getId());
+        }
+        // next delete all flowElements if there still exist ones...
+        Set<BPMNFlowElement> flowElements=this.getBPMNFlowElements();
+        for (BPMNFlowElement flowElement: flowElements) {
+            this.deleteBPMNBaseElement(flowElement.getId());
+        }
+    }
+
+    /**
      * Deletes a BPMNLane and all referred element from this process.
      * <p>
      * 
@@ -544,8 +561,7 @@ public class BPMNProcess extends BPMNBaseElement {
             this.deleteBPMNBaseElement(flowEleemntID);
         }
 
-        // finally delete the task element and the shape
-        this.getElementNode().removeChild(lane.getElementNode());
+        //  delete the shape
         if (lane.getBpmnShape() != null) {
             model.getBpmnPlane().removeChild(lane.getBpmnShape());
         }
@@ -579,7 +595,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         this.getActivities().remove(task);
     }
-
+    
     /**
      * Deletes a BPMNEvent element from this context.
      * <p>
