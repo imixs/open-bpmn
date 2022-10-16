@@ -46,7 +46,8 @@ import org.openbpmn.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * This is the Default BPMNEvent extension providing the JSONForms shemata.
+ * This is the Default BPMNParticipant extension providing the JSONForms
+ * shemata.
  *
  * @author rsoika
  *
@@ -181,7 +182,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
-            final BaseElementGNode gNodeElement) {
+            final GModelElement gNodeElement) {
 
         long l = System.currentTimeMillis();
         // default update of name and documentation
@@ -197,7 +198,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                 if ("name".equals(feature)) {
                     bpmnElement.setName(json.getString(feature));
                     // Update Label...
-                    gNodeElement.setName(json.getString(feature));
+                    ((BaseElementGNode) gNodeElement).setName(json.getString(feature));
                     continue;
                 }
                 if ("documentation".equals(feature)) {

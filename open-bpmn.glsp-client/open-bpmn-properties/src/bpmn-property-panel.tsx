@@ -185,12 +185,21 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
         // Check if we now have exactly one elemnt selected. Only in this case we show
         // a property panel.
-        if (selectedElements.length === 1) {
-            const element = root.index.getById(selectedElements[0]);
+        if (selectedElements.length === 1 || selectedElements.length ===0 ) {
+	        let element;
+	        if (selectedElements.length === 1) {
+              element = root.index.getById(selectedElements[0]);
+            } else {
+	          element=root;
+            }
             if (element) {
                 // did we have a change?
                 // avoid message loop...
                 if (element.id === this.selectedElementId) {
+                    // skip this event!
+                    return;
+                }
+                if (element.id === 'EMPTY') {
                     // skip this event!
                     return;
                 }
@@ -200,9 +209,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                 // because the jsonFomrs send a onchange event after init we mark this state here
                 this.initForm = true;
                 // update header
-                // this.header.insertAdjacentText('beforeend',element.type);
-                this.headerTitle.textContent = element.type;
-
+                if (element===root) {
+                    this.headerTitle.textContent = 'Default Process';
+	            } else {
+                    this.headerTitle.textContent = element.type;
+                }
                 
                  // BPMN Node selected, collect JSONForms schemata....
                  let bpmnPropertiesData;
@@ -245,16 +256,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
             this.selectedElementId = '';
             if (this.bodyDiv) {
                 this.headerTitle.textContent = 'BPMN Properties';
-                if (!this.selectionService.hasSelectedElements()) {
-                    // show an empty pane (or later the process panel)
-                    if (this.bodyDiv) {
-                        ReactDOM.render(<React.Fragment>Please select an element </React.Fragment>, this.bodyDiv);
-                    }
-                } else {
-                    // multi selection - we can not show a property panel
-                    if (this.bodyDiv) {
-                        ReactDOM.render(<React.Fragment>Please select a single element </React.Fragment>, this.bodyDiv);
-                    }
+                // multi selection - we can not show a property panel
+                if (this.bodyDiv) {
+                    ReactDOM.render(<React.Fragment>Please select a single element </React.Fragment>, this.bodyDiv);
                 }
             }
         }

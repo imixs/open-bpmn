@@ -22,12 +22,12 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.extension.BPMNExtension;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -146,7 +146,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
 
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
-            final BaseElementGNode gNodeElement) {
+            final GModelElement gNodeElement) {
 
         // check custom features
         Set<String> features = json.keySet();

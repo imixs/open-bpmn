@@ -25,9 +25,9 @@ import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
@@ -63,14 +63,24 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         String jsonData = operation.getJsonData();
 
         // validate GModel id
-        Optional<BaseElementGNode> element = modelState.getIndex().findElementByClass(operation.getId(),
+        String elementID = operation.getId();
+        GModelElement gModelElement = null;
+        BPMNBaseElement bpmnElement = null;
+        if (modelState.getRoot().getId().equals(elementID)) {
+            bpmnElement = modelState.getBpmnModel().openDefaultProcess();
+            gModelElement = modelState.getRoot();
+        }
+        Optional<BaseElementGNode> _baseElement = modelState.getIndex().findElementByClass(elementID,
                 BaseElementGNode.class);
-        if (element.isEmpty()) {
-            throw new RuntimeException("Cannot find BaseElement with id '" + operation.getId() + "'");
+        if (!_baseElement.isEmpty()) {
+            gModelElement = _baseElement.get();
+            bpmnElement = modelState.getBpmnModel().findBPMNBaseElementById(elementID);
+            // throw new RuntimeException("Cannot find BaseElement with id '" +
+            // operation.getId() + "'");
         }
 
         // validate BPMN element
-        BPMNBaseElement bpmnElement = modelState.getBpmnModel().findBPMNBaseElementById(operation.getId());
+
         if (bpmnElement == null) {
             throw new IllegalArgumentException(
                     "BPMN Element with id " + operation.getId() + " is not defined in current model!");
@@ -83,54 +93,25 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             throw new RuntimeException("Cannot read json data : " + e.getMessage());
         }
 
-        // The Name Feature for Tasks, Events and Gateways is handled separately to
-        // avoid the need to recompute the full GModel
-//        String nameValue = json.getString("name");
-//        // did the name has changed?
-//        if (nameValue != null && !nameValue.equals(bpmnElement.getName())) {
-//            // Event or Gateway?
-//            if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
-//                // update the GLabel associated with the Event directly.
-//                Optional<GLabel> label = modelState.getIndex().findElementByClass(operation.getId() + "_bpmnlabel",
-//                        GLabel.class);
-//                if (!label.isEmpty()) {
-//                    label.get().setText(nameValue);
-//                }
-//
-//            } else if (BPMNModel.isActivity(bpmnElement)) {
-//                // update the task CompartmentHeader (GLabel)
-//                GLabel label = BPMNBuilderHelper.findCompartmentHeader(element.get());
-//                if (label != null) {
-//                    label.setText(json.getString("name"));
-//                }
-//            } else if (BPMNModel.isParticipant(bpmnElement.getElementNode())) {
-//                // udpate the gNode name property
-//                element.get().setName(nameValue);
-//            }
-//        }
-
         // Now call the extensions to update the property data according to the BPMN
         // element. The updatePropertiesData can also update the given JSON object!
         if (extensions != null) {
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
+                    extension.updatePropertiesData(json, bpmnElement, gModelElement);
 
-                    if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
-                        // update the GLabel associated with the Event directly.
-//                        Optional<GLabel> label = modelState.getIndex()
-//                                .findElementByClass(operation.getId() + "_bpmnlabel", GLabel.class);
-//                        extension.updatePropertiesData(json, bpmnElement, label.get());
-                        extension.updatePropertiesData(json, bpmnElement, element.get());
-                    } else {
-                        extension.updatePropertiesData(json, bpmnElement, element.get());
-                    }
+//                    if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
+//                        extension.updatePropertiesData(json, bpmnElement, element.get());
+//                    } else {
+//                        extension.updatePropertiesData(json, bpmnElement, element.get());
+//                    }
                 }
             }
         }
 
         // finally we need to update the JSONFormsData property of the selected element
-        element.get().getArgs().put("JSONFormsData", json.toString());
+        gModelElement.getArgs().put("JSONFormsData", json.toString());
         logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
     }

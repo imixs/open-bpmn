@@ -31,7 +31,6 @@ import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
-import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
@@ -176,6 +175,10 @@ public class BPMNGModelFactory implements GModelFactory {
      */
     public GGraph buildGGraph(final BPMNModel model) {
 
+        // create the RootBuiler
+        GGraphBuilder rootBuilder = new GGraphBuilder() //
+                .id("root_" + BPMNModel.generateShortID());
+
         List<GModelElement> gRootNodeList = new ArrayList<>();
         try {
             // In case we have collaboration diagram we iterate over all participants and
@@ -201,7 +204,6 @@ public class BPMNGModelFactory implements GModelFactory {
 
                     } else {
                         // add default process without a pool
-                        // addBPMNProcess(bpmnProcess, gNodeList);
                         gRootNodeList.addAll(computeGModelElements(bpmnProcess, null));
                     }
                 }
@@ -215,11 +217,11 @@ public class BPMNGModelFactory implements GModelFactory {
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
-        // add to root node...
-        GGraph newGModel = new GGraphBuilder() //
-                .id("root_" + BPMNModel.generateShortID()) //
-                .addAll(gRootNodeList) //
-                .build();
+        // add the rootNodeList
+        rootBuilder.addAll(gRootNodeList);
+        GGraph newGModel = rootBuilder.build();
+        // finally add the root extensions
+        applyBPMNExtensions(newGModel, model.openDefaultProcess());
 
         return newGModel;
     }
@@ -231,7 +233,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param elementNode
      * @param bpmnElement
      */
-    void applyBPMNExtensions(final GNode elementNode, final BPMNBaseElement bpmnElement) {
+    void applyBPMNExtensions(final GModelElement elementNode, final BPMNBaseElement bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);

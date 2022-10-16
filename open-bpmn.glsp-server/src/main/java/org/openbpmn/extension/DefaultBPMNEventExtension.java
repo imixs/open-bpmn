@@ -30,7 +30,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -236,6 +235,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
              * represented as a separate object
              */
             dataBuilder.addArray("links");
+            logger.warning(" addLinkEventDefinitions not yet implemented");
             for (Element definition : eventDefinitions) {
                 dataBuilder.addObject();
                 dataBuilder.addData("name", "MY_LINK");
@@ -247,7 +247,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
-            final BaseElementGNode gNodeElement) {
+            final GModelElement gNodeElement) {
 
         Set<String> features = json.keySet();
         for (String feature : features) {

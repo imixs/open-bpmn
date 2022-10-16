@@ -17,56 +17,57 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNGateway;
-import org.openbpmn.glsp.bpmn.LabelGNode;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
 /**
- * This is the Default BPMNEvent extension providing the JSONForms shemata.
+ * This is the Default extension for the BPMN default process, providing the
+ * JSONForms shemata.
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNDefaultProcessExtension extends AbstractBPMNElementExtension {
 
-    @SuppressWarnings("unused")
-    private static Logger logger = Logger.getLogger(DefaultBPMNGatewayExtension.class.getName());
+    private static Logger logger = Logger.getLogger(DefaultBPMNDefaultProcessExtension.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
 
-    public DefaultBPMNGatewayExtension() {
+    public DefaultBPMNDefaultProcessExtension() {
         super();
     }
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNModel.BPMN_GATEWAYS.contains(elementTypeId);
+        logger.info("....UNCLEAR what does this id mean: " + elementTypeId);
+        return false;
     }
 
     /**
-     * This Extension is for BPMNGateways only
+     * This Extension is for BPMNActivities only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
-        return (bpmnElement instanceof BPMNGateway);
+        if (bpmnElement instanceof BPMNProcess) {
+            BPMNProcess process = (BPMNProcess) bpmnElement;
+            return (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(process.getProcessType()));
+        }
+        return false;
     }
 
     @Override
@@ -83,29 +84,20 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
     public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
-        dataBuilder. //
-                addData("name", bpmnElement.getName()). //
-                addData("documentation", bpmnElement.getDocumentation()). //
-                addData("gatewaydirection", bpmnElement.getAttribute("gatewayDirection"));
-
-        String[] gatewayDirections = { "Converging", "Diverging", "Mixed", "Unspecified" };
+        dataBuilder //
+                .addData("name", bpmnElement.getName()) //
+                .addData("documentation", bpmnElement.getDocumentation());
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("documentation", "string", "Element description"). //
-                addProperty("gatewaydirection", "string", null, gatewayDirections);
+                addProperty("documentation", "string", null);
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
-
-        Map<String, String> radioOption = new HashMap<>();
-        radioOption.put("format", "radio");
-
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
-                addElement("gatewaydirection", "Direction", radioOption). //
                 addLayout(Layout.VERTICAL). //
                 addElement("documentation", "Documentation", multilineOption);
 
@@ -115,21 +107,13 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
     public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
             final GModelElement gNodeElement) {
 
+        long l = System.currentTimeMillis();
+
+        // check custom features
         Set<String> features = json.keySet();
         for (String feature : features) {
-
             if ("name".equals(feature)) {
                 bpmnElement.setName(json.getString(feature));
-                // Update Label...
-                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
-                if (!label.isEmpty()) {
-                    LabelGNode lgn = (LabelGNode) label.get();
-                    GLabel glabel = BPMNBuilderHelper.findCompartmentHeader((lgn));
-                    if (glabel != null) {
-                        glabel.setText(json.getString(feature));
-                    }
-                }
-
                 continue;
             }
             if ("documentation".equals(feature)) {
@@ -137,13 +121,9 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
                 continue;
             }
 
-            if ("gatewaydirection".equals(feature)) {
-                bpmnElement.setAttribute("gatewayDirection", json.getString(feature));
-                continue;
-            }
-            // TODO implement Event features
         }
 
+        logger.info("default process update in " + (System.currentTimeMillis() - l) + "ms");
     }
 
 }

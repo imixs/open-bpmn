@@ -17,8 +17,8 @@ package org.openbpmn.extension;
 
 import javax.json.JsonObject;
 
+import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -121,7 +121,7 @@ public interface BPMNExtension {
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name", "category"). //
-    
+
          schemaBuilder.addProperty("name", "string", "Please enter your name");
      *
      * }
@@ -141,8 +141,8 @@ public interface BPMNExtension {
      *
      * @param json         - a JSON structure representing the data
      * @param bpmnElement  - the BPMN element to be updated
-     * @param gNodeElement - the GNode element
+     * @param gNodeElement - the GModelElement element
      */
-    void updatePropertiesData(JsonObject json, BPMNBaseElement bpmnElement, BaseElementGNode gNodeElement);
+    void updatePropertiesData(JsonObject json, BPMNBaseElement bpmnElement, GModelElement gNodeElement);
 
 }
