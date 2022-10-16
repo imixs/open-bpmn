@@ -530,13 +530,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * This method deletes all BPMNBase elements and Lanes form the process
      * 
      */
-    public void deleteAllElements() {
-        // first delete all lanes 
-        Set<BPMNLane> bpmnLanes = this.getLanes();
-        for (BPMNLane lane: bpmnLanes) {
-            this.deleteLane(lane.getId());
-        }
-        // next delete all flowElements if there still exist ones...
+    public void deleteAllFlowElements() {
         Set<BPMNFlowElement> flowElements=this.getBPMNFlowElements();
         for (BPMNFlowElement flowElement: flowElements) {
             this.deleteBPMNBaseElement(flowElement.getId());

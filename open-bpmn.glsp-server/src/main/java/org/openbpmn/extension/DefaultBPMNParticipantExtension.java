@@ -36,7 +36,7 @@ import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
-import org.openbpmn.glsp.bpmn.LaneGMode;
+import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -221,7 +221,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                             // update gnode...
                             Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
                             if (_gLane.isPresent()) {
-                                LaneGMode gLane = (LaneGMode) _gLane.get();
+                                LaneGNode gLane = (LaneGNode) _gLane.get();
                                 gLane.setName(laneData.getString("name"));
                             }
                         }

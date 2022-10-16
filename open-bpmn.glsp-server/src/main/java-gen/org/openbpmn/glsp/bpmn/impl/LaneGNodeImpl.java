@@ -5,22 +5,22 @@ package org.openbpmn.glsp.bpmn.impl;
 import org.eclipse.emf.ecore.EClass;
 
 import org.openbpmn.glsp.bpmn.BpmnPackage;
-import org.openbpmn.glsp.bpmn.LaneGMode;
+import org.openbpmn.glsp.bpmn.LaneGNode;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Lane GMode</b></em>'.
+ * An implementation of the model object '<em><b>Lane GNode</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class LaneGModeImpl extends BaseElementGNodeImpl implements LaneGMode {
+public class LaneGNodeImpl extends BaseElementGNodeImpl implements LaneGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected LaneGModeImpl() {
+    protected LaneGNodeImpl() {
         super();
     }
 
@@ -31,7 +31,7 @@ public class LaneGModeImpl extends BaseElementGNodeImpl implements LaneGMode {
      */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.LANE_GMODE;
+        return BpmnPackage.Literals.LANE_GNODE;
     }
 
-} //LaneGModeImpl
+} //LaneGNodeImpl

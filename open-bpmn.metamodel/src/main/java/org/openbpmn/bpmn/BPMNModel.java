@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.net.URI;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
@@ -30,6 +31,7 @@ import javax.xml.xpath.XPathFactory;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNLabel;
+import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
@@ -555,8 +557,19 @@ public class BPMNModel {
     public void deleteBPMNParticipant(BPMNParticipant participant) {
         if (participant != null) {
             BPMNProcess process = participant.openProcess();
-            
-            process.deleteAllElements();
+            // delete all Lanes - we need first to collect the IDs to avoid recursive calls
+            Iterator<BPMNLane> lanesIterator = process.getLanes().iterator();
+            List<String> laneIDs = new ArrayList<String>();
+            while (lanesIterator.hasNext()) {
+                BPMNLane lane = lanesIterator.next();
+                laneIDs.add(lane.getId());
+            }
+            for (String laneID : laneIDs) {
+                // delete Lane by id....
+                process.deleteLane(laneID);
+            }
+            // delete remaining FlowElements...
+            process.deleteAllFlowElements();
             this.definitions.removeChild(process.getElementNode());
             if (participant.hasPool()) {
                 this.bpmnPlane.removeChild(participant.getBpmnShape());
@@ -613,7 +626,6 @@ public class BPMNModel {
         return null;
     }
 
-  
     /**
      * This method returns the BPMNBounds element of a BPMNBaseElement with the
      * given ID. This finder method can be used to just adjust the Bounds in the

@@ -67,7 +67,7 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
             case BpmnPackage.GROUP_GNODE: return createGroupGNode();
             case BpmnPackage.TEXT_ANNOTATION_GNODE: return createTextAnnotationGNode();
             case BpmnPackage.POOL_GNODE: return createPoolGNode();
-            case BpmnPackage.LANE_GMODE: return createLaneGMode();
+            case BpmnPackage.LANE_GNODE: return createLaneGNode();
             case BpmnPackage.ICON_GNODE: return createIconGNode();
             case BpmnPackage.SEQUENCE_FLOW_GNODE: return createSequenceFlowGNode();
             default:
@@ -190,9 +190,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public LaneGMode createLaneGMode() {
-        LaneGModeImpl laneGMode = new LaneGModeImpl();
-        return laneGMode;
+    public LaneGNode createLaneGNode() {
+        LaneGNodeImpl laneGNode = new LaneGNodeImpl();
+        return laneGNode;
     }
 
     /**

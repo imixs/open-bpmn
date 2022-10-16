@@ -22,7 +22,7 @@
     <genClasses ecoreClass="bpmn-glsp.ecore#//GroupGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//TextAnnotationGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//PoolGNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//LaneGMode"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//LaneGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//IconGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//SequenceFlowGNode">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/name"/>

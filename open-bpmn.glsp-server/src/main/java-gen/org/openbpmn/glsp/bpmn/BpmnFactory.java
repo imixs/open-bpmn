@@ -121,13 +121,13 @@ public interface BpmnFactory extends EFactory {
     PoolGNode createPoolGNode();
 
     /**
-     * Returns a new object of class '<em>Lane GMode</em>'.
+     * Returns a new object of class '<em>Lane GNode</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Lane GMode</em>'.
+     * @return a new object of class '<em>Lane GNode</em>'.
      * @generated
      */
-    LaneGMode createLaneGMode();
+    LaneGNode createLaneGNode();
 
     /**
      * Returns a new object of class '<em>Icon GNode</em>'.

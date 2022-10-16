@@ -22,7 +22,7 @@ import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.GroupGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
-import org.openbpmn.glsp.bpmn.LaneGMode;
+import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
@@ -118,7 +118,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass laneGModeEClass = null;
+    private EClass laneGNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -323,8 +323,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getLaneGMode() {
-        return laneGModeEClass;
+    public EClass getLaneGNode() {
+        return laneGNodeEClass;
     }
 
     /**
@@ -424,7 +424,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
 
         poolGNodeEClass = createEClass(POOL_GNODE);
 
-        laneGModeEClass = createEClass(LANE_GMODE);
+        laneGNodeEClass = createEClass(LANE_GNODE);
 
         iconGNodeEClass = createEClass(ICON_GNODE);
 
@@ -476,7 +476,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         groupGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
         textAnnotationGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
         poolGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        laneGModeEClass.getESuperTypes().add(this.getBaseElementGNode());
+        laneGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
         iconGNodeEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
         sequenceFlowGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
 
@@ -505,7 +505,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
 
         initEClass(poolGNodeEClass, PoolGNode.class, "PoolGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(laneGModeEClass, LaneGMode.class, "LaneGMode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(laneGNodeEClass, LaneGNode.class, "LaneGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(iconGNodeEClass, IconGNode.class, "IconGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

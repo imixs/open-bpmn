@@ -58,7 +58,7 @@ import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
-import org.openbpmn.glsp.bpmn.LaneGMode;
+import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
@@ -324,7 +324,7 @@ public class BPMNGModelFactory implements GModelFactory {
             // compute relative position
             GPoint point = computeRelativeGPoint(lane.getBounds(), participant);
             // build GNode
-            LaneGMode laneNode = new LaneGNodeBuilder(lane) //
+            LaneGNode laneNode = new LaneGNodeBuilder(lane) //
                     .position(point) //
                     .build();
 

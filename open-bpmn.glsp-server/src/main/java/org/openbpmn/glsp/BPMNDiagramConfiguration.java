@@ -80,7 +80,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(BPMNTypes.EVENT, BpmnPackage.Literals.EVENT_GNODE);
         mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW_GNODE);
         mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
-        mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GMODE);
+        mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GNODE);
 
         return mappings;
     }

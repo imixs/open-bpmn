@@ -26,7 +26,7 @@ import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
-import org.openbpmn.glsp.bpmn.LaneGMode;
+import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
@@ -37,7 +37,7 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
  *
  * @author rsoika
  */
-public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeBuilder> {
+public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGNode, LaneGNodeBuilder> {
 
     private static Logger logger = Logger.getLogger(LaneGNodeBuilder.class.getName());
 
@@ -66,8 +66,8 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeB
     }
 
     @Override
-    protected LaneGMode instantiate() {
-        return BpmnFactory.eINSTANCE.createLaneGMode();
+    protected LaneGNode instantiate() {
+        return BpmnFactory.eINSTANCE.createLaneGNode();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGMode, LaneGNodeB
     }
 
     @Override
-    public void setProperties(final LaneGMode node) {
+    public void setProperties(final LaneGNode node) {
         super.setProperties(node);
         node.setName(name);
 

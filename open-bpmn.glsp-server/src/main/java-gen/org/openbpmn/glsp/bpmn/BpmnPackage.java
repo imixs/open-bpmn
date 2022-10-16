@@ -1689,14 +1689,14 @@ public interface BpmnPackage extends EPackage {
     int POOL_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LaneGModeImpl <em>Lane GMode</em>}' class.
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.LaneGNodeImpl <em>Lane GNode</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.openbpmn.glsp.bpmn.impl.LaneGModeImpl
-     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLaneGMode()
+     * @see org.openbpmn.glsp.bpmn.impl.LaneGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLaneGNode()
      * @generated
      */
-    int LANE_GMODE = 11;
+    int LANE_GNODE = 11;
 
     /**
      * The feature id for the '<em><b>Args</b></em>' map.
@@ -1705,7 +1705,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
+    int LANE_GNODE__ARGS = BASE_ELEMENT_GNODE__ARGS;
 
     /**
      * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1714,7 +1714,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__ID = BASE_ELEMENT_GNODE__ID;
+    int LANE_GNODE__ID = BASE_ELEMENT_GNODE__ID;
 
     /**
      * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
@@ -1723,7 +1723,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
+    int LANE_GNODE__CSS_CLASSES = BASE_ELEMENT_GNODE__CSS_CLASSES;
 
     /**
      * The feature id for the '<em><b>Children</b></em>' containment reference list.
@@ -1732,7 +1732,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
+    int LANE_GNODE__CHILDREN = BASE_ELEMENT_GNODE__CHILDREN;
 
     /**
      * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1741,7 +1741,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
+    int LANE_GNODE__PARENT = BASE_ELEMENT_GNODE__PARENT;
 
     /**
      * The feature id for the '<em><b>Trace</b></em>' attribute.
@@ -1750,7 +1750,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
+    int LANE_GNODE__TRACE = BASE_ELEMENT_GNODE__TRACE;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -1759,7 +1759,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
+    int LANE_GNODE__TYPE = BASE_ELEMENT_GNODE__TYPE;
 
     /**
      * The feature id for the '<em><b>Position</b></em>' containment reference.
@@ -1768,7 +1768,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
+    int LANE_GNODE__POSITION = BASE_ELEMENT_GNODE__POSITION;
 
     /**
      * The feature id for the '<em><b>Size</b></em>' containment reference.
@@ -1777,7 +1777,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
+    int LANE_GNODE__SIZE = BASE_ELEMENT_GNODE__SIZE;
 
     /**
      * The feature id for the '<em><b>Edge Placement</b></em>' containment reference.
@@ -1786,7 +1786,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
+    int LANE_GNODE__EDGE_PLACEMENT = BASE_ELEMENT_GNODE__EDGE_PLACEMENT;
 
     /**
      * The feature id for the '<em><b>Layout</b></em>' attribute.
@@ -1795,7 +1795,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
+    int LANE_GNODE__LAYOUT = BASE_ELEMENT_GNODE__LAYOUT;
 
     /**
      * The feature id for the '<em><b>Layout Options</b></em>' map.
@@ -1804,7 +1804,7 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
+    int LANE_GNODE__LAYOUT_OPTIONS = BASE_ELEMENT_GNODE__LAYOUT_OPTIONS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1813,25 +1813,25 @@ public interface BpmnPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int LANE_GMODE__NAME = BASE_ELEMENT_GNODE__NAME;
+    int LANE_GNODE__NAME = BASE_ELEMENT_GNODE__NAME;
 
     /**
-     * The number of structural features of the '<em>Lane GMode</em>' class.
+     * The number of structural features of the '<em>Lane GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LANE_GMODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
+    int LANE_GNODE_FEATURE_COUNT = BASE_ELEMENT_GNODE_FEATURE_COUNT + 0;
 
     /**
-     * The number of operations of the '<em>Lane GMode</em>' class.
+     * The number of operations of the '<em>Lane GNode</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LANE_GMODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
+    int LANE_GNODE_OPERATION_COUNT = BASE_ELEMENT_GNODE_OPERATION_COUNT + 0;
 
     /**
      * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.IconGNodeImpl <em>Icon GNode</em>}' class.
@@ -2266,14 +2266,14 @@ public interface BpmnPackage extends EPackage {
     EClass getPoolGNode();
 
     /**
-     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.LaneGMode <em>Lane GMode</em>}'.
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.LaneGNode <em>Lane GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Lane GMode</em>'.
-     * @see org.openbpmn.glsp.bpmn.LaneGMode
+     * @return the meta object for class '<em>Lane GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.LaneGNode
      * @generated
      */
-    EClass getLaneGMode();
+    EClass getLaneGNode();
 
     /**
      * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.IconGNode <em>Icon GNode</em>}'.
@@ -2478,14 +2478,14 @@ public interface BpmnPackage extends EPackage {
         EClass POOL_GNODE = eINSTANCE.getPoolGNode();
 
         /**
-         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LaneGModeImpl <em>Lane GMode</em>}' class.
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.LaneGNodeImpl <em>Lane GNode</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see org.openbpmn.glsp.bpmn.impl.LaneGModeImpl
-         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLaneGMode()
+         * @see org.openbpmn.glsp.bpmn.impl.LaneGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getLaneGNode()
          * @generated
          */
-        EClass LANE_GMODE = eINSTANCE.getLaneGMode();
+        EClass LANE_GNODE = eINSTANCE.getLaneGNode();
 
         /**
          * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.IconGNodeImpl <em>Icon GNode</em>}' class.

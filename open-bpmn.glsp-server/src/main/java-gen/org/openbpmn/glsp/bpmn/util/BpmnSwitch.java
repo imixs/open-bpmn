@@ -232,17 +232,17 @@ public class BpmnSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.LANE_GMODE: {
-                LaneGMode laneGMode = (LaneGMode)theEObject;
-                T result = caseLaneGMode(laneGMode);
-                if (result == null) result = caseBaseElementGNode(laneGMode);
-                if (result == null) result = caseGNode(laneGMode);
-                if (result == null) result = caseGShapeElement(laneGMode);
-                if (result == null) result = caseGEdgeLayoutable(laneGMode);
-                if (result == null) result = caseGLayouting(laneGMode);
-                if (result == null) result = caseGModelElement(laneGMode);
-                if (result == null) result = caseGBoundsAware(laneGMode);
-                if (result == null) result = caseGArgumentable(laneGMode);
+            case BpmnPackage.LANE_GNODE: {
+                LaneGNode laneGNode = (LaneGNode)theEObject;
+                T result = caseLaneGNode(laneGNode);
+                if (result == null) result = caseBaseElementGNode(laneGNode);
+                if (result == null) result = caseGNode(laneGNode);
+                if (result == null) result = caseGShapeElement(laneGNode);
+                if (result == null) result = caseGEdgeLayoutable(laneGNode);
+                if (result == null) result = caseGLayouting(laneGNode);
+                if (result == null) result = caseGModelElement(laneGNode);
+                if (result == null) result = caseGBoundsAware(laneGNode);
+                if (result == null) result = caseGArgumentable(laneGNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -437,17 +437,17 @@ public class BpmnSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Lane GMode</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Lane GNode</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Lane GMode</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Lane GNode</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseLaneGMode(LaneGMode object) {
+    public T caseLaneGNode(LaneGNode object) {
         return null;
     }
 

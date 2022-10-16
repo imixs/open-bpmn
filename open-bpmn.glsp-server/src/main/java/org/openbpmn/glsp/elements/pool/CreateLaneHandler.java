@@ -77,7 +77,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.LANE_GMODE, elementTypeId, modelState);
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.LANE_GNODE, elementTypeId, modelState);
         nodeCounter++; // start with 1
         return "Lane-" + nodeCounter;
     }

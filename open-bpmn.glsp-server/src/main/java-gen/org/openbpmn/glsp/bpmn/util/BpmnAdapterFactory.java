@@ -122,8 +122,8 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
                 return createPoolGNodeAdapter();
             }
             @Override
-            public Adapter caseLaneGMode(LaneGMode object) {
-                return createLaneGModeAdapter();
+            public Adapter caseLaneGNode(LaneGNode object) {
+                return createLaneGNodeAdapter();
             }
             @Override
             public Adapter caseIconGNode(IconGNode object) {
@@ -344,16 +344,16 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.LaneGMode <em>Lane GMode</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.LaneGNode <em>Lane GNode</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.bpmn.LaneGMode
+     * @see org.openbpmn.glsp.bpmn.LaneGNode
      * @generated
      */
-    public Adapter createLaneGModeAdapter() {
+    public Adapter createLaneGNodeAdapter() {
         return null;
     }
 
