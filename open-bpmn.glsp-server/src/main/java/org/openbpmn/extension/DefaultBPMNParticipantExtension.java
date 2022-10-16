@@ -191,12 +191,12 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
         BPMNParticipant participant = (BPMNParticipant) bpmnElement;
         try {
             BPMNProcess process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
-
             // check custom features
             Set<String> features = json.keySet();
             for (String feature : features) {
                 if ("name".equals(feature)) {
                     bpmnElement.setName(json.getString(feature));
+                    process.setName(json.getString(feature));
                     // Update Label...
                     ((BaseElementGNode) gNodeElement).setName(json.getString(feature));
                     continue;
