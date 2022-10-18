@@ -108,17 +108,32 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteTaskItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNTypes.TASK, "Task", new TriggerNodeCreationAction(BPMNTypes.TASK)));
-        result.add(new PaletteItem(BPMNTypes.MANUAL_TASK, "Manual Task",
-                new TriggerNodeCreationAction(BPMNTypes.MANUAL_TASK)));
-        result.add(
-                new PaletteItem(BPMNTypes.USER_TASK, "User Task", new TriggerNodeCreationAction(BPMNTypes.USER_TASK)));
-        result.add(new PaletteItem(BPMNTypes.SERVICE_TASK, "Service Task",
-                new TriggerNodeCreationAction(BPMNTypes.SERVICE_TASK)));
-        result.add(
-                new PaletteItem(BPMNTypes.SEND_TASK, "Send Task", new TriggerNodeCreationAction(BPMNTypes.SEND_TASK)));
-        result.add(new PaletteItem(BPMNTypes.SCRIPT_TASK, "Script Task",
-                new TriggerNodeCreationAction(BPMNTypes.SCRIPT_TASK)));
+        PaletteItem item = new PaletteItem(BPMNTypes.TASK, "Task", new TriggerNodeCreationAction(BPMNTypes.TASK));
+        item.setSortString("A");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.MANUAL_TASK, "Manual Task",
+                new TriggerNodeCreationAction(BPMNTypes.MANUAL_TASK));
+        item.setSortString("B");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.USER_TASK, "User Task", new TriggerNodeCreationAction(BPMNTypes.USER_TASK));
+        item.setSortString("C");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.SERVICE_TASK, "Service Task",
+                new TriggerNodeCreationAction(BPMNTypes.SERVICE_TASK));
+        item.setSortString("D");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.SEND_TASK, "Send Task", new TriggerNodeCreationAction(BPMNTypes.SEND_TASK));
+        item.setSortString("E");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.SCRIPT_TASK, "Script Task",
+                new TriggerNodeCreationAction(BPMNTypes.SCRIPT_TASK));
+        item.setSortString("F");
+        result.add(item);
 
         return result;
     }
@@ -131,15 +146,25 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteEventItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNTypes.START_EVENT, "Start Event",
-                new TriggerNodeCreationAction(BPMNTypes.START_EVENT)));
-        result.add(
-                new PaletteItem(BPMNTypes.END_EVENT, "End Event", new TriggerNodeCreationAction(BPMNTypes.END_EVENT)));
 
-        result.add(new PaletteItem(BPMNTypes.CATCH_EVENT, "Catch Event",
-                new TriggerNodeCreationAction(BPMNTypes.CATCH_EVENT)));
-        result.add(new PaletteItem(BPMNTypes.THROW_EVENT, "Throw Event",
-                new TriggerNodeCreationAction(BPMNTypes.THROW_EVENT)));
+        PaletteItem item = new PaletteItem(BPMNTypes.START_EVENT, "Start Event",
+                new TriggerNodeCreationAction(BPMNTypes.START_EVENT));
+        item.setSortString("A");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.END_EVENT, "End Event", new TriggerNodeCreationAction(BPMNTypes.END_EVENT));
+        item.setSortString("B");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.CATCH_EVENT, "Catch Event",
+                new TriggerNodeCreationAction(BPMNTypes.CATCH_EVENT));
+        item.setSortString("C");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.THROW_EVENT, "Throw Event",
+                new TriggerNodeCreationAction(BPMNTypes.THROW_EVENT));
+        item.setSortString("D");
+        result.add(item);
         return result;
     }
 
@@ -178,22 +203,36 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPalettePools() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(BPMNTypes.POOL)));
-        result.add(new PaletteItem("lane", "Lane", new TriggerNodeCreationAction(BPMNTypes.LANE)));
+
+        PaletteItem item = new PaletteItem("pool", "Pool", new TriggerNodeCreationAction(BPMNTypes.POOL));
+        item.setSortString("A");
+        result.add(item);
+
+        item = new PaletteItem("lane", "Lane", new TriggerNodeCreationAction(BPMNTypes.LANE));
+        item.setSortString("B");
+        result.add(item);
+
         return result;
     }
 
     protected List<PaletteItem> createPaletteGatewayItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNTypes.EXCLUSIVE_GATEWAY, "Exclusive",
-                new TriggerNodeCreationAction(BPMNTypes.EXCLUSIVE_GATEWAY)));
 
-        result.add(new PaletteItem(BPMNTypes.INCLUSIVE_GATEWAY, "Inclusive",
-                new TriggerNodeCreationAction(BPMNTypes.INCLUSIVE_GATEWAY)));
+        PaletteItem item = new PaletteItem(BPMNTypes.EXCLUSIVE_GATEWAY, "Exclusive",
+                new TriggerNodeCreationAction(BPMNTypes.EXCLUSIVE_GATEWAY));
+        item.setSortString("A");
+        result.add(item);
 
-        result.add(new PaletteItem(BPMNTypes.PARALLEL_GATEWAY, "Parallel",
-                new TriggerNodeCreationAction(BPMNTypes.PARALLEL_GATEWAY)));
+        item = new PaletteItem(BPMNTypes.PARALLEL_GATEWAY, "Parallel",
+                new TriggerNodeCreationAction(BPMNTypes.PARALLEL_GATEWAY));
+        item.setSortString("B");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.INCLUSIVE_GATEWAY, "Inclusive",
+                new TriggerNodeCreationAction(BPMNTypes.INCLUSIVE_GATEWAY));
+        item.setSortString("C");
+        result.add(item);
 
         return result;
     }

@@ -104,6 +104,7 @@ public class BPMNModel {
             BPMNTypes.SEND_TASK, //
             BPMNTypes.SERVICE_TASK, //
             BPMNTypes.EXCLUSIVE_GATEWAY, //
+            BPMNTypes.PARALLEL_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
             BPMNTypes.START_EVENT, //
             BPMNTypes.END_EVENT, //
