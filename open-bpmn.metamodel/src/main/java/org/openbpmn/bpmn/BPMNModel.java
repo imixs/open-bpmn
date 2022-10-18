@@ -103,6 +103,7 @@ public class BPMNModel {
             BPMNTypes.SCRIPT_TASK, //
             BPMNTypes.SEND_TASK, //
             BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.USER_TASK, //
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
