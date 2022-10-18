@@ -117,24 +117,20 @@
 
 .pool > .sprotty-node {
     fill: var(--theia-titleBar-activeBackground);
-    opacity: 40%;
+    opacity: 70%;
     stroke: var(--theia-focusBorder);
-    stroke-width: 0.4;
-
     outline-color: var(--theia-focusBorder);
     outline-style: solid;
     outline-width: 1px;
     outline-offset: -1px;    
 }
 .pool > .sprotty-node.mouseover {
-	 opacity: 70%;
+	 opacity: 60%;
 }
 
 .lane > .sprotty-node {
     fill: none;
     stroke: var(--theia-focusBorder);
-    stroke-width: 0.4;
-    
     outline-color: var(--theia-focusBorder);
     outline-style: solid;
     outline-width: 1px;
