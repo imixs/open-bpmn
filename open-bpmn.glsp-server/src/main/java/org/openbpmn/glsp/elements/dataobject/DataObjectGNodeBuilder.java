@@ -15,20 +15,13 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.dataobject;
 
-import java.util.logging.Logger;
-
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNDataObject;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
-import org.openbpmn.model.BPMNGModelFactory;
 
 /**
  * BPMN 2.0 Data Object Element.
@@ -41,8 +34,6 @@ import org.openbpmn.model.BPMNGModelFactory;
  */
 public class DataObjectGNodeBuilder extends AbstractGNodeBuilder<DataObjectGNode, DataObjectGNodeBuilder> {
 
-    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
-
     private final String name;
 
     public DataObjectGNodeBuilder(final BPMNDataObject dataObject) {
@@ -50,14 +41,6 @@ public class DataObjectGNodeBuilder extends AbstractGNodeBuilder<DataObjectGNode
         this.name = dataObject.getName();
         this.id = dataObject.getId();
 
-        try {
-            BPMNBounds bpmnBounds = dataObject.getBounds();
-            this.size = GraphUtil.dimension(bpmnBounds.getDimension().getWidth(),
-                    bpmnBounds.getDimension().getHeight());
-        } catch (BPMNMissingElementException e) {
-            // should not happen
-            logger.severe("BPMNDataObject does not support a BPMNBounds object!");
-        }
         // set Layout options
         this.addCssClass(type);
     }
@@ -76,19 +59,14 @@ public class DataObjectGNodeBuilder extends AbstractGNodeBuilder<DataObjectGNode
     public void setProperties(final DataObjectGNode node) {
         super.setProperties(node);
         node.setName(name);
+        node.setLayout(GConstants.Layout.FREEFORM);
+        size = GraphUtil.dimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
+        node.setSize(size);
 
-        node.setLayout(GConstants.Layout.VBOX);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
-        // Set min width/height
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNActivity.DEFAULT_WIDTH);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNActivity.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put("minWidth", BPMNDataObject.DEFAULT_WIDTH);
+        node.getLayoutOptions().put("minHeight", BPMNDataObject.DEFAULT_HEIGHT);
 
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
-
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
-        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+        node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
 
     }
 

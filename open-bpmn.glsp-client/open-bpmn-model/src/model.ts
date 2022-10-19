@@ -141,6 +141,24 @@ export class GatewayNode extends DiamondNode implements BPMNFlowElement {
 	documentation: string;
 }
 
+export class DataObjectNode extends RectangularNode implements BPMNFlowElement {
+	static override readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature
+	];
+	symbol?: string;
+	name?: string;
+	documentation: string;
+}
+
 /*
  * Helper Methods to determind if a ModelElement is of a specific type
  * The methods return the corresponding node

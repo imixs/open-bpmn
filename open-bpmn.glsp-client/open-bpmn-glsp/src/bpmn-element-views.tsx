@@ -21,6 +21,7 @@ import {
     SelectAction,
     setAttr,SShapeElement,
     SModelRoot,
+    Hoverable,Selectable,IViewArgs,SPort,SNode,
     TYPES
 } from '@eclipse-glsp/client';
 import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
@@ -211,7 +212,20 @@ export class ContainerHeaderView extends ShapeView {
     }
 }
 
-
+@injectable()
+export class DataObjectNodeView extends ShapeView {
+    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+        return <g>
+            <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
+                  class-mouseover={node.hoverFeedback} class-selected={node.selected}
+                  x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            {context.renderChildren(node)}
+        </g>;
+    }
+}
 
 /**
  * This selectionListener selects an associated BPMNLabel of a

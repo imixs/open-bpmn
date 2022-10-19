@@ -44,6 +44,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.elements.BPMNDataObject;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
@@ -55,6 +56,7 @@ import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
@@ -62,6 +64,7 @@ import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
+import org.openbpmn.glsp.elements.dataobject.DataObjectGNodeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
 import org.openbpmn.glsp.elements.flow.SequenceFlowGNodeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
@@ -410,6 +413,31 @@ public class BPMNGModelFactory implements GModelFactory {
             // compute relative point...
             labelPoint = computeRelativeGPoint(labelPoint, participant);
             LabelGNode labelNode = new LabelGNodeBuilder(gateway) //
+                    .position(labelPoint) //
+                    .build();
+            gNodeList.add(labelNode);
+        }
+
+        // Add all Dataobjects...
+        for (BPMNDataObject dataObject : process.getDataObjects()) {
+            logger.fine("dataObject: " + dataObject.getName());
+            GPoint point = computeRelativeGPoint(dataObject.getBounds(), participant);
+
+            // Build the GLSP Node....
+            DataObjectGNode dataObjectNode = new DataObjectGNodeBuilder(dataObject) //
+                    .position(point) //
+                    .build();
+
+            gNodeList.add(dataObjectNode);
+            // apply BPMN Extensions
+            applyBPMNExtensions(dataObjectNode, dataObject);
+
+            // now add a GLabel
+            BPMNLabel bpmnLabel = dataObject.getLabel();
+            GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
+            // compute relative point...
+            labelPoint = computeRelativeGPoint(labelPoint, participant);
+            LabelGNode labelNode = new LabelGNodeBuilder(dataObject) //
                     .position(labelPoint) //
                     .build();
             gNodeList.add(labelNode);

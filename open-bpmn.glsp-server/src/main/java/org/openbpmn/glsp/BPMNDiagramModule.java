@@ -38,6 +38,7 @@ import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
+import org.openbpmn.glsp.elements.dataobject.BPMNCreateDataObjectHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
@@ -121,6 +122,9 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);
+
+        // Data Items
+        binding.add(BPMNCreateDataObjectHandler.class);
 
         // Pools & Lanes
         binding.add(CreatePoolHandler.class);

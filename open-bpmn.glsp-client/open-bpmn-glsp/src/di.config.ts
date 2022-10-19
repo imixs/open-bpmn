@@ -42,13 +42,14 @@ import {
 	GatewayNode,
 	PoolNode,
 	LaneNode,
+	DataObjectNode,
 	Icon,
 	TaskNode,
 	EventNode,
 	SequenceFlow,
 	BPMNElementAnchor
 } from '@open-bpmn/open-bpmn-model';
-import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener } from './bpmn-element-views';
+import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 import { BPMNManhattanEdgeRouter } from './bpmn-edge-router';
 // import { BPMNEllipticAnchor,BPMNRectangularAnchor,BPMNDiamondAnchor } from './bpmn-anchors';
@@ -122,6 +123,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
+    configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
     // configureModelElement(context, 'container', SCompartment, StructureCompartmentView);
     configureModelElement(context, 'container', SCompartment, SCompartmentView);
 

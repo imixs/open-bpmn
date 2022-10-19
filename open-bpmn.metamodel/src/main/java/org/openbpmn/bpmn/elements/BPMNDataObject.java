@@ -26,7 +26,8 @@ public class BPMNDataObject extends BPMNFlowElement {
 
     public final static double DEFAULT_WIDTH = 35.0;
     public final static double DEFAULT_HEIGHT = 50.0;
-
+    public static final double LABEL_OFFSET = 0;
+    
     protected BPMNDataObject(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess)
             throws BPMNModelException {
         super(model, node, type, bpmnProcess);

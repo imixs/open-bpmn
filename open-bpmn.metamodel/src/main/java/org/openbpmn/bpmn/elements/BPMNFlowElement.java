@@ -105,7 +105,7 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      */
     public BPMNLabel getLabel() throws BPMNMissingElementException {
 
-        if (isEvent() || isGateway()) {
+        if (isEvent() || isGateway() || isDataObject()) {
             if (label == null) {
                 // lazy loading of bounds from a given bpmnShape
                 label = new BPMNLabel(model, this.bpmnShape);
@@ -140,6 +140,15 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
                 || BPMNTypes.COMPLEX_GATEWAY.equals(type)//
                 || BPMNTypes.PARALLEL_GATEWAY.equals(type)//
         );
+    }
+
+    /**
+     * Returns true if the element is an BPMN DataOjbect
+     * 
+     * @return
+     */
+    public boolean isDataObject() {
+        return BPMNTypes.DATAOBJECT.equals(type);
     }
 
 }

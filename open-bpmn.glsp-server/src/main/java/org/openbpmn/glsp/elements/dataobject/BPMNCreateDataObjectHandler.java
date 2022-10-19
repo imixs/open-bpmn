@@ -25,7 +25,6 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNDataObject;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -75,18 +74,16 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
             // find the process - either the default process for Root container or the
             // corresponding participant process
             BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
-            if (bpmnProcess != null) {
-                BPMNDataObject dataObject = bpmnProcess.addDataObject(dataObjectID, getLabel());
-                Optional<GPoint> point = operation.getLocation();
-                if (point.isPresent()) {
-                    dataObject.getBounds().setPosition(point.get().getX(), point.get().getY());
-                    dataObject.getBounds().setDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
-
-                    logger.info("....Drop Position = " + point.get().getX() + " " + point.get().getY());
-                }
-            } else {
-                // should not happen
-                logger.severe("Unable to find a vaild BPMNElement to place the new node: " + elementTypeId);
+            BPMNDataObject dataObject = bpmnProcess.addDataObject(dataObjectID, getLabel());
+            Optional<GPoint> point = operation.getLocation();
+            if (point.isPresent()) {
+                dataObject.getBounds().setPosition(point.get().getX(), point.get().getY());
+                dataObject.getBounds().setDimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
+                // set label bounds
+                double x = point.get().getX() + (BPMNDataObject.DEFAULT_WIDTH / 2) - (BPMNDataObject.DEFAULT_WIDTH / 2);
+                double y = point.get().getY() + BPMNDataObject.DEFAULT_HEIGHT + BPMNDataObject.LABEL_OFFSET;
+                dataObject.getLabel().updateLocation(x, y);
+                dataObject.getLabel().updateDimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -98,7 +95,7 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
     @Override
     public String getLabel() {
         int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.DATA_OBJECT_GNODE, elementTypeId, modelState);
-        return "DataObject-" + nodeCounter;
+        return "Data Object-" + (nodeCounter + 1);
     }
 
 }

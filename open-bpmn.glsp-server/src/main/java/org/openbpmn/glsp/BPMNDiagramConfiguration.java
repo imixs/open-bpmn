@@ -81,6 +81,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW_GNODE);
         mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
         mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GNODE);
+        mappings.put(BPMNTypes.DATAOBJECT, BpmnPackage.Literals.DATA_OBJECT_GNODE);
 
         return mappings;
     }
@@ -116,6 +117,9 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createGatewayHint(BPMNTypes.PARALLEL_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.EVENT_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.COMPLEX_GATEWAY));
+
+        // DataObject
+        nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false, false));
 
         // Pool ShapeEventTypes
         nodeHints.add(createPoolHint());
