@@ -53,6 +53,7 @@ public class BPMNTypes {
     public static final String COMPLEX_GATEWAY = "complexGateway";
     
     // others  
+    public static final String DATAOBJECT = "dataObject";
     public static final String POOL = "pool";
     public static final String LANE = "lane";
     public static final String SEQUENCE_FLOW = "sequenceFlow";

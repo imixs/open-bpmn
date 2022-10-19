@@ -79,10 +79,15 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                         "symbol-property", "D"),
                 PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
                         "symbol-property", "E"),
-                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "F"),
+
+                PaletteItem.createPaletteGroup("gateway-group", "Data Items", createPaletteDataItems(),
+                        "symbol-property", "F"),
+                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "G"),
 
                 PaletteItem.createPaletteGroup("extension-group", "Extensions", createPaletteExtensions(),
-                        "symbol-property", "G"));
+                        "symbol-property", "H")
+
+        );
 
     }
 
@@ -192,6 +197,22 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_TERMINATE)));
         result.add(new PaletteItem(BPMNTypes.EVENT_DEFINITION_TIMER, "Timer",
                 new TriggerNodeCreationAction(BPMNTypes.EVENT_DEFINITION_TIMER)));
+        return result;
+    }
+
+    /**
+     * Create a palette Item Group with all Task elements
+     *
+     * @return
+     */
+    protected List<PaletteItem> createPaletteDataItems() {
+
+        List<PaletteItem> result = new ArrayList<>();
+        PaletteItem item = new PaletteItem(BPMNTypes.DATAOBJECT, "Data Object",
+                new TriggerNodeCreationAction(BPMNTypes.DATAOBJECT));
+        item.setSortString("A");
+        result.add(item);
+
         return result;
     }
 

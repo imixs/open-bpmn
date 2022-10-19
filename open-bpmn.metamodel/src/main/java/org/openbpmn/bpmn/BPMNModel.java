@@ -71,6 +71,7 @@ public class BPMNModel {
     public static final String PARTICIPANT = "participant";
     public static final String LANESET = "laneSet";
     public static final String LANE = "lane";
+    public static final String DATAOBJECT = "dataObject";
 
     public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
