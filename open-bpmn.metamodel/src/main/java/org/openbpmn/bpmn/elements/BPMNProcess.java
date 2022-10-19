@@ -38,6 +38,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<BPMNActivity> activities = null;
+    protected Set<BPMNDataObject> dataObjects = null;
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
@@ -169,6 +170,24 @@ public class BPMNProcess extends BPMNBaseElement {
         this.gateways = gateways;
     }
 
+
+    /**
+     * Returns all BPMN DataObject elements contained in this process
+     * 
+     * @return
+     */
+    public Set<BPMNDataObject> getDataObjects() {
+        if (dataObjects == null) {
+            dataObjects = new LinkedHashSet<BPMNDataObject>();
+        }
+        return dataObjects;
+    }
+
+    public void setDataObjects(Set<BPMNDataObject> dataObjects) {
+        this.dataObjects = dataObjects;
+    }
+
+    
     public Set<BPMNSequenceFlow> getSequenceFlows() {
         if (sequenceFlows == null) {
             sequenceFlows = new LinkedHashSet<BPMNSequenceFlow>();
@@ -308,6 +327,45 @@ public class BPMNProcess extends BPMNBaseElement {
         return gateway;
 
     }
+    
+    
+    
+    /**
+     * Creates a new BPMNDataObject element.
+     * <p>
+     * <bpmn2:dataObject id="DataObject_1" name="Data Object 1"/>
+     * 
+     * @param id
+     * @param name
+     * @throws BPMNModelException
+     */
+    public BPMNDataObject addDataObject(String id, String name) throws BPMNModelException {
+
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
+        // verify id
+        for (BPMNDataObject node : getDataObjects()) {
+            if (node.getId().equals(id)) {
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
+            }
+        }
+
+        // create a new Dom node...
+        Element dataObjectElement = model.createElement(BPMNNS.BPMN2, "dataObject");
+        dataObjectElement.setAttribute("id", id);
+        dataObjectElement.setAttribute("name", name);
+        this.getElementNode().appendChild(dataObjectElement);
+
+        // add BPMNDataObject instance
+        BPMNDataObject dataObject = this.createBPMNDataObjectByNode(dataObjectElement);
+
+        return dataObject;
+    }
+
+    
 
     /**
      * Creates a new BPMNSequenceFlow element and adds the element into this process
@@ -856,6 +914,12 @@ public class BPMNProcess extends BPMNBaseElement {
         BPMNActivity task = new BPMNActivity(model, element, element.getLocalName(), this);
         getActivities().add(task);
         return task;
+    }
+    
+    private BPMNDataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
+        BPMNDataObject dataObject = new BPMNDataObject(model, element, element.getLocalName(), this);
+        getDataObjects().add(dataObject);
+        return dataObject;
     }
 
     /**
