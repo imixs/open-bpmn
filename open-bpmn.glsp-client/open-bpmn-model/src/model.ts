@@ -118,7 +118,6 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 		nameFeature
 	];
 	symbol?: string;
-	name?: string;
 	documentation: string;
 
 }
@@ -154,8 +153,7 @@ export class DataObjectNode extends RectangularNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
-	symbol?: string;
-	name?: string;
+	// symbol?: string;
 	documentation: string;
 }
 
@@ -187,8 +185,11 @@ export function isGatewayNode(element: SModelElement): element is GatewayNode {
 	return element instanceof GatewayNode || false;
 }
 
+/*
+ * Indicates that the ModelElement has a independed BPNNLabel
+ */
 export function isBPMNLabelNode(element: SModelElement): element is SModelElement {
-	return (element instanceof EventNode || element instanceof GatewayNode) || false;
+	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode) || false;
 }
 
 /*
@@ -198,7 +199,8 @@ export function isBPMNLabelNode(element: SModelElement): element is SModelElemen
 * which is a Task, Event or Gateway node
 */
 export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
-    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode || element instanceof PoolNode;
+    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
+           element instanceof DataObjectNode || element instanceof PoolNode;
 }
 
 export class SequenceFlow extends SEdge {

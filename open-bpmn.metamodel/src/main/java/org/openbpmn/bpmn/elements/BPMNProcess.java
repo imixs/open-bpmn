@@ -106,6 +106,8 @@ public class BPMNProcess extends BPMNBaseElement {
                     this.createBPMNEventByNode((Element) child);
                 } else if (BPMNModel.isGateway(child)) {
                     this.createBPMNGatewayByNode((Element) child);
+                } else if (BPMNModel.isDataObject(child)) {
+                    this.createBPMNDataObjectByNode((Element) child);
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
                 } else if (BPMNModel.isLaneSet(child)) {
@@ -858,6 +860,13 @@ public class BPMNProcess extends BPMNBaseElement {
             }
         }
 
+        Set<BPMNDataObject> listD = this.getDataObjects();
+        for (BPMNDataObject element : listD) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+        
         return null;
     }
 

@@ -229,7 +229,7 @@ export class DataObjectNodeView extends ShapeView {
 
 /**
  * This selectionListener selects an associated BPMNLabel of a
- * selected BPMN Event or Gatweway.
+ * selected BPMN Event, Gatweway, DataObject.
  * This allows to move both independent Nodes (GNode and GLabel)
  */
 @injectable()

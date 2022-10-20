@@ -869,6 +869,21 @@ public class BPMNModel {
     public static boolean isEvent(BPMNBaseElement element) {
         return isEvent(element.getElementNode());
     }
+    
+    /**
+     * Returns true if the node is a dataObject node.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isDataObject(Node node) {
+        return (DATAOBJECT.equals(node.getLocalName()));
+    }
+
+    public static boolean isDataObject(BPMNBaseElement element) {
+        return isDataObject(element.getElementNode());
+    }
+
 
     /**
      * Returns true if the node is a sequenceFlow.

@@ -26,6 +26,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNDataObject;
+import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -80,10 +81,10 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
                 dataObject.getBounds().setPosition(point.get().getX(), point.get().getY());
                 dataObject.getBounds().setDimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
                 // set label bounds
-                double x = point.get().getX() + (BPMNDataObject.DEFAULT_WIDTH / 2) - (BPMNDataObject.DEFAULT_WIDTH / 2);
+                double x = point.get().getX() + (BPMNDataObject.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
                 double y = point.get().getY() + BPMNDataObject.DEFAULT_HEIGHT + BPMNDataObject.LABEL_OFFSET;
                 dataObject.getLabel().updateLocation(x, y);
-                dataObject.getLabel().updateDimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
+                dataObject.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
