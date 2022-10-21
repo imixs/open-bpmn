@@ -87,6 +87,4 @@ export class BPMNManhattanEdgeRouter extends ManhattanEdgeRouter {
         // console.log('....applyInnerHandleMoves - END edge.routing.length='+edge.routingPoints.length);
     }
 
-
-
 }

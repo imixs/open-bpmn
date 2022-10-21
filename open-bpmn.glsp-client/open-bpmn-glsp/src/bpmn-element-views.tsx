@@ -190,7 +190,7 @@ export class ContainerHeaderView extends ShapeView {
         const containerNode = findParentByFeature(element,isContainerNode);
         let containerLabel='undefined';
         if (containerNode) {
-	        containerLabel=containerNode.name;
+            containerLabel=containerNode.name;
         }
         // we estimate the length of the label to translate the y position (just a guess)
         // see also: https://github.com/imixs/open-bpmn/issues/91
@@ -200,14 +200,12 @@ export class ContainerHeaderView extends ShapeView {
                 <text class-sprotty-label={true} transform={'scale(1),translate(14,'+yOffset+'),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
-        
+
        // const vnode = <text class-sprotty-label={true}>{containerLabel}</text>;
         const subType = getSubType(element);
         if (subType) {
             setAttr(vnode, 'class', subType);
         }
-        
-       
         return vnode;
     }
 }
