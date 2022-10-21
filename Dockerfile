@@ -1,23 +1,20 @@
-FROM node:16
+FROM node:16-buster
 
 # Install app dependencies
-RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev
+RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-11-jre
 
 # Create app directory
 WORKDIR /usr/src/app
 
-
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
+# Run GLSP Server part
+COPY open-bpmn.glsp-server/target/open-bpmn.server-0.4.0-SNAPSHOT-glsp.jar ./
+#RUN nohup java -jar open-bpmn.server-0.4.0-SNAPSHOT-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
+  
+# Build & RUN GLSP Client part
 COPY open-bpmn.glsp-client/ ./
 
-#RUN npm install
-RUN yarn
-# If you are building your code for production
-# RUN npm ci --only=production
-
-# Bundle app source
-#COPY . .
-
+COPY docker/build.sh ./
+RUN chmod +x build.sh
+RUN ls -la
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+CMD [ "./build.sh" ]
