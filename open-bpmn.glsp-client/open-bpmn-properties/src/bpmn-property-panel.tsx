@@ -36,8 +36,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
 @injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener { // IActionHandler 
-  
+export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener { // IActionHandler
+
     static readonly ID = 'bpmn-property-panel';
 
     @inject(TYPES.IActionDispatcher)
@@ -68,11 +68,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
     containerClass(): string {
         return BPMNPropertyPanel.ID;
     }
-    
-    // disabled because this breaks the UI Extension
-    // handle(action: BPMNPropertyPanelAction): void | Action {
-    //     console.log(" ...... handle for BPMNPropertyPanelAction not yet implemented - info="+action.additionalInformation);
-    // }
 
     /*
      * Initalize the elemnts of property panel
@@ -89,9 +84,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
     }
 
     protected createHeader(): void {
-        console.log("....createHeader...");
+        console.log('....createHeader...');
         const headerCompartment = document.createElement('div');
-        console.log("...headerCompartment="+headerCompartment);
+        console.log('...headerCompartment=' + headerCompartment);
         headerCompartment.classList.add('bpmn-property-header');
         headerCompartment.append(this.createHeaderTitle());
         headerCompartment.appendChild(this.createHeaderTools());
@@ -186,11 +181,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         // Check if we now have exactly one elemnt selected. Only in this case we show
         // a property panel.
         if (selectedElements.length === 1 || selectedElements.length ===0 ) {
-	        let element;
-	        if (selectedElements.length === 1) {
+            let element;
+            if (selectedElements.length === 1) {
               element = root.index.getById(selectedElements[0]);
             } else {
-	          element=root;
+              element=root;
             }
             if (element) {
                 // did we have a change?
@@ -211,26 +206,25 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                 // update header
                 if (element===root) {
                     this.headerTitle.textContent = 'Default Process';
-	            } else {
+                } else {
                     this.headerTitle.textContent = element.type;
                 }
-                
-                 // BPMN Node selected, collect JSONForms schemata....
-                 let bpmnPropertiesData;
-                 let bpmnPropertiesSchema;
-                 let bpmnPropertiesUISchema;
-                 if (hasArguments(element)) {
-                     // parse the jsonForms schema details
-                     bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
-                     bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
-                     bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
-                 }
+                // BPMN Node selected, collect JSONForms schemata....
+                let bpmnPropertiesData;
+                let bpmnPropertiesSchema;
+                let bpmnPropertiesUISchema;
+                if (hasArguments(element)) {
+                   // parse the jsonForms schema details
+                   bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
+                   bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
+                   bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
+                }
                 // Build a generic JSONForms Property panel if we have at least an UISchema
                 if (bpmnPropertiesUISchema) {
                     // list of renderers declared outside the App component
                     const bpmnRenderers = [
-                        ...vanillaRenderers,
-                        // optional register custom renderers...
+                       ...vanillaRenderers
+                       // optional register custom renderers...
                     ];
 
                     // render JSONForm // vanillaRenderers
@@ -297,23 +291,20 @@ export function createIcon(codiconId: string): HTMLElement {
 }
 
 export class BPMNPropertyPanelAction implements Action {
-  static readonly KIND = "BPMNPropertyPanelAction";
+  static readonly KIND = 'BPMNPropertyPanelAction';
   kind = BPMNPropertyPanelAction.KIND;
   constructor(public readonly additionalInformation: string) {}
 }
 
 @injectable()
 export class BPMNPropertyMouseListener extends MouseListener {
-	@inject(TYPES.IActionDispatcher) 
+	@inject(TYPES.IActionDispatcher)
 	protected actionDispatcher: GLSPActionDispatcher;
-	
-//	@inject(BPMNPropertyPanel)
-//  protected readonly proprtyPanel: BPMNPropertyPanel;
-    
+
     override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
-        console.log("...we have a double click event!");
+        console.log('...we have a double click event!');
         // TODO your implementation
-        this.actionDispatcher.dispatch(new BPMNPropertyPanelAction("toggle"));
+        this.actionDispatcher.dispatch(new BPMNPropertyPanelAction('toggle'));
         // this can return an action or get other services injected and call them on double-click
         return [];
     }
