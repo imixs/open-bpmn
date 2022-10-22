@@ -102,12 +102,11 @@ Bumping the version number of OpenBPMN you can use a script.
 
 Specify the old and the new version like this:
 
-	changeVersion.sh <oldVersionString> <newVersionString>"
+	$ changeVersion.sh <oldVersionString> <newVersionString>
 
 Example:
 
-	$ cd git/org.eclipse.bpmn2-modeler
-	$ ./scripts/changeVersion.sh 1.5.1-SNAPSHOT 1.5.2-SNAPSHOT
+	$ changeVersion.sh 0.3.0 0.4.0
 
 Finally commit your changes
 	
