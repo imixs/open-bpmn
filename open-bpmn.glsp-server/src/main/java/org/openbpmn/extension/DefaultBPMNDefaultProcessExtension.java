@@ -70,11 +70,6 @@ public class DefaultBPMNDefaultProcessExtension extends AbstractBPMNElementExten
         return false;
     }
 
-    @Override
-    public int getPriority() {
-        return 999999;
-    }
-
     /**
      * This Helper Method generates a JSON Object with the BPMNElement properties.
      * <p>

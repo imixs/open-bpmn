@@ -59,4 +59,9 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
         return "http://www.omg.org/spec/BPMN/20100524/MODEL";
     }
 
+    @Override
+    public int getPriority() {
+        return 999999;
+    }
+
 }

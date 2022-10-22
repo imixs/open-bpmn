@@ -72,11 +72,6 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
         return (bpmnElement instanceof BPMNEvent);
     }
 
-    @Override
-    public int getPriority() {
-        return 999999;
-    }
-
     /**
      * This Helper Method generates a JSONForms Object with the BPMNElement
      * properties.

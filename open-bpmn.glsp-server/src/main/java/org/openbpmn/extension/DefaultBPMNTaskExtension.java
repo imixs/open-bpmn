@@ -63,11 +63,6 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         return (bpmnElement instanceof BPMNActivity);
     }
 
-    @Override
-    public int getPriority() {
-        return 999999;
-    }
-
     /**
      * This Helper Method generates a JSON Object with the BPMNElement properties.
      * <p>
