@@ -33,3 +33,12 @@ After starting the container the applicaiton is available on
 To stop the container run:
 
 	$ docker stop open-bpmn
+
+	
+# Push to Docker-Hub
+
+To push the image manually to a docker repo:
+
+	$ docker build . -t imixs/open-bpmn:latest
+	$ docker push imixs/open-bpmn:latest
+
