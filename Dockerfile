@@ -6,15 +6,13 @@ RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-
 # Create app directory
 WORKDIR /usr/src/app
 
-# Run GLSP Server part
+# Copy GLSP Server part
 COPY open-bpmn.glsp-server/target/open-bpmn.server-0.4.0-SNAPSHOT-glsp.jar ./open-bpmn.glsp-server/target/
-# Build & RUN GLSP Client part
-COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 
-COPY docker/build.sh ./
-RUN chmod +x build.sh
+# Build GLSP Client part
+COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 WORKDIR /usr/src/app/open-bpmn.glsp-client
 RUN yarn
-WORKDIR /usr/src/app
+
 EXPOSE 3000
-CMD [ "./build.sh" ]
+ENTRYPOINT [ "yarn", "start", "--hostname=0.0.0.0" ]
