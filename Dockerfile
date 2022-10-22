@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-
 WORKDIR /usr/src/app
 
 # Copy GLSP Server part
-COPY open-bpmn.glsp-server/target/open-bpmn.server-0.4.0-SNAPSHOT-glsp.jar ./open-bpmn.glsp-server/target/
+COPY open-bpmn.glsp-server/target/open-bpmn.server-*-glsp.jar ./open-bpmn.glsp-server/target/
 
 # Build GLSP Client part
 COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/

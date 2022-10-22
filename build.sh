@@ -97,11 +97,8 @@ fi
 
 if [ "$buildDocker" == "true" ]; then
   mvn clean install -DskipTests
-  cd open-bpmn.glsp-client/
-  yarn
-  cd ..
-  cd docker/
-  docker build -t imixs/open-bpmn .
+  docker build . -t imixs/open-bpmn:latest
+  docker push imixs/open-bpmn:latest
 fi
 
 
