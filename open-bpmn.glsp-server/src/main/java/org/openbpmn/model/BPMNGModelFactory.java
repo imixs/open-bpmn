@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -466,10 +467,30 @@ public class BPMNGModelFactory implements GModelFactory {
             builder.source(computeGPort(source));
             builder.id(sequenceFlow.getId());
             SequenceFlowGNode sequenceFlowEdge = builder.build();
-            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
+            // because it is unclear how to deal with anchor points we ignore the
+            // achorpoints for now
+            // See issue #102
+            Iterator<BPMNPoint> wayPointIterator = sequenceFlow.getWayPoints().iterator();
+            // skip the first (anchor point) if exists
+            if (wayPointIterator.hasNext()) {
+                wayPointIterator.next();
+                // skip...
+            }
+            while (wayPointIterator.hasNext()) {
+                BPMNPoint wayPoint = wayPointIterator.next();
+                // skip the last (anchor point) if exists
+                if (!wayPointIterator.hasNext()) {
+                    break;
+                    // skip...
+                }
+                // add the waypoint to the GLSP model....
                 GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
                 sequenceFlowEdge.getRoutingPoints().add(point);
             }
+//            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
+//                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+//                sequenceFlowEdge.getRoutingPoints().add(point);
+//            }
             gNodeList.add(sequenceFlowEdge);
         }
 
