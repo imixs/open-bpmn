@@ -445,15 +445,25 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all SequenceFlows
         for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
-            SequenceFlowGNodeBuilder builder = new SequenceFlowGNodeBuilder();
-            GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
-            if (target != null) {
-                builder.target(computeGPort(target));
-            }
+            // first we need to verify if the target and source objects exist in our model
+            // if not we need to skip this sequenceFlow element!
             GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
-            if (source != null) {
-                builder.source(computeGPort(source));
+            GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
+            if (source == null) {
+                logger.warning("Source element '" + sequenceFlow.getSourceRef()
+                        + "' not found - skip BPMNSequenceFlow id=" + sequenceFlow.getId());
+                continue;
             }
+            if (target == null) {
+                logger.warning("Target element '" + sequenceFlow.getTargetRef()
+                        + "' not found - skip BPMNSequenceFlow id=" + sequenceFlow.getId());
+                continue;
+            }
+
+            // now construct the GNode and add it to the model....
+            SequenceFlowGNodeBuilder builder = new SequenceFlowGNodeBuilder();
+            builder.target(computeGPort(target));
+            builder.source(computeGPort(source));
             builder.id(sequenceFlow.getId());
             SequenceFlowGNode sequenceFlowEdge = builder.build();
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
