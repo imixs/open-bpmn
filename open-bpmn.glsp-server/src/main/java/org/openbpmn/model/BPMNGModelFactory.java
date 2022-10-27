@@ -484,7 +484,10 @@ public class BPMNGModelFactory implements GModelFactory {
                     // skip...
                 }
                 // add the waypoint to the GLSP model....
-                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+                // GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+
+                GPoint point = computeRelativeGPoint(wayPoint, participant);
+
                 sequenceFlowEdge.getRoutingPoints().add(point);
             }
 //            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
@@ -508,10 +511,13 @@ public class BPMNGModelFactory implements GModelFactory {
      * @return
      * @throws BPMNMissingElementException
      */
-    GPoint computeRelativeGPoint(final BPMNBounds bpmnBounds, final BPMNParticipant participant) {
-        BPMNPoint bpmnPoint = bpmnBounds.getPosition();
+    GPoint computeRelativeGPoint(final BPMNPoint bpmnPoint, final BPMNParticipant participant) {
         GPoint result = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
         return computeRelativeGPoint(result, participant);
+    }
+
+    GPoint computeRelativeGPoint(final BPMNBounds bpmnBounds, final BPMNParticipant participant) {
+        return computeRelativeGPoint(bpmnBounds.getPosition(), participant);
     }
 
     GPoint computeRelativeGPoint(final GPoint basisPoint, final BPMNParticipant participant) {
