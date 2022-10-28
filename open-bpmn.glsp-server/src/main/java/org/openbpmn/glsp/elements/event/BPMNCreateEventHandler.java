@@ -79,15 +79,24 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
             BPMNEvent event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
+
             if (point.isPresent()) {
-                event.getBounds().setPosition(point.get().getX(), point.get().getY());
+
+                double elementX = point.get().getX();
+                double elementY = point.get().getY();
+
+                // compute relative center position...
+                elementX = elementX - (BPMNEvent.DEFAULT_WIDTH / 2);
+                elementY = elementY - (BPMNEvent.DEFAULT_HEIGHT / 2);
+
+                event.getBounds().setPosition(elementX, elementY);
                 event.getBounds().setDimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
                 // set label bounds
-                double x = point.get().getX() + (BPMNEvent.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double y = point.get().getY() + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
+                double labelX = elementX + (BPMNEvent.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
 
-                logger.debug("new BPMNLabel Position = " + x + "," + y);
-                event.getLabel().updateLocation(x, y);
+                logger.debug("new BPMNLabel Position = " + labelX + "," + labelY);
+                event.getLabel().updateLocation(labelX, labelY);
                 event.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {

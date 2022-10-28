@@ -17,8 +17,9 @@ package org.openbpmn.glsp.elements.task;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -44,7 +45,7 @@ import com.google.inject.Inject;
  */
 public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
-    private static Logger logger = Logger.getLogger(BPMNCreateTaskHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNCreateTaskHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -69,7 +70,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String taskID = "task-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode tasknodeID=" + taskID);
+        logger.debug("createNode tasknodeID=" + taskID);
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
@@ -78,14 +79,20 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
                 BPMNActivity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
                 Optional<GPoint> point = operation.getLocation();
                 if (point.isPresent()) {
-                    task.getBounds().setPosition(point.get().getX(), point.get().getY());
+                    double elementX = point.get().getX();
+                    double elementY = point.get().getY();
+                    // compute relative center position...
+                    elementX = elementX - (BPMNActivity.DEFAULT_WIDTH / 2);
+                    elementY = elementY - (BPMNActivity.DEFAULT_HEIGHT / 2);
+
+                    task.getBounds().setPosition(elementX, elementY);
                     task.getBounds().setDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
 
-                    logger.info("....Drop Position = " + point.get().getX() + " " + point.get().getY());
+                    logger.debug("new BPMNActivity Position = " + elementX + "," + elementY);
                 }
             } else {
                 // should not happen
-                logger.severe("Unable to find a vaild BPMNElement to place the new node: " + elementTypeId);
+                logger.fatal("Unable to find a vaild BPMNElement to place the new node: " + elementTypeId);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();

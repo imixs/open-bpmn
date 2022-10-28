@@ -76,13 +76,21 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
             BPMNGateway gateway = bpmnProcess.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
-                gateway.getBounds().setPosition(point.get().getX(), point.get().getY());
+
+                double elementX = point.get().getX();
+                double elementY = point.get().getY();
+
+                // compute relative center position...
+                elementX = elementX - (BPMNGateway.DEFAULT_WIDTH / 2);
+                elementY = elementY - (BPMNGateway.DEFAULT_HEIGHT / 2);
+
+                gateway.getBounds().setPosition(elementX, elementY);
                 gateway.getBounds().setDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
                 // set label bounds
-                double x = point.get().getX() + (BPMNGateway.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double y = point.get().getY() + BPMNGateway.DEFAULT_HEIGHT + BPMNGateway.LABEL_OFFSET;
-                logger.debug("new BPMNLabel Position = " + x + "," + y);
-                gateway.getLabel().updateLocation(x, y);
+                double labelX = elementX + (BPMNGateway.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + BPMNGateway.DEFAULT_HEIGHT + BPMNGateway.LABEL_OFFSET;
+                logger.debug("new BPMNLabel Position = " + labelX + "," + labelY);
+                gateway.getLabel().updateLocation(labelX, labelY);
                 gateway.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {

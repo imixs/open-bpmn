@@ -17,8 +17,9 @@ package org.openbpmn.glsp.elements.dataobject;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -31,6 +32,7 @@ import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
+import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -45,7 +47,7 @@ import com.google.inject.Inject;
  */
 public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler {
 
-    private static Logger logger = Logger.getLogger(BPMNCreateDataObjectHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNCreateGatewayHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -70,7 +72,7 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String dataObjectID = "dataObject-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode dataObjectID=" + dataObjectID);
+        logger.debug("createNode dataObjectID=" + dataObjectID);
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
@@ -78,13 +80,23 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
             BPMNDataObject dataObject = bpmnProcess.addDataObject(dataObjectID, getLabel());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
-                dataObject.getBounds().setPosition(point.get().getX(), point.get().getY());
+                double elementX = point.get().getX();
+                double elementY = point.get().getY();
+                // compute relative center position...
+                elementX = elementX - (BPMNDataObject.DEFAULT_WIDTH / 2);
+                elementY = elementY - (BPMNDataObject.DEFAULT_HEIGHT / 2);
+
+                dataObject.getBounds().setPosition(elementX, elementY);
                 dataObject.getBounds().setDimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
                 // set label bounds
-                double x = point.get().getX() + (BPMNDataObject.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double y = point.get().getY() + BPMNDataObject.DEFAULT_HEIGHT + BPMNDataObject.LABEL_OFFSET;
-                dataObject.getLabel().updateLocation(x, y);
+
+                // set label bounds
+                double labelX = elementX + (BPMNDataObject.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + BPMNDataObject.DEFAULT_HEIGHT + BPMNDataObject.LABEL_OFFSET;
+                logger.debug("new BPMNLabel Position = " + labelX + "," + labelY);
+                dataObject.getLabel().updateLocation(labelX, labelY);
                 dataObject.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
+
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
