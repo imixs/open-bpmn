@@ -23,6 +23,11 @@ To build and start the GLSP Server only, run:
 
 	$ ./build.sh -b
 
+### Logging
+
+You can extend the log file output by setting the optional logLevel to DEBUG
+
+	java -jar open-bpmn.server-0.5.0-SNAPSHOT-glsp.jar org.openbpmn.glsp.BPMNServerLauncher -logLevel=DEBUG
 	
 	
 ### Debug - Eclipse
