@@ -17,8 +17,9 @@ package org.openbpmn.glsp.elements.gateway;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -43,7 +44,7 @@ import com.google.inject.Inject;
  */
 public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
 
-    private static Logger logger = Logger.getLogger(BPMNCreateGatewayHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNCreateGatewayHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -67,7 +68,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         elementTypeId = operation.getElementTypeId();
         // now we add a new gateway into the source model
         String gatewayID = "gateway-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode gatewaynodeID=" + gatewayID);
+        logger.debug("createNode gatewaynodeID=" + gatewayID);
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
@@ -80,6 +81,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
                 // set label bounds
                 double x = point.get().getX() + (BPMNGateway.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
                 double y = point.get().getY() + BPMNGateway.DEFAULT_HEIGHT + BPMNGateway.LABEL_OFFSET;
+                logger.debug("new BPMNLabel Position = " + x + "," + y);
                 gateway.getLabel().updateLocation(x, y);
                 gateway.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }

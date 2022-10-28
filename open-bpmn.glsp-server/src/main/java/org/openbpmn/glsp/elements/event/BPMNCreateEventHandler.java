@@ -17,8 +17,9 @@ package org.openbpmn.glsp.elements.event;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -47,7 +48,7 @@ import com.google.inject.Inject;
  */
 public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
-    private static Logger logger = Logger.getLogger(BPMNCreateEventHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNCreateEventHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -71,7 +72,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String eventID = "event-" + BPMNModel.generateShortID();
-        logger.fine("===== > createNode eventnodeID=" + eventID);
+        logger.debug("createNode eventnodeID=" + eventID);
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
@@ -84,6 +85,8 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                 // set label bounds
                 double x = point.get().getX() + (BPMNEvent.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
                 double y = point.get().getY() + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
+
+                logger.debug("new BPMNLabel Position = " + x + "," + y);
                 event.getLabel().updateLocation(x, y);
                 event.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
             }

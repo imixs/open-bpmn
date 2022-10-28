@@ -23,10 +23,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
@@ -47,6 +49,7 @@ import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNDataObject;
 import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNLane;
@@ -94,7 +97,7 @@ import org.w3c.dom.Node;
  * </p>
  **/
 public class BPMNGModelFactory implements GModelFactory {
-    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNGModelFactory.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -113,7 +116,7 @@ public class BPMNGModelFactory implements GModelFactory {
     public void createGModel() {
         // verify extensions....
         if (extensions == null || extensions.size() == 0) {
-            logger.warning("no BPMNExtension found! Check DiagramModule->configureBPMNExtensions");
+            logger.warn("no BPMNExtension found! Check DiagramModule->configureBPMNExtensions");
         }
 
         if (!modelState.isInitalized()) {
@@ -123,14 +126,14 @@ public class BPMNGModelFactory implements GModelFactory {
             modelState.getRoot().setRevision(-1);
 
             if (newGModel == null) {
-                logger.warning("Unable to create model - no processes found - creating an empty model");
+                logger.warn("Unable to create model - no processes found - creating an empty model");
                 createNewEmptyRoot("process_0");
             }
 
             modelState.setInitalized(true);
             logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
         } else {
-            logger.fine("===> createGModel skipped!");
+            logger.debug("===> createGModel skipped!");
         }
     }
 
@@ -191,7 +194,7 @@ public class BPMNGModelFactory implements GModelFactory {
             if (model.isCollaborationDiagram()) {
                 Set<BPMNParticipant> participants = model.getParticipants();
                 for (BPMNParticipant participant : participants) {
-                    logger.fine(
+                    logger.debug(
                             "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
                     BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
                     // Add a Pool if the process is private
@@ -337,7 +340,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Tasks
         for (BPMNActivity activity : process.getActivities()) {
-            logger.fine("activity: " + activity.getName());
+            logger.debug("activity: " + activity.getName());
             // compute relative position
             GPoint point = computeRelativeGPoint(activity.getBounds(), participant);
             // build GNode
@@ -352,11 +355,11 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Events...
         for (BPMNEvent event : process.getEvents()) {
-            logger.fine("event: " + event.getName());
+            logger.debug("BPMNEvent: " + event.getName() + " x=" + event.getBounds().getPosition().getX() + " y="
+                    + event.getBounds().getPosition().getY());
             // compute relative position
             GPoint point = computeRelativeGPoint(event.getBounds(), participant);
             // build GNode
-            logger.fine("event point: " + point.getX() + " , " + point.getY());
             EventGNode eventNode = new EventGNodeBuilder(event) //
                     .position(point) //
                     .build();
@@ -383,20 +386,14 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // now add a GLabel
             BPMNLabel bpmnLabel = event.getLabel();
-            GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
-            // compute relative point...
-            labelPoint = computeRelativeGPoint(labelPoint, participant);
-            // now we build the LabelGNode
-            LabelGNode labelNode = new LabelGNodeBuilder(event) //
-                    .position(labelPoint) //
-                    .build();
-
+            LabelGNode labelNode = createLabelNode(bpmnLabel, event, participant);
             gNodeList.add(labelNode);
         }
 
         // Add all Gateways...
         for (BPMNGateway gateway : process.getGateways()) {
-            logger.fine("gateway: " + gateway.getName());
+            logger.debug("BPMNGateway: " + gateway.getName() + " x=" + gateway.getBounds().getPosition().getX() + " y="
+                    + gateway.getBounds().getPosition().getY());
             GPoint point = computeRelativeGPoint(gateway.getBounds(), participant);
 
             // Build the GLSP Node....
@@ -410,18 +407,13 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // now add a GLabel
             BPMNLabel bpmnLabel = gateway.getLabel();
-            GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
-            // compute relative point...
-            labelPoint = computeRelativeGPoint(labelPoint, participant);
-            LabelGNode labelNode = new LabelGNodeBuilder(gateway) //
-                    .position(labelPoint) //
-                    .build();
+            LabelGNode labelNode = createLabelNode(bpmnLabel, gateway, participant);
             gNodeList.add(labelNode);
         }
 
         // Add all Dataobjects...
         for (BPMNDataObject dataObject : process.getDataObjects()) {
-            logger.fine("dataObject: " + dataObject.getName());
+            logger.debug("dataObject: " + dataObject.getName());
             GPoint point = computeRelativeGPoint(dataObject.getBounds(), participant);
 
             // Build the GLSP Node....
@@ -435,12 +427,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // now add a GLabel
             BPMNLabel bpmnLabel = dataObject.getLabel();
-            GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
-            // compute relative point...
-            labelPoint = computeRelativeGPoint(labelPoint, participant);
-            LabelGNode labelNode = new LabelGNodeBuilder(dataObject) //
-                    .position(labelPoint) //
-                    .build();
+            LabelGNode labelNode = createLabelNode(bpmnLabel, dataObject, participant);
             gNodeList.add(labelNode);
         }
 
@@ -451,13 +438,13 @@ public class BPMNGModelFactory implements GModelFactory {
             GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
             GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
             if (source == null) {
-                logger.warning("Source element '" + sequenceFlow.getSourceRef()
-                        + "' not found - skip BPMNSequenceFlow id=" + sequenceFlow.getId());
+                logger.warn("Source element '" + sequenceFlow.getSourceRef() + "' not found - skip BPMNSequenceFlow id="
+                        + sequenceFlow.getId());
                 continue;
             }
             if (target == null) {
-                logger.warning("Target element '" + sequenceFlow.getTargetRef()
-                        + "' not found - skip BPMNSequenceFlow id=" + sequenceFlow.getId());
+                logger.warn("Target element '" + sequenceFlow.getTargetRef() + "' not found - skip BPMNSequenceFlow id="
+                        + sequenceFlow.getId());
                 continue;
             }
 
@@ -485,9 +472,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 }
                 // add the waypoint to the GLSP model....
                 // GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
-
                 GPoint point = computeRelativeGPoint(wayPoint, participant);
-
                 sequenceFlowEdge.getRoutingPoints().add(point);
             }
 //            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
@@ -498,6 +483,34 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         return gNodeList;
+    }
+
+    /**
+     * This helper method creates a GLSP LableGNode element to a corresponding
+     * BPMNFlowElement (Event|Gateway|DataObject)
+     *
+     * @param bpmnLabel
+     * @param flowElement
+     * @param participant
+     * @return
+     * @throws BPMNMissingElementException
+     */
+    private LabelGNode createLabelNode(final BPMNLabel bpmnLabel, final BPMNFlowElement flowElement,
+            final BPMNParticipant participant) throws BPMNMissingElementException {
+        logger.debug("BPMNLabel: x=" + bpmnLabel.getBounds().getPosition().getX() + " y="
+                + bpmnLabel.getBounds().getPosition().getY());
+        GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
+        // compute relative point...
+        labelPoint = computeRelativeGPoint(labelPoint, participant);
+        labelPoint.setX(labelPoint.getX() - 0);
+        // now we build the LabelGNode
+        logger.debug("label GPoint: x=" + labelPoint.getX() + " y=" + labelPoint.getY());
+        LabelGNode labelNode = new LabelGNodeBuilder(flowElement) //
+                .position(labelPoint) //
+                .size(bpmnLabel.getBounds().getDimension().getWidth(), bpmnLabel.getBounds().getDimension().getHeight()) //
+                .build();
+
+        return labelNode;
     }
 
     /**
@@ -530,7 +543,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 basisPoint.setX(basisPoint.getX() - poolGPoint.getX());
                 basisPoint.setY(basisPoint.getY() - poolGPoint.getY());
             } catch (BPMNMissingElementException e) {
-                logger.severe("Failed to compute relative GPoint of Pool element: " + e.getMessage());
+                logger.fatal("Failed to compute relative GPoint of Pool element: " + e.getMessage());
             }
         }
         return basisPoint;

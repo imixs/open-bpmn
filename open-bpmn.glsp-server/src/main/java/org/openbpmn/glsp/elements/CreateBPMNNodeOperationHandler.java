@@ -17,8 +17,9 @@ package org.openbpmn.glsp.elements;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
@@ -27,7 +28,6 @@ import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.PoolGNode;
-import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.utils.ModelTypes;
 import org.openbpmn.model.BPMNGModelState;
 
@@ -43,7 +43,7 @@ import com.google.inject.Inject;
  */
 public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation>
         implements CreateNodeOperationHandler {
-    private static Logger logger = Logger.getLogger(BPMNCreateTaskHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(CreateBPMNNodeOperationHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -101,7 +101,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     public BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation) {
         GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
         String containerId = container.getId();
-        logger.info(" ==> Container ID : " + container.getId());
+        logger.debug("containerId = " + container.getId());
 
         BPMNProcess bpmnProcess = null;
         // is it the root?
