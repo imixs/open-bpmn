@@ -20,6 +20,9 @@ public class BPMNTypes {
     public static final String SERVICE_TASK = "serviceTask";
     public static final String SEND_TASK = "sendTask";
     public static final String MANUAL_TASK = "manualTask";
+    public static final String BUSINESSRULE_TASK = "businessRuleTask";
+    public static final String RECEIVE_TASK = "receiveTask";
+    
     public static final String TASK = "task";
     
     // Event

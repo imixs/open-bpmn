@@ -73,23 +73,29 @@ public class BPMNModel {
     public static final String LANE = "lane";
     public static final String DATAOBJECT = "dataObject";
 
-    public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
-            BPMNTypes.TASK, //
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.USER_TASK, //
-            "receiveTask", "businessRuleTask", "subProcess", "adHocSubProcess", "transaction", "callActivity" });
-
     public static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.USER_TASK, //
             BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.USER_TASK //
+            BPMNTypes.BUSINESSRULE_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.RECEIVE_TASK //
     });
+    
+    public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
+            BPMNTypes.TASK, //
+            BPMNTypes.MANUAL_TASK, //
+            BPMNTypes.USER_TASK, //
+            BPMNTypes.SCRIPT_TASK, //
+            BPMNTypes.BUSINESSRULE_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.RECEIVE_TASK, //
+            "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+
+  
 
     public static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT, //
@@ -102,19 +108,24 @@ public class BPMNModel {
     public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.SERVICE_TASK, //
             BPMNTypes.USER_TASK, //
+            BPMNTypes.SCRIPT_TASK, //
+            BPMNTypes.BUSINESSRULE_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.RECEIVE_TASK, //
+            
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
             BPMNTypes.EVENTBASED_GATEWAY, //
             BPMNTypes.COMPLEX_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
+            
             BPMNTypes.START_EVENT, //
             BPMNTypes.END_EVENT, //
             BPMNTypes.CATCH_EVENT, //
             BPMNTypes.THROW_EVENT, //
+            
             BPMNTypes.SEQUENCE_FLOW);
 
     public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //

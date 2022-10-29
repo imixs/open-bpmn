@@ -126,18 +126,28 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         item.setSortString("C");
         result.add(item);
 
-        item = new PaletteItem(BPMNTypes.SERVICE_TASK, "Service Task",
-                new TriggerNodeCreationAction(BPMNTypes.SERVICE_TASK));
+        item = new PaletteItem(BPMNTypes.SCRIPT_TASK, "Script Task",
+                new TriggerNodeCreationAction(BPMNTypes.SCRIPT_TASK));
         item.setSortString("D");
         result.add(item);
 
-        item = new PaletteItem(BPMNTypes.SEND_TASK, "Send Task", new TriggerNodeCreationAction(BPMNTypes.SEND_TASK));
+        item = new PaletteItem(BPMNTypes.BUSINESSRULE_TASK, "Business Rule Task",
+                new TriggerNodeCreationAction(BPMNTypes.BUSINESSRULE_TASK));
         item.setSortString("E");
         result.add(item);
 
-        item = new PaletteItem(BPMNTypes.SCRIPT_TASK, "Script Task",
-                new TriggerNodeCreationAction(BPMNTypes.SCRIPT_TASK));
+        item = new PaletteItem(BPMNTypes.SERVICE_TASK, "Service Task",
+                new TriggerNodeCreationAction(BPMNTypes.SERVICE_TASK));
         item.setSortString("F");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.SEND_TASK, "Send Task", new TriggerNodeCreationAction(BPMNTypes.SEND_TASK));
+        item.setSortString("G");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.RECEIVE_TASK, "Receive Task",
+                new TriggerNodeCreationAction(BPMNTypes.RECEIVE_TASK));
+        item.setSortString("H");
         result.add(item);
 
         return result;

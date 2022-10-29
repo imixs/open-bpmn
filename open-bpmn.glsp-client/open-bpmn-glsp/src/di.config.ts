@@ -99,9 +99,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'sendTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'serviceTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'scriptTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'businessRuleTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'serviceTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'sendTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'receiveTask', TaskNode, RoundedCornerNodeView);
 
     configureModelElement(context, 'startEvent', EventNode, CircularNodeView);
     configureModelElement(context, 'endEvent', EventNode, CircularNodeView);

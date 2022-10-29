@@ -110,7 +110,9 @@ public class TestFlowElements {
             assertNotNull(process);
             logger.info("...Process ID=" + process.getAttribute("id"));
 
-            assertEquals(2, process.getSequenceFlows().size());
+            assertEquals(2, process.getActivities().size());
+            assertEquals(5, process.getSequenceFlows().size());
+            
             
             // read gateways....
             Set<BPMNGateway> gateways = process.getGateways();
