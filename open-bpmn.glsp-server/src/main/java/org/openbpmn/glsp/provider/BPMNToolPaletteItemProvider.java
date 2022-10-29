@@ -250,9 +250,19 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         item.setSortString("B");
         result.add(item);
 
+        item = new PaletteItem(BPMNTypes.EVENT_GATEWAY, "Event",
+                new TriggerNodeCreationAction(BPMNTypes.EVENT_GATEWAY));
+        item.setSortString("C");
+        result.add(item);
+
         item = new PaletteItem(BPMNTypes.INCLUSIVE_GATEWAY, "Inclusive",
                 new TriggerNodeCreationAction(BPMNTypes.INCLUSIVE_GATEWAY));
-        item.setSortString("C");
+        item.setSortString("D");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.COMPLEX_GATEWAY, "Complex",
+                new TriggerNodeCreationAction(BPMNTypes.COMPLEX_GATEWAY));
+        item.setSortString("E");
         result.add(item);
 
         return result;

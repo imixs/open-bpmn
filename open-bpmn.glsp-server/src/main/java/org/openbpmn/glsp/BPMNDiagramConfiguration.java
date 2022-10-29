@@ -113,8 +113,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // Gateway ShapeEventTypes
         nodeHints.add(createGatewayHint(BPMNTypes.EXCLUSIVE_GATEWAY));
-        nodeHints.add(createGatewayHint(BPMNTypes.INCLUSIVE_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.PARALLEL_GATEWAY));
+        nodeHints.add(createGatewayHint(BPMNTypes.INCLUSIVE_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.EVENT_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.COMPLEX_GATEWAY));
 

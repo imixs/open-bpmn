@@ -104,7 +104,6 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      * @throws BPMNMissingElementException
      */
     public BPMNLabel getLabel() throws BPMNMissingElementException {
-
         if (isEvent() || isGateway() || isDataObject()) {
             if (label == null) {
                 // lazy loading of bounds from a given bpmnShape
@@ -120,12 +119,12 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      * @return
      */
     public boolean isEvent() {
-        return (BPMNTypes.EVENT.equals(type)//
-                || BPMNTypes.START_EVENT.equals(type) //
-                || BPMNTypes.END_EVENT.equals(type) //
-                || BPMNTypes.CATCH_EVENT.equals(type) //
-                || BPMNTypes.THROW_EVENT.equals(type) //
-        );
+        for (String eventType: BPMNModel.BPMN_EVENTS) {
+            if (eventType.equals(type)) {
+                return true;
+            }
+        }
+       return false;
     }
 
     /**
@@ -134,12 +133,12 @@ public abstract class BPMNFlowElement extends BPMNBaseElement {
      * @return
      */
     public boolean isGateway() {
-        return (BPMNTypes.GATEWAY.equals(type) //
-                || BPMNTypes.EXCLUSIVE_GATEWAY.equals(type)//
-                || BPMNTypes.INCLUSIVE_GATEWAY.equals(type)//
-                || BPMNTypes.COMPLEX_GATEWAY.equals(type)//
-                || BPMNTypes.PARALLEL_GATEWAY.equals(type)//
-        );
+       for (String gateWayType: BPMNModel.BPMN_GATEWAYS) {
+           if (gateWayType.equals(type)) {
+               return true;
+           }
+       }
+      return false;
     }
 
     /**
