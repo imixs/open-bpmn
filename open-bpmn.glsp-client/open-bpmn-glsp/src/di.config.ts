@@ -111,7 +111,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'exclusiveGateway', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'inclusiveGateway', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'parallelGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'eventGateway', GatewayNode, DiamondNodeView);
+    configureModelElement(context, 'eventBasedGateway', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'complexGateway', GatewayNode, DiamondNodeView);
 
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -90,6 +89,47 @@ public class TestFlowElements {
         logger.info("...model read sucessful");
     }
 
+    
+    /**
+     * This test parses refmodel-7
+     */
+    @Test
+    public void testReadRefmodel7() {
+
+        logger.info("...read model");
+        try {
+            BPMNModel model = BPMNModelFactory.read("/refmodel-7.bpmn");
+            System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
+            System.out.println("------");
+            if (model.getDoc().hasChildNodes()) {
+                printNote(model.getDoc().getChildNodes());
+            }
+
+            BPMNProcess process = model.openProcess(null);
+
+            assertNotNull(process);
+            logger.info("...Process ID=" + process.getAttribute("id"));
+
+            assertEquals(2, process.getSequenceFlows().size());
+            
+            // read gateways....
+            Set<BPMNGateway> gateways = process.getGateways();
+            assertEquals(1, gateways.size());
+            for (BPMNGateway element : gateways) {
+                logger.info("....... Gateway type=" + element.getType() + " id=" + element.getAttribute("id"));
+                // bounds
+                logger.info("....... Gateway Bounds=" + element.getBounds());
+
+            }
+            
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        logger.info("...model read sucessful");
+    }
+    
+    
     private static void printNote(NodeList nodeList) {
 
         for (int count = 0; count < nodeList.getLength(); count++) {

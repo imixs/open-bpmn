@@ -115,7 +115,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createGatewayHint(BPMNTypes.EXCLUSIVE_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.PARALLEL_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.INCLUSIVE_GATEWAY));
-        nodeHints.add(createGatewayHint(BPMNTypes.EVENT_GATEWAY));
+        nodeHints.add(createGatewayHint(BPMNTypes.EVENTBASED_GATEWAY));
         nodeHints.add(createGatewayHint(BPMNTypes.COMPLEX_GATEWAY));
 
         // DataObject

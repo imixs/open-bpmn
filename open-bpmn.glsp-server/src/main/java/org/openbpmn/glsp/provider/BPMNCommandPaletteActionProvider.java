@@ -102,7 +102,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.INCLUSIVE_GATEWAY,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Event Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EVENT_GATEWAY,
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EVENTBASED_GATEWAY,
                                 lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
                 new LabeledAction("Create Complex Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.COMPLEX_GATEWAY,

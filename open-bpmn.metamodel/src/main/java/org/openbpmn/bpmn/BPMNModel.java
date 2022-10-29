@@ -108,7 +108,7 @@ public class BPMNModel {
             BPMNTypes.USER_TASK, //
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
-            BPMNTypes.EVENT_GATEWAY, //
+            BPMNTypes.EVENTBASED_GATEWAY, //
             BPMNTypes.COMPLEX_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
             BPMNTypes.START_EVENT, //
@@ -132,7 +132,7 @@ public class BPMNModel {
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
-            BPMNTypes.EVENT_GATEWAY, //
+            BPMNTypes.EVENTBASED_GATEWAY, //
             BPMNTypes.COMPLEX_GATEWAY //
     });
 

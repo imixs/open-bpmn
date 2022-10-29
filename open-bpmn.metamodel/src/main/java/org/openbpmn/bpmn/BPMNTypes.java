@@ -48,7 +48,7 @@ public class BPMNTypes {
     public static final String GATEWAY = "gateway"; 
     public static final String EXCLUSIVE_GATEWAY = "exclusiveGateway";
     public static final String INCLUSIVE_GATEWAY = "inclusiveGateway";
-    public static final String EVENT_GATEWAY = "eventGateway";
+    public static final String EVENTBASED_GATEWAY = "eventBasedGateway";
     public static final String PARALLEL_GATEWAY = "parallelGateway";
     public static final String COMPLEX_GATEWAY = "complexGateway";
     
