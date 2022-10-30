@@ -112,6 +112,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createEndEventHint());
         nodeHints.add(createCatchEventHint());
         nodeHints.add(createThrowEventHint());
+        nodeHints.add(createBoundaryEventHint());
 
         // Gateway ShapeEventTypes
         nodeHints.add(createGatewayHint(BPMNTypes.EXCLUSIVE_GATEWAY));
@@ -163,6 +164,9 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         ShapeTypeHint poolHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
         List<String> elementList = new ArrayList<>();
         elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        // remove Boundary Event
+        elementList.remove(BPMNTypes.BOUNDARY_EVENT);
+        // add lane
         elementList.add(BPMNModel.LANE);
 
         poolHint.setContainableElementTypeIds(elementList);
@@ -176,14 +180,19 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
      */
     private ShapeTypeHint createLaneHint() {
         ShapeTypeHint laneHint = new ShapeTypeHint(BPMNTypes.LANE, false, true, false, true);
-        laneHint.setContainableElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        List<String> elementList = new ArrayList<>();
+        elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        // remove Boundary Event
+        elementList.remove(BPMNTypes.BOUNDARY_EVENT);
+
+        laneHint.setContainableElementTypeIds(elementList);
         return laneHint;
     }
 
     /**
      * Creates a Task ShapeTypeHint
      * <p>
-     * The method defines the containable Extensions
+     * The method defines the containable BoundaryEvent
      *
      * @return
      */
@@ -191,6 +200,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(taskType, true, true, true, true);
 
         List<String> containables = new ArrayList<>();
+        // add Boundary Event as the only containable for a Task Element
+        containables.addAll(Arrays.asList(new String[] { //
+                BPMNTypes.BOUNDARY_EVENT //
+        }));
+
         // Add optional Extension Hints...
         addExtensionHints(taskType, containables);
 
@@ -310,6 +324,32 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // Add optional Extension Hints...
         addExtensionHints(BPMNTypes.THROW_EVENT, containables);
+        shapeTypeHint.setContainableElementTypeIds(containables);
+        return shapeTypeHint;
+    }
+
+    /**
+     * Creates a BoundaryEvent ShapeTypeHint
+     * <p>
+     * The method defines the containable Event Definitions
+     *
+     * @return
+     */
+    private ShapeTypeHint createBoundaryEventHint() {
+        List<String> containables = new ArrayList<>();
+        // add Event Definitions
+        containables.addAll(Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
+                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
+                BPMNTypes.EVENT_DEFINITION_TIMER, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL //
+        }));
+
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.BOUNDARY_EVENT, true, true, false, true);
+
+        // Add optional Extension Hints...
+        addExtensionHints(BPMNTypes.BOUNDARY_EVENT, containables);
         shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
     }

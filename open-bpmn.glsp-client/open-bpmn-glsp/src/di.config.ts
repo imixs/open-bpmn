@@ -109,6 +109,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'endEvent', EventNode, CircularNodeView);
     configureModelElement(context, 'intermediateCatchEvent', EventNode, CircularNodeView);
     configureModelElement(context, 'intermediateThrowEvent', EventNode, CircularNodeView);
+    configureModelElement(context, 'boundaryEvent', EventNode, CircularNodeView);
 
     configureModelElement(context, 'exclusiveGateway', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'inclusiveGateway', GatewayNode, DiamondNodeView);

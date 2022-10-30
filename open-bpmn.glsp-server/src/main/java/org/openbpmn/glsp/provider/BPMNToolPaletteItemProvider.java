@@ -180,6 +180,11 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 new TriggerNodeCreationAction(BPMNTypes.THROW_EVENT));
         item.setSortString("D");
         result.add(item);
+
+        item = new PaletteItem(BPMNTypes.BOUNDARY_EVENT, "Boundary Event",
+                new TriggerNodeCreationAction(BPMNTypes.BOUNDARY_EVENT));
+        item.setSortString("E");
+        result.add(item);
         return result;
     }
 
