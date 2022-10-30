@@ -132,6 +132,44 @@ public class TestFlowElements {
     }
     
     
+    /**
+     * This test parses refmodel-8 - Boundary Event
+     */
+    @Test
+    public void testReadRefmodel8() {
+
+        logger.info("...read model");
+        try {
+            BPMNModel model = BPMNModelFactory.read("/refmodel-8.bpmn");
+            System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
+            System.out.println("------");
+            if (model.getDoc().hasChildNodes()) {
+                printNote(model.getDoc().getChildNodes());
+            }
+
+            BPMNProcess process = model.openProcess(null);
+
+            assertNotNull(process);
+            logger.info("...Process ID=" + process.getAttribute("id"));
+
+            assertEquals(1, process.getActivities().size());
+            assertEquals(1, process.getEvents().size());
+            
+            // Load Boundary event and test attribute attachedToRef
+            BPMNEvent boundaryEvent=(BPMNEvent) process.findBPMNFlowElementById("BoundaryEvent_1");
+            assertNotNull(boundaryEvent);
+            String attachedRef=boundaryEvent.getAttribute("attachedToRef");
+            assertEquals("Task_1", attachedRef);
+            
+            
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        logger.info("...model read sucessful");
+    }
+    
+    
     private static void printNote(NodeList nodeList) {
 
         for (int count = 0; count < nodeList.getLength(); count++) {

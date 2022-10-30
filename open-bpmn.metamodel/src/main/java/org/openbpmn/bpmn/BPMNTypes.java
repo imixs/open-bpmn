@@ -31,6 +31,7 @@ public class BPMNTypes {
     public static final String END_EVENT= "endEvent";
     public static final String CATCH_EVENT = "intermediateCatchEvent";
     public static final String THROW_EVENT = "intermediateThrowEvent";
+    public static final String BOUNDARY_EVENT = "boundaryEvent";
     
     // Event Definitions
     public static final String EVENT_DEFINITION_CONDITIONAL = "conditionalEventDefinition";

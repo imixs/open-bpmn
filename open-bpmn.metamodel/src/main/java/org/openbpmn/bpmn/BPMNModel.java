@@ -102,7 +102,8 @@ public class BPMNModel {
             BPMNTypes.START_EVENT, //
             BPMNTypes.END_EVENT, //
             BPMNTypes.CATCH_EVENT, //
-            BPMNTypes.THROW_EVENT //
+            BPMNTypes.THROW_EVENT, //
+            BPMNTypes.BOUNDARY_EVENT //
     });
 
     public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
@@ -125,6 +126,7 @@ public class BPMNModel {
             BPMNTypes.END_EVENT, //
             BPMNTypes.CATCH_EVENT, //
             BPMNTypes.THROW_EVENT, //
+            BPMNTypes.BOUNDARY_EVENT, //
             
             BPMNTypes.SEQUENCE_FLOW);
 
