@@ -71,7 +71,7 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
 
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
-        String dataObjectID = "dataObject-" + BPMNModel.generateShortID();
+        String dataObjectID = BPMNModel.generateShortID("dataObject"); // "dataObject-" + BPMNModel.generateShortID();
         logger.debug("createNode dataObjectID=" + dataObjectID);
         try {
             // find the process - either the default process for Root container or the

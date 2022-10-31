@@ -67,7 +67,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
         // now we add a new gateway into the source model
-        String gatewayID = "gateway-" + BPMNModel.generateShortID();
+        String gatewayID = BPMNModel.generateShortID("gateway");// "gateway-" + BPMNModel.generateShortID();
         logger.debug("createNode gatewaynodeID=" + gatewayID);
         try {
             // find the process - either the default process for Root container or the

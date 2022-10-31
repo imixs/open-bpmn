@@ -71,7 +71,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
-        String eventID = "event-" + BPMNModel.generateShortID();
+        String eventID = BPMNModel.generateShortID("event"); // "event-" + BPMNModel.generateShortID();
         logger.debug("createNode eventnodeID=" + eventID);
         try {
             // find the process - either the default process for Root container or the

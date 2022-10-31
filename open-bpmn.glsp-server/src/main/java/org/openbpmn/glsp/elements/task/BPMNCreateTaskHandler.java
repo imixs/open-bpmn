@@ -69,7 +69,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
-        String taskID = "task-" + BPMNModel.generateShortID();
+        String taskID = BPMNModel.generateShortID("task");// "task-" + BPMNModel.generateShortID();
         logger.debug("createNode tasknodeID=" + taskID);
         try {
             // find the process - either the default process for Root container or the
