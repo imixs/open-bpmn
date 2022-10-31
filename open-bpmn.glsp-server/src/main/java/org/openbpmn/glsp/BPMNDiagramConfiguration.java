@@ -97,6 +97,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     public List<ShapeTypeHint> getShapeTypeHints() {
         List<ShapeTypeHint> nodeHints = new ArrayList<>();
 
+        nodeHints.add(createRootHint());
+
         // Task ShapeTypeHints
         nodeHints.add(createTaskHint(BPMNTypes.TASK));
         nodeHints.add(createTaskHint(BPMNTypes.BUSINESSRULE_TASK));
@@ -158,6 +160,26 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         edgeHints.add(sequenceFlowHint);
 
         return edgeHints;
+    }
+
+    /**
+     * Defines the hints for root diagram plane
+     *
+     * @return
+     */
+    private ShapeTypeHint createRootHint() {
+        ShapeTypeHint rootHint = new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false);
+        List<String> elementList = new ArrayList<>();
+        elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        // remove Boundary Event
+        elementList.remove(BPMNTypes.BOUNDARY_EVENT);
+
+        // add special types
+        elementList.add(BPMNTypes.DATAOBJECT);
+        elementList.add(BPMNTypes.POOL);
+
+        rootHint.setContainableElementTypeIds(elementList);
+        return rootHint;
     }
 
     private ShapeTypeHint createPoolHint() {
