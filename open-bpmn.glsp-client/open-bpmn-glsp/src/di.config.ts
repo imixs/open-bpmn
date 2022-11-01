@@ -53,7 +53,12 @@ import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectN
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
 import { BPMNManhattanEdgeRouter } from './bpmn-edge-router';
 // import { BPMNEllipticAnchor,BPMNRectangularAnchor,BPMNDiamondAnchor } from './bpmn-anchors';
-import { HelperLineListener,DrawHelperLinesCommand,RemoveHelperLinesCommand,HelperLineView,BPMNElementSnapper } from './bpmn-helperlines';
+import { HelperLineListener,
+         DrawHelperLinesCommand,
+         RemoveHelperLinesCommand,
+         HelperLineView,
+         BPMNElementSnapper
+       } from './bpmn-helperlines';
 
 import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
 
@@ -65,6 +70,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.ISnapper).to(GridSnapper);
     // bind(TYPES.ISnapper).to(BPMNGridSnapper);
     bind(TYPES.ISnapper).to(BPMNElementSnapper);
+    //bind(TYPES.ISnapper).to(BPMNBoundaryEventSnapper);
 
     // BPMN Router
     bind(BPMNManhattanEdgeRouter).toSelf().inSingletonScope();

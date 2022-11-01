@@ -19,11 +19,12 @@ import {
     hasObjectProp,
     isBoundsAware,
     ISnapper,
+    hasArguments,
     MouseListener,
     SModelElement,
     SModelRoot
 } from '@eclipse-glsp/client';
-import { isBPMNNode, isEventNode, isGatewayNode, LabelNode } from '@open-bpmn/open-bpmn-model';
+import { isBPMNNode, isEventNode, isGatewayNode, LabelNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { CommandExecutionContext, CommandReturn, getAbsoluteBounds, IView, RenderingContext, SChildElement, svg, TYPES } from 'sprotty';
@@ -88,6 +89,18 @@ export class BPMNElementSnapper implements ISnapper {
             // return position;
             return { x: position.x, y: position.y };
         }
+        
+        if (isBoundaryEvent(element)) {
+	        console.log('--->we have a boundary event');
+	        if (hasArguments(element)) {
+		    
+	          const taskRef=element.args.attachedToRef + '';
+	          console.log('---> task ref='+taskRef);
+	        }
+            // return position;
+            return { x: position.x, y: position.y };
+        }
+        
         // find snap position
         const snapPoint: Point = this.findSnapPoint(element);
         // if a snapPoint was found and this snapPoint is still in the snapRange,
@@ -172,6 +185,41 @@ export class BPMNElementSnapper implements ISnapper {
         }
         return false;
     }
+}
+
+
+/**
+ * Snapper implementation to allign Boundary Events
+ * The snapper finds the position according to the 
+ * reffered Task.
+ */
+@injectable()
+export class BPMNBoundaryEventSnapper implements ISnapper {
+    get snapRange(): number {
+        return 10;
+    }
+
+    /* Find a possible snapPoint.
+     * a SnapPoint is found if the x or y coordinates matching the position
+     * of another element Node.
+     * We are only interested in BPMNNode elemnets. For all other element we return
+     * the default.
+     */
+    snap(position: Point, element: SModelElement): Point {
+        if (!isBoundaryEvent(element)) {
+	        console.log('--->we have a boundary event');
+            // return position;
+            return { x: position.x, y: position.y };
+        }
+        // find snap position
+	    console.log('--->we have NOT a boundary event');
+        
+        return { x: position.x, y: position.y };
+    }
+
+
+
+  
 }
 
 /*

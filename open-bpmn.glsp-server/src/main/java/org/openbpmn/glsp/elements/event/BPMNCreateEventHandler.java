@@ -20,12 +20,16 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNActivity;
+import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -41,7 +45,11 @@ import com.google.inject.Inject;
  * operationHandler is called when the user adds a new Element from the
  * ToolPalette.
  * <p>
- * The Handler simply extends the SourceModel and reset the state.
+ * The Handler also is aware of BoundaryEvents which are contained in a Task
+ * element.
+ * <p>
+ * Finally the Handler simply extends the SourceModel and reset the state.
+ *
  *
  * @author rsoika
  *
@@ -74,10 +82,36 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         String eventID = BPMNModel.generateShortID("event"); // "event-" + BPMNModel.generateShortID();
         logger.debug("createNode eventnodeID=" + eventID);
         try {
-            // find the process - either the default process for Root container or the
-            // corresponding participant process
-            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
+
+            GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
+            String containerId = container.getId();
+            logger.debug("containerId = " + container.getId());
+
+            BPMNProcess bpmnProcess = null;
+            String attachedToRef = null;
+            // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
+            if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {
+                // we assume that the containerId is the Task Element...
+                BPMNBaseElement containerElement = modelState.getBpmnModel().findBPMNBaseElementById(containerId);
+                if (containerElement != null && containerElement instanceof BPMNActivity) {
+                    // it is a BPMNActivity
+                    bpmnProcess = ((BPMNActivity) containerElement).getBpmnProcess();
+                    attachedToRef = containerElement.getId();
+                }
+            }
+
+            // did we have yet a process ?
+            if (bpmnProcess == null) {
+                // find the process - either the default process for Root container or the
+                // corresponding participant process
+                bpmnProcess = findProcessByCreateNodeOperation(operation);
+            }
+
             BPMNEvent event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
+            // do we have a attachedToRef?
+            if (attachedToRef != null && !attachedToRef.isEmpty()) {
+                event.setAttribute("attachedToRef", attachedToRef);
+            }
             Optional<GPoint> point = operation.getLocation();
 
             if (point.isPresent()) {

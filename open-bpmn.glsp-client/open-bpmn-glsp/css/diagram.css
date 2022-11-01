@@ -108,6 +108,11 @@
 	fill: #82848a;
 }
 
+.event.boundaryEvent > circle {
+	fill: #627ea5;
+	stroke-width: 1;
+	stroke: #354152a8
+}
 
 /*** Gateways ***/
 

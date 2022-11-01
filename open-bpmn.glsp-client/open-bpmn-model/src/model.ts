@@ -203,6 +203,13 @@ export function isBPMNNode(element: SModelElement): element is TaskNode | EventN
            element instanceof DataObjectNode || element instanceof PoolNode;
 }
 
+/*
+ * Returns ture if the BPMN Node Elmeent is a BoundaryEvent
+ */
+export function isBoundaryEvent(element: SModelElement): element is EventNode {
+    return element instanceof EventNode && element.type === 'boundaryEvent';
+}
+
 export class SequenceFlow extends SEdge {
 	condition?: string;
 }

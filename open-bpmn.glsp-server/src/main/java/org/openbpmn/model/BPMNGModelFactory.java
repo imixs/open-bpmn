@@ -364,6 +364,12 @@ public class BPMNGModelFactory implements GModelFactory {
                     .position(point) //
                     .build();
 
+            if (BPMNTypes.BOUNDARY_EVENT.equals(event.getType())) {
+                // resolve task ref
+                String taskrefID = event.getAttribute("attachedToRef");
+                eventNode.getArgs().put("attachedToRef", taskrefID);
+            }
+
             // compute the symbol for the BPMNEvent
             String symbol = null;
             Set<Element> eventDefinitionList = event.getEventDefinitions();
