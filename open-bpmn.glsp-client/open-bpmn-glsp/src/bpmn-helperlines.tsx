@@ -24,7 +24,7 @@ import {
     SModelElement,
     SModelRoot
 } from '@eclipse-glsp/client';
-import { isBPMNNode, isEventNode, isGatewayNode, LabelNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
+import { isBPMNNode, isBPMNLabelNode, LabelNode, isBoundaryEvent, TaskNode, EventNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { CommandExecutionContext, CommandReturn, getAbsoluteBounds, IView, RenderingContext, SChildElement, svg, TYPES } from 'sprotty';
@@ -89,38 +89,79 @@ export class BPMNElementSnapper implements ISnapper {
             // return position;
             return { x: position.x, y: position.y };
         }
-        
+
+        let snapPoint: Point;
         if (isBoundaryEvent(element)) {
-	        console.log('--->we have a boundary event');
-	        if (hasArguments(element)) {
-		    
-	          const taskRef=element.args.attachedToRef + '';
-	          console.log('---> task ref='+taskRef);
-	        }
-            // return position;
-            return { x: position.x, y: position.y };
+	        snapPoint = this.findBoundarySnapPoint(element,position);
+        } else {
+	       // find default snap position
+	       snapPoint = this.findSnapPoint(element);
+           // if a snapPoint was found and this snapPoint is still in the snapRange,
+           // then we adjust the current mouse Postion. Otherwise we return the current position
+           const snapX = snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.snapRange ? snapPoint.x : position.x;
+           const snapY = snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.snapRange ? snapPoint.y : position.y;
+           snapPoint={ x: snapX, y: snapY };
         }
         
-        // find snap position
-        const snapPoint: Point = this.findSnapPoint(element);
-        // if a snapPoint was found and this snapPoint is still in the snapRange,
-        // then we adjust the current mouse Postion. Otherwise we return the current position
-        const y = snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.snapRange ? snapPoint.y : position.y;
-        const x = snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.snapRange ? snapPoint.x : position.x;
-        const xSnap = x - position.x;
-        const ySnap = y - position.y;
-        // fix label ofset (only needed or Events and Gateways)?
-        if ((isEventNode(element) || isGatewayNode(element)) && (ySnap !== 0 || xSnap !== 0)) {
+        // fix BPMNLabel offset (only needed or Elements with a separate label)?
+        if (isBPMNLabelNode(element) ) {
+            const xOffset = snapPoint.x - position.x;
+            const yOffset = snapPoint.y - position.y;
             const label: any = element.root.index.getById(element.id + '_bpmnlabel');
             if (label instanceof LabelNode) {
                 // fix ofset of the lable position....
-                const ly = label.position.y + ySnap;
-                const lx = label.position.x + xSnap;
+                const ly = label.position.y + yOffset;
+                const lx = label.position.x + xOffset;
                 label.position = { x: lx, y: ly };
             }
         }
 
-        return { x: x, y: y };
+        return snapPoint;
+    }
+    
+    /*
+     * This helper method computes the snap Position of a BoundaryEvent. 
+     * THe position is based on the Bounds of the containing TaskElement
+     *
+     */    
+    private findBoundarySnapPoint(element: EventNode, position: Point): Point {
+	   let x= position.x;
+	   let y= position.y;
+	   if (hasArguments(element)) {
+		  // now we compute the x/y on the edge of the task bounds
+		  const offset=18;
+	      const taskRef=element.args.attachedToRef + '';
+	      // find the task...
+	      const task= element.root.index.getById(taskRef);
+	      if (task && task instanceof TaskNode) {
+	         const taskCenter = Bounds.center(task.bounds);
+	         
+	         // x-axis move
+	         if (x>=task.bounds.x && x<=(task.bounds.x+task.bounds.width)) {
+		       if (y>taskCenter.y) {
+		          y=task.position.y+task.bounds.height-offset;
+	           } else {
+		          y=task.position.y-offset;
+	           }
+	         } else if (y>=task.bounds.y && y<=(task.bounds.y+task.bounds.height)) {
+		        // y-axis move
+		       	if (x>taskCenter.x) {
+	  	          x=task.position.x+task.bounds.width-offset;
+	            } else {
+		          x=task.position.x-offset;
+	            }
+	         } else {
+		        // default - out of range = do not move
+		        x=element.bounds.x;
+		        y=element.bounds.y;
+	         }
+	         
+
+	         console.log('---> new boundary event pos='+x + ',' + y);    
+	       }    
+	     }
+         // new position;
+         return { x: x, y: y };
     }
 
     /*
