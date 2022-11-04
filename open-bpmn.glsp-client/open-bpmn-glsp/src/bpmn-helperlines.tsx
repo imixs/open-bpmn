@@ -121,15 +121,15 @@ export class BPMNElementSnapper implements ISnapper {
     
     /*
      * This helper method computes the snap Position of a BoundaryEvent. 
-     * THe position is based on the Bounds of the containing TaskElement
-     *
+     * The position is based on the Bounds of the containing TaskElement.
+     * The final position is always on the edge of the TaskElement.
      */    
     private findBoundarySnapPoint(element: EventNode, position: Point): Point {
+  	   const offset=18;
 	   let x= position.x;
 	   let y= position.y;
 	   if (hasArguments(element)) {
 		  // now we compute the x/y on the edge of the task bounds
-		  const offset=18;
 	      const taskRef=element.args.attachedToRef + '';
 	      // find the task...
 	      const task= element.root.index.getById(taskRef);
@@ -137,15 +137,15 @@ export class BPMNElementSnapper implements ISnapper {
 	         const taskCenter = Bounds.center(task.bounds);
 	         
 	         // x-axis move
-	         if (x>=task.bounds.x && x<=(task.bounds.x+task.bounds.width)) {
-		       if (y>taskCenter.y) {
+	         if (x>=task.bounds.x-offset && x<=(task.bounds.x-offset+task.bounds.width)) {
+		       if (y+offset>taskCenter.y) {
 		          y=task.position.y+task.bounds.height-offset;
 	           } else {
 		          y=task.position.y-offset;
 	           }
-	         } else if (y>=task.bounds.y && y<=(task.bounds.y+task.bounds.height)) {
+	         } else if (y>=task.bounds.y-offset && y<=(task.bounds.y-offset+task.bounds.height)) {
 		        // y-axis move
-		       	if (x>taskCenter.x) {
+		       	if (x+offset>taskCenter.x) {
 	  	          x=task.position.x+task.bounds.width-offset;
 	            } else {
 		          x=task.position.x-offset;
@@ -155,12 +155,9 @@ export class BPMNElementSnapper implements ISnapper {
 		        x=element.bounds.x;
 		        y=element.bounds.y;
 	         }
-	         
-
-	         console.log('---> new boundary event pos='+x + ',' + y);    
 	       }    
 	     }
-         // new position;
+         // return the new position;
          return { x: x, y: y };
     }
 
