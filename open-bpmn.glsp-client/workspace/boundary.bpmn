@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" id="Definitions_1" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1" isExecutable="false" name="Default Process" processType="Public">
+        <bpmn2:task id="task-FkBJK0lIQJcrSWOL" name="Task-1"/>
+        <bpmn2:boundaryEvent attachedToRef="task-FkBJK0lIQJcrSWOL" id="event_FEZUzA" name="Event-1"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="task-FkBJK0lIQJcrSWOL" id="BPMNShape_0glhrA">
+                <dc:Bounds height="50.0" width="110.0" x="85.0" y="56.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="14.0" width="36.0" x="122.0" y="74.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event_FEZUzA" id="BPMNShape_M2TRkQ">
+                <dc:Bounds height="36.0" width="36.0" x="110.0" y="88.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_VS7VBQ">
+                    <dc:Bounds height="24.0" width="100.0" x="78.0" y="124.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+            <dc:Font name="arial" size="9.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
+        <bpmn2:participant id="participant_kLKU1Q" name="Default Process" processRef="process_1"/>
+        <bpmn2:participant id="participant_xxX2og" name="Pool-1" processRef="process_4F9XMQ"/>
+    </bpmn2:collaboration>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="Default Process" processType="Public"/>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_4F9XMQ" name="Process 2" processType="Private">
+        <bpmn2:startEvent id="event_PACstQ" name="Event-1">
+            <bpmn2:outgoing>SequenceFlow_MDxg0Q</bpmn2:outgoing>
+        </bpmn2:startEvent>
+        <bpmn2:manualTask id="task_PVTBpQ" name="Task-1">
+            <bpmn2:incoming>SequenceFlow_MDxg0Q</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_qF8gJQ</bpmn2:outgoing>
+        </bpmn2:manualTask>
+        <bpmn2:endEvent id="event_wd0wAQ" name="Event-2">
+            <bpmn2:incoming>SequenceFlow_qF8gJQ</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="SequenceFlow_MDxg0Q" sourceRef="event_PACstQ" targetRef="task_PVTBpQ"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_qF8gJQ" sourceRef="task_PVTBpQ" targetRef="event_wd0wAQ"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="participant_xxX2og" id="BPMNShape_AdTG0A">
+                <dc:Bounds height="161.0" width="510.0" x="65.0" y="63.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event_PACstQ" id="BPMNShape_0jOsZQ">
+                <dc:Bounds height="36.0" width="36.0" x="153.0" y="115.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_qVu7Tg">
+                    <dc:Bounds height="24.0" width="100.0" x="121.0" y="151.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_PVTBpQ" id="BPMNShape_YQd0eA">
+                <dc:Bounds height="50.0" width="110.0" x="271.0" y="108.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event_wd0wAQ" id="BPMNShape_50DQ9g">
+                <dc:Bounds height="36.0" width="36.0" x="449.0" y="115.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_xZsfPw">
+                    <dc:Bounds height="24.0" width="100.0" x="417.0" y="151.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_MDxg0Q" id="BPMNEdge_h9l0AQ"/>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_qF8gJQ" id="BPMNEdge_pXglhg"/>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xs="http://www.w3.org/2001/XMLSchema" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" id="Definitions_1">
+    <bpmn2:collaboration id="Collaboration_1" name="Collaboration 1">
+        <bpmn2:participant id="Participant_1" name="Pool 1" processRef="Process_1"/>
+        <bpmn2:participant id="Participant_2" name="Pool 2" processRef="Process_2"/>
+    </bpmn2:collaboration>
+    <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Pool 1 Process">
+        <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
+            <bpmn2:lane id="Lane_1" name="Lane 1">
+                <bpmn2:flowNodeRef>UserTask_1</bpmn2:flowNodeRef>
+            </bpmn2:lane>
+        </bpmn2:laneSet>
+        <bpmn2:userTask id="UserTask_1" name="User Task 1"/>
+    </bpmn2:process>
+    <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_2" isExecutable="false" name="Pool 2 Process">
+        <bpmn2:laneSet id="LaneSet_2" name="Lane Set 2">
+            <bpmn2:lane id="Lane_2" name="Lane 2">
+                <bpmn2:flowNodeRef>BusinessRuleTask_1</bpmn2:flowNodeRef>
+            </bpmn2:lane>
+        </bpmn2:laneSet>
+        <bpmn2:businessRuleTask id="BusinessRuleTask_1" name="Business Rule Task 1"/>
+    </bpmn2:process>
+    <bpmn2:process id="process_3" name="Default Process" processType="Public"/>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="Collaboration_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="Participant_1" id="BPMNShape_Participant_1" isHorizontal="true">
+                <dc:Bounds height="150.0" width="530.0" x="70.0" y="40.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="35.0" width="14.0" x="76.0" y="97.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Participant_2" id="BPMNShape_Participant_2" isHorizontal="true">
+                <dc:Bounds height="150.0" width="530.0" x="70.0" y="270.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="35.0" width="14.0" x="76.0" y="327.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Lane_1" id="BPMNShape_Lane_1" isHorizontal="true">
+                <dc:Bounds height="150.0" width="500.0" x="100.0" y="40.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_3" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="38.0" width="14.0" x="106.0" y="96.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Lane_2" id="BPMNShape_Lane_2" isHorizontal="true">
+                <dc:Bounds height="150.0" width="500.0" x="100.0" y="270.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_4" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="38.0" width="14.0" x="106.0" y="326.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="UserTask_1" id="BPMNShape_UserTask_1" isExpanded="true">
+                <dc:Bounds height="50.0" width="110.0" x="178.0" y="59.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_5" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="14.0" width="64.0" x="218.0" y="73.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="BusinessRuleTask_1" id="BPMNShape_BusinessRuleTask_1" isExpanded="true">
+                <dc:Bounds height="50.0" width="110.0" x="165.0" y="305.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_6" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="28.0" width="88.0" x="176.0" y="316.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+            <dc:Font name="arial" size="9.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
