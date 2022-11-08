@@ -2,9 +2,9 @@
 
 Open BPMN is a free and open platform for modeling BPMN 2.0 diagrams.  The primary goal of this project is to provide a graphical BPMN editing framework, which can be easily customized and extended by any BPMN 2.0 compliant execution engine. Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/).
 
-<p align="center">
- <h2><a href="https://open-bpmn.imixs.org" target="_blank">Start the Online Demo<a></h2>
-</p>
+
+ <h2 align="center"><a href="https://open-bpmn.imixs.org" target="_blank">Start the Online Demo<a></h2>
+
 
 **Note:** The project is still under development. See the developer details below. 
 
