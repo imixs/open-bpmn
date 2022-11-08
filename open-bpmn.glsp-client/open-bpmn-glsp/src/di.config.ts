@@ -70,7 +70,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.ISnapper).to(GridSnapper);
     // bind(TYPES.ISnapper).to(BPMNGridSnapper);
     bind(TYPES.ISnapper).to(BPMNElementSnapper);
-    //bind(TYPES.ISnapper).to(BPMNBoundaryEventSnapper);
+    // bind(TYPES.ISnapper).to(BPMNBoundaryEventSnapper);
 
     // BPMN Router
     bind(BPMNManhattanEdgeRouter).toSelf().inSingletonScope();

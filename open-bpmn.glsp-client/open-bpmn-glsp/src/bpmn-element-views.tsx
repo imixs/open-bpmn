@@ -90,6 +90,7 @@ export class IconView extends ShapeView {
 
             } else if (taskNode.type === 'businessRuleTask') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/table.svg?short_path=8f21e22
+                // eslint-disable-next-line max-len
                 icon = 'M13.5 2h-12l-.5.5v11l.5.5h12l.5-.5v-11l-.5-.5zM2 3h11v1H2V3zm7 4H6V5h3v2zm0 1v2H6V8h3zM2 5h3v2H2V5zm0 3h3v2H2V8zm0 5v-2h3v2H2zm4 0v-2h3v2H6zm7 0h-3v-2h3v2zm0-3h-3V8h3v2zm-3-3V5h3v2h-3z';
 
             } else if (taskNode.type === 'serviceTask') {
@@ -101,7 +102,7 @@ export class IconView extends ShapeView {
                 icon =
                     // eslint-disable-next-line max-len
                     'M1 3.5l.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5v-9zm1 1.035V12h12V4.536L8.31 8.9H7.7L2 4.535zM13.03 4H2.97L8 7.869 13.03 4z';
-       
+
             } else if (taskNode.type === 'receiveTask') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/mail-read.svg?short_path=f74817b
                 icon =
@@ -111,7 +112,7 @@ export class IconView extends ShapeView {
             } else {
                 // dummy place holder
                 icon = 'M6';
-            }            
+            }
         }
 
         if (gatewayNode) {
@@ -148,7 +149,7 @@ export class IconView extends ShapeView {
                 icon =
                     // eslint-disable-next-line max-len
                     'M9.1 4.4L8.6 2H7.4l-.5 2.4-.7.3-2-1.3-.9.8 1.3 2-.2.7-2.4.5v1.2l2.4.5.3.8-1.3 2 .8.8 2-1.3.8.3.4 2.3h1.2l.5-2.4.8-.3 2 1.3.8-.8-1.3-2 .3-.8 2.3-.4V7.4l-2.4-.5-.3-.8 1.3-2-.8-.8-2 1.3-.7-.2zM9.4 1l.5 2.4L12 2.1l2 2-1.4 2.1 2.4.4v2.8l-2.4.5L14 12l-2 2-2.1-1.4-.5 2.4H6.6l-.5-2.4L4 13.9l-2-2 1.4-2.1L1 9.4V6.6l2.4-.5L2.1 4l2-2 2.1 1.4.4-2.4h2.8zm.6 7c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zM8 9c.6 0 1-.4 1-1s-.4-1-1-1-1 .4-1 1 .4 1 1 1z';
-            }                        
+            }
         }
 
         if (eventNode) {
@@ -161,7 +162,7 @@ export class IconView extends ShapeView {
                     // eslint-disable-next-line max-len
                     'M1 3.5l.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5v-9zm1 1.035V12h12V4.536L8.31 8.9H7.7L2 4.535zM13.03 4H2.97L8 7.869 13.03 4z';
             } else if (eventNode.symbol === 'conditionalEventDefinition') {
-	            // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/checklist.svg?short_path=e850b9d
+                // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/checklist.svg?short_path=e850b9d
                 icon =
                     // eslint-disable-next-line max-len
                     'M3.75 4.48h-.71L2 3.43l.71-.7.69.68L4.81 2l.71.71-1.77 1.77zM6.99 3h8v1h-8V3zm0 3h8v1h-8V6zm8 3h-8v1h8V9zm-8 3h8v1h-8v-1zM3.04 7.48h.71l1.77-1.77-.71-.7L3.4 6.42l-.69-.69-.71.71 1.04 1.04zm.71 3.01h-.71L2 9.45l.71-.71.69.69 1.41-1.42.71.71-1.77 1.77zm-.71 3.01h.71l1.77-1.77-.71-.71-1.41 1.42-.69-.69-.71.7 1.04 1.05z';
@@ -211,7 +212,7 @@ export class IconView extends ShapeView {
         // did we have now a icon?
         let vnode: any;
         if (!icon) {
-	        return undefined;
+            return undefined;
         } else {
             vnode = (
               <g>
@@ -288,23 +289,23 @@ export class BPMNLabelNodeSelectionListener implements SelectionListener {
     protected actionDispatcher: ActionDispatcher;
 
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-        let additionalSelection: string[]=[''];       
+        const additionalSelection: string[]=[''];
         // We are intersted in Tasks with BoundaryEvents ...
         const selectedTaskNodes = getElements(root.index, selectedElements, isTaskNode);
         // - first get a list of all selected TaskIDs
         const taskIds = selectedTaskNodes.map(task => task.id);
         // - next iterate over all BoundaryEvents
-	    const boundaryEvents=filter(root.index,isBoundaryEvent);
+        const boundaryEvents=filter(root.index,isBoundaryEvent);
         if (selectedTaskNodes.length > 0) {
-	       // do we have a boundaryEvent that matches this taskID?
-	       boundaryEvents.forEach( b => { 
-		     if (hasArguments(b)) {
-			   const taskRef=b.args.attachedToRef+'';
-			   if (taskIds.includes(taskRef)) {
-     		     additionalSelection.push(b.id);
-			   }
-		     }
-		   });
+          // do we have a boundaryEvent that matches this taskID?
+          boundaryEvents.forEach( b => {
+            if (hasArguments(b)) {
+              const taskRef=b.args.attachedToRef+'';
+              if (taskIds.includes(taskRef)) {
+                additionalSelection.push(b.id);
+              }
+            }
+          });
         }
         // ... and we are intersted in BPMNLabelNodes
         const eventNodes = getElements(root.index, selectedElements, isBPMNLabelNode);
@@ -312,8 +313,8 @@ export class BPMNLabelNodeSelectionListener implements SelectionListener {
             // find the associated BPMNLabels
             const eventLabelIds = eventNodes.map(node => node.id + '_bpmnlabel');
             eventLabelIds.forEach( l => {
-	          additionalSelection.push(l);
-	        }); 
+              additionalSelection.push(l);
+            });
         }
         // finally dispatch the additional elementIDs...
         this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: additionalSelection }));

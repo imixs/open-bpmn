@@ -92,17 +92,17 @@ export class BPMNElementSnapper implements ISnapper {
 
         let snapPoint: Point;
         if (isBoundaryEvent(element)) {
-	        snapPoint = this.findBoundarySnapPoint(element,position);
+           snapPoint = this.findBoundarySnapPoint(element,position);
         } else {
-	       // find default snap position
-	       snapPoint = this.findSnapPoint(element);
+           // find default snap position
+           snapPoint = this.findSnapPoint(element);
            // if a snapPoint was found and this snapPoint is still in the snapRange,
            // then we adjust the current mouse Postion. Otherwise we return the current position
            const snapX = snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.snapRange ? snapPoint.x : position.x;
            const snapY = snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.snapRange ? snapPoint.y : position.y;
            snapPoint={ x: snapX, y: snapY };
         }
-        
+
         // fix BPMNLabel offset (only needed or Elements with a separate label)?
         if (isBPMNLabelNode(element) ) {
             const xOffset = snapPoint.x - position.x;
@@ -118,24 +118,23 @@ export class BPMNElementSnapper implements ISnapper {
 
         return snapPoint;
     }
-    
+
     /*
-     * This helper method computes the snap Position of a BoundaryEvent. 
+     * This helper method computes the snap Position of a BoundaryEvent.
      * The position is based on the Bounds of the containing TaskElement.
      * The final position is always on the edge of the TaskElement.
      */    
     private findBoundarySnapPoint(element: EventNode, position: Point): Point {
-  	   const offset=18;
-	   let x= position.x;
-	   let y= position.y;
-	   if (hasArguments(element)) {
-		  // now we compute the x/y on the edge of the task bounds
-	      const taskRef=element.args.attachedToRef + '';
-	      // find the task...
-	      const task= element.root.index.getById(taskRef);
-	      if (task && task instanceof TaskNode) {
-	         const taskCenter = Bounds.center(task.bounds);
-	         
+      const offset=18;
+      let x= position.x;
+      let y= position.y;
+      if (hasArguments(element)) {
+        // now we compute the x/y on the edge of the task bounds
+        const taskRef=element.args.attachedToRef + '';
+        // find the task...
+        const task= element.root.index.getById(taskRef);
+        if (task && task instanceof TaskNode) {
+          const taskCenter = Bounds.center(task.bounds);
 	         // x-axis move
 	         if (x>=task.bounds.x-offset && x<=(task.bounds.x-offset+task.bounds.width)) {
 		       if (y+offset>taskCenter.y) {
