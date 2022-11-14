@@ -26,21 +26,19 @@
   "scripts": {
     "prepare": "lerna run prepare",
     "watch": "lerna run --parallel watch",
-    "build": "yarn simpleInstall && lerna run build",
-    "lint": "lerna run lint --",
-    "simpleInstall": "yarn install --ignore-scripts",
+    "build": "yarn install:only && lerna run build",
+    "lint": "yarn install:only && lerna run lint --",
+    "install:only": "yarn install --ignore-scripts",
     "rebuild:browser": "theia rebuild:browser",
     "start": "yarn rebuild:browser && yarn --cwd open-bpmn-app start",
-    "start:external": "yarn build && yarn --cwd open-bpmn-app start:external",
-    "rebuild:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
+    "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
   },
+    
   "devDependencies": {
-    "@eclipse-glsp/config": "1.0.0",  
-    "typescript": ">=4.5.5",    
-    "lerna": "^4.0.0",
+    "@eclipse-glsp/config": "^1.0.0",
     "rimraf": "^2.6.1",
-    "@theia/cli": "1.26.0",
-    "@types/lodash": "^4.14.149"
+    "lerna": "^4.0.0",
+    "typescript": "^4.5.5"
   },
   "workspaces": [
     "open-bpmn-glsp",
@@ -52,24 +50,10 @@
   ],
 
   "resolutions": {
-    "**/@eclipse-glsp/theia-integration": "^1.0.0",
-    "**/@eclipse-glsp/client": "^1.0.0",  
-    "**/@eclipse-glsp/protocol": "^1.0.0",  
-    "**/@theia/core": "1.26.0",
-    "**/@theia/editor": "1.26.0",
-    "**/@theia/filesystem": "1.26.0",
-    "**/@theia/markers": "1.26.0",
-    "**/@theia/messages": "1.26.0",
-    "**/@theia/monaco": "1.26.0",
-    "**/@theia/navigator": "1.26.0",
-    "**/@theia/outline-view": "1.26.0",
-    "**/@theia/preferences": "1.26.0",
-    "**/@theia/process": "1.26.0",
-    "**/@theia/terminal": "1.26.0",
-    "**/@theia/variable-resolver": "1.26.0",
-    "**/@theia/userstorage": "1.26.0",
-    "**/@theia/workspace": "1.26.0",
-    "**/@theia/cli": "1.26.0",
-    "**/inversify": "5.1.1"
+    "**/@theia/core": "1.27.0",
+    "**/@theia/editor": "1.27.0",
+    "**/@theia/filesystem": "1.27.0",
+    "**/@theia/messages": "1.27.0",
+    "**/@theia/monaco": "1.27.0"
   }
 }
