@@ -64,18 +64,21 @@ The Application can be started from a Web Browser
 
 During development you can run the frontend and backend in separate tasks. This gives you more control over the CLient and the Backend Component. 
 
-To start the GLSP Server only, run:
+To build & start the GLSP Server only, run:
 
 	$ ./build.sh -b
 
-To start the GLSP Client only, run:
+To build & start the GLSP Client only, run:
 
 	$ ./build.sh -f
 
-For a full rebuild run:
+To start the GLSP Client without building, run:
 
-	$ ./wipe-full.sh
-	$ ./build.sh -r
+	$ ./build.sh -s
+	
+For a full clean & reinstall of the GLSP Client (after upgrades), run:
+
+	$ ./build.sh -c -i
 
 You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
 

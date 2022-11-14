@@ -49,11 +49,11 @@ while [ "$1" != "" ]; do
 done
 
 [[ "$buildAll" == "true" ]] && echo "  building Backend & Frontend"
+[[ "$clean" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-c)"
 [[ "$buildBackend" == "true" ]] && echo "  build & start Backend (-b)"
 [[ "$buildFrontend" == "true" ]] && echo "  build & start Frontend (-f)"
 [[ "$install" == "true" ]] && echo "  install Frontend only (-i)"
 [[ "$start" == "true" ]] && echo "  start Frontend (-s)"
-[[ "$clean" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-c)"
 [[ "$buildDocker" == "true" ]] && echo "  building Docker Image"
 
 
