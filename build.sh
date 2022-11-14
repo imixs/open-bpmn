@@ -1,19 +1,25 @@
 #!/bin/bash
 echo "***************************************"
 echo "* Build - Open BPMN.....              *"
+echo "***************************************"
 buildAll='false'
 buildBackend='false'
 buildFrontend='false'
-rebuildFrontend='false'
+install='false'
 forceFrontend='false'
 
 if [[ $1 == "-h" ]]; then
-  printf "Usage: build.sh [-h] [-b] [-ff] [-f] [-r]\n\n"
+  printf "Usage: build.sh [-s] [-f] [-b] [-i] [-c]\n\n"
   echo "Options:"
-  echo "  -b   building Backend..."
-  echo "  -ff  remove yarn.lock..."
-  echo "  -f   building Frontend..."
-  echo "  -r   rebuilding Frontend..."
+  echo "  -h   help..."
+  echo "  -s   start Frontend..."
+  echo "  -f   build & start Frontend only..."
+  echo "  -b   build & start Backend only..."
+  echo "  -i   reinstall Frontend..."
+  echo "  -c   clean..."
+  echo "  "
+  echo "  no options = build & start all..."
+  echo "  "
   exit 0
 fi
 echo "***************************************"
@@ -22,76 +28,63 @@ if [[ "$1" == "" ]]; then
   buildAll='true'
 fi
 
-if [[ ${#1} -gt 2 ]]; then
-  if [[ "$1" == -*"b"* ]]; then
-    buildBackend='true'
-  fi
-  if [[ "$1" == -*"f"* ]]; then
-    buildFrontend='true'
-  fi
-  if [[ "$1" == -*"ff"* ]]; then
-    forceFrontend='true'
-  fi
-  if [[ "$1" == -*"r"* ]]; then
-    rebuildFrontend='true'
-  fi  
-  if [[ "$1" == -*"d"* ]]; then
-    buildDocker='true'
-  fi  
-fi
+
 
 while [ "$1" != "" ]; do
   case $1 in
-    -b | --backend )  buildBackend='true'
+    -s | --start) start='true'
                       ;;
     -f | --frontend ) buildFrontend='true'
                       ;;
-    -r | --frontend ) rebuildFrontend='true'
+    -b | --backend )  buildBackend='true'
+                      ;;
+    -i | --install ) install='true'
+                      ;;
+    -c | --clean ) clean='true'
                       ;;
     -d | --docker ) buildDocker='true'
-                      ;;
-    -ff | --forcefrontend ) forceFrontend='true'
                       ;;
   esac
   shift
 done
 
-[[ "$buildAll" == "true" ]] && echo "  building Backend and Frontend"
-[[ "$buildBackend" == "true" ]] && echo "  building Backend Only (-b)"
-[[ "$buildFrontend" == "true" ]] && echo "  building Frontend Only (-f)"
-[[ "$rebuildFrontend" == "true" ]] && echo "  rebuilding Frontend (-r)"
-[[ "$forceFrontend" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-ff)"
+[[ "$buildAll" == "true" ]] && echo "  building Backend & Frontend"
+[[ "$buildBackend" == "true" ]] && echo "  build & start Backend (-b)"
+[[ "$buildFrontend" == "true" ]] && echo "  build & start Frontend (-f)"
+[[ "$install" == "true" ]] && echo "  install Frontend only (-i)"
+[[ "$start" == "true" ]] && echo "  start Frontend (-s)"
+[[ "$clean" == "true" ]] && echo "  clean .gitignore files and building Frontend Only (-c)"
 [[ "$buildDocker" == "true" ]] && echo "  building Docker Image"
 
-if [ "$buildAll" == "true" ]; then
-  echo "$(date +"[%T.%3N]") Build backend products"
-  cd open-bpmn.glsp-server/
-  mvn clean install
-  cd ../
+
+if [ "$clean" == "true" ]; then
+  # clean up gitignore files
+  git clean -xdf
 fi
 
 if [ "$buildBackend" == "true" ]; then
-  echo "$(date +"[%T.%3N]") Build backend products"
   mvn clean install -DskipTests
   cd open-bpmn.glsp-server/target
   java -jar open-bpmn.server-0.6.0-SNAPSHOT-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
   cd ../
 fi
 
-if [ "$forceFrontend" == "true" ]; then
-  # clean up gitignore files
-  git clean -xdf
-fi
-
 if [ "$buildFrontend" == "true" ]; then
   cd open-bpmn.glsp-client/
+  yarn build 
   yarn start:external
   cd ..
 fi
 
-if [ "$rebuildFrontend" == "true" ]; then
+if [ "$install" == "true" ]; then
   cd open-bpmn.glsp-client/
-  yarn
+  yarn install
+  cd ..
+fi
+
+if [ "$start" == "true" ]; then
+  cd open-bpmn.glsp-client/
+  yarn start:external
   cd ..
 fi
 
@@ -103,8 +96,10 @@ fi
 
 
 if [ "$buildAll" == "true" ]; then
-  cd open-bpmn.glsp-client/
-  yarn
+  cd open-bpmn.glsp-server/
+  mvn clean install -DskipTests
+  cd ../open-bpmn.glsp-client/
+  yarn install
   yarn start
   cd ..
 fi
