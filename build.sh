@@ -60,6 +60,7 @@ done
 if [ "$clean" == "true" ]; then
   # clean up gitignore files
   git clean -xdf
+  rm open-bpmn.glsp-client/yarn.lock
 fi
 
 if [ "$buildBackend" == "true" ]; then

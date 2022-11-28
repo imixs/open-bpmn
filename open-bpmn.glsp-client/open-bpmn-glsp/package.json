@@ -24,7 +24,8 @@
     }
   ],
   "dependencies": {
-    "@eclipse-glsp/client": "^1.0.0",
+    "@eclipse-glsp/client": "1.1.0-RC02",
+    "sprotty": "0.13.0-next.1c4343c.328",
     "@open-bpmn/open-bpmn-model": "0.6.0",
     "@open-bpmn/open-bpmn-properties": "0.6.0",
     "balloon-css": "^0.5.0"
