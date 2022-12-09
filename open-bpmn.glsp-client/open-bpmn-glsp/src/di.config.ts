@@ -29,7 +29,6 @@ import {
     SLabel,CircularNodeView,DiamondNodeView,
     SLabelView,configureView,
     configureCommand,
-    ManhattanEdgeRouter,
     TYPES
 } from '@eclipse-glsp/client';
 // import { DefaultTypes } from '@eclipse-glsp/protocol';
@@ -51,7 +50,7 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-import { BPMNManhattanEdgeRouter } from './bpmn-edge-router';
+// import { BPMNManhattanEdgeRouter } from './bpmn-edge-router';
 // import { BPMNEllipticAnchor,BPMNRectangularAnchor,BPMNDiamondAnchor } from './bpmn-anchors';
 import { HelperLineListener,
          DrawHelperLinesCommand,
@@ -73,8 +72,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bind(TYPES.ISnapper).to(BPMNBoundaryEventSnapper);
 
     // BPMN Router
-    bind(BPMNManhattanEdgeRouter).toSelf().inSingletonScope();
-    rebind(ManhattanEdgeRouter).toService(BPMNManhattanEdgeRouter);
+    // bind(BPMNManhattanEdgeRouter).toSelf().inSingletonScope();
+    // rebind(ManhattanEdgeRouter).toService(BPMNManhattanEdgeRouter);
 
    // bind(TYPES.IAnchorComputer).to(BPMNEllipticAnchor).inSingletonScope();
    // bind(TYPES.IAnchorComputer).to(BPMNRectangularAnchor).inSingletonScope();
