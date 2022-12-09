@@ -134,6 +134,16 @@ public class BPMNProcess extends BPMNBaseElement {
         return result;
     }
 
+    
+    /**
+     * This method returns the BPMNParticipant in case the Process represents a BPMN Pool
+     * @return
+     */
+    public BPMNParticipant findBPMNParticipant() {
+        BPMNParticipant result = this.getModel().findBPMNParticipantByProcessId(this.getId());
+        return result;
+    }
+
     /**
      * Returns all BPMNActivity elements contained in this process
      * 
@@ -172,7 +182,6 @@ public class BPMNProcess extends BPMNBaseElement {
         this.gateways = gateways;
     }
 
-
     /**
      * Returns all BPMN DataObject elements contained in this process
      * 
@@ -189,7 +198,6 @@ public class BPMNProcess extends BPMNBaseElement {
         this.dataObjects = dataObjects;
     }
 
-    
     public Set<BPMNSequenceFlow> getSequenceFlows() {
         if (sequenceFlows == null) {
             sequenceFlows = new LinkedHashSet<BPMNSequenceFlow>();
@@ -329,9 +337,7 @@ public class BPMNProcess extends BPMNBaseElement {
         return gateway;
 
     }
-    
-    
-    
+
     /**
      * Creates a new BPMNDataObject element.
      * <p>
@@ -366,8 +372,6 @@ public class BPMNProcess extends BPMNBaseElement {
 
         return dataObject;
     }
-
-    
 
     /**
      * Creates a new BPMNSequenceFlow element and adds the element into this process
@@ -418,8 +422,8 @@ public class BPMNProcess extends BPMNBaseElement {
         // add BPMNGateway instance
         BPMNSequenceFlow flow = this.createBPMNSequenceFlowByNode(sequenceFlow);
         // add default waypoints
-        //flow.addWayPoint(sourceElement.getBounds().getCenter());
-        //flow.addWayPoint(targetElement.getBounds().getCenter());
+        // flow.addWayPoint(sourceElement.getBounds().getCenter());
+        // flow.addWayPoint(targetElement.getBounds().getCenter());
         return flow;
 
     }
@@ -591,8 +595,8 @@ public class BPMNProcess extends BPMNBaseElement {
      * 
      */
     public void deleteAllFlowElements() {
-        Set<BPMNFlowElement> flowElements=this.getBPMNFlowElements();
-        for (BPMNFlowElement flowElement: flowElements) {
+        Set<BPMNFlowElement> flowElements = this.getBPMNFlowElements();
+        for (BPMNFlowElement flowElement : flowElements) {
             this.deleteBPMNBaseElement(flowElement.getId());
         }
     }
@@ -615,7 +619,7 @@ public class BPMNProcess extends BPMNBaseElement {
             this.deleteBPMNBaseElement(flowEleemntID);
         }
 
-        //  delete the shape
+        // delete the shape
         if (lane.getBpmnShape() != null) {
             model.getBpmnPlane().removeChild(lane.getBpmnShape());
         }
@@ -649,7 +653,7 @@ public class BPMNProcess extends BPMNBaseElement {
 
         this.getActivities().remove(task);
     }
-    
+
     /**
      * Deletes a BPMNEvent element from this context.
      * <p>
@@ -866,7 +870,7 @@ public class BPMNProcess extends BPMNBaseElement {
                 return element;
             }
         }
-        
+
         return null;
     }
 
@@ -924,7 +928,7 @@ public class BPMNProcess extends BPMNBaseElement {
         getActivities().add(task);
         return task;
     }
-    
+
     private BPMNDataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
         BPMNDataObject dataObject = new BPMNDataObject(model, element, element.getLocalName(), this);
         getDataObjects().add(dataObject);

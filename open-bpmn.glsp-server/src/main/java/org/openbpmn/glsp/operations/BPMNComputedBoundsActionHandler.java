@@ -23,6 +23,8 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
+import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
@@ -34,6 +36,9 @@ import com.google.inject.Inject;
  * This ActionHandler reacts on and updates the BPMN Waypoints of a
  * BPMNSequenceFlow.
  * <p>
+ * The action handler is only handling ComputedBoundsActions on a
+ * BBPMNSequenceFlow element. Other elements will be ignored.
+ *
  *
  *
  * @author rsoika
@@ -49,6 +54,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
     @Override
     protected List<Action> executeAction(final ComputedBoundsAction actualAction) {
         BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
+
         List<ElementAndRoutingPoints> routings = actualAction.getRoutes();
 
         logger.info("=== updating RoutingPoints.... - count=" + routings.size());
@@ -57,17 +63,35 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
 
                 String id = routingInfo.getElementId();
                 logger.info("....element id= " + id);
+                BPMNSequenceFlow bpmnSequenceFlow = null;
 
-                BPMNSequenceFlow bpmnSequenceFlow = context.findBPMNSequenceFlowById(id);
-                if (bpmnSequenceFlow != null) {
+                BPMNBaseElement element = modelState.getBpmnModel().findBPMNBaseElementById(id);
+                // do we have a BPMNSequenceFlow ?
+                if (element != null && element instanceof BPMNSequenceFlow) {
+                    // update the BPMN WayPoints.
+                    bpmnSequenceFlow = (BPMNSequenceFlow) element;
+
                     List<GPoint> newGLSPRoutingPoints = routingInfo.getNewRoutingPoints();
 
-                    // update the BPMN Waypoint.
                     System.out.println("===== Updating " + newGLSPRoutingPoints.size() + " BPMN WayPoints  =======");
                     bpmnSequenceFlow.clearWayPoints();
                     // add the new routing points
                     for (GPoint point : newGLSPRoutingPoints) {
-                        BPMNPoint bpmnPoint = new BPMNPoint(point.getX(), point.getY());
+                        BPMNPoint bpmnPoint = null;
+                        // if we are in a Pool we need to compute the absolute position
+                        BPMNParticipant participant = bpmnSequenceFlow.getBpmnProcess().findBPMNParticipant();
+                        if (participant != null) {
+                            // compute Pool offset...
+                            double xOffset = participant.getBounds().getPosition().getX();
+                            double yOffset = participant.getBounds().getPosition().getY();
+                            bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
+
+                        } else {
+                            // we are in the default process
+                            bpmnPoint = new BPMNPoint(point.getX(), point.getY());
+                        }
+
+                        logger.info("..add new waypoint: " + point.getX() + "," + point.getY());
                         bpmnSequenceFlow.addWayPoint(bpmnPoint);
                     }
                 } else {

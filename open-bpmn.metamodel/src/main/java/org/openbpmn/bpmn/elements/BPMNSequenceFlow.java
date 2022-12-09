@@ -167,7 +167,7 @@ public class BPMNSequenceFlow extends BPMNBaseElement {
                 deletionList.add(child);
             }
         }
-        // remove nodes form Edge element...
+        // remove nodes from Edge element...
         for (Node element : deletionList) {
             bpmnEdge.removeChild(element);
         }
