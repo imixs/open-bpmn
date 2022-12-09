@@ -50,6 +50,7 @@ import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
+import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
@@ -94,6 +95,8 @@ public class BPMNDiagramModule extends DiagramModule {
     protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
         super.configureActionHandlers(binding);
         // binding.add(RequestClipboardDataActionHandler.class);
+
+        binding.add(BPMNComputedBoundsActionHandler.class);
     }
 
     @Override

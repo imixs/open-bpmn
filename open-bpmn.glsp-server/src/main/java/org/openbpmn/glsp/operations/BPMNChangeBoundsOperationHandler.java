@@ -83,6 +83,8 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
     @Override
     public void executeOperation(final ChangeBoundsOperation operation) {
         // iterate over all new Bounds...
+        logger.info("=== ChangeBoundsOperation - " + operation.getNewBounds().size() + " new bounds");
+
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
             for (ElementAndBounds elementBound : elementBounds) {
