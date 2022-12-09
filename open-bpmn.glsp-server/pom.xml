@@ -17,8 +17,8 @@
 		<package-type>eclipse-plugin</package-type>
 		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
 		
-		<!-- 1.0.0 | 1.1.0.RC02 | 1.1.0-SNAPSHOT -->
-		<glsp-server-version>1.1.0.RC02</glsp-server-version>
+		<!-- 1.0.0 | 1.1.0.RC02 | 1.1.0.RC03 | 1.1.0-SNAPSHOT -->
+		<glsp-server-version>1.1.0.RC03</glsp-server-version>
 	</properties>
 
 	<dependencies>

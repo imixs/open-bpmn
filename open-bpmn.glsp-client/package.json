@@ -54,6 +54,7 @@
     "**/@theia/editor": "1.27.0",
     "**/@theia/filesystem": "1.27.0",
     "**/@theia/messages": "1.27.0",
-    "**/@theia/monaco": "1.27.0"
+    "**/@theia/monaco": "1.27.0",
+    "sprotty": "0.13.0-next.1c4343c.328"
   }
 }
