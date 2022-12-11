@@ -38,8 +38,6 @@ import {
 	WithEditableLabel,
 	withEditLabelFeature
 } from '@eclipse-glsp/client';
-// import { Bounds } from 'sprotty-protocol';
-// import { BPMN_ELEMENT_ANCHOR_KIND } from './bpmn-anchors';
 
 export interface BPMNFlowElement {
 }
@@ -119,7 +117,6 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 	];
 	symbol?: string;
 	documentation: string;
-
 }
 
 // DiamondNode  //  Nameable, WithEditableLabel,

@@ -177,22 +177,15 @@ export class BPMNElementSnapper implements ISnapper {
 		let childs: any;
 
 		if (isBoundsAware(modelElement)) {
-			
-			
 			// we need to find out if we are in a container....
 			if (modelElement instanceof SChildElement) {
 				childs=modelElement.parent.children;				
 				console.log('....parent id = '+ modelElement.parent.id);
 				console.log('....child count = '+ childs.length);
 			}
-			
-			
-			// modelElement.root.children
-			// const childs = root.children;
+
 			const modelElementCenter = Bounds.center(modelElement.bounds);
-			
 			console.log(' ... snap model element ' + modelElement.id + ' pos=' + modelElement.bounds.x + ','+modelElement.bounds.y);
-			
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			for (const element of childs) {

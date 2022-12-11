@@ -45,8 +45,7 @@ import {
 	Icon,
 	TaskNode,
 	EventNode,
-	SequenceFlow,
-	BPMNElementAnchor
+	SequenceFlow
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
@@ -66,18 +65,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
-    // bind(TYPES.ISnapper).to(GridSnapper);
-    // bind(TYPES.ISnapper).to(BPMNGridSnapper);
     bind(TYPES.ISnapper).to(BPMNElementSnapper);
-    // bind(TYPES.ISnapper).to(BPMNBoundaryEventSnapper);
-
-    // BPMN Router
-    // bind(BPMNManhattanEdgeRouter).toSelf().inSingletonScope();
-    // rebind(ManhattanEdgeRouter).toService(BPMNManhattanEdgeRouter);
-
-   // bind(TYPES.IAnchorComputer).to(BPMNEllipticAnchor).inSingletonScope();
-   // bind(TYPES.IAnchorComputer).to(BPMNRectangularAnchor).inSingletonScope();
-   // bind(TYPES.IAnchorComputer).to(BPMNDiamondAnchor).inSingletonScope();
 
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
@@ -90,13 +78,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureCommand({ bind, isBound }, DrawHelperLinesCommand);
     configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
     configureView({ bind, isBound }, 'helpline', HelperLineView);
-
-    // bind the BPMN AnchorComputer
-    bind(TYPES.IAnchorComputer).to(BPMNElementAnchor).inSingletonScope();
-    // bind(TYPES.IAnchorComputer).to(BPMNPolylineElementAnchor).inSingletonScope();
-    // bind(TYPES.IAnchorComputer).to(BPMNSequenceFlowAnchor).inSingletonScope();
-    // bind(TYPES.IAnchorComputer).to(BPMNEventElementAnchor).inSingletonScope();
-
     configureDefaultModelElements(context);
 
     configureModelElement(context, 'BPMNLabel', LabelNode, RoundedCornerNodeView);
@@ -141,8 +122,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 });
 
-// createBPMNDiagramContainer
-// createContainer
 export default function createBPMNDiagramContainer(widgetId: string): Container {
     // Create the createClientContainer with the diagramModule and the BPMN bpmnPropertyModule...
     const container = createClientContainer(bpmnDiagramModule, bpmnPropertyModule);
