@@ -85,6 +85,7 @@ export class BPMNElementSnapper implements ISnapper {
 	 * the default.
 	 */
 	snap(position: Point, element: SModelElement): Point {
+		console.log('.....snapi...');
 		if (!isBPMNNode(element)) {
 			// return position;
 			return { x: position.x, y: position.y };
@@ -171,24 +172,34 @@ export class BPMNElementSnapper implements ISnapper {
 	 *
 	 */
 	private findSnapPoint(modelElement: SModelElement): Point {
-		let root: any;
-		try {
-			root = modelElement.root;
-		} catch (e: unknown) {
-			// unable to get root (during creation)
-		}
-
 		let x = -1;
 		let y = -1;
+		let childs: any;
 
-		if (root && isBoundsAware(modelElement)) {
-			const childs = root.children;
+		if (isBoundsAware(modelElement)) {
+			
+			
+			// we need to find out if we are in a container....
+			if (modelElement instanceof SChildElement) {
+				childs=modelElement.parent.children;				
+				console.log('....parent id = '+ modelElement.parent.id);
+				console.log('....child count = '+ childs.length);
+			}
+			
+			
+			// modelElement.root.children
+			// const childs = root.children;
 			const modelElementCenter = Bounds.center(modelElement.bounds);
+			
+			console.log(' ... snap model element ' + modelElement.id + ' pos=' + modelElement.bounds.x + ','+modelElement.bounds.y);
+			
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			for (const element of childs) {
 				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
 					const elementCenter = Bounds.center(element.bounds);
+					
+					console.log(' ... found element ' + element.id + ' pos=' + elementCenter.x + ','+elementCenter.y);
 					if (elementCenter && modelElementCenter) {
 						// test horizontal alligment...
 						if (y === -1 && this.isNear(elementCenter.y, modelElementCenter.y)) {
