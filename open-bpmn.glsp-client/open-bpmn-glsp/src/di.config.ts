@@ -49,8 +49,6 @@ import {
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectNodeView } from './bpmn-element-views';
 import { BPMNSequenceFlowView } from './bpmn-routing-views';
-// import { BPMNManhattanEdgeRouter } from './bpmn-edge-router';
-// import { BPMNEllipticAnchor,BPMNRectangularAnchor,BPMNDiamondAnchor } from './bpmn-anchors';
 import { HelperLineListener,
          DrawHelperLinesCommand,
          RemoveHelperLinesCommand,
