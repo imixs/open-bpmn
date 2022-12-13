@@ -179,7 +179,7 @@ export class BPMNElementSnapper implements ISnapper {
 		if (isBoundsAware(modelElement)) {
 			// we need to find out if we are in a container....
 			if (modelElement instanceof SChildElement) {
-				childs=modelElement.parent.children;				
+				childs=modelElement.parent.children;
 				console.log('....parent id = '+ modelElement.parent.id);
 				console.log('....child count = '+ childs.length);
 			}
@@ -191,7 +191,6 @@ export class BPMNElementSnapper implements ISnapper {
 			for (const element of childs) {
 				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
 					const elementCenter = Bounds.center(element.bounds);
-					
 					console.log(' ... found element ' + element.id + ' pos=' + elementCenter.x + ','+elementCenter.y);
 					if (elementCenter && modelElementCenter) {
 						// test horizontal alligment...
