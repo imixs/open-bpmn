@@ -5,21 +5,21 @@
   "description": "Web App for Open BPMN",
   "license": "(GPL-3.0)",     
   "dependencies": {
-    "@theia/core": "1.27.0",
-    "@theia/editor": "1.27.0",
-    "@theia/filesystem": "1.27.0",
-    "@theia/markers": "1.27.0",
-    "@theia/messages": "1.27.0",
-    "@theia/monaco": "1.27.0",
-    "@theia/navigator": "1.27.0",
-    "@theia/preferences": "1.27.0",
-    "@theia/process": "1.27.0",
-    "@theia/terminal": "1.27.0",
-    "@theia/workspace": "1.27.0",
+    "@theia/core": "1.29.2",
+    "@theia/editor": "1.29.2",
+    "@theia/filesystem": "1.29.2",
+    "@theia/markers": "1.29.2",
+    "@theia/messages": "1.29.2",
+    "@theia/monaco": "1.29.2",
+    "@theia/navigator": "1.29.2",
+    "@theia/preferences": "1.29.2",
+    "@theia/process": "1.29.2",
+    "@theia/terminal": "1.29.2",
+    "@theia/workspace": "1.29.2",
     "@open-bpmn/open-bpmn-theia": "0.6.0"
   },
   "devDependencies": {
-    "@theia/cli": "1.27.0"
+    "@theia/cli": "1.29.2"
   },
   "scripts": {
     "prepare": "theia build --mode development",

@@ -6,6 +6,7 @@ buildAll='false'
 buildBackend='false'
 buildFrontend='false'
 install='false'
+watch='false'
 forceFrontend='false'
 
 if [[ $1 == "-h" ]]; then
@@ -16,6 +17,7 @@ if [[ $1 == "-h" ]]; then
   echo "  -f   build & start Frontend only..."
   echo "  -b   build & start Backend only..."
   echo "  -i   reinstall Frontend..."
+  echo "  -w   watch changes (dev mode)..."
   echo "  -c   clean..."
   echo "  "
   echo "  no options = build & start all..."
@@ -40,6 +42,8 @@ while [ "$1" != "" ]; do
                       ;;
     -i | --install ) install='true'
                       ;;
+    -w | --watch ) watch='true'
+                      ;;
     -c | --clean ) clean='true'
                       ;;
     -d | --docker ) buildDocker='true'
@@ -53,6 +57,7 @@ done
 [[ "$buildBackend" == "true" ]] && echo "  build & start Backend (-b)"
 [[ "$buildFrontend" == "true" ]] && echo "  build & start Frontend (-f)"
 [[ "$install" == "true" ]] && echo "  install Frontend only (-i)"
+[[ "$watch" == "true" ]] && echo "  watch mode (-w)"
 [[ "$start" == "true" ]] && echo "  start Frontend (-s)"
 [[ "$buildDocker" == "true" ]] && echo "  building Docker Image"
 
@@ -72,10 +77,17 @@ fi
 
 if [ "$buildFrontend" == "true" ]; then
   cd open-bpmn.glsp-client/
-  yarn build 
+  yarn 
   yarn start:external
   cd ..
 fi
+
+if [ "$watch" == "true" ]; then
+  cd open-bpmn.glsp-client/
+  yarn watch
+  cd ..
+fi
+
 
 if [ "$install" == "true" ]; then
   cd open-bpmn.glsp-client/

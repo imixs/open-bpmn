@@ -20,9 +20,9 @@ import {
     EditModeListener,
     EditorContextService,
     EnableDefaultToolsAction,
-    EnableToolsAction,SModelElement,
-    hasArguments,MouseListener,
-    SetUIExtensionVisibilityAction,GLSPActionDispatcher,
+    EnableToolsAction,
+    hasArguments,
+    SetUIExtensionVisibilityAction,
     SModelRoot,
     TYPES
 } from '@eclipse-glsp/client';
@@ -296,16 +296,16 @@ export class BPMNPropertyPanelAction implements Action {
   constructor(public readonly additionalInformation: string) {}
 }
 
-@injectable()
-export class BPMNPropertyMouseListener extends MouseListener {
-	@inject(TYPES.IActionDispatcher)
-	protected actionDispatcher: GLSPActionDispatcher;
-
-    override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
-        console.log('...we have a double click event!');
-        // TODO your implementation
-        this.actionDispatcher.dispatch(new BPMNPropertyPanelAction('toggle'));
-        // this can return an action or get other services injected and call them on double-click
-        return [];
-    }
-}
+//@injectable()
+//export class BPMNPropertyMouseListener extends MouseListener {
+//	@inject(TYPES.IActionDispatcher)
+//	protected actionDispatcher: GLSPActionDispatcher;
+//
+//    override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
+//        console.log('...we have a double click event!');
+//        // TODO your implementation
+//        this.actionDispatcher.dispatch(new BPMNPropertyPanelAction('toggle'));
+//        // this can return an action or get other services injected and call them on double-click
+//        return [];
+//    }
+//}
