@@ -33,7 +33,8 @@ import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/fe
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+// import * as ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener { // IActionHandler
@@ -54,6 +55,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
     selectedElementId: string;
     initForm: boolean;
     headerTitle: HTMLElement;
+    protected panelContainer: any;
 
     @postConstruct()
     postConstruct(): void {
@@ -209,6 +211,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                 } else {
                     this.headerTitle.textContent = element.type;
                 }
+
+                // init the react container only once....
+                if (!this.panelContainer) {
+                    this.panelContainer = createRoot(this.bodyDiv); // createRoot(container!) if you use TypeScript
+                }
                 // BPMN Node selected, collect JSONForms schemata....
                 let bpmnPropertiesData;
                 let bpmnPropertiesSchema;
@@ -228,17 +235,15 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                     ];
 
                     // render JSONForm // vanillaRenderers
-                    ReactDOM.render(
-                        <JsonForms
+                    console.log('---- React! ich male was....');
+                    this.panelContainer.render(<JsonForms
                             data={bpmnPropertiesData}
                             schema={bpmnPropertiesSchema}
                             uischema={bpmnPropertiesUISchema}
                             cells={vanillaCells}
                             renderers={bpmnRenderers}
                             onChange={({ errors, data }) => this.setState({ data })}
-                        />,
-                        this.bodyDiv
-                    );
+                        />);
                 }
             } else {
                 // element not defined!
@@ -252,7 +257,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                 this.headerTitle.textContent = 'BPMN Properties';
                 // multi selection - we can not show a property panel
                 if (this.bodyDiv) {
-                    ReactDOM.render(<React.Fragment>Please select a single element </React.Fragment>, this.bodyDiv);
+                    this.panelContainer.render(<React.Fragment>Please select a single element </React.Fragment>);
                 }
             }
         }
@@ -295,17 +300,3 @@ export class BPMNPropertyPanelAction implements Action {
   kind = BPMNPropertyPanelAction.KIND;
   constructor(public readonly additionalInformation: string) {}
 }
-
-//@injectable()
-//export class BPMNPropertyMouseListener extends MouseListener {
-//	@inject(TYPES.IActionDispatcher)
-//	protected actionDispatcher: GLSPActionDispatcher;
-//
-//    override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
-//        console.log('...we have a double click event!');
-//        // TODO your implementation
-//        this.actionDispatcher.dispatch(new BPMNPropertyPanelAction('toggle'));
-//        // this can return an action or get other services injected and call them on double-click
-//        return [];
-//    }
-//}
