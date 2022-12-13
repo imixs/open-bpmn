@@ -235,7 +235,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
                     ];
 
                     // render JSONForm // vanillaRenderers
-                    console.log('---- React! ich male was....');
                     this.panelContainer.render(<JsonForms
                             data={bpmnPropertiesData}
                             schema={bpmnPropertiesSchema}
