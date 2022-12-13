@@ -22,12 +22,9 @@ import '../css/jsonforms-theia.css';
 
 export const bpmnPropertyModule = new ContainerModule((bind, unbind, isBound,rebind) => {
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
-  //  bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
-    
-    
+    //  bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     bind(TYPES.IUIExtension).to(BPMNPropertyPanel);
-    
-   // bind(TYPES.MouseListener).to(BPMNPropertyMouseListener);
+    // bind(TYPES.MouseListener).to(BPMNPropertyMouseListener);
     // bind(BPMNPropertyPanelAction.KIND).to(BPMNPropertyPanel);
 
 	// register the actionHandler...
