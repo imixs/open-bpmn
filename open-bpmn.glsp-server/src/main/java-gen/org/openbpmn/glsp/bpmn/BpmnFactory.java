@@ -148,6 +148,24 @@ public interface BpmnFactory extends EFactory {
     SequenceFlowGNode createSequenceFlowGNode();
 
     /**
+     * Returns a new object of class '<em>Association GNode</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Association GNode</em>'.
+     * @generated
+     */
+    AssociationGNode createAssociationGNode();
+
+    /**
+     * Returns a new object of class '<em>Message Flow GNode</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Message Flow GNode</em>'.
+     * @generated
+     */
+    MessageFlowGNode createMessageFlowGNode();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

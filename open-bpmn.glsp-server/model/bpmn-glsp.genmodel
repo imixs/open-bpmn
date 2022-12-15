@@ -29,6 +29,13 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/condition"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/defaultFlow"/>
     </genClasses>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//AssociationGNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//AssociationGNode/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//AssociationGNode/associationDirection"/>
+    </genClasses>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//MessageFlowGNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//MessageFlowGNode/name"/>
+    </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
       ecorePackage="glsp-graph.ecore#/">

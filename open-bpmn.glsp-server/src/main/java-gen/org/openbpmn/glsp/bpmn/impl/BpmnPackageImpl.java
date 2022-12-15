@@ -12,6 +12,7 @@ import org.eclipse.glsp.graph.GraphPackage;
 
 import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 
+import org.openbpmn.glsp.bpmn.AssociationGNode;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -23,6 +24,7 @@ import org.openbpmn.glsp.bpmn.GroupGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
+import org.openbpmn.glsp.bpmn.MessageFlowGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
@@ -133,6 +135,20 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * @generated
      */
     private EClass sequenceFlowGNodeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass associationGNodeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass messageFlowGNodeEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -377,6 +393,51 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getAssociationGNode() {
+        return associationGNodeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getAssociationGNode_Name() {
+        return (EAttribute)associationGNodeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getAssociationGNode_AssociationDirection() {
+        return (EAttribute)associationGNodeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getMessageFlowGNode() {
+        return messageFlowGNodeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getMessageFlowGNode_Name() {
+        return (EAttribute)messageFlowGNodeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public BpmnFactory getBpmnFactory() {
         return (BpmnFactory)getEFactoryInstance();
     }
@@ -432,6 +493,13 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__NAME);
         createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__CONDITION);
         createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__DEFAULT_FLOW);
+
+        associationGNodeEClass = createEClass(ASSOCIATION_GNODE);
+        createEAttribute(associationGNodeEClass, ASSOCIATION_GNODE__NAME);
+        createEAttribute(associationGNodeEClass, ASSOCIATION_GNODE__ASSOCIATION_DIRECTION);
+
+        messageFlowGNodeEClass = createEClass(MESSAGE_FLOW_GNODE);
+        createEAttribute(messageFlowGNodeEClass, MESSAGE_FLOW_GNODE__NAME);
     }
 
     /**
@@ -479,6 +547,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         laneGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
         iconGNodeEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
         sequenceFlowGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        associationGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        messageFlowGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(baseElementGNodeEClass, BaseElementGNode.class, "BaseElementGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -513,6 +583,13 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         initEAttribute(getSequenceFlowGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSequenceFlowGNode_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSequenceFlowGNode_DefaultFlow(), ecorePackage.getEBoolean(), "defaultFlow", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(associationGNodeEClass, AssociationGNode.class, "AssociationGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getAssociationGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, AssociationGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getAssociationGNode_AssociationDirection(), ecorePackage.getEString(), "associationDirection", null, 0, 1, AssociationGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(messageFlowGNodeEClass, MessageFlowGNode.class, "MessageFlowGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMessageFlowGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, MessageFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

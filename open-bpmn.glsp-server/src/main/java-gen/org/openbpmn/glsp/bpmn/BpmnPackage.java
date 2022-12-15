@@ -2134,6 +2134,324 @@ public interface BpmnPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.AssociationGNodeImpl <em>Association GNode</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.AssociationGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getAssociationGNode()
+     * @generated
+     */
+    int ASSOCIATION_GNODE = 14;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__ARGS = GraphPackage.GEDGE__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__ID = GraphPackage.GEDGE__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__CHILDREN = GraphPackage.GEDGE__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__PARENT = GraphPackage.GEDGE__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__TRACE = GraphPackage.GEDGE__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__TYPE = GraphPackage.GEDGE__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Routing Points</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
+
+    /**
+     * The feature id for the '<em><b>Source Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
+
+    /**
+     * The feature id for the '<em><b>Target Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
+
+    /**
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__SOURCE = GraphPackage.GEDGE__SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__TARGET = GraphPackage.GEDGE__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Router Kind</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__NAME = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Association Direction</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE__ASSOCIATION_DIRECTION = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Association GNode</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 2;
+
+    /**
+     * The number of operations of the '<em>Association GNode</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ASSOCIATION_GNODE_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
+
+    /**
+     * The meta object id for the '{@link org.openbpmn.glsp.bpmn.impl.MessageFlowGNodeImpl <em>Message Flow GNode</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.openbpmn.glsp.bpmn.impl.MessageFlowGNodeImpl
+     * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessageFlowGNode()
+     * @generated
+     */
+    int MESSAGE_FLOW_GNODE = 15;
+
+    /**
+     * The feature id for the '<em><b>Args</b></em>' map.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__ARGS = GraphPackage.GEDGE__ARGS;
+
+    /**
+     * The feature id for the '<em><b>Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__ID = GraphPackage.GEDGE__ID;
+
+    /**
+     * The feature id for the '<em><b>Css Classes</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__CSS_CLASSES = GraphPackage.GEDGE__CSS_CLASSES;
+
+    /**
+     * The feature id for the '<em><b>Children</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__CHILDREN = GraphPackage.GEDGE__CHILDREN;
+
+    /**
+     * The feature id for the '<em><b>Parent</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__PARENT = GraphPackage.GEDGE__PARENT;
+
+    /**
+     * The feature id for the '<em><b>Trace</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__TRACE = GraphPackage.GEDGE__TRACE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__TYPE = GraphPackage.GEDGE__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Routing Points</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__ROUTING_POINTS = GraphPackage.GEDGE__ROUTING_POINTS;
+
+    /**
+     * The feature id for the '<em><b>Source Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__SOURCE_ID = GraphPackage.GEDGE__SOURCE_ID;
+
+    /**
+     * The feature id for the '<em><b>Target Id</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__TARGET_ID = GraphPackage.GEDGE__TARGET_ID;
+
+    /**
+     * The feature id for the '<em><b>Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__SOURCE = GraphPackage.GEDGE__SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__TARGET = GraphPackage.GEDGE__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Router Kind</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__ROUTER_KIND = GraphPackage.GEDGE__ROUTER_KIND;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE__NAME = GraphPackage.GEDGE_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Message Flow GNode</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE_FEATURE_COUNT = GraphPackage.GEDGE_FEATURE_COUNT + 1;
+
+    /**
+     * The number of operations of the '<em>Message Flow GNode</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int MESSAGE_FLOW_GNODE_OPERATION_COUNT = GraphPackage.GEDGE_OPERATION_COUNT + 0;
+
+
+    /**
      * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.BaseElementGNode <em>Base Element GNode</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2327,6 +2645,59 @@ public interface BpmnPackage extends EPackage {
      * @generated
      */
     EAttribute getSequenceFlowGNode_DefaultFlow();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.AssociationGNode <em>Association GNode</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Association GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.AssociationGNode
+     * @generated
+     */
+    EClass getAssociationGNode();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.AssociationGNode#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.openbpmn.glsp.bpmn.AssociationGNode#getName()
+     * @see #getAssociationGNode()
+     * @generated
+     */
+    EAttribute getAssociationGNode_Name();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.AssociationGNode#getAssociationDirection <em>Association Direction</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Association Direction</em>'.
+     * @see org.openbpmn.glsp.bpmn.AssociationGNode#getAssociationDirection()
+     * @see #getAssociationGNode()
+     * @generated
+     */
+    EAttribute getAssociationGNode_AssociationDirection();
+
+    /**
+     * Returns the meta object for class '{@link org.openbpmn.glsp.bpmn.MessageFlowGNode <em>Message Flow GNode</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Message Flow GNode</em>'.
+     * @see org.openbpmn.glsp.bpmn.MessageFlowGNode
+     * @generated
+     */
+    EClass getMessageFlowGNode();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.openbpmn.glsp.bpmn.MessageFlowGNode#getName <em>Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Name</em>'.
+     * @see org.openbpmn.glsp.bpmn.MessageFlowGNode#getName()
+     * @see #getMessageFlowGNode()
+     * @generated
+     */
+    EAttribute getMessageFlowGNode_Name();
 
     /**
      * Returns the factory that creates the instances of the model.
@@ -2530,6 +2901,50 @@ public interface BpmnPackage extends EPackage {
          * @generated
          */
         EAttribute SEQUENCE_FLOW_GNODE__DEFAULT_FLOW = eINSTANCE.getSequenceFlowGNode_DefaultFlow();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.AssociationGNodeImpl <em>Association GNode</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.AssociationGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getAssociationGNode()
+         * @generated
+         */
+        EClass ASSOCIATION_GNODE = eINSTANCE.getAssociationGNode();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ASSOCIATION_GNODE__NAME = eINSTANCE.getAssociationGNode_Name();
+
+        /**
+         * The meta object literal for the '<em><b>Association Direction</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute ASSOCIATION_GNODE__ASSOCIATION_DIRECTION = eINSTANCE.getAssociationGNode_AssociationDirection();
+
+        /**
+         * The meta object literal for the '{@link org.openbpmn.glsp.bpmn.impl.MessageFlowGNodeImpl <em>Message Flow GNode</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see org.openbpmn.glsp.bpmn.impl.MessageFlowGNodeImpl
+         * @see org.openbpmn.glsp.bpmn.impl.BpmnPackageImpl#getMessageFlowGNode()
+         * @generated
+         */
+        EClass MESSAGE_FLOW_GNODE = eINSTANCE.getMessageFlowGNode();
+
+        /**
+         * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute MESSAGE_FLOW_GNODE__NAME = eINSTANCE.getMessageFlowGNode_Name();
 
     }
 

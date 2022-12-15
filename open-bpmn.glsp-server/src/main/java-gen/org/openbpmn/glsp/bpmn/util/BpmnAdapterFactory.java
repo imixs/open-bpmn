@@ -134,6 +134,14 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
                 return createSequenceFlowGNodeAdapter();
             }
             @Override
+            public Adapter caseAssociationGNode(AssociationGNode object) {
+                return createAssociationGNodeAdapter();
+            }
+            @Override
+            public Adapter caseMessageFlowGNode(MessageFlowGNode object) {
+                return createMessageFlowGNodeAdapter();
+            }
+            @Override
             public Adapter caseGArgumentable(GArgumentable object) {
                 return createGArgumentableAdapter();
             }
@@ -382,6 +390,34 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSequenceFlowGNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.AssociationGNode <em>Association GNode</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.AssociationGNode
+     * @generated
+     */
+    public Adapter createAssociationGNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.MessageFlowGNode <em>Message Flow GNode</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.MessageFlowGNode
+     * @generated
+     */
+    public Adapter createMessageFlowGNodeAdapter() {
         return null;
     }
 
