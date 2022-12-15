@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNGateway;
@@ -89,6 +90,37 @@ public class TestFlowElements {
         logger.info("...model read sucessful");
     }
 
+    
+    /**
+     * This test parses refmodel-6
+     * 
+     * Test Association Flows
+     */
+    @Test
+    public void testReadRefmodel6() {
+
+        logger.info("...read model");
+        try {
+            BPMNModel model = BPMNModelFactory.read("/refmodel-6.bpmn");            
+            BPMNProcess process = model.openDefaultProcess();
+            assertNotNull(process);
+            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
+
+            // we expect 2 data objects 
+            assertEquals(2, process.getDataObjects().size());
+            // and one association between the two data objects
+            assertEquals(1,process.getAssociations().size());
+            assertEquals(0,process.getSequenceFlows().size());
+           
+            
+            
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        logger.info("...model read sucessful");
+    }
+    
     
     /**
      * This test parses refmodel-7

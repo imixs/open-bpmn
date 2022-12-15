@@ -83,7 +83,7 @@ public class BPMNModel {
             BPMNTypes.SEND_TASK, //
             BPMNTypes.RECEIVE_TASK //
     });
-    
+
     public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
@@ -94,8 +94,6 @@ public class BPMNModel {
             BPMNTypes.SEND_TASK, //
             BPMNTypes.RECEIVE_TASK, //
             "subProcess", "adHocSubProcess", "transaction", "callActivity" });
-
-  
 
     public static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT, //
@@ -115,19 +113,19 @@ public class BPMNModel {
             BPMNTypes.SERVICE_TASK, //
             BPMNTypes.SEND_TASK, //
             BPMNTypes.RECEIVE_TASK, //
-            
+
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
             BPMNTypes.EVENTBASED_GATEWAY, //
             BPMNTypes.COMPLEX_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
-            
+
             BPMNTypes.START_EVENT, //
             BPMNTypes.END_EVENT, //
             BPMNTypes.CATCH_EVENT, //
             BPMNTypes.THROW_EVENT, //
             BPMNTypes.BOUNDARY_EVENT, //
-            
+
             BPMNTypes.SEQUENCE_FLOW);
 
     public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
@@ -149,7 +147,8 @@ public class BPMNModel {
             BPMNTypes.COMPLEX_GATEWAY //
     });
 
-    public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] { BPMNTypes.SEQUENCE_FLOW });
+    // public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] {
+    // BPMNTypes.SEQUENCE_FLOW });
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
 
@@ -887,7 +886,7 @@ public class BPMNModel {
     public static boolean isEvent(BPMNBaseElement element) {
         return isEvent(element.getElementNode());
     }
-    
+
     /**
      * Returns true if the node is a dataObject node.
      * 
@@ -902,7 +901,6 @@ public class BPMNModel {
         return isDataObject(element.getElementNode());
     }
 
-
     /**
      * Returns true if the node is a sequenceFlow.
      * 
@@ -910,7 +908,27 @@ public class BPMNModel {
      * @return
      */
     public static boolean isSequenceFlow(Node node) {
-        return (BPMN_SQUENCEFLOWS.contains(node.getLocalName()));
+        return (BPMNTypes.SEQUENCE_FLOW.equals(node.getLocalName()));
+    }
+
+    /**
+     * Returns true if the node is a messageFlow.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isMessageFlow(Node node) {
+        return (BPMNTypes.MESSAGE_FLOW.equals(node.getLocalName()));
+    }
+
+    /**
+     * Returns true if the node is a Accociation.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isAssociation(Node node) {
+        return (BPMNTypes.ASSOCIATION.equals(node.getLocalName()));
     }
 
     /**

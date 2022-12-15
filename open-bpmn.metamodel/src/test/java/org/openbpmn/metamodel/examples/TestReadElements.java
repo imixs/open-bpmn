@@ -40,7 +40,7 @@ public class TestReadElements {
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 
-            assertEquals(1, process.getDataObjects().size());
+            assertEquals(2, process.getDataObjects().size());
 
             BPMNFlowElement dataObject = process.findBPMNFlowElementById("DataObject_2");
             assertNotNull(dataObject);

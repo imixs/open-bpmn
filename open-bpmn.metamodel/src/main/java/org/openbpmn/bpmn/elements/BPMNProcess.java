@@ -42,6 +42,8 @@ public class BPMNProcess extends BPMNBaseElement {
     protected Set<BPMNEvent> events = null;
     protected Set<BPMNGateway> gateways = null;
     protected Set<BPMNSequenceFlow> sequenceFlows = null;
+    protected Set<BPMNAssociation> associations = null;
+    protected Set<BPMNMessageFlow> messageFlows = null;
     protected Set<BPMNLane> lanes = null;
     protected Element laneSet = null;
 
@@ -110,6 +112,12 @@ public class BPMNProcess extends BPMNBaseElement {
                     this.createBPMNDataObjectByNode((Element) child);
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
+
+                } else if (BPMNModel.isMessageFlow(child)) {
+                    this.createBPMNMessageFlowByNode((Element) child);
+                } else if (BPMNModel.isAssociation(child)) {
+                    this.createBPMNAssociationByNode((Element) child);                
+                
                 } else if (BPMNModel.isLaneSet(child)) {
                     this.createBPMNLanesByNode((Element) child);
                 } else {
@@ -208,6 +216,31 @@ public class BPMNProcess extends BPMNBaseElement {
     public void setSequenceFlows(Set<BPMNSequenceFlow> sequenceFlows) {
         this.sequenceFlows = sequenceFlows;
     }
+    
+    
+
+    public Set<BPMNAssociation> getAssociations() {
+        if (associations == null) {
+            associations = new LinkedHashSet<BPMNAssociation>();
+        }
+        return associations;
+    }
+
+    public void setAssociations(Set<BPMNAssociation> accociations) {
+        this.associations = accociations;
+    }
+    
+
+    public Set<BPMNMessageFlow> getMessageFlows() {
+        if (messageFlows == null) {
+            messageFlows = new LinkedHashSet<BPMNMessageFlow>();
+        }
+        return messageFlows;
+    }
+
+    public void setMessageFlows(Set<BPMNMessageFlow> messageFlows) {
+        this.messageFlows = messageFlows;
+    }
 
     /**
      * Helper method to get the SequenceFlow by id
@@ -217,6 +250,14 @@ public class BPMNProcess extends BPMNBaseElement {
      */
     public BPMNSequenceFlow getSequenceFlowByID(String id) {
         for (BPMNSequenceFlow sf : this.sequenceFlows) {
+            if (id.equals(sf.getId())) {
+                return sf;
+            }
+        }
+        return null;
+    }
+    public BPMNAssociation getAccociationByID(String id) {
+        for (BPMNAssociation sf : this.associations) {
             if (id.equals(sf.getId())) {
                 return sf;
             }
@@ -638,12 +679,9 @@ public class BPMNProcess extends BPMNBaseElement {
             // does not exist
             return;
         }
-        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(task.getId());
 
         // remove all flows
-        for (BPMNSequenceFlow flow : flowList) {
-            deleteSequenceFlow(flow.getId());
-        }
+        deleteFlows(task.getId());      
 
         // finally delete the task element and the shape
         this.getElementNode().removeChild(task.getElementNode());
@@ -666,13 +704,9 @@ public class BPMNProcess extends BPMNBaseElement {
             // does not exist
             return;
         }
-        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(event.getId());
-
-        // remove all flows
-        for (BPMNSequenceFlow flow : flowList) {
-            deleteSequenceFlow(flow.getId());
-        }
-
+         // remove all flows
+        deleteFlows(event.getId());
+   
         // finally delete the task element and the shape
         this.getElementNode().removeChild(event.getElementNode());
         if (event.getBpmnShape() != null) {
@@ -682,6 +716,30 @@ public class BPMNProcess extends BPMNBaseElement {
         this.getEvents().remove(event);
     }
 
+    /**
+     * Helper method to delete all SequenceFlows, Accociations and MessageFlows from an element
+     * 
+     */
+    private void deleteFlows(String elementId)  {
+        // remove all SequenceFlows
+        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(elementId);
+        for (BPMNSequenceFlow flow : flowList) {
+            deleteBaseFlow(flow.getId());
+        }
+        
+        // remove all Associations
+        Set<BPMNAssociation> accociationList = findAssociationsByElementId(elementId);
+        for (BPMNAssociation flow : accociationList) {
+            deleteBaseFlow(flow.getId());
+        }
+        
+        // remove all MessageFlows
+        Set<BPMNMessageFlow> messageFlowList = findMessageFlowsByElementId(elementId);
+        for (BPMNMessageFlow flow : messageFlowList) {
+            deleteBaseFlow(flow.getId());
+        }
+    }
+    
     /**
      * Deletes a BPMNGateway element from this context.
      * <p>
@@ -694,13 +752,10 @@ public class BPMNProcess extends BPMNBaseElement {
             // does not exist
             return;
         }
-        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(getway.getId());
-
+        
         // remove all flows
-        for (BPMNSequenceFlow flow : flowList) {
-            deleteSequenceFlow(flow.getId());
-        }
-
+        deleteFlows(getway.getId());
+     
         // finally delete the task element and the shape
         this.getElementNode().removeChild(getway.getElementNode());
         if (getway.getBpmnShape() != null) {
@@ -716,15 +771,15 @@ public class BPMNProcess extends BPMNBaseElement {
      * 
      * @param id
      */
-    public void deleteSequenceFlow(String id) {
-        BPMNSequenceFlow seqenceFlow = (BPMNSequenceFlow) findBaseElementById(id);
-        if (seqenceFlow == null) {
+    public void deleteBaseFlow(String id) {
+        BPMNBaseFlow baseFlow = (BPMNBaseFlow) findBaseElementById(id);
+        if (baseFlow == null) {
             // does not exist
             return;
         }
 
-        String targetRef = seqenceFlow.getTargetRef();
-        String soureRef = seqenceFlow.getSourceRef();
+        String targetRef = baseFlow.getTargetRef();
+        String soureRef = baseFlow.getSourceRef();
         // first we need to update the elements still connected with this flow
         // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
         // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
@@ -760,12 +815,23 @@ public class BPMNProcess extends BPMNBaseElement {
         }
 
         // Finally delete the flow element and the edge
-        this.getElementNode().removeChild(seqenceFlow.getElementNode());
-        if (seqenceFlow.getBpmnEdge() != null) {
-            model.getBpmnPlane().removeChild(seqenceFlow.getBpmnEdge());
+        this.getElementNode().removeChild(baseFlow.getElementNode());
+        if (baseFlow.getBpmnEdge() != null) {
+            model.getBpmnPlane().removeChild(baseFlow.getBpmnEdge());
         }
 
-        this.getSequenceFlows().remove(seqenceFlow);
+        
+        if (baseFlow instanceof BPMNSequenceFlow) {
+            this.getSequenceFlows().remove(baseFlow);
+        }
+        if (baseFlow instanceof BPMNMessageFlow) {
+            this.getMessageFlows().remove(baseFlow);
+        }
+        if (baseFlow instanceof BPMNAssociation) {
+            this.getAssociations().remove(baseFlow);
+        }
+        
+        
     }
 
     /**
@@ -789,7 +855,7 @@ public class BPMNProcess extends BPMNBaseElement {
             this.deleteGateway(id);
         }
         if (baseElement instanceof BPMNSequenceFlow) {
-            this.deleteSequenceFlow(id);
+            this.deleteBaseFlow(id);
         }
     }
 
@@ -821,7 +887,7 @@ public class BPMNProcess extends BPMNBaseElement {
         }
 
         // test SequenceFlows
-        result = this.findBPMNSequenceFlowById(id);
+        result = this.findBPMNBaseFlowById(id);
         if (result != null) {
             return result;
         }
@@ -882,12 +948,26 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @return
      */
-    public BPMNSequenceFlow findBPMNSequenceFlowById(String id) {
+    public BPMNBaseFlow findBPMNBaseFlowById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
         Set<BPMNSequenceFlow> listF = this.getSequenceFlows();
         for (BPMNSequenceFlow element : listF) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+        
+        Set<BPMNMessageFlow> listM = this.getMessageFlows();
+        for (BPMNMessageFlow element : listM) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+        
+        Set<BPMNAssociation> listA = this.getAssociations();
+        for (BPMNAssociation element : listA) {
             if (id.equals(element.getId())) {
                 return element;
             }
@@ -975,6 +1055,30 @@ public class BPMNProcess extends BPMNBaseElement {
         getSequenceFlows().add(flow);
         return flow;
     }
+    
+    /**
+     * Adds a new BPMNMessageFlow from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     */
+    private BPMNMessageFlow createBPMNMessageFlowByNode(Element element) {
+        BPMNMessageFlow flow = new BPMNMessageFlow(model, element, this);
+        getMessageFlows().add(flow);
+        return flow;
+    }
+    
+    /**
+     * Adds a new BPMNAssociation from a existing Element Node
+     * 
+     * @param eventElement
+     * @return
+     */
+    private BPMNAssociation createBPMNAssociationByNode(Element element) {
+        BPMNAssociation flow = new BPMNAssociation(model, element, this);
+        getAssociations().add(flow);
+        return flow;
+    }
 
     /**
      * Returns a list of sequenceFlows associated with a given FlowElement
@@ -995,6 +1099,47 @@ public class BPMNProcess extends BPMNBaseElement {
         }
         return result;
     }
+    
+    /**
+     * Returns a list of accociations associated with a given FlowElement
+     * 
+     * @param id of a flowElement
+     * @return list of Accociations
+     */
+    private Set<BPMNAssociation> findAssociationsByElementId(String id) {
+        Set<BPMNAssociation> result = new LinkedHashSet<BPMNAssociation>();
+        if (id == null || id.isEmpty()) {
+            return result;
+        }
+        Set<BPMNAssociation> listA = this.getAssociations();
+        for (BPMNAssociation flow : listA) {
+            if (id.equals(flow.sourceRef) || id.equals(flow.targetRef)) {
+                result.add(flow);
+            }
+        }
+        return result;
+    }
+    
+    /**
+     * Returns a list of MessageFlows associated with a given FlowElement
+     * 
+     * @param id of a flowElement
+     * @return list of MessageFlows
+     */
+    private Set<BPMNMessageFlow> findMessageFlowsByElementId(String id) {
+        Set<BPMNMessageFlow> result = new LinkedHashSet<BPMNMessageFlow>();
+        if (id == null || id.isEmpty()) {
+            return result;
+        }
+        Set<BPMNMessageFlow> listA = this.getMessageFlows();
+        for (BPMNMessageFlow flow : listA) {
+            if (id.equals(flow.sourceRef) || id.equals(flow.targetRef)) {
+                result.add(flow);
+            }
+        }
+        return result;
+    }
+    
 
     /**
      * This method inserts a lane before a target lane within an existing laneset. A
