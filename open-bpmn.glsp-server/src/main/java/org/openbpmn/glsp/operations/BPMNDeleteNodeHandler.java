@@ -21,11 +21,11 @@ import java.util.logging.Logger;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNBaseFlow;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.model.BPMNGModelState;
 
@@ -77,10 +77,10 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
                 continue;
             }
 
-            if (baseElement != null && baseElement instanceof BPMNSequenceFlow) {
+            if (baseElement != null && baseElement instanceof BPMNBaseFlow) {
                 // open the corresponding process
-                BPMNProcess process = ((BPMNSequenceFlow) baseElement).getBpmnProcess();
-                process.deleteSequenceFlow(id);
+                BPMNProcess process = ((BPMNBaseFlow) baseElement).getBpmnProcess();
+                process.deleteBaseFlow(id);
                 continue;
             }
 
