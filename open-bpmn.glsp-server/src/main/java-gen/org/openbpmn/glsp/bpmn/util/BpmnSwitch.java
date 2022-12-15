@@ -258,30 +258,12 @@ public class BpmnSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case BpmnPackage.SEQUENCE_FLOW_GNODE: {
-                SequenceFlowGNode sequenceFlowGNode = (SequenceFlowGNode)theEObject;
-                T result = caseSequenceFlowGNode(sequenceFlowGNode);
-                if (result == null) result = caseGEdge(sequenceFlowGNode);
-                if (result == null) result = caseGModelElement(sequenceFlowGNode);
-                if (result == null) result = caseGArgumentable(sequenceFlowGNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case BpmnPackage.ASSOCIATION_GNODE: {
-                AssociationGNode associationGNode = (AssociationGNode)theEObject;
-                T result = caseAssociationGNode(associationGNode);
-                if (result == null) result = caseGEdge(associationGNode);
-                if (result == null) result = caseGModelElement(associationGNode);
-                if (result == null) result = caseGArgumentable(associationGNode);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case BpmnPackage.MESSAGE_FLOW_GNODE: {
-                MessageFlowGNode messageFlowGNode = (MessageFlowGNode)theEObject;
-                T result = caseMessageFlowGNode(messageFlowGNode);
-                if (result == null) result = caseGEdge(messageFlowGNode);
-                if (result == null) result = caseGModelElement(messageFlowGNode);
-                if (result == null) result = caseGArgumentable(messageFlowGNode);
+            case BpmnPackage.BPMN_EDGE: {
+                BPMNEdge bpmnEdge = (BPMNEdge)theEObject;
+                T result = caseBPMNEdge(bpmnEdge);
+                if (result == null) result = caseGEdge(bpmnEdge);
+                if (result == null) result = caseGModelElement(bpmnEdge);
+                if (result == null) result = caseGArgumentable(bpmnEdge);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -485,47 +467,17 @@ public class BpmnSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Sequence Flow GNode</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>BPMN Edge</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Sequence Flow GNode</em>'.
+     * @return the result of interpreting the object as an instance of '<em>BPMN Edge</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseSequenceFlowGNode(SequenceFlowGNode object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Association GNode</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Association GNode</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseAssociationGNode(AssociationGNode object) {
-        return null;
-    }
-
-    /**
-     * Returns the result of interpreting the object as an instance of '<em>Message Flow GNode</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Message Flow GNode</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseMessageFlowGNode(MessageFlowGNode object) {
+    public T caseBPMNEdge(BPMNEdge object) {
         return null;
     }
 

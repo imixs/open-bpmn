@@ -69,9 +69,7 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
             case BpmnPackage.POOL_GNODE: return createPoolGNode();
             case BpmnPackage.LANE_GNODE: return createLaneGNode();
             case BpmnPackage.ICON_GNODE: return createIconGNode();
-            case BpmnPackage.SEQUENCE_FLOW_GNODE: return createSequenceFlowGNode();
-            case BpmnPackage.ASSOCIATION_GNODE: return createAssociationGNode();
-            case BpmnPackage.MESSAGE_FLOW_GNODE: return createMessageFlowGNode();
+            case BpmnPackage.BPMN_EDGE: return createBPMNEdge();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -212,29 +210,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public SequenceFlowGNode createSequenceFlowGNode() {
-        SequenceFlowGNodeImpl sequenceFlowGNode = new SequenceFlowGNodeImpl();
-        return sequenceFlowGNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public AssociationGNode createAssociationGNode() {
-        AssociationGNodeImpl associationGNode = new AssociationGNodeImpl();
-        return associationGNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public MessageFlowGNode createMessageFlowGNode() {
-        MessageFlowGNodeImpl messageFlowGNode = new MessageFlowGNodeImpl();
-        return messageFlowGNode;
+    public BPMNEdge createBPMNEdge() {
+        BPMNEdgeImpl bpmnEdge = new BPMNEdgeImpl();
+        return bpmnEdge;
     }
 
     /**

@@ -24,17 +24,9 @@
     <genClasses ecoreClass="bpmn-glsp.ecore#//PoolGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//LaneGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//IconGNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//SequenceFlowGNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/condition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//SequenceFlowGNode/defaultFlow"/>
-    </genClasses>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//AssociationGNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//AssociationGNode/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//AssociationGNode/associationDirection"/>
-    </genClasses>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//MessageFlowGNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//MessageFlowGNode/name"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//BPMNEdge">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNEdge/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNEdge/kind"/>
     </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"

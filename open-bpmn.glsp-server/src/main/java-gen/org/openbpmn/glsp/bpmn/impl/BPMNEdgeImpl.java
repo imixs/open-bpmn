@@ -10,24 +10,24 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.glsp.graph.impl.GEdgeImpl;
 
-import org.openbpmn.glsp.bpmn.AssociationGNode;
+import org.openbpmn.glsp.bpmn.BPMNEdge;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Association GNode</b></em>'.
+ * An implementation of the model object '<em><b>BPMN Edge</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.bpmn.impl.AssociationGNodeImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.bpmn.impl.AssociationGNodeImpl#getAssociationDirection <em>Association Direction</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.BPMNEdgeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.BPMNEdgeImpl#getKind <em>Kind</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode {
+public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -49,31 +49,31 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
     protected String name = NAME_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getAssociationDirection() <em>Association Direction</em>}' attribute.
+     * The default value of the '{@link #getKind() <em>Kind</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getAssociationDirection()
+     * @see #getKind()
      * @generated
      * @ordered
      */
-    protected static final String ASSOCIATION_DIRECTION_EDEFAULT = null;
+    protected static final String KIND_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getAssociationDirection() <em>Association Direction</em>}' attribute.
+     * The cached value of the '{@link #getKind() <em>Kind</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getAssociationDirection()
+     * @see #getKind()
      * @generated
      * @ordered
      */
-    protected String associationDirection = ASSOCIATION_DIRECTION_EDEFAULT;
+    protected String kind = KIND_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected AssociationGNodeImpl() {
+    protected BPMNEdgeImpl() {
         super();
     }
 
@@ -84,7 +84,7 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
      */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.ASSOCIATION_GNODE;
+        return BpmnPackage.Literals.BPMN_EDGE;
     }
 
     /**
@@ -105,7 +105,7 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.ASSOCIATION_GNODE__NAME, oldName, name));
+            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BPMN_EDGE__NAME, oldName, name));
     }
 
     /**
@@ -113,8 +113,8 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getAssociationDirection() {
-        return associationDirection;
+    public String getKind() {
+        return kind;
     }
 
     /**
@@ -122,11 +122,11 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setAssociationDirection(String newAssociationDirection) {
-        String oldAssociationDirection = associationDirection;
-        associationDirection = newAssociationDirection;
+    public void setKind(String newKind) {
+        String oldKind = kind;
+        kind = newKind;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.ASSOCIATION_GNODE__ASSOCIATION_DIRECTION, oldAssociationDirection, associationDirection));
+            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BPMN_EDGE__KIND, oldKind, kind));
     }
 
     /**
@@ -137,10 +137,10 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case BpmnPackage.ASSOCIATION_GNODE__NAME:
+            case BpmnPackage.BPMN_EDGE__NAME:
                 return getName();
-            case BpmnPackage.ASSOCIATION_GNODE__ASSOCIATION_DIRECTION:
-                return getAssociationDirection();
+            case BpmnPackage.BPMN_EDGE__KIND:
+                return getKind();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -153,11 +153,11 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case BpmnPackage.ASSOCIATION_GNODE__NAME:
+            case BpmnPackage.BPMN_EDGE__NAME:
                 setName((String)newValue);
                 return;
-            case BpmnPackage.ASSOCIATION_GNODE__ASSOCIATION_DIRECTION:
-                setAssociationDirection((String)newValue);
+            case BpmnPackage.BPMN_EDGE__KIND:
+                setKind((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -171,11 +171,11 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case BpmnPackage.ASSOCIATION_GNODE__NAME:
+            case BpmnPackage.BPMN_EDGE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case BpmnPackage.ASSOCIATION_GNODE__ASSOCIATION_DIRECTION:
-                setAssociationDirection(ASSOCIATION_DIRECTION_EDEFAULT);
+            case BpmnPackage.BPMN_EDGE__KIND:
+                setKind(KIND_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -189,10 +189,10 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case BpmnPackage.ASSOCIATION_GNODE__NAME:
+            case BpmnPackage.BPMN_EDGE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case BpmnPackage.ASSOCIATION_GNODE__ASSOCIATION_DIRECTION:
-                return ASSOCIATION_DIRECTION_EDEFAULT == null ? associationDirection != null : !ASSOCIATION_DIRECTION_EDEFAULT.equals(associationDirection);
+            case BpmnPackage.BPMN_EDGE__KIND:
+                return KIND_EDEFAULT == null ? kind != null : !KIND_EDEFAULT.equals(kind);
         }
         return super.eIsSet(featureID);
     }
@@ -209,10 +209,10 @@ public class AssociationGNodeImpl extends GEdgeImpl implements AssociationGNode 
         StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
-        result.append(", associationDirection: ");
-        result.append(associationDirection);
+        result.append(", kind: ");
+        result.append(kind);
         result.append(')');
         return result.toString();
     }
 
-} //AssociationGNodeImpl
+} //BPMNEdgeImpl

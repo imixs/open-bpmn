@@ -12,7 +12,7 @@ import org.eclipse.glsp.graph.GraphPackage;
 
 import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 
-import org.openbpmn.glsp.bpmn.AssociationGNode;
+import org.openbpmn.glsp.bpmn.BPMNEdge;
 import org.openbpmn.glsp.bpmn.BaseElementGNode;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
@@ -24,10 +24,8 @@ import org.openbpmn.glsp.bpmn.GroupGNode;
 import org.openbpmn.glsp.bpmn.IconGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
-import org.openbpmn.glsp.bpmn.MessageFlowGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
-import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 
@@ -134,21 +132,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass sequenceFlowGNodeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass associationGNodeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass messageFlowGNodeEClass = null;
+    private EClass bpmnEdgeEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -357,8 +341,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getSequenceFlowGNode() {
-        return sequenceFlowGNodeEClass;
+    public EClass getBPMNEdge() {
+        return bpmnEdgeEClass;
     }
 
     /**
@@ -366,8 +350,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSequenceFlowGNode_Name() {
-        return (EAttribute)sequenceFlowGNodeEClass.getEStructuralFeatures().get(0);
+    public EAttribute getBPMNEdge_Name() {
+        return (EAttribute)bpmnEdgeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -375,62 +359,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSequenceFlowGNode_Condition() {
-        return (EAttribute)sequenceFlowGNodeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getSequenceFlowGNode_DefaultFlow() {
-        return (EAttribute)sequenceFlowGNodeEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getAssociationGNode() {
-        return associationGNodeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getAssociationGNode_Name() {
-        return (EAttribute)associationGNodeEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getAssociationGNode_AssociationDirection() {
-        return (EAttribute)associationGNodeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getMessageFlowGNode() {
-        return messageFlowGNodeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getMessageFlowGNode_Name() {
-        return (EAttribute)messageFlowGNodeEClass.getEStructuralFeatures().get(0);
+    public EAttribute getBPMNEdge_Kind() {
+        return (EAttribute)bpmnEdgeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -489,17 +419,9 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
 
         iconGNodeEClass = createEClass(ICON_GNODE);
 
-        sequenceFlowGNodeEClass = createEClass(SEQUENCE_FLOW_GNODE);
-        createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__NAME);
-        createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__CONDITION);
-        createEAttribute(sequenceFlowGNodeEClass, SEQUENCE_FLOW_GNODE__DEFAULT_FLOW);
-
-        associationGNodeEClass = createEClass(ASSOCIATION_GNODE);
-        createEAttribute(associationGNodeEClass, ASSOCIATION_GNODE__NAME);
-        createEAttribute(associationGNodeEClass, ASSOCIATION_GNODE__ASSOCIATION_DIRECTION);
-
-        messageFlowGNodeEClass = createEClass(MESSAGE_FLOW_GNODE);
-        createEAttribute(messageFlowGNodeEClass, MESSAGE_FLOW_GNODE__NAME);
+        bpmnEdgeEClass = createEClass(BPMN_EDGE);
+        createEAttribute(bpmnEdgeEClass, BPMN_EDGE__NAME);
+        createEAttribute(bpmnEdgeEClass, BPMN_EDGE__KIND);
     }
 
     /**
@@ -546,9 +468,7 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         poolGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
         laneGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
         iconGNodeEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
-        sequenceFlowGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
-        associationGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
-        messageFlowGNodeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        bpmnEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
 
         // Initialize classes, features, and operations; add parameters
         initEClass(baseElementGNodeEClass, BaseElementGNode.class, "BaseElementGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -579,17 +499,9 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
 
         initEClass(iconGNodeEClass, IconGNode.class, "IconGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(sequenceFlowGNodeEClass, SequenceFlowGNode.class, "SequenceFlowGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getSequenceFlowGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSequenceFlowGNode_Condition(), ecorePackage.getEString(), "condition", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getSequenceFlowGNode_DefaultFlow(), ecorePackage.getEBoolean(), "defaultFlow", null, 0, 1, SequenceFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(associationGNodeEClass, AssociationGNode.class, "AssociationGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getAssociationGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, AssociationGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getAssociationGNode_AssociationDirection(), ecorePackage.getEString(), "associationDirection", null, 0, 1, AssociationGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-        initEClass(messageFlowGNodeEClass, MessageFlowGNode.class, "MessageFlowGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMessageFlowGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, MessageFlowGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(bpmnEdgeEClass, BPMNEdge.class, "BPMNEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBPMNEdge_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBPMNEdge_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

@@ -18,16 +18,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="PoolGNode" eSuperTypes="#//BaseElementGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="LaneGNode" eSuperTypes="#//BaseElementGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="IconGNode" eSuperTypes="glsp-graph.ecore#//GCompartment"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SequenceFlowGNode" eSuperTypes="glsp-graph.ecore#//GEdge">
+  <eClassifiers xsi:type="ecore:EClass" name="BPMNEdge" eSuperTypes="glsp-graph.ecore#//GEdge">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="condition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultFlow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AssociationGNode" eSuperTypes="glsp-graph.ecore#//GEdge">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="associationDirection" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MessageFlowGNode" eSuperTypes="glsp-graph.ecore#//GEdge">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

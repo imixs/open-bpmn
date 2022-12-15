@@ -139,31 +139,13 @@ public interface BpmnFactory extends EFactory {
     IconGNode createIconGNode();
 
     /**
-     * Returns a new object of class '<em>Sequence Flow GNode</em>'.
+     * Returns a new object of class '<em>BPMN Edge</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Sequence Flow GNode</em>'.
+     * @return a new object of class '<em>BPMN Edge</em>'.
      * @generated
      */
-    SequenceFlowGNode createSequenceFlowGNode();
-
-    /**
-     * Returns a new object of class '<em>Association GNode</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Association GNode</em>'.
-     * @generated
-     */
-    AssociationGNode createAssociationGNode();
-
-    /**
-     * Returns a new object of class '<em>Message Flow GNode</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Message Flow GNode</em>'.
-     * @generated
-     */
-    MessageFlowGNode createMessageFlowGNode();
+    BPMNEdge createBPMNEdge();
 
     /**
      * Returns the package supported by this factory.
