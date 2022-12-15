@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface EventGNode extends FlowElementGNode {
+public interface EventGNode extends BPMNGNode {
 } // EventGNode

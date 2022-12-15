@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.GatewayGNode;
  *
  * @generated
  */
-public class GatewayGNodeImpl extends FlowElementGNodeImpl implements GatewayGNode {
+public class GatewayGNodeImpl extends BPMNGNodeImpl implements GatewayGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

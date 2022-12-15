@@ -42,7 +42,7 @@ import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.glsp.elements.dataobject.BPMNCreateDataObjectHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
-import org.openbpmn.glsp.elements.flow.BPMNCreateSequenceFlowHandler;
+import org.openbpmn.glsp.elements.flow.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
@@ -122,7 +122,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.add(BPMNCreateEventDefinitionHandler.class);
 
         // Flows
-        binding.add(BPMNCreateSequenceFlowHandler.class);
+        binding.add(BPMNGEdgeCreateHandler.class);
 
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);

@@ -115,7 +115,7 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
-	symbol?: string;
+	kind?: string;
 	documentation: string;
 }
 
@@ -133,7 +133,7 @@ export class GatewayNode extends DiamondNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
-	category?: string;
+	kind?: string;
 	documentation: string;
 }
 
@@ -207,8 +207,9 @@ export function isBoundaryEvent(element: SModelElement): element is EventNode {
     return element instanceof EventNode && element.type === 'boundaryEvent';
 }
 
-export class SequenceFlow extends SEdge {
-	condition?: string;
+export class BPMNEdge extends SEdge {
+	kind?: string;
+	documentation: string;
 }
 
 export class Icon extends SShapeElement implements LayoutContainer {

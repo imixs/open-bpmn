@@ -22,22 +22,31 @@ public interface BpmnFactory extends EFactory {
     BpmnFactory eINSTANCE = org.openbpmn.glsp.bpmn.impl.BpmnFactoryImpl.init();
 
     /**
-     * Returns a new object of class '<em>Base Element GNode</em>'.
+     * Returns a new object of class '<em>BPMNG Node</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Base Element GNode</em>'.
+     * @return a new object of class '<em>BPMNG Node</em>'.
      * @generated
      */
-    BaseElementGNode createBaseElementGNode();
+    BPMNGNode createBPMNGNode();
 
     /**
-     * Returns a new object of class '<em>Flow Element GNode</em>'.
+     * Returns a new object of class '<em>BPMNG Edge</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return a new object of class '<em>Flow Element GNode</em>'.
+     * @return a new object of class '<em>BPMNG Edge</em>'.
      * @generated
      */
-    FlowElementGNode createFlowElementGNode();
+    BPMNGEdge createBPMNGEdge();
+
+    /**
+     * Returns a new object of class '<em>Icon GCompartment</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Icon GCompartment</em>'.
+     * @generated
+     */
+    IconGCompartment createIconGCompartment();
 
     /**
      * Returns a new object of class '<em>Task GNode</em>'.
@@ -128,24 +137,6 @@ public interface BpmnFactory extends EFactory {
      * @generated
      */
     LaneGNode createLaneGNode();
-
-    /**
-     * Returns a new object of class '<em>Icon GNode</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Icon GNode</em>'.
-     * @generated
-     */
-    IconGNode createIconGNode();
-
-    /**
-     * Returns a new object of class '<em>BPMN Edge</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>BPMN Edge</em>'.
-     * @generated
-     */
-    BPMNEdge createBPMNEdge();
 
     /**
      * Returns the package supported by this factory.

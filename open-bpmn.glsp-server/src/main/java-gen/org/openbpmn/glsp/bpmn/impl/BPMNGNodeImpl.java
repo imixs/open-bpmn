@@ -8,26 +8,26 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.eclipse.glsp.graph.impl.GEdgeImpl;
+import org.eclipse.glsp.graph.impl.GNodeImpl;
 
-import org.openbpmn.glsp.bpmn.BPMNEdge;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>BPMN Edge</b></em>'.
+ * An implementation of the model object '<em><b>BPMNG Node</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.bpmn.impl.BPMNEdgeImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.bpmn.impl.BPMNEdgeImpl#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.BPMNGNodeImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.impl.BPMNGNodeImpl#getKind <em>Kind</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
+public class BPMNGNodeImpl extends GNodeImpl implements BPMNGNode {
     /**
      * The default value of the '{@link #getName() <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
@@ -73,7 +73,7 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
      * <!-- end-user-doc -->
      * @generated
      */
-    protected BPMNEdgeImpl() {
+    protected BPMNGNodeImpl() {
         super();
     }
 
@@ -84,7 +84,7 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
      */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.BPMN_EDGE;
+        return BpmnPackage.Literals.BPMNG_NODE;
     }
 
     /**
@@ -105,7 +105,7 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BPMN_EDGE__NAME, oldName, name));
+            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BPMNG_NODE__NAME, oldName, name));
     }
 
     /**
@@ -126,7 +126,7 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
         String oldKind = kind;
         kind = newKind;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BPMN_EDGE__KIND, oldKind, kind));
+            eNotify(new ENotificationImpl(this, Notification.SET, BpmnPackage.BPMNG_NODE__KIND, oldKind, kind));
     }
 
     /**
@@ -137,9 +137,9 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case BpmnPackage.BPMN_EDGE__NAME:
+            case BpmnPackage.BPMNG_NODE__NAME:
                 return getName();
-            case BpmnPackage.BPMN_EDGE__KIND:
+            case BpmnPackage.BPMNG_NODE__KIND:
                 return getKind();
         }
         return super.eGet(featureID, resolve, coreType);
@@ -153,10 +153,10 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case BpmnPackage.BPMN_EDGE__NAME:
+            case BpmnPackage.BPMNG_NODE__NAME:
                 setName((String)newValue);
                 return;
-            case BpmnPackage.BPMN_EDGE__KIND:
+            case BpmnPackage.BPMNG_NODE__KIND:
                 setKind((String)newValue);
                 return;
         }
@@ -171,10 +171,10 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case BpmnPackage.BPMN_EDGE__NAME:
+            case BpmnPackage.BPMNG_NODE__NAME:
                 setName(NAME_EDEFAULT);
                 return;
-            case BpmnPackage.BPMN_EDGE__KIND:
+            case BpmnPackage.BPMNG_NODE__KIND:
                 setKind(KIND_EDEFAULT);
                 return;
         }
@@ -189,9 +189,9 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case BpmnPackage.BPMN_EDGE__NAME:
+            case BpmnPackage.BPMNG_NODE__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-            case BpmnPackage.BPMN_EDGE__KIND:
+            case BpmnPackage.BPMNG_NODE__KIND:
                 return KIND_EDEFAULT == null ? kind != null : !KIND_EDEFAULT.equals(kind);
         }
         return super.eIsSet(featureID);
@@ -215,4 +215,4 @@ public class BPMNEdgeImpl extends GEdgeImpl implements BPMNEdge {
         return result.toString();
     }
 
-} //BPMNEdgeImpl
+} //BPMNGNodeImpl

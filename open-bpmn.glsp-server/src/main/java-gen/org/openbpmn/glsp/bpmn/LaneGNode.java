@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface LaneGNode extends BaseElementGNode {
+public interface LaneGNode extends BPMNGNode {
 } // LaneGNode

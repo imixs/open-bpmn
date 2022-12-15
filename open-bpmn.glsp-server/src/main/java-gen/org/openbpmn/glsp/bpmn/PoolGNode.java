@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface PoolGNode extends BaseElementGNode {
+public interface PoolGNode extends BPMNGNode {
 } // PoolGNode

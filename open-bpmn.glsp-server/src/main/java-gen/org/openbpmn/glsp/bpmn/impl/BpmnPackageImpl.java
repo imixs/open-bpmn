@@ -12,16 +12,15 @@ import org.eclipse.glsp.graph.GraphPackage;
 
 import org.eclipse.glsp.graph.impl.GraphPackageImpl;
 
-import org.openbpmn.glsp.bpmn.BPMNEdge;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.BPMNGEdge;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
-import org.openbpmn.glsp.bpmn.FlowElementGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.GroupGNode;
-import org.openbpmn.glsp.bpmn.IconGNode;
+import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
@@ -41,14 +40,21 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass baseElementGNodeEClass = null;
+    private EClass bpmngNodeEClass = null;
 
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass flowElementGNodeEClass = null;
+    private EClass bpmngEdgeEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass iconGCompartmentEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -119,20 +125,6 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * @generated
      */
     private EClass laneGNodeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass iconGNodeEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass bpmnEdgeEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -206,8 +198,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getBaseElementGNode() {
-        return baseElementGNodeEClass;
+    public EClass getBPMNGNode() {
+        return bpmngNodeEClass;
     }
 
     /**
@@ -215,8 +207,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getBaseElementGNode_Name() {
-        return (EAttribute)baseElementGNodeEClass.getEStructuralFeatures().get(0);
+    public EAttribute getBPMNGNode_Name() {
+        return (EAttribute)bpmngNodeEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -224,8 +216,8 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getFlowElementGNode() {
-        return flowElementGNodeEClass;
+    public EAttribute getBPMNGNode_Kind() {
+        return (EAttribute)bpmngNodeEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -233,8 +225,35 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getFlowElementGNode_Symbol() {
-        return (EAttribute)flowElementGNodeEClass.getEStructuralFeatures().get(0);
+    public EClass getBPMNGEdge() {
+        return bpmngEdgeEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBPMNGEdge_Name() {
+        return (EAttribute)bpmngEdgeEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getBPMNGEdge_Kind() {
+        return (EAttribute)bpmngEdgeEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EClass getIconGCompartment() {
+        return iconGCompartmentEClass;
     }
 
     /**
@@ -332,42 +351,6 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getIconGNode() {
-        return iconGNodeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getBPMNEdge() {
-        return bpmnEdgeEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getBPMNEdge_Name() {
-        return (EAttribute)bpmnEdgeEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getBPMNEdge_Kind() {
-        return (EAttribute)bpmnEdgeEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public BpmnFactory getBpmnFactory() {
         return (BpmnFactory)getEFactoryInstance();
     }
@@ -391,11 +374,15 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         isCreated = true;
 
         // Create classes and their features
-        baseElementGNodeEClass = createEClass(BASE_ELEMENT_GNODE);
-        createEAttribute(baseElementGNodeEClass, BASE_ELEMENT_GNODE__NAME);
+        bpmngNodeEClass = createEClass(BPMNG_NODE);
+        createEAttribute(bpmngNodeEClass, BPMNG_NODE__NAME);
+        createEAttribute(bpmngNodeEClass, BPMNG_NODE__KIND);
 
-        flowElementGNodeEClass = createEClass(FLOW_ELEMENT_GNODE);
-        createEAttribute(flowElementGNodeEClass, FLOW_ELEMENT_GNODE__SYMBOL);
+        bpmngEdgeEClass = createEClass(BPMNG_EDGE);
+        createEAttribute(bpmngEdgeEClass, BPMNG_EDGE__NAME);
+        createEAttribute(bpmngEdgeEClass, BPMNG_EDGE__KIND);
+
+        iconGCompartmentEClass = createEClass(ICON_GCOMPARTMENT);
 
         taskGNodeEClass = createEClass(TASK_GNODE);
 
@@ -416,12 +403,6 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         poolGNodeEClass = createEClass(POOL_GNODE);
 
         laneGNodeEClass = createEClass(LANE_GNODE);
-
-        iconGNodeEClass = createEClass(ICON_GNODE);
-
-        bpmnEdgeEClass = createEClass(BPMN_EDGE);
-        createEAttribute(bpmnEdgeEClass, BPMN_EDGE__NAME);
-        createEAttribute(bpmnEdgeEClass, BPMN_EDGE__KIND);
     }
 
     /**
@@ -455,27 +436,30 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         // Set bounds for type parameters
 
         // Add supertypes to classes
-        baseElementGNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
-        flowElementGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        taskGNodeEClass.getESuperTypes().add(this.getFlowElementGNode());
-        gatewayGNodeEClass.getESuperTypes().add(this.getFlowElementGNode());
-        eventGNodeEClass.getESuperTypes().add(this.getFlowElementGNode());
-        labelGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        dataObjectGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        messageGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        groupGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        textAnnotationGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        poolGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        laneGNodeEClass.getESuperTypes().add(this.getBaseElementGNode());
-        iconGNodeEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
-        bpmnEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        bpmngNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
+        bpmngEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+        iconGCompartmentEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
+        taskGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        gatewayGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        eventGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        labelGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        dataObjectGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        messageGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        groupGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        textAnnotationGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        poolGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+        laneGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
 
         // Initialize classes, features, and operations; add parameters
-        initEClass(baseElementGNodeEClass, BaseElementGNode.class, "BaseElementGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBaseElementGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, BaseElementGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(bpmngNodeEClass, BPMNGNode.class, "BPMNGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBPMNGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBPMNGNode_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(flowElementGNodeEClass, FlowElementGNode.class, "FlowElementGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getFlowElementGNode_Symbol(), ecorePackage.getEString(), "symbol", null, 0, 1, FlowElementGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(bpmngEdgeEClass, BPMNGEdge.class, "BPMNGEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getBPMNGEdge_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNGEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getBPMNGEdge_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNGEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(iconGCompartmentEClass, IconGCompartment.class, "IconGCompartment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(taskGNodeEClass, TaskGNode.class, "TaskGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -496,12 +480,6 @@ public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
         initEClass(poolGNodeEClass, PoolGNode.class, "PoolGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(laneGNodeEClass, LaneGNode.class, "LaneGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(iconGNodeEClass, IconGNode.class, "IconGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(bpmnEdgeEClass, BPMNEdge.class, "BPMNEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBPMNEdge_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBPMNEdge_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

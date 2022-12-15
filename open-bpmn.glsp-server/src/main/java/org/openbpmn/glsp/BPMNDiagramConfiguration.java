@@ -71,14 +71,14 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         // Layout Model types
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
         mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
-        mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON_GNODE);
+        mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON_GCOMPARTMENT);
         mappings.put(ModelTypes.CONTAINER, GraphPackage.Literals.GCOMPARTMENT);
 
         // BPMN Types
         mappings.put(BPMNTypes.TASK, BpmnPackage.Literals.TASK_GNODE);
         mappings.put(BPMNTypes.GATEWAY, BpmnPackage.Literals.GATEWAY_GNODE);
         mappings.put(BPMNTypes.EVENT, BpmnPackage.Literals.EVENT_GNODE);
-        mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.SEQUENCE_FLOW_GNODE);
+        mappings.put(BPMNTypes.SEQUENCE_FLOW, BpmnPackage.Literals.BPMNG_EDGE);
         mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
         mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GNODE);
         mappings.put(BPMNTypes.DATAOBJECT, BpmnPackage.Literals.DATA_OBJECT_GNODE);

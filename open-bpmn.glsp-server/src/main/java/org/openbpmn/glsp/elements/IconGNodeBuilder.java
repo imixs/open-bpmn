@@ -17,7 +17,7 @@ package org.openbpmn.glsp.elements;
 
 import org.eclipse.glsp.graph.builder.AbstractGCompartmentBuilder;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
-import org.openbpmn.glsp.bpmn.IconGNode;
+import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
 import org.openbpmn.glsp.utils.ModelTypes;
@@ -30,15 +30,15 @@ import org.openbpmn.glsp.utils.ModelTypes;
  * @author rsoika
  *
  */
-public class IconGNodeBuilder extends AbstractGCompartmentBuilder<IconGNode, IconGNodeBuilder> {
+public class IconGNodeBuilder extends AbstractGCompartmentBuilder<IconGCompartment, IconGNodeBuilder> {
 
     public IconGNodeBuilder() {
         super(ModelTypes.ICON);
     }
 
     @Override
-    protected IconGNode instantiate() {
-        return BpmnFactory.eINSTANCE.createIconGNode();
+    protected IconGCompartment instantiate() {
+        return BpmnFactory.eINSTANCE.createIconGCompartment();
     }
 
     @Override

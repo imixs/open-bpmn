@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.LaneGNode;
  *
  * @generated
  */
-public class LaneGNodeImpl extends BaseElementGNodeImpl implements LaneGNode {
+public class LaneGNodeImpl extends BPMNGNodeImpl implements LaneGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

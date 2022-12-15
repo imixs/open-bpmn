@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface DataObjectGNode extends BaseElementGNode {
+public interface DataObjectGNode extends BPMNGNode {
 } // DataObjectGNode

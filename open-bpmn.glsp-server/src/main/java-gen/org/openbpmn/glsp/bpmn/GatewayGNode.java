@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface GatewayGNode extends FlowElementGNode {
+public interface GatewayGNode extends BPMNGNode {
 } // GatewayGNode

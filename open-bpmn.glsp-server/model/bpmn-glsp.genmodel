@@ -7,12 +7,15 @@
   <foreignModel>bpmn-glsp.ecore</foreignModel>
   <genPackages prefix="Bpmn" basePackage="org.openbpmn.glsp" disposableProviderFactory="true"
       ecorePackage="bpmn-glsp.ecore#/">
-    <genClasses ecoreClass="bpmn-glsp.ecore#//BaseElementGNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BaseElementGNode/name"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//BPMNGNode">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNGNode/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNGNode/kind"/>
     </genClasses>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//FlowElementGNode">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//FlowElementGNode/symbol"/>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//BPMNGEdge">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNGEdge/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNGEdge/kind"/>
     </genClasses>
+    <genClasses ecoreClass="bpmn-glsp.ecore#//IconGCompartment"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//TaskGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//GatewayGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//EventGNode"/>
@@ -23,11 +26,6 @@
     <genClasses ecoreClass="bpmn-glsp.ecore#//TextAnnotationGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//PoolGNode"/>
     <genClasses ecoreClass="bpmn-glsp.ecore#//LaneGNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//IconGNode"/>
-    <genClasses ecoreClass="bpmn-glsp.ecore#//BPMNEdge">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNEdge/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute bpmn-glsp.ecore#//BPMNEdge/kind"/>
-    </genClasses>
   </genPackages>
   <genPackages prefix="Graph" basePackage="org.eclipse.glsp" disposableProviderFactory="true"
       ecorePackage="glsp-graph.ecore#/">

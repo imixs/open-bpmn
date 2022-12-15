@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.DataObjectGNode;
  *
  * @generated
  */
-public class DataObjectGNodeImpl extends BaseElementGNodeImpl implements DataObjectGNode {
+public class DataObjectGNodeImpl extends BPMNGNodeImpl implements DataObjectGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

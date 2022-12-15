@@ -59,17 +59,17 @@ import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
-import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.dataobject.DataObjectGNodeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
-import org.openbpmn.glsp.elements.flow.SequenceFlowGNodeBuilder;
+import org.openbpmn.glsp.elements.flow.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
 import org.openbpmn.glsp.elements.label.LabelGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.LaneGNodeBuilder;
@@ -370,20 +370,20 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             // compute the symbol for the BPMNEvent
-            String symbol = null;
+            String kind = null;
             Set<Element> eventDefinitionList = event.getEventDefinitions();
             if (eventDefinitionList.size() > 0) {
                 for (Node eventDefinition : eventDefinitionList) {
-                    if (symbol == null) {
-                        symbol = eventDefinition.getLocalName();
+                    if (kind == null) {
+                        kind = eventDefinition.getLocalName();
                     } else {
                         // we already have a symbol - Switch to Multiple Symbol?
-                        if (!symbol.equals(eventDefinition.getLocalName())) {
-                            symbol = BPMNTypes.MULTIPLE_EVENT_DEFINITIONS;
+                        if (!kind.equals(eventDefinition.getLocalName())) {
+                            kind = BPMNTypes.MULTIPLE_EVENT_DEFINITIONS;
                         }
                     }
                 }
-                eventNode.setSymbol(symbol);
+                eventNode.setKind(kind);
             }
             gNodeList.add(eventNode);
             // apply BPMN Extensions
@@ -425,7 +425,6 @@ public class BPMNGModelFactory implements GModelFactory {
             DataObjectGNode dataObjectNode = new DataObjectGNodeBuilder(dataObject) //
                     .position(point) //
                     .build();
-
             gNodeList.add(dataObjectNode);
             // apply BPMN Extensions
             applyBPMNExtensions(dataObjectNode, dataObject);
@@ -454,18 +453,17 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             // now construct the GNode and add it to the model....
-            SequenceFlowGNodeBuilder builder = new SequenceFlowGNodeBuilder();
+            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(sequenceFlow);
             builder.target(computeGPort(target));
             builder.source(computeGPort(source));
-            builder.id(sequenceFlow.getId());
-            SequenceFlowGNode sequenceFlowEdge = builder.build();
-
+            BPMNGEdge bpmnGEdge = builder.build();
+            bpmnGEdge.setKind("");
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
                 // add the waypoint to the GLSP model....
                 GPoint point = computeRelativeGPoint(wayPoint, participant);
-                sequenceFlowEdge.getRoutingPoints().add(point);
+                bpmnGEdge.getRoutingPoints().add(point);
             }
-            gNodeList.add(sequenceFlowEdge);
+            gNodeList.add(bpmnGEdge);
         }
 
         return gNodeList;

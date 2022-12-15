@@ -45,10 +45,10 @@ import {
 	Icon,
 	TaskNode,
 	EventNode,
-	SequenceFlow
+	BPMNEdge
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectNodeView } from './bpmn-element-views';
-import { BPMNSequenceFlowView } from './bpmn-routing-views';
+import { BPMNEdgeView } from './bpmn-routing-views';
 import { HelperLineListener,
          DrawHelperLinesCommand,
          RemoveHelperLinesCommand,
@@ -112,11 +112,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
-    // configureModelElement(context, 'container', SCompartment, StructureCompartmentView);
     configureModelElement(context, 'container', SCompartment, SCompartmentView);
 
-    // configureModelElement(context, 'edge:sequenceflow', SequenceFlow, BPMNSequenceFlowView);
-    configureModelElement(context, 'sequenceFlow', SequenceFlow, BPMNSequenceFlowView);
+    // Sequence flows
+    configureModelElement(context, 'sequenceFlow', BPMNEdge, BPMNEdgeView);
+    configureModelElement(context, 'messageFlow', BPMNEdge, BPMNEdgeView);
+    configureModelElement(context, 'association', BPMNEdge, BPMNEdgeView);
 
 });
 

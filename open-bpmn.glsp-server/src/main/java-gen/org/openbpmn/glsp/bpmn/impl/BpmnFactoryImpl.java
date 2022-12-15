@@ -56,8 +56,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
     @Override
     public EObject create(EClass eClass) {
         switch (eClass.getClassifierID()) {
-            case BpmnPackage.BASE_ELEMENT_GNODE: return createBaseElementGNode();
-            case BpmnPackage.FLOW_ELEMENT_GNODE: return createFlowElementGNode();
+            case BpmnPackage.BPMNG_NODE: return createBPMNGNode();
+            case BpmnPackage.BPMNG_EDGE: return createBPMNGEdge();
+            case BpmnPackage.ICON_GCOMPARTMENT: return createIconGCompartment();
             case BpmnPackage.TASK_GNODE: return createTaskGNode();
             case BpmnPackage.GATEWAY_GNODE: return createGatewayGNode();
             case BpmnPackage.EVENT_GNODE: return createEventGNode();
@@ -68,8 +69,6 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
             case BpmnPackage.TEXT_ANNOTATION_GNODE: return createTextAnnotationGNode();
             case BpmnPackage.POOL_GNODE: return createPoolGNode();
             case BpmnPackage.LANE_GNODE: return createLaneGNode();
-            case BpmnPackage.ICON_GNODE: return createIconGNode();
-            case BpmnPackage.BPMN_EDGE: return createBPMNEdge();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -80,9 +79,9 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public BaseElementGNode createBaseElementGNode() {
-        BaseElementGNodeImpl baseElementGNode = new BaseElementGNodeImpl();
-        return baseElementGNode;
+    public BPMNGNode createBPMNGNode() {
+        BPMNGNodeImpl bpmngNode = new BPMNGNodeImpl();
+        return bpmngNode;
     }
 
     /**
@@ -90,9 +89,19 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public FlowElementGNode createFlowElementGNode() {
-        FlowElementGNodeImpl flowElementGNode = new FlowElementGNodeImpl();
-        return flowElementGNode;
+    public BPMNGEdge createBPMNGEdge() {
+        BPMNGEdgeImpl bpmngEdge = new BPMNGEdgeImpl();
+        return bpmngEdge;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public IconGCompartment createIconGCompartment() {
+        IconGCompartmentImpl iconGCompartment = new IconGCompartmentImpl();
+        return iconGCompartment;
     }
 
     /**
@@ -193,26 +202,6 @@ public class BpmnFactoryImpl extends EFactoryImpl implements BpmnFactory {
     public LaneGNode createLaneGNode() {
         LaneGNodeImpl laneGNode = new LaneGNodeImpl();
         return laneGNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public IconGNode createIconGNode() {
-        IconGNodeImpl iconGNode = new IconGNodeImpl();
-        return iconGNode;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public BPMNEdge createBPMNEdge() {
-        BPMNEdgeImpl bpmnEdge = new BPMNEdgeImpl();
-        return bpmnEdge;
     }
 
     /**

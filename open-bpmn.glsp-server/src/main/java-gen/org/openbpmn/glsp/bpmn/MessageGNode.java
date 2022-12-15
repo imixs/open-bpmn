@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface MessageGNode extends BaseElementGNode {
+public interface MessageGNode extends BPMNGNode {
 } // MessageGNode

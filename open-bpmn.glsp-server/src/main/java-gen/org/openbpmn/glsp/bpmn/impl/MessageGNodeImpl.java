@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.MessageGNode;
  *
  * @generated
  */
-public class MessageGNodeImpl extends BaseElementGNodeImpl implements MessageGNode {
+public class MessageGNodeImpl extends BPMNGNodeImpl implements MessageGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

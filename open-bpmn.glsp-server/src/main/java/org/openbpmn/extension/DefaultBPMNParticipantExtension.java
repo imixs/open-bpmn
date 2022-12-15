@@ -35,7 +35,7 @@ import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -193,7 +193,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                     bpmnElement.setName(json.getString(feature));
                     process.setName(json.getString(feature));
                     // Update Label...
-                    ((BaseElementGNode) gNodeElement).setName(json.getString(feature));
+                    ((BPMNGNode) gNodeElement).setName(json.getString(feature));
                     continue;
                 }
                 if ("documentation".equals(feature)) {

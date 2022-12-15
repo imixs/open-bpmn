@@ -157,44 +157,44 @@ export class IconView extends ShapeView {
             scaleFactor = 1.5;
             translateX = 4.0;
             translateY = 4.0;
-            if (eventNode.symbol === 'messageEventDefinition') {
+            if (eventNode.kind === 'messageEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/mail.svg?short_path=d02764e
                 icon =
                     // eslint-disable-next-line max-len
                     'M1 3.5l.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5v-9zm1 1.035V12h12V4.536L8.31 8.9H7.7L2 4.535zM13.03 4H2.97L8 7.869 13.03 4z';
-            } else if (eventNode.symbol === 'conditionalEventDefinition') {
+            } else if (eventNode.kind === 'conditionalEventDefinition') {
                 // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/checklist.svg?short_path=e850b9d
                 icon =
                     // eslint-disable-next-line max-len
                     'M3.75 4.48h-.71L2 3.43l.71-.7.69.68L4.81 2l.71.71-1.77 1.77zM6.99 3h8v1h-8V3zm0 3h8v1h-8V6zm8 3h-8v1h8V9zm-8 3h8v1h-8v-1zM3.04 7.48h.71l1.77-1.77-.71-.7L3.4 6.42l-.69-.69-.71.71 1.04 1.04zm.71 3.01h-.71L2 9.45l.71-.71.69.69 1.41-1.42.71.71-1.77 1.77zm-.71 3.01h.71l1.77-1.77-.71-.71-1.41 1.42-.69-.69-.71.7 1.04 1.05z';
-            } else if (eventNode.symbol === 'compensationEventDefinition') {
+            } else if (eventNode.kind === 'compensationEventDefinition') {
                 // From codicons:
                 // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/debug-reverse-continue.svg?short_path=5509580
                 icon =
                     // eslint-disable-next-line max-len
                     'M13.5 2H12v12h1.5V2zm-4.936.39L9.75 3v10l-1.186.61-7-5V7.39l7-5zM3.29 8l4.96 3.543V4.457L3.29 8z';
-            } else if (eventNode.symbol === 'timerEventDefinition') {
+            } else if (eventNode.kind === 'timerEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/history.svg?short_path=53d41f7
                 icon =
                     // eslint-disable-next-line max-len
                     'M13.507 12.324a7 7 0 0 0 .065-8.56A7 7 0 0 0 2 4.393V2H1v3.5l.5.5H5V5H2.811a6.008 6.008 0 1 1-.135 5.77l-.887.462a7 7 0 0 0 11.718 1.092zm-3.361-.97l.708-.707L8 7.792V4H7v4l.146.354 3 3z';
-            } else if (eventNode.symbol === 'signalEventDefinition') {
+            } else if (eventNode.kind === 'signalEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/pulse.svg?short_path=6ffbc15
                 icon =
                     // eslint-disable-next-line max-len
                     'M11.8 9L10 3H9L7.158 9.64 5.99 4.69h-.97L3.85 9H1v.99h3.23l.49-.37.74-2.7L6.59 12h1.03l1.87-7.04 1.46 4.68.48.36H15V9h-3.2z';
-            } else if (eventNode.symbol === 'linkEventDefinition') {
+            } else if (eventNode.kind === 'linkEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/run-all.svg?short_path=06e6ef9
                 icon =
                     // eslint-disable-next-line max-len
                     'M2.78 2L2 2.41v12l.78.42 9-6V8l-9-6zM3 13.48V3.35l7.6 5.07L3 13.48z';
                 translateX=6;
-            } else if (eventNode.symbol === 'errorEventDefinition') {
+            } else if (eventNode.kind === 'errorEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/github-action.svg?short_path=987d495
                 icon =
                     // eslint-disable-next-line max-len
                     'M3.04 10h2.58l.65 1H2.54l-.5-.5v-9l.5-.5h12l.5.5v4.77l-1-1.75V2h-11v8zm5.54 1l-1.41 3.47h2.2L15 8.7 14.27 7h-1.63l.82-1.46L12.63 4H9.76l-.92.59-2.28 5L7.47 11h1.11zm1.18-6h2.87l-1.87 3h3.51l-5.76 5.84L10.2 10H7.47l2.29-5zM6.95 7H4.04V6H7.4l-.45 1zm-.9 2H4.04V8H6.5l-.45 1z';
-            } else if (eventNode.symbol === 'terminateEventDefinition') {
+            } else if (eventNode.kind === 'terminateEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/circle-large.svg?short_path=f801c32
                 icon =
                     // eslint-disable-next-line max-len
@@ -202,7 +202,7 @@ export class IconView extends ShapeView {
                 translateX=2;
                 translateY=2;
                 scaleFactor=1.8;
-            } else if (eventNode.symbol === 'multipleEventDefinition') {
+            } else if (eventNode.kind === 'multipleEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/layers.svg?short_path=f67ac65
                 icon =
                     // eslint-disable-next-line max-len
@@ -250,8 +250,8 @@ export class ContainerHeaderView extends ShapeView {
         // we center the label vertical to the height of the container
         let yOffset=0;
         if (containerNode && isBoundsAware(containerNode)) {
-	        yOffset=containerNode.bounds.height*0.5 - 5;
-	    }        
+            yOffset=containerNode.bounds.height*0.5 - 5;
+        }
         const vnode: any = (
             <g class-node={true}>
                 <text class-sprotty-label={true} transform={'scale(1),translate(14,'+yOffset+'),rotate(-90)'}>{containerLabel}</text>

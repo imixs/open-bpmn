@@ -147,8 +147,11 @@ public class BPMNModel {
             BPMNTypes.COMPLEX_GATEWAY //
     });
 
-    // public static List<String> BPMN_SQUENCEFLOWS = Arrays.asList(new String[] {
-    // BPMNTypes.SEQUENCE_FLOW });
+    public static List<String> BPMN_EDGES = Arrays.asList(new String[] { //
+            BPMNTypes.SEQUENCE_FLOW, //
+            BPMNTypes.MESSAGE_FLOW, //
+            BPMNTypes.ASSOCIATION //
+    });
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
 

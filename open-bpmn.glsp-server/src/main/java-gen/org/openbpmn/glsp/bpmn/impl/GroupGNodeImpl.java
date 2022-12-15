@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.GroupGNode;
  *
  * @generated
  */
-public class GroupGNodeImpl extends BaseElementGNodeImpl implements GroupGNode {
+public class GroupGNodeImpl extends BPMNGNodeImpl implements GroupGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

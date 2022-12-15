@@ -772,7 +772,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      */
     public void deleteBaseFlow(String id) {
-        BPMNBaseFlow baseFlow = (BPMNBaseFlow) findBaseElementById(id);
+        BPMNFlowEdge baseFlow = (BPMNFlowEdge) findBaseElementById(id);
         if (baseFlow == null) {
             // does not exist
             return;
@@ -948,7 +948,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @param id
      * @return
      */
-    public BPMNBaseFlow findBPMNBaseFlowById(String id) {
+    public BPMNFlowEdge findBPMNBaseFlowById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -1051,7 +1051,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @return
      */
     private BPMNSequenceFlow createBPMNSequenceFlowByNode(Element element) {
-        BPMNSequenceFlow flow = new BPMNSequenceFlow(model, element, this);
+        BPMNSequenceFlow flow = new BPMNSequenceFlow(model, element,element.getLocalName(), this);
         getSequenceFlows().add(flow);
         return flow;
     }
@@ -1063,7 +1063,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @return
      */
     private BPMNMessageFlow createBPMNMessageFlowByNode(Element element) {
-        BPMNMessageFlow flow = new BPMNMessageFlow(model, element, this);
+        BPMNMessageFlow flow = new BPMNMessageFlow(model, element,element.getLocalName(), this);
         getMessageFlows().add(flow);
         return flow;
     }
@@ -1075,7 +1075,7 @@ public class BPMNProcess extends BPMNBaseElement {
      * @return
      */
     private BPMNAssociation createBPMNAssociationByNode(Element element) {
-        BPMNAssociation flow = new BPMNAssociation(model, element, this);
+        BPMNAssociation flow = new BPMNAssociation(model, element,element.getLocalName(), this);
         getAssociations().add(flow);
         return flow;
     }

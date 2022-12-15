@@ -14,23 +14,28 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The BPMNBaseFlow is the abstract super class for all BPMN sequence flows. It
- * provides general attributes like the source and target ref and also the wayPoint attribute.
+ * The BPMNFlowEdge is the abstract super class for all BPMN edge types
+ * (SequenceFlow, MessageFlow, Association).
+ * <p>
+ * The BPMNFlowEdge provides general attributes like the source and target ref
+ * and also the wayPoint attribute.
  * <p>
  * A BPMNBaseFlow extends the BPMNBaseElement
- *  
+ * 
  * @author rsoika
  */
-public abstract class BPMNBaseFlow extends BPMNBaseElement {
-    private static Logger logger = Logger.getLogger(BPMNBaseFlow.class.getName());
+public abstract class BPMNFlowEdge extends BPMNBaseElement {
+    private static Logger logger = Logger.getLogger(BPMNFlowEdge.class.getName());
+    protected String type = null;
     protected BPMNProcess bpmnProcess = null;
     protected String sourceRef = null;
     protected String targetRef = null;
     protected Element bpmnEdge = null;
     protected Set<BPMNPoint> wayPoints = null;
 
-    public BPMNBaseFlow(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
+    public BPMNFlowEdge(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
         super(model, node);
+        this.type = _type;
         this.bpmnProcess = _bpmnProcess;
         wayPoints = new LinkedHashSet<BPMNPoint>();
 
@@ -62,7 +67,7 @@ public abstract class BPMNBaseFlow extends BPMNBaseElement {
             }
         }
     }
-    
+
     /**
      * Returns the BPMNProcess this element belongs to.
      * 
@@ -78,6 +83,24 @@ public abstract class BPMNBaseFlow extends BPMNBaseElement {
 
     public void setBpmnEdge(Element bpmnEdge) {
         this.bpmnEdge = bpmnEdge;
+    }
+
+    /**
+     * Returns the BPMN sub type
+     * 
+     * @return
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Set the BPMN sub type
+     * 
+     * @param type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**

@@ -30,7 +30,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -70,8 +70,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             bpmnElement = modelState.getBpmnModel().openDefaultProcess();
             gModelElement = modelState.getRoot();
         }
-        Optional<BaseElementGNode> _baseElement = modelState.getIndex().findElementByClass(elementID,
-                BaseElementGNode.class);
+        Optional<BPMNGNode> _baseElement = modelState.getIndex().findElementByClass(elementID, BPMNGNode.class);
         if (!_baseElement.isEmpty()) {
             gModelElement = _baseElement.get();
             bpmnElement = modelState.getBpmnModel().findBPMNBaseElementById(elementID);

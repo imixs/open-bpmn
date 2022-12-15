@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface GroupGNode extends BaseElementGNode {
+public interface GroupGNode extends BPMNGNode {
 } // GroupGNode

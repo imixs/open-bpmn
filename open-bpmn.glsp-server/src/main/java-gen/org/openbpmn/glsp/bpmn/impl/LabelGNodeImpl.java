@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.LabelGNode;
  *
  * @generated
  */
-public class LabelGNodeImpl extends BaseElementGNodeImpl implements LabelGNode {
+public class LabelGNodeImpl extends BPMNGNodeImpl implements LabelGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

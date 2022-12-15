@@ -29,7 +29,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNFlowElement;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -123,7 +123,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         for (String feature : features) {
             if ("name".equals(feature)) {
                 // update the task CompartmentHeader (GLabel)
-                GLabel label = BPMNBuilderHelper.findCompartmentHeader((BaseElementGNode) gNodeElement);
+                GLabel label = BPMNBuilderHelper.findCompartmentHeader((BPMNGNode) gNodeElement);
                 if (label != null) {
                     label.setText(json.getString(feature));
                 }

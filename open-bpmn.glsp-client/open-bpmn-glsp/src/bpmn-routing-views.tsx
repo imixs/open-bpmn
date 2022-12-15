@@ -39,7 +39,7 @@ import { svg } from 'sprotty';
 const JSX = { createElement: svg };
 
 @injectable()
-export class BPMNSequenceFlowView extends PolylineEdgeViewWithGapsOnIntersections {
+export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
     protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
         const additionals = super.renderAdditionals(edge, segments, context);
         const p1 = segments[segments.length - 2];

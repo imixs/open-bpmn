@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bpmn" nsURI="http://www.openbpmn.org/bpmn/glsp" nsPrefix="bpmn">
-  <eClassifiers xsi:type="ecore:EClass" name="BaseElementGNode" eSuperTypes="glsp-graph.ecore#//GNode">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FlowElementGNode" eSuperTypes="#//BaseElementGNode">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="symbol" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TaskGNode" eSuperTypes="#//FlowElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="GatewayGNode" eSuperTypes="#//FlowElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EventGNode" eSuperTypes="#//FlowElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LabelGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="DataObjectGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="MessageGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="GroupGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="TextAnnotationGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PoolGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LaneGNode" eSuperTypes="#//BaseElementGNode"/>
-  <eClassifiers xsi:type="ecore:EClass" name="IconGNode" eSuperTypes="glsp-graph.ecore#//GCompartment"/>
-  <eClassifiers xsi:type="ecore:EClass" name="BPMNEdge" eSuperTypes="glsp-graph.ecore#//GEdge">
+  <eClassifiers xsi:type="ecore:EClass" name="BPMNGNode" eSuperTypes="glsp-graph.ecore#//GNode">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BPMNGEdge" eSuperTypes="glsp-graph.ecore#//GEdge">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IconGCompartment" eSuperTypes="glsp-graph.ecore#//GCompartment"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TaskGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GatewayGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EventGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LabelGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataObjectGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MessageGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GroupGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TextAnnotationGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="PoolGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LaneGNode" eSuperTypes="#//BPMNGNode"/>
 </ecore:EPackage>

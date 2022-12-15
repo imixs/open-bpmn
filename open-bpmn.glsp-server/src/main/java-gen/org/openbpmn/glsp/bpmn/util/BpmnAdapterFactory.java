@@ -78,12 +78,16 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     protected BpmnSwitch<Adapter> modelSwitch =
         new BpmnSwitch<Adapter>() {
             @Override
-            public Adapter caseBaseElementGNode(BaseElementGNode object) {
-                return createBaseElementGNodeAdapter();
+            public Adapter caseBPMNGNode(BPMNGNode object) {
+                return createBPMNGNodeAdapter();
             }
             @Override
-            public Adapter caseFlowElementGNode(FlowElementGNode object) {
-                return createFlowElementGNodeAdapter();
+            public Adapter caseBPMNGEdge(BPMNGEdge object) {
+                return createBPMNGEdgeAdapter();
+            }
+            @Override
+            public Adapter caseIconGCompartment(IconGCompartment object) {
+                return createIconGCompartmentAdapter();
             }
             @Override
             public Adapter caseTaskGNode(TaskGNode object) {
@@ -126,14 +130,6 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
                 return createLaneGNodeAdapter();
             }
             @Override
-            public Adapter caseIconGNode(IconGNode object) {
-                return createIconGNodeAdapter();
-            }
-            @Override
-            public Adapter caseBPMNEdge(BPMNEdge object) {
-                return createBPMNEdgeAdapter();
-            }
-            @Override
             public Adapter caseGArgumentable(GArgumentable object) {
                 return createGArgumentableAdapter();
             }
@@ -162,12 +158,12 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
                 return createGNodeAdapter();
             }
             @Override
-            public Adapter caseGCompartment(GCompartment object) {
-                return createGCompartmentAdapter();
-            }
-            @Override
             public Adapter caseGEdge(GEdge object) {
                 return createGEdgeAdapter();
+            }
+            @Override
+            public Adapter caseGCompartment(GCompartment object) {
+                return createGCompartmentAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -190,30 +186,44 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
 
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.BaseElementGNode <em>Base Element GNode</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.BPMNGNode <em>BPMNG Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.bpmn.BaseElementGNode
+     * @see org.openbpmn.glsp.bpmn.BPMNGNode
      * @generated
      */
-    public Adapter createBaseElementGNodeAdapter() {
+    public Adapter createBPMNGNodeAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.FlowElementGNode <em>Flow Element GNode</em>}'.
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.BPMNGEdge <em>BPMNG Edge</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see org.openbpmn.glsp.bpmn.FlowElementGNode
+     * @see org.openbpmn.glsp.bpmn.BPMNGEdge
      * @generated
      */
-    public Adapter createFlowElementGNodeAdapter() {
+    public Adapter createBPMNGEdgeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.IconGCompartment <em>Icon GCompartment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.openbpmn.glsp.bpmn.IconGCompartment
+     * @generated
+     */
+    public Adapter createIconGCompartmentAdapter() {
         return null;
     }
 
@@ -358,34 +368,6 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.IconGNode <em>Icon GNode</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.glsp.bpmn.IconGNode
-     * @generated
-     */
-    public Adapter createIconGNodeAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link org.openbpmn.glsp.bpmn.BPMNEdge <em>BPMN Edge</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.openbpmn.glsp.bpmn.BPMNEdge
-     * @generated
-     */
-    public Adapter createBPMNEdgeAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GArgumentable <em>GArgumentable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -484,20 +466,6 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GCompartment <em>GCompartment</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see org.eclipse.glsp.graph.GCompartment
-     * @generated
-     */
-    public Adapter createGCompartmentAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GEdge <em>GEdge</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -508,6 +476,20 @@ public class BpmnAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createGEdgeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.eclipse.glsp.graph.GCompartment <em>GCompartment</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.eclipse.glsp.graph.GCompartment
+     * @generated
+     */
+    public Adapter createGCompartmentAdapter() {
         return null;
     }
 

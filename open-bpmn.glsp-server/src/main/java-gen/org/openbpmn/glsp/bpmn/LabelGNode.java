@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface LabelGNode extends BaseElementGNode {
+public interface LabelGNode extends BPMNGNode {
 } // LabelGNode

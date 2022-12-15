@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.EventGNode;
  *
  * @generated
  */
-public class EventGNodeImpl extends FlowElementGNodeImpl implements EventGNode {
+public class EventGNodeImpl extends BPMNGNodeImpl implements EventGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

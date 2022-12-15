@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.TaskGNode;
  *
  * @generated
  */
-public class TaskGNodeImpl extends FlowElementGNodeImpl implements TaskGNode {
+public class TaskGNodeImpl extends BPMNGNodeImpl implements TaskGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

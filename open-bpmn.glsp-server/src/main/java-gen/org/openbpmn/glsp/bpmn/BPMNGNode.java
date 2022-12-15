@@ -2,40 +2,40 @@
  */
 package org.openbpmn.glsp.bpmn;
 
-import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.GNode;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>BPMN Edge</b></em>'.
+ * A representation of the model object '<em><b>BPMNG Node</b></em>'.
  * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.openbpmn.glsp.bpmn.BPMNEdge#getName <em>Name</em>}</li>
- *   <li>{@link org.openbpmn.glsp.bpmn.BPMNEdge#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.BPMNGNode#getName <em>Name</em>}</li>
+ *   <li>{@link org.openbpmn.glsp.bpmn.BPMNGNode#getKind <em>Kind</em>}</li>
  * </ul>
  *
- * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBPMNEdge()
+ * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBPMNGNode()
  * @model
  * @generated
  */
-public interface BPMNEdge extends GEdge {
+public interface BPMNGNode extends GNode {
     /**
      * Returns the value of the '<em><b>Name</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the value of the '<em>Name</em>' attribute.
      * @see #setName(String)
-     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBPMNEdge_Name()
+     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBPMNGNode_Name()
      * @model
      * @generated
      */
     String getName();
 
     /**
-     * Sets the value of the '{@link org.openbpmn.glsp.bpmn.BPMNEdge#getName <em>Name</em>}' attribute.
+     * Sets the value of the '{@link org.openbpmn.glsp.bpmn.BPMNGNode#getName <em>Name</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Name</em>' attribute.
@@ -50,14 +50,14 @@ public interface BPMNEdge extends GEdge {
      * <!-- end-user-doc -->
      * @return the value of the '<em>Kind</em>' attribute.
      * @see #setKind(String)
-     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBPMNEdge_Kind()
+     * @see org.openbpmn.glsp.bpmn.BpmnPackage#getBPMNGNode_Kind()
      * @model
      * @generated
      */
     String getKind();
 
     /**
-     * Sets the value of the '{@link org.openbpmn.glsp.bpmn.BPMNEdge#getKind <em>Kind</em>}' attribute.
+     * Sets the value of the '{@link org.openbpmn.glsp.bpmn.BPMNGNode#getKind <em>Kind</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @param value the new value of the '<em>Kind</em>' attribute.
@@ -66,4 +66,4 @@ public interface BPMNEdge extends GEdge {
      */
     void setKind(String value);
 
-} // BPMNEdge
+} // BPMNGNode

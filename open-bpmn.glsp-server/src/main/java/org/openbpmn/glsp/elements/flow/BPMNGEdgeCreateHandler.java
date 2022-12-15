@@ -21,19 +21,18 @@ import java.util.logging.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.glsp.bpmn.BaseElementGNode;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
 import org.openbpmn.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
-public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandler {
+public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
 
     protected final String label;
-    private static Logger logger = Logger.getLogger(BPMNCreateSequenceFlowHandler.class.getName());
+    private static Logger logger = Logger.getLogger(BPMNGEdgeCreateHandler.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
@@ -46,8 +45,8 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
      * <p>
      * We use this constructor to overwrite the handledElementTypeIds
      */
-    public BPMNCreateSequenceFlowHandler() {
-        super(BPMNTypes.SEQUENCE_FLOW);
+    public BPMNGEdgeCreateHandler() {
+        super(BPMNModel.BPMN_EDGES);
         this.label = "Sequence Flow";
     }
 
@@ -56,20 +55,19 @@ public class BPMNCreateSequenceFlowHandler extends CreateBPMNEdgeOperationHandle
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
-        // BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
 
         try {
-            Optional<BaseElementGNode> element = null;
+            Optional<BPMNGNode> element = null;
             String targetId = operation.getTargetElementId();
             // find GNode
-            element = modelState.getIndex().findElementByClass(targetId, BaseElementGNode.class);
+            element = modelState.getIndex().findElementByClass(targetId, BPMNGNode.class);
             if (element.isPresent()) {
                 targetId = element.get().getId();
             }
 
             String sourceId = operation.getSourceElementId();
             // find GNode
-            element = modelState.getIndex().findElementByClass(sourceId, BaseElementGNode.class);
+            element = modelState.getIndex().findElementByClass(sourceId, BPMNGNode.class);
             if (element.isPresent()) {
                 sourceId = element.get().getId();
             }

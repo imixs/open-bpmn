@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface TaskGNode extends FlowElementGNode {
+public interface TaskGNode extends BPMNGNode {
 } // TaskGNode

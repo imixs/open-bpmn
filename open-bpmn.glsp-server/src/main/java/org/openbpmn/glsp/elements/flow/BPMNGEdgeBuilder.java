@@ -17,9 +17,9 @@ package org.openbpmn.glsp.elements.flow;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNFlowEdge;
+import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
-import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
 
 /**
  * BPMN SequenceFlow
@@ -27,36 +27,35 @@ import org.openbpmn.glsp.bpmn.SequenceFlowGNode;
  * @author rsoika
  *
  */
-public class SequenceFlowGNodeBuilder extends AbstractGEdgeBuilder<SequenceFlowGNode, SequenceFlowGNodeBuilder> {
+public class BPMNGEdgeBuilder extends AbstractGEdgeBuilder<BPMNGEdge, BPMNGEdgeBuilder> {
 
-    private String condition;
+    private final String name;
 
-    public SequenceFlowGNodeBuilder() {
-        super(BPMNTypes.SEQUENCE_FLOW);
-    }
+    public BPMNGEdgeBuilder(final BPMNFlowEdge edge) {
+        super(edge.getType());
+        this.name = edge.getName();
+        this.id = edge.getId();
 
-    public SequenceFlowGNodeBuilder condition(final String condition) {
-        this.condition = condition;
-        return self();
+        this.addCssClass(type);
+        this.addCssClass("bpmnedge");
     }
 
     @Override
-    protected void setProperties(final SequenceFlowGNode edge) {
+    protected void setProperties(final BPMNGEdge edge) {
         super.setProperties(edge);
-        edge.setCondition(condition);
-
+        edge.setName(name);
         // set the custom BPMN Router Kind
         edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
         // edge.setRouterKind(ModelTypes.BPMN_ROUTER_KIND);
     }
 
     @Override
-    protected SequenceFlowGNode instantiate() {
-        return BpmnFactory.eINSTANCE.createSequenceFlowGNode();
+    protected BPMNGEdge instantiate() {
+        return BpmnFactory.eINSTANCE.createBPMNGEdge();
     }
 
     @Override
-    protected SequenceFlowGNodeBuilder self() {
+    protected BPMNGEdgeBuilder self() {
         return this;
     }
 

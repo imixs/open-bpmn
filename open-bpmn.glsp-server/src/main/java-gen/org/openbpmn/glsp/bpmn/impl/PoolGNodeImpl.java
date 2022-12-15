@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.PoolGNode;
  *
  * @generated
  */
-public class PoolGNodeImpl extends BaseElementGNodeImpl implements PoolGNode {
+public class PoolGNodeImpl extends BPMNGNodeImpl implements PoolGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

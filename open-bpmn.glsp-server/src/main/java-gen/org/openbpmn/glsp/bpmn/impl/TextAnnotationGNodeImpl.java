@@ -14,7 +14,7 @@ import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
  *
  * @generated
  */
-public class TextAnnotationGNodeImpl extends BaseElementGNodeImpl implements TextAnnotationGNode {
+public class TextAnnotationGNodeImpl extends BPMNGNodeImpl implements TextAnnotationGNode {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

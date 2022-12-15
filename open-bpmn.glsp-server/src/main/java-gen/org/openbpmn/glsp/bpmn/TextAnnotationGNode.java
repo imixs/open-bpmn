@@ -13,5 +13,5 @@ package org.openbpmn.glsp.bpmn;
  * @model
  * @generated
  */
-public interface TextAnnotationGNode extends BaseElementGNode {
+public interface TextAnnotationGNode extends BPMNGNode {
 } // TextAnnotationGNode
