@@ -34,7 +34,7 @@ import org.openbpmn.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * OperationHandler to create a new BPMNParticipant within the BPMN Model.
+ * OperationHandler to create a new BPMNLane within the BPMN Pool.
  *
  * @author rsoika
  *

@@ -22,6 +22,7 @@ import {
     SelectAction,
     setAttr,SShapeElement,
     SModelRoot,
+    isBoundsAware,
     hasArguments,
     Hoverable,Selectable,IViewArgs,SPort,SNode,
     TYPES
@@ -246,9 +247,11 @@ export class ContainerHeaderView extends ShapeView {
         if (containerNode) {
             containerLabel=containerNode.name;
         }
-        // we estimate the length of the label to translate the y position (just a guess)
-        // see also: https://github.com/imixs/open-bpmn/issues/91
-        const yOffset=containerLabel.length*3;
+        // we center the label vertical to the height of the container
+        let yOffset=0;
+        if (containerNode && isBoundsAware(containerNode)) {
+	        yOffset=containerNode.bounds.height*0.5 - 5;
+	    }        
         const vnode: any = (
             <g class-node={true}>
                 <text class-sprotty-label={true} transform={'scale(1),translate(14,'+yOffset+'),rotate(-90)'}>{containerLabel}</text>
