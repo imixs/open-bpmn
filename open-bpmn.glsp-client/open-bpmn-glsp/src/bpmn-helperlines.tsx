@@ -85,7 +85,6 @@ export class BPMNElementSnapper implements ISnapper {
 	 * the default.
 	 */
 	snap(position: Point, element: SModelElement): Point {
-		console.log('.....snapi...');
 		if (!isBPMNNode(element)) {
 			// return position;
 			return { x: position.x, y: position.y };
@@ -180,18 +179,16 @@ export class BPMNElementSnapper implements ISnapper {
 			// we need to find out if we are in a container....
 			if (modelElement instanceof SChildElement) {
 				childs=modelElement.parent.children;
-				console.log('....parent id = '+ modelElement.parent.id);
-				console.log('....child count = '+ childs.length);
 			}
 
 			const modelElementCenter = Bounds.center(modelElement.bounds);
-			console.log(' ... snap model element ' + modelElement.id + ' pos=' + modelElement.bounds.x + ','+modelElement.bounds.y);
+			// console.log(' ... snap model element ' + modelElement.id + ' pos=' + modelElement.bounds.x + ','+modelElement.bounds.y);
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			for (const element of childs) {
 				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
 					const elementCenter = Bounds.center(element.bounds);
-					console.log(' ... found element ' + element.id + ' pos=' + elementCenter.x + ','+elementCenter.y);
+					// console.log(' ... found element ' + element.id + ' pos=' + elementCenter.x + ','+elementCenter.y);
 					if (elementCenter && modelElementCenter) {
 						// test horizontal alligment...
 						if (y === -1 && this.isNear(elementCenter.y, modelElementCenter.y)) {
@@ -224,36 +221,6 @@ export class BPMNElementSnapper implements ISnapper {
 			return true;
 		}
 		return false;
-	}
-}
-
-/**
- * Snapper implementation to allign Boundary Events
- * The snapper finds the position according to the
- * reffered Task.
- */
-@injectable()
-export class BPMNBoundaryEventSnapper implements ISnapper {
-	get snapRange(): number {
-		return 10;
-	}
-
-	/* Find a possible snapPoint.
-	 * a SnapPoint is found if the x or y coordinates matching the position
-	 * of another element Node.
-	 * We are only interested in BPMNNode elemnets. For all other element we return
-	 * the default.
-	 */
-	snap(position: Point, element: SModelElement): Point {
-		if (!isBoundaryEvent(element)) {
-			console.log('--->we have a boundary event');
-			// return position;
-			return { x: position.x, y: position.y };
-		}
-		// find snap position
-		console.log('--->we have NOT a boundary event');
-
-		return { x: position.x, y: position.y };
 	}
 }
 
