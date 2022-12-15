@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=0.0 Y=0.0 -->
+<bpmn2:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1">
+  <bpmn2:process id="Process_1" name="Process 1" isExecutable="false">
+    <bpmn2:dataObject id="DataObject_2" name="Data Object 1"/>
+    <bpmn2:dataObject id="DataObject_4" name="Data Object 3"/>
+    <bpmn2:association id="Association_1" associationDirection="Both" sourceRef="DataObject_2" targetRef="DataObject_4">
+      <bpmn2:documentation id="Documentation_3"><![CDATA[docu]]></bpmn2:documentation>
+    </bpmn2:association>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1">
+      <bpmndi:BPMNShape id="BPMNShape_DataObject_1" bpmnElement="DataObject_2">
+        <dc:Bounds height="50.0" width="36.0" x="100.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="74.0" x="81.0" y="120.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_DataObject_2" bpmnElement="DataObject_4">
+        <dc:Bounds height="50.0" width="36.0" x="360.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="74.0" x="341.0" y="120.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_Association_1" bpmnElement="Association_1" sourceElement="BPMNShape_DataObject_1" targetElement="BPMNShape_DataObject_2">
+        <di:waypoint xsi:type="dc:Point" x="136.0" y="95.0"/>
+        <di:waypoint xsi:type="dc:Point" x="248.0" y="95.0"/>
+        <di:waypoint xsi:type="dc:Point" x="360.0" y="95.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_3"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+      <dc:Font name="arial" size="9.0"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
