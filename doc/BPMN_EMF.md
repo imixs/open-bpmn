@@ -1,24 +1,7 @@
 # BPMN 2.0 EMF
 
-The *bpmn-graph.ecore* file defines the graphical model of BPMN 2.0 used in Open BPMN. An .ecore file is a concept of the Eclispe Modeling Framework (EMF) and is used to describe model elements  The adapted node and edge elements of Open BPMN described within this model are designed to meet the requirements for the graphical modeling of a BPMN diagram. This includes the *Common Executable Conformance Sub-Class*. This conformance sub-class is intended for modeling tools that can emit executable models, which is the main purpose of Open BPMN. More details can be found in the [BPMN 2.0.2 specification](https://www.omg.org/spec/BPMN).
-
-
-
-The bpmn-graph.ecore file includes of the following diagram elements:
-
- - Task types, 
- - CallActivity,
- - all Gateway types, 
- - all Event types (Start, Intermediate, and End), 
- - Lane, 
- - Participants, 
- - Data Object 
- - Message, 
- - Group, 
- - Text
- - Annotation, 
- - Sequence Flow (including conditional and default flows),
- - Message Flow
+*Open BPMN* makes use of the [Eclipse Modeling Framework (EMF)](https://www.eclipse.org/modeling/emf/) to describe the graphical model elements.
+The file *bpmn-graph.ecore* defines the mode. The adapted node and edge elements of Open BPMN described within this model are designed to meet the basic requirements for the graphical modeling of a BPMN diagram. This makes the model very compact and easy to integrate.
 
 ## The Elements used in Open BPMN
 
@@ -26,50 +9,40 @@ Within the ecore model of Open BPMN we are using the following elements which bu
 
 	/open-bpmn.glsp-server/src/main/java-gen/
 
-### BaseElement
+### BPMNGNode
 
-The BaseElement extends the glsp GNode and provides the core properties of each BPMN element
+The *BPMNGNode* extends the glsp GNode and provides the core properties used by each kind of BPMN Flow Elements
 
  - name - used in the graphical view to label the element
+ - kind - sub type to define variants
  - documentation - an optional documentation for the element
  
-### FlowElement
+ 
+### BPMNGEdge
 
-The FlowElement extends the BaseElement and introduces the concept of categories for a element class which is a core concept of BPMN
+The *BPMNGEdge* extends the glsp GEdge and provides the basic properties used by each kind of BPMN Edge Elements
 
- - categories - a list of categories to specify the element - e.g. task:manaual, task:script, event:start, event:stop....
-  
+ - name - used in the graphical view to label the element
+ - kind - sub type to define variants
+ - documentation - an optional documentation for the element
+ 
 
-### TaskElement
+### Sub Elements
 
-The TaskNode extends the FlowElement and is used for all types of BPMN Tasks
+The following EMF classes define sub types of the BPMNGNode class used for the BPMN graphical core elements:
 
-
-### EventNode
-
-The EventNode extends the FlowElement and is used for all types of BPMN Events
-
-### GatewayNode
-
-The GatewayNode extends the FlowElement and is used for all types of BPMN Gateways
-
-### SequenceFlow
-
-The SequenceFlow extends the FlowElement and is used for all types of BPMN Sequence Flows
-
- - condition - optional condition of a flow
-
-
-### Pool
-
-The Pool is a container for FlowElements
-
-## Visual Appearance - GLSP
-
-A key element of BPMN is the choice of shapes and icons used for the graphical elements identified in this International
-Standard. The intent is to create a standard visual language that all process modelers will recognize and understand. Open BPMN uses the graphical elements, shapes, and markers illustrated in the BPMN 2.0 standard.
-
-The graphical model is based on the [GLSP modeling concept](https://www.eclipse.org/glsp/) and did not contain all properties from the BPMN 2.0.2 specification. But the Open BPMN model Server can deal with all aspects of BPMN 2.0 and translates a .bpmn file into a GLSP model and vice versa. 
+ - TaskGNode - represents a BPMN Activity
+ - GatewayGNode - represents a BPMN Gateway
+ - EventGNode - represents a BPMN Event
+ - IconGCompartment - represents an embedded icon (used by task elements)
+ - LabelGNode - represents a BPMN Label below a graphical Node (used by Events and Gateways)
+ - DataObjectGNode - represents a BPMN Data Object
+ - MessageGNode - represents a BPMN Message Object
+ - GroupGNode - represents a BPMN Group
+ - TextAnnotationGNode - represents a BPMN Text Annotation
+ - PoolGNode - represents a BPMN Participant (Pool)
+ - LaneGNode - represents a Lane within a Pool
+ 
 
 
 
