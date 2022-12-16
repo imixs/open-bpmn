@@ -1,7 +1,7 @@
 # BPMN 2.0 EMF
 
 *Open BPMN* makes use of the [Eclipse Modeling Framework (EMF)](https://www.eclipse.org/modeling/emf/) to describe the graphical model elements.
-The file *bpmn-graph.ecore* defines the mode. The adapted node and edge elements of Open BPMN described within this model are designed to meet the basic requirements for the graphical modeling of a BPMN diagram. This makes the model very compact and easy to integrate.
+The file *bpmn-graph.ecore* defines the EMF model. The adapted node and edge elements of Open BPMN described within this model are designed to meet the basic requirements for the graphical modeling of a BPMN diagram. This makes the model very compact and easy to integrate.
 
 ## The Elements used in Open BPMN
 
