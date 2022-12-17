@@ -154,10 +154,21 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // SequenceFLow
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
-
         sequenceFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         sequenceFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
         edgeHints.add(sequenceFlowHint);
+
+        // MessageFLow
+        EdgeTypeHint messageFlowHint = createDefaultEdgeTypeHint(BPMNTypes.MESSAGE_FLOW);
+        messageFlowHint.setSourceElementTypeIds(Arrays.asList(BPMNTypes.POOL));
+        messageFlowHint.setTargetElementTypeIds(Arrays.asList(BPMNTypes.POOL));
+        edgeHints.add(messageFlowHint);
+
+        // Association
+        EdgeTypeHint associationHint = createDefaultEdgeTypeHint(BPMNTypes.ASSOCIATION);
+        associationHint.setSourceElementTypeIds(Arrays.asList(BPMNTypes.DATAOBJECT));
+        associationHint.setTargetElementTypeIds(Arrays.asList(BPMNTypes.DATAOBJECT));
+        edgeHints.add(associationHint);
 
         return edgeHints;
     }

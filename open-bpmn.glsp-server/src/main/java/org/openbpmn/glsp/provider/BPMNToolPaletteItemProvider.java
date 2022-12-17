@@ -27,7 +27,6 @@ import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.eclipse.glsp.server.operations.CreateOperation;
 import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
@@ -63,13 +62,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
     @Override
     public List<PaletteItem> getItems(final Map<String, String> args) {
-        List<CreateOperationHandler> handlers = operationHandlerRegistry.getAll().stream()
-                .filter(CreateOperationHandler.class::isInstance).map(CreateOperationHandler.class::cast)
-                .collect(Collectors.toList());
         counter = 0;
-
         // Create custom Palette Groups
-        List<PaletteItem> edges = createPaletteItems(handlers, CreateEdgeOperation.class);
         return Lists.newArrayList(
                 PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(), "symbol-property", "A"),
                 PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(), "symbol-property", "B"),
@@ -82,7 +76,9 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
                 PaletteItem.createPaletteGroup("gateway-group", "Data Items", createPaletteDataItems(),
                         "symbol-property", "F"),
-                PaletteItem.createPaletteGroup("edge-group", "Edges", edges, "symbol-property", "G"),
+
+                PaletteItem.createPaletteGroup("edge-group", "Edges", createPaletteSequenceFlowItems(),
+                        "symbol-property", "G"),
 
                 PaletteItem.createPaletteGroup("extension-group", "Extensions", createPaletteExtensions(),
                         "symbol-property", "H")
@@ -99,8 +95,21 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteSequenceFlowItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        result.add(new PaletteItem(BPMNTypes.SEQUENCE_FLOW, "Sequence Flow",
-                new TriggerEdgeCreationAction(BPMNTypes.SEQUENCE_FLOW)));
+
+        PaletteItem item = new PaletteItem(BPMNTypes.SEQUENCE_FLOW, "Sequence Flow",
+                new TriggerEdgeCreationAction(BPMNTypes.SEQUENCE_FLOW));
+        item.setSortString("A");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.MESSAGE_FLOW, "Message Flow",
+                new TriggerEdgeCreationAction(BPMNTypes.MESSAGE_FLOW));
+        item.setSortString("B");
+        result.add(item);
+
+        item = new PaletteItem(BPMNTypes.ASSOCIATION, "Association",
+                new TriggerEdgeCreationAction(BPMNTypes.ASSOCIATION));
+        item.setSortString("C");
+        result.add(item);
 
         return result;
     }
