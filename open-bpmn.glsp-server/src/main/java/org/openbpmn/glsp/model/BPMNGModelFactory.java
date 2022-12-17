@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-package org.openbpmn.model;
+package org.openbpmn.glsp.model;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -68,8 +68,8 @@ import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.dataobject.DataObjectGNodeBuilder;
+import org.openbpmn.glsp.elements.edge.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
-import org.openbpmn.glsp.elements.flow.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
 import org.openbpmn.glsp.elements.label.LabelGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.LaneGNodeBuilder;

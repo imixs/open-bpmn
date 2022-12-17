@@ -31,7 +31,7 @@ import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

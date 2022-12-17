@@ -27,7 +27,7 @@ import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

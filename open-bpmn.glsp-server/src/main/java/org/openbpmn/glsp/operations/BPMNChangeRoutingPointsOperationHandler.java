@@ -24,7 +24,7 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

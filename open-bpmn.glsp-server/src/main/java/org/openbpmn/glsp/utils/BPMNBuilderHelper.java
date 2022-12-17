@@ -30,8 +30,8 @@ import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
-import org.openbpmn.glsp.elements.IconGNodeBuilder;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 /**
  * The BPMNBuilderHelper provides helper methods to create GNode Elements
@@ -44,7 +44,7 @@ public class BPMNBuilderHelper {
     private static final String V_GRAB = "vGrab";
 
     public static IconGCompartment createCompartmentIcon(final BPMNGNode node) {
-        return new IconGNodeBuilder(). //
+        return new IconGCompartmentBuilder(). //
                 id(node.getId() + "_icon"). //
                 build();
     }

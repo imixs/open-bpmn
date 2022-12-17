@@ -26,7 +26,8 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 /**
- * The CreateBPMNEdgeOperationHandler is used for generating sequence flows
+ * The CreateBPMNEdgeOperationHandler is used for generating BPMN edged like
+ * SequenceFlows, MessageFlows and Associations
  *
  * @author rsoika
  *

@@ -28,8 +28,8 @@ import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.PoolGNode;
+import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
-import org.openbpmn.model.BPMNGModelState;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;

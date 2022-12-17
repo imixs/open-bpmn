@@ -30,7 +30,7 @@ import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

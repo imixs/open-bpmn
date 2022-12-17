@@ -40,13 +40,16 @@ import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.glsp.elements.dataobject.BPMNCreateDataObjectHandler;
+import org.openbpmn.glsp.elements.edge.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
-import org.openbpmn.glsp.elements.flow.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
+import org.openbpmn.glsp.model.BPMNGModelFactory;
+import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNSourceModelStorage;
 import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
@@ -56,9 +59,6 @@ import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNModelValidator;
 import org.openbpmn.glsp.validators.LabelEditValidator;
-import org.openbpmn.model.BPMNGModelFactory;
-import org.openbpmn.model.BPMNGModelState;
-import org.openbpmn.model.BPMNSourceModelStorage;
 
 import com.google.inject.multibindings.Multibinder;
 

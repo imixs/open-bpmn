@@ -28,9 +28,9 @@ import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.TaskGNode;
-import org.openbpmn.glsp.elements.IconGNodeBuilder;
+import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
+import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
-import org.openbpmn.model.BPMNGModelFactory;
 
 /**
  * BPMN 2.0 Task Element.
@@ -94,7 +94,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
 
-        IconGCompartment taskIcon = new IconGNodeBuilder(). //
+        IconGCompartment taskIcon = new IconGCompartmentBuilder(). //
                 id(node.getId() + "_icon"). //
                 layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.LEFT)). //
                 build();

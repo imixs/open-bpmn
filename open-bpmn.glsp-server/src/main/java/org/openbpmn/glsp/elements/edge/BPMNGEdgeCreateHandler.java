@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.flow;
+package org.openbpmn.glsp.elements.edge;
 
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -25,7 +25,7 @@ import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 

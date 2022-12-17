@@ -23,16 +23,16 @@ import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
- * The IconBuilder is used to add icons into different elements like Tasks or
- * Gateways
+ * The IconGCompartmentBuilder is used to add icons into various elements like
+ * Tasks or Gateways
  *
  * @See {@link TaskGNodeBuilder}, {@link GatewayGNodeBuilder}
  * @author rsoika
  *
  */
-public class IconGNodeBuilder extends AbstractGCompartmentBuilder<IconGCompartment, IconGNodeBuilder> {
+public class IconGCompartmentBuilder extends AbstractGCompartmentBuilder<IconGCompartment, IconGCompartmentBuilder> {
 
-    public IconGNodeBuilder() {
+    public IconGCompartmentBuilder() {
         super(ModelTypes.ICON);
     }
 
@@ -42,7 +42,7 @@ public class IconGNodeBuilder extends AbstractGCompartmentBuilder<IconGCompartme
     }
 
     @Override
-    protected IconGNodeBuilder self() {
+    protected IconGCompartmentBuilder self() {
         return this;
     }
 

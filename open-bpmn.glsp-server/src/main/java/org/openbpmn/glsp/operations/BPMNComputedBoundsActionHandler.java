@@ -28,7 +28,7 @@ import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
-import org.openbpmn.model.BPMNGModelState;
+import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
