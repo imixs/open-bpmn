@@ -18,8 +18,8 @@ import org.w3c.dom.NodeList;
  * The BPMNElementEdge is the abstract super class for all BPMN edge types
  * (SequenceFlow, MessageFlow, Association).
  * <p>
- * The BPMNElementEdge provides general attributes like the source and target ref
- * and also the wayPoint attribute.
+ * The BPMNElementEdge provides general attributes like the source and target
+ * ref and also the wayPoint attribute.
  * <p>
  * A BPMNElementEdge extends the AbstractBPMNElement
  * 
@@ -34,6 +34,10 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
     protected Element bpmnEdge = null;
     protected Set<BPMNPoint> wayPoints = null;
 
+    public BPMNElementEdge(BPMNModel model, Element node) {
+       super(model,node);
+    }
+    
     public BPMNElementEdge(BPMNModel model, Element node, String _type, Process _bpmnProcess) {
         super(model, node);
         this.type = _type;
@@ -68,6 +72,7 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
             }
         }
     }
+
 
     /**
      * Returns the BPMNProcess this element belongs to.
@@ -119,7 +124,7 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
      * @return
      */
     public BPMNElementNode getSourceElement() {
-        return this.bpmnProcess.findBPMNNodeById(sourceRef);
+        return this.model.findElementNodeById(sourceRef);
     }
 
     public void setSourceRef(String sourceRef) {
@@ -145,7 +150,7 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
      * @return
      */
     public BPMNElementNode getTargetElement() {
-        return this.bpmnProcess.findBPMNNodeById(targetRef);
+        return this.model.findElementNodeById(targetRef);
     }
 
     public Set<BPMNPoint> getWayPoints() {
@@ -183,6 +188,26 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
             logger.warning("missing bpmnShape for SequenceFlow: " + this.getId());
         }
         this.wayPoints.add(wayPoint);
+    }
+
+    /**
+     * Creates the default waypoints if no waypoints are defined. This is useful in
+     * case of a backend creation of edges.
+     * 
+     * @param wayPoint
+     */
+    public void addDefaultWayPoints() {
+        // Waypoint exist?
+        if (this.getWayPoints().size() > 0) {
+            return;
+        }
+
+        BPMNElementNode sourceElement = this.getSourceElement();
+        BPMNElementNode targetElement = this.getTargetElement();
+        if (sourceElement != null && targetElement != null) {
+            addWayPoint(sourceElement.bounds.getCenter());
+            addWayPoint(targetElement.bounds.getCenter());
+        }
     }
 
     /**

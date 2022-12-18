@@ -92,7 +92,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {
                 // we assume that the containerId is the Task Element...
-                containerElement = modelState.getBpmnModel().findNodeElementById(containerId);
+                containerElement = modelState.getBpmnModel().findElementNodeById(containerId);
                 if (containerElement != null && containerElement instanceof Activity) {
                     // it is a BPMNActivity
                     bpmnProcess = ((Activity) containerElement).getBpmnProcess();

@@ -48,7 +48,7 @@ public class TestBPMNLanes {
             Process process = participant.openProcess();
             assertNotNull(process);
 
-            BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_4");
+            BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_4");
             assertNotNull(bpmnFlowElement);
             
             // read laneset.....
@@ -144,7 +144,7 @@ public class TestBPMNLanes {
             
             
             // insert new test-lane before Lane 2
-            Lane lane2 = process.findBPMNLaneById("Lane_2");
+            Lane lane2 = process.findLaneById("Lane_2");
           process.insertLaneBefore(laneTest, lane2) ;// laneTest.insertBefore(lane2);
            
             model.save(out);

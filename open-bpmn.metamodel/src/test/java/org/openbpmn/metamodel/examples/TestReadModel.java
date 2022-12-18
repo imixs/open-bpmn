@@ -43,7 +43,7 @@ public class TestReadModel {
             assertEquals(2, process.getActivities().size());
             assertEquals(2, process.getEvents().size());
 
-            BPMNElementNode startEvent = process.findBPMNNodeById("StartEvent_1");
+            BPMNElementNode startEvent = process.findElementNodeById("StartEvent_1");
             assertNotNull(startEvent);
 
             // test the label position of the event
@@ -83,7 +83,7 @@ public class TestReadModel {
             assertEquals(1, process1.getActivities().size());
             assertEquals(2, process1.getEvents().size());
 
-            BPMNElementNode startEvent = process1.findBPMNNodeById("StartEvent_1");
+            BPMNElementNode startEvent = process1.findElementNodeById("StartEvent_1");
             assertNotNull(startEvent);
 
             // test the label position of the event
@@ -124,7 +124,7 @@ public class TestReadModel {
             Process process1 = model.openProcess("Process_1");
             assertEquals(1, process1.getActivities().size());
             assertEquals(2, process1.getEvents().size());
-            BPMNElementNode startEvent = process1.findBPMNNodeById("StartEvent_1");
+            BPMNElementNode startEvent = process1.findElementNodeById("StartEvent_1");
             assertNotNull(startEvent);
 
             // test the label position of the event

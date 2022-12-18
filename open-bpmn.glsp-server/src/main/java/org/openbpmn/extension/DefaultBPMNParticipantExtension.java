@@ -209,7 +209,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                         // update lane properties
                         JsonObject laneData = (JsonObject) laneValue;
                         String id = laneData.getString("id");
-                        Lane bpmnLane = process.findBPMNLaneById(id);
+                        Lane bpmnLane = process.findLaneById(id);
                         if (bpmnLane != null) {
                             bpmnLane.setName(laneData.getString("name"));
                             bpmnLane.setDocumentation(laneData.getString("documentation"));

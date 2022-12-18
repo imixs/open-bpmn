@@ -73,7 +73,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         Optional<BPMNGNode> _baseElement = modelState.getIndex().findElementByClass(elementID, BPMNGNode.class);
         if (!_baseElement.isEmpty()) {
             gModelElement = _baseElement.get();
-            bpmnElement = modelState.getBpmnModel().findNodeElementById(elementID);
+            bpmnElement = modelState.getBpmnModel().findElementNodeById(elementID);
             // throw new RuntimeException("Cannot find BaseElement with id '" +
             // operation.getId() + "'");
         }

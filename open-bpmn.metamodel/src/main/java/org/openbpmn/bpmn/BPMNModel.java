@@ -29,6 +29,7 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
@@ -38,6 +39,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
@@ -67,7 +69,7 @@ public class BPMNModel {
     protected Element bpmnPlane = null;
     protected Set<Participant> participants = null;
     protected Set<Process> processes = null;
-
+    protected Set<MessageFlow> messageFlows = null;
     protected Element collaborationElement = null;
 
     public static final String PARTICIPANT = "participant";
@@ -294,6 +296,16 @@ public class BPMNModel {
             processes = new LinkedHashSet<Process>();
         }
         return processes;
+    }
+    public Set<MessageFlow> getMessageFlows() {
+        if (messageFlows == null) {
+            messageFlows = new LinkedHashSet<MessageFlow>();
+        }
+        return messageFlows;
+    }
+
+    public void setMessageFlows(Set<MessageFlow> messageFlows) {
+        this.messageFlows = messageFlows;
     }
 
     public void setProcesses(Set<Process> processes) {
@@ -612,6 +624,65 @@ public class BPMNModel {
         return element;
     }
 
+    
+    /**
+     * Adds a MessageFlow. The method computes and validates the source and target
+     * elements based on this process context.
+     * <p>
+     * <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="Task_1" targetRef=
+     * "SendTask_1"/>
+     * 
+     * @param id
+     * @param source - ID of the source element
+     * @param target - ID of the target element
+     * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException
+     * @throws BPMNInvalidTypeException
+     */
+    public MessageFlow addMessageFlow(String id, String sourceId, String targetId)
+            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
+        if (sourceId == null || sourceId.equals(targetId)) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source and Target ID can not be the same");
+        }
+       
+        // validate Source and Target IDs
+        // both must be part of the same process
+        BPMNElementNode sourceElement = findElementNodeById(sourceId);
+        BPMNElementNode targetElement = findElementNodeById(targetId);
+        if (sourceElement == null || targetElement == null) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source and Target must be part of the process!");
+        }
+
+
+        // create sequenceFlow element
+        Element bpmnEdgeElement = createElement(BPMNNS.BPMN2, BPMNTypes.MESSAGE_FLOW);
+        bpmnEdgeElement.setAttribute("id", id);
+        bpmnEdgeElement.setAttribute("sourceRef", sourceId);
+        bpmnEdgeElement.setAttribute("targetRef", targetId);
+
+       // this.definitions.appendChild(bpmnEdgeElement);
+        
+        this.collaborationElement.appendChild(bpmnEdgeElement);
+
+        //.insertAfter(bpmnEdgeElement, this.collaborationElement.getLastChild());
+        
+
+        MessageFlow messageFlow =new MessageFlow(this, bpmnEdgeElement, bpmnEdgeElement.getLocalName());
+        getMessageFlows().add(messageFlow);
+       
+        messageFlow.addDefaultWayPoints();
+        
+        // add refs to the BPMNEdge element...
+        Element edgeShape = messageFlow.getBpmnEdge();
+        edgeShape.setAttribute("sourceElement", sourceElement.getBpmnShape().getAttribute("id"));
+        edgeShape.setAttribute("targetElement", targetElement.getBpmnShape().getAttribute("id"));
+
+       return messageFlow;
+    }
+
+    
     /**
      * Finds a BPMNElement by ID within this model. The Element can be a Node or an
      * Edge. The method iterates over all existing Processes and its contained
@@ -642,7 +713,7 @@ public class BPMNModel {
 
             } else {
                 // analyze the content of the process
-                AbstractBPMNElement baseElement = process.findBPMNElementById(id);
+                AbstractBPMNElement baseElement = process.findElementById(id);
                 if (baseElement != null) {
                     return baseElement;
                 }
@@ -662,7 +733,7 @@ public class BPMNModel {
      * @param id - the BPMN Element id
      * @return
      */
-    public BPMNElementNode findNodeElementById(String id) {
+    public BPMNElementNode findElementNodeById(String id) {
 
         AbstractBPMNElement result = this.findElementById(id);
         if (result != null && result instanceof BPMNElementNode) {
@@ -682,7 +753,7 @@ public class BPMNModel {
      * @param id - the BPMN Element id
      * @return
      */
-    public BPMNElementEdge findEdgeElementById(String id) {
+    public BPMNElementEdge findElementEdgeById(String id) {
 
         AbstractBPMNElement result = this.findElementById(id);
         if (result != null && result instanceof BPMNElementEdge) {
@@ -724,7 +795,7 @@ public class BPMNModel {
                         return participant.getBounds();
                     } else {
                         // analyze the content of the process
-                        BPMNElementNode baseElement = participant.openProcess().findBPMNNodeById(id);
+                        BPMNElementNode baseElement = participant.openProcess().findElementNodeById(id);
                         if (baseElement != null) {
                             return baseElement.getBounds();
                         }
@@ -732,7 +803,7 @@ public class BPMNModel {
                 }
             } else {
                 // just analyze the default process
-                BPMNElementNode baseElement = openDefaultProcess().findBPMNNodeById(id);
+                BPMNElementNode baseElement = openDefaultProcess().findElementNodeById(id);
                 if (baseElement != null) {
                     return baseElement.getBounds();
                 }

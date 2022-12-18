@@ -47,7 +47,7 @@ public class TestReadBounds {
             Process process = model.openProcess(null);
             assertNotNull(process);
 
-            BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_1");
+            BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_1");
             assertNotNull(bpmnFlowElement);
 
             BPMNBounds bounds = bpmnFlowElement.getBounds();
@@ -77,7 +77,7 @@ public class TestReadBounds {
             Process process = model.openProcess(null);
             assertNotNull(process);
 
-            BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_1");
+            BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_1");
 
             assertNotNull(bpmnFlowElement);
 

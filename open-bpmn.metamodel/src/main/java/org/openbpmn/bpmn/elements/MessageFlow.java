@@ -1,17 +1,52 @@
 package org.openbpmn.bpmn.elements;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 
 public class MessageFlow extends BPMNElementEdge {
-    @SuppressWarnings("unused")
+
     private static Logger logger = Logger.getLogger(MessageFlow.class.getName());
 
-    public MessageFlow(BPMNModel model, Element node, String _type, Process _bpmnProcess) {
-        super(model, node, _type, _bpmnProcess);
+    public MessageFlow(BPMNModel model, Element node, String _type) {
+        super(model, node);
+        this.type = _type;
+
+        wayPoints = new LinkedHashSet<BPMNPoint>();
+
+        this.sourceRef = this.getAttribute("sourceRef");
+        if (sourceRef.isEmpty()) {
+            logger.warning("Missing sourceRef!");
+        }
+
+        this.targetRef = this.getAttribute("targetRef");
+        if (targetRef.isEmpty()) {
+            logger.warning("Missing targetRef!");
+        }
+
+        // find the BPMNShape element. If not defined create a new one
+
+        bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
+        if (bpmnEdge == null) {
+            // create shape element
+            createBPMNEdge();
+        } else {
+            // parse waypoints (di:waypoint)
+            Set<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, BPMNNS.DI.prefix + ":waypoint");
+            for (Element wayPoint : wayPoints) {
+                NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
+                BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
+                        wayPointattributeMap.getNamedItem("y").getNodeValue());
+                getWayPoints().add(point);
+            }
+        }
+
     }
-    
 }

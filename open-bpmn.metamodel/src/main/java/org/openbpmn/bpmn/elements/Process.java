@@ -48,7 +48,7 @@ public class Process extends AbstractBPMNElement {
     protected Set<Gateway> gateways = null;
     protected Set<SequenceFlow> sequenceFlows = null;
     protected Set<Association> associations = null;
-    protected Set<MessageFlow> messageFlows = null;
+   
     protected Set<Lane> lanes = null;
     protected Element laneSet = null;
 
@@ -117,9 +117,6 @@ public class Process extends AbstractBPMNElement {
                     this.createBPMNDataObjectByNode((Element) child);
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
-
-                } else if (BPMNModel.isMessageFlow(child)) {
-                    this.createBPMNMessageFlowByNode((Element) child);
                 } else if (BPMNModel.isAssociation(child)) {
                     this.createBPMNAssociationByNode((Element) child);
 
@@ -240,17 +237,7 @@ public class Process extends AbstractBPMNElement {
         this.associations = accociations;
     }
 
-    public Set<MessageFlow> getMessageFlows() {
-        if (messageFlows == null) {
-            messageFlows = new LinkedHashSet<MessageFlow>();
-        }
-        return messageFlows;
-    }
-
-    public void setMessageFlows(Set<MessageFlow> messageFlows) {
-        this.messageFlows = messageFlows;
-    }
-
+ 
     /**
      * Creates a new BPMNTask element.
      * <p>
@@ -406,6 +393,9 @@ public class Process extends AbstractBPMNElement {
      * <p>
      * <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="Task_1" targetRef=
      * "SendTask_1"/>
+     * <p>
+     * Note: In case of a SequenceFlow the edge ID is added to the BPMNFlow Element.
+     * For MessageFlows and Association this additional reference is skipped.
      * 
      * @param id
      * @param source - ID of the source element
@@ -414,29 +404,57 @@ public class Process extends AbstractBPMNElement {
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidTypeException
      */
-    public BPMNElementEdge addSequenceFlow(String id, String source, String target)
+    public SequenceFlow addSequenceFlow(String id, String source, String target)
             throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
-        return addEdge(id, source, target, BPMNTypes.SEQUENCE_FLOW);
+
+        // validate Source and Target IDs
+        // both must be part of the same process
+        BPMNElementNode sourceElement = model.findElementNodeById(source);
+        BPMNElementNode targetElement = model.findElementNodeById(target);
+
+        if (sourceElement == null || targetElement == null) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source and Target must be part of the process!");
+        }
+
+        if (source == null || source.equals(target)) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source and Target ID can not be the same");
+        }
+
+        // create sequenceFlow element
+        Element bpmnEdgeElement = model.createElement(BPMNNS.BPMN2, BPMNTypes.SEQUENCE_FLOW);
+        bpmnEdgeElement.setAttribute("id", id);
+        bpmnEdgeElement.setAttribute("sourceRef", source);
+        bpmnEdgeElement.setAttribute("targetRef", target);
+
+        this.getElementNode().appendChild(bpmnEdgeElement);
+
+        SequenceFlow sequenceFlow = this.createBPMNSequenceFlowByNode(bpmnEdgeElement);
+
+        // add refs to the BPMNEdge element...
+        Element edgeShape = sequenceFlow.getBpmnEdge();
+        edgeShape.setAttribute("sourceElement", sourceElement.getBpmnShape().getAttribute("id"));
+        edgeShape.setAttribute("targetElement", targetElement.getBpmnShape().getAttribute("id"));
+
+        // add a default waypoint
+        // <di:waypoint xsi:type="dc:Point" x="156.0" y="105.0"/>
+        // <di:waypoint xsi:type="dc:Point" x="243.0" y="105.0"/>
+        sequenceFlow.addDefaultWayPoints();
+
+        // add outgoing reference to source element
+        Element refOut = model.createElement(BPMNNS.BPMN2, "outgoing");
+        refOut.setTextContent(id);
+        sourceElement.getElementNode().appendChild(refOut);
+        // add incoming reference to target element
+        Element refIn = model.createElement(BPMNNS.BPMN2, "incoming");
+        refIn.setTextContent(id);
+        targetElement.getElementNode().appendChild(refIn);
+
+        return sequenceFlow;
     }
 
-    /**
-     * Adds a MessageFlow. The method computes and validates the source and target
-     * elements based on this process context.
-     * <p>
-     * <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="Task_1" targetRef=
-     * "SendTask_1"/>
-     * 
-     * @param id
-     * @param source - ID of the source element
-     * @param target - ID of the target element
-     * @throws BPMNInvalidReferenceException
-     * @throws BPMNMissingElementException
-     * @throws BPMNInvalidTypeException
-     */
-    public BPMNElementEdge addMessageFlow(String id, String source, String target)
-            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
-        return addEdge(id, source, target, BPMNTypes.MESSAGE_FLOW);
-    }
+   
 
     /**
      * Adds a Association. The method computes and validates the source and target
@@ -452,103 +470,44 @@ public class Process extends AbstractBPMNElement {
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidTypeException
      */
-    public BPMNElementEdge addAssociation(String id, String source, String target)
-            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
-        return addEdge(id, source, target, BPMNTypes.ASSOCIATION);
-    }
-
-    /**
-     * Creates a new BPMNEdge. The edge type is defined by the type parameter and
-     * can be 'SequenceFlow', 'MessageFlow' or 'Association'.
-     * <p>
-     * The method computes and validates the source and target elements based on
-     * this process context.
-     * <p>
-     * Note: In case of a SequenceFlow the ege ID is added to the BPMNFlow Element.
-     * For MessageFlows and Association this additional reference is scipped.
-     * <p>
-     * <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="Task_1" targetRef=
-     * "SendTask_1"/>
-     * 
-     * @param id
-     * @param source - ID of the source element
-     * @param target - ID of the target element
-     * @throws BPMNInvalidReferenceException
-     * @throws BPMNMissingElementException
-     * @throws BPMNInvalidTypeException
-     */
-    private BPMNElementEdge addEdge(String id, String source, String target, String bpmnEdgeType)
+    public Association addAssociation(String id, String source, String target)
             throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
 
-        // validate IDs
-        BPMNElementNode sourceElement = (BPMNElementNode) findBPMNNodeById(source);
-        BPMNElementNode targetElement = (BPMNElementNode) findBPMNNodeById(target);
+        BPMNElementNode sourceElement = model.findElementNodeById(source);
+        BPMNElementNode targetElement = model.findElementNodeById(target);
 
-        if (sourceElement == null || targetElement == null) {
-            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
-                    "Source or Target ID not set");
-        }
-        if (sourceElement.getId().equals(targetElement.getId())) {
+        if (source == null || source.equals(target)) {
             throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
                     "Source and Target ID can not be the same");
         }
+        if (sourceElement == null || targetElement == null) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Source and Target must be part of the process!");
+        }
+
+        // validate Source and Target IDs
+        // both must be part of the same process
 
         // create sequenceFlow element
-        Element bpmnEdgeElement = model.createElement(BPMNNS.BPMN2, bpmnEdgeType);
+        Element bpmnEdgeElement = model.createElement(BPMNNS.BPMN2, BPMNTypes.ASSOCIATION);
         bpmnEdgeElement.setAttribute("id", id);
         bpmnEdgeElement.setAttribute("sourceRef", source);
         bpmnEdgeElement.setAttribute("targetRef", target);
 
         this.getElementNode().appendChild(bpmnEdgeElement);
 
-        if (BPMNTypes.SEQUENCE_FLOW.equals(bpmnEdgeType)) {
-            // add outgoing reference to source element
-            Element refOut = model.createElement(BPMNNS.BPMN2, "outgoing");
-            refOut.setTextContent(id);
-            sourceElement.getElementNode().appendChild(refOut);
-            // add incoming reference to target element
-            Element refIn = model.createElement(BPMNNS.BPMN2, "incoming");
-            refIn.setTextContent(id);
-            targetElement.getElementNode().appendChild(refIn);
-        }
-
-        BPMNElementEdge bpmnBaseEdge;
-        switch (bpmnEdgeType) {
-        case BPMNTypes.SEQUENCE_FLOW:
-            bpmnBaseEdge = this.createBPMNSequenceFlowByNode(bpmnEdgeElement);
-            break;
-        case BPMNTypes.MESSAGE_FLOW:
-            bpmnBaseEdge = this.createBPMNMessageFlowByNode(bpmnEdgeElement);
-            break;
-        case BPMNTypes.ASSOCIATION:
-            bpmnBaseEdge = this.createBPMNAssociationByNode(bpmnEdgeElement);
-            break;
-        default:
-            // unknown edge type
-            throw new BPMNInvalidTypeException("Invalid BPMN Type: " + bpmnEdgeType);
-        }
-
+        Association association = this.createBPMNAssociationByNode(bpmnEdgeElement);
+        association.addDefaultWayPoints();
+        
         // add refs to the BPMNEdge element...
-        Element edgeShape = bpmnBaseEdge.getBpmnEdge();
+        Element edgeShape = association.getBpmnEdge();
         edgeShape.setAttribute("sourceElement", sourceElement.getBpmnShape().getAttribute("id"));
         edgeShape.setAttribute("targetElement", targetElement.getBpmnShape().getAttribute("id"));
 
-        return bpmnBaseEdge;
+        return association;
     }
 
-    /**
-     * Returns all BPMNFlowElements contained in this process
-     * 
-     * @return
-     */
-    // public Set<BPMNElementNode> getBPMNNodes() {
-    // Set<BPMNElementNode> result = new LinkedHashSet<BPMNElementNode>();
-    //
-    // result.addAll(this.getActivities());
-    // result.addAll(this.getEvents());
-    // result.addAll(this.getGateways());
-    // return result;
-    // }
+   
 
     /**
      * Creates a new BPMNLane element and adds the element into this process
@@ -697,7 +656,7 @@ public class Process extends AbstractBPMNElement {
      * @param id
      */
     public void deleteLane(String id) {
-        Lane lane = (Lane) findBPMNLaneById(id);
+        Lane lane = (Lane) findLaneById(id);
         if (lane == null) {
             // does not exist
             return;
@@ -721,14 +680,14 @@ public class Process extends AbstractBPMNElement {
      * @param id
      */
     public void deleteElementNode(String id) {
-        BPMNElementNode bpmnElement = findBPMNNodeById(id);
+        BPMNElementNode bpmnElement = findElementNodeById(id);
         if (bpmnElement == null) {
             // does not exist
             return;
         }
 
         // test if the elmen tis a lane
-        Lane lane = this.findBPMNLaneById(id);
+        Lane lane = this.findLaneById(id);
         if (lane != null) {
             this.deleteLane(id);
             return;
@@ -757,7 +716,7 @@ public class Process extends AbstractBPMNElement {
      */
     public void deleteBPMNElementNode(String id) {
 
-        BPMNElementNode baseElement = findBPMNNodeById(id);
+        BPMNElementNode baseElement = findElementNodeById(id);
         if (baseElement instanceof Lane) {
             this.deleteLane(id);
             return;
@@ -784,7 +743,7 @@ public class Process extends AbstractBPMNElement {
      * @param id
      */
     public void deleteElementEdge(String id) {
-        BPMNElementEdge bpmnEdge = (BPMNElementEdge) findBPMNEdgeById(id);
+        BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
         if (bpmnEdge == null) {
             // does not exist
             return;
@@ -795,7 +754,7 @@ public class Process extends AbstractBPMNElement {
         // first we need to update the elements still connected with this flow
         // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
         // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
-        BPMNElementNode targetElement = findBPMNNodeById(targetRef);
+        BPMNElementNode targetElement = findElementNodeById(targetRef);
         if (targetElement != null) {
             NodeList childs = targetElement.getElementNode().getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
@@ -810,7 +769,7 @@ public class Process extends AbstractBPMNElement {
                 }
             }
         }
-        BPMNElementNode sourceElement = findBPMNNodeById(soureRef);
+        BPMNElementNode sourceElement = findElementNodeById(soureRef);
         if (sourceElement != null) {
             NodeList childs = sourceElement.getElementNode().getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
@@ -836,7 +795,7 @@ public class Process extends AbstractBPMNElement {
             this.getSequenceFlows().remove(bpmnEdge);
         }
         if (bpmnEdge instanceof MessageFlow) {
-            this.getMessageFlows().remove(bpmnEdge);
+            this.getModel().getMessageFlows().remove(bpmnEdge);
         }
         if (bpmnEdge instanceof Association) {
             this.getAssociations().remove(bpmnEdge);
@@ -910,6 +869,34 @@ public class Process extends AbstractBPMNElement {
     }
 
     /**
+     * Finds an BPMN Element within this process. The element can be either a Node
+     * or an Edge
+     * 
+     */
+    public AbstractBPMNElement findElementById(String id) {
+        AbstractBPMNElement result = null;
+        result = findElementNodeById(id);
+        if (result != null) {
+            // Node Element found
+            return result;
+        }
+
+        result = findLaneById(id);
+        if (result != null) {
+            // Lane found
+            return result;
+        }
+
+        result = findElementEdgeById(id);
+        if (result != null) {
+            // Edge Element found
+            return result;
+        }
+
+        return null;
+    }
+
+    /**
      * Finds a BPMNElementNode by ID within the current process.
      * <p>
      * If no element with the given ID exists, the method returns null.
@@ -917,7 +904,7 @@ public class Process extends AbstractBPMNElement {
      * @param id
      * @return
      */
-    public BPMNElementNode findBPMNNodeById(String id) {
+    public BPMNElementNode findElementNodeById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -968,39 +955,6 @@ public class Process extends AbstractBPMNElement {
     // }
 
     /**
-     * This method returns the BPMNParticipant in case the Process represents a BPMN
-     * Pool
-     * 
-     * @return
-     */
-    public Participant findBPMNParticipant() {
-        Participant result = this.getModel().findParticipantByProcessId(this.getId());
-        return result;
-    }
-
-    /**
-     * Finds a BPMNLane by ID within the current process.
-     * <p>
-     * If no lane with the given ID exists, the method returns null.
-     * 
-     * @param id
-     * @return
-     */
-    public Lane findBPMNLaneById(String id) {
-        if (id == null || id.isEmpty()) {
-            return null;
-        }
-
-        Set<Lane> lanes = this.getLanes();
-        for (Lane element : lanes) {
-            if (id.equals(element.getId())) {
-                return element;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Finds a BPMN Edge Element by given id. An Edge can be a SequenceFlow, a
      * MessageFlow or an Association
      * <p>
@@ -1009,7 +963,7 @@ public class Process extends AbstractBPMNElement {
      * @param id
      * @return
      */
-    public BPMNElementEdge findBPMNEdgeById(String id) {
+    public BPMNElementEdge findElementEdgeById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -1020,7 +974,7 @@ public class Process extends AbstractBPMNElement {
             }
         }
 
-        Set<MessageFlow> listM = this.getMessageFlows();
+        Set<MessageFlow> listM = this.getModel().getMessageFlows();
         for (MessageFlow element : listM) {
             if (id.equals(element.getId())) {
                 return element;
@@ -1038,30 +992,35 @@ public class Process extends AbstractBPMNElement {
     }
 
     /**
-     * Finds an BPMN Element within this process. The element can be either a Node
-     * or an Edge
+     * This method returns the BPMNParticipant in case the Process represents a BPMN
+     * Pool
      * 
+     * @return
      */
-    public AbstractBPMNElement findBPMNElementById(String id) {
-        AbstractBPMNElement result = null;
-        result = findBPMNNodeById(id);
-        if (result != null) {
-            // Node Element found
-            return result;
+    public Participant findParticipant() {
+        Participant result = this.getModel().findParticipantByProcessId(this.getId());
+        return result;
+    }
+
+    /**
+     * Finds a BPMNLane by ID within the current process.
+     * <p>
+     * If no lane with the given ID exists, the method returns null.
+     * 
+     * @param id
+     * @return
+     */
+    public Lane findLaneById(String id) {
+        if (id == null || id.isEmpty()) {
+            return null;
         }
 
-        result = findBPMNLaneById(id);
-        if (result != null) {
-            // Lane found
-            return result;
+        Set<Lane> lanes = this.getLanes();
+        for (Lane element : lanes) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
         }
-
-        result = findBPMNEdgeById(id);
-        if (result != null) {
-            // Edge Element found
-            return result;
-        }
-
         return null;
     }
 
@@ -1145,17 +1104,6 @@ public class Process extends AbstractBPMNElement {
         return flow;
     }
 
-    /**
-     * Adds a new BPMNMessageFlow from a existing Element Node
-     * 
-     * @param eventElement
-     * @return
-     */
-    private MessageFlow createBPMNMessageFlowByNode(Element element) {
-        MessageFlow flow = new MessageFlow(model, element, element.getLocalName(), this);
-        getMessageFlows().add(flow);
-        return flow;
-    }
 
     /**
      * Adds a new BPMNAssociation from a existing Element Node
@@ -1220,7 +1168,7 @@ public class Process extends AbstractBPMNElement {
         if (id == null || id.isEmpty()) {
             return result;
         }
-        Set<MessageFlow> listA = this.getMessageFlows();
+        Set<MessageFlow> listA = this.getModel().getMessageFlows();
         for (MessageFlow flow : listA) {
             if (id.equals(flow.getSourceRef()) || id.equals(flow.getTargetRef())) {
                 result.add(flow);

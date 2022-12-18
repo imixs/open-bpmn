@@ -148,7 +148,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                         // update the BPMNLabel bounds
                         // Therefor we need first find the corresponding BPMNFlowElement
                         String labelID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
-                        BPMNElementNode bpmnElement = modelState.getBpmnModel().findNodeElementById(labelID);
+                        BPMNElementNode bpmnElement = modelState.getBpmnModel().findElementNodeById(labelID);
 
                         BPMNLabel bpmnLabel = bpmnElement.getLabel();
                         if (bpmnLabel != null) {

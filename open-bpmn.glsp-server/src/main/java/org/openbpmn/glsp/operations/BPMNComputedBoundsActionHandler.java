@@ -79,7 +79,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     for (GPoint point : newGLSPRoutingPoints) {
                         BPMNPoint bpmnPoint = null;
                         // if we are in a Pool we need to compute the absolute position
-                        Participant participant = bpmnSequenceFlow.getBpmnProcess().findBPMNParticipant();
+                        Participant participant = bpmnSequenceFlow.getBpmnProcess().findParticipant();
                         if (participant != null) {
                             // compute Pool offset...
                             double xOffset = participant.getBounds().getPosition().getX();

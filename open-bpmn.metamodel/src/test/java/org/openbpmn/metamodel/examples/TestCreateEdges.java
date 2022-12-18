@@ -8,7 +8,10 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -55,6 +58,43 @@ public class TestCreateEdges {
         }
         assertNotNull(model);
         assertEquals(1, model.getProcesses().size());
+
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+    }
+    
+    
+    
+    /**
+     * This test creates a bpmn file with a pool and a Task linked with a MessageFlow.
+     * 
+     */
+    @Test
+    public void testCreateMessageFlowIn() {
+        String out = "src/test/resources/output/process-example-8.bpmn";
+
+        logger.info("...create empty model");
+
+        String exporter = "demo";
+        String version = "1.0.0";
+        String targetNameSpace = "http://org.openbpmn";
+        BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+
+        try {
+            Participant participant1 = model.addParticipant("paticipant_1");
+            participant1.setPosition(10,10);
+            Activity task1= model.openDefaultProcess().addTask("task1", "Task", BPMNTypes.MANUAL_TASK);
+            task1.setPosition(350,300);
+         
+            // create messageFlow
+           model.addMessageFlow("messageflow_1", participant1.getId(), task1.getId());
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        assertNotNull(model);
+        assertEquals(2, model.getProcesses().size());
 
         model.save(out);
         logger.info("...model created sucessful: " + out);

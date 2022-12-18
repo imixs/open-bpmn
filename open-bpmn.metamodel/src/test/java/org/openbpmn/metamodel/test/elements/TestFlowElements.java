@@ -73,7 +73,7 @@ public class TestFlowElements {
 
             // we expect 3 sequnceFlows
             assertEquals(3, process.getSequenceFlows().size());
-            SequenceFlow sequenceFlow = (SequenceFlow) process.findBPMNEdgeById("SequenceFlow_1");
+            SequenceFlow sequenceFlow = (SequenceFlow) process.findElementEdgeById("SequenceFlow_1");
             assertEquals("StartEvent_1", sequenceFlow.getSourceRef());
             assertEquals("Task_1", sequenceFlow.getTargetRef());
 
@@ -188,7 +188,7 @@ public class TestFlowElements {
             assertEquals(1, process.getEvents().size());
             
             // Load Boundary event and test attribute attachedToRef
-            Event boundaryEvent=(Event) process.findBPMNNodeById("BoundaryEvent_1");
+            Event boundaryEvent=(Event) process.findElementNodeById("BoundaryEvent_1");
             assertNotNull(boundaryEvent);
             String attachedRef=boundaryEvent.getAttribute("attachedToRef");
             assertEquals("Task_1", attachedRef);

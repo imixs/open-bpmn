@@ -79,8 +79,8 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             }
 
             // Verify that both Elements are members of the same process...
-            String sourceProcessId = modelState.getBpmnModel().findNodeElementById(sourceId).getProcessId();
-            String targetProcessId = modelState.getBpmnModel().findNodeElementById(targetId).getProcessId();
+            String sourceProcessId = modelState.getBpmnModel().findElementNodeById(sourceId).getProcessId();
+            String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
             if (sourceProcessId == null || !sourceProcessId.equals(targetProcessId)) {
                 throw new IllegalArgumentException("Target and Source Element are not members of the same process!");
             }

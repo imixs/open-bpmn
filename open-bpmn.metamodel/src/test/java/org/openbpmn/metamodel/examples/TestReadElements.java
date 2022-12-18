@@ -42,7 +42,7 @@ public class TestReadElements {
 
             assertEquals(2, process.getDataObjects().size());
 
-            BPMNElementNode dataObject = process.findBPMNNodeById("DataObject_2");
+            BPMNElementNode dataObject = process.findElementNodeById("DataObject_2");
             assertNotNull(dataObject);
 
             // test the label position of the event
