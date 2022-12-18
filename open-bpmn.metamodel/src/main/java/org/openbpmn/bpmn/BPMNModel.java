@@ -256,6 +256,7 @@ public class BPMNModel {
             // init the participant and process list
             loadParticipantList();
             loadProcessList();
+            loadMessageFlowList();
 
         }
     }
@@ -297,6 +298,7 @@ public class BPMNModel {
         }
         return processes;
     }
+
     public Set<MessageFlow> getMessageFlows() {
         if (messageFlows == null) {
             messageFlows = new LinkedHashSet<MessageFlow>();
@@ -624,7 +626,6 @@ public class BPMNModel {
         return element;
     }
 
-    
     /**
      * Adds a MessageFlow. The method computes and validates the source and target
      * elements based on this process context.
@@ -645,7 +646,7 @@ public class BPMNModel {
             throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
                     "Source and Target ID can not be the same");
         }
-       
+
         // validate Source and Target IDs
         // both must be part of the same process
         BPMNElementNode sourceElement = findElementNodeById(sourceId);
@@ -655,34 +656,31 @@ public class BPMNModel {
                     "Source and Target must be part of the process!");
         }
 
-
         // create sequenceFlow element
         Element bpmnEdgeElement = createElement(BPMNNS.BPMN2, BPMNTypes.MESSAGE_FLOW);
         bpmnEdgeElement.setAttribute("id", id);
         bpmnEdgeElement.setAttribute("sourceRef", sourceId);
         bpmnEdgeElement.setAttribute("targetRef", targetId);
 
-       // this.definitions.appendChild(bpmnEdgeElement);
-        
+        // this.definitions.appendChild(bpmnEdgeElement);
+
         this.collaborationElement.appendChild(bpmnEdgeElement);
 
-        //.insertAfter(bpmnEdgeElement, this.collaborationElement.getLastChild());
-        
+        // .insertAfter(bpmnEdgeElement, this.collaborationElement.getLastChild());
 
-        MessageFlow messageFlow =new MessageFlow(this, bpmnEdgeElement, bpmnEdgeElement.getLocalName());
+        MessageFlow messageFlow = new MessageFlow(this, bpmnEdgeElement);
         getMessageFlows().add(messageFlow);
-       
+
         messageFlow.addDefaultWayPoints();
-        
+
         // add refs to the BPMNEdge element...
         Element edgeShape = messageFlow.getBpmnEdge();
         edgeShape.setAttribute("sourceElement", sourceElement.getBpmnShape().getAttribute("id"));
         edgeShape.setAttribute("targetElement", targetElement.getBpmnShape().getAttribute("id"));
 
-       return messageFlow;
+        return messageFlow;
     }
 
-    
     /**
      * Finds a BPMNElement by ID within this model. The Element can be a Node or an
      * Edge. The method iterates over all existing Processes and its contained
@@ -1117,8 +1115,7 @@ public class BPMNModel {
     /**
      * This helper method loads the participant elements from a collaboration
      * diagram located in the 'bpmn2:collaboration' section. This section is
-     * optional. If the model is not a collaboration model the method
-     * getPaticpants() returns null
+     * optional.
      * 
      * @throws BPMNModelException
      * 
@@ -1146,7 +1143,7 @@ public class BPMNModel {
 
     /**
      * This helper method loads the process elements from the current model. If the
-     * model does not yet contain any process the method getProcesses() returns null
+     * model does not yet contain any process the method returns null
      * <p>
      * The method also verify the attribute processType. If the processType is not
      * set and but the process ID is listed in the optional list of participants the
@@ -1207,6 +1204,33 @@ public class BPMNModel {
             getLogger().warning("Invalid model structure! The model contains more than one public process instance!");
         }
 
+    }
+
+    /**
+     * This helper method loads the MessageFlow elements from a collaboration
+     * diagram located in the 'bpmn2:collaboration' section. This section is
+     * optional.
+     * 
+     * @throws BPMNModelException
+     * 
+     */
+    private void loadMessageFlowList() throws BPMNModelException {
+        messageFlows = new LinkedHashSet<MessageFlow>();
+        NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
+        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+
+            // we only take the first collaboration element (this is what is expected)
+            collaborationElement = (Element) collaborationNodeList.item(0);
+            // now find all messageFlows...
+            NodeList messageFlowList = collaborationElement
+                    .getElementsByTagName(BPMNNS.BPMN2.prefix + ":" + BPMNTypes.MESSAGE_FLOW);
+            logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
+            for (int i = 0; i < messageFlowList.getLength(); i++) {
+                Element item = (Element) messageFlowList.item(i);
+                MessageFlow messageFlow = new MessageFlow(this, item);
+                messageFlows.add(messageFlow);
+            }
+        }
     }
 
     /**

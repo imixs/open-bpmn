@@ -48,6 +48,7 @@ import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.elements.SequenceFlow;
@@ -219,6 +220,9 @@ public class BPMNGModelFactory implements GModelFactory {
                 gRootNodeList.addAll(computeGModelElements(bpmnProcess, null));
             }
 
+            // finally we add the MessageFlow elements...
+            gRootNodeList.addAll(computeGModelMessageFlows(gRootNodeList));
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
@@ -353,7 +357,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Events...
         for (Event event : process.getEvents()) {
-            logger.debug("BPMNEvent: " + event.getName() + " x=" + event.getBounds().getPosition().getX() + " y="
+            logger.debug("Event: " + event.getName() + " x=" + event.getBounds().getPosition().getX() + " y="
                     + event.getBounds().getPosition().getY());
             // compute relative position
             GPoint point = computeRelativeGPoint(event.getBounds(), participant);
@@ -396,7 +400,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Gateways...
         for (Gateway gateway : process.getGateways()) {
-            logger.debug("BPMNGateway: " + gateway.getName() + " x=" + gateway.getBounds().getPosition().getX() + " y="
+            logger.debug("Gateway: " + gateway.getName() + " x=" + gateway.getBounds().getPosition().getX() + " y="
                     + gateway.getBounds().getPosition().getY());
             GPoint point = computeRelativeGPoint(gateway.getBounds(), participant);
 
@@ -441,12 +445,12 @@ public class BPMNGModelFactory implements GModelFactory {
             GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
             GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
             if (source == null) {
-                logger.warn("Source element '" + sequenceFlow.getSourceRef() + "' not found - skip BPMNSequenceFlow id="
+                logger.warn("Source element '" + sequenceFlow.getSourceRef() + "' not found - skip SequenceFlow id="
                         + sequenceFlow.getId());
                 continue;
             }
             if (target == null) {
-                logger.warn("Target element '" + sequenceFlow.getTargetRef() + "' not found - skip BPMNSequenceFlow id="
+                logger.warn("Target element '" + sequenceFlow.getTargetRef() + "' not found - skip SequenceFlow id="
                         + sequenceFlow.getId());
                 continue;
             }
@@ -466,6 +470,52 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         return gNodeList;
+    }
+
+    /**
+     * This helper method returns a GModelElement list from all MessageFlows
+     * contained in the current model.
+     * <p>
+     * This method expects that all process instances are already resolved.
+     *
+     */
+    List<GModelElement> computeGModelMessageFlows(final List<GModelElement> gRootNodeList)
+            throws BPMNMissingElementException {
+        List<GModelElement> gNodeList = new ArrayList<>();
+
+        // Add all SequenceFlows
+        for (MessageFlow messageFlow : bpmnModel.getMessageFlows()) {
+            // first we need to verify if the target and source objects exist in our model
+            // if not we need to skip this messageFlow element!
+            GModelElement source = findElementById(gRootNodeList, messageFlow.getSourceRef());
+            GModelElement target = findElementById(gRootNodeList, messageFlow.getTargetRef());
+            if (source == null) {
+                logger.warn("Source element '" + messageFlow.getSourceRef() + "' not found - skip MessageFlow id="
+                        + messageFlow.getId());
+                continue;
+            }
+            if (target == null) {
+                logger.warn("Target element '" + messageFlow.getTargetRef() + "' not found - skip MessageFlow id="
+                        + messageFlow.getId());
+                continue;
+            }
+
+            // now construct the GNode and add it to the model....
+            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(messageFlow);
+            builder.target(computeGPort(target));
+            builder.source(computeGPort(source));
+            BPMNGEdge bpmnGEdge = builder.build();
+            bpmnGEdge.setKind("");
+            for (BPMNPoint wayPoint : messageFlow.getWayPoints()) {
+                // add the waypoint to the GLSP model....
+                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+                bpmnGEdge.getRoutingPoints().add(point);
+            }
+            gNodeList.add(bpmnGEdge);
+        }
+
+        return gNodeList;
+
     }
 
     /**

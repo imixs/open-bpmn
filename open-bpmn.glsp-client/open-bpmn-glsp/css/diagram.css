@@ -160,55 +160,26 @@
 }
 
 /* sequence flow */
-.sprotty-edge.sequenceflow:not(.selected),
-.sprotty-edge.sequenceflow:not(.selected) .arrow,
-.sprotty-edge.sequenceflow.medium:not(.selected),
-.sprotty-edge.sequenceflow.medium:not(.selected) .arrow {
-    stroke: rgb(174 190 243);
+.sprotty-edge.sequenceFlow:not(.selected) .line,
+.sprotty-edge.sequenceFlow:not(.selected) .arrow {
 }
 
 /* selected sequence flow */
-.sprotty-edge.sequenceflow.selected,
-.sprotty-edge.sequenceflow.selected .arrow,
-.sprotty-edge.sequenceflow.medium.selected,
-.sprotty-edge.sequenceflow.medium.selected .arrow {
+.sprotty-edge.bpmnedge.selected .line,
+.sprotty-edge.bpmnedge.selected .arrow {
     stroke: #ffdf8b;
 }
 
-
-
-/* arrow */
-
-.sprotty-edge.sequenceflow:not(.selected) .arrow,
-.sprotty-edge.sequenceflow.medium:not(.selected) .arrow {
-    fill: rgb(174 190 243);
+/* messageFlow */
+.sprotty-edge.messageFlow .line {
+   stroke-dasharray: 6,4;
 }
-
-.sprotty-edge.sequenceflow.high:not(.selected),
-.sprotty-edge.sequenceflow.high:not(.selected) .arrow {
-    stroke: rgb(174 190 243);
-}
-
-.sprotty-edge.sequenceflow.high:not(.selected) .arrow {
-    fill: rgb(174 190 243);
-}
-
-
-
-
-
 
 
 .helper-line {
 	stroke: #f18e00;
 	stroke-width:1;
 }
-
-
-
-
-
-
 
 .sprotty-comp {
     stroke: transparent;

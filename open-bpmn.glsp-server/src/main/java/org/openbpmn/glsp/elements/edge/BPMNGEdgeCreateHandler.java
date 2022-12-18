@@ -92,7 +92,7 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                 bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
                 break;
             case BPMNTypes.MESSAGE_FLOW:
-                bpmnProcess.addMessageFlow(BPMNModel.generateShortID("MessageFlow"), sourceId, targetId);
+                modelState.getBpmnModel().addMessageFlow(BPMNModel.generateShortID("MessageFlow"), sourceId, targetId);
                 break;
             case BPMNTypes.ASSOCIATION:
                 bpmnProcess.addAssociation(BPMNModel.generateShortID("Association"), sourceId, targetId);

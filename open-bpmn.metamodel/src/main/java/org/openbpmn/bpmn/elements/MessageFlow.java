@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.w3c.dom.Element;
@@ -15,9 +16,10 @@ public class MessageFlow extends BPMNElementEdge {
 
     private static Logger logger = Logger.getLogger(MessageFlow.class.getName());
 
-    public MessageFlow(BPMNModel model, Element node, String _type) {
+    public MessageFlow(BPMNModel model, Element node) {
         super(model, node);
-        this.type = _type;
+       
+        this.type=BPMNTypes.MESSAGE_FLOW;
 
         wayPoints = new LinkedHashSet<BPMNPoint>();
 
