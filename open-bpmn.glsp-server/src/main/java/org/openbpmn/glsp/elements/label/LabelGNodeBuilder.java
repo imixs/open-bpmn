@@ -20,7 +20,7 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LabelGNode;
@@ -45,7 +45,7 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
 
     private final String name;
 
-    public LabelGNodeBuilder(final BPMNFlowElement flowElement) {
+    public LabelGNodeBuilder(final BPMNElementNode flowElement) {
         super(BPMNTypes.BPMNLABEL);
         this.name = flowElement.getName();// _name;
         this.id = flowElement.getId() + "_bpmnlabel";

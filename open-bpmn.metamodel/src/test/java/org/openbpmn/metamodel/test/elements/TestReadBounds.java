@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -47,7 +47,7 @@ public class TestReadBounds {
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
-            BPMNFlowElement bpmnFlowElement = process.findBPMNFlowElementById("StartEvent_1");
+            BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_1");
             assertNotNull(bpmnFlowElement);
 
             BPMNBounds bounds = bpmnFlowElement.getBounds();
@@ -77,7 +77,7 @@ public class TestReadBounds {
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
-            BPMNFlowElement bpmnFlowElement = process.findBPMNFlowElementById("StartEvent_1");
+            BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_1");
 
             assertNotNull(bpmnFlowElement);
 

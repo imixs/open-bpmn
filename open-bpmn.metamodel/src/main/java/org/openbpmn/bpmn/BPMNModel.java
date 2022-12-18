@@ -28,8 +28,10 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.AbstractBPMNElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.elements.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
@@ -496,7 +498,7 @@ public class BPMNModel {
      * 
      * @throws BPMNMissingElementException
      */
-    public Element buildBPMNShape(BPMNBaseElement bpmnElement) throws BPMNModelException {
+    public Element buildBPMNShape(BPMNElementNode bpmnElement) throws BPMNModelException {
         Element bpmnShape;
         if (getBpmnPlane() == null) {
             throw new BPMNMissingElementException("Missing bpmnPlane in current model context");
@@ -592,7 +594,7 @@ public class BPMNModel {
                 process.deleteLane(laneID);
             }
             // delete remaining FlowElements...
-            process.deleteAllFlowElements();
+            process.deleteAllNodes();
             this.definitions.removeChild(process.getElementNode());
             if (participant.hasPool()) {
                 this.bpmnPlane.removeChild(participant.getBpmnShape());
@@ -611,15 +613,16 @@ public class BPMNModel {
     }
 
     /**
-     * Finds a BPMNBaseElement by ID within this model. The method iterates over all
-     * existing Processes and its contained BPMNFlowElements.
+     * Finds a BPMNElement by ID within this model. The Element can be a Node or an
+     * Edge. The method iterates over all existing Processes and its contained
+     * FlowElements.
      * <p>
      * If no element with the given ID exists, the method returns null.
      * 
      * @param id - the BPMN Element id
      * @return
      */
-    public BPMNBaseElement findBPMNBaseElementById(String id) {
+    public AbstractBPMNElement findBPMNElementById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
@@ -635,14 +638,55 @@ public class BPMNModel {
         for (BPMNProcess process : processList) {
             if (id.equals(process.getId())) {
                 // the id matches a Process
-                return process;
+                throw new IllegalArgumentException("unable to return process - not implemented!");
+
             } else {
                 // analyze the content of the process
-                BPMNBaseElement baseElement = process.findBaseElementById(id);
+                AbstractBPMNElement baseElement = process.findBPMNElementById(id);
                 if (baseElement != null) {
                     return baseElement;
                 }
             }
+        }
+
+        // no corresponding element found!
+        return null;
+    }
+
+    /**
+     * Finds a BPMNElementNode by ID within this model. The method iterates over all
+     * existing Processes and its contained FlowElements.
+     * <p>
+     * If no element with the given ID exists, the method returns null.
+     * 
+     * @param id - the BPMN Element id
+     * @return
+     */
+    public BPMNElementNode findBPMNNodeById(String id) {
+
+        AbstractBPMNElement result = this.findBPMNElementById(id);
+        if (result != null && result instanceof BPMNElementNode) {
+            return (BPMNElementNode) result;
+        }
+
+        // no corresponding element found!
+        return null;
+    }
+
+    /**
+     * Finds a BPMNElementEdge by ID within this model. The method iterates over all
+     * existing Processes and its contained FlowElements.
+     * <p>
+     * If no element with the given ID exists, the method returns null.
+     * 
+     * @param id - the BPMN Element id
+     * @return
+     */
+    public BPMNElementEdge findBPMNEdgeById(String id) {
+
+        AbstractBPMNElement result = this.findBPMNElementById(id);
+        if (result != null && result instanceof BPMNElementEdge) {
+            return (BPMNElementEdge) result;
         }
 
         // no corresponding element found!
@@ -680,7 +724,7 @@ public class BPMNModel {
                         return participant.getBounds();
                     } else {
                         // analyze the content of the process
-                        BPMNBaseElement baseElement = participant.openProcess().findBaseElementById(id);
+                        BPMNElementNode baseElement = participant.openProcess().findBPMNNodeById(id);
                         if (baseElement != null) {
                             return baseElement.getBounds();
                         }
@@ -688,7 +732,7 @@ public class BPMNModel {
                 }
             } else {
                 // just analyze the default process
-                BPMNBaseElement baseElement = openDefaultProcess().findBaseElementById(id);
+                BPMNElementNode baseElement = openDefaultProcess().findBPMNNodeById(id);
                 if (baseElement != null) {
                     return baseElement.getBounds();
                 }
@@ -838,7 +882,7 @@ public class BPMNModel {
         return (BPMN_ACTIVITIES.contains(node.getLocalName()));
     }
 
-    public static boolean isActivity(BPMNBaseElement element) {
+    public static boolean isActivity(BPMNElementNode element) {
         return isActivity(element.getElementNode());
     }
 
@@ -872,7 +916,7 @@ public class BPMNModel {
         return (BPMN_GATEWAYS.contains(node.getLocalName()));
     }
 
-    public static boolean isGateway(BPMNBaseElement element) {
+    public static boolean isGateway(BPMNElementNode element) {
         return isGateway(element.getElementNode());
     }
 
@@ -886,7 +930,7 @@ public class BPMNModel {
         return (BPMN_EVENTS.contains(node.getLocalName()));
     }
 
-    public static boolean isEvent(BPMNBaseElement element) {
+    public static boolean isEvent(BPMNElementNode element) {
         return isEvent(element.getElementNode());
     }
 
@@ -900,7 +944,7 @@ public class BPMNModel {
         return (DATAOBJECT.equals(node.getLocalName()));
     }
 
-    public static boolean isDataObject(BPMNBaseElement element) {
+    public static boolean isDataObject(BPMNElementNode element) {
         return isDataObject(element.getElementNode());
     }
 

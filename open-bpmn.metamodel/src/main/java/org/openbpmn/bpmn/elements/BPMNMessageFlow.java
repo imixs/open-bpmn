@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import org.openbpmn.bpmn.BPMNModel;
 import org.w3c.dom.Element;
 
-public class BPMNMessageFlow extends BPMNFlowEdge {
+public class BPMNMessageFlow extends BPMNElementEdge {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNMessageFlow.class.getName());
 

@@ -17,7 +17,7 @@ package org.openbpmn.glsp.elements.edge;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.bpmn.elements.BPMNFlowEdge;
+import org.openbpmn.bpmn.elements.BPMNElementEdge;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 
@@ -31,7 +31,7 @@ public class BPMNGEdgeBuilder extends AbstractGEdgeBuilder<BPMNGEdge, BPMNGEdgeB
 
     private final String name;
 
-    public BPMNGEdgeBuilder(final BPMNFlowEdge edge) {
+    public BPMNGEdgeBuilder(final BPMNElementEdge edge) {
         super(edge.getType());
         this.name = edge.getName();
         this.id = edge.getId();

@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -48,7 +48,7 @@ public class TestBPMNLanes {
             BPMNProcess process = participant.openProcess();
             assertNotNull(process);
 
-            BPMNFlowElement bpmnFlowElement = process.findBPMNFlowElementById("StartEvent_4");
+            BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_4");
             assertNotNull(bpmnFlowElement);
             
             // read laneset.....
@@ -144,7 +144,7 @@ public class TestBPMNLanes {
             
             
             // insert new test-lane before Lane 2
-            BPMNLane lane2 = process.findLane("Lane_2");
+            BPMNLane lane2 = process.findBPMNLaneById("Lane_2");
           process.insertLaneBefore(laneTest, lane2) ;// laneTest.insertBefore(lane2);
            
             model.save(out);

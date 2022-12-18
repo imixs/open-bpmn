@@ -28,7 +28,7 @@ import javax.json.JsonReader;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -65,15 +65,15 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         // validate GModel id
         String elementID = operation.getId();
         GModelElement gModelElement = null;
-        BPMNBaseElement bpmnElement = null;
+        BPMNElementNode bpmnElement = null;
         if (modelState.getRoot().getId().equals(elementID)) {
-            bpmnElement = modelState.getBpmnModel().openDefaultProcess();
+            // bpmnElement = modelState.getBpmnModel().openDefaultProcess();
             gModelElement = modelState.getRoot();
         }
         Optional<BPMNGNode> _baseElement = modelState.getIndex().findElementByClass(elementID, BPMNGNode.class);
         if (!_baseElement.isEmpty()) {
             gModelElement = _baseElement.get();
-            bpmnElement = modelState.getBpmnModel().findBPMNBaseElementById(elementID);
+            bpmnElement = modelState.getBpmnModel().findBPMNNodeById(elementID);
             // throw new RuntimeException("Cannot find BaseElement with id '" +
             // operation.getId() + "'");
         }

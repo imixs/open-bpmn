@@ -16,7 +16,7 @@
 package org.openbpmn.extension;
 
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 
 /**
  * This is Abstract implementation provides some core funtionallity like update
@@ -40,7 +40,7 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
     }
 
     @Override
-    public void addExtension(final BPMNBaseElement bpmnElement) {
+    public void addExtension(final BPMNElementNode bpmnElement) {
         // no op for default extensions
     }
 

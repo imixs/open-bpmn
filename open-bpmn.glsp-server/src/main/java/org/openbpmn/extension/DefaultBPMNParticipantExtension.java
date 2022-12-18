@@ -30,7 +30,7 @@ import javax.json.JsonValue;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -72,7 +72,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
      * This Extension is for BPMNActivities only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
         return (bpmnElement instanceof BPMNParticipant);
     }
 
@@ -82,7 +82,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
@@ -176,7 +176,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
             final GModelElement gNodeElement) {
 
         long l = System.currentTimeMillis();
@@ -209,7 +209,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                         // update lane properties
                         JsonObject laneData = (JsonObject) laneValue;
                         String id = laneData.getString("id");
-                        BPMNLane bpmnLane = process.findLane(id);
+                        BPMNLane bpmnLane = process.findBPMNLaneById(id);
                         if (bpmnLane != null) {
                             bpmnLane.setName(laneData.getString("name"));
                             bpmnLane.setDocumentation(laneData.getString("documentation"));

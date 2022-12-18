@@ -47,7 +47,7 @@ public class TestUpdateRoutingPoints {
 
             // udpate routing points for SequenceFlow_1
 
-            BPMNSequenceFlow flow1 = (BPMNSequenceFlow) process.findBaseElementById("SequenceFlow_1");
+            BPMNSequenceFlow flow1 = (BPMNSequenceFlow) process.findBPMNEdgeById("SequenceFlow_1");
             assertNotNull(flow1);
 
             assertEquals(3, flow1.getWayPoints().size());

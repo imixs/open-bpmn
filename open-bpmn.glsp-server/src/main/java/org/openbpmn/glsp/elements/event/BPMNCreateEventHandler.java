@@ -29,7 +29,7 @@ import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNEvent;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNPoint;
@@ -78,7 +78,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
-        BPMNBaseElement containerElement = null;
+        BPMNElementNode containerElement = null;
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String eventID = BPMNModel.generateShortID("event"); // "event-" + BPMNModel.generateShortID();
@@ -92,7 +92,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {
                 // we assume that the containerId is the Task Element...
-                containerElement = modelState.getBpmnModel().findBPMNBaseElementById(containerId);
+                containerElement = modelState.getBpmnModel().findBPMNNodeById(containerId);
                 if (containerElement != null && containerElement instanceof BPMNActivity) {
                     // it is a BPMNActivity
                     bpmnProcess = ((BPMNActivity) containerElement).getBpmnProcess();

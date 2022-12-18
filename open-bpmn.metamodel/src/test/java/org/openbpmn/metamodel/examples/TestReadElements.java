@@ -9,7 +9,8 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
+
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -42,7 +43,7 @@ public class TestReadElements {
 
             assertEquals(2, process.getDataObjects().size());
 
-            BPMNFlowElement dataObject = process.findBPMNFlowElementById("DataObject_2");
+            BPMNElementNode dataObject = process.findBPMNNodeById("DataObject_2");
             assertNotNull(dataObject);
 
             // test the label position of the event

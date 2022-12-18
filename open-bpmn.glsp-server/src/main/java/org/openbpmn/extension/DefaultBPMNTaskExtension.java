@@ -27,8 +27,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -59,7 +58,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
      * This Extension is for BPMNActivities only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
         return (bpmnElement instanceof BPMNActivity);
     }
 
@@ -69,7 +68,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNBaseElement bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
@@ -92,7 +91,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 addElement("documentation", "Documentation", multilineOption);
 
         // Script-Task?
-        BPMNFlowElement taskElement = (BPMNFlowElement) bpmnElement;
+        BPMNElementNode taskElement = bpmnElement;
         if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
             dataBuilder //
                     .addData("scriptformat", taskElement.getAttribute("scriptFormat")) //
@@ -114,7 +113,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNBaseElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
             final GModelElement gNodeElement) {
 
         // default update of name and documentation

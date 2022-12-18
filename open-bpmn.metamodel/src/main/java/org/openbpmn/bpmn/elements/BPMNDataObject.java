@@ -22,7 +22,7 @@ import org.w3c.dom.Element;
  * @author rsoika
  *
  */
-public class BPMNDataObject extends BPMNFlowElement {
+public class BPMNDataObject extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 35.0;
     public final static double DEFAULT_HEIGHT = 50.0;

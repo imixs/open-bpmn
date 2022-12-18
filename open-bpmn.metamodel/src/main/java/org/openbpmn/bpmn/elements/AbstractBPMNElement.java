@@ -4,34 +4,23 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The BaseElement is the abstract super class for most BPMN elements. It
- * provides a list of attributes with at least an id and a documentation. Other
- * element types can extend the attribute list.
+ * The AbstractBPMNElement is the abstract super class for all BPMN Nodes and
+ * Edges. It provides a list of attributes with at least an id. Other element
+ * types can extend the attribute list.
  * <p>
- * A BPMNBaseElement holds a reference to an optional bpmnShape element
  * 
  * @author rsoika
  */
-public abstract class BPMNBaseElement {
-    private NamedNodeMap attributeMap = null;
-    private Element elementNode = null;
+public abstract class AbstractBPMNElement {
+    protected NamedNodeMap attributeMap = null;
+    protected Element elementNode = null;
     protected BPMNModel model = null;
-    private Element documentationNode = null;
-    protected Element bpmnShape = null;
-    protected BPMNBounds bounds = null;
-
-    public BPMNBaseElement() {
-        super();
-    }
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -40,11 +29,10 @@ public abstract class BPMNBaseElement {
      * @param node
      * @param model
      */
-    public BPMNBaseElement(BPMNModel model, Element node) {
+    public AbstractBPMNElement(BPMNModel model, Element node) {
         super();
         this.model = model;
         this.elementNode = node;
-
         if (this.elementNode.hasAttributes()) {
             // get attributes names and values
             this.attributeMap = this.elementNode.getAttributes();
@@ -62,17 +50,6 @@ public abstract class BPMNBaseElement {
     }
 
     /**
-     * Returns the Document object associated with this Element. The document object
-     * can be used to create new nodes.
-     * 
-     * @return
-     */
-    public Document getDoc() {
-        Document doc = this.getElementNode().getOwnerDocument();
-        return doc;
-    }
-
-    /**
      * Returns the ID of the element
      * 
      * @return
@@ -82,7 +59,7 @@ public abstract class BPMNBaseElement {
     }
 
     /**
-     * This method returns the corresponding BPMNProcess ID for this BPMNBaseElement.
+     * This method returns the corresponding BPMNProcess ID for this Element.
      * 
      * @param bpmynElement
      * @return
@@ -112,58 +89,6 @@ public abstract class BPMNBaseElement {
     }
 
     /**
-     * Returns the Documentation
-     * 
-     * @return String - can be empty
-     */
-    public String getDocumentation() {
-        if (documentationNode == null) {
-            // lazy loading of documentation element
-            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    BPMNNS.BPMN2.prefix + ":documentation");
-            if (elementList.size() > 0) {
-                // get the first one and update the value only
-                documentationNode = elementList.iterator().next();
-            }
-        }
-        if (documentationNode != null && documentationNode.getFirstChild() != null) {
-            return documentationNode.getFirstChild().getNodeValue();
-        } else {
-            return ""; // element
-        }
-    }
-
-    /**
-     * Set the new documentation content for this element.
-     * 
-     * @param content
-     */
-    public void setDocumentation(String content) {
-        if (documentationNode == null) {
-            // lazy loading of documentation element
-            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    BPMNNS.BPMN2.prefix + ":documentation");
-            if (elementList.size() == 0) {
-                // create new node
-                documentationNode = model.createElement(BPMNNS.BPMN2, "documentation");
-                documentationNode.setAttribute("id", BPMNModel.generateShortID("documentation"));
-                elementNode.appendChild(documentationNode);
-            } else {
-                // get the first one and update the value only
-                documentationNode = elementList.iterator().next();
-            }
-        }
-        // remove old child nodes
-        NodeList docChildList = documentationNode.getChildNodes();
-        for (int i = 0; i < docChildList.getLength(); i++) {
-            Node child = docChildList.item(i);
-            documentationNode.removeChild(child);
-        }
-        CDATASection cdata = getDoc().createCDATASection(content);
-        documentationNode.appendChild(cdata);
-    }
-
-    /**
      * Set the new childNode with a given content for this element in a CDATA
      * element.
      * <p>
@@ -173,7 +98,7 @@ public abstract class BPMNBaseElement {
      * @param content  the content
      * @param id       optional id
      */
-    public void setChildNodeContent(String nodeName, String content, String id) {
+    public Element setChildNodeContent(String nodeName, String content, String id) {
         Element childNode = null;
         // load the element
         Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
@@ -194,10 +119,7 @@ public abstract class BPMNBaseElement {
                 childNode.removeChild(child);
             }
         }
-
-        // set content as CDATA text
-        CDATASection cdata = getDoc().createCDATASection(content);
-        childNode.appendChild(cdata);
+        return childNode;
     }
 
     /**
@@ -231,13 +153,6 @@ public abstract class BPMNBaseElement {
         if (name == null || name.isEmpty() || attributeMap == null) {
             return null;
         }
-//        for (int i = 0; i < attributeMap.getLength(); i++) {
-//            Node node = attributeMap.item(i);
-//            if (name.equals(node.getNodeName())) {
-//                return node.getNodeValue();
-//            }
-//        }
-//        return null;
         return getElementNode().getAttribute(name);
     }
 
@@ -253,14 +168,6 @@ public abstract class BPMNBaseElement {
         if (name == null || name.isEmpty() || attributeMap == null) {
             return;
         }
-//        for (int i = 0; i < attributeMap.getLength(); i++) {
-//            Node node = attributeMap.item(i);
-//            if (name.equals(node.getNodeName())) {
-//                // update the attribute value
-//                node.setNodeValue(value);
-//                return;
-//            }
-//        }
         // if we did not found the attribute, we add a new one...
         this.getElementNode().setAttribute(name, value);
 
@@ -334,75 +241,6 @@ public abstract class BPMNBaseElement {
      */
     public boolean hasExtensionAttribute(String extensionNamespace, String attribute) {
         return hasAttribute(extensionNamespace + ":" + attribute);
-    }
-
-    /**
-     * Returns the BPMNShape bounds.
-     * 
-     * @return
-     * @throws BPMNMissingElementException
-     */
-    public BPMNBounds getBounds() throws BPMNMissingElementException {
-        if (bounds == null) {
-            // lazy loading of bounds from a given bpmnShape
-            bounds = new BPMNBounds(this.bpmnShape, model);
-        }
-        return bounds;
-    }
-
-    public void setPosition(double x, double y) {
-        try {
-            this.getBounds().setPosition(x, y);
-        } catch (BPMNMissingElementException e) {
-            BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
-        }
-    }
-
-    public void setDimension(double width, double height) {
-        try {
-            this.getBounds().setDimension(width, height);
-        } catch (BPMNMissingElementException e) {
-            BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
-        }
-    }
-
-    /**
-     * Updates the BPMN Shape bounds.
-     * 
-     * @param x
-     * @param y
-     * @param height
-     * @param width
-     * @return
-     * @throws BPMNMissingElementException
-     */
-    public BPMNBounds setBounds(double x, double y, double width, double height) throws BPMNMissingElementException {
-        // init bound if not yet loaded
-        getBounds();
-
-        // update bounds
-        bounds.setDimension(width, height);
-        bounds.setPosition(x, y);
-
-        return bounds;
-    }
-
-    /**
-     * Returns the BPMNShape element
-     * 
-     * @return
-     */
-    public Element getBpmnShape() {
-        return bpmnShape;
-    }
-
-    /**
-     * Set the BPMNShape element
-     * 
-     * @param bpmnShape
-     */
-    public void setBpmnShape(Element bpmnShape) {
-        this.bpmnShape = bpmnShape;
     }
 
 }

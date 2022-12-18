@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
  * @author rsoika
  *
  */
-public class BPMNActivity extends BPMNFlowElement {
+public class BPMNActivity extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 110.0;
     public final static double DEFAULT_HEIGHT = 50.0;

@@ -23,7 +23,7 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.AbstractBPMNElement;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNPoint;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -65,7 +65,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                 logger.info("....element id= " + id);
                 BPMNSequenceFlow bpmnSequenceFlow = null;
 
-                BPMNBaseElement element = modelState.getBpmnModel().findBPMNBaseElementById(id);
+                AbstractBPMNElement element = modelState.getBpmnModel().findBPMNElementById(id);
                 // do we have a BPMNSequenceFlow ?
                 if (element != null && element instanceof BPMNSequenceFlow) {
                     // update the BPMN WayPoints.

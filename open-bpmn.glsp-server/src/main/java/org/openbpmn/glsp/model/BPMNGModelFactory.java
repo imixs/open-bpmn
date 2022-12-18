@@ -44,11 +44,10 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
 import org.openbpmn.bpmn.elements.BPMNDataObject;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
 import org.openbpmn.bpmn.elements.BPMNGateway;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNLane;
@@ -227,7 +226,7 @@ public class BPMNGModelFactory implements GModelFactory {
         rootBuilder.addAll(gRootNodeList);
         GGraph newGModel = rootBuilder.build();
         // finally add the root extensions
-        applyBPMNExtensions(newGModel, model.openDefaultProcess());
+        // applyBPMNExtensions(newGModel, model.openDefaultProcess());
 
         return newGModel;
     }
@@ -239,7 +238,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param elementNode
      * @param bpmnElement
      */
-    void applyBPMNExtensions(final GModelElement elementNode, final BPMNBaseElement bpmnElement) {
+    void applyBPMNExtensions(final GModelElement elementNode, final BPMNElementNode bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
@@ -479,7 +478,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @return
      * @throws BPMNMissingElementException
      */
-    private LabelGNode createLabelNode(final BPMNLabel bpmnLabel, final BPMNFlowElement flowElement,
+    private LabelGNode createLabelNode(final BPMNLabel bpmnLabel, final BPMNElementNode flowElement,
             final BPMNParticipant participant) throws BPMNMissingElementException {
         logger.debug("BPMNLabel: x=" + bpmnLabel.getBounds().getPosition().getX() + " y="
                 + bpmnLabel.getBounds().getPosition().getY());

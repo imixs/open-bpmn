@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class BPMNEvent extends BPMNFlowElement {
+public class BPMNEvent extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 36.0;
     public final static double DEFAULT_HEIGHT = 36.0;

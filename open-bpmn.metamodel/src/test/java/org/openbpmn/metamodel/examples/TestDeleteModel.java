@@ -133,7 +133,7 @@ public class TestDeleteModel {
             privateProcess.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
 
             // we expect 3 Flow elements and 2 Processes
-            assertEquals(3, privateProcess.getBPMNFlowElements().size());
+            assertEquals(3, privateProcess.getAllNodes().size());
             assertEquals(2, model.getProcesses().size());
             assertEquals(2, model.getParticipants().size());
 

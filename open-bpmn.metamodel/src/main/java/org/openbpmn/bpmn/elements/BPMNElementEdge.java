@@ -14,18 +14,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The BPMNFlowEdge is the abstract super class for all BPMN edge types
+ * The BPMNElementEdge is the abstract super class for all BPMN edge types
  * (SequenceFlow, MessageFlow, Association).
  * <p>
- * The BPMNFlowEdge provides general attributes like the source and target ref
+ * The BPMNElementEdge provides general attributes like the source and target ref
  * and also the wayPoint attribute.
  * <p>
- * A BPMNBaseFlow extends the BPMNBaseElement
+ * A BPMNElementEdge extends the AbstractBPMNElement
  * 
  * @author rsoika
  */
-public abstract class BPMNFlowEdge extends BPMNBaseElement {
-    private static Logger logger = Logger.getLogger(BPMNFlowEdge.class.getName());
+public abstract class BPMNElementEdge extends AbstractBPMNElement {
+    private static Logger logger = Logger.getLogger(BPMNElementEdge.class.getName());
     protected String type = null;
     protected BPMNProcess bpmnProcess = null;
     protected String sourceRef = null;
@@ -33,7 +33,7 @@ public abstract class BPMNFlowEdge extends BPMNBaseElement {
     protected Element bpmnEdge = null;
     protected Set<BPMNPoint> wayPoints = null;
 
-    public BPMNFlowEdge(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
+    public BPMNElementEdge(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
         super(model, node);
         this.type = _type;
         this.bpmnProcess = _bpmnProcess;
@@ -117,8 +117,8 @@ public abstract class BPMNFlowEdge extends BPMNBaseElement {
      * 
      * @return
      */
-    public BPMNFlowElement getSourceElement() {
-        return this.bpmnProcess.findBPMNFlowElementById(sourceRef);
+    public BPMNElementNode getSourceElement() {
+        return this.bpmnProcess.findBPMNNodeById(sourceRef);
     }
 
     public void setSourceRef(String sourceRef) {
@@ -143,8 +143,8 @@ public abstract class BPMNFlowEdge extends BPMNBaseElement {
      * 
      * @return
      */
-    public BPMNFlowElement getTargetElement() {
-        return this.bpmnProcess.findBPMNFlowElementById(targetRef);
+    public BPMNElementNode getTargetElement() {
+        return this.bpmnProcess.findBPMNNodeById(targetRef);
     }
 
     public Set<BPMNPoint> getWayPoints() {

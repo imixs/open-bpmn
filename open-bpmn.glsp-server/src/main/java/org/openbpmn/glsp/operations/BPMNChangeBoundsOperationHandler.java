@@ -29,9 +29,8 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
 import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
@@ -149,8 +148,9 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                         // update the BPMNLabel bounds
                         // Therefor we need first find the corresponding BPMNFlowElement
                         String labelID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
-                        BPMNBaseElement bpmnBaseElement = modelState.getBpmnModel().findBPMNBaseElementById(labelID);
-                        BPMNLabel bpmnLabel = ((BPMNFlowElement) bpmnBaseElement).getLabel();
+                        BPMNElementNode bpmnElement = modelState.getBpmnModel().findBPMNNodeById(labelID);
+
+                        BPMNLabel bpmnLabel = bpmnElement.getLabel();
                         if (bpmnLabel != null) {
                             BPMNPoint labelPoint = bpmnLabel.getBounds().getPosition();
                             bpmnLabel.updateLocation(labelPoint.getX() + offsetX, labelPoint.getY() + offsetY);
@@ -275,8 +275,8 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             final double offsetWidth, final double offsetHeight) throws BPMNMissingElementException {
 
         // Update all FlowElements
-        Set<BPMNFlowElement> bpmnFlowElements = process.getBPMNFlowElements();
-        for (BPMNFlowElement flowElement : bpmnFlowElements) {
+        Set<BPMNElementNode> bpmnFlowElements = process.getAllNodes();
+        for (BPMNElementNode flowElement : bpmnFlowElements) {
             logger.info("update element bounds: " + flowElement.getId());
             try {
                 BPMNBounds bounds = flowElement.getBounds();

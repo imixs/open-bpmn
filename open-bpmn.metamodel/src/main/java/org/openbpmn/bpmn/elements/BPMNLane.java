@@ -34,7 +34,7 @@ import org.w3c.dom.Text;
  * @author rsoika
  *
  */
-public class BPMNLane extends BPMNBaseElement {
+public class BPMNLane extends BPMNElementNode {
 
     public final static double MIN_WIDTH = 270.0;
     public final static double MIN_HEIGHT = 100.0;
@@ -69,10 +69,10 @@ public class BPMNLane extends BPMNBaseElement {
      * @param laneId
      * @throws BPMNInvalidReferenceException
      */
-    public void insert(BPMNFlowElement bpmnFlowEement) throws BPMNInvalidReferenceException {
+    public void insert(BPMNElementNode bpmnEementNode) throws BPMNInvalidReferenceException {
         // append flowNodeRef
         Element flowNodeRef = model.createElement(BPMNNS.BPMN2, "flowNodeRef");
-        Text textNode = this.getDoc().createTextNode(bpmnFlowEement.getId());
+        Text textNode = this.getDoc().createTextNode(bpmnEementNode.getId());
         flowNodeRef.appendChild(textNode);
         this.getElementNode().appendChild(flowNodeRef);
     }
@@ -83,7 +83,7 @@ public class BPMNLane extends BPMNBaseElement {
      * @param element a BPMNFlowElement
      * @return
      */
-    public boolean contains(BPMNFlowElement bpmnElement) {
+    public boolean contains(BPMNElementNode bpmnElement) {
         // get all bpmn2:flowNodeRef
         Set<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
                 BPMNNS.BPMN2.prefix + ":flowNodeRef");
@@ -109,6 +109,16 @@ public class BPMNLane extends BPMNBaseElement {
             result.add(element.getTextContent());
         }
         return result;
+    }
+
+    @Override
+    public double getDefaultWidth() {
+        return DEFAULT_WIDTH;
+    }
+
+    @Override
+    public double getDefaultHeigth() {
+        return DEFAULT_HEIGHT;
     }
 
     

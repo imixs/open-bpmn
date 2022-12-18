@@ -20,9 +20,9 @@ import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
-import org.openbpmn.bpmn.elements.BPMNFlowEdge;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLane;
 import org.openbpmn.bpmn.elements.BPMNParticipant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -57,10 +57,10 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             }
 
             // find the bpmnBaseElement
-            BPMNBaseElement baseElement = modelState.getBpmnModel().findBPMNBaseElementById(id);
-            if (baseElement != null && baseElement instanceof BPMNLane) {
+            AbstractBPMNElement bpmnElement = modelState.getBpmnModel().findBPMNElementById(id);
+            if (bpmnElement != null && bpmnElement instanceof BPMNLane) {
                 // delete lane
-                BPMNLane lane = (BPMNLane) baseElement;
+                BPMNLane lane = (BPMNLane) bpmnElement;
                 try {
                     modelState.getBpmnModel().openProcess(lane.getProcessId()).deleteLane(id);
                 } catch (BPMNModelException e) {
@@ -70,17 +70,17 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
 
             }
             // finally we assume that this is a FlowElement
-            if (baseElement != null && baseElement instanceof BPMNFlowElement) {
+            if (bpmnElement != null && bpmnElement instanceof BPMNElementNode) {
                 // open the corresponding process
-                BPMNProcess process = ((BPMNFlowElement) baseElement).getBpmnProcess();
-                process.deleteBPMNBaseElement(id);
+                BPMNProcess process = ((BPMNElementNode) bpmnElement).getBpmnProcess();
+                process.deleteBPMNElementNode(id);
                 continue;
             }
 
-            if (baseElement != null && baseElement instanceof BPMNFlowEdge) {
+            if (bpmnElement != null && bpmnElement instanceof BPMNElementEdge) {
                 // open the corresponding process
-                BPMNProcess process = ((BPMNFlowEdge) baseElement).getBpmnProcess();
-                process.deleteBaseFlow(id);
+                BPMNProcess process = ((BPMNElementEdge) bpmnElement).getBpmnProcess();
+                process.deleteElementEdge(id);
                 continue;
             }
 

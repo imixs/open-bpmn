@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
@@ -50,12 +51,17 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
         this.label = "Sequence Flow";
     }
 
+    /**
+     * Adds a new BPMNEdge to the diagram. Depending on the type a SequenceFlow,
+     * MessageFlow or Association is crated.
+     */
     @Override
     protected void executeOperation(final CreateEdgeOperation operation) {
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
 
+        String edgeType = operation.getElementTypeId();
         try {
             Optional<BPMNGNode> element = null;
             String targetId = operation.getTargetElementId();
@@ -73,15 +79,27 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             }
 
             // Verify that both Elements are members of the same process...
-            String sourceProcessId = modelState.getBpmnModel().findBPMNBaseElementById(sourceId).getProcessId();
-            String targetProcessId = modelState.getBpmnModel().findBPMNBaseElementById(targetId).getProcessId();
+            String sourceProcessId = modelState.getBpmnModel().findBPMNNodeById(sourceId).getProcessId();
+            String targetProcessId = modelState.getBpmnModel().findBPMNNodeById(targetId).getProcessId();
             if (sourceProcessId == null || !sourceProcessId.equals(targetProcessId)) {
                 throw new IllegalArgumentException("Target and Source Element are not members of the same process!");
             }
             // open the process and create the sequence flow...
             BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
-            bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
 
+            switch (edgeType) {
+            case BPMNTypes.SEQUENCE_FLOW:
+                bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
+                break;
+            case BPMNTypes.MESSAGE_FLOW:
+                bpmnProcess.addMessageFlow(BPMNModel.generateShortID("MessageFlow"), sourceId, targetId);
+                break;
+            case BPMNTypes.ASSOCIATION:
+                bpmnProcess.addAssociation(BPMNModel.generateShortID("Association"), sourceId, targetId);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid BPMNEdge type: " + edgeType);
+            }
             modelState.reset();
         } catch (BPMNModelException e) {
             logger.severe(e.getMessage());

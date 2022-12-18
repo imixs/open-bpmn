@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNFlowElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.bpmn.elements.BPMNLabel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -43,7 +43,7 @@ public class TestReadModel {
             assertEquals(2, process.getActivities().size());
             assertEquals(2, process.getEvents().size());
 
-            BPMNFlowElement startEvent = process.findBPMNFlowElementById("StartEvent_1");
+            BPMNElementNode startEvent = process.findBPMNNodeById("StartEvent_1");
             assertNotNull(startEvent);
 
             // test the label position of the event
@@ -83,7 +83,7 @@ public class TestReadModel {
             assertEquals(1, process1.getActivities().size());
             assertEquals(2, process1.getEvents().size());
 
-            BPMNFlowElement startEvent = process1.findBPMNFlowElementById("StartEvent_1");
+            BPMNElementNode startEvent = process1.findBPMNNodeById("StartEvent_1");
             assertNotNull(startEvent);
 
             // test the label position of the event
@@ -124,7 +124,7 @@ public class TestReadModel {
             BPMNProcess process1 = model.openProcess("Process_1");
             assertEquals(1, process1.getActivities().size());
             assertEquals(2, process1.getEvents().size());
-            BPMNFlowElement startEvent = process1.findBPMNFlowElementById("StartEvent_1");
+            BPMNElementNode startEvent = process1.findBPMNNodeById("StartEvent_1");
             assertNotNull(startEvent);
 
             // test the label position of the event

@@ -13,7 +13,7 @@ import org.w3c.dom.Element;
  * @author rsoika
  *
  */
-public class BPMNParticipant extends BPMNBaseElement {
+public class BPMNParticipant extends BPMNElementNode {
 
     public final static double MIN_WIDTH = 300.0;
     public final static double MIN_HEIGHT = 100.0;
@@ -26,6 +26,7 @@ public class BPMNParticipant extends BPMNBaseElement {
 
     public BPMNParticipant(BPMNModel model, Element node) throws BPMNModelException {
         super(model, node);
+        
         // find the BPMNShape element. 
         bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
     }
@@ -56,6 +57,18 @@ public class BPMNParticipant extends BPMNBaseElement {
     public void setProcessRef(String processRef) {
         this.processRef = processRef;
         this.getElementNode().setAttribute("processRef", processRef);
+    }
+
+
+    @Override
+    public double getDefaultWidth() {
+        return DEFAULT_WIDTH;
+    }
+
+
+    @Override
+    public double getDefaultHeigth() {
+        return DEFAULT_HEIGHT;
     }
   
 }

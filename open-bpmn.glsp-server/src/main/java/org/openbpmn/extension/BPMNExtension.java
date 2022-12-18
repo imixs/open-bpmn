@@ -18,7 +18,7 @@ package org.openbpmn.extension;
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.elements.BPMNBaseElement;
+import org.openbpmn.bpmn.elements.BPMNElementNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -85,7 +85,7 @@ public interface BPMNExtension {
      * @param bpmnElement The BPMNBaseElement that should be handled.
      * @return `true` if the given bpmnElement can be handled by this extension.
      */
-    default boolean handlesBPMNElement(final BPMNBaseElement bpmnElement) {
+    default boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
         return true;
     }
 
@@ -108,7 +108,7 @@ public interface BPMNExtension {
      *
      * @param bpmnElement
      */
-    void addExtension(BPMNBaseElement bpmnElement);
+    void addExtension(BPMNElementNode bpmnElement);
 
     /**
      * This Helper Method is called to generate a JSON Forms Object by adding the
@@ -130,7 +130,7 @@ public interface BPMNExtension {
      * JsonForms
      *
      */
-    void buildPropertiesForm(BPMNBaseElement bpmnElement, DataBuilder dataBuilder, SchemaBuilder schemaBuilder,
+    void buildPropertiesForm(BPMNElementNode bpmnElement, DataBuilder dataBuilder, SchemaBuilder schemaBuilder,
             UISchemaBuilder uiSchemaBuilder);
 
     /**
@@ -143,6 +143,6 @@ public interface BPMNExtension {
      * @param bpmnElement  - the BPMN element to be updated
      * @param gNodeElement - the GModelElement element
      */
-    void updatePropertiesData(JsonObject json, BPMNBaseElement bpmnElement, GModelElement gNodeElement);
+    void updatePropertiesData(JsonObject json, BPMNElementNode bpmnElement, GModelElement gNodeElement);
 
 }

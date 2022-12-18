@@ -47,7 +47,7 @@ public class TestUpdateBounds {
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
-            BPMNActivity task1 = (BPMNActivity) process.findBaseElementById("Task_1");
+            BPMNActivity task1 = (BPMNActivity) process.findBPMNNodeById("Task_1");
             assertNotNull(task1);
 
             BPMNBounds bounds = task1.getBounds();
