@@ -26,8 +26,8 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -109,7 +109,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                 elementID = element.get().getId();
                 logger.info("===== > add extension for element id: " + elementID);
 
-                BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
+                Process process = modelState.getBpmnModel().openDefaultProcess();
                 BPMNElementNode bpmnElement = process.findBPMNNodeById(elementID);
                 if (bpmnElement != null) {
                     // add the new extension

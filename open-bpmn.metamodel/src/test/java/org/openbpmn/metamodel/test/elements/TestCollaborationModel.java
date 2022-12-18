@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNLane;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -41,14 +41,14 @@ public class TestCollaborationModel {
             model = BPMNModelFactory.read("/collaboration_1.bpmn");
             // we expect the existence of 2 process elements
 
-            Set<BPMNParticipant> participants = model.getParticipants();
+            Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
             assertEquals(2, participants.size());
 
             // get first participant and load the process context
-            BPMNParticipant bpmnParticipant = participants.iterator().next();
+            Participant bpmnParticipant = participants.iterator().next();
 
-            BPMNProcess process = model.openProcess("Process_1");
+            Process process = model.openProcess("Process_1");
 
             // we expect 1 Task element in this process
             assertEquals(1, process.getActivities().size());
@@ -79,8 +79,8 @@ public class TestCollaborationModel {
             assertEquals(1, model.getProcesses().size());
 
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
-            BPMNParticipant participantManagement = model.addParticipant("Management");
+            Participant participantSales = model.addParticipant("Sales Team");
+            Participant participantManagement = model.addParticipant("Management");
 
             assertTrue(model.isCollaborationDiagram());
             assertEquals(3, model.getProcesses().size());
@@ -117,10 +117,10 @@ public class TestCollaborationModel {
 
         try {
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            Participant participantSales = model.addParticipant("Sales Team");
 
             // add a task
-            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(60, 40);
 
         } catch (BPMNModelException e) {
@@ -148,18 +148,18 @@ public class TestCollaborationModel {
 
         try {
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 200);
 
-            BPMNProcess salesProcess = participantSales.openProcess();
+            Process salesProcess = participantSales.openProcess();
             // add a BPMNLane
-            BPMNLane lane1 = salesProcess.addLane(model, "Europe");
-            BPMNLane lane2 = salesProcess.addLane(model, "United States");
+            Lane lane1 = salesProcess.addLane(model, "Europe");
+            Lane lane2 = salesProcess.addLane(model, "United States");
             lane1.setBounds(40, 10, 470, 100);
             lane2.setBounds(40, 110, 470, 100);
 
             // add a task
-            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(100, 40);
             lane1.insert(task);
 
@@ -190,17 +190,17 @@ public class TestCollaborationModel {
 
         try {
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 200);
 
-            BPMNProcess salesProcess = participantSales.openProcess();
+            Process salesProcess = participantSales.openProcess();
             // add a BPMNLane
-            BPMNLane lane1 = salesProcess.addLane(model, "Europe");
-            BPMNLane lane2 = salesProcess.addLane(model, "United States");
-            BPMNLane lane3 = salesProcess.addLane(model, "Africa");
+            Lane lane1 = salesProcess.addLane(model, "Europe");
+            Lane lane2 = salesProcess.addLane(model, "United States");
+            Lane lane3 = salesProcess.addLane(model, "Africa");
 
             // add a task
-            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(100, 40);
             lane1.insert(task);
 

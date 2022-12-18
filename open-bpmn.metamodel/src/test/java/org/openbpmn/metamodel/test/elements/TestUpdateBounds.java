@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNDimension;
-import org.openbpmn.bpmn.elements.BPMNPoint;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNDimension;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -44,10 +44,10 @@ public class TestUpdateBounds {
         logger.info("...read model");
         try {
             // read tasks....
-            BPMNProcess process = model.openProcess(null);
+            Process process = model.openProcess(null);
             assertNotNull(process);
 
-            BPMNActivity task1 = (BPMNActivity) process.findBPMNNodeById("Task_1");
+            Activity task1 = (Activity) process.findBPMNNodeById("Task_1");
             assertNotNull(task1);
 
             BPMNBounds bounds = task1.getBounds();

@@ -24,9 +24,9 @@ import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -80,8 +80,8 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
     @Override
     public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
 
-        if (bpmnElement instanceof BPMNActivity) {
-            BPMNActivity task = (BPMNActivity) bpmnElement;
+        if (bpmnElement instanceof Activity) {
+            Activity task = (Activity) bpmnElement;
             if (task.getType().equals(BPMNTypes.TASK)) {
                 // next check the extension attribute imixs:processid
                 if (task.hasAttribute(getNamespace() + ":processid")) {
@@ -89,8 +89,8 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
                 }
             }
         }
-        if (bpmnElement instanceof BPMNEvent) {
-            BPMNEvent event = (BPMNEvent) bpmnElement;
+        if (bpmnElement instanceof Event) {
+            Event event = (Event) bpmnElement;
             if (event.getType().equals(BPMNTypes.CATCH_EVENT)) {
                 // next check the extension attribute imixs:processid
                 if (event.hasAttribute(getNamespace() + ":activityid")) {
@@ -106,11 +106,11 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      */
     @Override
     public void addExtension(final BPMNElementNode bpmnElement) {
-        if (bpmnElement instanceof BPMNActivity) {
+        if (bpmnElement instanceof Activity) {
             bpmnElement.setExtensionAttribute(getNamespace(), "processid", "100");
         }
 
-        if (bpmnElement instanceof BPMNEvent) {
+        if (bpmnElement instanceof Event) {
             bpmnElement.setExtensionAttribute(getNamespace(), "activityid", "10");
         }
     }

@@ -9,11 +9,11 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNPoint;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -44,7 +44,7 @@ public class TestReadBounds {
         logger.info("...read model");
         try {
             // read tasks....
-            BPMNProcess process = model.openProcess(null);
+            Process process = model.openProcess(null);
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_1");
@@ -74,7 +74,7 @@ public class TestReadBounds {
         logger.info("...read model");
         try {
             // read tasks....
-            BPMNProcess process = model.openProcess(null);
+            Process process = model.openProcess(null);
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_1");

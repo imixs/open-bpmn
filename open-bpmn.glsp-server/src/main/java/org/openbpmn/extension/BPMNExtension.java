@@ -18,7 +18,7 @@ package org.openbpmn.extension;
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;

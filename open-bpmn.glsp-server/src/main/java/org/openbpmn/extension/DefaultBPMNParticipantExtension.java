@@ -30,10 +30,10 @@ import javax.json.JsonValue;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNLane;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
@@ -73,7 +73,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
-        return (bpmnElement instanceof BPMNParticipant);
+        return (bpmnElement instanceof Participant);
     }
 
     /**
@@ -104,7 +104,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                 addElement("documentation", "Documentation", multilineOption);
 
         // LaneSet
-        addLaneSetProperties((BPMNParticipant) bpmnElement, dataBuilder, schemaBuilder, uiSchemaBuilder);
+        addLaneSetProperties((Participant) bpmnElement, dataBuilder, schemaBuilder, uiSchemaBuilder);
 
     }
 
@@ -116,12 +116,12 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
      * @param schemaBuilder
      * @param uiSchemaBuilder
      */
-    private void addLaneSetProperties(final BPMNParticipant participant, final DataBuilder dataBuilder,
+    private void addLaneSetProperties(final Participant participant, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
-        BPMNProcess process = participant.openProcess();
+        Process process = participant.openProcess();
 
         if (process.hasLanes()) {
             Map<String, String> arrayDetailOption = new HashMap<>();
@@ -165,7 +165,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
              * object
              */
             dataBuilder.addArray("lanes");
-            for (BPMNLane bpmnLane : process.getLanes()) {
+            for (Lane bpmnLane : process.getLanes()) {
                 dataBuilder.addObject();
                 dataBuilder.addData("name", bpmnLane.getName());
                 dataBuilder.addData("documentation", bpmnLane.getDocumentation());
@@ -183,9 +183,9 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
         // default update of name and documentation
         // super.updatePropertiesData(json, bpmnElement, gNodeElement);
 
-        BPMNParticipant participant = (BPMNParticipant) bpmnElement;
+        Participant participant = (Participant) bpmnElement;
         try {
-            BPMNProcess process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
+            Process process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
             // check custom features
             Set<String> features = json.keySet();
             for (String feature : features) {
@@ -209,7 +209,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                         // update lane properties
                         JsonObject laneData = (JsonObject) laneValue;
                         String id = laneData.getString("id");
-                        BPMNLane bpmnLane = process.findBPMNLaneById(id);
+                        Lane bpmnLane = process.findBPMNLaneById(id);
                         if (bpmnLane != null) {
                             bpmnLane.setName(laneData.getString("name"));
                             bpmnLane.setDocumentation(laneData.getString("documentation"));

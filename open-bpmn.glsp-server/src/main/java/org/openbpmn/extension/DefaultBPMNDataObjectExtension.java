@@ -25,8 +25,8 @@ import javax.json.JsonObject;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNDataObject;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
+import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -62,7 +62,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
-        return (bpmnElement instanceof BPMNDataObject);
+        return (bpmnElement instanceof DataObject);
     }
 
     /**

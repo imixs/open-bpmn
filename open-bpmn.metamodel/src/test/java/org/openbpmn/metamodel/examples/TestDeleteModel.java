@@ -10,9 +10,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -43,7 +43,7 @@ public class TestDeleteModel {
         String out = "src/test/resources/delete-process_1.bpmn";
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
-            BPMNProcess process = model.openProcess(null);
+            Process process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class TestDeleteModel {
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
 
-            BPMNProcess process = model.openProcess(null);
+            Process process = model.openProcess(null);
             process.deleteTask("Task_1");
             process.deleteEvent("StartEvent_1");
         } catch (BPMNModelException e) {
@@ -84,13 +84,13 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            BPMNProcess processContext = model.openDefaultProcess();
+            Process processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
-            BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().setPosition(10.0, 10.0);
             task.getBounds().setDimension(140.0, 60.0);
 
@@ -117,14 +117,14 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            BPMNProcess defaultProcess = model.openDefaultProcess();
+            Process defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
 
             // create Participant
-            BPMNParticipant sales = model.addParticipant("Sales");
+            Participant sales = model.addParticipant("Sales");
 
             // add Task
-            BPMNProcess privateProcess = sales.openProcess();
+            Process privateProcess = sales.openProcess();
             // add a start and end event
             privateProcess.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             privateProcess.addEvent("end_1", "End", BPMNTypes.END_EVENT);
@@ -138,7 +138,7 @@ public class TestDeleteModel {
             assertEquals(2, model.getParticipants().size());
 
             // now delete the Participant
-            model.deleteBPMNParticipant(sales);
+            model.deleteParticipant(sales);
             assertEquals(1, model.getParticipants().size());
             assertEquals(1, model.getProcesses().size());
 

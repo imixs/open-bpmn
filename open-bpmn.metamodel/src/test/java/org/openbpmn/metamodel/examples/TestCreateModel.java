@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNLane;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -41,7 +41,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         assertNotNull(model);
 
-        BPMNProcess defaultProcess = model.openDefaultProcess();
+        Process defaultProcess = model.openDefaultProcess();
         assertNotNull(defaultProcess);
         assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 
@@ -64,7 +64,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProcess();
+            Process process = model.openDefaultProcess();
             process.addTask("task_1", "Task-1", null);
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProcess();
+            Process processContext = model.openDefaultProcess();
 
             assertNotNull(processContext);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, processContext.getProcessType());
@@ -127,7 +127,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProcess();
+            Process processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event
@@ -165,13 +165,13 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProcess();
+            Process processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
-            BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().setPosition(10.0, 10.0);
             task.getBounds().setDimension(140.0, 60.0);
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
@@ -202,10 +202,10 @@ public class TestCreateModel {
 
         try {
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            Participant participantSales = model.addParticipant("Sales Team");
            
             // add a task
-            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(60, 40);
 
         } catch (BPMNModelException e) {
@@ -236,16 +236,16 @@ public class TestCreateModel {
 
         try {
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10,10,500,100);
             
-            BPMNProcess salesProcess=participantSales.openProcess();
+            Process salesProcess=participantSales.openProcess();
             // add a BPMNLane
-            BPMNLane lane1=salesProcess.addLane(model, "Europe");
-            BPMNLane lane2=salesProcess.addLane(model, "United States");
+            Lane lane1=salesProcess.addLane(model, "Europe");
+            Lane lane2=salesProcess.addLane(model, "United States");
             
             // add a task
-            BPMNActivity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(100, 40);
             lane1.insert(task);
 

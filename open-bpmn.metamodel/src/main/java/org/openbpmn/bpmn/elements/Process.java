@@ -7,6 +7,10 @@ import java.util.Set;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
@@ -35,17 +39,17 @@ import org.w3c.dom.NodeList;
  * @author rsoika
  *
  */
-public class BPMNProcess extends AbstractBPMNElement {
+public class Process extends AbstractBPMNElement {
 
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
-    protected Set<BPMNActivity> activities = null;
-    protected Set<BPMNDataObject> dataObjects = null;
-    protected Set<BPMNEvent> events = null;
-    protected Set<BPMNGateway> gateways = null;
-    protected Set<BPMNSequenceFlow> sequenceFlows = null;
-    protected Set<BPMNAssociation> associations = null;
-    protected Set<BPMNMessageFlow> messageFlows = null;
-    protected Set<BPMNLane> lanes = null;
+    protected Set<Activity> activities = null;
+    protected Set<DataObject> dataObjects = null;
+    protected Set<Event> events = null;
+    protected Set<Gateway> gateways = null;
+    protected Set<SequenceFlow> sequenceFlows = null;
+    protected Set<Association> associations = null;
+    protected Set<MessageFlow> messageFlows = null;
+    protected Set<Lane> lanes = null;
     protected Element laneSet = null;
 
     private boolean initalized = false;
@@ -63,7 +67,7 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param model
      * @param element
      */
-    public BPMNProcess(BPMNModel model, Element element, String processType) {
+    public Process(BPMNModel model, Element element, String processType) {
         super(model, element);
 
         // set public if not yet specified
@@ -165,36 +169,36 @@ public class BPMNProcess extends AbstractBPMNElement {
      * 
      * @return
      */
-    public Set<BPMNActivity> getActivities() {
+    public Set<Activity> getActivities() {
         if (activities == null) {
-            activities = new LinkedHashSet<BPMNActivity>();
+            activities = new LinkedHashSet<Activity>();
         }
         return activities;
     }
 
-    public void setActivities(Set<BPMNActivity> activities) {
+    public void setActivities(Set<Activity> activities) {
         this.activities = activities;
     }
 
-    public Set<BPMNEvent> getEvents() {
+    public Set<Event> getEvents() {
         if (events == null) {
-            events = new LinkedHashSet<BPMNEvent>();
+            events = new LinkedHashSet<Event>();
         }
         return events;
     }
 
-    public void setEvents(Set<BPMNEvent> events) {
+    public void setEvents(Set<Event> events) {
         this.events = events;
     }
 
-    public Set<BPMNGateway> getGateways() {
+    public Set<Gateway> getGateways() {
         if (gateways == null) {
-            gateways = new LinkedHashSet<BPMNGateway>();
+            gateways = new LinkedHashSet<Gateway>();
         }
         return gateways;
     }
 
-    public void setGateways(Set<BPMNGateway> gateways) {
+    public void setGateways(Set<Gateway> gateways) {
         this.gateways = gateways;
     }
 
@@ -203,47 +207,47 @@ public class BPMNProcess extends AbstractBPMNElement {
      * 
      * @return
      */
-    public Set<BPMNDataObject> getDataObjects() {
+    public Set<DataObject> getDataObjects() {
         if (dataObjects == null) {
-            dataObjects = new LinkedHashSet<BPMNDataObject>();
+            dataObjects = new LinkedHashSet<DataObject>();
         }
         return dataObjects;
     }
 
-    public void setDataObjects(Set<BPMNDataObject> dataObjects) {
+    public void setDataObjects(Set<DataObject> dataObjects) {
         this.dataObjects = dataObjects;
     }
 
-    public Set<BPMNSequenceFlow> getSequenceFlows() {
+    public Set<SequenceFlow> getSequenceFlows() {
         if (sequenceFlows == null) {
-            sequenceFlows = new LinkedHashSet<BPMNSequenceFlow>();
+            sequenceFlows = new LinkedHashSet<SequenceFlow>();
         }
         return sequenceFlows;
     }
 
-    public void setSequenceFlows(Set<BPMNSequenceFlow> sequenceFlows) {
+    public void setSequenceFlows(Set<SequenceFlow> sequenceFlows) {
         this.sequenceFlows = sequenceFlows;
     }
 
-    public Set<BPMNAssociation> getAssociations() {
+    public Set<Association> getAssociations() {
         if (associations == null) {
-            associations = new LinkedHashSet<BPMNAssociation>();
+            associations = new LinkedHashSet<Association>();
         }
         return associations;
     }
 
-    public void setAssociations(Set<BPMNAssociation> accociations) {
+    public void setAssociations(Set<Association> accociations) {
         this.associations = accociations;
     }
 
-    public Set<BPMNMessageFlow> getMessageFlows() {
+    public Set<MessageFlow> getMessageFlows() {
         if (messageFlows == null) {
-            messageFlows = new LinkedHashSet<BPMNMessageFlow>();
+            messageFlows = new LinkedHashSet<MessageFlow>();
         }
         return messageFlows;
     }
 
-    public void setMessageFlows(Set<BPMNMessageFlow> messageFlows) {
+    public void setMessageFlows(Set<MessageFlow> messageFlows) {
         this.messageFlows = messageFlows;
     }
 
@@ -257,14 +261,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNActivity addTask(String id, String name, String type) throws BPMNModelException {
+    public Activity addTask(String id, String name, String type) throws BPMNModelException {
 
         // verify id
         if (id == null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNActivity node : getActivities()) {
+        for (Activity node : getActivities()) {
             if (node.getId().equals(id)) {
                 throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
                         "id '" + id + "' is already in use!");
@@ -278,7 +282,7 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.getElementNode().appendChild(taskElement);
 
         // add BPMNEvent instance
-        BPMNActivity task = this.createBPMNActivityByNode(taskElement);
+        Activity task = this.createBPMNActivityByNode(taskElement);
 
         return task;
     }
@@ -295,14 +299,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNEvent addEvent(String id, String name, String type) throws BPMNModelException {
+    public Event addEvent(String id, String name, String type) throws BPMNModelException {
 
         // verify id
         if (id == null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNEvent node : getEvents()) {
+        for (Event node : getEvents()) {
             if (node.getId().equals(id)) {
                 throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
                         "id '" + id + "' is already in use!");
@@ -316,7 +320,7 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.getElementNode().appendChild(eventElement);
 
         // add BPMNEvent instance
-        BPMNEvent event = this.createBPMNEventByNode(eventElement);
+        Event event = this.createBPMNEventByNode(eventElement);
 
         return event;
 
@@ -334,13 +338,13 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    public BPMNGateway addGateway(String id, String name, String type) throws BPMNModelException {
+    public Gateway addGateway(String id, String name, String type) throws BPMNModelException {
         // verify id
         if (id == null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNGateway node : getGateways()) {
+        for (Gateway node : getGateways()) {
             if (node.getId().equals(id)) {
                 throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
                         "id '" + id + "' is already in use!");
@@ -356,7 +360,7 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.getElementNode().appendChild(eventElement);
 
         // add BPMNGateway instance
-        BPMNGateway gateway = this.createBPMNGatewayByNode(eventElement);
+        Gateway gateway = this.createBPMNGatewayByNode(eventElement);
         return gateway;
 
     }
@@ -370,14 +374,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param name
      * @throws BPMNModelException
      */
-    public BPMNDataObject addDataObject(String id, String name) throws BPMNModelException {
+    public DataObject addDataObject(String id, String name) throws BPMNModelException {
 
         // verify id
         if (id == null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNDataObject node : getDataObjects()) {
+        for (DataObject node : getDataObjects()) {
             if (node.getId().equals(id)) {
                 throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
                         "id '" + id + "' is already in use!");
@@ -391,7 +395,7 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.getElementNode().appendChild(dataObjectElement);
 
         // add BPMNDataObject instance
-        BPMNDataObject dataObject = this.createBPMNDataObjectByNode(dataObjectElement);
+        DataObject dataObject = this.createBPMNDataObjectByNode(dataObjectElement);
 
         return dataObject;
     }
@@ -525,9 +529,9 @@ public class BPMNProcess extends AbstractBPMNElement {
         }
 
         // add refs to the BPMNEdge element...
-        Element edgeShape = bpmnBaseEdge.bpmnEdge;
-        edgeShape.setAttribute("sourceElement", sourceElement.bpmnShape.getAttribute("id"));
-        edgeShape.setAttribute("targetElement", targetElement.bpmnShape.getAttribute("id"));
+        Element edgeShape = bpmnBaseEdge.getBpmnEdge();
+        edgeShape.setAttribute("sourceElement", sourceElement.getBpmnShape().getAttribute("id"));
+        edgeShape.setAttribute("targetElement", targetElement.getBpmnShape().getAttribute("id"));
 
         return bpmnBaseEdge;
     }
@@ -563,7 +567,7 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @return BPMNLane
      * @throws BPMNMissingElementException
      */
-    public BPMNLane addLane(BPMNModel model, String name) throws BPMNMissingElementException {
+    public Lane addLane(BPMNModel model, String name) throws BPMNMissingElementException {
 
         if (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(this.getProcessType())) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
@@ -590,10 +594,10 @@ public class BPMNProcess extends AbstractBPMNElement {
         laneSet.appendChild(lane);
 
         BPMNModel.debug("new lane '" + laneId + "' added");
-        BPMNLane bpmnLane = new BPMNLane(model, lane);
+        Lane bpmnLane = new Lane(model, lane);
 
         // Autocompute the Lane Bounds
-        BPMNParticipant bpmnParticipant = model.findBPMNParticipantByProcessId(this.getId());
+        Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
         if (bpmnParticipant != null) {
             // add shape
             // create shape element
@@ -623,13 +627,13 @@ public class BPMNProcess extends AbstractBPMNElement {
 
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
 
-            int laneX = (int) (poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET);
+            int laneX = (int) (poolBounds.getPosition().getX() + Participant.POOL_OFFSET);
             int laneY = (int) poolBounds.getPosition().getY();
             if (currentLaneCount > 0) {
                 laneY = laneY + (currentLaneCount * expansion);
             }
 
-            int laneWidth = (int) (poolBounds.getDimension().getWidth() - BPMNParticipant.POOL_OFFSET);
+            int laneWidth = (int) (poolBounds.getDimension().getWidth() - Participant.POOL_OFFSET);
             int laneHeight = (int) (poolBounds.getDimension().getHeight() / (currentLaneCount + 1));
             if (currentLaneCount > 0) {
                 // overlap lanes by 1 pixel
@@ -655,14 +659,14 @@ public class BPMNProcess extends AbstractBPMNElement {
         return (lanes != null);
     }
 
-    public Set<BPMNLane> getLanes() {
+    public Set<Lane> getLanes() {
         if (lanes == null) {
-            lanes = new LinkedHashSet<BPMNLane>();
+            lanes = new LinkedHashSet<Lane>();
         }
         return lanes;
     }
 
-    public void setLanes(Set<BPMNLane> lanes) {
+    public void setLanes(Set<Lane> lanes) {
         this.lanes = lanes;
     }
 
@@ -673,7 +677,7 @@ public class BPMNProcess extends AbstractBPMNElement {
     public void deleteAllNodes() {
 
         // frist delete all lanes
-        Iterator<BPMNLane> ll = this.getLanes().iterator();
+        Iterator<Lane> ll = this.getLanes().iterator();
         while (ll.hasNext()) {
             deleteLane(ll.next().getId());
         }
@@ -693,7 +697,7 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id
      */
     public void deleteLane(String id) {
-        BPMNLane lane = (BPMNLane) findBPMNLaneById(id);
+        Lane lane = (Lane) findBPMNLaneById(id);
         if (lane == null) {
             // does not exist
             return;
@@ -724,7 +728,7 @@ public class BPMNProcess extends AbstractBPMNElement {
         }
 
         // test if the elmen tis a lane
-        BPMNLane lane = this.findBPMNLaneById(id);
+        Lane lane = this.findBPMNLaneById(id);
         if (lane != null) {
             this.deleteLane(id);
             return;
@@ -754,19 +758,19 @@ public class BPMNProcess extends AbstractBPMNElement {
     public void deleteBPMNElementNode(String id) {
 
         BPMNElementNode baseElement = findBPMNNodeById(id);
-        if (baseElement instanceof BPMNLane) {
+        if (baseElement instanceof Lane) {
             this.deleteLane(id);
             return;
         }
-        if (baseElement instanceof BPMNActivity) {
+        if (baseElement instanceof Activity) {
             this.deleteTask(id);
             return;
         }
-        if (baseElement instanceof BPMNEvent) {
+        if (baseElement instanceof Event) {
             this.deleteEvent(id);
             return;
         }
-        if (baseElement instanceof BPMNGateway) {
+        if (baseElement instanceof Gateway) {
             this.deleteGateway(id);
             return;
         }
@@ -828,13 +832,13 @@ public class BPMNProcess extends AbstractBPMNElement {
             model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
         }
 
-        if (bpmnEdge instanceof BPMNSequenceFlow) {
+        if (bpmnEdge instanceof SequenceFlow) {
             this.getSequenceFlows().remove(bpmnEdge);
         }
-        if (bpmnEdge instanceof BPMNMessageFlow) {
+        if (bpmnEdge instanceof MessageFlow) {
             this.getMessageFlows().remove(bpmnEdge);
         }
-        if (bpmnEdge instanceof BPMNAssociation) {
+        if (bpmnEdge instanceof Association) {
             this.getAssociations().remove(bpmnEdge);
         }
 
@@ -887,20 +891,20 @@ public class BPMNProcess extends AbstractBPMNElement {
      */
     private void deleteEdgesFromElement(String elementId) {
         // remove all SequenceFlows
-        Set<BPMNSequenceFlow> flowList = findSequenceFlowsByElementId(elementId);
-        for (BPMNSequenceFlow flow : flowList) {
+        Set<SequenceFlow> flowList = findSequenceFlowsByElementId(elementId);
+        for (SequenceFlow flow : flowList) {
             deleteElementEdge(flow.getId());
         }
 
         // remove all Associations
-        Set<BPMNAssociation> accociationList = findAssociationsByElementId(elementId);
-        for (BPMNAssociation flow : accociationList) {
+        Set<Association> accociationList = findAssociationsByElementId(elementId);
+        for (Association flow : accociationList) {
             deleteElementEdge(flow.getId());
         }
 
         // remove all MessageFlows
-        Set<BPMNMessageFlow> messageFlowList = findMessageFlowsByElementId(elementId);
-        for (BPMNMessageFlow flow : messageFlowList) {
+        Set<MessageFlow> messageFlowList = findMessageFlowsByElementId(elementId);
+        for (MessageFlow flow : messageFlowList) {
             deleteElementEdge(flow.getId());
         }
     }
@@ -918,29 +922,29 @@ public class BPMNProcess extends AbstractBPMNElement {
             return null;
         }
 
-        Set<BPMNActivity> listA = this.getActivities();
-        for (BPMNActivity element : listA) {
+        Set<Activity> listA = this.getActivities();
+        for (Activity element : listA) {
             if (id.equals(element.getId())) {
                 return element;
             }
         }
 
-        Set<BPMNEvent> listE = this.getEvents();
-        for (BPMNEvent element : listE) {
+        Set<Event> listE = this.getEvents();
+        for (Event element : listE) {
             if (id.equals(element.getId())) {
                 return element;
             }
         }
 
-        Set<BPMNGateway> listG = this.getGateways();
-        for (BPMNGateway element : listG) {
+        Set<Gateway> listG = this.getGateways();
+        for (Gateway element : listG) {
             if (id.equals(element.getId())) {
                 return element;
             }
         }
 
-        Set<BPMNDataObject> listD = this.getDataObjects();
-        for (BPMNDataObject element : listD) {
+        Set<DataObject> listD = this.getDataObjects();
+        for (DataObject element : listD) {
             if (id.equals(element.getId())) {
                 return element;
             }
@@ -969,8 +973,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * 
      * @return
      */
-    public BPMNParticipant findBPMNParticipant() {
-        BPMNParticipant result = this.getModel().findBPMNParticipantByProcessId(this.getId());
+    public Participant findBPMNParticipant() {
+        Participant result = this.getModel().findParticipantByProcessId(this.getId());
         return result;
     }
 
@@ -982,13 +986,13 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id
      * @return
      */
-    public BPMNLane findBPMNLaneById(String id) {
+    public Lane findBPMNLaneById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
 
-        Set<BPMNLane> lanes = this.getLanes();
-        for (BPMNLane element : lanes) {
+        Set<Lane> lanes = this.getLanes();
+        for (Lane element : lanes) {
             if (id.equals(element.getId())) {
                 return element;
             }
@@ -1009,22 +1013,22 @@ public class BPMNProcess extends AbstractBPMNElement {
         if (id == null || id.isEmpty()) {
             return null;
         }
-        Set<BPMNSequenceFlow> listF = this.getSequenceFlows();
-        for (BPMNSequenceFlow element : listF) {
+        Set<SequenceFlow> listF = this.getSequenceFlows();
+        for (SequenceFlow element : listF) {
             if (id.equals(element.getId())) {
                 return element;
             }
         }
 
-        Set<BPMNMessageFlow> listM = this.getMessageFlows();
-        for (BPMNMessageFlow element : listM) {
+        Set<MessageFlow> listM = this.getMessageFlows();
+        for (MessageFlow element : listM) {
             if (id.equals(element.getId())) {
                 return element;
             }
         }
 
-        Set<BPMNAssociation> listA = this.getAssociations();
-        for (BPMNAssociation element : listA) {
+        Set<Association> listA = this.getAssociations();
+        for (Association element : listA) {
             if (id.equals(element.getId())) {
                 return element;
             }
@@ -1083,19 +1087,19 @@ public class BPMNProcess extends AbstractBPMNElement {
         // find Child Nodes
         Set<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, BPMNNS.BPMN2.prefix + ":lane");
         for (Element _lane : laneNodes) {
-            BPMNLane bpmnLane = new BPMNLane(model, _lane);
+            Lane bpmnLane = new Lane(model, _lane);
             this.getLanes().add(bpmnLane);
         }
     }
 
-    private BPMNActivity createBPMNActivityByNode(Element element) throws BPMNModelException {
-        BPMNActivity task = new BPMNActivity(model, element, element.getLocalName(), this);
+    private Activity createBPMNActivityByNode(Element element) throws BPMNModelException {
+        Activity task = new Activity(model, element, element.getLocalName(), this);
         getActivities().add(task);
         return task;
     }
 
-    private BPMNDataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
-        BPMNDataObject dataObject = new BPMNDataObject(model, element, element.getLocalName(), this);
+    private DataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
+        DataObject dataObject = new DataObject(model, element, element.getLocalName(), this);
         getDataObjects().add(dataObject);
         return dataObject;
     }
@@ -1110,8 +1114,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @return
      * @throws BPMNModelException
      */
-    private BPMNEvent createBPMNEventByNode(Element element) throws BPMNModelException {
-        BPMNEvent event = new BPMNEvent(model, element, element.getLocalName(), this);
+    private Event createBPMNEventByNode(Element element) throws BPMNModelException {
+        Event event = new Event(model, element, element.getLocalName(), this);
         getEvents().add(event);
         return event;
     }
@@ -1123,8 +1127,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @return
      * @throws BPMNModelException
      */
-    private BPMNGateway createBPMNGatewayByNode(Element element) throws BPMNModelException {
-        BPMNGateway gateway = new BPMNGateway(model, element, element.getLocalName(), this);
+    private Gateway createBPMNGatewayByNode(Element element) throws BPMNModelException {
+        Gateway gateway = new Gateway(model, element, element.getLocalName(), this);
         getGateways().add(gateway);
         return gateway;
     }
@@ -1135,8 +1139,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param eventElement
      * @return
      */
-    private BPMNSequenceFlow createBPMNSequenceFlowByNode(Element element) {
-        BPMNSequenceFlow flow = new BPMNSequenceFlow(model, element, element.getLocalName(), this);
+    private SequenceFlow createBPMNSequenceFlowByNode(Element element) {
+        SequenceFlow flow = new SequenceFlow(model, element, element.getLocalName(), this);
         getSequenceFlows().add(flow);
         return flow;
     }
@@ -1147,8 +1151,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param eventElement
      * @return
      */
-    private BPMNMessageFlow createBPMNMessageFlowByNode(Element element) {
-        BPMNMessageFlow flow = new BPMNMessageFlow(model, element, element.getLocalName(), this);
+    private MessageFlow createBPMNMessageFlowByNode(Element element) {
+        MessageFlow flow = new MessageFlow(model, element, element.getLocalName(), this);
         getMessageFlows().add(flow);
         return flow;
     }
@@ -1159,8 +1163,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param eventElement
      * @return
      */
-    private BPMNAssociation createBPMNAssociationByNode(Element element) {
-        BPMNAssociation flow = new BPMNAssociation(model, element, element.getLocalName(), this);
+    private Association createBPMNAssociationByNode(Element element) {
+        Association flow = new Association(model, element, element.getLocalName(), this);
         getAssociations().add(flow);
         return flow;
     }
@@ -1171,14 +1175,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id of a flowElement
      * @return list of SequenceFlows
      */
-    private Set<BPMNSequenceFlow> findSequenceFlowsByElementId(String id) {
-        Set<BPMNSequenceFlow> result = new LinkedHashSet<BPMNSequenceFlow>();
+    private Set<SequenceFlow> findSequenceFlowsByElementId(String id) {
+        Set<SequenceFlow> result = new LinkedHashSet<SequenceFlow>();
         if (id == null || id.isEmpty()) {
             return result;
         }
-        Set<BPMNSequenceFlow> listA = this.getSequenceFlows();
-        for (BPMNSequenceFlow flow : listA) {
-            if (id.equals(flow.sourceRef) || id.equals(flow.targetRef)) {
+        Set<SequenceFlow> listA = this.getSequenceFlows();
+        for (SequenceFlow flow : listA) {
+            if (id.equals(flow.getSourceRef()) || id.equals(flow.getTargetRef())) {
                 result.add(flow);
             }
         }
@@ -1191,14 +1195,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id of a flowElement
      * @return list of Accociations
      */
-    private Set<BPMNAssociation> findAssociationsByElementId(String id) {
-        Set<BPMNAssociation> result = new LinkedHashSet<BPMNAssociation>();
+    private Set<Association> findAssociationsByElementId(String id) {
+        Set<Association> result = new LinkedHashSet<Association>();
         if (id == null || id.isEmpty()) {
             return result;
         }
-        Set<BPMNAssociation> listA = this.getAssociations();
-        for (BPMNAssociation flow : listA) {
-            if (id.equals(flow.sourceRef) || id.equals(flow.targetRef)) {
+        Set<Association> listA = this.getAssociations();
+        for (Association flow : listA) {
+            if (id.equals(flow.getSourceRef()) || id.equals(flow.getTargetRef())) {
                 result.add(flow);
             }
         }
@@ -1211,14 +1215,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id of a flowElement
      * @return list of MessageFlows
      */
-    private Set<BPMNMessageFlow> findMessageFlowsByElementId(String id) {
-        Set<BPMNMessageFlow> result = new LinkedHashSet<BPMNMessageFlow>();
+    private Set<MessageFlow> findMessageFlowsByElementId(String id) {
+        Set<MessageFlow> result = new LinkedHashSet<MessageFlow>();
         if (id == null || id.isEmpty()) {
             return result;
         }
-        Set<BPMNMessageFlow> listA = this.getMessageFlows();
-        for (BPMNMessageFlow flow : listA) {
-            if (id.equals(flow.sourceRef) || id.equals(flow.targetRef)) {
+        Set<MessageFlow> listA = this.getMessageFlows();
+        for (MessageFlow flow : listA) {
+            if (id.equals(flow.getSourceRef()) || id.equals(flow.getTargetRef())) {
                 result.add(flow);
             }
         }
@@ -1232,15 +1236,15 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param laneTest
      * @param lane2
      */
-    public void insertLaneBefore(BPMNLane laneTest, BPMNLane lane2) {
+    public void insertLaneBefore(Lane laneTest, Lane lane2) {
 
         this.laneSet.insertBefore(laneTest.getElementNode(), lane2.getElementNode());
         // reorder the BPMNLanes
-        BPMNParticipant bpmnParticipant = model.findBPMNParticipantByProcessId(this.getId());
-        LinkedHashSet<BPMNLane> newOrderedLaneSet = new LinkedHashSet<BPMNLane>();
-        Iterator<BPMNLane> laneIterator = this.lanes.iterator();
+        Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
+        LinkedHashSet<Lane> newOrderedLaneSet = new LinkedHashSet<Lane>();
+        Iterator<Lane> laneIterator = this.lanes.iterator();
         while (laneIterator.hasNext()) {
-            BPMNLane aLane = laneIterator.next();
+            Lane aLane = laneIterator.next();
             if (!aLane.getId().equals(laneTest.getId()) && !aLane.getId().equals(lane2.getId())) {
                 newOrderedLaneSet.add(aLane);
                 continue;
@@ -1259,12 +1263,12 @@ public class BPMNProcess extends AbstractBPMNElement {
         try { // now recompute the position of the lanes according to their order within the
               // laneset
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
-            int bpmnLaneX = (int) (poolBounds.getPosition().getX() + BPMNParticipant.POOL_OFFSET);
+            int bpmnLaneX = (int) (poolBounds.getPosition().getX() + Participant.POOL_OFFSET);
             int bpmnLaneY = (int) poolBounds.getPosition().getY();
-            Iterator<BPMNLane> laneSetIterator = this.getLanes().iterator();
+            Iterator<Lane> laneSetIterator = this.getLanes().iterator();
             while (laneSetIterator.hasNext()) {
                 // get BPMNBounds and GNode for this lane...
-                BPMNLane lane = laneSetIterator.next();
+                Lane lane = laneSetIterator.next();
                 // System.out.println(" --->" + lane.getId() + " new yPos="+bpmnLaneY);
                 BPMNBounds bpmnLaneBounds = lane.getBounds();
                 // Update absolute BPMN position

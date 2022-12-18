@@ -1,16 +1,17 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
-public class BPMNGateway extends BPMNElementNode {
+public class Gateway extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 50.0;
     public final static double DEFAULT_HEIGHT = 50.0;
     public static final double LABEL_OFFSET = 0;
     
-    public BPMNGateway(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
+    public Gateway(BPMNModel model, Element node, String type, Process bpmnProcess) throws BPMNModelException {
         super(model, node, type,bpmnProcess);
     }
 

@@ -17,7 +17,7 @@ package org.openbpmn.glsp.elements.edge;
 
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.openbpmn.bpmn.elements.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 

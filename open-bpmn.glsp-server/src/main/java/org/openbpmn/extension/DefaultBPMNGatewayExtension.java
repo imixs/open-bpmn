@@ -26,8 +26,8 @@ import javax.json.JsonObject;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -66,7 +66,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
-        return (bpmnElement instanceof BPMNGateway);
+        return (bpmnElement instanceof Gateway);
     }
 
     /**

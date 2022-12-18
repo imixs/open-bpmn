@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNDataObject;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -40,11 +40,11 @@ public class TestCreateEdges {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProcess();
+            Process process = model.openDefaultProcess();
             // Create a DataObject
-            BPMNDataObject dataObject1 = process.addDataObject("dataobject_1", "DataObject-1");
+            DataObject dataObject1 = process.addDataObject("dataobject_1", "DataObject-1");
             dataObject1.setPosition(100,50);
-            BPMNDataObject dataObject2=process.addDataObject("dataobject_2", "DataObject-2");
+            DataObject dataObject2=process.addDataObject("dataobject_2", "DataObject-2");
             dataObject2.setPosition(200,50);
             
             // create associaton

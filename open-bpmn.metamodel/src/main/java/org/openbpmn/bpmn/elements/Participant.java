@@ -1,6 +1,8 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
@@ -13,7 +15,7 @@ import org.w3c.dom.Element;
  * @author rsoika
  *
  */
-public class BPMNParticipant extends BPMNElementNode {
+public class Participant extends BPMNElementNode {
 
     public final static double MIN_WIDTH = 300.0;
     public final static double MIN_HEIGHT = 100.0;
@@ -24,7 +26,7 @@ public class BPMNParticipant extends BPMNElementNode {
     protected BPMNLabel label = null;
     private String processRef = null;
 
-    public BPMNParticipant(BPMNModel model, Element node) throws BPMNModelException {
+    public Participant(BPMNModel model, Element node) throws BPMNModelException {
         super(model, node);
         
         // find the BPMNShape element. 
@@ -41,7 +43,7 @@ public class BPMNParticipant extends BPMNElementNode {
      * 
      * @return BPMNProcess
      */
-    public BPMNProcess openProcess() {
+    public Process openProcess() {
         try {
             return model.openProcess(processRef);
         } catch (BPMNModelException e) {

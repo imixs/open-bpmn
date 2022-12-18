@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.Document;
@@ -41,12 +41,12 @@ public class TestDeepCopy {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext=  model.openDefaultProcess();
+            Process processContext=  model.openDefaultProcess();
             assertNotNull(processContext);
             // add a start and end event
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
-            BPMNActivity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
             task.getBounds().setPosition(10.0, 10.0);
             task.getBounds().setDimension(140.0, 60.0);
 
@@ -68,7 +68,7 @@ public class TestDeepCopy {
 
             // test structure of clone....
             BPMNModel modelClone = new BPMNModel(clone);
-            BPMNProcess processContextClone = modelClone.openProcess("process_1");
+            Process processContextClone = modelClone.openProcess("process_1");
             assertEquals(2, processContextClone.getEvents().size());
 
             assertEquals(1, processContext.getEvents().size());

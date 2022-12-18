@@ -18,7 +18,7 @@ package org.openbpmn.glsp.elements.event;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.openbpmn.bpmn.elements.BPMNEvent;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
@@ -40,7 +40,7 @@ public class EventGNodeBuilder extends AbstractGNodeBuilder<EventGNode, EventGNo
 
     private final String name;
 
-    public EventGNodeBuilder(final BPMNEvent event) {
+    public EventGNodeBuilder(final Event event) {
         super(event.getType());
         this.name = event.getName();
         this.id = event.getId();
@@ -65,11 +65,11 @@ public class EventGNodeBuilder extends AbstractGNodeBuilder<EventGNode, EventGNo
         super.setProperties(node);
         node.setName(name);
         node.setLayout(GConstants.Layout.FREEFORM);
-        size = GraphUtil.dimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
+        size = GraphUtil.dimension(Event.DEFAULT_WIDTH, Event.DEFAULT_HEIGHT);
         node.setSize(size);
 
-        node.getLayoutOptions().put("minWidth", BPMNEvent.DEFAULT_WIDTH);
-        node.getLayoutOptions().put("minHeight", BPMNEvent.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put("minWidth", Event.DEFAULT_WIDTH);
+        node.getLayoutOptions().put("minHeight", Event.DEFAULT_HEIGHT);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
 

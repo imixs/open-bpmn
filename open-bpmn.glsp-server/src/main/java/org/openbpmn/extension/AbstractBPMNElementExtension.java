@@ -16,7 +16,7 @@
 package org.openbpmn.extension;
 
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 
 /**
  * This is Abstract implementation provides some core funtionallity like update

@@ -26,9 +26,9 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNDataObject;
-import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -76,23 +76,23 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
-            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
-            BPMNDataObject dataObject = bpmnProcess.addDataObject(dataObjectID, getLabel());
+            Process bpmnProcess = findProcessByCreateNodeOperation(operation);
+            DataObject dataObject = bpmnProcess.addDataObject(dataObjectID, getLabel());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 double elementX = point.get().getX();
                 double elementY = point.get().getY();
                 // compute relative center position...
-                elementX = elementX - (BPMNDataObject.DEFAULT_WIDTH / 2);
-                elementY = elementY - (BPMNDataObject.DEFAULT_HEIGHT / 2);
+                elementX = elementX - (DataObject.DEFAULT_WIDTH / 2);
+                elementY = elementY - (DataObject.DEFAULT_HEIGHT / 2);
 
                 dataObject.getBounds().setPosition(elementX, elementY);
-                dataObject.getBounds().setDimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
+                dataObject.getBounds().setDimension(DataObject.DEFAULT_WIDTH, DataObject.DEFAULT_HEIGHT);
                 // set label bounds
 
                 // set label bounds
-                double labelX = elementX + (BPMNDataObject.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double labelY = elementY + BPMNDataObject.DEFAULT_HEIGHT + BPMNDataObject.LABEL_OFFSET;
+                double labelX = elementX + (DataObject.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + DataObject.DEFAULT_HEIGHT + DataObject.LABEL_OFFSET;
                 logger.debug("new BPMNLabel Position = " + labelX + "," + labelY);
                 dataObject.getLabel().updateLocation(labelX, labelY);
                 dataObject.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);

@@ -18,7 +18,7 @@ package org.openbpmn.glsp.elements.dataobject;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.openbpmn.bpmn.elements.BPMNDataObject;
+import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
@@ -36,7 +36,7 @@ public class DataObjectGNodeBuilder extends AbstractGNodeBuilder<DataObjectGNode
 
     private final String name;
 
-    public DataObjectGNodeBuilder(final BPMNDataObject dataObject) {
+    public DataObjectGNodeBuilder(final DataObject dataObject) {
         super(dataObject.getType());
         this.name = dataObject.getName();
         this.id = dataObject.getId();
@@ -60,11 +60,11 @@ public class DataObjectGNodeBuilder extends AbstractGNodeBuilder<DataObjectGNode
         super.setProperties(node);
         node.setName(name);
         node.setLayout(GConstants.Layout.FREEFORM);
-        size = GraphUtil.dimension(BPMNDataObject.DEFAULT_WIDTH, BPMNDataObject.DEFAULT_HEIGHT);
+        size = GraphUtil.dimension(DataObject.DEFAULT_WIDTH, DataObject.DEFAULT_HEIGHT);
         node.setSize(size);
 
-        node.getLayoutOptions().put("minWidth", BPMNDataObject.DEFAULT_WIDTH);
-        node.getLayoutOptions().put("minHeight", BPMNDataObject.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put("minWidth", DataObject.DEFAULT_WIDTH);
+        node.getLayoutOptions().put("minHeight", DataObject.DEFAULT_HEIGHT);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
 

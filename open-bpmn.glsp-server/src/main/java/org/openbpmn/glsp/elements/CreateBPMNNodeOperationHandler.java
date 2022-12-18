@@ -25,8 +25,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
@@ -98,12 +98,12 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
      * @param operation - a CreateNodeOperation
      * @return the corresponding BPMNProcess
      */
-    public BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation) {
+    public Process findProcessByCreateNodeOperation(final CreateNodeOperation operation) {
         GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
         String containerId = container.getId();
         logger.debug("containerId = " + container.getId());
 
-        BPMNProcess bpmnProcess = null;
+        Process bpmnProcess = null;
         // is it the root?
         if (modelState.getRoot().getId().equals(containerId)) {
             bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
@@ -112,7 +112,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
             if (containerId.startsWith("participant_")) {
                 // compute participant
                 String participantID = containerId.substring(0, containerId.lastIndexOf("_"));
-                BPMNParticipant bpmnParticipant = modelState.getBpmnModel().findBPMNParticipantById(participantID);
+                Participant bpmnParticipant = modelState.getBpmnModel().findParticipantById(participantID);
                 if (bpmnParticipant != null) {
                     bpmnProcess = bpmnParticipant.openProcess();
                 }

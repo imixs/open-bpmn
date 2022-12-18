@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -39,10 +39,10 @@ public class TestDocumentation {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProcess();
+            Process processContext = model.openDefaultProcess();
             assertNotNull(processContext);
             // add a start and end event
-            BPMNEvent bpmnElement = processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
+            Event bpmnElement = processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
 
             // add a documentation - we expect a CDATA tag
             String value = "Some text with \n<markup>code</markup>\n Finish!";
@@ -68,8 +68,8 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_CDATA.bpmn");
-           BPMNProcess process = model.openProcess(null);
-           BPMNEvent startEvent = (BPMNEvent) process.findBPMNNodeById("start_1");
+           Process process = model.openProcess(null);
+           Event startEvent = (Event) process.findBPMNNodeById("start_1");
            assertEquals("Some text with \n"
                    + "<markup>code</markup>!",startEvent.getDocumentation());
         } catch (BPMNModelException e) {
@@ -90,8 +90,8 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_TEXT.bpmn");
-           BPMNProcess process = model.openProcess(null);
-           BPMNEvent startEvent = (BPMNEvent) process.findBPMNNodeById("start_1");
+           Process process = model.openProcess(null);
+           Event startEvent = (Event) process.findBPMNNodeById("start_1");
            assertEquals("Some text with",startEvent.getDocumentation());
         } catch (BPMNModelException e) {
             e.printStackTrace();

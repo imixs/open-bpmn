@@ -1,4 +1,4 @@
-package org.openbpmn.bpmn.elements;
+package org.openbpmn.bpmn.elements.core;
 
 public class BPMNPoint {
 

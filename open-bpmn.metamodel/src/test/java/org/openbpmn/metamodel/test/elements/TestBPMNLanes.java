@@ -11,11 +11,11 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNLane;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -42,10 +42,10 @@ public class TestBPMNLanes {
         try {
             model = BPMNModelFactory.read("/refmodel-4.bpmn");
      
-            BPMNParticipant participant = model.findBPMNParticipantById("Participant_1");
+            Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
             
-            BPMNProcess process = participant.openProcess();
+            Process process = participant.openProcess();
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findBPMNNodeById("StartEvent_4");
@@ -82,18 +82,18 @@ public class TestBPMNLanes {
             assertEquals(1, model.getProcesses().size());
 
             // create two participants
-            BPMNParticipant participantSales = model.addParticipant("Sales Team");
+            Participant participantSales = model.addParticipant("Sales Team");
             assertTrue(model.isCollaborationDiagram());
             assertEquals(2, model.getProcesses().size());
             assertEquals(2, model.getParticipants().size());
 
-            BPMNProcess process = participantSales.openProcess();
+            Process process = participantSales.openProcess();
             // add a new Lane
-            BPMNLane lane=process.addLane(model,"Lane 1");
+            Lane lane=process.addLane(model,"Lane 1");
             assertNotNull(lane);
             
             // add a task
-            BPMNActivity task = process.addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = process.addTask("task_1", "Task", BPMNTypes.TASK);
 
             // insert the task into the lane
             lane.insert(task);
@@ -129,22 +129,22 @@ public class TestBPMNLanes {
         try {
             model = BPMNModelFactory.read("/refmodel-5.bpmn");
      
-            BPMNParticipant participant = model.findBPMNParticipantById("Participant_1");
+            Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
             
-            BPMNProcess process = participant.openProcess();
+            Process process = participant.openProcess();
             assertNotNull(process);
 
             
             // add new Lane...
-            BPMNLane laneTest = process.addLane(model, "Lane Test");
+            Lane laneTest = process.addLane(model, "Lane Test");
             assertNotNull(laneTest);
             // read laneset.....
             assertEquals(3, process.getLanes().size());
             
             
             // insert new test-lane before Lane 2
-            BPMNLane lane2 = process.findBPMNLaneById("Lane_2");
+            Lane lane2 = process.findBPMNLaneById("Lane_2");
           process.insertLaneBefore(laneTest, lane2) ;// laneTest.insertBefore(lane2);
            
             model.save(out);

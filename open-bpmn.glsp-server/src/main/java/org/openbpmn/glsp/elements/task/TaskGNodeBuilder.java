@@ -22,8 +22,8 @@ import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBounds;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
@@ -47,7 +47,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
 
     private final String name;
 
-    public TaskGNodeBuilder(final BPMNActivity activity) {
+    public TaskGNodeBuilder(final Activity activity) {
         super(activity.getType());
         this.name = activity.getName();
         this.id = activity.getId();
@@ -86,8 +86,8 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         // Set min width/height
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNActivity.DEFAULT_WIDTH);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNActivity.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());

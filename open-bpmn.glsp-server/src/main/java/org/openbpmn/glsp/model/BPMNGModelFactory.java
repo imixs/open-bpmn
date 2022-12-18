@@ -43,18 +43,18 @@ import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNDataObject;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNGateway;
-import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNLane;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNPoint;
-import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extension.BPMNExtension;
@@ -190,11 +190,11 @@ public class BPMNGModelFactory implements GModelFactory {
             // create a pool if the contained process is private. Otherwise we create the
             // default process
             if (model.isCollaborationDiagram()) {
-                Set<BPMNParticipant> participants = model.getParticipants();
-                for (BPMNParticipant participant : participants) {
+                Set<Participant> participants = model.getParticipants();
+                for (Participant participant : participants) {
                     logger.debug(
                             "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
-                    BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
+                    Process bpmnProcess = model.openProcess(participant.getProcessRef());
                     // Add a Pool if the process is private
                     if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
                         List<GModelElement> childList = computeGModelElements(bpmnProcess, participant);
@@ -215,7 +215,7 @@ public class BPMNGModelFactory implements GModelFactory {
             } else {
                 // We have a simple 'Process Diagram' type - build the GModel from default
                 // process
-                BPMNProcess bpmnProcess = model.openDefaultProcess();
+                Process bpmnProcess = model.openDefaultProcess();
                 gRootNodeList.addAll(computeGModelElements(bpmnProcess, null));
             }
 
@@ -318,13 +318,13 @@ public class BPMNGModelFactory implements GModelFactory {
      * is absolute and in a GModel the position is relative to the container.
      *
      */
-    List<GModelElement> computeGModelElements(final BPMNProcess process, final BPMNParticipant participant)
+    List<GModelElement> computeGModelElements(final Process process, final Participant participant)
             throws BPMNMissingElementException {
 
         List<GModelElement> gNodeList = new ArrayList<>();
 
         // Add all Lanes
-        for (BPMNLane lane : process.getLanes()) {
+        for (Lane lane : process.getLanes()) {
             logger.info("lane: " + lane.getName());
             // compute relative position
             GPoint point = computeRelativeGPoint(lane.getBounds(), participant);
@@ -337,7 +337,7 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all Tasks
-        for (BPMNActivity activity : process.getActivities()) {
+        for (Activity activity : process.getActivities()) {
             logger.debug("activity: " + activity.getName());
             // compute relative position
             GPoint point = computeRelativeGPoint(activity.getBounds(), participant);
@@ -352,7 +352,7 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all Events...
-        for (BPMNEvent event : process.getEvents()) {
+        for (Event event : process.getEvents()) {
             logger.debug("BPMNEvent: " + event.getName() + " x=" + event.getBounds().getPosition().getX() + " y="
                     + event.getBounds().getPosition().getY());
             // compute relative position
@@ -395,7 +395,7 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all Gateways...
-        for (BPMNGateway gateway : process.getGateways()) {
+        for (Gateway gateway : process.getGateways()) {
             logger.debug("BPMNGateway: " + gateway.getName() + " x=" + gateway.getBounds().getPosition().getX() + " y="
                     + gateway.getBounds().getPosition().getY());
             GPoint point = computeRelativeGPoint(gateway.getBounds(), participant);
@@ -416,7 +416,7 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all Dataobjects...
-        for (BPMNDataObject dataObject : process.getDataObjects()) {
+        for (DataObject dataObject : process.getDataObjects()) {
             logger.debug("dataObject: " + dataObject.getName());
             GPoint point = computeRelativeGPoint(dataObject.getBounds(), participant);
 
@@ -435,7 +435,7 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all SequenceFlows
-        for (BPMNSequenceFlow sequenceFlow : process.getSequenceFlows()) {
+        for (SequenceFlow sequenceFlow : process.getSequenceFlows()) {
             // first we need to verify if the target and source objects exist in our model
             // if not we need to skip this sequenceFlow element!
             GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
@@ -479,7 +479,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @throws BPMNMissingElementException
      */
     private LabelGNode createLabelNode(final BPMNLabel bpmnLabel, final BPMNElementNode flowElement,
-            final BPMNParticipant participant) throws BPMNMissingElementException {
+            final Participant participant) throws BPMNMissingElementException {
         logger.debug("BPMNLabel: x=" + bpmnLabel.getBounds().getPosition().getX() + " y="
                 + bpmnLabel.getBounds().getPosition().getY());
         GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
@@ -507,16 +507,16 @@ public class BPMNGModelFactory implements GModelFactory {
      * @return
      * @throws BPMNMissingElementException
      */
-    GPoint computeRelativeGPoint(final BPMNPoint bpmnPoint, final BPMNParticipant participant) {
+    GPoint computeRelativeGPoint(final BPMNPoint bpmnPoint, final Participant participant) {
         GPoint result = GraphUtil.point(bpmnPoint.getX(), bpmnPoint.getY());
         return computeRelativeGPoint(result, participant);
     }
 
-    GPoint computeRelativeGPoint(final BPMNBounds bpmnBounds, final BPMNParticipant participant) {
+    GPoint computeRelativeGPoint(final BPMNBounds bpmnBounds, final Participant participant) {
         return computeRelativeGPoint(bpmnBounds.getPosition(), participant);
     }
 
-    GPoint computeRelativeGPoint(final GPoint basisPoint, final BPMNParticipant participant) {
+    GPoint computeRelativeGPoint(final GPoint basisPoint, final Participant participant) {
         // compute relative position if we have a container...
         if (participant != null) {
             try {

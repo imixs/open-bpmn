@@ -1,10 +1,11 @@
-package org.openbpmn.bpmn.elements;
+package org.openbpmn.bpmn.elements.core;
 
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.CDATASection;
@@ -26,15 +27,12 @@ import org.w3c.dom.NodeList;
  */
 public abstract class BPMNElementNode extends AbstractBPMNElement {
     protected String type = null;
-    protected BPMNProcess bpmnProcess = null;
+    protected Process bpmnProcess = null;
     protected BPMNLabel label = null;
     private Element documentationNode = null;
     protected Element bpmnShape = null;
     protected BPMNBounds bounds = null;
 
-//    public BPMNElementNode() {
-//        super();
-//    }
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -55,7 +53,7 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
      * @param model
      * @throws BPMNModelException
      */
-    public BPMNElementNode(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess)
+    public BPMNElementNode(BPMNModel model, Element node, String _type, Process _bpmnProcess)
             throws BPMNModelException {
         super(model, node);
         this.type = _type;
@@ -238,7 +236,7 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
      * 
      * @return
      */
-    public BPMNProcess getBpmnProcess() {
+    public Process getBpmnProcess() {
         return bpmnProcess;
     }
 

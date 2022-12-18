@@ -24,8 +24,8 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.PoolGNode;
@@ -47,7 +47,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
 
     private String name;
 
-    public PoolGNodeBuilder(final BPMNParticipant participant) {
+    public PoolGNodeBuilder(final Participant participant) {
         super(BPMNTypes.POOL);
         this.name = participant.getName();
         this.id = participant.getId();
@@ -86,8 +86,8 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
 
         node.setLayout(GConstants.Layout.HBOX);
         // Set min width/height for the Pool element
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNParticipant.MIN_WIDTH);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNParticipant.MIN_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Participant.MIN_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Participant.MIN_HEIGHT);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 

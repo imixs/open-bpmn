@@ -22,8 +22,8 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNBounds;
-import org.openbpmn.bpmn.elements.BPMNLane;
+import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LaneGNode;
@@ -47,7 +47,7 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGNode, LaneGNodeB
     private static final String H_GRAB = "hGrab";
     private static final String H_ALIGN = "hAlign";
 
-    public LaneGNodeBuilder(final BPMNLane lane) {
+    public LaneGNodeBuilder(final Lane lane) {
         super(BPMNTypes.LANE);
         this.name = lane.getName();
         this.id = lane.getId();
@@ -86,8 +86,8 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGNode, LaneGNodeB
 
         node.setLayout(GConstants.Layout.HBOX);
         // Set min width/height for the Pool element
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNLane.MIN_WIDTH);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNLane.MIN_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Lane.MIN_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Lane.MIN_HEIGHT);
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());

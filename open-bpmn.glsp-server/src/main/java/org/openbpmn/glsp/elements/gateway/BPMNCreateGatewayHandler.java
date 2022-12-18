@@ -26,9 +26,9 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNGateway;
-import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -72,8 +72,8 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
-            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
-            BPMNGateway gateway = bpmnProcess.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
+            Process bpmnProcess = findProcessByCreateNodeOperation(operation);
+            Gateway gateway = bpmnProcess.addGateway(gatewayID, getLabel(), operation.getElementTypeId());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
 
@@ -81,14 +81,14 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
                 double elementY = point.get().getY();
 
                 // compute relative center position...
-                elementX = elementX - (BPMNGateway.DEFAULT_WIDTH / 2);
-                elementY = elementY - (BPMNGateway.DEFAULT_HEIGHT / 2);
+                elementX = elementX - (Gateway.DEFAULT_WIDTH / 2);
+                elementY = elementY - (Gateway.DEFAULT_HEIGHT / 2);
 
                 gateway.getBounds().setPosition(elementX, elementY);
-                gateway.getBounds().setDimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
+                gateway.getBounds().setDimension(Gateway.DEFAULT_WIDTH, Gateway.DEFAULT_HEIGHT);
                 // set label bounds
-                double labelX = elementX + (BPMNGateway.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double labelY = elementY + BPMNGateway.DEFAULT_HEIGHT + BPMNGateway.LABEL_OFFSET;
+                double labelX = elementX + (Gateway.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + Gateway.DEFAULT_HEIGHT + Gateway.LABEL_OFFSET;
                 logger.debug("new BPMNLabel Position = " + labelX + "," + labelY);
                 gateway.getLabel().updateLocation(labelX, labelY);
                 gateway.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);

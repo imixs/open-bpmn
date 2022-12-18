@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
@@ -79,13 +79,13 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             }
 
             // Verify that both Elements are members of the same process...
-            String sourceProcessId = modelState.getBpmnModel().findBPMNNodeById(sourceId).getProcessId();
-            String targetProcessId = modelState.getBpmnModel().findBPMNNodeById(targetId).getProcessId();
+            String sourceProcessId = modelState.getBpmnModel().findNodeElementById(sourceId).getProcessId();
+            String targetProcessId = modelState.getBpmnModel().findNodeElementById(targetId).getProcessId();
             if (sourceProcessId == null || !sourceProcessId.equals(targetProcessId)) {
                 throw new IllegalArgumentException("Target and Source Element are not members of the same process!");
             }
             // open the process and create the sequence flow...
-            BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
+            Process bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
 
             switch (edgeType) {
             case BPMNTypes.SEQUENCE_FLOW:

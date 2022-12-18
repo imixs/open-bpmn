@@ -28,12 +28,12 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNEvent;
-import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNPoint;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -87,15 +87,15 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
             String containerId = container.getId();
             logger.debug("containerId = " + container.getId());
-            BPMNProcess bpmnProcess = null;
+            Process bpmnProcess = null;
             String attachedToRef = null;
             // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {
                 // we assume that the containerId is the Task Element...
-                containerElement = modelState.getBpmnModel().findBPMNNodeById(containerId);
-                if (containerElement != null && containerElement instanceof BPMNActivity) {
+                containerElement = modelState.getBpmnModel().findNodeElementById(containerId);
+                if (containerElement != null && containerElement instanceof Activity) {
                     // it is a BPMNActivity
-                    bpmnProcess = ((BPMNActivity) containerElement).getBpmnProcess();
+                    bpmnProcess = ((Activity) containerElement).getBpmnProcess();
                     attachedToRef = containerElement.getId();
                 }
             }
@@ -106,7 +106,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                 bpmnProcess = findProcessByCreateNodeOperation(operation);
             }
 
-            BPMNEvent event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
+            Event event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
             // do we have a attachedToRef?
             if (attachedToRef != null && !attachedToRef.isEmpty()) {
                 event.setAttribute("attachedToRef", attachedToRef);
@@ -117,31 +117,31 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                 double elementX = point.get().getX();
                 double elementY = point.get().getY();
                 // compute relative center position...
-                elementX = elementX - (BPMNEvent.DEFAULT_WIDTH / 2);
-                elementY = elementY - (BPMNEvent.DEFAULT_HEIGHT / 2);
+                elementX = elementX - (Event.DEFAULT_WIDTH / 2);
+                elementY = elementY - (Event.DEFAULT_HEIGHT / 2);
                 // compute default label position
-                double labelX = elementX + (BPMNEvent.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double labelY = elementY + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
+                double labelX = elementX + (Event.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
 
                 // in case of a BoundaryEvent we adjust the position to the TaskEdge...
                 if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)
-                        && (containerElement != null && containerElement instanceof BPMNActivity)) {
+                        && (containerElement != null && containerElement instanceof Activity)) {
                     double taskY = containerElement.getBounds().getPosition().getY();
                     BPMNPoint taskCenterPoint = containerElement.getBounds().getCenter();
                     // Upper bounds?
-                    if (elementY + (BPMNEvent.DEFAULT_HEIGHT / 2) < taskCenterPoint.getY()) {
-                        elementY = taskY - (BPMNEvent.DEFAULT_HEIGHT / 2);
-                        labelY = elementY - BPMNLabel.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
+                    if (elementY + (Event.DEFAULT_HEIGHT / 2) < taskCenterPoint.getY()) {
+                        elementY = taskY - (Event.DEFAULT_HEIGHT / 2);
+                        labelY = elementY - BPMNLabel.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
                     } else {
                         // lower bounds
                         elementY = taskY + (containerElement.getBounds().getDimension().getHeight()
-                                - (BPMNEvent.DEFAULT_HEIGHT / 2));
-                        labelY = elementY + BPMNEvent.DEFAULT_HEIGHT + BPMNEvent.LABEL_OFFSET;
+                                - (Event.DEFAULT_HEIGHT / 2));
+                        labelY = elementY + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
                     }
                 }
                 // set event bounds
                 event.getBounds().setPosition(elementX, elementY);
-                event.getBounds().setDimension(BPMNEvent.DEFAULT_WIDTH, BPMNEvent.DEFAULT_HEIGHT);
+                event.getBounds().setDimension(Event.DEFAULT_WIDTH, Event.DEFAULT_HEIGHT);
                 // set label bounds
                 event.getLabel().updateLocation(labelX, labelY);
                 event.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);

@@ -23,11 +23,11 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.openbpmn.bpmn.elements.AbstractBPMNElement;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNPoint;
-import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.BPMNSequenceFlow;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -53,7 +53,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
 
     @Override
     protected List<Action> executeAction(final ComputedBoundsAction actualAction) {
-        BPMNProcess context = modelState.getBpmnModel().openDefaultProcess();
+        Process context = modelState.getBpmnModel().openDefaultProcess();
 
         List<ElementAndRoutingPoints> routings = actualAction.getRoutes();
 
@@ -63,13 +63,13 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
 
                 String id = routingInfo.getElementId();
                 logger.info("....element id= " + id);
-                BPMNSequenceFlow bpmnSequenceFlow = null;
+                SequenceFlow bpmnSequenceFlow = null;
 
-                AbstractBPMNElement element = modelState.getBpmnModel().findBPMNElementById(id);
+                AbstractBPMNElement element = modelState.getBpmnModel().findElementById(id);
                 // do we have a BPMNSequenceFlow ?
-                if (element != null && element instanceof BPMNSequenceFlow) {
+                if (element != null && element instanceof SequenceFlow) {
                     // update the BPMN WayPoints.
-                    bpmnSequenceFlow = (BPMNSequenceFlow) element;
+                    bpmnSequenceFlow = (SequenceFlow) element;
 
                     List<GPoint> newGLSPRoutingPoints = routingInfo.getNewRoutingPoints();
 
@@ -79,7 +79,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     for (GPoint point : newGLSPRoutingPoints) {
                         BPMNPoint bpmnPoint = null;
                         // if we are in a Pool we need to compute the absolute position
-                        BPMNParticipant participant = bpmnSequenceFlow.getBpmnProcess().findBPMNParticipant();
+                        Participant participant = bpmnSequenceFlow.getBpmnProcess().findBPMNParticipant();
                         if (participant != null) {
                             // compute Pool offset...
                             double xOffset = participant.getBounds().getPosition().getX();

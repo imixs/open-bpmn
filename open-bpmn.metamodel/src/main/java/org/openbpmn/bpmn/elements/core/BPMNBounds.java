@@ -1,4 +1,4 @@
-package org.openbpmn.bpmn.elements;
+package org.openbpmn.bpmn.elements.core;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;

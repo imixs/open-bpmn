@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.w3c.dom.Element;
@@ -34,7 +35,7 @@ import org.w3c.dom.Text;
  * @author rsoika
  *
  */
-public class BPMNLane extends BPMNElementNode {
+public class Lane extends BPMNElementNode {
 
     public final static double MIN_WIDTH = 270.0;
     public final static double MIN_HEIGHT = 100.0;
@@ -50,7 +51,7 @@ public class BPMNLane extends BPMNElementNode {
      * @param width
      * @throws BPMNMissingElementException
      */
-    public BPMNLane(BPMNModel model, Element node) {
+    public Lane(BPMNModel model, Element node) {
         super(model, node);
         // find the BPMNShape element. 
         bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());

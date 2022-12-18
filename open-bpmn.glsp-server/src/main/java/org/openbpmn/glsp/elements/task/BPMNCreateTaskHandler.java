@@ -26,8 +26,8 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.BPMNActivity;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -74,19 +74,19 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
-            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
+            Process bpmnProcess = findProcessByCreateNodeOperation(operation);
             if (bpmnProcess != null) {
-                BPMNActivity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
+                Activity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
                 Optional<GPoint> point = operation.getLocation();
                 if (point.isPresent()) {
                     double elementX = point.get().getX();
                     double elementY = point.get().getY();
                     // compute relative center position...
-                    elementX = elementX - (BPMNActivity.DEFAULT_WIDTH / 2);
-                    elementY = elementY - (BPMNActivity.DEFAULT_HEIGHT / 2);
+                    elementX = elementX - (Activity.DEFAULT_WIDTH / 2);
+                    elementY = elementY - (Activity.DEFAULT_HEIGHT / 2);
 
                     task.getBounds().setPosition(elementX, elementY);
-                    task.getBounds().setDimension(BPMNActivity.DEFAULT_WIDTH, BPMNActivity.DEFAULT_HEIGHT);
+                    task.getBounds().setDimension(Activity.DEFAULT_WIDTH, Activity.DEFAULT_HEIGHT);
 
                     logger.debug("new BPMNActivity Position = " + elementX + "," + elementY);
                 }

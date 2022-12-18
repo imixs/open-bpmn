@@ -1,4 +1,4 @@
-package org.openbpmn.bpmn.elements;
+package org.openbpmn.bpmn.elements.core;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.Process;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -27,13 +28,13 @@ import org.w3c.dom.NodeList;
 public abstract class BPMNElementEdge extends AbstractBPMNElement {
     private static Logger logger = Logger.getLogger(BPMNElementEdge.class.getName());
     protected String type = null;
-    protected BPMNProcess bpmnProcess = null;
+    protected Process bpmnProcess = null;
     protected String sourceRef = null;
     protected String targetRef = null;
     protected Element bpmnEdge = null;
     protected Set<BPMNPoint> wayPoints = null;
 
-    public BPMNElementEdge(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
+    public BPMNElementEdge(BPMNModel model, Element node, String _type, Process _bpmnProcess) {
         super(model, node);
         this.type = _type;
         this.bpmnProcess = _bpmnProcess;
@@ -73,7 +74,7 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
      * 
      * @return
      */
-    public BPMNProcess getBpmnProcess() {
+    public Process getBpmnProcess() {
         return bpmnProcess;
     }
 

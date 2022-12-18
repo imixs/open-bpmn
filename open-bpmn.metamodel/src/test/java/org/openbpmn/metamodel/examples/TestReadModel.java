@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.BPMNElementNode;
-import org.openbpmn.bpmn.elements.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -36,7 +36,7 @@ public class TestReadModel {
             logger.info("...read model");
             model = BPMNModelFactory.read("/refmodel-1.bpmn");
 
-            BPMNProcess process = model.openDefaultProcess();
+            Process process = model.openDefaultProcess();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 
@@ -72,14 +72,14 @@ public class TestReadModel {
             // we expect 3 Processes
             assertEquals(3, model.getProcesses().size());
 
-            BPMNProcess defaultProcess = model.openDefaultProcess();
+            Process defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
             // no activities expected
             assertEquals(0, defaultProcess.getActivities().size());
 
             // Open process 1
-            BPMNProcess process1 = model.openProcess("Process_1");
+            Process process1 = model.openProcess("Process_1");
             assertEquals(1, process1.getActivities().size());
             assertEquals(2, process1.getEvents().size());
 
@@ -112,7 +112,7 @@ public class TestReadModel {
             assertEquals(3, model.getProcesses().size());
 
             // verify Default Process
-            BPMNProcess defaultProcess = model.openDefaultProcess();
+            Process defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
             assertEquals("Process_3", defaultProcess.getId());
@@ -121,7 +121,7 @@ public class TestReadModel {
             assertEquals(1, defaultProcess.getActivities().size());
 
             // verify process 1
-            BPMNProcess process1 = model.openProcess("Process_1");
+            Process process1 = model.openProcess("Process_1");
             assertEquals(1, process1.getActivities().size());
             assertEquals(2, process1.getEvents().size());
             BPMNElementNode startEvent = process1.findBPMNNodeById("StartEvent_1");

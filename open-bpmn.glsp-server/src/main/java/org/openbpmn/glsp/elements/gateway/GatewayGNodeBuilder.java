@@ -18,7 +18,7 @@ package org.openbpmn.glsp.elements.gateway;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.openbpmn.bpmn.elements.BPMNGateway;
+import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.utils.BPMNBuilderHelper;
@@ -36,7 +36,7 @@ public class GatewayGNodeBuilder extends AbstractGNodeBuilder<GatewayGNode, Gate
 
     private final String name;
 
-    public GatewayGNodeBuilder(final BPMNGateway gateway) {
+    public GatewayGNodeBuilder(final Gateway gateway) {
         super(gateway.getType());
         this.name = gateway.getName();
         this.id = gateway.getId();
@@ -61,11 +61,11 @@ public class GatewayGNodeBuilder extends AbstractGNodeBuilder<GatewayGNode, Gate
         super.setProperties(node);
         node.setName(name);
         node.setLayout(GConstants.Layout.FREEFORM);
-        size = GraphUtil.dimension(BPMNGateway.DEFAULT_WIDTH, BPMNGateway.DEFAULT_HEIGHT);
+        size = GraphUtil.dimension(Gateway.DEFAULT_WIDTH, Gateway.DEFAULT_HEIGHT);
         node.setSize(size);
 
-        node.getLayoutOptions().put("minWidth", BPMNGateway.DEFAULT_WIDTH);
-        node.getLayoutOptions().put("minHeight", BPMNGateway.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put("minWidth", Gateway.DEFAULT_WIDTH);
+        node.getLayoutOptions().put("minHeight", Gateway.DEFAULT_HEIGHT);
 
         node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
 

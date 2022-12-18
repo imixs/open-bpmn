@@ -26,8 +26,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.openbpmn.bpmn.elements.BPMNParticipant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
@@ -110,11 +110,11 @@ public class BPMNBuilderHelper {
      * @param container  - the GModeElement
      * @return the corresponding BPMNProcess
      */
-    public static BPMNProcess findProcessByContainer(final BPMNGModelState modelState, final GModelElement container) {
+    public static Process findProcessByContainer(final BPMNGModelState modelState, final GModelElement container) {
         String containerId = container.getId();
         logger.info(" ==> Container ID : " + container.getId());
 
-        BPMNProcess bpmnProcess = null;
+        Process bpmnProcess = null;
         // is it the root?
         if (modelState.getRoot().getId().equals(containerId)) {
             bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
@@ -123,7 +123,7 @@ public class BPMNBuilderHelper {
             if (containerId.startsWith("participant_")) {
                 // compute participant
                 String participantID = containerId.substring(0, containerId.lastIndexOf("_"));
-                BPMNParticipant bpmnParticipant = modelState.getBpmnModel().findBPMNParticipantById(participantID);
+                Participant bpmnParticipant = modelState.getBpmnModel().findParticipantById(participantID);
                 if (bpmnParticipant != null) {
                     bpmnProcess = bpmnParticipant.openProcess();
                 }
