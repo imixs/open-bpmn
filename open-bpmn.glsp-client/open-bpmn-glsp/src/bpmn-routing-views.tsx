@@ -122,12 +122,12 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
             }
         }
 
-        let stroke: string='';
+        let stroke='';
         if (edge instanceof BPMNEdge) {
-	        console.log('..edge type='+edge.type + '  kind='+edge.kind);
-	        if ('association'===edge.type) {
-		      stroke='"5,5"';
-	        }
+            console.log('..edge type='+edge.type + '  kind='+edge.kind);
+            if ('association'===edge.type) {
+              stroke='"5,5"';
+            }
         }
 
         const vnode: any = <path stroke-dasharray={stroke} d={path} />;
