@@ -50,7 +50,7 @@ public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHa
     public void executeOperation(final ChangeRoutingPointsOperation operation) {
 
         List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
-        logger.info("=== ChangeRoutingPointsOperation - " + routingPoints.size() + " routing points");
+        logger.fine("=== ChangeRoutingPointsOperation - " + routingPoints.size() + " routing points");
         try {
             for (ElementAndRoutingPoints routingPoint : routingPoints) {
                 String id = routingPoint.getElementId();
@@ -58,7 +58,7 @@ public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHa
                 // update the GModel.
                 Optional<GEdge> _edge = modelState.getIndex().findElementByClass(id, GEdge.class);
                 if (_edge.isPresent()) {
-                    logger.info("===== Updating GLSP RoutingPoints =======");
+                    logger.fine("===== Updating GLSP RoutingPoints =======");
                     GEdge edge = _edge.get();
                     edge.getRoutingPoints().clear();
                     edge.getRoutingPoints().addAll(newGLSPRoutingPoints);

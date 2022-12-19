@@ -23,10 +23,10 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
+import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
-import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -38,8 +38,6 @@ import com.google.inject.Inject;
  * <p>
  * The action handler is only handling ComputedBoundsActions on a
  * BBPMNSequenceFlow element. Other elements will be ignored.
- *
- *
  *
  * @author rsoika
  *
@@ -53,49 +51,43 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
 
     @Override
     protected List<Action> executeAction(final ComputedBoundsAction actualAction) {
-        Process context = modelState.getBpmnModel().openDefaultProcess();
-
         List<ElementAndRoutingPoints> routings = actualAction.getRoutes();
-
-        logger.info("=== updating RoutingPoints.... - count=" + routings.size());
         try {
             for (ElementAndRoutingPoints routingInfo : routings) {
-
                 String id = routingInfo.getElementId();
-                logger.info("....element id= " + id);
-                SequenceFlow bpmnSequenceFlow = null;
-
                 AbstractBPMNElement element = modelState.getBpmnModel().findElementById(id);
                 // do we have a BPMNSequenceFlow ?
-                if (element != null && element instanceof SequenceFlow) {
+                if (element != null && element instanceof BPMNElementEdge) {
+                    BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;
                     // update the BPMN WayPoints.
-                    bpmnSequenceFlow = (SequenceFlow) element;
-
                     List<GPoint> newGLSPRoutingPoints = routingInfo.getNewRoutingPoints();
-
-                    System.out.println("===== Updating " + newGLSPRoutingPoints.size() + " BPMN WayPoints  =======");
-                    bpmnSequenceFlow.clearWayPoints();
+                    logger.fine("...updating " + newGLSPRoutingPoints.size() + " BPMN WayPoints for element " + id
+                            + "....");
+                    bpmnElementEdge.clearWayPoints();
                     // add the new routing points
                     for (GPoint point : newGLSPRoutingPoints) {
                         BPMNPoint bpmnPoint = null;
-                        // if we are in a Pool we need to compute the absolute position
-                        Participant participant = bpmnSequenceFlow.getBpmnProcess().findParticipant();
+                        Participant participant = null;
+                        // try to comput the participant
+                        if (!(element instanceof MessageFlow)) {
+                            participant = bpmnElementEdge.getBpmnProcess().findParticipant();
+                        }
+                        // if we have a participant/pool we can compute the relative position...
                         if (participant != null) {
                             // compute Pool offset...
                             double xOffset = participant.getBounds().getPosition().getX();
                             double yOffset = participant.getBounds().getPosition().getY();
                             bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
-
                         } else {
                             // we are in the default process
                             bpmnPoint = new BPMNPoint(point.getX(), point.getY());
                         }
 
-                        logger.info("..add new waypoint: " + point.getX() + "," + point.getY());
-                        bpmnSequenceFlow.addWayPoint(bpmnPoint);
+                        logger.fine("...add new waypoint: " + point.getX() + "," + point.getY());
+                        bpmnElementEdge.addWayPoint(bpmnPoint);
                     }
                 } else {
-                    logger.info("----> Event will be ignored as the element is not a Sequence Flow!");
+                    logger.warning("ComputedBoundsAction will be ignored as the element is not a BPMNElementEdge!");
                 }
             }
         } catch (Exception e) {
