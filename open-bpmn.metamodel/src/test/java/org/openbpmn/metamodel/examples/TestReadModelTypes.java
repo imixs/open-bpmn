@@ -4,13 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.Set;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -23,9 +21,9 @@ import org.openbpmn.bpmn.util.BPMNModelFactory;
  * @author rsoika
  *
  */
-public class TestReadModel {
+public class TestReadModelTypes {
 
-    private static Logger logger = Logger.getLogger(TestReadModel.class.getName());
+    private static Logger logger = Logger.getLogger(TestReadModelTypes.class.getName());
 
     static BPMNModel model = null;
 
@@ -138,34 +136,5 @@ public class TestReadModel {
         logger.info("...model read sucessful: ");
     }
 
-    /**
-     * This test reads a collaboration bpmn file containing 1 participants and a
-     * task in the default process connected by a MessageFlow.
-     * 
-     */
-    @Test
-    public void testReadCollaborationModelWithMessageFlows() {
-        try {
-            logger.info("...read model");
-            model = BPMNModelFactory.read("/refmodel-9.bpmn");
-
-            // we expect 2 Processes (default + participant)
-            assertEquals(2, model.getProcesses().size());
-
-            // verify MessageFlow
-            Set<MessageFlow> messageFlows = model.getMessageFlows();
-            assertNotNull(messageFlows);
-            assertEquals(1,messageFlows.size());
-            
-            MessageFlow messageFlow=messageFlows.iterator().next();
-           
-            assertEquals("task1", messageFlow.getTargetRef());
-         
-        } catch (BPMNModelException e) {
-            e.printStackTrace();
-            fail();
-        }
-        logger.info("...model read sucessful: ");
-    }
-
+  
 }

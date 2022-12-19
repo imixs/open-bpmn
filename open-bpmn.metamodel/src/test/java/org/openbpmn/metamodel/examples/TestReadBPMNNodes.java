@@ -21,9 +21,9 @@ import org.openbpmn.bpmn.util.BPMNModelFactory;
  * @author rsoika
  *
  */
-public class TestReadElements {
+public class TestReadBPMNNodes {
 
-    private static Logger logger = Logger.getLogger(TestReadElements.class.getName());
+    private static Logger logger = Logger.getLogger(TestReadBPMNNodes.class.getName());
 
     static BPMNModel model = null;
 
