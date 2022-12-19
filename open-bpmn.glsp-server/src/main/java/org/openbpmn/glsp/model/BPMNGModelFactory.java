@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 //import java.util.logging.Logger;
@@ -51,8 +52,8 @@ import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Process;
-import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -439,7 +440,28 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         // Add all SequenceFlows
-        for (SequenceFlow sequenceFlow : process.getSequenceFlows()) {
+        Set<BPMNElementEdge> list = new LinkedHashSet<>();
+        list.addAll(process.getSequenceFlows());
+        readEdges(list, gNodeList, participant);
+
+        list = new LinkedHashSet<>();
+        list.addAll(process.getAssociations());
+        readEdges(list, gNodeList, participant);
+
+        return gNodeList;
+    }
+
+    /**
+     * Helper method to import a list of BPMNElementEges into a gModel
+     *
+     * @param bpmnEdges
+     * @param gNodeList
+     * @param participant
+     */
+    private void readEdges(final Set<BPMNElementEdge> bpmnEdges, final List<GModelElement> gNodeList,
+            final Participant participant) {
+        // Add all SequenceFlows
+        for (BPMNElementEdge sequenceFlow : bpmnEdges) {
             // first we need to verify if the target and source objects exist in our model
             // if not we need to skip this sequenceFlow element!
             GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
@@ -468,8 +490,6 @@ public class BPMNGModelFactory implements GModelFactory {
             }
             gNodeList.add(bpmnGEdge);
         }
-
-        return gNodeList;
     }
 
     /**

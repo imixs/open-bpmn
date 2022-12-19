@@ -54,10 +54,6 @@ public class Process extends AbstractBPMNElement {
 
     private boolean initalized = false;
 
-//    public BPMNProcess() {
-//        super();
-//    }
-
     /**
      * The method creates a BPMNProcess instance form a bpmn2:process model element.
      * <p>

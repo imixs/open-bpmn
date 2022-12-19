@@ -174,7 +174,10 @@
 .sprotty-edge.messageFlow .line {
    stroke-dasharray: 6,4;
 }
-
+/* Association */
+.sprotty-edge.association .line {
+   stroke-dasharray: 4,4;
+}
 
 .helper-line {
 	stroke: #f18e00;

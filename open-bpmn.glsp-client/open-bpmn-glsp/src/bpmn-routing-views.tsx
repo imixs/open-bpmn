@@ -26,6 +26,7 @@ import {
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { svg } from 'sprotty';
+// import { BPMNEdge } from '@open-bpmn/open-bpmn-model'; 
 
 /****************************************************************************
  * This module provides BPMN Routings views for sequence flows
@@ -45,7 +46,14 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
         const p1 = segments[segments.length - 2];
         const p2 = segments[segments.length - 1];
 
-        const arrow: any = (
+        // let kind:string='';
+        // if (edge instanceof BPMNEdge) {
+	    //     kind=edge.kind;
+        // }
+        
+        // arrow depends on the type of the BPMNEdge
+        if ('sequenceFlow'===edge.type || 'messageFlow'===edge.type) {
+	      const arrow: any = (
             <path
                 class-sprotty-edge={true}
                 class-arrow={true}
@@ -54,8 +62,9 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
                     p2.y
                 })`}
             />
-        );
-        additionals.push(arrow);
+          );        
+          additionals.push(arrow);
+        }
         return additionals;
     }
 
