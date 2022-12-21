@@ -25,7 +25,8 @@ import {
     isBoundsAware,
     hasArguments,
     Hoverable,Selectable,IViewArgs,SPort,SNode,
-    TYPES
+    TYPES,
+    findParentByFeature, ShapeView, svg
 } from '@eclipse-glsp/client';
 import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
 import { Icon,
@@ -38,7 +39,7 @@ import { Icon,
        } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { findParentByFeature, ShapeView, svg } from 'sprotty';
+
 /****************************************************************************
  * This module provides BPMN element views like Gateways, or Events
  *
