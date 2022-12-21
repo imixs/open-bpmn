@@ -30,7 +30,8 @@
 	bottom: 0px;
 	z-index: 20;
 	width: 100%;
-	background: var(--theia-editor-background);
+    background: var(--theia-editorWidget-background);
+    opacity: 0.9 !important;
     color: var(--theia-foreground);
     height: 25px;
 }
@@ -38,7 +39,6 @@
 
 .bpmn-property-header {
 	padding-left: 8px;
-	background: var(--theia-menu-background);
     color: var(--theia-titleBar-activeForeground);
     border: 0;
     font-weight: normal;

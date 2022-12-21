@@ -74,17 +74,9 @@
 }
 
 
-
-
-
 .horizontal-layout[hidden] {
   display: none;
 }
-
-
-
-
-
 
 
 
@@ -106,25 +98,24 @@
     height: var(--jsonforms-line-height);
     width: 100%;
     padding: 0 5px;
-    background: var(--theia-editorWidget-background) !important;
+    background: var(--theia-input-background) !important;
     flex-basis: auto;
     flex-shrink: 1 !important;
     flex-grow: 0 !important;
     color: var(--theia-input-foreground);
-    border: var(--theia-border-width) solid var(--theia-input-border);
-    
+    border: 1px solid var(--theia-dropdown-border); 
 }
 .control>textarea {
     display: flex;
     height: var(--jsonforms-line-height);
     width: 100%;
     padding: 0 5px;
-    background: var(--theia-editorWidget-background) !important;
+    background: var(--theia-input-background) !important;
     flex-basis: auto;
     flex-shrink: 1 !important;
     flex-grow: 0 !important;
     color: var(--theia-input-foreground);
-    border: var(--theia-border-width) solid var(--theia-input-border);
+    border: 1px solid var(--theia-dropdown-border);
     resize: vertical;
     min-height: 7em;
 }
@@ -176,7 +167,6 @@
 }
 
 .array-table-layout.control>table>thead {
-    xdisplay: none;
 }
 
 .array-table-layout.control>table>tbody>tr>td>input {
@@ -255,7 +245,6 @@
 }
 
 .categorization>* {
-
 }
 
 .categorization>*:first-child {

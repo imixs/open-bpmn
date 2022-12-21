@@ -124,9 +124,10 @@
 .dataObject > .sprotty-node {
 	opacity: 80%;
 	stroke: var(--theia-focusBorder);
-    outline-color: var(--theia-focusBorder);
+    outline-color: #ccc;
     outline-style: solid;
     outline-width: 1px;
+    fill: #82848a;
 }
 
 /*** Pool and Lances **/
