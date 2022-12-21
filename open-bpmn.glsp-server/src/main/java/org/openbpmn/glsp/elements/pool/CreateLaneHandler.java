@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Lane;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -61,7 +61,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
         String laneID = BPMNModel.generateShortID("lane");
         try {
             // find the process - should be the corresponding participant process
-            Process bpmnProcess = findProcessByCreateNodeOperation(operation);
+            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
             if (bpmnProcess != null) {
                 Lane bpmnLane = bpmnProcess.addLane(modelState.getBpmnModel(),
                         "Lane " + (bpmnProcess.getLanes().size() + 1));

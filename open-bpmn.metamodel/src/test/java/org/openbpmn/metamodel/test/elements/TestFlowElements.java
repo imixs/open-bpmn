@@ -13,7 +13,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -48,7 +48,7 @@ public class TestFlowElements {
             }
 
             // read tasks....
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
 
             assertNotNull(process);
             logger.info("...Process ID=" + process.getAttribute("id"));
@@ -102,7 +102,7 @@ public class TestFlowElements {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-6.bpmn");            
-            Process process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 
@@ -137,7 +137,7 @@ public class TestFlowElements {
                 printNote(model.getDoc().getChildNodes());
             }
 
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
 
             assertNotNull(process);
             logger.info("...Process ID=" + process.getAttribute("id"));
@@ -179,7 +179,7 @@ public class TestFlowElements {
                 printNote(model.getDoc().getChildNodes());
             }
 
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
 
             assertNotNull(process);
             logger.info("...Process ID=" + process.getAttribute("id"));

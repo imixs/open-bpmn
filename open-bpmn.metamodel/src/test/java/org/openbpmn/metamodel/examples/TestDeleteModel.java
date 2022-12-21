@@ -12,7 +12,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -43,7 +43,7 @@ public class TestDeleteModel {
         String out = "src/test/resources/delete-process_1.bpmn";
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class TestDeleteModel {
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
 
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
             process.deleteEvent("StartEvent_1");
         } catch (BPMNModelException e) {
@@ -84,7 +84,7 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            Process processContext = model.openDefaultProcess();
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event
@@ -117,14 +117,14 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            Process defaultProcess = model.openDefaultProcess();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
 
             // create Participant
             Participant sales = model.addParticipant("Sales");
 
             // add Task
-            Process privateProcess = sales.openProcess();
+            BPMNProcess privateProcess = sales.openProcess();
             // add a start and end event
             privateProcess.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             privateProcess.addEvent("end_1", "End", BPMNTypes.END_EVENT);

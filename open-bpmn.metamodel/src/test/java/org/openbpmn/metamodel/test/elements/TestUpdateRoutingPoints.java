@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -42,7 +42,7 @@ public class TestUpdateRoutingPoints {
         logger.info("...read model");
         try {
             // read Sequcen....
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
             // udpate routing points for SequenceFlow_1

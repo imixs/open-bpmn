@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.Document;
@@ -41,7 +41,7 @@ public class TestDeepCopy {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            Process processContext=  model.openDefaultProcess();
+            BPMNProcess processContext=  model.openDefaultProcess();
             assertNotNull(processContext);
             // add a start and end event
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
@@ -68,7 +68,7 @@ public class TestDeepCopy {
 
             // test structure of clone....
             BPMNModel modelClone = new BPMNModel(clone);
-            Process processContextClone = modelClone.openProcess("process_1");
+            BPMNProcess processContextClone = modelClone.openProcess("process_1");
             assertEquals(2, processContextClone.getEvents().size());
 
             assertEquals(1, processContext.getEvents().size());

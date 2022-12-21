@@ -31,7 +31,7 @@ import javax.xml.xpath.XPathFactory;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
@@ -68,7 +68,7 @@ public class BPMNModel {
     private Node bpmnDiagram;
     protected Element bpmnPlane = null;
     protected Set<Participant> participants = null;
-    protected Set<Process> processes = null;
+    protected Set<BPMNProcess> processes = null;
     protected Set<MessageFlow> messageFlows = null;
     protected Element collaborationElement = null;
 
@@ -131,6 +131,31 @@ public class BPMNModel {
             BPMNTypes.BOUNDARY_EVENT, //
 
             BPMNTypes.SEQUENCE_FLOW);
+    
+
+    public final static List<String> BPMN_NODE_ELEMENTS = Arrays.asList(//
+            BPMNTypes.TASK, //
+            BPMNTypes.MANUAL_TASK, //
+            BPMNTypes.USER_TASK, //
+            BPMNTypes.SCRIPT_TASK, //
+            BPMNTypes.BUSINESSRULE_TASK, //
+            BPMNTypes.SERVICE_TASK, //
+            BPMNTypes.SEND_TASK, //
+            BPMNTypes.RECEIVE_TASK, //
+
+            BPMNTypes.EXCLUSIVE_GATEWAY, //
+            BPMNTypes.PARALLEL_GATEWAY, //
+            BPMNTypes.EVENTBASED_GATEWAY, //
+            BPMNTypes.COMPLEX_GATEWAY, //
+            BPMNTypes.INCLUSIVE_GATEWAY, //
+
+            BPMNTypes.START_EVENT, //
+            BPMNTypes.END_EVENT, //
+            BPMNTypes.CATCH_EVENT, //
+            BPMNTypes.THROW_EVENT, //
+            BPMNTypes.BOUNDARY_EVENT, //
+
+            BPMNTypes.POOL);
 
     public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
@@ -292,9 +317,9 @@ public class BPMNModel {
         this.participants = participants;
     }
 
-    public Set<Process> getProcesses() {
+    public Set<BPMNProcess> getProcesses() {
         if (processes == null) {
-            processes = new LinkedHashSet<Process>();
+            processes = new LinkedHashSet<BPMNProcess>();
         }
         return processes;
     }
@@ -310,7 +335,7 @@ public class BPMNModel {
         this.messageFlows = messageFlows;
     }
 
-    public void setProcesses(Set<Process> processes) {
+    public void setProcesses(Set<BPMNProcess> processes) {
         this.processes = processes;
     }
 
@@ -376,7 +401,7 @@ public class BPMNModel {
             this.getBpmnPlane().setAttribute("bpmnElement", collaborationID);
 
             // Now we migrate all existing processes into the new collaboration element....
-            for (Process existingProcess : processes) {
+            for (BPMNProcess existingProcess : processes) {
                 Element migratedParticipantNode = createElement(BPMNNS.BPMN2, "participant");
                 String participantID = BPMNModel.generateShortID("participant");
                 migratedParticipantNode.setAttribute("id", participantID);
@@ -405,7 +430,7 @@ public class BPMNModel {
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
         int processNumber = this.getProcesses().size() + 1;
-        Process process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
+        BPMNProcess process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
                 BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
         bpmnParticipant.setProcessRef(process.getId());
@@ -459,13 +484,13 @@ public class BPMNModel {
      * @param type - EventType
      * @throws BPMNModelException
      */
-    protected Process buildProcess(String id, String name, String type) throws BPMNModelException {
+    protected BPMNProcess buildProcess(String id, String name, String type) throws BPMNModelException {
 
         if (id == null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (Process process : processes) {
+        for (BPMNProcess process : processes) {
             if (process.getId().equals(id)) {
                 throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
                         "id '" + id + "' is already in use!");
@@ -490,7 +515,7 @@ public class BPMNModel {
 
         definitions.insertBefore(process, this.getBpmnDiagram());
 
-        Process bpmnProcess = new Process(this, process, type);
+        BPMNProcess bpmnProcess = new BPMNProcess(this, process, type);
         this.getProcesses().add(bpmnProcess);
 
         // add an empty BPMNPlane tag
@@ -542,13 +567,13 @@ public class BPMNModel {
      * @return BPMNProcess instance
      * @throws BPMNModelException
      */
-    public Process openProcess(String id) throws BPMNModelException {
-        Process process = null;
+    public BPMNProcess openProcess(String id) throws BPMNModelException {
+        BPMNProcess process = null;
         if (processes != null) {
-            Iterator<Process> it = processes.iterator();
+            Iterator<BPMNProcess> it = processes.iterator();
 
             while (it.hasNext()) {
-                Process p = it.next();
+                BPMNProcess p = it.next();
                 // default process?
                 if (id == null || id.isEmpty()) {
                     if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())) {
@@ -578,7 +603,7 @@ public class BPMNModel {
      * elements of the Process. The default process always exists and is not
      * embedded in a Pool.
      */
-    public Process openDefaultProcess() {
+    public BPMNProcess openDefaultProcess() {
         try {
             return openProcess(null);
         } catch (BPMNModelException e) {
@@ -595,7 +620,7 @@ public class BPMNModel {
      */
     public void deleteParticipant(Participant participant) {
         if (participant != null) {
-            Process process = participant.openProcess();
+            BPMNProcess process = participant.openProcess();
             // delete all Lanes - we need first to collect the IDs to avoid recursive calls
             Iterator<Lane> lanesIterator = process.getLanes().iterator();
             List<String> laneIDs = new ArrayList<String>();
@@ -680,6 +705,71 @@ public class BPMNModel {
 
         return messageFlow;
     }
+    
+    
+    
+    
+    
+    /**
+     * Deletes a BPMNEdge element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteMessageFlow(String id) {
+        BPMNElementEdge bpmnEdge = this.findElementEdgeById(id);
+         if (bpmnEdge == null) {
+            // does not exist
+            return;
+        }
+         
+     
+        String targetRef = bpmnEdge.getTargetRef();
+        String soureRef = bpmnEdge.getSourceRef();
+        // first we need to update the elements still connected with this flow
+        // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+        // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+        BPMNElementNode targetElement = findElementNodeById(targetRef);
+        if (targetElement != null) {
+            NodeList childs = targetElement.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() == Node.ELEMENT_NODE
+                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
+                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                    if (id.equals(child.getTextContent())) {
+                        targetElement.getElementNode().removeChild(child);
+                        break;
+                    }
+                }
+            }
+        }
+        BPMNElementNode sourceElement = findElementNodeById(soureRef);
+        if (sourceElement != null) {
+            NodeList childs = sourceElement.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() == Node.ELEMENT_NODE
+                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
+                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                    if (id.equals(child.getTextContent())) {
+                        sourceElement.getElementNode().removeChild(child);
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Finally delete the flow element and the edge
+        this.collaborationElement.removeChild(bpmnEdge.getElementNode());
+        if (bpmnEdge.getBpmnEdge() != null) {
+            getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+        }
+        getMessageFlows().remove(bpmnEdge);
+
+      
+
+    }
 
     /**
      * Finds a BPMNElement by ID within this model. The Element can be a Node or an
@@ -703,8 +793,8 @@ public class BPMNModel {
         }
 
         // iterate over all processes
-        Set<Process> processList = this.getProcesses();
-        for (Process process : processList) {
+        Set<BPMNProcess> processList = this.getProcesses();
+        for (BPMNProcess process : processList) {
             if (id.equals(process.getId())) {
                 // the id matches a Process
                 throw new IllegalArgumentException("unable to return process - not implemented!");
@@ -1154,7 +1244,7 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     private void loadProcessList() throws BPMNModelException {
-        processes = new LinkedHashSet<Process>();
+        processes = new LinkedHashSet<BPMNProcess>();
         int publicCount = 0;
 
         // find process
@@ -1191,7 +1281,7 @@ public class BPMNModel {
                     }
                 }
 
-                Process bpmnProcess = new Process(this, item, processType);
+                BPMNProcess bpmnProcess = new BPMNProcess(this, item, processType);
                 processes.add(bpmnProcess);
             }
         }

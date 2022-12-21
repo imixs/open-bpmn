@@ -160,14 +160,14 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // MessageFLow
         EdgeTypeHint messageFlowHint = createDefaultEdgeTypeHint(BPMNTypes.MESSAGE_FLOW);
-        messageFlowHint.setSourceElementTypeIds(Arrays.asList(BPMNTypes.POOL));
-        messageFlowHint.setTargetElementTypeIds(Arrays.asList(BPMNTypes.POOL));
+        messageFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
+        messageFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
         edgeHints.add(messageFlowHint);
 
         // Association
         EdgeTypeHint associationHint = createDefaultEdgeTypeHint(BPMNTypes.ASSOCIATION);
-        associationHint.setSourceElementTypeIds(Arrays.asList(BPMNTypes.DATAOBJECT));
-        associationHint.setTargetElementTypeIds(Arrays.asList(BPMNTypes.DATAOBJECT));
+        associationHint.setSourceElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
+        associationHint.setTargetElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
         edgeHints.add(associationHint);
 
         return edgeHints;

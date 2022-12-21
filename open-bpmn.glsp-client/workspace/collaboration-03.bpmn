@@ -3,6 +3,7 @@
     <bpmn2:collaboration id="Collaboration_1" name="Collaboration 1">
         <bpmn2:participant id="Participant_1" name="Pool 1" processRef="Process_1"/>
         <bpmn2:participant id="Participant_2" name="Pool 2" processRef="Process_2"/>
+        <bpmn2:messageFlow id="MessageFlow_70UPUw" sourceRef="Participant_2" targetRef="Participant_1"/>
     </bpmn2:collaboration>
     <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Pool 1 Process">
         <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
@@ -59,6 +60,10 @@
                     <dc:Bounds height="28.0" width="88.0" x="176.0" y="316.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="MessageFlow_70UPUw" id="BPMNEdge_QvjZKw" sourceElement="BPMNShape_Participant_2" targetElement="BPMNShape_Participant_1">
+                <di:waypoint x="335.0" y="270.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI"/>
+                <di:waypoint x="335.0" y="190.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI"/>
+            </bpmndi:BPMNEdge>
         </bpmndi:BPMNPlane>
         <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
             <dc:Font name="arial" size="9.0"/>

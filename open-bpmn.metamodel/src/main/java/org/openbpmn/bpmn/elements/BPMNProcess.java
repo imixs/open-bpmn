@@ -39,7 +39,7 @@ import org.w3c.dom.NodeList;
  * @author rsoika
  *
  */
-public class Process extends AbstractBPMNElement {
+public class BPMNProcess extends AbstractBPMNElement {
 
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<Activity> activities = null;
@@ -63,7 +63,7 @@ public class Process extends AbstractBPMNElement {
      * @param model
      * @param element
      */
-    public Process(BPMNModel model, Element element, String processType) {
+    public BPMNProcess(BPMNModel model, Element element, String processType) {
         super(model, element);
 
         // set public if not yet specified
@@ -604,6 +604,13 @@ public class Process extends AbstractBPMNElement {
         this.getLanes().add(bpmnLane);
         return bpmnLane;
     }
+    
+    /**
+     * Return true if the process is the public default process 
+     */
+    public boolean isPublicProcess() {
+        return BPMNTypes.PROCESS_TYPE_PUBLIC.equals(getProcessType());
+    }
 
     /**
      * Returns true if the process contains a laneset
@@ -731,14 +738,53 @@ public class Process extends AbstractBPMNElement {
         }
 
     }
-
+    
     /**
-     * Deletes a BPMNEdge element from this context.
+     * Deletes a SquenceFlow from this context.
      * <p>
      * 
      * @param id
      */
-    public void deleteElementEdge(String id) {
+    public void deleteSequenceFlow(String id) {
+        deleteElementEdge(id);
+        BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
+        if (bpmnEdge == null) {
+            // does not exist
+            return;
+        }
+
+        if (bpmnEdge instanceof SequenceFlow) {
+            this.getSequenceFlows().remove(bpmnEdge);
+        }
+    }
+    
+    
+    /**
+     * Deletes a Association from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteAssociation(String id) {
+        deleteElementEdge(id);
+        BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
+        if (bpmnEdge == null) {
+            // does not exist
+            return;
+        }
+
+        if (bpmnEdge instanceof Association) {
+            this.getAssociations().remove(bpmnEdge);
+        }
+    }
+
+    /**
+     * Helper method to delete a BPMNEdge element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    private void deleteElementEdge(String id) {
         BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
         if (bpmnEdge == null) {
             // does not exist
@@ -785,16 +831,6 @@ public class Process extends AbstractBPMNElement {
         this.getElementNode().removeChild(bpmnEdge.getElementNode());
         if (bpmnEdge.getBpmnEdge() != null) {
             model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
-        }
-
-        if (bpmnEdge instanceof SequenceFlow) {
-            this.getSequenceFlows().remove(bpmnEdge);
-        }
-        if (bpmnEdge instanceof MessageFlow) {
-            this.getModel().getMessageFlows().remove(bpmnEdge);
-        }
-        if (bpmnEdge instanceof Association) {
-            this.getAssociations().remove(bpmnEdge);
         }
 
     }

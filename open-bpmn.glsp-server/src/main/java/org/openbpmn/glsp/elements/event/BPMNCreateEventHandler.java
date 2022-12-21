@@ -30,7 +30,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -87,7 +87,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
             String containerId = container.getId();
             logger.debug("containerId = " + container.getId());
-            Process bpmnProcess = null;
+            BPMNProcess bpmnProcess = null;
             String attachedToRef = null;
             // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {

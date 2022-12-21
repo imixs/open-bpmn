@@ -8,7 +8,6 @@ import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.elements.Process;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -28,7 +27,7 @@ import org.w3c.dom.NodeList;
 public abstract class BPMNElementEdge extends AbstractBPMNElement {
     private static Logger logger = Logger.getLogger(BPMNElementEdge.class.getName());
     protected String type = null;
-    protected Process bpmnProcess = null;
+    
     protected String sourceRef = null;
     protected String targetRef = null;
     protected Element bpmnEdge = null;
@@ -38,10 +37,10 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
        super(model,node);
     }
     
-    public BPMNElementEdge(BPMNModel model, Element node, String _type, Process _bpmnProcess) {
+    public BPMNElementEdge(BPMNModel model, Element node, String _type) {
         super(model, node);
         this.type = _type;
-        this.bpmnProcess = _bpmnProcess;
+        
         wayPoints = new LinkedHashSet<BPMNPoint>();
 
         this.sourceRef = this.getAttribute("sourceRef");
@@ -55,7 +54,7 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
         }
 
         // find the BPMNShape element. If not defined create a new one
-        if (bpmnProcess != null) {
+       
             bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
             if (bpmnEdge == null) {
                 // create shape element
@@ -70,18 +69,9 @@ public abstract class BPMNElementEdge extends AbstractBPMNElement {
                     getWayPoints().add(point);
                 }
             }
-        }
+        
     }
 
-
-    /**
-     * Returns the BPMNProcess this element belongs to.
-     * 
-     * @return
-     */
-    public Process getBpmnProcess() {
-        return bpmnProcess;
-    }
 
     public Element getBpmnEdge() {
         return bpmnEdge;

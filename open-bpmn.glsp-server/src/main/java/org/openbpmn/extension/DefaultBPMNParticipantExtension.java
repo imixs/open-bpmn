@@ -32,7 +32,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
@@ -121,7 +121,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
-        Process process = participant.openProcess();
+        BPMNProcess process = participant.openProcess();
 
         if (process.hasLanes()) {
             Map<String, String> arrayDetailOption = new HashMap<>();
@@ -185,7 +185,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
         Participant participant = (Participant) bpmnElement;
         try {
-            Process process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
+            BPMNProcess process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
             // check custom features
             Set<String> features = json.keySet();
             for (String feature : features) {

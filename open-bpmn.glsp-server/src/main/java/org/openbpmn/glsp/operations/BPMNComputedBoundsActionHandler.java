@@ -23,8 +23,11 @@ import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.core.model.ComputedBoundsAction;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
-import org.openbpmn.bpmn.elements.MessageFlow;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Association;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -68,21 +71,34 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     for (GPoint point : newGLSPRoutingPoints) {
                         BPMNPoint bpmnPoint = null;
                         Participant participant = null;
-                        // try to comput the participant
-                        if (!(element instanceof MessageFlow)) {
-                            participant = bpmnElementEdge.getBpmnProcess().findParticipant();
-                        }
-                        // if we have a participant/pool we can compute the relative position...
-                        if (participant != null) {
-                            // compute Pool offset...
-                            double xOffset = participant.getBounds().getPosition().getX();
-                            double yOffset = participant.getBounds().getPosition().getY();
-                            bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
-                        } else {
-                            // we are in the default process
-                            bpmnPoint = new BPMNPoint(point.getX(), point.getY());
+                        BPMNProcess process = null;
+                        double xOffset = 0;
+                        double yOffset = 0;
+
+                        // in case we are within a Pool we need to compute the x/y offsets first
+                        if (!BPMNTypes.MESSAGE_FLOW.equals(bpmnElementEdge.getType())) {
+                            // find the process
+                            if (bpmnElementEdge instanceof SequenceFlow) {
+                                process = ((SequenceFlow) bpmnElementEdge).getProcess();
+
+                            }
+                            if (bpmnElementEdge instanceof Association) {
+                                process = ((Association) bpmnElementEdge).getProcess();
+
+                            }
+
+                            if (process != null && !process.isPublicProcess()) {
+                                participant = process.findParticipant();
+                            }
+
+                            if (participant != null) {
+                                // if we have a participant/pool we can compute the relative position...
+                                xOffset = participant.getBounds().getPosition().getX();
+                                yOffset = participant.getBounds().getPosition().getY();
+                            }
                         }
 
+                        bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
                         logger.fine("...add new waypoint: " + point.getX() + "," + point.getY());
                         bpmnElementEdge.addWayPoint(bpmnPoint);
                     }
@@ -90,11 +106,15 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     logger.warning("ComputedBoundsAction will be ignored as the element is not a BPMNElementEdge!");
                 }
             }
-        } catch (Exception e) {
+        } catch (
+
+        Exception e) {
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
-        return none();
+        return
+
+        none();
     }
 
 }

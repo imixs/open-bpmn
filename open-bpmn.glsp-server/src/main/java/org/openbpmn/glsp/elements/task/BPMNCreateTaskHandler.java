@@ -27,7 +27,7 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.Activity;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -74,7 +74,7 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
-            Process bpmnProcess = findProcessByCreateNodeOperation(operation);
+            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
             if (bpmnProcess != null) {
                 Activity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
                 Optional<GPoint> point = operation.getLocation();

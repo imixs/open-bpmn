@@ -31,7 +31,7 @@ import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -133,7 +133,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                     Participant participant = modelState.getBpmnModel().findParticipantById(id);
                     if (participant != null) {
                         logger.info("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
-                        Process process = participant.openProcess();
+                        BPMNProcess process = participant.openProcess();
 
                         updateLaneSet(participant, offsetWidth, offsetHeight);
                         updateFlowElements(process, offsetX, offsetY, offsetWidth, offsetHeight);
@@ -181,7 +181,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      */
     void updateLaneSet(final Participant participant, final double offsetWidth, final double offsetHeight)
             throws BPMNMissingElementException {
-        Process process = participant.openProcess();
+        BPMNProcess process = participant.openProcess();
         Set<Lane> bpmnLaneSet = process.getLanes();
 
         String processID = process.getId();
@@ -271,7 +271,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      * @param participant
      * @throws BPMNMissingElementException
      */
-    void updateFlowElements(final Process process, final double offsetX, final double offsetY,
+    void updateFlowElements(final BPMNProcess process, final double offsetX, final double offsetY,
             final double offsetWidth, final double offsetHeight) throws BPMNMissingElementException {
 
         // Update all FlowElements

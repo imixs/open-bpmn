@@ -45,13 +45,13 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -196,7 +196,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 for (Participant participant : participants) {
                     logger.debug(
                             "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
-                    Process bpmnProcess = model.openProcess(participant.getProcessRef());
+                    BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
                     // Add a Pool if the process is private
                     if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
                         List<GModelElement> childList = computeGModelElements(bpmnProcess, participant);
@@ -217,7 +217,7 @@ public class BPMNGModelFactory implements GModelFactory {
             } else {
                 // We have a simple 'Process Diagram' type - build the GModel from default
                 // process
-                Process bpmnProcess = model.openDefaultProcess();
+                BPMNProcess bpmnProcess = model.openDefaultProcess();
                 gRootNodeList.addAll(computeGModelElements(bpmnProcess, null));
             }
 
@@ -323,7 +323,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * is absolute and in a GModel the position is relative to the container.
      *
      */
-    List<GModelElement> computeGModelElements(final Process process, final Participant participant)
+    List<GModelElement> computeGModelElements(final BPMNProcess process, final Participant participant)
             throws BPMNMissingElementException {
 
         List<GModelElement> gNodeList = new ArrayList<>();

@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
@@ -78,28 +78,33 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                 sourceId = element.get().getId();
             }
 
-            // Verify that both Elements are members of the same process...
-            String sourceProcessId = modelState.getBpmnModel().findElementNodeById(sourceId).getProcessId();
-            String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
-            if (sourceProcessId == null || !sourceProcessId.equals(targetProcessId)) {
-                throw new IllegalArgumentException("Target and Source Element are not members of the same process!");
-            }
-            // open the process and create the sequence flow...
-            Process bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
+            // Depending on the edgeType we use here different method to create the BPMN
+            // edge
 
-            switch (edgeType) {
-            case BPMNTypes.SEQUENCE_FLOW:
+            if (BPMNTypes.SEQUENCE_FLOW.equals(edgeType)) {
+
+                // Verify that both Elements are members of the same process...
+                String sourceProcessId = modelState.getBpmnModel().findElementNodeById(sourceId).getProcessId();
+                String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
+                if (sourceProcessId == null || !sourceProcessId.equals(targetProcessId)) {
+                    throw new IllegalArgumentException(
+                            "Target and Source Element are not members of the same process!");
+                }
+                // open the process and create the sequence flow...
+                BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
                 bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
-                break;
-            case BPMNTypes.MESSAGE_FLOW:
-                modelState.getBpmnModel().addMessageFlow(BPMNModel.generateShortID("MessageFlow"), sourceId, targetId);
-                break;
-            case BPMNTypes.ASSOCIATION:
-                bpmnProcess.addAssociation(BPMNModel.generateShortID("Association"), sourceId, targetId);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid BPMNEdge type: " + edgeType);
             }
+
+            if (BPMNTypes.ASSOCIATION.equals(edgeType)) {
+                String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
+                BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
+                bpmnProcess.addAssociation(BPMNModel.generateShortID("Association"), sourceId, targetId);
+            }
+
+            if (BPMNTypes.MESSAGE_FLOW.equals(edgeType)) {
+                modelState.getBpmnModel().addMessageFlow(BPMNModel.generateShortID("MessageFlow"), sourceId, targetId);
+            }
+
             modelState.reset();
         } catch (BPMNModelException e) {
             logger.severe(e.getMessage());

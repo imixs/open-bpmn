@@ -14,7 +14,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -45,7 +45,7 @@ public class TestBPMNLanes {
             Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
             
-            Process process = participant.openProcess();
+            BPMNProcess process = participant.openProcess();
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_4");
@@ -87,7 +87,7 @@ public class TestBPMNLanes {
             assertEquals(2, model.getProcesses().size());
             assertEquals(2, model.getParticipants().size());
 
-            Process process = participantSales.openProcess();
+            BPMNProcess process = participantSales.openProcess();
             // add a new Lane
             Lane lane=process.addLane(model,"Lane 1");
             assertNotNull(lane);
@@ -132,7 +132,7 @@ public class TestBPMNLanes {
             Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
             
-            Process process = participant.openProcess();
+            BPMNProcess process = participant.openProcess();
             assertNotNull(process);
 
             

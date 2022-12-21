@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -38,7 +38,7 @@ public class TestCreateElements {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            Process process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProcess();
             // Create a DataObject
             process.addDataObject("dataobject_1", "DataObject-1");
         } catch (BPMNModelException e) {

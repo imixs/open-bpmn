@@ -12,7 +12,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -43,7 +43,7 @@ public class TestCreateEdges {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            Process process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProcess();
             // Create a DataObject
             DataObject dataObject1 = process.addDataObject("dataobject_1", "DataObject-1");
             dataObject1.setPosition(100,50);

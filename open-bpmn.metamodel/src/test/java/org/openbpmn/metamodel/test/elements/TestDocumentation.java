@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -39,7 +39,7 @@ public class TestDocumentation {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            Process processContext = model.openDefaultProcess();
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
             // add a start and end event
             Event bpmnElement = processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
@@ -68,7 +68,7 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_CDATA.bpmn");
-           Process process = model.openProcess(null);
+           BPMNProcess process = model.openProcess(null);
            Event startEvent = (Event) process.findElementNodeById("start_1");
            assertEquals("Some text with \n"
                    + "<markup>code</markup>!",startEvent.getDocumentation());
@@ -90,7 +90,7 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_TEXT.bpmn");
-           Process process = model.openProcess(null);
+           BPMNProcess process = model.openProcess(null);
            Event startEvent = (Event) process.findElementNodeById("start_1");
            assertEquals("Some text with",startEvent.getDocumentation());
         } catch (BPMNModelException e) {

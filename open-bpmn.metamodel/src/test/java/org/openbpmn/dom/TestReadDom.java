@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.NamedNodeMap;
@@ -88,7 +88,7 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
         assertNotNull(model);
-        Process defaultProcess=model.openDefaultProcess();
+        BPMNProcess defaultProcess=model.openDefaultProcess();
         assertNotNull(defaultProcess);
         assertEquals("process_1",defaultProcess.getId());
 

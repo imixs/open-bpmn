@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -44,7 +44,7 @@ public class TestReadBounds {
         logger.info("...read model");
         try {
             // read tasks....
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_1");
@@ -74,7 +74,7 @@ public class TestReadBounds {
         logger.info("...read model");
         try {
             // read tasks....
-            Process process = model.openProcess(null);
+            BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_1");

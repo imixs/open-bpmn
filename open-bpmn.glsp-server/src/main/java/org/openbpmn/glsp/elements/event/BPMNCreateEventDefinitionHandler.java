@@ -25,7 +25,7 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -76,7 +76,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
                 eventID = eventElement.get().getId();
                 logger.info("===== > event id: " + eventID);
                 try {
-                    Process process = modelState.getBpmnModel().openDefaultProcess();
+                    BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
                     Event bpmnEvent = (Event) process.findElementNodeById(eventID);
                     if (bpmnEvent != null) {
                         // add the new definition

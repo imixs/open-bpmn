@@ -26,7 +26,7 @@ import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.ModelTypes;
@@ -98,12 +98,12 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
      * @param operation - a CreateNodeOperation
      * @return the corresponding BPMNProcess
      */
-    public Process findProcessByCreateNodeOperation(final CreateNodeOperation operation) {
+    public BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation) {
         GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
         String containerId = container.getId();
         logger.debug("containerId = " + container.getId());
 
-        Process bpmnProcess = null;
+        BPMNProcess bpmnProcess = null;
         // is it the root?
         if (modelState.getRoot().getId().equals(containerId)) {
             bpmnProcess = modelState.getBpmnModel().openDefaultProcess();

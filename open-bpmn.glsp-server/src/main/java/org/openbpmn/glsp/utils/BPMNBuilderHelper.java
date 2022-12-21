@@ -27,7 +27,7 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
@@ -110,11 +110,11 @@ public class BPMNBuilderHelper {
      * @param container  - the GModeElement
      * @return the corresponding BPMNProcess
      */
-    public static Process findProcessByContainer(final BPMNGModelState modelState, final GModelElement container) {
+    public static BPMNProcess findProcessByContainer(final BPMNGModelState modelState, final GModelElement container) {
         String containerId = container.getId();
         logger.info(" ==> Container ID : " + container.getId());
 
-        Process bpmnProcess = null;
+        BPMNProcess bpmnProcess = null;
         // is it the root?
         if (modelState.getRoot().getId().equals(containerId)) {
             bpmnProcess = modelState.getBpmnModel().openDefaultProcess();

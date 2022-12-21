@@ -43,7 +43,7 @@ public class Participant extends BPMNElementNode {
      * 
      * @return BPMNProcess
      */
-    public Process openProcess() {
+    public BPMNProcess openProcess() {
         try {
             return model.openProcess(processRef);
         } catch (BPMNModelException e) {

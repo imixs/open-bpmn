@@ -14,7 +14,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -48,7 +48,7 @@ public class TestCollaborationModel {
             // get first participant and load the process context
             Participant bpmnParticipant = participants.iterator().next();
 
-            Process process = model.openProcess("Process_1");
+            BPMNProcess process = model.openProcess("Process_1");
 
             // we expect 1 Task element in this process
             assertEquals(1, process.getActivities().size());
@@ -151,7 +151,7 @@ public class TestCollaborationModel {
             Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 200);
 
-            Process salesProcess = participantSales.openProcess();
+            BPMNProcess salesProcess = participantSales.openProcess();
             // add a BPMNLane
             Lane lane1 = salesProcess.addLane(model, "Europe");
             Lane lane2 = salesProcess.addLane(model, "United States");
@@ -193,7 +193,7 @@ public class TestCollaborationModel {
             Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 200);
 
-            Process salesProcess = participantSales.openProcess();
+            BPMNProcess salesProcess = participantSales.openProcess();
             // add a BPMNLane
             Lane lane1 = salesProcess.addLane(model, "Europe");
             Lane lane2 = salesProcess.addLane(model, "United States");

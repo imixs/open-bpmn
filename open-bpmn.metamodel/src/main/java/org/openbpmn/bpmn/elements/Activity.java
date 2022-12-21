@@ -25,7 +25,7 @@ public class Activity extends BPMNElementNode {
     public final static double DEFAULT_HEIGHT = 50.0;
 
     
-    protected Activity(BPMNModel model, Element node, String type, Process bpmnProcess) throws BPMNModelException {
+    protected Activity(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
         super(model, node, type,bpmnProcess);
     }
 

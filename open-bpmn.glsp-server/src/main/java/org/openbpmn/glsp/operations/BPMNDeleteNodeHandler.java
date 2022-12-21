@@ -20,11 +20,13 @@ import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
+import org.openbpmn.bpmn.elements.Association;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.Process;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
-import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -58,7 +60,11 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
 
             // find the bpmnBaseElement
             AbstractBPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
-            if (bpmnElement != null && bpmnElement instanceof Lane) {
+            if (bpmnElement == null) {
+                logger.warning("...no BPMN elmenet with id: " + id + " found!");
+                continue;
+            }
+            if (bpmnElement instanceof Lane) {
                 // delete lane
                 Lane lane = (Lane) bpmnElement;
                 try {
@@ -69,22 +75,32 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
                 continue;
 
             }
-            // finally we assume that this is a FlowElement
-            if (bpmnElement != null && bpmnElement instanceof BPMNElementNode) {
+            // Check if the element is a BPMNElementNode...
+            if (bpmnElement instanceof BPMNElementNode) {
                 // open the corresponding process
-                Process process = ((BPMNElementNode) bpmnElement).getBpmnProcess();
+                BPMNProcess process = ((BPMNElementNode) bpmnElement).getBpmnProcess();
                 process.deleteBPMNElementNode(id);
                 continue;
             }
 
-            if (bpmnElement != null && bpmnElement instanceof BPMNElementEdge) {
-                // open the corresponding process
-                Process process = ((BPMNElementEdge) bpmnElement).getBpmnProcess();
-                process.deleteElementEdge(id);
+            if (bpmnElement instanceof SequenceFlow) {
+                BPMNProcess process = ((SequenceFlow) bpmnElement).getProcess();
+                if (process != null) {
+                    process.deleteSequenceFlow(id);
+                }
+                continue;
+            }
+            if (bpmnElement instanceof Association) {
+                BPMNProcess process = ((Association) bpmnElement).getProcess();
+                if (process != null) {
+                    process.deleteAssociation(id);
+                }
                 continue;
             }
 
-            logger.warning("...no BPMN elmenet with id: " + id + " found!");
+            if (bpmnElement instanceof MessageFlow) {
+                bpmnElement.getModel().deleteMessageFlow(id);
+            }
 
         }
 
