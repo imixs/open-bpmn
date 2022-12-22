@@ -15,6 +15,7 @@ import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -111,7 +112,9 @@ public class TestFlowElements {
             // and one association between the two data objects
             assertEquals(1,process.getAssociations().size());
             assertEquals(0,process.getSequenceFlows().size());
-           
+            
+            Set<TextAnnotation>  annotations=process.getTextAnnotations();
+            assertEquals(1,annotations.size());
             
             
         } catch (BPMNModelException e) {

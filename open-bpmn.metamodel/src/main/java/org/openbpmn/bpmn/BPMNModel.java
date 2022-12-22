@@ -76,6 +76,7 @@ public class BPMNModel {
     public static final String LANESET = "laneSet";
     public static final String LANE = "lane";
     public static final String DATAOBJECT = "dataObject";
+    public static final String TEXTANNOTATION = "textAnnotation";
 
     public static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
@@ -1105,6 +1106,20 @@ public class BPMNModel {
 
     public static boolean isDataObject(BPMNElementNode element) {
         return isDataObject(element.getElementNode());
+    }
+    
+    /**
+     * Returns true if the node is a textAnnotaion node.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isTextAnnotation(Node node) {
+        return (TEXTANNOTATION.equals(node.getLocalName()));
+    }
+
+    public static boolean isTextAnnotation(BPMNElementNode element) {
+        return isTextAnnotation(element.getElementNode());
     }
 
     /**

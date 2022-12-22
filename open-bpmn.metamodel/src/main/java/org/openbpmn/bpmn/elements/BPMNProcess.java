@@ -44,11 +44,12 @@ public class BPMNProcess extends AbstractBPMNElement {
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<Activity> activities = null;
     protected Set<DataObject> dataObjects = null;
+    protected Set<TextAnnotation> textAnnotations = null;
     protected Set<Event> events = null;
     protected Set<Gateway> gateways = null;
     protected Set<SequenceFlow> sequenceFlows = null;
     protected Set<Association> associations = null;
-   
+
     protected Set<Lane> lanes = null;
     protected Element laneSet = null;
 
@@ -111,6 +112,10 @@ public class BPMNProcess extends AbstractBPMNElement {
                     this.createBPMNGatewayByNode((Element) child);
                 } else if (BPMNModel.isDataObject(child)) {
                     this.createBPMNDataObjectByNode((Element) child);
+
+                } else if (BPMNModel.isTextAnnotation(child)) {
+                    this.createBPMNTextAnnotaionByNode((Element) child);
+
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
                 } else if (BPMNModel.isAssociation(child)) {
@@ -211,6 +216,16 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.dataObjects = dataObjects;
     }
 
+    public Set<TextAnnotation> getTextAnnotations() {
+        if (textAnnotations == null)
+            textAnnotations = new LinkedHashSet<TextAnnotation>();
+        return textAnnotations;
+    }
+
+    public void setTextAnnotations(Set<TextAnnotation> textAnnotations) {
+        this.textAnnotations = textAnnotations;
+    }
+
     public Set<SequenceFlow> getSequenceFlows() {
         if (sequenceFlows == null) {
             sequenceFlows = new LinkedHashSet<SequenceFlow>();
@@ -233,7 +248,6 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.associations = accociations;
     }
 
- 
     /**
      * Creates a new BPMNTask element.
      * <p>
@@ -450,8 +464,6 @@ public class BPMNProcess extends AbstractBPMNElement {
         return sequenceFlow;
     }
 
-   
-
     /**
      * Adds a Association. The method computes and validates the source and target
      * elements based on this process context.
@@ -494,7 +506,7 @@ public class BPMNProcess extends AbstractBPMNElement {
 
         Association association = this.createBPMNAssociationByNode(bpmnEdgeElement);
         association.addDefaultWayPoints();
-        
+
         // add refs to the BPMNEdge element...
         Element edgeShape = association.getBpmnEdge();
         edgeShape.setAttribute("sourceElement", sourceElement.getBpmnShape().getAttribute("id"));
@@ -502,8 +514,6 @@ public class BPMNProcess extends AbstractBPMNElement {
 
         return association;
     }
-
-   
 
     /**
      * Creates a new BPMNLane element and adds the element into this process
@@ -604,9 +614,9 @@ public class BPMNProcess extends AbstractBPMNElement {
         this.getLanes().add(bpmnLane);
         return bpmnLane;
     }
-    
+
     /**
-     * Return true if the process is the public default process 
+     * Return true if the process is the public default process
      */
     public boolean isPublicProcess() {
         return BPMNTypes.PROCESS_TYPE_PUBLIC.equals(getProcessType());
@@ -706,10 +716,21 @@ public class BPMNProcess extends AbstractBPMNElement {
         }
 
         // finally delete the element from the corresponding list
-        this.getActivities().remove(bpmnElement);
-        this.getEvents().remove(bpmnElement);
-        this.getDataObjects().remove(bpmnElement);
-        this.getGateways().remove(bpmnElement);
+        if (bpmnElement instanceof Activity) {
+            this.getActivities().remove(bpmnElement);
+        }
+        if (bpmnElement instanceof Gateway) {
+            this.getGateways().remove(bpmnElement);
+        }
+        if (bpmnElement instanceof Event) {
+            this.getEvents().remove(bpmnElement);
+        }
+        if (bpmnElement instanceof DataObject) {
+            this.getDataObjects().remove(bpmnElement);
+        }
+        if (bpmnElement instanceof TextAnnotation) {
+            this.getTextAnnotations().remove(bpmnElement);
+        }
     }
 
     /**
@@ -738,7 +759,7 @@ public class BPMNProcess extends AbstractBPMNElement {
         }
 
     }
-    
+
     /**
      * Deletes a SquenceFlow from this context.
      * <p>
@@ -746,15 +767,14 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id
      */
     public void deleteSequenceFlow(String id) {
-      
+
         BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
         if (bpmnEdge != null && bpmnEdge instanceof SequenceFlow) {
             removeElementEdge(id);
             this.getSequenceFlows().remove(bpmnEdge);
         }
     }
-    
-    
+
     /**
      * Deletes a Association from this context.
      * <p>
@@ -770,7 +790,7 @@ public class BPMNProcess extends AbstractBPMNElement {
     }
 
     /**
-     * Deletes a BPMNTask element from this context.
+     * Deletes a BPMN Task element from this context.
      * <p>
      * 
      * @param id
@@ -780,7 +800,7 @@ public class BPMNProcess extends AbstractBPMNElement {
     }
 
     /**
-     * Deletes a BPMNEvent element from this context.
+     * Deletes a BPMN Event element from this context.
      * <p>
      * 
      * @param id
@@ -790,7 +810,7 @@ public class BPMNProcess extends AbstractBPMNElement {
     }
 
     /**
-     * Deletes a BPMNGateway element from this context.
+     * Deletes a BPMN Gateway element from this context.
      * <p>
      * 
      * @param id
@@ -800,12 +820,22 @@ public class BPMNProcess extends AbstractBPMNElement {
     }
 
     /**
-     * Deletes a BPMNGateway element from this context.
+     * Deletes a BPMN DataObject element from this context.
      * <p>
      * 
      * @param id
      */
     public void deleteDataObject(String id) {
+        deleteElementNode(id);
+    }
+
+    /**
+     * Deletes a BPMN TextAnnotation element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteTextAnnotation(String id) {
         deleteElementNode(id);
     }
 
@@ -821,10 +851,11 @@ public class BPMNProcess extends AbstractBPMNElement {
             // does not exist
             return;
         }
-    
+
         String targetRef = bpmnEdge.getTargetRef();
         String soureRef = bpmnEdge.getSourceRef();
-        // In case of a SequenceFlow  we need to update the referenced inside the referred elements 
+        // In case of a SequenceFlow we need to update the referenced inside the
+        // referred elements
         // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
         // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
         BPMNElementNode targetElement = findElementNodeById(targetRef);
@@ -857,13 +888,13 @@ public class BPMNProcess extends AbstractBPMNElement {
                 }
             }
         }
-    
+
         // Finally delete the flow element and the edge
         this.getElementNode().removeChild(bpmnEdge.getElementNode());
         if (bpmnEdge.getBpmnEdge() != null) {
             model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
         }
-    
+
     }
 
     /**
@@ -955,6 +986,13 @@ public class BPMNProcess extends AbstractBPMNElement {
 
         Set<DataObject> listD = this.getDataObjects();
         for (DataObject element : listD) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+        
+        Set<TextAnnotation> listT = this.getTextAnnotations();
+        for (TextAnnotation element : listT) {
             if (id.equals(element.getId())) {
                 return element;
             }
@@ -1086,6 +1124,12 @@ public class BPMNProcess extends AbstractBPMNElement {
         return dataObject;
     }
 
+    private TextAnnotation createBPMNTextAnnotaionByNode(Element element) throws BPMNModelException {
+        TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
+        getTextAnnotations().add(textAnnotation);
+        return textAnnotation;
+    }
+
     /**
      * Creates a new BPMNEvent from a existing BPMN Node and adds the BPMNEvent into
      * the event list
@@ -1126,7 +1170,6 @@ public class BPMNProcess extends AbstractBPMNElement {
         getSequenceFlows().add(flow);
         return flow;
     }
-
 
     /**
      * Adds a new BPMNAssociation from a existing Element Node
