@@ -6,13 +6,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
-import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -26,23 +25,16 @@ public class TestDeleteModel {
 
     private static Logger logger = Logger.getLogger(TestDeleteModel.class.getName());
 
-    static BPMNModel model = null;
-
-    @BeforeAll
-    public static void init() throws BPMNModelException {
-        logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-1.bpmn");
-
-    }
 
     /**
      * This test creates a bpmn file
      */
     @Test
     public void testDeleteTask() {
-        String out = "src/test/resources/delete-process_1.bpmn";
+        BPMNModel model=null;
+        String out = "src/test/resources/output/delete-process_1.bpmn";
         try {
-            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
+             model = BPMNModelFactory.read("/refmodel-1.bpmn");
             BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
@@ -58,12 +50,18 @@ public class TestDeleteModel {
      */
     @Test
     public void testDeleteTaskAndStartEvent() {
-        String out = "src/test/resources/delete-process_2.bpmn";
+        BPMNModel model=null;
+        String out = "src/test/resources/output/delete-process_2.bpmn";
         try {
-            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
-
+             model = BPMNModelFactory.read("/refmodel-1.bpmn");
+           
             BPMNProcess process = model.openProcess(null);
+            assertEquals(2,process.getActivities().size());
             process.deleteTask("Task_1");
+            
+            assertEquals(1,process.getActivities().size());
+      
+            
             process.deleteEvent("StartEvent_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();

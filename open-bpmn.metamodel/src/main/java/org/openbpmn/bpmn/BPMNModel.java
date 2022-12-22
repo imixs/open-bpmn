@@ -760,14 +760,14 @@ public class BPMNModel {
             }
         }
 
-        // Finally delete the flow element and the edge
+        // delete the flow element and the edge
         this.collaborationElement.removeChild(bpmnEdge.getElementNode());
         if (bpmnEdge.getBpmnEdge() != null) {
             getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
         }
+        
+        // finally we remove the messageFlow object form the messageFlow list
         getMessageFlows().remove(bpmnEdge);
-
-      
 
     }
 

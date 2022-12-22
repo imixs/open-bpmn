@@ -667,7 +667,7 @@ public class BPMNProcess extends AbstractBPMNElement {
 
         Set<String> flowElementList = lane.getFlowElementIDs();
         for (String flowEleemntID : flowElementList) {
-            this.deleteEdgesFromElement(flowEleemntID);
+            this.removeAllEdgesFromElement(flowEleemntID);
         }
 
         // delete the shape
@@ -697,9 +697,9 @@ public class BPMNProcess extends AbstractBPMNElement {
         }
 
         // remove all flows
-        deleteEdgesFromElement(bpmnElement.getId());
+        removeAllEdgesFromElement(bpmnElement.getId());
 
-        // delete teh shape
+        // delete the shape
         this.getElementNode().removeChild(bpmnElement.getElementNode());
         if (bpmnElement.getBpmnShape() != null) {
             model.getBpmnPlane().removeChild(bpmnElement.getBpmnShape());
@@ -746,14 +746,10 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id
      */
     public void deleteSequenceFlow(String id) {
-        deleteElementEdge(id);
+      
         BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
-        if (bpmnEdge == null) {
-            // does not exist
-            return;
-        }
-
-        if (bpmnEdge instanceof SequenceFlow) {
+        if (bpmnEdge != null && bpmnEdge instanceof SequenceFlow) {
+            removeElementEdge(id);
             this.getSequenceFlows().remove(bpmnEdge);
         }
     }
@@ -766,73 +762,11 @@ public class BPMNProcess extends AbstractBPMNElement {
      * @param id
      */
     public void deleteAssociation(String id) {
-        deleteElementEdge(id);
         BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
-        if (bpmnEdge == null) {
-            // does not exist
-            return;
-        }
-
-        if (bpmnEdge instanceof Association) {
+        if (bpmnEdge != null && bpmnEdge instanceof Association) {
+            removeElementEdge(id);
             this.getAssociations().remove(bpmnEdge);
         }
-    }
-
-    /**
-     * Helper method to delete a BPMNEdge element from this context.
-     * <p>
-     * 
-     * @param id
-     */
-    private void deleteElementEdge(String id) {
-        BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
-        if (bpmnEdge == null) {
-            // does not exist
-            return;
-        }
-
-        String targetRef = bpmnEdge.getTargetRef();
-        String soureRef = bpmnEdge.getSourceRef();
-        // first we need to update the elements still connected with this flow
-        // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
-        // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
-        BPMNElementNode targetElement = findElementNodeById(targetRef);
-        if (targetElement != null) {
-            NodeList childs = targetElement.getElementNode().getChildNodes();
-            for (int j = 0; j < childs.getLength(); j++) {
-                Node child = childs.item(j);
-                if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
-                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
-                    if (id.equals(child.getTextContent())) {
-                        targetElement.getElementNode().removeChild(child);
-                        break;
-                    }
-                }
-            }
-        }
-        BPMNElementNode sourceElement = findElementNodeById(soureRef);
-        if (sourceElement != null) {
-            NodeList childs = sourceElement.getElementNode().getChildNodes();
-            for (int j = 0; j < childs.getLength(); j++) {
-                Node child = childs.item(j);
-                if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
-                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
-                    if (id.equals(child.getTextContent())) {
-                        sourceElement.getElementNode().removeChild(child);
-                        break;
-                    }
-                }
-            }
-        }
-
-        // Finally delete the flow element and the edge
-        this.getElementNode().removeChild(bpmnEdge.getElementNode());
-        if (bpmnEdge.getBpmnEdge() != null) {
-            model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
-        }
-
     }
 
     /**
@@ -876,27 +810,84 @@ public class BPMNProcess extends AbstractBPMNElement {
     }
 
     /**
+     * Helper method to delete a BPMNEdge element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    private void removeElementEdge(String id) {
+        BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
+        if (bpmnEdge == null) {
+            // does not exist
+            return;
+        }
+    
+        String targetRef = bpmnEdge.getTargetRef();
+        String soureRef = bpmnEdge.getSourceRef();
+        // In case of a SequenceFlow  we need to update the referenced inside the referred elements 
+        // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+        // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+        BPMNElementNode targetElement = findElementNodeById(targetRef);
+        if (targetElement != null) {
+            NodeList childs = targetElement.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() == Node.ELEMENT_NODE
+                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
+                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                    if (id.equals(child.getTextContent())) {
+                        targetElement.getElementNode().removeChild(child);
+                        break;
+                    }
+                }
+            }
+        }
+        BPMNElementNode sourceElement = findElementNodeById(soureRef);
+        if (sourceElement != null) {
+            NodeList childs = sourceElement.getElementNode().getChildNodes();
+            for (int j = 0; j < childs.getLength(); j++) {
+                Node child = childs.item(j);
+                if (child.getNodeType() == Node.ELEMENT_NODE
+                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
+                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                    if (id.equals(child.getTextContent())) {
+                        sourceElement.getElementNode().removeChild(child);
+                        break;
+                    }
+                }
+            }
+        }
+    
+        // Finally delete the flow element and the edge
+        this.getElementNode().removeChild(bpmnEdge.getElementNode());
+        if (bpmnEdge.getBpmnEdge() != null) {
+            model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+        }
+    
+    }
+
+    /**
      * Helper method to deletes all SequenceFlows, Associations and MessageFlows
      * from an element
      * 
      */
-    private void deleteEdgesFromElement(String elementId) {
+    private void removeAllEdgesFromElement(String elementId) {
         // remove all SequenceFlows
         Set<SequenceFlow> flowList = findSequenceFlowsByElementId(elementId);
         for (SequenceFlow flow : flowList) {
-            deleteElementEdge(flow.getId());
+            deleteSequenceFlow(flow.getId());
         }
 
         // remove all Associations
         Set<Association> accociationList = findAssociationsByElementId(elementId);
         for (Association flow : accociationList) {
-            deleteElementEdge(flow.getId());
+            deleteAssociation(flow.getId());
         }
 
         // remove all MessageFlows
         Set<MessageFlow> messageFlowList = findMessageFlowsByElementId(elementId);
         for (MessageFlow flow : messageFlowList) {
-            deleteElementEdge(flow.getId());
+            model.deleteMessageFlow(flow.getId());
         }
     }
 
