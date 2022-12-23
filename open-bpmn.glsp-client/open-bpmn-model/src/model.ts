@@ -36,7 +36,8 @@ import {
 	SModelElement,
 	SShapeElement,
 	WithEditableLabel,
-	withEditLabelFeature
+	withEditLabelFeature,
+	ForeignObjectElement,SArgumentable,Args,Bounds,isBoundsAware,Dimension
 } from '@eclipse-glsp/client';
 
 export interface BPMNFlowElement {
@@ -150,8 +151,72 @@ export class DataObjectNode extends RectangularNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
-	// symbol?: string;
 	documentation: string;
+}
+
+export class TextAnnotationNode extends RectangularNode implements BPMNFlowElement {
+	static override readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature
+	];
+	documentation: string;
+}
+
+/*
+ * This class provides a new Node displaying a multiline textblock.
+ * The node also allows editing the text.
+ * We are using this model object for BPMN TextAnnotations.
+ *
+ * See: https://www.eclipse.org/glsp/documentation/rendering/#default-views
+ */
+export class MultiLineTextNode extends ForeignObjectElement implements SArgumentable, EditableLabel {
+  readonly isMultiLine = true;
+  readonly args: Args;
+  text = '';
+
+  override set bounds(bounds: Bounds) {
+    /* ignore set bounds, always use the parent's bounds */
+  }
+
+  override get bounds(): Bounds {
+    if (isBoundsAware(this.parent)) {
+      return {
+        x: this.position.x,
+        y: this.position.y,
+        width: this.parent.bounds.width,
+        height: this.parent.bounds.height
+      };
+    }
+    return Bounds.EMPTY;
+  }
+
+  // @ts-expect-error Arguments are set in the element
+  override get code(): string {
+    if (this.text === '') {
+      const textArg = this.args['text'];
+      if (typeof textArg === 'string') {
+        this.text = textArg;
+      }
+    }
+    return `<pre>${this.text}</pre>`;
+  }
+
+  override namespace = 'http://www.w3.org/1999/xhtml';
+
+  get editControlDimension(): Dimension {
+    return {
+      width: this.bounds.width - 4,
+      height: this.bounds.height - 4
+    };
+  }
 }
 
 /*

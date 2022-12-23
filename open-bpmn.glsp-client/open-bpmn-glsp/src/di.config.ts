@@ -19,7 +19,7 @@ import {
     ConsoleLogger,
     createClientContainer,
     DeleteElementContextMenuItemProvider,
-    editLabelFeature,
+    editLabelFeature, moveFeature, selectFeature,
     LogLevel,
     overrideViewerOptions,
     RevealNamedElementActionProvider,
@@ -29,7 +29,7 @@ import {
     SLabel,CircularNodeView,DiamondNodeView,
     SLabelView,configureView,
     configureCommand,
-    TYPES
+    TYPES,ForeignObjectView
 } from '@eclipse-glsp/client';
 // import { DefaultTypes } from '@eclipse-glsp/protocol';
 import 'balloon-css/balloon.min.css';
@@ -42,12 +42,17 @@ import {
 	PoolNode,
 	LaneNode,
 	DataObjectNode,
+	TextAnnotationNode,
 	Icon,
 	TaskNode,
 	EventNode,
-	BPMNEdge
+	BPMNEdge, MultiLineTextNode
 } from '@open-bpmn/open-bpmn-model';
-import { IconView,ContainerHeaderView,BPMNLabelNodeSelectionListener,DataObjectNodeView } from './bpmn-element-views';
+import { IconView,ContainerHeaderView,
+         BPMNLabelNodeSelectionListener,
+         DataObjectNodeView,
+         TextAnnotationNodeView
+} from './bpmn-element-views';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import { HelperLineListener,
          DrawHelperLinesCommand,
@@ -112,6 +117,14 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
+    configureModelElement(context, 'textAnnotation', TextAnnotationNode, TextAnnotationNodeView);
+
+    // textNode of TextAnnotation...
+    configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, ForeignObjectView, {
+         disable: [moveFeature, selectFeature],
+         enable: [editLabelFeature]}
+    );
+
     configureModelElement(context, 'container', SCompartment, SCompartmentView);
 
     // Sequence flows
