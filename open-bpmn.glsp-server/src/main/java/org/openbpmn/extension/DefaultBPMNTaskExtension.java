@@ -141,7 +141,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
             }
 
             if ("script".equals(feature)) {
-                bpmnElement.setChildNodeContent("script", json.getString(feature), null);
+                bpmnElement.setChildNodeContent("script", json.getString(feature));
                 continue;
             }
         }

@@ -118,7 +118,7 @@ public class TestFlowElements {
             assertEquals(1,annotations.size());
             TextAnnotation textAnnotation=annotations.iterator().next();
             assertEquals("Text Annotation Example\n"
-                    + "2nd LIne",textAnnotation.getText());            
+                    + "2nd LIne\n<br />",textAnnotation.getText());            
             assertEquals("text/html",textAnnotation.getAttribute("textFormat"));
             
         } catch (BPMNModelException e) {

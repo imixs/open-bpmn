@@ -1,18 +1,11 @@
 package org.openbpmn.bpmn.elements.core;
 
-import java.util.Set;
-
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.w3c.dom.CDATASection;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * The BPMNNode is the abstract super class for most BPMN elements like Task,
@@ -29,10 +22,8 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
     protected String type = null;
     protected BPMNProcess bpmnProcess = null;
     protected BPMNLabel label = null;
-    private Element documentationNode = null;
     protected Element bpmnShape = null;
     protected BPMNBounds bounds = null;
-
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -42,9 +33,9 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
      * @param model
      */
     public BPMNElementNode(BPMNModel model, Element node) {
-        super(model,node);
+        super(model, node);
     }
-    
+
     /**
      * Creates a new BPMNFlowElement
      * 
@@ -77,36 +68,12 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
     }
 
     /**
-     * Returns the Document object associated with this Element. The document object
-     * can be used to create new nodes.
-     * 
-     * @return
-     */
-    public Document getDoc() {
-        Document doc = this.getElementNode().getOwnerDocument();
-        return doc;
-    }
-
-    /**
      * Returns the Documentation
      * 
      * @return String - can be empty
      */
     public String getDocumentation() {
-        if (documentationNode == null) {
-            // lazy loading of documentation element
-            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    BPMNNS.BPMN2.prefix + ":documentation");
-            if (elementList.size() > 0) {
-                // get the first one and update the value only
-                documentationNode = elementList.iterator().next();
-            }
-        }
-        if (documentationNode != null && documentationNode.getFirstChild() != null) {
-            return documentationNode.getFirstChild().getNodeValue();
-        } else {
-            return ""; // element
-        }
+        return this.getChildNodeContent("documentation");
     }
 
     /**
@@ -115,48 +82,7 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
      * @param content
      */
     public void setDocumentation(String content) {
-        if (documentationNode == null) {
-            // lazy loading of documentation element
-            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    BPMNNS.BPMN2.prefix + ":documentation");
-            if (elementList.size() == 0) {
-                // create new node
-                documentationNode = model.createElement(BPMNNS.BPMN2, "documentation");
-                documentationNode.setAttribute("id", BPMNModel.generateShortID("documentation"));
-                elementNode.appendChild(documentationNode);
-            } else {
-                // get the first one and update the value only
-                documentationNode = elementList.iterator().next();
-            }
-        }
-        // remove old child nodes
-        NodeList docChildList = documentationNode.getChildNodes();
-        for (int i = 0; i < docChildList.getLength(); i++) {
-            Node child = docChildList.item(i);
-            documentationNode.removeChild(child);
-        }
-        CDATASection cdata = getDoc().createCDATASection(content);
-        documentationNode.appendChild(cdata);
-    }
-
-    /**
-     * Set the new childNode with a given content for this element in a CDATA
-     * element.
-     * <p>
-     * The id is optional and is only set if not null
-     * 
-     * @param nodeName name of the new child node
-     * @param content  the content
-     * @param id       optional id
-     */
-    public Element setChildNodeContent(String nodeName, String content, String id) {
-        Element childNode = super.setChildNodeContent(nodeName, content, id);
-
-        // set content as CDATA text
-        CDATASection cdata = getDoc().createCDATASection(content);
-        childNode.appendChild(cdata);
-
-        return childNode;
+        this.setChildNodeContent("documentation", content);
     }
 
     /**
@@ -227,9 +153,6 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
     public void setBpmnShape(Element bpmnShape) {
         this.bpmnShape = bpmnShape;
     }
-    
-    
-
 
     /**
      * Returns the BPMNProcess this element belongs to.
@@ -296,12 +219,12 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
      * @return
      */
     public boolean isEvent() {
-        for (String eventType: BPMNModel.BPMN_EVENTS) {
+        for (String eventType : BPMNModel.BPMN_EVENTS) {
             if (eventType.equals(type)) {
                 return true;
             }
         }
-       return false;
+        return false;
     }
 
     /**
@@ -310,12 +233,12 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
      * @return
      */
     public boolean isGateway() {
-       for (String gateWayType: BPMNModel.BPMN_GATEWAYS) {
-           if (gateWayType.equals(type)) {
-               return true;
-           }
-       }
-      return false;
+        for (String gateWayType : BPMNModel.BPMN_GATEWAYS) {
+            if (gateWayType.equals(type)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

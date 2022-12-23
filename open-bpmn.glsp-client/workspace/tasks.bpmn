@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
     <bpmn2:process id="process_1" processType="Public">
-                
-        
-        
-        
-        
-        
-    
-        <bpmn2:task id="task-HmgGmXh7org0JIpx" name="Task-1"/>
-        <bpmn2:manualTask id="task-eOgGBtp0qBLUGlFL" name="Task-2"/>
-        <bpmn2:userTask id="task-var0ecNgYi05q6fU" name="Task-3"/>
-        <bpmn2:scriptTask id="task-Wg20YXdUxou1u6rT" name="Task-4"/>
-        <bpmn2:businessRuleTask id="task-jt8DbnZKAXfwJgTG" name="Task-5"/>
-        <bpmn2:serviceTask id="task-93JcHal1XtlfgB0a" name="Task-6"/>
-        <bpmn2:sendTask id="task-LLT29iuQrPVbDXQe" name="Task-7"/>
-        <bpmn2:receiveTask id="task-qz0cd40KkQrexSf2" name="Task-8"/>
+        <bpmn2:task id="task-HmgGmXh7org0JIpx" name="Task-1">
+            <bpmn2:documentation id="documentation_65P6SQ"/>
+        </bpmn2:task>
+        <bpmn2:manualTask id="task-eOgGBtp0qBLUGlFL" name="Task-2">
+            <bpmn2:documentation id="documentation_DMbBog"/>
+        </bpmn2:manualTask>
+        <bpmn2:userTask id="task-var0ecNgYi05q6fU" name="Task-3">
+            <bpmn2:documentation id="documentation_p7TyRQ"/>
+        </bpmn2:userTask>
+        <bpmn2:scriptTask id="task-Wg20YXdUxou1u6rT" name="Task-4" scriptFormat="">
+            <bpmn2:documentation id="documentation_2N3M7Q"/>
+            <bpmn2:script id="script_oIt7iw"><![CDATA[some script]]></bpmn2:script>
+        </bpmn2:scriptTask>
+        <bpmn2:businessRuleTask id="task-jt8DbnZKAXfwJgTG" name="Task-5">
+            <bpmn2:documentation id="documentation_0j6n0w"/>
+        </bpmn2:businessRuleTask>
+        <bpmn2:serviceTask id="task-93JcHal1XtlfgB0a" name="Task-6">
+            <bpmn2:documentation id="documentation_KdUaSA"/>
+        </bpmn2:serviceTask>
+        <bpmn2:sendTask id="task-LLT29iuQrPVbDXQe" name="Task-7">
+            <bpmn2:documentation id="documentation_OWcrfg"/>
+        </bpmn2:sendTask>
+        <bpmn2:receiveTask id="task-qz0cd40KkQrexSf2" name="Task-8">
+            <bpmn2:documentation id="documentation_0vwIwA"/>
+        </bpmn2:receiveTask>
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_process_1">
-                        
-            
-            
-            
-            
-            
-        
             <bpmndi:BPMNShape bpmnElement="task-HmgGmXh7org0JIpx" id="BPMNShape_CvFv1A">
                 <dc:Bounds height="50.0" width="110.0" x="48.0" y="29.0"/>
             </bpmndi:BPMNShape>

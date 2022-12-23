@@ -1,9 +1,13 @@
 package org.openbpmn.bpmn.elements.core;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.w3c.dom.CDATASection;
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -21,6 +25,7 @@ public abstract class AbstractBPMNElement {
     protected NamedNodeMap attributeMap = null;
     protected Element elementNode = null;
     protected BPMNModel model = null;
+    protected Map<String, Element> childNodes = null;
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -37,7 +42,19 @@ public abstract class AbstractBPMNElement {
             // get attributes names and values
             this.attributeMap = this.elementNode.getAttributes();
         }
+        childNodes = new HashMap<String, Element>();
 
+    }
+
+    /**
+     * Returns the Document object associated with this Element. The document object
+     * can be used to create new nodes.
+     * 
+     * @return
+     */
+    public Document getDoc() {
+        Document doc = this.getElementNode().getOwnerDocument();
+        return doc;
     }
 
     /**
@@ -98,47 +115,82 @@ public abstract class AbstractBPMNElement {
      * @param content  the content
      * @param id       optional id
      */
-    public Element setChildNodeContent(String nodeName, String content, String id) {
-        Element childNode = null;
-        // load the element
-        Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
-        if (elementList.size() == 0) {
-            // create new node
-            childNode = model.createElement(BPMNNS.BPMN2, nodeName);
-            if (id != null && !id.isEmpty()) {
-                childNode.setAttribute("id", id);
-            }
-            elementNode.appendChild(childNode);
-        } else {
+    public Element setChildNodeContent(String nodeName, String content) {
+        // test if the child node was already loaded (lazy loading)
+        Element childNode = loadOrCreateChildNode(nodeName);
+
+        if (childNode != null) {
+
             // get the first one and remove old values
-            childNode = elementList.iterator().next();
+
             // remove old child nodes of the the node...
             NodeList subChildList = childNode.getChildNodes();
+
             for (int i = 0; i < subChildList.getLength(); i++) {
                 Node child = subChildList.item(i);
                 childNode.removeChild(child);
             }
+
+//            if (id != null && !id.isEmpty()) {
+//                childNode.setAttribute("id", id);
+//            }
+
+            CDATASection cdata = getDoc().createCDATASection(content);
+            childNode.appendChild(cdata);
+            return childNode;
         }
-        return childNode;
+        return null;
     }
 
     /**
-     * Returns the content of a given childNode as a string
-     * 
+     * This helper method returns the content of a given childNode as a string.
+     *
      * @return String - can be empty
      */
     public String getChildNodeContent(String nodeName) {
-        Element childNode = null;
-        // lazy loading of documentation element
-        Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode, BPMNNS.BPMN2.prefix + ":" + nodeName);
-        if (elementList.size() > 0) {
-            // get the first one and update the value only
-            childNode = elementList.iterator().next();
-            if (childNode.getFirstChild() != null) {
-                return childNode.getFirstChild().getNodeValue();
-            }
+        // lazy loading child node
+        Element childNode = loadOrCreateChildNode(nodeName);
+
+        if (childNode != null && childNode.getFirstChild() != null) {
+            return childNode.getFirstChild().getNodeValue();
+        } else {
+            return ""; // element
         }
-        return ""; // no element found
+    }
+
+    /**
+     * This helper method returns a childNode by name. If no child node with the
+     * name exists, the method creates a new empty node.
+     * <p>
+     * The method uses a lazy loading mechanism and a cache to access the same node
+     * faster
+     * 
+     * @return String - can be empty
+     */
+    private Element loadOrCreateChildNode(String nodeName) {
+
+        // test if the child node was already loaded (la7y loading)
+        Element childNode = childNodes.get(nodeName);
+        if (childNode == null) {
+
+            // lazy loading of documentation element
+            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
+                    BPMNNS.BPMN2.prefix + ":" + nodeName);
+            if (elementList.size() > 0) {
+                // get the first one and update the value only
+                childNode = elementList.iterator().next();
+
+            } else {
+                // create a new childnode....
+                // create new node
+                childNode = model.createElement(BPMNNS.BPMN2, nodeName);
+                childNode.setAttribute("id", BPMNModel.generateShortID(nodeName));
+                elementNode.appendChild(childNode);
+            }
+            // put into cache
+            childNodes.put(nodeName, childNode);
+        }
+        return childNode;
     }
 
     /**
