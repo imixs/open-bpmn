@@ -114,7 +114,7 @@ public class BPMNProcess extends AbstractBPMNElement {
                     this.createBPMNDataObjectByNode((Element) child);
 
                 } else if (BPMNModel.isTextAnnotation(child)) {
-                    this.createBPMNTextAnnotaionByNode((Element) child);
+                    this.createBPMNTextAnnotationByNode((Element) child);
 
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
@@ -397,6 +397,43 @@ public class BPMNProcess extends AbstractBPMNElement {
         return dataObject;
     }
 
+    
+    /**
+     * Creates a new BPMN TextAnnotation element.
+     * <p>
+     * <bpmn2:textAnnotation id="Annotation_1" name="Text Annotation 1"/>
+     * 
+     * @param id
+     * @param name
+     * @throws BPMNModelException
+     */
+    public TextAnnotation addTextAnnotation(String id) throws BPMNModelException {
+
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
+        // verify id
+        for (TextAnnotation node : getTextAnnotations()) {
+            if (node.getId().equals(id)) {
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
+            }
+        }
+
+        // create a new Dom node...
+        Element textAnnotationElement = model.createElement(BPMNNS.BPMN2, "textAnnotation");
+        textAnnotationElement.setAttribute("id", id);
+        this.getElementNode().appendChild(textAnnotationElement);
+
+        // add BPMN TextAnnotation instance
+        TextAnnotation textAnnotation = this.createBPMNTextAnnotationByNode(textAnnotationElement);
+
+        return textAnnotation;
+    }
+
+    
+    
     /**
      * Adds a SequenceFlow. The method computes and validates the source and target
      * elements based on this process context.
@@ -1124,8 +1161,16 @@ public class BPMNProcess extends AbstractBPMNElement {
         return dataObject;
     }
 
-    private TextAnnotation createBPMNTextAnnotaionByNode(Element element) throws BPMNModelException {
+    private TextAnnotation createBPMNTextAnnotationByNode(Element element) throws BPMNModelException {
         TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
+        
+        // read text <bpmn2:text>
+        Set<Element> textNodes = BPMNModel.findChildNodesByName(element, BPMNNS.BPMN2.prefix + ":text");
+        if (textNodes!=null && textNodes.size()>0) {
+            Element textNode = textNodes.iterator().next();
+            textAnnotation.setText(textNode.getTextContent());
+        }
+        
         getTextAnnotations().add(textAnnotation);
         return textAnnotation;
     }

@@ -82,6 +82,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
         mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GNODE);
         mappings.put(BPMNTypes.DATAOBJECT, BpmnPackage.Literals.DATA_OBJECT_GNODE);
+        mappings.put(BPMNTypes.TEXTANNOTATION, BpmnPackage.Literals.TEXT_ANNOTATION_GNODE);
 
         return mappings;
     }
@@ -125,7 +126,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // DataObject
         nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false, false));
-
+        // TextAnnotation
+        nodeHints.add(new ShapeTypeHint(BPMNTypes.TEXTANNOTATION, true, true, false, false));
         // Pool ShapeEventTypes
         nodeHints.add(createPoolHint());
         nodeHints.add(createLaneHint());
@@ -187,6 +189,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // add special types
         elementList.add(BPMNTypes.DATAOBJECT);
+        elementList.add(BPMNTypes.TEXTANNOTATION);
         elementList.add(BPMNTypes.POOL);
 
         rootHint.setContainableElementTypeIds(elementList);
@@ -201,6 +204,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         elementList.remove(BPMNTypes.BOUNDARY_EVENT);
         // add lane
         elementList.add(BPMNModel.LANE);
+        // add TextAnnotation
+        elementList.add(BPMNModel.TEXTANNOTATION);
 
         poolHint.setContainableElementTypeIds(elementList);
         return poolHint;

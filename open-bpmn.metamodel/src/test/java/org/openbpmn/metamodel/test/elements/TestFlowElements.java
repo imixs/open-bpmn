@@ -113,9 +113,13 @@ public class TestFlowElements {
             assertEquals(1,process.getAssociations().size());
             assertEquals(0,process.getSequenceFlows().size());
             
+            // Analyze the structure of the TextAnnotation
             Set<TextAnnotation>  annotations=process.getTextAnnotations();
             assertEquals(1,annotations.size());
-            
+            TextAnnotation textAnnotation=annotations.iterator().next();
+            assertEquals("Text Annotation Example\n"
+                    + "2nd LIne",textAnnotation.getText());            
+            assertEquals("text/html",textAnnotation.getAttribute("textFormat"));
             
         } catch (BPMNModelException e) {
             e.printStackTrace();

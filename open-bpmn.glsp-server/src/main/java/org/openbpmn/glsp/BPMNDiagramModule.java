@@ -38,6 +38,7 @@ import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
+import org.openbpmn.extension.DefaultBPMNTextAnnotationExtension;
 import org.openbpmn.glsp.elements.dataobject.BPMNCreateDataObjectHandler;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
@@ -46,6 +47,7 @@ import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
+import org.openbpmn.glsp.elements.textannotation.BPMNCreateTextAnnotationHandler;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.model.BPMNSourceModelStorage;
@@ -128,6 +130,8 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Data Items
         binding.add(BPMNCreateDataObjectHandler.class);
+        // Text Annotation
+        binding.add(BPMNCreateTextAnnotationHandler.class);
 
         // Pools & Lanes
         binding.add(CreatePoolHandler.class);
@@ -210,6 +214,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNParticipantExtension.class);
 
         binding.addBinding().to(DefaultBPMNDataObjectExtension.class);
+        binding.addBinding().to(DefaultBPMNTextAnnotationExtension.class);
 
         // Imixs Extensions (just for testing)
         binding.addBinding().to(ImixsBPMNTaskExtension.class);

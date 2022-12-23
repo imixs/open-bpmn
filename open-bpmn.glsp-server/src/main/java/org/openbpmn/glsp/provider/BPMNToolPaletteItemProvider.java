@@ -237,6 +237,11 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         item.setSortString("A");
         result.add(item);
 
+        item = new PaletteItem(BPMNTypes.TEXTANNOTATION, "Text Annotation",
+                new TriggerNodeCreationAction(BPMNTypes.TEXTANNOTATION));
+        item.setSortString("B");
+        result.add(item);
+
         return result;
     }
 

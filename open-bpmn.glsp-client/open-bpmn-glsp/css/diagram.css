@@ -130,6 +130,17 @@
     fill: #82848a;
 }
 
+.textAnnotation > .sprotty-node {
+	opacity: 20%;
+    fill: #82848a;
+}
+
+.textAnnotation > polyline {
+    stroke: #57A14C;
+    stroke-width: 2;
+    fill: none;
+}
+
 /*** Pool and Lances **/
 
 .pool > .sprotty-node {

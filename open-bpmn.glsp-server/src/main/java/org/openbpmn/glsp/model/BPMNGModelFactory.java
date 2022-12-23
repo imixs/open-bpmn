@@ -52,6 +52,7 @@ import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -68,6 +69,7 @@ import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
+import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.elements.dataobject.DataObjectGNodeBuilder;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
@@ -76,6 +78,7 @@ import org.openbpmn.glsp.elements.label.LabelGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.LaneGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.PoolGNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
+import org.openbpmn.glsp.elements.textannotation.TextAnnotationGNodeBuilder;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -437,6 +440,21 @@ public class BPMNGModelFactory implements GModelFactory {
             BPMNLabel bpmnLabel = dataObject.getLabel();
             LabelGNode labelNode = createLabelNode(bpmnLabel, dataObject, participant);
             gNodeList.add(labelNode);
+        }
+
+        // Add all Text Annotations
+        for (TextAnnotation textAnnotation : process.getTextAnnotations()) {
+            logger.debug("textAnnotation: " + textAnnotation.getId());
+            // compute relative position
+            GPoint point = computeRelativeGPoint(textAnnotation.getBounds(), participant);
+            // build GNode
+            TextAnnotationGNode textAnnotationNode = new TextAnnotationGNodeBuilder(textAnnotation) //
+                    .position(point) //
+                    .build();
+
+            // apply BPMN Extensions
+            applyBPMNExtensions(textAnnotationNode, textAnnotation);
+            gNodeList.add(textAnnotationNode);
         }
 
         // Add all SequenceFlows

@@ -156,6 +156,9 @@ public class BPMNModel {
             BPMNTypes.THROW_EVENT, //
             BPMNTypes.BOUNDARY_EVENT, //
 
+            BPMNTypes.DATAOBJECT, //
+            BPMNTypes.TEXTANNOTATION, //
+            
             BPMNTypes.POOL);
 
     public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
