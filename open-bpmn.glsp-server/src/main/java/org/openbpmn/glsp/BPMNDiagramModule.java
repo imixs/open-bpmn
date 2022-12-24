@@ -48,6 +48,7 @@ import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.elements.textannotation.BPMNCreateTextAnnotationHandler;
+import org.openbpmn.glsp.elements.textannotation.edittext.BPMNApplyEditOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.model.BPMNSourceModelStorage;
@@ -97,13 +98,19 @@ public class BPMNDiagramModule extends DiagramModule {
         super.configureActionHandlers(binding);
         // binding.add(RequestClipboardDataActionHandler.class);
 
+        // Edit lable actions..
         binding.add(BPMNComputedBoundsActionHandler.class);
+
     }
 
     @Override
     protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
         super.configureOperationHandlers(binding);
-//        binding.add(ApplyLabelEditOperationHandler.class);
+
+        // Inline Edit
+
+        binding.add(BPMNApplyEditOperationHandler.class);
+
 //        binding.add(ChangeBoundsOperationHandler.class);
 //        binding.add(ChangeRoutingPointsHandler.class);
         binding.add(CutOperationHandler.class);
