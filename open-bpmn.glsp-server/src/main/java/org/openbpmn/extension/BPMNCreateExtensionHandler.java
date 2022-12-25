@@ -35,7 +35,7 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * OperationHandler to add a Extension to a BPMN Event node.
+ * OperationHandler to add a Extension to a BPMN Element node.
  * <p>
  * During the call of method executeOperation, the corresponding extension is
  * added to the source model element. Also the extension namespace is added to

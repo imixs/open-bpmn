@@ -103,7 +103,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
 
             if ("name".equals(feature)) {
                 bpmnElement.setName(json.getString(feature));
-                // Update Label...
+                // Update GModelElement Label...
                 Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
                 if (!label.isEmpty()) {
                     LabelGNode lgn = (LabelGNode) label.get();

@@ -17,6 +17,7 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.json.JsonObject;
@@ -121,8 +122,13 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
                 continue;
             }
             if ("text".equals(feature)) {
-                ((TextAnnotation) bpmnElement).setText(json.getString(feature));
-                // bpmnElement.setAttribute("text", json.getString(feature));
+                String text = json.getString(feature);
+                ((TextAnnotation) bpmnElement).setText(text);
+                // Update GModelElement Text Node...
+                Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_bpmntext");
+                if (!textNode.isEmpty()) {
+                    textNode.get().getArgs().put("text", text);
+                }
                 continue;
             }
             if ("documentation".equals(feature)) {

@@ -67,7 +67,11 @@ public class TextAnnotationGNodeBuilder extends AbstractGNodeBuilder<TextAnnotat
         node.getLayoutOptions().put("minHeight", TextAnnotation.DEFAULT_HEIGHT);
 
         // add a mulitLine text block to show and edit long text blocks
-        node.getChildren().add(new GNodeBuilder("bpmn-text-node").addArgument("text", text).build());
+        this.id = node.getId() + "_bpmntext";
+        node.getChildren().add(new GNodeBuilder("bpmn-text-node"). //
+                id(id). //
+                addArgument("text", text). //
+                build());
     }
 
 }
