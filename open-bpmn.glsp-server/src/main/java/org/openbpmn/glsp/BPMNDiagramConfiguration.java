@@ -127,7 +127,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         // DataObject
         nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false, false));
         // TextAnnotation
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.TEXTANNOTATION, true, true, false, false));
+        nodeHints.add(new ShapeTypeHint(BPMNTypes.TEXTANNOTATION, true, true, true, false));
         // Pool ShapeEventTypes
         nodeHints.add(createPoolHint());
         nodeHints.add(createLaneHint());
