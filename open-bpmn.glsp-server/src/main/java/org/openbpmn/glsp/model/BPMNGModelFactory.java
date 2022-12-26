@@ -333,7 +333,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Add all Lanes
         for (Lane lane : process.getLanes()) {
-            logger.info("lane: " + lane.getName());
+            logger.debug("lane: " + lane.getName());
             // compute relative position
             GPoint point = computeRelativeGPoint(lane.getBounds(), participant);
             // build GNode

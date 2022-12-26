@@ -17,15 +17,16 @@ package org.openbpmn.glsp.elements.event;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -41,7 +42,7 @@ import com.google.inject.Inject;
  */
 public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHandler {
 
-    private static Logger logger = Logger.getLogger(BPMNCreateEventDefinitionHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNCreateEventDefinitionHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -69,28 +70,25 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
         // now we add this definition directly into the BPMN Event element of the source
         // model
         Optional<GModelElement> container = this.getContainer(operation);
-
         if (container.isPresent()) {
             Optional<GModelElement> eventElement = modelState.getIndex().get(container.get().getId());
             if (eventElement.isPresent()) {
                 eventID = eventElement.get().getId();
-                logger.info("===== > event id: " + eventID);
+                logger.debug("===== > event id: " + eventID);
                 try {
-                    BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
-                    Event bpmnEvent = (Event) process.findElementNodeById(eventID);
-                    if (bpmnEvent != null) {
+                    // open bpmn event element
+                    BPMNElementNode bpmnEvent = modelState.getBpmnModel().findElementNodeById(eventID);
+                    if (bpmnEvent != null && bpmnEvent instanceof Event) {
                         // add the new definition
-                        bpmnEvent.addEventDefinition(elementTypeId);
+                        ((Event) bpmnEvent).addEventDefinition(elementTypeId);
                     } else {
-                        logger.warning("Event " + eventID + " does not exist in current source model!");
+                        logger.warn("Event " + eventID + " does not exist in current source model!");
                     }
                 } catch (BPMNModelException e) {
-                    logger.warning("Failed to add new Event Definition: " + e.getMessage());
+                    logger.warn("Failed to add new Event Definition: " + e.getMessage());
                 }
             }
-
         }
-
         modelState.reset();
         if (eventID != null) {
             // select event
