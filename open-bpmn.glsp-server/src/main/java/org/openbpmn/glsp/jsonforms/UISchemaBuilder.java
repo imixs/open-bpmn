@@ -230,7 +230,7 @@ public class UISchemaBuilder {
      *
      * @param item    - item name
      * @param label   - optional label
-     * @param options - optional options
+     * @param details - JsonObject for details
      * @return this
      */
     public UISchemaBuilder addElementWithOptions(final String item, final String label, final JsonObject details) {
@@ -257,7 +257,6 @@ public class UISchemaBuilder {
 
         // add optional options?
         if (details != null) {
-
             controlBuilder.add("options", details);
         }
 

@@ -77,7 +77,7 @@ public interface BPMNExtension {
     boolean handlesElementTypeId(String elementTypeId);
 
     /**
-     * Validates whether the given {@link BPMNBaseElement} can be handled by this
+     * Validates whether the given {@link BPMNElementNode} can be handled by this
      * BPMN extension. The default implementation returns true. Implementations can
      * accept only specific BPMN element types or elements containing specific BPMN
      * 2.0 extensions.
@@ -92,7 +92,7 @@ public interface BPMNExtension {
     /**
      * Returns the priority of this action handler. The priority is used to derive
      * the execution order if multiple extension handlers should execute the same
-     * {@link BPMNBaseElement}. The default priority is `0` and the priority is
+     * {@link BPMNElementNode}. The default priority is `0` and the priority is
      * sorted descending. This means handlers with a priority &gt; 0 are executed
      * before handlers with a default priority and handlers with a priority &lt; 0
      * are executed afterwards.

@@ -43,10 +43,6 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGNode, LaneGNodeB
 
     private String name;
 
-    private static final String V_GRAB = "vGrab";
-    private static final String H_GRAB = "hGrab";
-    private static final String H_ALIGN = "hAlign";
-
     public LaneGNodeBuilder(final Lane lane) {
         super(BPMNTypes.LANE);
         this.name = lane.getName();
