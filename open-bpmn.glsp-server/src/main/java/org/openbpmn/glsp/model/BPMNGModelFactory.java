@@ -286,14 +286,18 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Build JSONForms UISchema
         try (Writer writer = new StringWriter()) {
-            elementNode.getArgs().put("JSONFormsUISchema", uiSchemaBuilder.build());
+            String uiSchema = uiSchemaBuilder.build();
+            logger.info(uiSchema);
+            elementNode.getArgs().put("JSONFormsUISchema", uiSchema);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         // Build JSONForms Schema
         try (Writer writer = new StringWriter()) {
-            elementNode.getArgs().put("JSONFormsSchema", schemaBuilder.build());
+            String schema = schemaBuilder.build();
+            logger.info(schema);
+            elementNode.getArgs().put("JSONFormsSchema", schema);
         } catch (IOException e) {
             e.printStackTrace();
         }

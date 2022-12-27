@@ -31,6 +31,7 @@ import javax.xml.xpath.XPathFactory;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
@@ -70,6 +71,7 @@ public class BPMNModel {
     protected Set<Participant> participants = null;
     protected Set<BPMNProcess> processes = null;
     protected Set<MessageFlow> messageFlows = null;
+    protected Set<Signal> signals = null;
     protected Element collaborationElement = null;
 
     public static final String PARTICIPANT = "participant";
@@ -286,6 +288,7 @@ public class BPMNModel {
             loadParticipantList();
             loadProcessList();
             loadMessageFlowList();
+            loadSignalList();
 
         }
     }
@@ -339,6 +342,18 @@ public class BPMNModel {
         this.messageFlows = messageFlows;
     }
 
+    public Set<Signal> getSignals() {
+        if (signals == null) {
+            signals = new LinkedHashSet<Signal>();
+        }
+        return signals;
+    }
+
+    public void setSignals(Set<Signal> signals) {
+        this.signals = signals;
+    }
+
+    
     public void setProcesses(Set<BPMNProcess> processes) {
         this.processes = processes;
     }
@@ -1337,6 +1352,25 @@ public class BPMNModel {
                 Element item = (Element) messageFlowList.item(i);
                 MessageFlow messageFlow = new MessageFlow(this, item);
                 messageFlows.add(messageFlow);
+            }
+        }
+    }
+    
+
+    /**
+     * This helper method loads the Signal elements from the
+     * diagram - 'bpmn2:signal' .
+     * 
+     * @throws BPMNModelException
+     */
+    private void loadSignalList() throws BPMNModelException {
+        signals = new LinkedHashSet<Signal>();
+        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":signal");
+        if (signalNodeList != null && signalNodeList.getLength() > 0) {
+            for (int i = 0; i < signalNodeList.getLength(); i++) {
+                Element item = (Element) signalNodeList.item(i);
+                Signal signal = new Signal(this, item);
+                signals.add(signal);
             }
         }
     }
