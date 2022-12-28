@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -294,5 +296,40 @@ public abstract class AbstractBPMNElement {
     public boolean hasExtensionAttribute(String extensionNamespace, String attribute) {
         return hasAttribute(extensionNamespace + ":" + attribute);
     }
+    
+    
+
+    /**
+     * Deletes a Child Element from this element. The node is identified by its id
+     * <p>
+     * <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
+     * 
+     * @throws BPMNMissingElementException
+     */
+    public void deleteChild(String id) throws BPMNModelException {
+
+        if (this.getElementNode() == null) {
+            throw new BPMNMissingElementException("Missing ElementNode!");
+        }
+        
+        // iterate over all childs
+        NodeList childList = this.getElementNode().getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            if (child.getNodeType() == Node.ELEMENT_NODE) {
+                // check the attribute bpmnElement
+                if (!child.getNodeName().isEmpty() && child.hasAttributes()) {
+                    
+                    String defID = ((Element)child).getAttribute("id");
+                    if (id.equals(defID)) {
+                        this.getElementNode().removeChild(child);
+                    }
+                    
+                }
+            }
+        }
+  
+    }
+
 
 }

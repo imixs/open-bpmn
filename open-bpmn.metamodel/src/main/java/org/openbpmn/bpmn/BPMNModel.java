@@ -33,6 +33,7 @@ import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
@@ -134,7 +135,6 @@ public class BPMNModel {
             BPMNTypes.BOUNDARY_EVENT, //
 
             BPMNTypes.SEQUENCE_FLOW);
-    
 
     public final static List<String> BPMN_NODE_ELEMENTS = Arrays.asList(//
             BPMNTypes.TASK, //
@@ -160,7 +160,7 @@ public class BPMNModel {
 
             BPMNTypes.DATAOBJECT, //
             BPMNTypes.TEXTANNOTATION, //
-            
+
             BPMNTypes.POOL);
 
     public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
@@ -353,7 +353,6 @@ public class BPMNModel {
         this.signals = signals;
     }
 
-    
     public void setProcesses(Set<BPMNProcess> processes) {
         this.processes = processes;
     }
@@ -724,11 +723,7 @@ public class BPMNModel {
 
         return messageFlow;
     }
-    
-    
-    
-    
-    
+
     /**
      * Deletes a BPMNEdge element from this context.
      * <p>
@@ -737,12 +732,11 @@ public class BPMNModel {
      */
     public void deleteMessageFlow(String id) {
         BPMNElementEdge bpmnEdge = this.findElementEdgeById(id);
-         if (bpmnEdge == null) {
+        if (bpmnEdge == null) {
             // does not exist
             return;
         }
-         
-     
+
         String targetRef = bpmnEdge.getTargetRef();
         String soureRef = bpmnEdge.getSourceRef();
         // first we need to update the elements still connected with this flow
@@ -784,9 +778,92 @@ public class BPMNModel {
         if (bpmnEdge.getBpmnEdge() != null) {
             getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
         }
-        
+
         // finally we remove the messageFlow object form the messageFlow list
         getMessageFlows().remove(bpmnEdge);
+
+    }
+
+    /**
+     * Adds a Signal element to the diagram
+     * <p>
+     * <bpmn2:signal id="Signal_1" name="My Signal"/>
+     * 
+     * @param id
+     * @param name - name of the signal
+     * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException
+     * @throws BPMNInvalidTypeException
+     */
+    public Signal addSignal(String id, String name)
+            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
+
+        // create sequenceFlow element
+        Element bpmnEdgeElement = createElement(BPMNNS.BPMN2, BPMNTypes.SIGNAL);
+        bpmnEdgeElement.setAttribute("id", id);
+        bpmnEdgeElement.setAttribute("name", name);
+
+        // this.definitions.insertBefore( ,
+        // bpmnEdgeElement).appendChild(bpmnEdgeElement);
+        this.definitions.insertBefore(bpmnEdgeElement, this.getBpmnDiagram());
+
+        Signal signal = new Signal(this, bpmnEdgeElement);
+        getSignals().add(signal);
+
+        return signal;
+    }
+
+    /**
+     * Deletes a Signal element from this diagram.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteSignal(String id) {
+        if (id == null || id.isEmpty()) {
+            return;
+        }
+
+        Signal signal = null;
+        for (Signal _signal : getSignals()) {
+            if (id.equals(_signal.getId())) {
+                signal = _signal;
+                break;
+            }
+        }
+
+        if (signal == null) {
+            // does not exist
+            return;
+        }
+
+        // find all SignalDefinitions in Events referring this Signal ID
+        Set<Event> events = findAllEvents();
+        // test if the event has a event definition with this signal ID
+        for (Event event : events) {
+            Set<Element> definitionList = event.getEventDefinitions();
+            for (Element e : definitionList) {
+
+                if (BPMNTypes.EVENT_DEFINITION_SIGNAL.equals(e.getLocalName())) {
+                    String refID = e.getAttribute("signalRef");
+
+                    if (id.equals(refID)) {
+                        try {
+                            event.deleteEventDefinition(e.getAttribute("id"));
+                        } catch (BPMNModelException e1) {
+                            // TODO Auto-generated catch block
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+        // delete the element from teh definitions
+        this.definitions.removeChild(signal.getElementNode());
+
+        // finally we remove the signal object form the signals list
+        getSignals().remove(signal);
 
     }
 
@@ -829,6 +906,23 @@ public class BPMNModel {
 
         // no corresponding element found!
         return null;
+    }
+
+    /**
+     * Returns all Events within this model
+     * <p>
+     * If no event exists, the method returns an empty list.
+     * 
+     * @return
+     */
+    public Set<Event> findAllEvents() {
+        LinkedHashSet<Event> result = new LinkedHashSet<Event>();
+        // iterate over all processes
+        Set<BPMNProcess> processList = this.getProcesses();
+        for (BPMNProcess process : processList) {
+            result.addAll(process.getEvents());
+        }
+        return result;
     }
 
     /**
@@ -1125,7 +1219,7 @@ public class BPMNModel {
     public static boolean isDataObject(BPMNElementNode element) {
         return isDataObject(element.getElementNode());
     }
-    
+
     /**
      * Returns true if the node is a textAnnotaion node.
      * 
@@ -1355,11 +1449,10 @@ public class BPMNModel {
             }
         }
     }
-    
 
     /**
-     * This helper method loads the Signal elements from the
-     * diagram - 'bpmn2:signal' .
+     * This helper method loads the Signal elements from the diagram -
+     * 'bpmn2:signal' .
      * 
      * @throws BPMNModelException
      */

@@ -11,6 +11,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNDimension;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -59,7 +60,7 @@ public class TestSignal {
     }
 
     /**
-     * This test creates a signal event
+     * This test creates a signal element
      */
     @Test
     public void testCreateSignal() {
@@ -78,9 +79,11 @@ public class TestSignal {
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 
-            // create catch event
-
-            defaultProcess.addEvent("event-1", "Signal Event 1", BPMNTypes.CATCH_EVENT);
+            // create signal
+            model.addSignal("signal_1", "My Signal");
+            // read signal
+            assertEquals(1, model.getSignals().size());
+            
         } catch (BPMNModelException e) {
 
             e.printStackTrace();
@@ -92,5 +95,88 @@ public class TestSignal {
 
       
     }
+
+    
+    /**
+     * This test creates a signal definition to an existing event.
+     * We expect that the signal is created automatically. 
+     */
+    @Test
+    public void testCreateSignalDefinition() {
+        BPMNModel model=null;
+        String out = "src/test/resources/output/create_signal_event2.bpmn";
+        try {
+            logger.info("...create empty model");
+
+            String exporter = "demo";
+            String version = "1.0.0";
+            String targetNameSpace = "http://org.openbpmn";
+             model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
+            assertNotNull(model);
+
+            BPMNProcess defaultProcess = model.openDefaultProcess();
+            assertNotNull(defaultProcess);
+            assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
+
+            // create catch event
+            Event event = defaultProcess.addEvent("event-1", "Signal Event 1", BPMNTypes.CATCH_EVENT);
+            
+            // add definition
+            event.addEventDefinition(BPMNTypes.EVENT_DEFINITION_SIGNAL);
+            
+            // we expect that we have now 1 new Signal in the definition list
+
+            assertEquals(1, model.getSignals().size());
+            
+        } catch (BPMNModelException e) {
+
+            e.printStackTrace();
+            fail();
+        }
+
+        model.save(out);
+        logger.info("...model created sucessful: " + out);
+
+      
+    }
+    
+    
+    /**
+     * This test parses a bpmn file and removes singnal_1 which is referred by an event
+     */
+    @Test
+    public void testDeleteSignal() {
+        BPMNModel model = null;
+        String out = "src/test/resources/output/create_signal_event3.bpmn";
+        logger.info("...read model");
+        try {
+            model = BPMNModelFactory.read("/refmodel-10.bpmn");
+           
+            logger.info("...read model");
+
+            // read tasks....
+            BPMNProcess process = model.openProcess(null);
+            assertNotNull(process);
+
+            // remove signal
+            Signal signal=model.getSignals().iterator().next();
+            assertNotNull(signal);
+            
+            model.deleteSignal(signal.getId());
+             // read signal
+            assertEquals(0, model.getSignals().size());
+            
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+
+        model.save(out);
+        logger.info("...model update sucessful: " + out);
+
+    }
+
 
 }
