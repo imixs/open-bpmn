@@ -22,8 +22,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -170,35 +173,36 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 // find all Signal definitions of this event
                 List<Element> signalEventDefinitions = eventDefinitions.stream()
                         .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
-
-                // If the size of the singnalDataList is not equals the size of the known
-                // eventSignalDefinitions we print a warning
-                if (eventDefinitions.size() != signalDataList.size()) {
-                    logger.warn("signalDataList does not match the signalEventDefinition list!");
-                }
-                // just update the values one by one by refering to the signalRef id by
-                // comparing the name
-                for (int i = 0; i < eventDefinitions.size(); i++) {
-                    Element eventDefinitionElement = signalEventDefinitions.get(i);
-                    JsonObject jsonData = signalDataList.getJsonObject(i); // .get(i);
-                    if (jsonData != null) {
-                        String signalName = jsonData.getString("signal");
-                        logger.info("signal=" + signalName);
-                        try {
-                            Signal signal = modelState.getBpmnModel().findSignalByName(signalName);
-                            eventDefinitionElement.setAttribute("signalRef", signal.getId());
-                        } catch (BPMNInvalidReferenceException | BPMNMissingElementException
-                                | BPMNInvalidTypeException e) {
-
-                            e.printStackTrace();
-                        }
-                    }
-                    // update completed
-                }
-
+                updateSignalEventDefinitions(signalEventDefinitions, signalDataList);
             }
         }
 
+    }
+
+    private void updateSignalEventDefinitions(final List<Element> eventDefinitions, final JsonArray signalDataList) {
+        // If the size of the singnalDataList is not equals the size of the known
+        // eventSignalDefinitions we print a warning
+        if (eventDefinitions.size() != signalDataList.size()) {
+            logger.warn("signalDataList does not match the signalEventDefinition list!");
+        }
+        // just update the values one by one by reffering to the signalRef id by
+        // comparing the name
+        for (int i = 0; i < eventDefinitions.size(); i++) {
+            Element eventDefinitionElement = eventDefinitions.get(i);
+            JsonObject jsonData = signalDataList.getJsonObject(i); // .get(i);
+            if (jsonData != null) {
+                String signalName = jsonData.getString("signal");
+                logger.info("signal=" + signalName);
+                try {
+                    Signal signal = modelState.getBpmnModel().findSignalByName(signalName);
+                    eventDefinitionElement.setAttribute("signalRef", signal.getId());
+                } catch (BPMNInvalidReferenceException | BPMNMissingElementException | BPMNInvalidTypeException e) {
+
+                    e.printStackTrace();
+                }
+            }
+            // update completed
+        }
     }
 
     /**
@@ -213,18 +217,35 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
         if (eventDefinitions.size() > 0) {
 
-            Map<String, String> multilineOption = new HashMap<>();
-            multilineOption.put("multi", "true");
-
-            Map<String, String> arrayDetailOption = new HashMap<>();
-            // GENERATED HorizontalLayout
-            arrayDetailOption.put("detail", "GENERATED");
-
+            // build a custom detail UISchema to display fields like expression as a
+            // Textarea
             uiSchemaBuilder. //
                     addCategory("Conditions"). //
                     addLayout(Layout.VERTICAL);
-            uiSchemaBuilder.addElement("conditions", "Conditions", arrayDetailOption);
 
+            JsonObject multilineOption = Json.createObjectBuilder() //
+                    .add("multi", true).build();
+            JsonObjectBuilder layoutBuilder = Json.createObjectBuilder().add("type", "VerticalLayout");
+            JsonArrayBuilder controlsArrayBuilder = Json.createArrayBuilder();
+            controlsArrayBuilder //
+                    .add(Json.createObjectBuilder() //
+                            .add("type", "Control") //
+                            .add("scope", "#/properties/language"))//
+                    .add(Json.createObjectBuilder() //
+                            .add("type", "Control") //
+                            .add("scope", "#/properties/expression") //
+                            .add("label", "Expression") //
+                            .add("options", multilineOption) //
+                    );
+            layoutBuilder.add("elements", controlsArrayBuilder);
+            JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
+                    add("detail", layoutBuilder.build());
+
+            uiSchemaBuilder.addElementWithOptions("conditions", "Conditions", detailBuilder.build());
+
+            /*
+             * Add the Schema ....
+             */
             schemaBuilder.addArray("conditions");
             schemaBuilder.addProperty("language", "string", null, null);
             schemaBuilder.addProperty("expression", "string", null, null);
@@ -271,6 +292,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             int i = 0;
             for (Signal bpmnSignal : bpmnSignals) {
                 signalOptions[i] = bpmnSignal.getName();
+                i++;
                 // signalOptions[i] = bpmnSignal.getId() + "|" + bpmnSignal.getName();
             }
             schemaBuilder.addProperty("signal", "string", null, signalOptions);
@@ -286,8 +308,12 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 String signalRefID = definition.getAttribute("signalRef");
                 // fetch the corresponding Signal
                 Signal bpmnSignal = (Signal) modelState.getBpmnModel().findElementById(signalRefID);
+                if (bpmnSignal != null) {
+                    dataBuilder.addData("signal", bpmnSignal.getName());
+                } else {
+                    logger.warn("invalid signalRefID found: " + signalRefID);
+                }
 
-                dataBuilder.addData("signal", bpmnSignal.getName());
             }
         }
 

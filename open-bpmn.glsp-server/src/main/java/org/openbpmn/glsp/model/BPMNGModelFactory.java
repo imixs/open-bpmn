@@ -235,7 +235,7 @@ public class BPMNGModelFactory implements GModelFactory {
         rootBuilder.addAll(gRootNodeList);
         GGraph newGModel = rootBuilder.build();
         // finally add the root extensions
-        applyBPMNExtensions(newGModel, null);
+        applyBPMNExtensions(newGModel, model.openDefaultProcess());
 
         return newGModel;
     }
