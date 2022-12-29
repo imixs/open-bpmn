@@ -1,7 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.w3c.dom.Element;
 
 /**
@@ -15,7 +15,7 @@ import org.w3c.dom.Element;
  * 
  * @author rsoika
  */
-public class Signal extends AbstractBPMNElement {
+public class Signal extends BPMNElement {
     protected String type = null;
  
 

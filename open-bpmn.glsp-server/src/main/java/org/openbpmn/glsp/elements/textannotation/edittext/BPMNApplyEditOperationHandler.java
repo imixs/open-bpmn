@@ -27,7 +27,7 @@ import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.TextAnnotation;
-import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -72,7 +72,7 @@ public class BPMNApplyEditOperationHandler extends AbstractOperationHandler<Appl
         }
 
         // resolve the corresponding BPMN Element
-        AbstractBPMNElement bpmnElement = resolveBPMNElement(operation);
+        BPMNElement bpmnElement = resolveBPMNElement(operation);
         if (bpmnElement != null) {
 
             // For TextAnnotation we need to updat the 'text' argument on the gNode
@@ -110,8 +110,8 @@ public class BPMNApplyEditOperationHandler extends AbstractOperationHandler<Appl
      * @param operation
      * @return
      */
-    private AbstractBPMNElement resolveBPMNElement(final ApplyLabelEditOperation operation) {
-        AbstractBPMNElement result = null;
+    private BPMNElement resolveBPMNElement(final ApplyLabelEditOperation operation) {
+        BPMNElement result = null;
         String labelId = operation.getLabelId();
         String elementID = null;
 

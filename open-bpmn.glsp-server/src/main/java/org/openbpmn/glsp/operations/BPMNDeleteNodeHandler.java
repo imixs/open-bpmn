@@ -26,7 +26,7 @@ import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
-import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -59,7 +59,7 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             }
 
             // find the bpmnBaseElement
-            AbstractBPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
+            BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
             if (bpmnElement == null) {
                 logger.warning("...no BPMN elmenet with id: " + id + " found!");
                 continue;

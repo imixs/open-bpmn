@@ -27,7 +27,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.TextAnnotation;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -63,7 +63,7 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
      * This Extension is for BPMNActivities only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
         return (bpmnElement instanceof TextAnnotation);
     }
 
@@ -73,7 +73,7 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         if (!(bpmnElement instanceof TextAnnotation)) {
@@ -105,7 +105,7 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         if (!(bpmnElement instanceof TextAnnotation)) {

@@ -30,10 +30,10 @@ import javax.json.JsonValue;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
@@ -72,7 +72,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
      * This Extension is for BPMNActivities only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
         return (bpmnElement instanceof Participant);
     }
 
@@ -82,7 +82,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
@@ -176,7 +176,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         long l = System.currentTimeMillis();

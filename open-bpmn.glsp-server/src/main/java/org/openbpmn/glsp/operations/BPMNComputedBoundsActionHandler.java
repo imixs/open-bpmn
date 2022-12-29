@@ -28,7 +28,7 @@ import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
-import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -58,7 +58,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
         try {
             for (ElementAndRoutingPoints routingInfo : routings) {
                 String id = routingInfo.getElementId();
-                AbstractBPMNElement element = modelState.getBpmnModel().findElementById(id);
+                BPMNElement element = modelState.getBpmnModel().findElementById(id);
                 // do we have a BPMNSequenceFlow ?
                 if (element != null && element instanceof BPMNElementEdge) {
                     BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;

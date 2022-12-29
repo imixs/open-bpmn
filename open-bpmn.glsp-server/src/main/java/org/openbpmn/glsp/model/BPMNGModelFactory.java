@@ -54,6 +54,7 @@ import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -234,7 +235,7 @@ public class BPMNGModelFactory implements GModelFactory {
         rootBuilder.addAll(gRootNodeList);
         GGraph newGModel = rootBuilder.build();
         // finally add the root extensions
-        // applyBPMNExtensions(newGModel, model.openDefaultProcess());
+        applyBPMNExtensions(newGModel, null);
 
         return newGModel;
     }
@@ -246,7 +247,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param elementNode
      * @param bpmnElement
      */
-    void applyBPMNExtensions(final GModelElement elementNode, final BPMNElementNode bpmnElement) {
+    void applyBPMNExtensions(final GModelElement elementNode, final BPMNElement bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);

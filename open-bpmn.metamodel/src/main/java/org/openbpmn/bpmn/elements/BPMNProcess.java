@@ -7,7 +7,7 @@ import java.util.Set;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -39,7 +39,7 @@ import org.w3c.dom.NodeList;
  * @author rsoika
  *
  */
-public class BPMNProcess extends AbstractBPMNElement {
+public class BPMNProcess extends BPMNElement {
 
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<Activity> activities = null;
@@ -964,8 +964,8 @@ public class BPMNProcess extends AbstractBPMNElement {
      * or an Edge
      * 
      */
-    public AbstractBPMNElement findElementById(String id) {
-        AbstractBPMNElement result = null;
+    public BPMNElement findElementById(String id) {
+        BPMNElement result = null;
         result = findElementNodeById(id);
         if (result != null) {
             // Node Element found

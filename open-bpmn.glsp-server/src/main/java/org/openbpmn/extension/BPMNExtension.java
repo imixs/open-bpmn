@@ -18,7 +18,7 @@ package org.openbpmn.extension;
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -77,25 +77,25 @@ public interface BPMNExtension {
     boolean handlesElementTypeId(String elementTypeId);
 
     /**
-     * Validates whether the given {@link BPMNElementNode} can be handled by this
-     * BPMN extension. The default implementation returns true. Implementations can
+     * Validates whether the given {@link BPMNElement} can be handled by this BPMN
+     * extension. The default implementation returns true. Implementations can
      * accept only specific BPMN element types or elements containing specific BPMN
      * 2.0 extensions.
      *
      * @param bpmnElement The BPMNBaseElement that should be handled.
      * @return `true` if the given bpmnElement can be handled by this extension.
      */
-    default boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    default boolean handlesBPMNElement(final BPMNElement bpmnElement) {
         return true;
     }
 
     /**
      * Returns the priority of this action handler. The priority is used to derive
      * the execution order if multiple extension handlers should execute the same
-     * {@link BPMNElementNode}. The default priority is `0` and the priority is
-     * sorted descending. This means handlers with a priority &gt; 0 are executed
-     * before handlers with a default priority and handlers with a priority &lt; 0
-     * are executed afterwards.
+     * {@link BPMNElement}. The default priority is `0` and the priority is sorted
+     * descending. This means handlers with a priority &gt; 0 are executed before
+     * handlers with a default priority and handlers with a priority &lt; 0 are
+     * executed afterwards.
      *
      * @return the priority as integer.
      */
@@ -108,7 +108,7 @@ public interface BPMNExtension {
      *
      * @param bpmnElement
      */
-    void addExtension(BPMNElementNode bpmnElement);
+    void addExtension(BPMNElement bpmnElement);
 
     /**
      * This Helper Method is called to generate a JSON Forms Object by adding the
@@ -130,7 +130,7 @@ public interface BPMNExtension {
      * JsonForms
      *
      */
-    void buildPropertiesForm(BPMNElementNode bpmnElement, DataBuilder dataBuilder, SchemaBuilder schemaBuilder,
+    void buildPropertiesForm(BPMNElement bpmnElement, DataBuilder dataBuilder, SchemaBuilder schemaBuilder,
             UISchemaBuilder uiSchemaBuilder);
 
     /**
@@ -143,6 +143,6 @@ public interface BPMNExtension {
      * @param bpmnElement  - the BPMN element to be updated
      * @param gNodeElement - the GModelElement element
      */
-    void updatePropertiesData(JsonObject json, BPMNElementNode bpmnElement, GModelElement gNodeElement);
+    void updatePropertiesData(JsonObject json, BPMNElement bpmnElement, GModelElement gNodeElement);
 
 }

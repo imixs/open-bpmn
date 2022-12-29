@@ -26,7 +26,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -78,7 +78,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      * attribute is added in the 'addExtesnion' method call
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
 
         if (bpmnElement instanceof Activity) {
             Activity task = (Activity) bpmnElement;
@@ -105,7 +105,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      * This method adds a unique identifier to the corresponding BPMNElement
      */
     @Override
-    public void addExtension(final BPMNElementNode bpmnElement) {
+    public void addExtension(final BPMNElement bpmnElement) {
         if (bpmnElement instanceof Activity) {
             bpmnElement.setExtensionAttribute(getNamespace(), "processid", "100");
         }
@@ -121,7 +121,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
@@ -145,7 +145,7 @@ public class ImixsBPMNTaskExtension implements BPMNExtension {
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // check custom features

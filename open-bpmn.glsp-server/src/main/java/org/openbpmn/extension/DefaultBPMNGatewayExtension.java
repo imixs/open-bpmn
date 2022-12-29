@@ -27,7 +27,7 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.Gateway;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -65,7 +65,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
      * This Extension is for BPMNGateways only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
         return (bpmnElement instanceof Gateway);
     }
 
@@ -75,7 +75,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder. //
@@ -107,7 +107,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         Set<String> features = json.keySet();

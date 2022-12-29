@@ -26,6 +26,7 @@ import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
@@ -61,7 +62,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
      * This Extension is for BPMNActivities only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
         return (bpmnElement instanceof DataObject);
     }
 
@@ -71,7 +72,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
      * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
-    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder //
@@ -94,7 +95,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // default update of name and documentation
@@ -115,7 +116,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
                 continue;
             }
             if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(json.getString(feature));
+                ((BPMNElementNode) bpmnElement).setDocumentation(json.getString(feature));
                 continue;
             }
 

@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
  * 
  * @author rsoika
  */
-public abstract class BPMNElementNode extends AbstractBPMNElement {
+public abstract class BPMNElementNode extends BPMNElement {
     protected String type = null;
     protected BPMNProcess bpmnProcess = null;
     protected BPMNLabel label = null;
@@ -67,23 +67,7 @@ public abstract class BPMNElementNode extends AbstractBPMNElement {
         }
     }
 
-    /**
-     * Returns the Documentation
-     * 
-     * @return String - can be empty
-     */
-    public String getDocumentation() {
-        return this.getChildNodeContent("documentation");
-    }
-
-    /**
-     * Set the new documentation content for this element.
-     * 
-     * @param content
-     */
-    public void setDocumentation(String content) {
-        this.setChildNodeContent("documentation", content);
-    }
+   
 
     /**
      * Returns the BPMNShape bounds.

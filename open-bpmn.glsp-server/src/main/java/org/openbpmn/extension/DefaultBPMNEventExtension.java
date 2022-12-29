@@ -20,16 +20,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.Signal;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -48,7 +54,8 @@ import com.google.inject.Inject;
  *
  */
 public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
-    private static Logger logger = Logger.getLogger(DefaultBPMNEventExtension.class.getName());
+    private static Logger logger = LogManager.getLogger(DefaultBPMNEventExtension.class);
+
     @Inject
     protected BPMNGModelState modelState;
 
@@ -68,7 +75,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      * This Extension is for BPMNEvents only
      */
     @Override
-    public boolean handlesBPMNElement(final BPMNElementNode bpmnElement) {
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
         return (bpmnElement instanceof Event);
     }
 
@@ -83,7 +90,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      * definitions of the same type.
      */
     @Override
-    public void buildPropertiesForm(final BPMNElementNode bpmnElement, final DataBuilder dataBuilder,
+    public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         dataBuilder. //
@@ -98,6 +105,8 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
+        Map<String, String> radioOption = new HashMap<>();
+        radioOption.put("format", "radio");
 
         uiSchemaBuilder. //
                 addCategory("General"). //
@@ -124,6 +133,75 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     }
 
     /**
+     * Builds the different property tabs for the core attributes and the event
+     * definitions
+     */
+    @Override
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+            final GModelElement gNodeElement) {
+
+        Event bpmnEvent = (Event) bpmnElement;
+        Set<String> features = json.keySet();
+        for (String feature : features) {
+
+            if ("name".equals(feature)) {
+                bpmnElement.setName(json.getString(feature));
+                // Update Label...
+                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
+                if (!label.isEmpty()) {
+                    LabelGNode lgn = (LabelGNode) label.get();
+
+                    GLabel glabel = BPMNBuilderHelper.findCompartmentHeader((lgn));
+                    if (glabel != null) {
+                        glabel.setText(json.getString(feature));
+                    }
+                }
+                continue;
+            }
+            if ("documentation".equals(feature)) {
+                bpmnElement.setDocumentation(json.getString(feature));
+                continue;
+            }
+
+            // Update eventDefinitions...
+            Set<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
+            if ("signals".equals(feature)) {
+                JsonArray signalDataList = json.getJsonArray("signals");
+                // find all Signal definitions of this event
+                List<Element> signalEventDefinitions = eventDefinitions.stream()
+                        .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+
+                // If the size of the singnalDataList is not equals the size of the known
+                // eventSignalDefinitions we print a warning
+                if (eventDefinitions.size() != signalDataList.size()) {
+                    logger.warn("signalDataList does not match the signalEventDefinition list!");
+                }
+                // just update the values one by one by refering to the signalRef id by
+                // comparing the name
+                for (int i = 0; i < eventDefinitions.size(); i++) {
+                    Element eventDefinitionElement = signalEventDefinitions.get(i);
+                    JsonObject jsonData = signalDataList.getJsonObject(i); // .get(i);
+                    if (jsonData != null) {
+                        String signalName = jsonData.getString("signal");
+                        logger.info("signal=" + signalName);
+                        try {
+                            Signal signal = modelState.getBpmnModel().findSignalByName(signalName);
+                            eventDefinitionElement.setAttribute("signalRef", signal.getId());
+                        } catch (BPMNInvalidReferenceException | BPMNMissingElementException
+                                | BPMNInvalidTypeException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+                    // update completed
+                }
+
+            }
+        }
+
+    }
+
+    /**
      * Adds the ConditionalEvent definitions
      *
      * @param eventDefinitions
@@ -134,6 +212,10 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     private void addConditionalEventDefinitions(final List<Element> eventDefinitions, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
         if (eventDefinitions.size() > 0) {
+
+            Map<String, String> multilineOption = new HashMap<>();
+            multilineOption.put("multi", "true");
+
             Map<String, String> arrayDetailOption = new HashMap<>();
             // GENERATED HorizontalLayout
             arrayDetailOption.put("detail", "GENERATED");
@@ -142,12 +224,10 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                     addCategory("Conditions"). //
                     addLayout(Layout.VERTICAL);
             uiSchemaBuilder.addElement("conditions", "Conditions", arrayDetailOption);
-            // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
 
             schemaBuilder.addArray("conditions");
-            schemaBuilder.addProperty("formalExpression", "string", null, null);
             schemaBuilder.addProperty("language", "string", null, null);
-            schemaBuilder.addProperty("condition", "string", null, null);
+            schemaBuilder.addProperty("expression", "string", null, null);
 
             /*
              * Now we can create the data structure - each conditionalEventDefinition is
@@ -156,9 +236,8 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             dataBuilder.addArray("conditions");
             for (Element definition : eventDefinitions) {
                 dataBuilder.addObject();
-                dataBuilder.addData("formalExpression", "...some expression...");
                 dataBuilder.addData("language", "java");
-                dataBuilder.addData("condition", "blue");
+                dataBuilder.addData("expression", "blue");
             }
         }
     }
@@ -185,16 +264,30 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
 
             schemaBuilder.addArray("signals");
-            schemaBuilder.addProperty("Signal", "string", null, null);
+
+            // find all signals in the current model and build an array...
+            Set<Signal> bpmnSignals = modelState.getBpmnModel().getSignals();
+            String[] signalOptions = new String[bpmnSignals.size()];
+            int i = 0;
+            for (Signal bpmnSignal : bpmnSignals) {
+                signalOptions[i] = bpmnSignal.getName();
+                // signalOptions[i] = bpmnSignal.getId() + "|" + bpmnSignal.getName();
+            }
+            schemaBuilder.addProperty("signal", "string", null, signalOptions);
+            // schemaBuilder.addPropertyOneOf("signal", "string", null, signalOptions);
 
             /*
-             * Now we can create the data structure - each conditionalEventDefinition is
-             * represented as a separate object
+             * Now we can create the data structure - each signalEventDefinition is
+             * represented as a separate object. We resolve the signalRef
              */
             dataBuilder.addArray("signals");
             for (Element definition : eventDefinitions) {
                 dataBuilder.addObject();
-                dataBuilder.addData("signal", "org.imixs.foo...");
+                String signalRefID = definition.getAttribute("signalRef");
+                // fetch the corresponding Signal
+                Signal bpmnSignal = (Signal) modelState.getBpmnModel().findElementById(signalRefID);
+
+                dataBuilder.addData("signal", bpmnSignal.getName());
             }
         }
 
@@ -219,56 +312,22 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                     addCategory("Link"). //
                     addLayout(Layout.VERTICAL);
             uiSchemaBuilder.addElement("links", "Links", arrayDetailOption);
-            // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
 
             schemaBuilder.addArray("links");
-            schemaBuilder.addProperty("Name", "string", null, null);
-            schemaBuilder.addProperty("Target", "string", null, null);
+            schemaBuilder.addProperty("name", "string", null, null);
+            schemaBuilder.addProperty("target", "string", null, null);
 
             /*
              * Now we can create the data structure - each conditionalEventDefinition is
              * represented as a separate object
              */
             dataBuilder.addArray("links");
-            logger.warning(" addLinkEventDefinitions not yet implemented");
+            logger.warn(" addLinkEventDefinitions not yet implemented");
             for (Element definition : eventDefinitions) {
                 dataBuilder.addObject();
-                dataBuilder.addData("name", "MY_LINK");
+                dataBuilder.addData("name", definition.getAttribute("name"));
                 dataBuilder.addData("target", "some target");
             }
-        }
-
-    }
-
-    @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElementNode bpmnElement,
-            final GModelElement gNodeElement) {
-
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-
-            if ("name".equals(feature)) {
-                bpmnElement.setName(json.getString(feature));
-                // Update Label...
-                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
-                if (!label.isEmpty()) {
-                    LabelGNode lgn = (LabelGNode) label.get();
-
-                    GLabel glabel = BPMNBuilderHelper.findCompartmentHeader((lgn));
-                    if (glabel != null) {
-                        glabel.setText(json.getString(feature));
-                    }
-                }
-                continue;
-            }
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(json.getString(feature));
-                continue;
-            }
-
-            logger.fine("...update feature = " + feature);
-
-            // TODO implement Event features
         }
 
     }

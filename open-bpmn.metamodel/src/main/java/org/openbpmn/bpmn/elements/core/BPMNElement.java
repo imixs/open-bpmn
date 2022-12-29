@@ -16,14 +16,14 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * The AbstractBPMNElement is the abstract super class for all BPMN Nodes and
- * Edges. It provides a list of attributes with at least an id. Other element
- * types can extend the attribute list.
+ * BPMNElement is the abstract super class for all BPMN elements including
+ * Nodes, Edges and processes. It provides a list of attributes with at least an
+ * id. Other element types can extend the attribute list.
  * <p>
  * 
  * @author rsoika
  */
-public abstract class AbstractBPMNElement {
+public abstract class BPMNElement {
     protected NamedNodeMap attributeMap = null;
     protected Element elementNode = null;
     protected BPMNModel model = null;
@@ -36,7 +36,7 @@ public abstract class AbstractBPMNElement {
      * @param node
      * @param model
      */
-    public AbstractBPMNElement(BPMNModel model, Element node) {
+    public BPMNElement(BPMNModel model, Element node) {
         super();
         this.model = model;
         this.elementNode = node;
@@ -108,6 +108,24 @@ public abstract class AbstractBPMNElement {
     }
 
     /**
+     * Returns the Documentation
+     * 
+     * @return String - can be empty
+     */
+    public String getDocumentation() {
+        return this.getChildNodeContent("documentation");
+    }
+
+    /**
+     * Set the new documentation content for this element.
+     * 
+     * @param content
+     */
+    public void setDocumentation(String content) {
+        this.setChildNodeContent("documentation", content);
+    }
+    
+    /**
      * Set the new childNode with a given content for this element in a CDATA
      * element.
      * <p>
@@ -132,10 +150,6 @@ public abstract class AbstractBPMNElement {
                 Node child = subChildList.item(i);
                 childNode.removeChild(child);
             }
-
-//            if (id != null && !id.isEmpty()) {
-//                childNode.setAttribute("id", id);
-//            }
 
             CDATASection cdata = getDoc().createCDATASection(content);
             childNode.appendChild(cdata);
@@ -296,8 +310,6 @@ public abstract class AbstractBPMNElement {
     public boolean hasExtensionAttribute(String extensionNamespace, String attribute) {
         return hasAttribute(extensionNamespace + ":" + attribute);
     }
-    
-    
 
     /**
      * Deletes a Child Element from this element. The node is identified by its id
@@ -311,7 +323,7 @@ public abstract class AbstractBPMNElement {
         if (this.getElementNode() == null) {
             throw new BPMNMissingElementException("Missing ElementNode!");
         }
-        
+
         // iterate over all childs
         NodeList childList = this.getElementNode().getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
@@ -319,17 +331,16 @@ public abstract class AbstractBPMNElement {
             if (child.getNodeType() == Node.ELEMENT_NODE) {
                 // check the attribute bpmnElement
                 if (!child.getNodeName().isEmpty() && child.hasAttributes()) {
-                    
-                    String defID = ((Element)child).getAttribute("id");
+
+                    String defID = ((Element) child).getAttribute("id");
                     if (id.equals(defID)) {
                         this.getElementNode().removeChild(child);
                     }
-                    
+
                 }
             }
         }
-  
-    }
 
+    }
 
 }

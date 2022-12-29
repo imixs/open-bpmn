@@ -28,13 +28,13 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Signal;
-import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.core.AbstractBPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -812,6 +812,30 @@ public class BPMNModel {
 
         return signal;
     }
+    
+    /**
+     * Finds a Signal element by name withing the diagram
+     * <p>
+     * <bpmn2:signal id="Signal_1" name="My Signal"/>
+     * 
+     * @param name - name of the signal
+     * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException
+     * @throws BPMNInvalidTypeException
+     */
+    public Signal findSignalByName( String name)
+            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
+
+        if (name==null || name.isEmpty()) {
+            return null;
+        }
+        for (Signal signal:signals) {
+            if (name.equals(signal.getName())) {
+                return signal;
+            }
+        }        
+        return null;
+    }
 
     /**
      * Deletes a Signal element from this diagram.
@@ -829,6 +853,7 @@ public class BPMNModel {
             if (id.equals(_signal.getId())) {
                 signal = _signal;
                 break;
+                
             }
         }
 
@@ -877,9 +902,16 @@ public class BPMNModel {
      * @param id - the BPMN Element id
      * @return
      */
-    public AbstractBPMNElement findElementById(String id) {
+    public BPMNElement findElementById(String id) {
         if (id == null || id.isEmpty()) {
             return null;
+        }
+        
+        // test signals...
+        for (Signal signal: signals) {
+            if (id.equals(signal.getId())) {
+                return signal;
+            }
         }
 
         // test for participant...
@@ -897,7 +929,7 @@ public class BPMNModel {
 
             } else {
                 // analyze the content of the process
-                AbstractBPMNElement baseElement = process.findElementById(id);
+                BPMNElement baseElement = process.findElementById(id);
                 if (baseElement != null) {
                     return baseElement;
                 }
@@ -936,7 +968,7 @@ public class BPMNModel {
      */
     public BPMNElementNode findElementNodeById(String id) {
 
-        AbstractBPMNElement result = this.findElementById(id);
+        BPMNElement result = this.findElementById(id);
         if (result != null && result instanceof BPMNElementNode) {
             return (BPMNElementNode) result;
         }
@@ -956,7 +988,7 @@ public class BPMNModel {
      */
     public BPMNElementEdge findElementEdgeById(String id) {
 
-        AbstractBPMNElement result = this.findElementById(id);
+        BPMNElement result = this.findElementById(id);
         if (result != null && result instanceof BPMNElementEdge) {
             return (BPMNElementEdge) result;
         }

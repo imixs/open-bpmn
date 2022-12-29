@@ -24,7 +24,7 @@ import org.w3c.dom.NodeList;
  * 
  * @author rsoika
  */
-public abstract class BPMNElementEdge extends AbstractBPMNElement {
+public abstract class BPMNElementEdge extends BPMNElement {
     private static Logger logger = Logger.getLogger(BPMNElementEdge.class.getName());
     protected String type = null;
     
