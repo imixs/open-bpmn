@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.dataobject;
+package org.openbpmn.glsp.elements.data;
 
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -27,7 +27,7 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
  * BPMN 2.0 Data Object Element.
  * <p>
  * The method builds a GNode from a BPMNDataObject element. The builder is
- * called from the method createGModelFromProcess of the BPMNGModelFactory.
+ * called from the BPMNGModelFactory.
  *
  * @author rsoika
  *

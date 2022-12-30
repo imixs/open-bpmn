@@ -25,6 +25,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -58,7 +59,7 @@ public class BPMNCreateTextAnnotationHandler extends CreateBPMNNodeOperationHand
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateTextAnnotationHandler() {
-        super(BPMNModel.TEXTANNOTATION);
+        super(BPMNTypes.TEXTANNOTATION);
     }
 
     @Override

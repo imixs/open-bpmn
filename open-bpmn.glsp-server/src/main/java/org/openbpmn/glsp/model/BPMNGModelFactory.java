@@ -71,7 +71,7 @@ import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
-import org.openbpmn.glsp.elements.dataobject.DataObjectGNodeBuilder;
+import org.openbpmn.glsp.elements.data.DataObjectGNodeBuilder;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;

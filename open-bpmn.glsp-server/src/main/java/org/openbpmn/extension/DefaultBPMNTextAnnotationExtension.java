@@ -25,7 +25,7 @@ import javax.json.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
@@ -56,7 +56,7 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNModel.TEXTANNOTATION.equals(elementTypeId);
+        return BPMNTypes.TEXTANNOTATION.equals(elementTypeId);
     }
 
     /**

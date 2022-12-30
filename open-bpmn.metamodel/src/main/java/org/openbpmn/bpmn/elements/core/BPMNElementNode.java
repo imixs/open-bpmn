@@ -203,7 +203,7 @@ public abstract class BPMNElementNode extends BPMNElement {
      * @return
      */
     public boolean isEvent() {
-        for (String eventType : BPMNModel.BPMN_EVENTS) {
+        for (String eventType : BPMNTypes.BPMN_EVENTS) {
             if (eventType.equals(type)) {
                 return true;
             }
@@ -217,7 +217,7 @@ public abstract class BPMNElementNode extends BPMNElement {
      * @return
      */
     public boolean isGateway() {
-        for (String gateWayType : BPMNModel.BPMN_GATEWAYS) {
+        for (String gateWayType : BPMNTypes.BPMN_GATEWAYS) {
             if (gateWayType.equals(type)) {
                 return true;
             }

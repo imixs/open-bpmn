@@ -231,15 +231,22 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
      */
     protected List<PaletteItem> createPaletteDataItems() {
 
+        // Add DataObject
         List<PaletteItem> result = new ArrayList<>();
         PaletteItem item = new PaletteItem(BPMNTypes.DATAOBJECT, "Data Object",
                 new TriggerNodeCreationAction(BPMNTypes.DATAOBJECT));
         item.setSortString("A");
         result.add(item);
 
+        // Add Message
+        item = new PaletteItem(BPMNTypes.MESSAGE, "Message", new TriggerNodeCreationAction(BPMNTypes.MESSAGE));
+        item.setSortString("B");
+        result.add(item);
+
+        // Add TextAnnotation
         item = new PaletteItem(BPMNTypes.TEXTANNOTATION, "Text Annotation",
                 new TriggerNodeCreationAction(BPMNTypes.TEXTANNOTATION));
-        item.setSortString("B");
+        item.setSortString("C");
         result.add(item);
 
         return result;

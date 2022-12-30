@@ -32,7 +32,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
@@ -71,7 +71,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
      */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNModel.BPMN_EVENTS.contains(elementTypeId);
+        return BPMNTypes.BPMN_EVENTS.contains(elementTypeId);
     }
 
     /**

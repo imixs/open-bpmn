@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.dataobject;
+package org.openbpmn.glsp.elements.data;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +26,9 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -38,14 +38,14 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * The BPMNCreateDataObjectHandler is a GLSP CreateNodeOperation bound to the
- * DiagramModule and called when ever a BPMNDataObject is newly created within
- * the model.
+ * The BPMNCreateMessageHandler is a GLSP CreateNodeOperation bound to the
+ * DiagramModule and called when ever a BPMN Message is newly created within the
+ * model.
  *
  * @author rsoika
  *
  */
-public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler {
+public class BPMNCreateMessageHandler extends CreateBPMNNodeOperationHandler {
 
     private static Logger logger = LogManager.getLogger(BPMNCreateGatewayHandler.class);
 
@@ -62,8 +62,8 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
      * <p>
      * We use this constructor to overwrite the handledElementTypeIds
      */
-    public BPMNCreateDataObjectHandler() {
-        super(BPMNModel.DATAOBJECT);
+    public BPMNCreateMessageHandler() {
+        super(BPMNTypes.MESSAGE);
     }
 
     @Override
@@ -71,44 +71,41 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
 
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
-        String dataObjectID = BPMNModel.generateShortID("dataObject"); // "dataObject-" + BPMNModel.generateShortID();
-        logger.debug("createNode dataObjectID=" + dataObjectID);
+        String messageID = BPMNModel.generateShortID("message");
+        logger.debug("createNode messageID=" + messageID);
         try {
-            // find the process - either the default process for Root container or the
-            // corresponding participant process
-            BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
-            DataObject dataObject = bpmnProcess.addDataObject(dataObjectID, getLabel());
+            Message message = modelState.getBpmnModel().addMessage(messageID, getLabel());
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 double elementX = point.get().getX();
                 double elementY = point.get().getY();
                 // compute relative center position...
-                elementX = elementX - (DataObject.DEFAULT_WIDTH / 2);
-                elementY = elementY - (DataObject.DEFAULT_HEIGHT / 2);
+                elementX = elementX - (Message.DEFAULT_WIDTH / 2);
+                elementY = elementY - (Message.DEFAULT_HEIGHT / 2);
 
-                dataObject.getBounds().setPosition(elementX, elementY);
-                dataObject.getBounds().setDimension(DataObject.DEFAULT_WIDTH, DataObject.DEFAULT_HEIGHT);
+                message.getBounds().setPosition(elementX, elementY);
+                message.getBounds().setDimension(Message.DEFAULT_WIDTH, Message.DEFAULT_HEIGHT);
                 // set label bounds
 
                 // set label bounds
-                double labelX = elementX + (DataObject.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double labelY = elementY + DataObject.DEFAULT_HEIGHT + DataObject.LABEL_OFFSET;
+                double labelX = elementX + (Message.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = elementY + Message.DEFAULT_HEIGHT + Message.LABEL_OFFSET;
                 logger.debug("new BPMNLabel Position = " + labelX + "," + labelY);
-                dataObject.getLabel().updateLocation(labelX, labelY);
-                dataObject.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
+                message.getLabel().updateLocation(labelX, labelY);
+                message.getLabel().updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
 
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(dataObjectID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(messageID)));
     }
 
     @Override
     public String getLabel() {
-        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.DATA_OBJECT_GNODE, elementTypeId, modelState);
-        return "Data Object-" + (nodeCounter + 1);
+        int nodeCounter = GModelUtil.generateId(BpmnPackage.Literals.MESSAGE_GNODE, elementTypeId, modelState);
+        return "Message-" + (nodeCounter + 1);
     }
 
 }

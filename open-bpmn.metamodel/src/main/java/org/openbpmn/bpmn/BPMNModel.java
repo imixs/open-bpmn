@@ -77,119 +77,7 @@ public class BPMNModel {
     protected Set<Message> messages = null;    
     protected Element collaborationElement = null;
 
-    public static final String PARTICIPANT = "participant";
-    public static final String LANESET = "laneSet";
-    public static final String LANE = "lane";
-    public static final String DATAOBJECT = "dataObject";
-    public static final String TEXTANNOTATION = "textAnnotation";
-
-    public static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
-            BPMNTypes.TASK, //
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.USER_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.BUSINESSRULE_TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.RECEIVE_TASK //
-    });
-
-    public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
-            BPMNTypes.TASK, //
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.USER_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.BUSINESSRULE_TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.RECEIVE_TASK, //
-            "subProcess", "adHocSubProcess", "transaction", "callActivity" });
-
-    public static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
-            BPMNTypes.EVENT, //
-            BPMNTypes.START_EVENT, //
-            BPMNTypes.END_EVENT, //
-            BPMNTypes.CATCH_EVENT, //
-            BPMNTypes.THROW_EVENT, //
-            BPMNTypes.BOUNDARY_EVENT //
-    });
-
-    public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
-            BPMNTypes.TASK, //
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.USER_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.BUSINESSRULE_TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.RECEIVE_TASK, //
-
-            BPMNTypes.EXCLUSIVE_GATEWAY, //
-            BPMNTypes.PARALLEL_GATEWAY, //
-            BPMNTypes.EVENTBASED_GATEWAY, //
-            BPMNTypes.COMPLEX_GATEWAY, //
-            BPMNTypes.INCLUSIVE_GATEWAY, //
-
-            BPMNTypes.START_EVENT, //
-            BPMNTypes.END_EVENT, //
-            BPMNTypes.CATCH_EVENT, //
-            BPMNTypes.THROW_EVENT, //
-            BPMNTypes.BOUNDARY_EVENT, //
-
-            BPMNTypes.SEQUENCE_FLOW);
-
-    public final static List<String> BPMN_NODE_ELEMENTS = Arrays.asList(//
-            BPMNTypes.TASK, //
-            BPMNTypes.MANUAL_TASK, //
-            BPMNTypes.USER_TASK, //
-            BPMNTypes.SCRIPT_TASK, //
-            BPMNTypes.BUSINESSRULE_TASK, //
-            BPMNTypes.SERVICE_TASK, //
-            BPMNTypes.SEND_TASK, //
-            BPMNTypes.RECEIVE_TASK, //
-
-            BPMNTypes.EXCLUSIVE_GATEWAY, //
-            BPMNTypes.PARALLEL_GATEWAY, //
-            BPMNTypes.EVENTBASED_GATEWAY, //
-            BPMNTypes.COMPLEX_GATEWAY, //
-            BPMNTypes.INCLUSIVE_GATEWAY, //
-
-            BPMNTypes.START_EVENT, //
-            BPMNTypes.END_EVENT, //
-            BPMNTypes.CATCH_EVENT, //
-            BPMNTypes.THROW_EVENT, //
-            BPMNTypes.BOUNDARY_EVENT, //
-
-            BPMNTypes.DATAOBJECT, //
-            BPMNTypes.TEXTANNOTATION, //
-
-            BPMNTypes.POOL);
-
-    public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
-            BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
-            BPMNTypes.EVENT_DEFINITION_TIMER, //
-            BPMNTypes.EVENT_DEFINITION_SIGNAL, //
-            BPMNTypes.EVENT_DEFINITION_MESSAGE, //
-            BPMNTypes.EVENT_DEFINITION_LINK, //
-            BPMNTypes.EVENT_DEFINITION_ERROR, //
-            BPMNTypes.EVENT_DEFINITION_TERMINATE, //
-            BPMNTypes.EVENT_DEFINITION_COMPENSATION });
-
-    public static List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { //
-            BPMNTypes.GATEWAY, //
-            BPMNTypes.EXCLUSIVE_GATEWAY, //
-            BPMNTypes.INCLUSIVE_GATEWAY, //
-            BPMNTypes.PARALLEL_GATEWAY, //
-            BPMNTypes.EVENTBASED_GATEWAY, //
-            BPMNTypes.COMPLEX_GATEWAY //
-    });
-
-    public static List<String> BPMN_EDGES = Arrays.asList(new String[] { //
-            BPMNTypes.SEQUENCE_FLOW, //
-            BPMNTypes.MESSAGE_FLOW, //
-            BPMNTypes.ASSOCIATION //
-    });
-
+   
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
 
     /**
@@ -1279,7 +1167,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isActivity(Node node) {
-        return (BPMN_ACTIVITIES.contains(node.getLocalName()));
+        return (BPMNTypes.BPMN_ACTIVITIES.contains(node.getLocalName()));
     }
 
     public static boolean isActivity(BPMNElementNode element) {
@@ -1293,7 +1181,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isParticipant(Node node) {
-        return (PARTICIPANT.equals(node.getLocalName()));
+        return (BPMNTypes.PARTICIPANT.equals(node.getLocalName()));
     }
 
     /**
@@ -1303,7 +1191,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isLaneSet(Node node) {
-        return (LANESET.equals(node.getLocalName()));
+        return (BPMNTypes.LANESET.equals(node.getLocalName()));
     }
 
     /**
@@ -1313,7 +1201,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isGateway(Node node) {
-        return (BPMN_GATEWAYS.contains(node.getLocalName()));
+        return (BPMNTypes.BPMN_GATEWAYS.contains(node.getLocalName()));
     }
 
     public static boolean isGateway(BPMNElementNode element) {
@@ -1327,7 +1215,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isEvent(Node node) {
-        return (BPMN_EVENTS.contains(node.getLocalName()));
+        return (BPMNTypes.BPMN_EVENTS.contains(node.getLocalName()));
     }
 
     public static boolean isEvent(BPMNElementNode element) {
@@ -1341,7 +1229,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isDataObject(Node node) {
-        return (DATAOBJECT.equals(node.getLocalName()));
+        return (BPMNTypes.DATAOBJECT.equals(node.getLocalName()));
     }
 
     public static boolean isDataObject(BPMNElementNode element) {
@@ -1355,7 +1243,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isTextAnnotation(Node node) {
-        return (TEXTANNOTATION.equals(node.getLocalName()));
+        return (BPMNTypes.TEXTANNOTATION.equals(node.getLocalName()));
     }
 
     public static boolean isTextAnnotation(BPMNElementNode element) {

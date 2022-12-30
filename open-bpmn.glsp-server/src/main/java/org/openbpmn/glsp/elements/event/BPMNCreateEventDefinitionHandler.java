@@ -24,7 +24,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -56,7 +56,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateEventDefinitionHandler() {
-        super(BPMNModel.BPMN_EVENT_DEFINITIONS);
+        super(BPMNTypes.BPMN_EVENT_DEFINITIONS);
     }
 
     /**

@@ -40,7 +40,8 @@ import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.extension.DefaultBPMNTextAnnotationExtension;
-import org.openbpmn.glsp.elements.dataobject.BPMNCreateDataObjectHandler;
+import org.openbpmn.glsp.elements.data.BPMNCreateDataObjectHandler;
+import org.openbpmn.glsp.elements.data.BPMNCreateMessageHandler;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
@@ -136,9 +137,9 @@ public class BPMNDiagramModule extends DiagramModule {
         // Gateways
         binding.add(BPMNCreateGatewayHandler.class);
 
-        // Data Items
+        // Data Elements
         binding.add(BPMNCreateDataObjectHandler.class);
-        // Text Annotation
+        binding.add(BPMNCreateMessageHandler.class);
         binding.add(BPMNCreateTextAnnotationHandler.class);
 
         // Pools & Lanes

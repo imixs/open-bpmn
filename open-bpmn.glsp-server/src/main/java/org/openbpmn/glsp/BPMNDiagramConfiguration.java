@@ -28,7 +28,6 @@ import org.eclipse.glsp.server.diagram.BaseDiagramConfiguration;
 import org.eclipse.glsp.server.layout.ServerLayoutKind;
 import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
-import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.extension.BPMNExtension;
@@ -126,6 +125,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // DataObject
         nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false, false));
+        // Message
+        nodeHints.add(new ShapeTypeHint(BPMNTypes.MESSAGE, true, true, false, false));
         // TextAnnotation
         nodeHints.add(new ShapeTypeHint(BPMNTypes.TEXTANNOTATION, true, true, true, false));
         // Pool ShapeEventTypes
@@ -156,20 +157,20 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // SequenceFLow
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
-        sequenceFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
-        sequenceFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_FLOWELEMENTS);
+        sequenceFlowHint.setSourceElementTypeIds(BPMNTypes.BPMN_FLOWELEMENTS);
+        sequenceFlowHint.setTargetElementTypeIds(BPMNTypes.BPMN_FLOWELEMENTS);
         edgeHints.add(sequenceFlowHint);
 
         // MessageFLow
         EdgeTypeHint messageFlowHint = createDefaultEdgeTypeHint(BPMNTypes.MESSAGE_FLOW);
-        messageFlowHint.setSourceElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
-        messageFlowHint.setTargetElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
+        messageFlowHint.setSourceElementTypeIds(BPMNTypes.BPMN_NODE_ELEMENTS);
+        messageFlowHint.setTargetElementTypeIds(BPMNTypes.BPMN_NODE_ELEMENTS);
         edgeHints.add(messageFlowHint);
 
         // Association
         EdgeTypeHint associationHint = createDefaultEdgeTypeHint(BPMNTypes.ASSOCIATION);
-        associationHint.setSourceElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
-        associationHint.setTargetElementTypeIds(BPMNModel.BPMN_NODE_ELEMENTS);
+        associationHint.setSourceElementTypeIds(BPMNTypes.BPMN_NODE_ELEMENTS);
+        associationHint.setTargetElementTypeIds(BPMNTypes.BPMN_NODE_ELEMENTS);
         edgeHints.add(associationHint);
 
         return edgeHints;
@@ -183,7 +184,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private ShapeTypeHint createRootHint() {
         ShapeTypeHint rootHint = new ShapeTypeHint(DefaultTypes.GRAPH, false, false, false, false);
         List<String> elementList = new ArrayList<>();
-        elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        elementList.addAll(BPMNTypes.BPMN_FLOWELEMENTS);
         // remove Boundary Event
         elementList.remove(BPMNTypes.BOUNDARY_EVENT);
 
@@ -199,13 +200,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private ShapeTypeHint createPoolHint() {
         ShapeTypeHint poolHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
         List<String> elementList = new ArrayList<>();
-        elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        elementList.addAll(BPMNTypes.BPMN_FLOWELEMENTS);
         // remove Boundary Event
         elementList.remove(BPMNTypes.BOUNDARY_EVENT);
         // add lane
-        elementList.add(BPMNModel.LANE);
+        elementList.add(BPMNTypes.LANE);
         // add TextAnnotation
-        elementList.add(BPMNModel.TEXTANNOTATION);
+        elementList.add(BPMNTypes.TEXTANNOTATION);
 
         poolHint.setContainableElementTypeIds(elementList);
         return poolHint;
@@ -219,7 +220,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private ShapeTypeHint createLaneHint() {
         ShapeTypeHint laneHint = new ShapeTypeHint(BPMNTypes.LANE, false, true, false, true);
         List<String> elementList = new ArrayList<>();
-        elementList.addAll(BPMNModel.BPMN_FLOWELEMENTS);
+        elementList.addAll(BPMNTypes.BPMN_FLOWELEMENTS);
         // remove Boundary Event
         elementList.remove(BPMNTypes.BOUNDARY_EVENT);
 

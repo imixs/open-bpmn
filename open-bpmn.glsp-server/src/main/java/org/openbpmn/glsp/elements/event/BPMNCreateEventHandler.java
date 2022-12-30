@@ -29,8 +29,8 @@ import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
-import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -73,7 +73,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateEventHandler() {
-        super(BPMNModel.BPMN_EVENTS);
+        super(BPMNTypes.BPMN_EVENTS);
     }
 
     @Override

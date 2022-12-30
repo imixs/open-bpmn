@@ -26,9 +26,10 @@ import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -60,7 +61,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNCreateGatewayHandler() {
-        super(BPMNModel.BPMN_GATEWAYS);
+        super(BPMNTypes.BPMN_GATEWAYS);
     }
 
     @Override

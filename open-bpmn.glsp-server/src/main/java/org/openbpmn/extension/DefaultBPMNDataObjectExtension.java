@@ -24,7 +24,7 @@ import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -55,7 +55,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNModel.DATAOBJECT.equals(elementTypeId);
+        return BPMNTypes.DATAOBJECT.equals(elementTypeId);
     }
 
     /**

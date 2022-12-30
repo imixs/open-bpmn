@@ -25,7 +25,7 @@ import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.bpmn.LabelGNode;
@@ -58,7 +58,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNModel.BPMN_GATEWAYS.contains(elementTypeId);
+        return BPMNTypes.BPMN_GATEWAYS.contains(elementTypeId);
     }
 
     /**
