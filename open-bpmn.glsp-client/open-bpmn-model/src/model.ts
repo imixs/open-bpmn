@@ -303,8 +303,8 @@ export class Icon extends SShapeElement implements LayoutContainer {
 	layout: string;
 	override layoutOptions?: { [key: string]: string | number | boolean };
 	override size = {
-		width: 32,
-		height: 32
+		width: 16,
+		height: 16
 	};
 }
 
