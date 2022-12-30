@@ -151,7 +151,9 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
             JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
                     add("detail", layoutBuilder.build());
 
-            uiSchemaBuilder.addElementWithOptions("lanes", "Lanes", detailBuilder.build());
+            uiSchemaBuilder.addDetailLayout("lanes", "Lanes", detailBuilder.build());
+
+            // addDetailLayout
 
             //
 

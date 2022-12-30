@@ -175,21 +175,36 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                         .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
                 updateSignalEventDefinitions(signalEventDefinitions, signalDataList);
             }
+            if ("conditions".equals(feature)) {
+                JsonArray signalDataList = json.getJsonArray("conditions");
+                // find all Signal definitions of this event
+                List<Element> conditionalEventDefinitions = eventDefinitions.stream()
+                        .filter(c -> "conditionalEventDefinition".equals(c.getLocalName()))
+                        .collect(Collectors.toList());
+                updateConditionalEventDefinitions(conditionalEventDefinitions, signalDataList);
+            }
+            if ("links".equals(feature)) {
+                JsonArray signalDataList = json.getJsonArray("links");
+                // find all Signal definitions of this event
+                List<Element> conditionalEventDefinitions = eventDefinitions.stream()
+                        .filter(c -> "linkEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
+                updateLinkEventDefinitions(conditionalEventDefinitions, signalDataList);
+            }
         }
 
     }
 
-    private void updateSignalEventDefinitions(final List<Element> eventDefinitions, final JsonArray signalDataList) {
+    private void updateSignalEventDefinitions(final List<Element> eventDefinitions, final JsonArray dataList) {
         // If the size of the singnalDataList is not equals the size of the known
         // eventSignalDefinitions we print a warning
-        if (eventDefinitions.size() != signalDataList.size()) {
-            logger.warn("signalDataList does not match the signalEventDefinition list!");
+        if (eventDefinitions.size() != dataList.size()) {
+            logger.warn("dataList does not match the EventDefinition list!");
         }
-        // just update the values one by one by reffering to the signalRef id by
+        // just update the values one by one by referring to the signalRef id by
         // comparing the name
         for (int i = 0; i < eventDefinitions.size(); i++) {
             Element eventDefinitionElement = eventDefinitions.get(i);
-            JsonObject jsonData = signalDataList.getJsonObject(i); // .get(i);
+            JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
             if (jsonData != null) {
                 String signalName = jsonData.getString("signal");
                 logger.info("signal=" + signalName);
@@ -200,6 +215,44 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
                     e.printStackTrace();
                 }
+            }
+            // update completed
+        }
+    }
+
+    private void updateConditionalEventDefinitions(final List<Element> eventDefinitions, final JsonArray dataList) {
+        // If the size of the conditionalDataList is not equals the size of the known
+        // eventConditionalDefinitions we print a warning
+        if (eventDefinitions.size() != dataList.size()) {
+            logger.warn("dataList does not match the EventDefinition list!");
+        }
+        // just update the values one by one by referring to the signalRef id by
+        // comparing the name
+        for (int i = 0; i < eventDefinitions.size(); i++) {
+            Element eventDefinitionElement = eventDefinitions.get(i);
+            JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
+            if (jsonData != null) {
+                eventDefinitionElement.setAttribute("language", jsonData.getString("language", ""));
+                eventDefinitionElement.setAttribute("expression", jsonData.getString("expression", ""));
+            }
+            // update completed
+        }
+    }
+
+    private void updateLinkEventDefinitions(final List<Element> eventDefinitions, final JsonArray dataList) {
+        // If the size of the conditionalDataList is not equals the size of the known
+        // eventConditionalDefinitions we print a warning
+        if (eventDefinitions.size() != dataList.size()) {
+            logger.warn("dataList does not match the EventDefinition list!");
+        }
+        // just update the values one by one by referring to the signalRef id by
+        // comparing the name
+        for (int i = 0; i < eventDefinitions.size(); i++) {
+            Element eventDefinitionElement = eventDefinitions.get(i);
+            JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
+            if (jsonData != null) {
+                eventDefinitionElement.setAttribute("name", jsonData.getString("name", ""));
+                eventDefinitionElement.setAttribute("target", jsonData.getString("target", ""));
             }
             // update completed
         }
@@ -217,15 +270,14 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
         if (eventDefinitions.size() > 0) {
 
-            // build a custom detail UISchema to display fields like expression as a
-            // Textarea
+            JsonObject multilineOption = Json.createObjectBuilder() //
+                    .add("multi", true).build();
+
             uiSchemaBuilder. //
                     addCategory("Conditions"). //
                     addLayout(Layout.VERTICAL);
 
-            JsonObject multilineOption = Json.createObjectBuilder() //
-                    .add("multi", true).build();
-            JsonObjectBuilder layoutBuilder = Json.createObjectBuilder().add("type", "VerticalLayout");
+            // create a detail control Layout....
             JsonArrayBuilder controlsArrayBuilder = Json.createArrayBuilder();
             controlsArrayBuilder //
                     .add(Json.createObjectBuilder() //
@@ -237,11 +289,14 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                             .add("label", "Expression") //
                             .add("options", multilineOption) //
                     );
-            layoutBuilder.add("elements", controlsArrayBuilder);
-            JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
-                    add("detail", layoutBuilder.build());
 
-            uiSchemaBuilder.addElementWithOptions("conditions", "Conditions", detailBuilder.build());
+            JsonObjectBuilder detailLayoutBuilder = Json.createObjectBuilder(). //
+                    add("type", "VerticalLayout"). ///
+                    add("elements", controlsArrayBuilder);
+
+            JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
+                    add("detail", detailLayoutBuilder.build());
+            uiSchemaBuilder.addDetailLayout("conditions", "Conditions", detailBuilder.build());
 
             /*
              * Add the Schema ....
@@ -257,8 +312,8 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             dataBuilder.addArray("conditions");
             for (Element definition : eventDefinitions) {
                 dataBuilder.addObject();
-                dataBuilder.addData("language", "java");
-                dataBuilder.addData("expression", "blue");
+                dataBuilder.addData("language", definition.getAttribute("language"));
+                dataBuilder.addData("expression", definition.getAttribute("expression"));
             }
         }
     }
@@ -320,7 +375,10 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     }
 
     /**
-     * Adds the LinkEvent definitions
+     * Adds the LinkEvent definitions.
+     * <p>
+     * This is a simple detail section without custom layout. So we use
+     * detail=GERNERATED here.
      *
      * @param eventDefinitions
      * @param dataBuilder
@@ -352,7 +410,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             for (Element definition : eventDefinitions) {
                 dataBuilder.addObject();
                 dataBuilder.addData("name", definition.getAttribute("name"));
-                dataBuilder.addData("target", "some target");
+                dataBuilder.addData("target", definition.getAttribute("target"));
             }
         }
 

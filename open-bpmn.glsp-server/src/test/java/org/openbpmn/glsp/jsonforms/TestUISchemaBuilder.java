@@ -248,7 +248,7 @@ public class TestUISchemaBuilder extends DefaultGModelState {
         builder.addCategory("Lanes") //
                 .addLayout(Layout.VERTICAL);
 
-        builder.addElementWithOptions("lanes", "Lanes", detailBuilder.build());
+        builder.addDetailLayout("lanes", "Lanes", detailBuilder.build());
 
         String json = builder.build();
 

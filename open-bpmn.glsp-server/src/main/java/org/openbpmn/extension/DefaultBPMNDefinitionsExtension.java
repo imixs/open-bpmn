@@ -214,7 +214,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
                     add("detail", layoutBuilder.build());
 
-            uiSchemaBuilder.addElementWithOptions("signals", "Signals", detailBuilder.build());
+            uiSchemaBuilder.addDetailLayout("signals", "Signals", detailBuilder.build());
 
             // Schema builder
             schemaBuilder.addArray("signals");

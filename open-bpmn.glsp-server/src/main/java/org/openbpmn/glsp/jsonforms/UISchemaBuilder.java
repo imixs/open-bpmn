@@ -226,14 +226,54 @@ public class UISchemaBuilder {
     }
 
     /**
-     * Adds a control into the current layout context
+     * Adds a 'detail' layout section into the current layout context. A detail
+     * layout can be used for object arrays with complex data structures.
+     * <p>
+     * The method expects a JsonObject containing the layout details to be embedded.
+     * The scope of the referred elements is relative to the object array
+     * <p>
+     * The result is embedded as a element:
+     *
+     * <pre>
+     * {@code
+     * ....
+     *  "elements": [
+        {
+            "type": "Control",
+            "scope": "#/properties/conditions",
+            "label": "Conditions",
+            "options": {
+                "detail": {
+                    "type": "VerticalLayout",
+                    "elements": [
+                        {
+                            "type": "Control",
+                            "scope": "#/properties/language"
+                        },
+                        {
+                            "type": "Control",
+                            "scope": "#/properties/expression",
+                            "label": "Expression",
+                            "options": {
+                                "multi": true
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+     *  ...
+     *
+     * }</pre>
+     *
+     *
      *
      * @param item    - item name
      * @param label   - optional label
      * @param details - JsonObject for details
      * @return this
      */
-    public UISchemaBuilder addElementWithOptions(final String item, final String label, final JsonObject details) {
+    public UISchemaBuilder addDetailLayout(final String item, final String label, final JsonObject details) {
 
         if (layoutContext == null) {
             // add a default layout context
