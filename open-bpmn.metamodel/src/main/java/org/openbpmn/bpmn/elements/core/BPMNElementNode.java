@@ -64,7 +64,6 @@ public abstract class BPMNElementNode extends BPMNElement {
             }
         }
     }
-      
 
     /**
      * Returns the BPMNShape bounds.
@@ -185,7 +184,7 @@ public abstract class BPMNElementNode extends BPMNElement {
      * @throws BPMNMissingElementException
      */
     public BPMNLabel getLabel() throws BPMNMissingElementException {
-        if (isEvent() || isGateway() || isDataObject()) {
+        if (hasBPMNLabel()) {
             if (label == null) {
                 // lazy loading of bounds from a given bpmnShape
                 label = new BPMNLabel(model, this.bpmnShape);
@@ -195,40 +194,29 @@ public abstract class BPMNElementNode extends BPMNElement {
     }
 
     /**
-     * Returns true if the element is an BPMN Event
+     * Returns true if the element has a separate BPMN label like a Event or
+     * Gateway.
      * 
      * @return
      */
-    public boolean isEvent() {
-        for (String eventType : BPMNTypes.BPMN_EVENTS) {
-            if (eventType.equals(type)) {
-                return true;
-            }
-        }
-        return false;
-    }
+    public boolean hasBPMNLabel() {
 
-    /**
-     * Returns true if the element is an BPMN Gateway
-     * 
-     * @return
-     */
-    public boolean isGateway() {
-        for (String gateWayType : BPMNTypes.BPMN_GATEWAYS) {
-            if (gateWayType.equals(type)) {
-                return true;
-            }
+        if (BPMNTypes.BPMN_GATEWAYS.contains(type)) {
+            return true;
         }
-        return false;
-    }
 
-    /**
-     * Returns true if the element is an BPMN DataOjbect
-     * 
-     * @return
-     */
-    public boolean isDataObject() {
-        return BPMNTypes.DATAOBJECT.equals(type);
+        if (BPMNTypes.BPMN_EVENTS.contains(type)) {
+            return true;
+        }
+
+        if (BPMNTypes.DATAOBJECT.equals(type)) {
+            return true;
+        }
+        if (BPMNTypes.MESSAGE.equals(type)) {
+            return true;
+        }
+
+        return false;
     }
 
 }

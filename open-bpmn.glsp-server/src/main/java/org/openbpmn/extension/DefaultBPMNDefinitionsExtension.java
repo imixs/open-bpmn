@@ -33,9 +33,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -169,8 +167,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                         try {
                             modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
                             modelState.reset();
-                        } catch (BPMNInvalidReferenceException | BPMNMissingElementException
-                                | BPMNInvalidTypeException e) {
+                        } catch (BPMNModelException e) {
                             logger.warning("Unable to add new signal: " + e.getMessage());
                         }
 

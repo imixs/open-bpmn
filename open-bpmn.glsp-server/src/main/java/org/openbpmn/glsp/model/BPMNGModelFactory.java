@@ -50,6 +50,7 @@ import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.TextAnnotation;
@@ -68,10 +69,12 @@ import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
+import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.elements.data.DataObjectGNodeBuilder;
+import org.openbpmn.glsp.elements.data.MessageGNodeBuilder;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
@@ -444,6 +447,25 @@ public class BPMNGModelFactory implements GModelFactory {
             // now add a GLabel
             BPMNLabel bpmnLabel = dataObject.getLabel();
             LabelGNode labelNode = createLabelNode(bpmnLabel, dataObject, participant);
+            gNodeList.add(labelNode);
+        }
+
+        // Add all Messages...
+        for (Message message : modelState.getBpmnModel().getMessages()) {
+            logger.debug("message: " + message.getName());
+            GPoint point = computeRelativeGPoint(message.getBounds(), participant);
+
+            // Build the GLSP Node....
+            MessageGNode messageNode = new MessageGNodeBuilder(message) //
+                    .position(point) //
+                    .build();
+            gNodeList.add(messageNode);
+            // apply BPMN Extensions
+            applyBPMNExtensions(messageNode, message);
+
+            // now add a GLabel
+            BPMNLabel bpmnLabel = message.getLabel();
+            LabelGNode labelNode = createLabelNode(bpmnLabel, message, participant);
             gNodeList.add(labelNode);
         }
 

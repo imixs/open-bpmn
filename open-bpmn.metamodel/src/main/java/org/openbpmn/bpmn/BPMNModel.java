@@ -905,6 +905,14 @@ public class BPMNModel {
             }
         }
 
+        // test messages...
+        for (Message message: messages) {
+            if (id.equals(message.getId())) {
+                return message;
+            }
+        }
+
+        
         // test for participant...
         Participant participant = this.findParticipantById(id);
         if (participant != null) {

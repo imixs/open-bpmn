@@ -267,7 +267,8 @@ export function isGatewayNode(element: SModelElement): element is GatewayNode {
  * Indicates that the ModelElement has a independed BPNNLabel
  */
 export function isBPMNLabelNode(element: SModelElement): element is SModelElement {
-	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode) || false;
+	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode
+            || element instanceof MessageNode) || false;
 }
 
 /*
@@ -278,7 +279,7 @@ export function isBPMNLabelNode(element: SModelElement): element is SModelElemen
 */
 export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
     return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
-           element instanceof DataObjectNode || element instanceof PoolNode;
+           element instanceof DataObjectNode || element instanceof MessageNode || element instanceof PoolNode;
 }
 
 /*
