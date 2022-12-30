@@ -283,10 +283,25 @@ export class DataObjectNodeView extends ShapeView {
     }
 }
 
+@injectable()
+export class MessageNodeView extends ShapeView {
+    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+        return <g>
+            <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
+                  class-mouseover={node.hoverFeedback} class-selected={node.selected}
+                  x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            {context.renderChildren(node)}
+        </g>;
+    }
+}
+
 /*
  * Render a BPMN TextAnnotation
  * A TextAnnotation contains a text attribute which is displayed using the ForeignObjectView
- * 
+ *
  * See: https://www.eclipse.org/glsp/documentation/rendering/#default-views
  */
 @injectable()
@@ -297,13 +312,13 @@ export class TextAnnotationNodeView extends ShapeView {
         }
         const textBorder='20,0 0,0 0,' + node.size.height + ' 20,' + node.size.height;
         return <g >
-             <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort} 
+             <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
              class-mouseover={node.hoverFeedback} class-selected={node.selected}
                   x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
-            <polyline points={textBorder} />         
+            <polyline points={textBorder} />
             {context.renderChildren(node)}
         </g>;
-    }       
+    }    
 }
 
 /**

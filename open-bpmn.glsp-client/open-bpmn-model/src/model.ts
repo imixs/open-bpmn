@@ -154,6 +154,22 @@ export class DataObjectNode extends RectangularNode implements BPMNFlowElement {
 	documentation: string;
 }
 
+export class MessageNode extends RectangularNode implements BPMNFlowElement {
+	static override readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature
+	];
+	documentation: string;
+}
+
 export class TextAnnotationNode extends RectangularNode implements BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,

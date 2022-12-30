@@ -42,15 +42,18 @@ import {
 	PoolNode,
 	LaneNode,
 	DataObjectNode,
+	MessageNode,
 	TextAnnotationNode,
 	Icon,
 	TaskNode,
 	EventNode,
-	BPMNEdge, MultiLineTextNode
+	BPMNEdge,
+	MultiLineTextNode
 } from '@open-bpmn/open-bpmn-model';
 import { IconView,ContainerHeaderView,
          BPMNLabelNodeSelectionListener,
          DataObjectNodeView,
+         MessageNodeView,
          TextAnnotationNodeView
 } from './bpmn-element-views';
 import { BPMNEdgeView } from './bpmn-routing-views';
@@ -117,6 +120,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
+    configureModelElement(context, 'message', MessageNode, MessageNodeView);
     configureModelElement(context, 'textAnnotation', TextAnnotationNode, TextAnnotationNodeView);
 
     // textNode of TextAnnotation...

@@ -7,7 +7,6 @@ import java.net.URI;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,8 +34,8 @@ import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Signal;
-import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -697,10 +696,15 @@ public class BPMNModel {
      * @throws BPMNInvalidReferenceException
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidTypeException
+     * @throws BPMNInvalidIDException 
      */
     public Signal addSignal(String id, String name)
-            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
+            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException, BPMNInvalidIDException {
 
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
         // create sequenceFlow element
         Element bpmnEdgeElement = createElement(BPMNNS.BPMN2, BPMNTypes.SIGNAL);
         bpmnEdgeElement.setAttribute("id", id);
@@ -721,21 +725,24 @@ public class BPMNModel {
      * 
      * @param id
      * @param name - name of the message
-     * @throws BPMNInvalidReferenceException
-     * @throws BPMNMissingElementException
-     * @throws BPMNInvalidTypeException
+     * @throws BPMNModelException 
      */
     public Message addMessage(String id, String name)
-            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
+            throws BPMNModelException {
 
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
+        
         // create sequenceFlow element
         Element bpmnElement = createElement(BPMNNS.BPMN2, BPMNTypes.MESSAGE);
         bpmnElement.setAttribute("id", id);
         bpmnElement.setAttribute("name", name);
 
         this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
-
-        Message message = new Message(this, bpmnElement);
+ 
+        Message message = new Message(this, bpmnElement,BPMNTypes.MESSAGE, this.openDefaultProcess());
         getMessages().add(message);
 
         return message;
@@ -1497,7 +1504,7 @@ public class BPMNModel {
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
-                Message message = new Message(this, item);
+                Message message = new Message(this, item,BPMNTypes.MESSAGE,this.openDefaultProcess());
                 messages.add(message);
             }
         }

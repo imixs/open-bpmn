@@ -50,24 +50,21 @@ public abstract class BPMNElementNode extends BPMNElement {
         this.type = _type;
         this.bpmnProcess = _bpmnProcess;
         // find the BPMNShape element. If not defined create a new one
-        if (bpmnProcess != null) {
-            bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
-            if (bpmnShape == null) {
-                // create shape element
-                bpmnShape = model.buildBPMNShape(this);
-                this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
-                // create BPMNLabel
-                label = this.getLabel();
-                if (label != null) {
-                    // set default position
-                    // BPMNPoint pos = this.getBounds().getPosition();
-                    label.updateLocation(0.0, 0.0);
-                }
+        bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+        if (bpmnShape == null) {
+            // create shape element
+            bpmnShape = model.buildBPMNShape(this);
+            this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
+            // create BPMNLabel
+            label = this.getLabel();
+            if (label != null) {
+                // set default position
+                // BPMNPoint pos = this.getBounds().getPosition();
+                label.updateLocation(0.0, 0.0);
             }
         }
     }
-
-   
+      
 
     /**
      * Returns the BPMNShape bounds.

@@ -81,6 +81,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         mappings.put(BPMNTypes.POOL, BpmnPackage.Literals.POOL_GNODE);
         mappings.put(BPMNTypes.LANE, BpmnPackage.Literals.LANE_GNODE);
         mappings.put(BPMNTypes.DATAOBJECT, BpmnPackage.Literals.DATA_OBJECT_GNODE);
+        mappings.put(BPMNTypes.MESSAGE, BpmnPackage.Literals.MESSAGE_GNODE);
         mappings.put(BPMNTypes.TEXTANNOTATION, BpmnPackage.Literals.TEXT_ANNOTATION_GNODE);
 
         return mappings;
@@ -190,6 +191,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // add special types
         elementList.add(BPMNTypes.DATAOBJECT);
+        elementList.add(BPMNTypes.MESSAGE);
         elementList.add(BPMNTypes.TEXTANNOTATION);
         elementList.add(BPMNTypes.POOL);
 
