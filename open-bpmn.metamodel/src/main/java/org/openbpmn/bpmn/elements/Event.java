@@ -51,10 +51,10 @@ public class Event extends BPMNElementNode {
         Element eventDefintion = model.createElement(BPMNNS.BPMN2, type);
         eventDefintion.setAttribute("id", BPMNModel.generateShortID(type));
 
-        // in case of a Signal Defintiion we need to add a reference to the first
+        // in case of a Signal Definition we need to add a reference to the first
         // existing Signal.
         if (BPMNTypes.EVENT_DEFINITION_SIGNAL.equals(type)) {
-            // do we have a signal ?
+            // do we have at least one signal ?
             if ( model.getSignals().size()==0) {
                 // create a dummy signal
                 model.addSignal("signal_1", "Signal 1");
@@ -62,6 +62,20 @@ public class Event extends BPMNElementNode {
              // take the first one
              Signal signal= model.getSignals().iterator().next();
              eventDefintion.setAttribute("signalRef", signal.getId());
+            
+        }
+
+        // in case of a Message Definition we need to add a reference to the first
+        // existing Message.
+        if (BPMNTypes.EVENT_DEFINITION_MESSAGE.equals(type)) {
+            // do we have at least one message ?
+            if ( model.getMessages().size()==0) {
+                // create a dummy message
+                model.addMessage("message_1", "Message 1");
+            }
+             // take the first one
+             Message message= model.getMessages().iterator().next();
+             eventDefintion.setAttribute("messageRef", message.getId());
             
         }
         this.getElementNode().appendChild(eventDefintion);

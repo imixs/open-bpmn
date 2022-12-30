@@ -61,6 +61,7 @@ public class BPMNTypes {
     public static final String TEXTANNOTATION = "textAnnotation";
     public static final String POOL = "pool";
     public static final String LANE = "lane";
+    public static final String MESSAGE = "message";
     public static final String SIGNAL = "signal";
     public static final String SEQUENCE_FLOW = "sequenceFlow";
     public static final String MESSAGE_FLOW = "messageFlow";

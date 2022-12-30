@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- origin at X=0.0 Y=0.0 -->
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1">
+  <bpmn2:message id="Message_2" name="Message 1">
+    <bpmn2:documentation id="Documentation_3"><![CDATA[some doc]]></bpmn2:documentation>
+  </bpmn2:message>
   <bpmn2:process id="Process_1" name="Process 1" isExecutable="false">
     <bpmn2:dataObject id="DataObject_2" name="Data Object 1">
       <bpmn2:documentation id="Documentation_1"><![CDATA[test 
 line2]]></bpmn2:documentation>
     </bpmn2:dataObject>
     <bpmn2:dataObject id="DataObject_3" name="Data Object 1"/>
+    <bpmn2:intermediateThrowEvent id="IntermediateThrowEvent_1" name="Intermediate Throw Event 1">
+      <bpmn2:dataInput id="DataInput_1" name="Message_1_Input"/>
+      <bpmn2:dataInputAssociation id="DataInputAssociation_1">
+        <bpmn2:targetRef>DataInput_1</bpmn2:targetRef>
+      </bpmn2:dataInputAssociation>
+      <bpmn2:inputSet id="InputSet_1" name="Input Set 1">
+        <bpmn2:dataInputRefs>DataInput_1</bpmn2:dataInputRefs>
+      </bpmn2:inputSet>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_2"/>
+    </bpmn2:intermediateThrowEvent>
     <bpmn2:association id="Association_1" sourceRef="DataObject_2" targetRef="DataObject_3"/>
     <bpmn2:textAnnotation id="TextAnnotation_1" textFormat="text/html">
       <bpmn2:text>Text Annotation Example
@@ -38,6 +51,18 @@ line2]]></bpmn2:documentation>
       <bpmndi:BPMNShape id="BPMNShape_Group_1" bpmnElement="Group_1">
         <dc:Bounds height="112.0" width="352.0" x="130.0" y="320.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_Message_1" bpmnElement="Message_2">
+        <dc:Bounds height="20.0" width="30.0" x="130.0" y="510.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_6" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="60.0" x="115.0" y="530.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_IntermediateThrowEvent_1" bpmnElement="IntermediateThrowEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="582.0" y="142.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_7" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="42.0" width="74.0" x="563.0" y="178.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_Association_1" bpmnElement="Association_1" sourceElement="BPMNShape_DataObject_1" targetElement="BPMNShape_DataObject_2">
         <di:waypoint xsi:type="dc:Point" x="156.0" y="105.0"/>

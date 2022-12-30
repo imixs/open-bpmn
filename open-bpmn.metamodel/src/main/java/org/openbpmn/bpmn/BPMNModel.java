@@ -31,6 +31,7 @@ import javax.xml.xpath.XPathFactory;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.Signal;
@@ -73,6 +74,7 @@ public class BPMNModel {
     protected Set<BPMNProcess> processes = null;
     protected Set<MessageFlow> messageFlows = null;
     protected Set<Signal> signals = null;
+    protected Set<Message> messages = null;    
     protected Element collaborationElement = null;
 
     public static final String PARTICIPANT = "participant";
@@ -287,6 +289,7 @@ public class BPMNModel {
             // init the participant and process list
             loadParticipantList();
             loadProcessList();
+            loadMessageList();
             loadMessageFlowList();
             loadSignalList();
 
@@ -353,6 +356,18 @@ public class BPMNModel {
         this.signals = signals;
     }
 
+    public Set<Message> getMessages() {
+        if (messages == null) {
+            messages = new LinkedHashSet<Message>();
+        }
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
+    }
+
+    
     public void setProcesses(Set<BPMNProcess> processes) {
         this.processes = processes;
     }
@@ -803,14 +818,39 @@ public class BPMNModel {
         bpmnEdgeElement.setAttribute("id", id);
         bpmnEdgeElement.setAttribute("name", name);
 
-        // this.definitions.insertBefore( ,
-        // bpmnEdgeElement).appendChild(bpmnEdgeElement);
         this.definitions.insertBefore(bpmnEdgeElement, this.getBpmnDiagram());
 
         Signal signal = new Signal(this, bpmnEdgeElement);
         getSignals().add(signal);
 
         return signal;
+    }
+    
+    /**
+     * Adds a Message element to the diagram
+     * <p>
+     * <bpmn2:message id="Message_4" name="Message 4" />
+     * 
+     * @param id
+     * @param name - name of the message
+     * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException
+     * @throws BPMNInvalidTypeException
+     */
+    public Message addMessage(String id, String name)
+            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
+
+        // create sequenceFlow element
+        Element bpmnElement = createElement(BPMNNS.BPMN2, BPMNTypes.MESSAGE);
+        bpmnElement.setAttribute("id", id);
+        bpmnElement.setAttribute("name", name);
+
+        this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
+
+        Message message = new Message(this, bpmnElement);
+        getMessages().add(message);
+
+        return message;
     }
     
     /**
@@ -892,6 +932,62 @@ public class BPMNModel {
 
     }
 
+    
+
+    /**
+     * Deletes a Message element from this diagram.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteMessage(String id) {
+        if (id == null || id.isEmpty()) {
+            return;
+        }
+
+        Message message = null;
+        for (Message _message : getMessages()) {
+            if (id.equals(_message.getId())) {
+                message = _message;
+                break;
+                
+            }
+        }
+
+        if (message == null) {
+            // does not exist
+            return;
+        }
+
+        // find all MessageDefinitions in Events referring this Message ID
+        Set<Event> events = findAllEvents();
+        // test if the event has a event definition with this message ID
+        for (Event event : events) {
+            Set<Element> definitionList = event.getEventDefinitions();
+            for (Element e : definitionList) {
+
+                if (BPMNTypes.EVENT_DEFINITION_MESSAGE.equals(e.getLocalName())) {
+                    String refID = e.getAttribute("messageRef");
+                    if (id.equals(refID)) {
+                        try {
+                            event.deleteEventDefinition(e.getAttribute("id"));
+                        } catch (BPMNModelException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }
+
+        // delete the element from teh definitions
+        this.definitions.removeChild(message.getElementNode());
+
+        // finally we remove the signal object form the signals list
+        getMessages().remove(message);
+
+    }
+
+    
     /**
      * Finds a BPMNElement by ID within this model. The Element can be a Node or an
      * Edge. The method iterates over all existing Processes and its contained
@@ -1490,12 +1586,31 @@ public class BPMNModel {
      */
     private void loadSignalList() throws BPMNModelException {
         signals = new LinkedHashSet<Signal>();
-        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":signal");
+        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":"+BPMNTypes.SIGNAL);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
                 Signal signal = new Signal(this, item);
                 signals.add(signal);
+            }
+        }
+    }
+    
+
+    /**
+     * This helper method loads the Message elements from the diagram -
+     * 'bpmn2:message' .
+     * 
+     * @throws BPMNModelException
+     */
+    private void loadMessageList() throws BPMNModelException {
+        messages = new LinkedHashSet<Message>();
+        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":"+BPMNTypes.MESSAGE);
+        if (signalNodeList != null && signalNodeList.getLength() > 0) {
+            for (int i = 0; i < signalNodeList.getLength(); i++) {
+                Element item = (Element) signalNodeList.item(i);
+                Message message = new Message(this, item);
+                messages.add(message);
             }
         }
     }
@@ -1549,5 +1664,6 @@ public class BPMNModel {
             e.printStackTrace();
         }
     }
+
 
 }

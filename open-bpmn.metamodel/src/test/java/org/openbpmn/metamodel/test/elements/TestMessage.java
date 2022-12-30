@@ -11,41 +11,42 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.Signal;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNDimension;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
- * This test class is testing Signal Events
+ * This test class is testing Message objects
  * 
  * @author rsoika
  *
  */
-public class TestSignal {
+public class TestMessage {
 
-    private static Logger logger = Logger.getLogger(TestSignal.class.getName());
+    private static Logger logger = Logger.getLogger(TestMessage.class.getName());
 
     /**
      * This test parses a bpmn file
      */
     @Test
-    public void testReadSignal() {
+    public void testReadMessage() {
         BPMNModel model = null;
         logger.info("...read model");
         try {
-            model = BPMNModelFactory.read("/refmodel-10.bpmn");
+            model = BPMNModelFactory.read("/refmodel-6.bpmn");
            
             logger.info("...read model");
 
             // read tasks....
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
-
-            Event event1 = (Event) process.findElementNodeById("IntermediateCatchEvent_1");
-            assertNotNull(event1);
-            
+  
             // read signal
-            assertEquals(1, model.getSignals().size());
+            assertEquals(1, model.getMessages().size());
             
 
         } catch (BPMNModelException e) {
@@ -57,12 +58,12 @@ public class TestSignal {
     }
 
     /**
-     * This test creates a signal element
+     * This test creates a message element
      */
     @Test
-    public void testCreateSignal() {
+    public void testCreateMessage() {
         BPMNModel model=null;
-        String out = "src/test/resources/output/create_signal.bpmn";
+        String out = "src/test/resources/output/create_message.bpmn";
         try {
             logger.info("...create empty model");
 
@@ -77,9 +78,9 @@ public class TestSignal {
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 
             // create signal
-            model.addSignal("signal_1", "My Signal");
+            model.addMessage("message_1", "My Message");
             // read signal
-            assertEquals(1, model.getSignals().size());
+            assertEquals(1, model.getMessages().size());
             
         } catch (BPMNModelException e) {
 
@@ -95,13 +96,13 @@ public class TestSignal {
 
     
     /**
-     * This test creates a signal definition to an existing event.
-     * We expect that the signal is created automatically. 
+     * This test creates a message definition to an existing event.
+     * We expect that the message is created automatically. 
      */
     @Test
-    public void testCreateSignalDefinition() {
+    public void testCreateMessageDefinition() {
         BPMNModel model=null;
-        String out = "src/test/resources/output/create_signal_event.bpmn";
+        String out = "src/test/resources/output/create_message_event.bpmn";
         try {
             logger.info("...create empty model");
 
@@ -116,14 +117,14 @@ public class TestSignal {
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 
             // create catch event
-            Event event = defaultProcess.addEvent("event-1", "Signal Event 1", BPMNTypes.CATCH_EVENT);
+            Event event = defaultProcess.addEvent("event-1", "Message Event 1", BPMNTypes.CATCH_EVENT);
             
             // add definition
-            event.addEventDefinition(BPMNTypes.EVENT_DEFINITION_SIGNAL);
+            event.addEventDefinition(BPMNTypes.EVENT_DEFINITION_MESSAGE);
             
             // we expect that we have now 1 new Signal in the definition list
 
-            assertEquals(1, model.getSignals().size());
+            assertEquals(1, model.getMessages().size());
             
         } catch (BPMNModelException e) {
 
@@ -139,15 +140,15 @@ public class TestSignal {
     
     
     /**
-     * This test parses a bpmn file and removes singnal_1 which is referred by an event
+     * This test parses a bpmn file and removes message_1 which is referred by an event
      */
     @Test
     public void testDeleteSignal() {
         BPMNModel model = null;
-        String out = "src/test/resources/output/create_signal_event3.bpmn";
+        String out = "src/test/resources/output/create_message_event3.bpmn";
         logger.info("...read model");
         try {
-            model = BPMNModelFactory.read("/refmodel-10.bpmn");
+            model = BPMNModelFactory.read("/refmodel-11.bpmn");
            
             logger.info("...read model");
 
@@ -156,12 +157,12 @@ public class TestSignal {
             assertNotNull(process);
 
             // remove signal
-            Signal signal=model.getSignals().iterator().next();
-            assertNotNull(signal);
+            Message message=model.getMessages().iterator().next();
+            assertNotNull(message);
             
-            model.deleteSignal(signal.getId());
-             // read signal
-            assertEquals(0, model.getSignals().size());
+            model.deleteMessage(message.getId());
+             // read Message
+            assertEquals(0, model.getMessages().size());
             
 
         } catch (BPMNModelException e) {

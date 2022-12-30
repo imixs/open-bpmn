@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1" name="Default Process" processType="Public">
+        <bpmn2:documentation id="documentation_G4Wx0Q"/>
+        <bpmn2:intermediateCatchEvent id="event_3cX4lQ" name="Event-1">
+            <bpmn2:documentation id="documentation_izhKjA"/>
+            <bpmn2:conditionalEventDefinition expression="            &lt;bpmndi:BPMNShape bpmnElement=&quot;event_3cX4lQ&quot; id=&quot;BPMNShape_z0fRjw&quot;&gt;&#10;                &lt;dc:Bounds height=&quot;36.0&quot; width=&quot;36.0&quot; x=&quot;129.0&quot; y=&quot;45.0&quot;/&gt;&#10;                &lt;bpmndi:BPMNLabel id=&quot;BPMNLabel_OzsGYQ&quot;&gt;&#10;                    &lt;dc:Bounds height=&quot;24.0&quot; width=&quot;100.0&quot; x=&quot;97.0&quot; y=&quot;81.0&quot;/&gt;&#10;                &lt;/bpmndi:BPMNLabel&gt;&#10;            &lt;/bpmndi:BPMNShape&gt;&#10;Cool" id="conditionalEventDefinition_0l1E2g" language="javaaaaaaa"/>
+        </bpmn2:intermediateCatchEvent>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="event_3cX4lQ" id="BPMNShape_z0fRjw">
+                <dc:Bounds height="36.0" width="36.0" x="129.0" y="45.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_OzsGYQ">
+                    <dc:Bounds height="24.0" width="100.0" x="97.0" y="81.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
