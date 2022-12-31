@@ -19,8 +19,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
@@ -29,9 +30,9 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -70,7 +71,8 @@ import com.google.inject.Inject;
  *
  */
 public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
-    private static Logger logger = Logger.getLogger(BPMNChangeBoundsOperationHandler.class.getName());
+
+    private static Logger logger = LogManager.getLogger(BPMNChangeBoundsOperationHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -96,7 +98,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
                 if (!_node.isPresent()) {
                     // this case should not happen!
-                    logger.severe("GNode '" + id + "' not found in current modelState!");
+                    logger.error("GNode '" + id + "' not found in current modelState!");
                     continue;
                 }
 
@@ -214,7 +216,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 gNode = _node.get();
             }
             if (bpmnLaneBounds == null || gNode == null) {
-                logger.warning("invalid LaneSet - model can not be synchronized!");
+                logger.warn("invalid LaneSet - model can not be synchronized!");
                 continue;
             }
 
@@ -291,7 +293,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 }
 
             } catch (BPMNMissingElementException e) {
-                logger.warning("Failed to update FlowElement bounds for : " + flowElement.getId());
+                logger.warn("Failed to update FlowElement bounds for : " + flowElement.getId());
             }
         }
 

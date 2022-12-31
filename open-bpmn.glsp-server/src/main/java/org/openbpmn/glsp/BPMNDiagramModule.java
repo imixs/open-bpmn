@@ -40,8 +40,10 @@ import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.extension.DefaultBPMNTextAnnotationExtension;
+import org.openbpmn.glsp.elements.data.BPMNApplyEditTextAnnotationOperationHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateDataObjectHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateMessageHandler;
+import org.openbpmn.glsp.elements.data.BPMNCreateTextAnnotationHandler;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
@@ -49,8 +51,6 @@ import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
 import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
-import org.openbpmn.glsp.elements.textannotation.BPMNCreateTextAnnotationHandler;
-import org.openbpmn.glsp.elements.textannotation.edittext.BPMNApplyEditOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.model.BPMNSourceModelStorage;
@@ -111,7 +111,7 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Inline Edit
 
-        binding.add(BPMNApplyEditOperationHandler.class);
+        binding.add(BPMNApplyEditTextAnnotationOperationHandler.class);
 
 //        binding.add(ChangeBoundsOperationHandler.class);
 //        binding.add(ChangeRoutingPointsHandler.class);

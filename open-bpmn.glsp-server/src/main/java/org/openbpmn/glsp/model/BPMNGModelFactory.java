@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
-//import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -75,6 +74,7 @@ import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.elements.data.DataObjectGNodeBuilder;
 import org.openbpmn.glsp.elements.data.MessageGNodeBuilder;
+import org.openbpmn.glsp.elements.data.TextAnnotationGNodeBuilder;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeBuilder;
 import org.openbpmn.glsp.elements.event.EventGNodeBuilder;
 import org.openbpmn.glsp.elements.gateway.GatewayGNodeBuilder;
@@ -82,7 +82,6 @@ import org.openbpmn.glsp.elements.label.LabelGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.LaneGNodeBuilder;
 import org.openbpmn.glsp.elements.pool.PoolGNodeBuilder;
 import org.openbpmn.glsp.elements.task.TaskGNodeBuilder;
-import org.openbpmn.glsp.elements.textannotation.TextAnnotationGNodeBuilder;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;

@@ -22,7 +22,7 @@ line3]]></bpmn2:text>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="textAnnotation_QcNIVQ" id="BPMNShape_0oWVDg">
-                <dc:Bounds height="50.0" width="75.0" x="170.5" y="36.0"/>
+                <dc:Bounds height="71.0" width="231.0" x="170.5" y="36.0"/>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="message_VZJ4qw" id="BPMNShape_4uGUJQ">
                 <dc:Bounds height="20.0" width="30.0" x="93.0" y="169.0"/>

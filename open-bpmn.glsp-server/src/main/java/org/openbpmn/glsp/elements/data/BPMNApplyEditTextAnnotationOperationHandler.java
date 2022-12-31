@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.textannotation.edittext;
+package org.openbpmn.glsp.elements.data;
 
 import java.util.Optional;
 
@@ -54,9 +54,9 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class BPMNApplyEditOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
+public class BPMNApplyEditTextAnnotationOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
 
-    private static Logger logger = LogManager.getLogger(BPMNApplyEditOperationHandler.class);
+    private static Logger logger = LogManager.getLogger(BPMNApplyEditTextAnnotationOperationHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
