@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1" name="Default Process" processType="Public">
+        <bpmn2:documentation id="documentation_mM0PoQ"/>
+        <bpmn2:dataObject id="dataObject_zEP3wg" name="Data Object-1">
+            <bpmn2:documentation id="documentation_PL8inQ"/>
+        </bpmn2:dataObject>
+        <bpmn2:textAnnotation id="textAnnotation_QcNIVQ" textFormat="">
+            <bpmn2:text id="text_sMC9qA"><![CDATA[Some text
+line2
+line3]]></bpmn2:text>
+            <bpmn2:documentation id="documentation_whvNAQ"/>
+        </bpmn2:textAnnotation>
+    </bpmn2:process>
+    <bpmn2:message id="message_VZJ4qw" name="Message-1"/>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="dataObject_zEP3wg" id="BPMNShape_9yWPqw">
+                <dc:Bounds height="50.0" width="35.0" x="45.5" y="44.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_4eFT3w">
+                    <dc:Bounds height="24.0" width="100.0" x="13.0" y="94.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="textAnnotation_QcNIVQ" id="BPMNShape_0oWVDg">
+                <dc:Bounds height="50.0" width="75.0" x="170.5" y="36.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="message_VZJ4qw" id="BPMNShape_4uGUJQ">
+                <dc:Bounds height="20.0" width="30.0" x="93.0" y="169.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_qtCCww">
+                    <dc:Bounds height="24.0" width="100.0" x="58.0" y="189.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
