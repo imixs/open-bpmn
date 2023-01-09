@@ -39,6 +39,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
@@ -73,10 +74,9 @@ public class BPMNModel {
     protected Set<BPMNProcess> processes = null;
     protected Set<MessageFlow> messageFlows = null;
     protected Set<Signal> signals = null;
-    protected Set<Message> messages = null;    
+    protected Set<Message> messages = null;
     protected Element collaborationElement = null;
 
-   
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
 
     /**
@@ -254,7 +254,6 @@ public class BPMNModel {
         this.messages = messages;
     }
 
-    
     public void setProcesses(Set<BPMNProcess> processes) {
         this.processes = processes;
     }
@@ -696,10 +695,10 @@ public class BPMNModel {
      * @throws BPMNInvalidReferenceException
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidTypeException
-     * @throws BPMNInvalidIDException 
+     * @throws BPMNInvalidIDException
      */
-    public Signal addSignal(String id, String name)
-            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException, BPMNInvalidIDException {
+    public Signal addSignal(String id, String name) throws BPMNInvalidReferenceException, BPMNMissingElementException,
+            BPMNInvalidTypeException, BPMNInvalidIDException {
 
         // verify id
         if (id == null || id.isEmpty()) {
@@ -717,7 +716,7 @@ public class BPMNModel {
 
         return signal;
     }
-    
+
     /**
      * Adds a Message element to the diagram
      * <p>
@@ -725,29 +724,28 @@ public class BPMNModel {
      * 
      * @param id
      * @param name - name of the message
-     * @throws BPMNModelException 
+     * @throws BPMNModelException
      */
-    public Message addMessage(String id, String name)
-            throws BPMNModelException {
+    public Message addMessage(String id, String name) throws BPMNModelException {
 
         // verify id
         if (id == null || id.isEmpty()) {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
-        
+
         // create sequenceFlow element
         Element bpmnElement = createElement(BPMNNS.BPMN2, BPMNTypes.MESSAGE);
         bpmnElement.setAttribute("id", id);
         bpmnElement.setAttribute("name", name);
 
         this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
- 
-        Message message = new Message(this, bpmnElement,BPMNTypes.MESSAGE, this.openDefaultProcess());
+
+        Message message = new Message(this, bpmnElement, BPMNTypes.MESSAGE, this.openDefaultProcess());
         getMessages().add(message);
 
         return message;
     }
-    
+
     /**
      * Finds a Signal element by name withing the diagram
      * <p>
@@ -758,17 +756,17 @@ public class BPMNModel {
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidTypeException
      */
-    public Signal findSignalByName( String name)
+    public Signal findSignalByName(String name)
             throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
 
-        if (name==null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
-        for (Signal signal:signals) {
+        for (Signal signal : signals) {
             if (name.equals(signal.getName())) {
                 return signal;
             }
-        }        
+        }
         return null;
     }
 
@@ -788,7 +786,7 @@ public class BPMNModel {
             if (id.equals(_signal.getId())) {
                 signal = _signal;
                 break;
-                
+
             }
         }
 
@@ -827,8 +825,6 @@ public class BPMNModel {
 
     }
 
-    
-
     /**
      * Deletes a Message element from this diagram.
      * <p>
@@ -845,7 +841,7 @@ public class BPMNModel {
             if (id.equals(_message.getId())) {
                 message = _message;
                 break;
-                
+
             }
         }
 
@@ -882,7 +878,6 @@ public class BPMNModel {
 
     }
 
-    
     /**
      * Finds a BPMNElement by ID within this model. The Element can be a Node or an
      * Edge. The method iterates over all existing Processes and its contained
@@ -897,22 +892,21 @@ public class BPMNModel {
         if (id == null || id.isEmpty()) {
             return null;
         }
-        
+
         // test signals...
-        for (Signal signal: signals) {
+        for (Signal signal : signals) {
             if (id.equals(signal.getId())) {
                 return signal;
             }
         }
 
         // test messages...
-        for (Message message: messages) {
+        for (Message message : messages) {
             if (id.equals(message.getId())) {
                 return message;
             }
         }
 
-        
         // test for participant...
         Participant participant = this.findParticipantById(id);
         if (participant != null) {
@@ -1046,6 +1040,41 @@ public class BPMNModel {
 
         // no corresponding element found!
         return null;
+    }
+
+    /**
+     * This method returns the BPMN Participant (Pool) a element contains to based
+     * on a given absolute position in the diagram. This method is used to move a
+     * element within a diagram from one process pool into another. If no
+     * Participant is found, than the default process will be returned.
+     * 
+     * @param id         - the BPMN Element id
+     * @param deepSearch - if true also containing elements like Pools are analyzed.
+     * @return
+     */
+    public BPMNProcess findBPMNProcessByPoint(BPMNPoint point) {
+        if (point == null) {
+            return null;
+        }
+
+        if (isCollaborationDiagram()) {
+            // iterate over all participants
+            Set<Participant> participantList = this.getParticipants();
+            for (Participant participant : participantList) {
+                // try to get the bound
+                try {
+                    BPMNBounds participantBounds;
+                    participantBounds = participant.getBounds();
+                    if (participantBounds.containsPoint(point)) {
+                        return participant.getBpmnProcess();
+                    }
+                } catch (BPMNMissingElementException e) {
+                    // participant does not contain bounds, so we can skip this one
+                }
+            }
+        }
+        // no participant found - return the default process
+        return this.openDefaultProcess();
     }
 
     /**
@@ -1384,6 +1413,7 @@ public class BPMNModel {
                 participant = new Participant(this, item);
                 // set processRef
                 participant.setProcessRef(item.getAttribute("processRef"));
+                // update process...
                 participants.add(participant);
             }
         }
@@ -1441,6 +1471,15 @@ public class BPMNModel {
 
                 BPMNProcess bpmnProcess = new BPMNProcess(this, item, processType);
                 processes.add(bpmnProcess);
+
+                // we need to update the containing Participant
+                // This assignment can only be done now because the loadParticpantList is called
+                // before this method.
+                Participant participant = bpmnProcess.findParticipant();
+                if (participant != null) {
+                    participant.setBpmnProcess(bpmnProcess);
+                }
+
             }
         }
 
@@ -1489,7 +1528,7 @@ public class BPMNModel {
      */
     private void loadSignalList() throws BPMNModelException {
         signals = new LinkedHashSet<Signal>();
-        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":"+BPMNTypes.SIGNAL);
+        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":" + BPMNTypes.SIGNAL);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
@@ -1498,7 +1537,6 @@ public class BPMNModel {
             }
         }
     }
-    
 
     /**
      * This helper method loads the Message elements from the diagram -
@@ -1508,11 +1546,11 @@ public class BPMNModel {
      */
     private void loadMessageList() throws BPMNModelException {
         messages = new LinkedHashSet<Message>();
-        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":"+BPMNTypes.MESSAGE);
+        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":" + BPMNTypes.MESSAGE);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
-                Message message = new Message(this, item,BPMNTypes.MESSAGE,this.openDefaultProcess());
+                Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProcess());
                 messages.add(message);
             }
         }
@@ -1567,6 +1605,5 @@ public class BPMNModel {
             e.printStackTrace();
         }
     }
-
 
 }
