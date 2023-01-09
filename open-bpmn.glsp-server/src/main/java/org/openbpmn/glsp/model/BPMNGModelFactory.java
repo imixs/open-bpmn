@@ -449,23 +449,25 @@ public class BPMNGModelFactory implements GModelFactory {
             gNodeList.add(labelNode);
         }
 
-        // Add all Messages...
-        for (Message message : modelState.getBpmnModel().getMessages()) {
-            logger.debug("message: " + message.getName());
-            GPoint point = computeRelativeGPoint(message.getBounds(), participant);
+        // search and add Messages only if default process...
+        if (process.isPublicProcess()) {
+            for (Message message : modelState.getBpmnModel().getMessages()) {
+                logger.debug("message: " + message.getName());
+                GPoint point = computeRelativeGPoint(message.getBounds(), participant);
 
-            // Build the GLSP Node....
-            MessageGNode messageNode = new MessageGNodeBuilder(message) //
-                    .position(point) //
-                    .build();
-            gNodeList.add(messageNode);
-            // apply BPMN Extensions
-            applyBPMNExtensions(messageNode, message);
+                // Build the GLSP Node....
+                MessageGNode messageNode = new MessageGNodeBuilder(message) //
+                        .position(point) //
+                        .build();
+                gNodeList.add(messageNode);
+                // apply BPMN Extensions
+                applyBPMNExtensions(messageNode, message);
 
-            // now add a GLabel
-            BPMNLabel bpmnLabel = message.getLabel();
-            LabelGNode labelNode = createLabelNode(bpmnLabel, message, participant);
-            gNodeList.add(labelNode);
+                // now add a GLabel
+                BPMNLabel bpmnLabel = message.getLabel();
+                LabelGNode labelNode = createLabelNode(bpmnLabel, message, participant);
+                gNodeList.add(labelNode);
+            }
         }
 
         // Add all Text Annotations
