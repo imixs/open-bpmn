@@ -117,7 +117,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
 
-    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView);
+    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] } );
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
     configureModelElement(context, 'message', MessageNode, MessageNodeView);

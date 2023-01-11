@@ -45,15 +45,11 @@ export interface BPMNFlowElement {
 
 export class LabelNode extends RectangularNode implements Nameable, WithEditableLabel{
 	static override readonly DEFAULT_FEATURES = [
-		connectableFeature,
-		deletableFeature,
 		selectFeature,
 		boundsFeature,
 		moveFeature,
 		layoutContainerFeature,
-		fadeFeature,
 		hoverFeedbackFeature,
-		popupFeature,
 		nameFeature,
 		withEditLabelFeature
 	];
@@ -313,7 +309,6 @@ export class PoolNode extends RectangularNode implements Nameable, WithEditableL
 		deletableFeature,
 		selectFeature,
 		boundsFeature,
-		moveFeature,
 		layoutContainerFeature,
 		fadeFeature,
 		hoverFeedbackFeature,
