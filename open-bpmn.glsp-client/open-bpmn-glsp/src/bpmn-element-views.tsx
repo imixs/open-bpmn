@@ -289,10 +289,12 @@ export class MessageNodeView extends ShapeView {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
+        const messageIcon='0,0 15,10 30,0';
         return <g>
             <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
                   class-mouseover={node.hoverFeedback} class-selected={node.selected}
                   x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            <polyline points={messageIcon} />
             {context.renderChildren(node)}
         </g>;
     }

@@ -130,6 +130,21 @@
     fill: #82848a;
 }
 
+.message > .sprotty-node {
+	opacity: 80%;
+	stroke: var(--theia-focusBorder);
+    outline-color: #ccc;
+    outline-style: solid;
+    outline-width: 1px;
+    fill: #CFE9F5;
+}
+.message > polyline {
+    stroke: #eee;
+    stroke-width: 2;
+    fill: none;
+}
+
+
 .textAnnotation > .sprotty-node {
 	opacity: 20%;
     fill: #82848a;
