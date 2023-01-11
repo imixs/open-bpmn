@@ -1045,36 +1045,41 @@ public class BPMNModel {
     /**
      * This method returns the BPMN Participant (Pool) a element contains to based
      * on a given absolute position in the diagram. This method is used to move a
-     * element within a diagram from one process pool into another. If no
-     * Participant is found, than the default process will be returned.
+     * element within a diagram from one process pool into another.
+     * <p>
+     * If the model type is no Collaboration diagram the method throws a
+     * BPMNInvalidTypeException
+     * <p>
+     * If no matching Participant can be found, than the method returns null.
      * 
-     * @param id         - the BPMN Element id
-     * @param deepSearch - if true also containing elements like Pools are analyzed.
-     * @return
+     * @param point - an absolute point within the current diagram
+     * @return a Participant or null
+     * @throws BPMNInvalidTypeException
      */
-    public BPMNProcess findBPMNProcessByPoint(BPMNPoint point) {
-        if (point == null) {
-            return null;
-        }
+    public Participant findParticipantByPoint(BPMNPoint point) throws BPMNInvalidTypeException {
+        if (!this.isCollaborationDiagram()) {
+            throw new BPMNInvalidTypeException(BPMNInvalidTypeException.INVALID_TYPE,
+                    "Model type is no collaboration diagram!");
+        }       
 
-        if (isCollaborationDiagram()) {
+        if (point != null && isCollaborationDiagram()) {
             // iterate over all participants
-            Set<Participant> participantList = this.getParticipants();
-            for (Participant participant : participantList) {
+            for (Participant participant : this.getParticipants()) {
                 // try to get the bound
                 try {
                     BPMNBounds participantBounds;
                     participantBounds = participant.getBounds();
                     if (participantBounds.containsPoint(point)) {
-                        return participant.getBpmnProcess();
+                        return participant;
                     }
                 } catch (BPMNMissingElementException e) {
                     // participant does not contain bounds, so we can skip this one
                 }
             }
         }
-        // no participant found - return the default process
-        return this.openDefaultProcess();
+        // no participant - return the default Participant
+        Participant defaultParticipant = findParticipantByProcessId(this.openDefaultProcess().getId());
+        return defaultParticipant;
     }
 
     /**

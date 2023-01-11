@@ -3,6 +3,9 @@ package org.openbpmn.bpmn.elements.core;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
@@ -141,6 +144,47 @@ public abstract class BPMNElementNode extends BPMNElement {
      */
     public BPMNProcess getBpmnProcess() {
         return bpmnProcess;
+    }
+
+    /**
+     * This method updates the participant reference of a BPMNElementNode. In a
+     * collaboration diagram each BPMNElementNode is contained in a participant.
+     * This can be either a Pool (private process) or the default Participant
+     * (public process).
+     * <p>
+     * This method can be used to change the participant (pool) of an element, which
+     * means that the BPMNElementNode is moved from one participant to another, or
+     * it is moved out of or into a pool.
+     * <p>
+     * Note that this method does not validate the absolute position of the
+     * BPMNElementNode within the Diagram plane.
+     * <p>
+     * If the current model is not a collaboration diagram, the method throws a
+     * {@link BPMNInvalidTypeException}
+     * 
+     * @throws BPMNInvalidReferenceException - thrown if participant is null
+     * @throws BPMNInvalidTypeException
+     */
+    public void updateParticipant(Participant participant)
+            throws BPMNInvalidReferenceException, BPMNInvalidTypeException {
+        if (!this.model.isCollaborationDiagram()) {
+            throw new BPMNInvalidTypeException(BPMNInvalidTypeException.INVALID_TYPE,
+                    "Participant can only be set in a collaboration model.");
+        }
+        if (participant == null) {
+            throw new BPMNInvalidReferenceException(BPMNInvalidReferenceException.INVALID_REFERENCE,
+                    "Participant can not be null!");
+        }
+
+        // remove element from old participant
+        this.bpmnProcess.elementNode.removeChild(this.elementNode);
+
+        // add element to new participant
+        participant.bpmnProcess.elementNode.appendChild(this.elementNode);
+
+        // update bpmn Process
+        bpmnProcess = participant.bpmnProcess;
+
     }
 
     /**

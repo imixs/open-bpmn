@@ -51,7 +51,7 @@ public class Participant extends BPMNElementNode {
         }
         return null;
     }
-
+  
     public String getProcessRef() {
         return processRef;
     }
@@ -60,6 +60,29 @@ public class Participant extends BPMNElementNode {
         this.processRef = processRef;
         this.getElementNode().setAttribute("processRef", processRef);
     }
+    
+    /**
+     * This method returns the corresponding BPMNProcess ID for this Element.
+     * 
+     * @param bpmynElement
+     * @return
+     */
+    @Override
+    public String getProcessId() {
+        return getProcessRef();
+    }
+
+    
+    /**
+     * Updates the BPMNProcessRef of the Participant
+     * 
+     * @return
+     */
+    public void setBpmnProcess(BPMNProcess _process) {
+        this.bpmnProcess=_process;
+        this.setProcessRef(_process.getId());
+    }
+
 
 
     @Override

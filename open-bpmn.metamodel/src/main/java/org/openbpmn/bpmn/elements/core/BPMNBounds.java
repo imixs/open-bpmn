@@ -87,6 +87,10 @@ public class BPMNBounds {
         elementNode.setAttribute("x", "" + x);
         elementNode.setAttribute("y", "" + y);
     }
+    public void setPosition(BPMNPoint point) {
+        elementNode.setAttribute("x", "" + point.getX());
+        elementNode.setAttribute("y", "" + point.getY());
+    }
 
     public BPMNPoint getPosition() {
         return new BPMNPoint(elementNode.getAttribute("x"), elementNode.getAttribute("y"));
@@ -102,13 +106,32 @@ public class BPMNBounds {
         BPMNDimension size = getDimension();
         Double _x = point.getX() + (size.getWidth() * 0.5);
         Double _y = point.getY() + (size.getHeight() * 0.5);
-        return new BPMNPoint(_x.intValue(), _y.intValue());
+        return new BPMNPoint(_x, _y);
     }
 
     @Override
     public String toString() {
         return "x=" + elementNode.getAttribute("x") + " y=" + elementNode.getAttribute("y") + " width="
                 + elementNode.getAttribute("width") + " heigth=" + elementNode.getAttribute("height");
+    }
+
+    /**
+     * This method returns true, if a given BPMN Point is within this BPMNBounds
+     * @param point
+     * @return
+     */
+    public boolean containsPoint(BPMNPoint point) {
+        
+        double x = this.getPosition().getX();
+        double y = this.getPosition().getY();
+        double w = this.getDimension().getWidth();
+        double h = this.getDimension().getHeight();
+        // is the point within this dimensions?
+        if (point.getX()>=x && point.getX()<=x+w 
+                && point.getY()>=y && point.getY()<=y+h) {
+            return true;
+        }
+        return false;
     }
 
 }
