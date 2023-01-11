@@ -145,6 +145,7 @@
 	font-size: 0.6em;
 	font-family: sans-serif;
 	margin: 0.3em;
+	white-space: pre-wrap;
 }
 
 
