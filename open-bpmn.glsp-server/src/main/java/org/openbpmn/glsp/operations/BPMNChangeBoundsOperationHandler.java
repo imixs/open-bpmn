@@ -198,7 +198,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 // find the containing participant
                 Participant participant = modelState.getBpmnModel().findParticipantByPoint(newBpmnPoint);
                 // verify if the participant ID has changed
-                if (!bpmnElementNode.getProcessId().equals(participant.getProcessId())) {
+                if (participant != null && !bpmnElementNode.getProcessId().equals(participant.getProcessId())) {
                     logger.info("Element was dropped on a new Participant - Processid=" + participant.getId());
                     bpmnElementNode.updateParticipant(participant);
                     // next we can update the GModel Parent node
