@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
@@ -37,7 +39,10 @@ import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -59,6 +64,11 @@ import com.google.inject.Inject;
  * selection listener in those cases. (See the client implementation
  * BPMNLabelNodeSelectionListener)
  * <p>
+ * In case the new bounds are now contained by another Participant or dropped
+ * outside of Participant, than the method verifies if the BPMN element need to
+ * be placed in a new process within the bpmn model.
+ *
+ * <p>
  * In case the Bounds of a Pool are updated, we also update an embedded laneSet.
  * <p>
  * Updating the dimensions of a GNode is done by updating the node properties
@@ -79,7 +89,11 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
     /**
      * Update the bounds for all selected elements in the GModel and also in the
-     * BPMNModel
+     * BPMNModel.
+     * <p>
+     * BPMNLabels and the corresponding element can appear in the same selection. In
+     * this case we remove the label from the selection because the
+     * updateFlowElement method treads the label automatically.
      */
     @Override
     public void executeOperation(final ChangeBoundsOperation operation) {
@@ -88,7 +102,12 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
-            for (ElementAndBounds elementBound : elementBounds) {
+
+            // first sort out all elementBounds from BPMNLable objects if the flowElment is
+            // part of this selection (see method updateFlowElement)
+            List<ElementAndBounds> filteredElementBounds = filterElements(elementBounds);
+
+            for (ElementAndBounds elementBound : filteredElementBounds) {
                 String id = elementBound.getElementId();
 
                 GPoint newPoint = elementBound.getNewPosition();
@@ -103,68 +122,242 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 }
 
                 GNode gNode = _node.get();
-                // first we compute the x/x offset
+                // compute the new offset x/y
                 double offsetX = newPoint.getX() - gNode.getPosition().getX();
                 double offsetY = newPoint.getY() - gNode.getPosition().getY();
-                double offsetWidth = newSize.getWidth() - gNode.getSize().getWidth();
-                double offsetHeight = newSize.getHeight() - gNode.getSize().getHeight();
-                logger.info("...bounds update for: " + id + " Offset= x:" + offsetX + " y:" + offsetY + " width: "
-                        + newSize.getWidth() + " height: " + newSize.getHeight());
+                logger.info("...bounds update for: " + id);
 
-                // Update GNode according to the new position....
-                gNode.setPosition(newPoint);
-                // Update GNode dimension....
-                gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
-                gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
-                // calling the size method does not have an effect.
-                // see:
-                // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-                gNode.setSize(newSize);
+                // find the BPMNElementNode
+                BPMNElementNode bpmnElementNode = (BPMNElementNode) modelState.getBpmnModel().findElementById(id);
+                if (bpmnElementNode != null) {
 
-                // Now update the corresponding BPMN element
-                BPMNBounds bpmnBounds = modelState.getBpmnModel().findBPMNBoundsById(id);
-                if (bpmnBounds != null) {
-
-                    // finally update BPMNElement bounds....
-                    bpmnBounds.setPosition(bpmnBounds.getPosition().getX() + offsetX,
-                            bpmnBounds.getPosition().getY() + offsetY);
-                    bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
-
-                    // if we have a Participant element selected than we need to update
-                    // all embedded BPMNFlow Elements and also the LaneSet if available.
-                    Participant participant = modelState.getBpmnModel().findParticipantById(id);
-                    if (participant != null) {
-                        logger.info("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
-                        BPMNProcess process = participant.openProcess();
-
-                        updateLaneSet(participant, offsetWidth, offsetHeight);
-                        updateFlowElements(process, offsetX, offsetY, offsetWidth, offsetHeight);
+                    if (bpmnElementNode instanceof Participant) {
+                        updatePool(gNode, bpmnElementNode, id, newPoint, newSize);
+                    } else {
+                        // it is a normal bpmn flow element...
+                        updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize);
                     }
-
                 } else {
                     // test if we have a BPMNLable element was selected?
                     if (id.endsWith("_bpmnlabel")) {
-                        // yes, update the GLabel position
-                        gNode.setPosition(newPoint);
+                        // find parent
+                        String flowElementID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
+                        BPMNElementNode _bpmnElement = modelState.getBpmnModel().findElementNodeById(flowElementID);
+                        BPMNLabel bpmnLabel = _bpmnElement.getLabel();
 
-                        // update the BPMNLabel bounds
-                        // Therefor we need first find the corresponding BPMNFlowElement
-                        String labelID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
-                        BPMNElementNode bpmnElement = modelState.getBpmnModel().findElementNodeById(labelID);
-
-                        BPMNLabel bpmnLabel = bpmnElement.getLabel();
-                        if (bpmnLabel != null) {
-                            BPMNPoint labelPoint = bpmnLabel.getBounds().getPosition();
-                            bpmnLabel.updateLocation(labelPoint.getX() + offsetX, labelPoint.getY() + offsetY);
-                        }
+                        updateLabel(gNode, bpmnLabel, offsetX, offsetY);
                     }
                 }
 
             }
-        } catch (BPMNMissingElementException e) {
+        } catch (BPMNMissingElementException | BPMNInvalidReferenceException | BPMNInvalidTypeException e) {
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
+    }
+
+    /**
+     * This helper method updates the position and dimension of a bpmnElementNode.
+     * The new absolute position can be computed with the given x/y offset in the
+     * BPMN model.
+     * <p>
+     * In addition the method computes the absolute position on the diagram an
+     * verifies if the bpmnElementNode has a new parent BPMN Pool. This is the case
+     * when a Flow Element is dropped on a Pool or outside a Pool. In this case the
+     * method changes the containing BPMN Process in the source model for this
+     * element.
+     * <p>
+     * The method also takes care about a BPMNLable assigned to the Flow element and
+     * adjusts the label position relative to the new element position.
+     *
+     * @param gNode
+     * @param bpmnElementNode
+     * @param elementBound
+     * @param offsetX
+     * @param offsetY
+     * @param newSize
+     * @throws BPMNInvalidTypeException
+     * @throws BPMNMissingElementException
+     * @throws BPMNInvalidReferenceException
+     */
+    private void updateFlowElement(final GNode gNode, final BPMNElementNode bpmnElementNode,
+            final ElementAndBounds elementBound, final GPoint newPoint, final GDimension newSize)
+            throws BPMNInvalidTypeException, BPMNMissingElementException, BPMNInvalidReferenceException {
+
+        double offsetX = newPoint.getX() - gNode.getPosition().getX();
+        double offsetY = newPoint.getY() - gNode.getPosition().getY();
+
+        BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
+        if (bpmnBounds != null) {
+            BPMNPoint oldBpmnPoint = bpmnBounds.getPosition();
+            BPMNPoint newBpmnPoint = new BPMNPoint(oldBpmnPoint.getX() + offsetX, oldBpmnPoint.getY() + offsetY);
+
+            // now we can verify if the element is contained by a new BPMN Pool. This is
+            // only needed for CollaborationDiagrams...
+            if (modelState.getBpmnModel().isCollaborationDiagram()) {
+                // find the containing participant
+                Participant participant = modelState.getBpmnModel().findParticipantByPoint(newBpmnPoint);
+                // verify if the participant ID has changed
+                if (!bpmnElementNode.getProcessId().equals(participant.getProcessId())) {
+                    logger.info("Element was dropped on a new Participant - Processid=" + participant.getId());
+                    bpmnElementNode.updateParticipant(participant);
+                    // next we can update the GModel Parent node
+                    Optional<GNode> _participantGNode = modelState.getIndex().findElementByClass(participant.getId(),
+                            GNode.class);
+                    if (_participantGNode.isPresent()) {
+                        GNode parentGnode = _participantGNode.get();
+                        gNode.setParent(parentGnode);
+
+                        // update relative position...
+                        GPoint relativePoint = GraphUtil.point(newBpmnPoint.getX() - parentGnode.getPosition().getX(),
+                                newBpmnPoint.getY() - parentGnode.getPosition().getY());
+                        gNode.setPosition(relativePoint);
+
+                        // update Label parent...
+                        String labelID = gNode.getId() + "_bpmnlabel";
+                        Optional<GNode> _labelNode = modelState.getIndex().findElementByClass(labelID, GNode.class);
+                        if (_labelNode.isPresent()) {
+                            _labelNode.get().setParent(parentGnode);
+                        }
+                    } else {
+                        // move to root
+                        gNode.setParent(modelState.getIndex().getRoot());
+                        // update absolute position...
+                        GPoint absolutePoint = GraphUtil.point(newBpmnPoint.getX(), newBpmnPoint.getY());
+                        gNode.setPosition(absolutePoint);
+
+                        // update Label parent...
+                        String labelID = gNode.getId() + "_bpmnlabel";
+                        Optional<GNode> _labelNode = modelState.getIndex().findElementByClass(labelID, GNode.class);
+                        if (_labelNode.isPresent()) {
+                            _labelNode.get().setParent(modelState.getIndex().getRoot());
+                        }
+                    }
+                } else {
+                    // we are still in the same pool so we can simply update the x/y offset
+                    gNode.setPosition(newPoint);
+                }
+            } else {
+                // update absolute position as we are not in a collaboration diagram
+                gNode.setPosition(newPoint);
+            }
+
+            // The BPMN Position is always absolute so we can simply update the element
+            // BPMN Position by the new offset and new dimensions.
+            bpmnBounds.setPosition(newBpmnPoint);
+            bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
+
+            // Finally Update GNode dimension....
+            gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+            gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+            // calling the size method does not have an effect.
+            // see:
+            // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+            gNode.setSize(newSize);
+            // if the flow Element has a BPMNLabel, than we need to adjust finally the
+            // position of the label too
+            if (bpmnElementNode.hasBPMNLabel()) {
+                BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
+                Optional<GNode> _labelnode = modelState.getIndex()
+                        .findElementByClass(bpmnElementNode.getId() + "_bpmnlabel", GNode.class);
+                updateLabel(_labelnode.get(), bpmnLabel, offsetX, offsetY);
+            }
+        }
+    }
+
+    /**
+     * This helper method updates the position and dimension of a BPMN Pool and all
+     * included BPMN Node Elements
+     *
+     * @param gNode
+     * @param bpmnElementNode
+     * @param id
+     * @param offsetX
+     * @param offsetY
+     * @param newSize
+     * @throws BPMNMissingElementException
+     */
+    private void updatePool(final GNode gNode, final BPMNElementNode bpmnElementNode, final String id,
+            final GPoint newPoint, final GDimension newSize) throws BPMNMissingElementException {
+
+        double offsetX = newPoint.getX() - gNode.getPosition().getX();
+        double offsetY = newPoint.getY() - gNode.getPosition().getY();
+
+        double offsetWidth = newSize.getWidth() - gNode.getSize().getWidth();
+        double offsetHeight = newSize.getHeight() - gNode.getSize().getHeight();
+
+        // Update GNode according to the new position....
+        gNode.setPosition(newPoint);
+        // Update GNode dimension....
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+        // calling the size method does not have an effect.
+        // see:
+        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+        gNode.setSize(newSize);
+
+        BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
+        // update BPMNElement bounds....
+        if (bpmnBounds != null) {
+            bpmnBounds.setPosition(bpmnBounds.getPosition().getX() + offsetX,
+                    bpmnBounds.getPosition().getY() + offsetY);
+            bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
+        }
+        // if we have a Participant element selected than we also need to update
+        // all embedded FlowElements and also the LaneSet if available.
+        Participant participant = modelState.getBpmnModel().findParticipantById(id);
+        if (participant != null) {
+            logger.info("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
+            BPMNProcess process = participant.openProcess();
+            updateLaneSet(participant, offsetWidth, offsetHeight);
+            updateEmbeddedElementNodes(process, offsetX, offsetY);
+        }
+    }
+
+    /**
+     * This helper method updates the position of a BPMNLabel. The method expects
+     * the x/y offset and first updates the absolute position in the BPMN plane.
+     * Than the method computes the current container and the relative GPoint
+     * position in the GModel.
+     *
+     * @param gNode
+     * @param newPoint
+     * @param id
+     * @param offsetX
+     * @param offsetY
+     * @throws BPMNMissingElementException
+     */
+    private void updateLabel(final GNode gLabel, final BPMNLabel bpmnLabel, final double offsetX, final double offsetY)
+            throws BPMNMissingElementException {
+
+        if (bpmnLabel != null) {
+            // now we can update the absolute position of the label
+            BPMNPoint labelPoint = bpmnLabel.getBounds().getPosition();
+            bpmnLabel.updateLocation(labelPoint.getX() + offsetX, labelPoint.getY() + offsetY);
+        }
+
+        // next update the GLabel position
+        // if the label is in a container (Pool) we need to compute the relative
+        // position
+        GModelElement parent = gLabel.getParent();
+        GPoint newLabelGPoint = null;
+        double absoluteX = bpmnLabel.getPosition().getX();
+        double absoluteY = bpmnLabel.getPosition().getY();
+
+        // is it a pool?
+        if (parent instanceof PoolGNode) {
+            GPoint poolPosition = ((GNode) parent).getPosition();
+            double relativeX = absoluteX - poolPosition.getX();
+            double relativeY = absoluteY - poolPosition.getY();
+            newLabelGPoint = GraphUtil.point(relativeX, relativeY);
+        } else {
+            // parent is the root plane
+            newLabelGPoint = GraphUtil.point(absoluteX, absoluteY);
+        }
+        if (newLabelGPoint != null) {
+            gLabel.setPosition(newLabelGPoint);
+        }
+
     }
 
     /**
@@ -181,7 +374,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      * @param offsetHeight
      * @throws BPMNMissingElementException
      */
-    void updateLaneSet(final Participant participant, final double offsetWidth, final double offsetHeight)
+    private void updateLaneSet(final Participant participant, final double offsetWidth, final double offsetHeight)
             throws BPMNMissingElementException {
         BPMNProcess process = participant.openProcess();
         Set<Lane> bpmnLaneSet = process.getLanes();
@@ -266,15 +459,18 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
     }
 
     /**
-     * This method updates the position for all BPMNFlowElements contained in a pool
-     * given a x and y offset.
+     * This method updates the position for all BPMNElementNodes contained in a pool
+     * given a x and y offset. This method is needed because in BPMN all positions
+     * are absolute and in GLSP the position of a element embedded in a container is
+     * relative.
      *
-     * @param process
-     * @param participant
+     * @param process - the bpmnProcess containing the bpmn element nodes.
+     * @param offsetX - new X offset
+     * @param offsetY - new Y offset
      * @throws BPMNMissingElementException
      */
-    void updateFlowElements(final BPMNProcess process, final double offsetX, final double offsetY,
-            final double offsetWidth, final double offsetHeight) throws BPMNMissingElementException {
+    void updateEmbeddedElementNodes(final BPMNProcess process, final double offsetX, final double offsetY)
+            throws BPMNMissingElementException {
 
         // Update all FlowElements
         Set<BPMNElementNode> bpmnFlowElements = process.getAllNodes();
@@ -297,5 +493,36 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             }
         }
 
+    }
+
+    /**
+     * This helper method removes all BPMNLables from a list of ElementAndBounds if
+     * the corresponding Node is already part of the list.
+     *
+     * @param elementBounds
+     * @return
+     */
+    private List<ElementAndBounds> filterElements(final List<ElementAndBounds> elementBounds) {
+        // first sort out all elementBounds from BPMNLable objects if the flowElment is
+        // part of this selection (see method updateFlowElement)
+        List<ElementAndBounds> filteredElementBounds = new ArrayList<>();
+        // copy all
+        filteredElementBounds.addAll(elementBounds);
+        Iterator<ElementAndBounds> iter = filteredElementBounds.iterator();
+        while (iter.hasNext()) {
+            ElementAndBounds element = iter.next();
+            String id = element.getElementId();
+            if (id.endsWith("_bpmnlabel")) {
+                String flowElementID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
+                // test if the id is part of our primary list...
+                for (ElementAndBounds e : elementBounds) {
+                    if (flowElementID.equals(e.getElementId())) {
+                        iter.remove();
+                        break;
+                    }
+                }
+            }
+        }
+        return filteredElementBounds;
     }
 }
