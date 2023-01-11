@@ -57,6 +57,7 @@ import com.google.inject.Inject;
  *
  */
 public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
+
     private static Logger logger = LogManager.getLogger(DefaultBPMNEventExtension.class);
 
     @Inject
@@ -207,7 +208,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
             if (jsonData != null) {
                 String signalName = jsonData.getString("signal");
-                logger.info("signal=" + signalName);
+                logger.debug("signal=" + signalName);
                 try {
                     Signal signal = modelState.getBpmnModel().findSignalByName(signalName);
                     eventDefinitionElement.setAttribute("signalRef", signal.getId());

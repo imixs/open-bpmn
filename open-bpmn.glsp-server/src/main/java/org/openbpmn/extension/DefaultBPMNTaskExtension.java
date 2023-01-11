@@ -18,10 +18,11 @@ package org.openbpmn.extension;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
@@ -42,7 +43,7 @@ import org.openbpmn.glsp.utils.BPMNBuilderHelper;
  */
 public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
-    private static Logger logger = Logger.getLogger(DefaultBPMNTaskExtension.class.getName());
+    private static Logger logger = LogManager.getLogger(DefaultBPMNTaskExtension.class);
 
     public DefaultBPMNTaskExtension() {
         super();
@@ -132,7 +133,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 continue;
             }
 
-            logger.info("...update feature = " + feature);
+            logger.debug("...update feature = " + feature);
 
             if ("scriptformat".equals(feature)) {
                 bpmnElement.setAttribute("scriptFormat", json.getString(feature));

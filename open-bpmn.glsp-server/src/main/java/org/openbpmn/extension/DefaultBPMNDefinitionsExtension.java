@@ -18,7 +18,6 @@ package org.openbpmn.extension;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -27,6 +26,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
@@ -53,7 +54,7 @@ import com.google.inject.Inject;
  */
 public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtension {
 
-    private static Logger logger = Logger.getLogger(DefaultBPMNDefinitionsExtension.class.getName());
+    private static Logger logger = LogManager.getLogger(DefaultBPMNDefinitionsExtension.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -151,7 +152,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
 
             // Signals...
             if ("signals".equals(feature)) {
-                logger.info("...update feature = " + feature);
+                logger.debug("...update feature = " + feature);
                 JsonArray signalSetValues = json.getJsonArray(feature);
                 for (JsonValue laneValue : signalSetValues) {
                     // update signal properties
@@ -168,7 +169,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                             modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
                             modelState.reset();
                         } catch (BPMNModelException e) {
-                            logger.warning("Unable to add new signal: " + e.getMessage());
+                            logger.warn("Unable to add new signal: " + e.getMessage());
                         }
 
                     }

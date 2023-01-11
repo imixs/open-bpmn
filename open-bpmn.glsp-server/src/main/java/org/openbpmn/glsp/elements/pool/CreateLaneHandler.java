@@ -16,16 +16,17 @@
 package org.openbpmn.glsp.elements.pool;
 
 import java.util.List;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -40,7 +41,9 @@ import com.google.inject.Inject;
  *
  */
 public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
-    private static Logger logger = Logger.getLogger(CreateLaneHandler.class.getName());
+
+    private static Logger logger = LogManager.getLogger(CreateLaneHandler.class);
+
     private String elementTypeId;
 
     @Inject
@@ -55,7 +58,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
 
     @Override
     public void executeOperation(final CreateNodeOperation operation) {
-        logger.info("===== > created lane....");
+        logger.debug("===== > created lane....");
         elementTypeId = operation.getElementTypeId();
         // now we add a new lane into the source model
         String laneID = BPMNModel.generateShortID("lane");
@@ -65,7 +68,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
             if (bpmnProcess != null) {
                 Lane bpmnLane = bpmnProcess.addLane(modelState.getBpmnModel(),
                         "Lane " + (bpmnProcess.getLanes().size() + 1));
-                logger.info("===== > created lane=" + bpmnLane.getId());
+                logger.debug("===== > created lane=" + bpmnLane.getId());
 
             }
         } catch (BPMNModelException e) {

@@ -103,6 +103,7 @@ import org.w3c.dom.Node;
  * </p>
  **/
 public class BPMNGModelFactory implements GModelFactory {
+
     private static Logger logger = LogManager.getLogger(BPMNGModelFactory.class);
 
     @Inject
@@ -137,7 +138,7 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             modelState.setInitalized(true);
-            logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
+            logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
         } else {
             logger.debug("===> createGModel skipped!");
         }
@@ -290,7 +291,7 @@ public class BPMNGModelFactory implements GModelFactory {
         // Build JSONForms UISchema
         try (Writer writer = new StringWriter()) {
             String uiSchema = uiSchemaBuilder.build();
-            logger.info(uiSchema);
+            logger.debug(uiSchema);
             elementNode.getArgs().put("JSONFormsUISchema", uiSchema);
         } catch (IOException e) {
             e.printStackTrace();
@@ -299,7 +300,7 @@ public class BPMNGModelFactory implements GModelFactory {
         // Build JSONForms Schema
         try (Writer writer = new StringWriter()) {
             String schema = schemaBuilder.build();
-            logger.info(schema);
+            logger.debug(schema);
             elementNode.getArgs().put("JSONFormsSchema", schema);
         } catch (IOException e) {
             e.printStackTrace();

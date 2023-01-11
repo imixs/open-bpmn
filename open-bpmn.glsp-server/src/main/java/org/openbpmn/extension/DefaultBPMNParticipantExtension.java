@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -28,6 +27,8 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -54,7 +55,7 @@ import com.google.inject.Inject;
  */
 public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtension {
 
-    private static Logger logger = Logger.getLogger(DefaultBPMNParticipantExtension.class.getName());
+    private static Logger logger = LogManager.getLogger(DefaultBPMNParticipantExtension.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -205,7 +206,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
                 // LaneSet...
                 if ("lanes".equals(feature)) {
-                    logger.info("...update feature = " + feature);
+                    logger.debug("...update feature = " + feature);
                     JsonArray laneSetValues = json.getJsonArray(feature);
                     for (JsonValue laneValue : laneSetValues) {
                         // update lane properties
@@ -226,10 +227,10 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                 }
             }
         } catch (BPMNModelException e) {
-            logger.severe("Failed to update laneSet properties: " + e.getMessage());
+            logger.error("Failed to update laneSet properties: " + e.getMessage());
         }
 
-        logger.info("laneSet update in " + (System.currentTimeMillis() - l) + "ms");
+        logger.debug("laneSet update in " + (System.currentTimeMillis() - l) + "ms");
     }
 
 }

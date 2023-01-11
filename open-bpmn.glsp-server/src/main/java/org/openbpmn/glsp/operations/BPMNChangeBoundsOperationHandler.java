@@ -98,7 +98,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
     @Override
     public void executeOperation(final ChangeBoundsOperation operation) {
         // iterate over all new Bounds...
-        logger.info("=== ChangeBoundsOperation - " + operation.getNewBounds().size() + " new bounds");
+        logger.debug("=== ChangeBoundsOperation - " + operation.getNewBounds().size() + " new bounds");
 
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
@@ -125,7 +125,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 // compute the new offset x/y
                 double offsetX = newPoint.getX() - gNode.getPosition().getX();
                 double offsetY = newPoint.getY() - gNode.getPosition().getY();
-                logger.info("...bounds update for: " + id);
+                logger.debug("...bounds update for: " + id);
 
                 // find the BPMNElementNode
                 BPMNElementNode bpmnElementNode = (BPMNElementNode) modelState.getBpmnModel().findElementById(id);
@@ -199,7 +199,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                 Participant participant = modelState.getBpmnModel().findParticipantByPoint(newBpmnPoint);
                 // verify if the participant ID has changed
                 if (participant != null && !bpmnElementNode.getProcessId().equals(participant.getProcessId())) {
-                    logger.info("Element was dropped on a new Participant - Processid=" + participant.getId());
+                    logger.debug("Element was dropped on a new Participant - Processid=" + participant.getId());
                     bpmnElementNode.updateParticipant(participant);
                     // next we can update the GModel Parent node
                     Optional<GNode> _participantGNode = modelState.getIndex().findElementByClass(participant.getId(),
@@ -307,7 +307,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         // all embedded FlowElements and also the LaneSet if available.
         Participant participant = modelState.getBpmnModel().findParticipantById(id);
         if (participant != null) {
-            logger.info("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
+            logger.debug("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
             BPMNProcess process = participant.openProcess();
             updateLaneSet(participant, offsetWidth, offsetHeight);
             updateEmbeddedElementNodes(process, offsetX, offsetY);
@@ -380,7 +380,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         Set<Lane> bpmnLaneSet = process.getLanes();
 
         String processID = process.getId();
-        logger.info("update laneSet for Process : " + processID);
+        logger.debug("update laneSet for Process : " + processID);
         if (bpmnLaneSet.size() == 0) {
             return; // no op
         }
@@ -389,7 +389,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         int laneCount = process.getLanes().size();
         int offsetHeightRatio = (int) (offsetHeight / laneCount);
         BPMNBounds poolBounds = participant.getBounds();
-        logger.info("  ===> Pool Height = " + poolBounds.getDimension().getHeight());
+        logger.debug("  ===> Pool Height = " + poolBounds.getDimension().getHeight());
 
         int bpmnLaneX = (int) (poolBounds.getPosition().getX() + Participant.POOL_OFFSET);
         int bpmnLaneY = (int) poolBounds.getPosition().getY();
@@ -428,14 +428,14 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             // it can happen, that the height it to large for the current pool height. We
             // check this and adjust the height if needed.
             if ((!laneSetIterator.hasNext() && laneHeight != maxLaneHeight) || (laneHeight > maxLaneHeight)) {
-                logger.info("BPMNlane height mismatch : current=" + laneHeight + "  max available=" + maxLaneHeight);
+                logger.warn("BPMNlane height mismatch : current=" + laneHeight + "  max available=" + maxLaneHeight);
                 laneHeight = maxLaneHeight;
                 logger.info("new lane height : " + laneHeight);
             }
 
             bpmnLaneBounds.setDimension(bpmnLaneWidth, laneHeight);
 
-            logger.info("  ===> Lane " + lane.getId() + " new Height = " + bpmnLaneBounds.getDimension().getHeight());
+            logger.debug("  ===> Lane " + lane.getId() + " new Height = " + bpmnLaneBounds.getDimension().getHeight());
 
             bpmnLaneBounds.setPosition(bpmnLaneX, bpmnLaneY);
             // adjust laneY for the next iteration
@@ -475,7 +475,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         // Update all FlowElements
         Set<BPMNElementNode> bpmnFlowElements = process.getAllNodes();
         for (BPMNElementNode flowElement : bpmnFlowElements) {
-            logger.info("update element bounds: " + flowElement.getId());
+            logger.debug("update element bounds: " + flowElement.getId());
             try {
                 BPMNBounds bounds = flowElement.getBounds();
                 if (bounds != null) {

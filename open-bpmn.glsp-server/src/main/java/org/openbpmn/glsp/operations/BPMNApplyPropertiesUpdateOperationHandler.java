@@ -18,13 +18,14 @@ package org.openbpmn.glsp.operations;
 import java.io.StringReader;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.json.Json;
 import javax.json.JsonException;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
@@ -43,7 +44,7 @@ import com.google.inject.Inject;
  */
 public class BPMNApplyPropertiesUpdateOperationHandler
         extends AbstractOperationHandler<BPMNApplyPropertiesUpdateOperation> {
-    private static Logger logger = Logger.getLogger(BPMNApplyPropertiesUpdateOperationHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNApplyPropertiesUpdateOperationHandler.class);
 
     @Inject
     protected ActionDispatcher actionDispatcher;
@@ -101,19 +102,13 @@ public class BPMNApplyPropertiesUpdateOperationHandler
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     extension.updatePropertiesData(json, bpmnElement, gModelElement);
-
-//                    if (BPMNModel.isEvent(bpmnElement) || BPMNModel.isGateway(bpmnElement)) {
-//                        extension.updatePropertiesData(json, bpmnElement, element.get());
-//                    } else {
-//                        extension.updatePropertiesData(json, bpmnElement, element.get());
-//                    }
                 }
             }
         }
 
         // finally we need to update the JSONFormsData property of the selected element
         gModelElement.getArgs().put("JSONFormsData", json.toString());
-        logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
+        logger.debug("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
     }
 

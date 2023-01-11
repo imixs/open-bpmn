@@ -17,8 +17,9 @@ package org.openbpmn.glsp.utils;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
@@ -26,8 +27,8 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
@@ -40,7 +41,9 @@ import org.openbpmn.glsp.model.BPMNGModelState;
  *
  */
 public class BPMNBuilderHelper {
-    private static Logger logger = Logger.getLogger(BPMNBuilderHelper.class.getName());
+
+    private static Logger logger = LogManager.getLogger(BPMNBuilderHelper.class);
+
     private static final String V_GRAB = "vGrab";
 
     public static IconGCompartment createCompartmentIcon(final BPMNGNode node) {
@@ -112,7 +115,7 @@ public class BPMNBuilderHelper {
      */
     public static BPMNProcess findProcessByContainer(final BPMNGModelState modelState, final GModelElement container) {
         String containerId = container.getId();
-        logger.info(" ==> Container ID : " + container.getId());
+        logger.debug(" ==> Container ID : " + container.getId());
 
         BPMNProcess bpmnProcess = null;
         // is it the root?

@@ -19,8 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -49,7 +50,7 @@ import com.google.inject.Inject;
  */
 public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
 
-    private static Logger logger = Logger.getLogger(BPMNCreateExtensionHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNCreateExtensionHandler.class);
 
     @Inject
     protected Set<BPMNExtension> extensions;
@@ -102,12 +103,12 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
         // now we add this extension directly into the BPMN element of the source
         // model
         Optional<GModelElement> container = this.getContainer(operation);
-        logger.info(" Extension Create Operation - elementTypeID=" + operation.getElementTypeId());
+        logger.debug(" Extension Create Operation - elementTypeID=" + operation.getElementTypeId());
         if (container.isPresent()) {
             Optional<GModelElement> element = modelState.getIndex().get(container.get().getId());
             if (element.isPresent()) {
                 elementID = element.get().getId();
-                logger.info("===== > add extension for element id: " + elementID);
+                logger.debug("===== > add extension for element id: " + elementID);
 
                 BPMNProcess process = modelState.getBpmnModel().openDefaultProcess();
                 BPMNElementNode bpmnElement = process.findElementNodeById(elementID);
