@@ -168,6 +168,7 @@
 
 .pool > .sprotty-node {
     fill: var(--theia-titleBar-activeBackground);
+    pointer-events: none;
     opacity: 70%;
     stroke: var(--theia-focusBorder);
     outline-color: var(--theia-focusBorder);
