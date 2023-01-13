@@ -61,7 +61,7 @@ public abstract class BPMNElementEdge extends BPMNElement {
                 createBPMNEdge();
             } else {
                 // parse waypoints (di:waypoint)
-                Set<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,model.getNameSpacePrefix( BPMNNS.DI) + ":waypoint");
+                Set<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,model.getPrefix( BPMNNS.DI) + ":waypoint");
                 for (Element wayPoint : wayPoints) {
                     NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                     BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
@@ -209,7 +209,7 @@ public abstract class BPMNElementEdge extends BPMNElement {
         // find all di:waypoint
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
-            if ((model.getNameSpacePrefix(BPMNNS.DI) + ":waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
+            if ((model.getPrefix(BPMNNS.DI) + ":waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
                 // collect node....
                 deletionList.add(child);
             }

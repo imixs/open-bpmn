@@ -191,7 +191,7 @@ public abstract class BPMNElement {
 
             // lazy loading of documentation element
             Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":" + nodeName);
+                    getModel().getPrefix(BPMNNS.BPMN2) + ":" + nodeName);
             if (elementList.size() > 0) {
                 // get the first one and update the value only
                 childNode = elementList.iterator().next();

@@ -43,7 +43,7 @@ public class TestReadDom {
         }
 
         // next validate the BPMN Default Namespaces
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
         logger.info("...model read sucessful");
     }
@@ -67,7 +67,7 @@ public class TestReadDom {
         }
 
         // next validate the BPMN Default Namespaces
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
         
         BPMNProcess process = model.openDefaultProcess();
@@ -96,13 +96,13 @@ public class TestReadDom {
         BPMNModel model = BPMNModelFactory.read("/process_1_custom_namespace.bpmn");
         System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
         // next validate the custom BPMN Namespace for bpmn2
-        assertEquals("http://www.omg.org/spec/BPMN/20100000/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+        assertEquals("http://www.omg.org/spec/BPMN/20100000/MODEL", model.getUri(BPMNNS.BPMN2));
 
         // now we read once again a model with the default namespace
         // we expect that the default namespace is set again!
         model = BPMNModelFactory.read("/process_1.bpmn");
         // next validate the BPMN Default Namespaces
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
         logger.info("...model read sucessful");
 
@@ -122,7 +122,7 @@ public class TestReadDom {
         System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
 
         // next validate the BPMN Default Namespaces
-        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
         assertNotNull(model);
         BPMNProcess defaultProcess=model.openDefaultProcess();
         assertNotNull(defaultProcess);
