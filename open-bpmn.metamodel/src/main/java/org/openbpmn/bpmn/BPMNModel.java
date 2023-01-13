@@ -78,6 +78,7 @@ public class BPMNModel {
     protected Element collaborationElement = null;
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
+    private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
 
     /**
      * Returns the namespace uri for a given namespace
@@ -92,9 +93,24 @@ public class BPMNModel {
     public void setNameSpaceUri(BPMNNS ns, String uri) {
         URI_BY_NAMESPACE.put(ns, uri);
     }
+    
+    /**
+     * Returns the namespace prefix for a given namespace - e.g. 'bpmn2:' or 'bpmndi:'
+     * <p>
+     * This is necessary because a bpmn model can work with the default namespace 'bpmn2' or 'bpmn' 
+     * @param ns
+     * @return
+     */
+    public String getNameSpacePrefix(BPMNNS ns) {
+        return PREFIX_BY_NAMESPACE.get(ns);
+    }
+    public void setNameSpacePrefix(BPMNNS ns,String prefix) {
+        PREFIX_BY_NAMESPACE.put(ns, prefix);
+    }
+    
 
     /**
-     * This method instantiates a new BPMN model with the default BPMN namespaces.
+     * This method instantiates a new BPMN model with the default BPMN namespaces and prefixes.
      * 
      * @param doc
      */
@@ -103,6 +119,11 @@ public class BPMNModel {
         setNameSpaceUri(BPMNNS.BPMNDI, "http://www.omg.org/spec/BPMN/20100524/DI");
         setNameSpaceUri(BPMNNS.DI, "http://www.omg.org/spec/DD/20100524/DI");
         setNameSpaceUri(BPMNNS.DC, "http://www.omg.org/spec/DD/20100524/DC");
+        
+        setNameSpacePrefix(BPMNNS.BPMN2, "bpmn2");
+        setNameSpacePrefix(BPMNNS.BPMNDI, "bpmndi");
+        setNameSpacePrefix(BPMNNS.DI, "di");
+        setNameSpacePrefix(BPMNNS.DC, "dc");
     }
 
     /**
@@ -130,22 +151,40 @@ public class BPMNModel {
             for (int j = 0; j < defAttributes.getLength(); j++) {
                 Node node = defAttributes.item(j);
                 // update to new namespace uri if not matching the default URI
-                if (BPMNNS.BPMN2.prefix.equals(node.getLocalName())
+                // NOTE:
+                // The primary namespace can be either 'bpmn2' or 'bpmn' !
+                if ("bpmn".equals(node.getLocalName())
+                        || "bpmn2".equals(node.getLocalName())) {
+                    
+                    // In case the deprecated 'bpmn' namespace is used, we need to adjust the internal prefix...
+                    if ("bpmn".equals(node.getLocalName())) {
+                        setNameSpacePrefix(BPMNNS.BPMN2, "bpmn");
+                    }
+                    
+                    if (!getNameSpaceUri(BPMNNS.BPMN2).equals(node.getNodeValue())) {
+                        logger.warning("...set BPMN namespace URI: " + node.getNodeValue());
+                        setNameSpaceUri(BPMNNS.BPMN2, node.getNodeValue());
+                    }
+                }
+
+                
+                if (getNameSpacePrefix(BPMNNS.BPMN2).equals(node.getLocalName())
                         && !getNameSpaceUri(BPMNNS.BPMN2).equals(node.getNodeValue())) {
                     logger.fine("...set BPMN2 namespace URI: " + node.getNodeValue());
                     setNameSpaceUri(BPMNNS.BPMN2, node.getNodeValue());
                 }
-                if (BPMNNS.BPMNDI.prefix.equals(node.getLocalName())
+              
+                if (getNameSpacePrefix(BPMNNS.BPMNDI).equals(node.getLocalName())
                         && !getNameSpaceUri(BPMNNS.BPMNDI).equals(node.getNodeValue())) {
                     logger.fine("...set BPMNDI namespace URI: " + node.getNodeValue());
                     setNameSpaceUri(BPMNNS.BPMNDI, node.getNodeValue());
                 }
-                if (BPMNNS.DC.prefix.equals(node.getLocalName())
+                if (getNameSpacePrefix(BPMNNS.DC).equals(node.getLocalName())
                         && !getNameSpaceUri(BPMNNS.DC).equals(node.getNodeValue())) {
                     logger.fine("...set DC namespace URI: " + node.getNodeValue());
                     setNameSpaceUri(BPMNNS.DC, node.getNodeValue());
                 }
-                if (BPMNNS.DI.prefix.equals(node.getLocalName())
+                if (getNameSpacePrefix(BPMNNS.DI).equals(node.getLocalName())
                         && !getNameSpaceUri(BPMNNS.DI).equals(node.getNodeValue())) {
                     logger.fine("...set DI namespace URI: " + node.getNodeValue());
                     setNameSpaceUri(BPMNNS.DI, node.getNodeValue());
@@ -153,7 +192,7 @@ public class BPMNModel {
             }
 
             // find bpmndi:BPMNDiagram
-            NodeList diagramList = doc.getElementsByTagName(BPMNNS.BPMNDI.prefix + ":BPMNDiagram");
+            NodeList diagramList = doc.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMNDI) + ":BPMNDiagram");
             if (diagramList != null && diagramList.getLength() > 0) {
                 bpmnDiagram = diagramList.item(0);
             } else {
@@ -168,7 +207,7 @@ public class BPMNModel {
             }
 
             // find BPMNPlane
-            NodeList planeList = doc.getElementsByTagName(BPMNNS.BPMNDI.prefix + ":BPMNPlane");
+            NodeList planeList = doc.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMNDI) + ":BPMNPlane");
             if (planeList != null && planeList.getLength() > 0) {
                 bpmnPlane = (Element) planeList.item(0);
             }
@@ -181,6 +220,7 @@ public class BPMNModel {
             loadSignalList();
 
         }
+
     }
 
     public Element getDefinitions() {
@@ -566,7 +606,7 @@ public class BPMNModel {
     }
 
     public Element createElement(BPMNNS ns, String type) {
-        Element element = this.getDoc().createElementNS(getNameSpaceUri(ns), ns.prefix + ":" + type);
+        Element element = this.getDoc().createElementNS(getNameSpaceUri(ns), getNameSpacePrefix(ns)+ ":" + type);
         return element;
     }
 
@@ -649,8 +689,8 @@ public class BPMNModel {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
-                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                        && (child.getNodeName().equals(getNameSpacePrefix(BPMNNS.BPMN2) + ":incoming")
+                                || child.getNodeName().equals(getNameSpacePrefix(BPMNNS.BPMN2)+ ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         targetElement.getElementNode().removeChild(child);
                         break;
@@ -664,8 +704,8 @@ public class BPMNModel {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
-                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                        && (child.getNodeName().equals(getNameSpacePrefix(BPMNNS.BPMN2) + ":incoming")
+                                || child.getNodeName().equals(getNameSpacePrefix(BPMNNS.BPMN2) + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;
@@ -1060,7 +1100,7 @@ public class BPMNModel {
         if (!this.isCollaborationDiagram()) {
             throw new BPMNInvalidTypeException(BPMNInvalidTypeException.INVALID_TYPE,
                     "Model type is no collaboration diagram!");
-        }       
+        }
 
         if (point != null && isCollaborationDiagram()) {
             // iterate over all participants
@@ -1347,7 +1387,7 @@ public class BPMNModel {
         if (id == null || id.isEmpty() || bpmnPlane == null || nodeName == null) {
             return null;
         }
-        String fullNodeName = BPMNNS.BPMNDI.prefix + ":" + nodeName;
+        String fullNodeName = getNameSpacePrefix(BPMNNS.BPMNDI) + ":" + nodeName;
         NodeList childList = bpmnPlane.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
@@ -1404,13 +1444,13 @@ public class BPMNModel {
      */
     private void loadParticipantList() throws BPMNModelException {
         participants = new LinkedHashSet<Participant>();
-        NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
+        NodeList collaborationNodeList = definitions.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMN2) + ":collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
 
             // we only take the first collaboration element (this is what is expected)
             collaborationElement = (Element) collaborationNodeList.item(0);
             // now find all participants...
-            NodeList participantList = collaborationElement.getElementsByTagName(BPMNNS.BPMN2.prefix + ":participant");
+            NodeList participantList = collaborationElement.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMN2)+ ":participant");
             logger.fine("..found " + participantList.getLength() + " participants");
             for (int i = 0; i < participantList.getLength(); i++) {
                 Element item = (Element) participantList.item(i);
@@ -1441,7 +1481,7 @@ public class BPMNModel {
         int publicCount = 0;
 
         // find process
-        NodeList processList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":process");
+        NodeList processList = definitions.getElementsByTagName(getNameSpacePrefix( BPMNNS.BPMN2 )+ ":process");
         if (processList != null && processList.getLength() > 0) {
             for (int i = 0; i < processList.getLength(); i++) {
                 Element item = (Element) processList.item(i);
@@ -1508,14 +1548,14 @@ public class BPMNModel {
      */
     private void loadMessageFlowList() throws BPMNModelException {
         messageFlows = new LinkedHashSet<MessageFlow>();
-        NodeList collaborationNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":collaboration");
+        NodeList collaborationNodeList = definitions.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMN2) + ":collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
 
             // we only take the first collaboration element (this is what is expected)
             collaborationElement = (Element) collaborationNodeList.item(0);
             // now find all messageFlows...
             NodeList messageFlowList = collaborationElement
-                    .getElementsByTagName(BPMNNS.BPMN2.prefix + ":" + BPMNTypes.MESSAGE_FLOW);
+                    .getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMN2)+ ":" + BPMNTypes.MESSAGE_FLOW);
             logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
             for (int i = 0; i < messageFlowList.getLength(); i++) {
                 Element item = (Element) messageFlowList.item(i);
@@ -1533,7 +1573,7 @@ public class BPMNModel {
      */
     private void loadSignalList() throws BPMNModelException {
         signals = new LinkedHashSet<Signal>();
-        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":" + BPMNTypes.SIGNAL);
+        NodeList signalNodeList = definitions.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.SIGNAL);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
@@ -1551,7 +1591,7 @@ public class BPMNModel {
      */
     private void loadMessageList() throws BPMNModelException {
         messages = new LinkedHashSet<Message>();
-        NodeList signalNodeList = definitions.getElementsByTagName(BPMNNS.BPMN2.prefix + ":" + BPMNTypes.MESSAGE);
+        NodeList signalNodeList = definitions.getElementsByTagName(getNameSpacePrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.MESSAGE);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);

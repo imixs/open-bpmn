@@ -901,8 +901,8 @@ public class BPMNProcess extends BPMNElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
-                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                        && (child.getNodeName().equals(getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":incoming")
+                                || child.getNodeName().equals(getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         targetElement.getElementNode().removeChild(child);
                         break;
@@ -916,8 +916,8 @@ public class BPMNProcess extends BPMNElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":incoming")
-                                || child.getNodeName().equals(BPMNNS.BPMN2.prefix + ":outgoing"))) {
+                        && (child.getNodeName().equals(getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":incoming")
+                                || child.getNodeName().equals(getModel().getNameSpacePrefix(BPMNNS.BPMN2)+ ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;
@@ -1142,7 +1142,7 @@ public class BPMNProcess extends BPMNElement {
     private void createBPMNLanesByNode(Element laneSet) {
         this.laneSet = laneSet;
         // find Child Nodes
-        Set<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, BPMNNS.BPMN2.prefix + ":lane");
+        Set<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":lane");
         for (Element _lane : laneNodes) {
             Lane bpmnLane = new Lane(model, _lane);
             this.getLanes().add(bpmnLane);
@@ -1165,7 +1165,7 @@ public class BPMNProcess extends BPMNElement {
         TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
         
         // read text <bpmn2:text>
-        Set<Element> textNodes = BPMNModel.findChildNodesByName(element, BPMNNS.BPMN2.prefix + ":text");
+        Set<Element> textNodes = BPMNModel.findChildNodesByName(element, getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":text");
         if (textNodes!=null && textNodes.size()>0) {
             Element textNode = textNodes.iterator().next();
             textAnnotation.setText(textNode.getTextContent());

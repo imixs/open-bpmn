@@ -1,15 +1,17 @@
 package org.openbpmn.bpmn;
 
+/**
+ * Defines the valid BPMN namespaces.
+ * <p>
+ * NOTE: The primary namespace can be either 'bpmn2' or 'bpmn' ! But 'bpmn2' is
+ * the default.
+ * 
+ * @author rsoika
+ */
 public enum BPMNNS {
-    BPMN2("bpmn2"),//
-    BPMNDI("bpmndi"), //
-    DC("dc"), //
-    DI("di");
-    
-   
-    public final String prefix;
+    BPMN2, // default
+    BPMNDI, //
+    DC, //
+    DI;
 
-    private BPMNNS(String prefix) {
-        this.prefix = prefix;
-    }
 }

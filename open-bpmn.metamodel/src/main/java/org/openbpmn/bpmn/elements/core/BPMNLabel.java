@@ -47,7 +47,7 @@ public class BPMNLabel {
         NodeList childList = bpmnShape.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
-            if ((BPMNNS.BPMNDI.prefix + ":BPMNLabel").equals(child.getNodeName())) {
+            if ((model.getNameSpacePrefix(BPMNNS.BPMNDI) + ":BPMNLabel").equals(child.getNodeName())) {
                 label = (Element) child;
                 // find the dc:Bounds element of the label...
 

@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -45,6 +46,41 @@ public class TestReadDom {
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
 
         logger.info("...model read sucessful");
+    }
+    
+    
+    /**
+     * This test parses a bpmn file
+     * @throws BPMNModelException 
+     */
+    @Test
+    public void testProcessExample01() throws BPMNModelException {
+
+        logger.info("...read model");
+
+        BPMNModel model = BPMNModelFactory.read("/process_example-01.bpmn");
+        String out = "src/test/resources/output/process-example-9.bpmn";
+        System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
+        System.out.println("------");
+        if (model.getDoc().hasChildNodes()) {
+            printNote(model.getDoc().getChildNodes());
+        }
+
+        // next validate the BPMN Default Namespaces
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getNameSpaceUri(BPMNNS.BPMN2));
+
+        
+        BPMNProcess process = model.openDefaultProcess();
+        assertNotNull(process);
+        assertEquals(1, process.getEvents().size()); // we expect 1 start event
+        
+        logger.info("...model read sucessful");
+        
+        // Now if we add a new task element to this model the xml namespace should be 'bpmn:task' and not 'bpmn2:task'
+        model.openDefaultProcess().addTask("task-2","Task 2",BPMNTypes.TASK);
+       
+        model.save(out);
+        logger.info("...model update sucessful: " + out);
     }
 
     /**

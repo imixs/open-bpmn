@@ -150,7 +150,10 @@ public class BPMNModelFactory {
             // read from a project's resources folder
             Document doc = db.parse(is);
             Element root = doc.getDocumentElement();
-            if (!"bpmn2:definitions".equals(root.getNodeName())) {
+                      
+            if (!"bpmn2:definitions".equals(root.getNodeName())
+                  && 
+                  !"bpmn:definitions".equals(root.getNodeName())) {
                 logger.severe("Missing root element 'bpmn2:definitions'!");
                 return null;
             } else {
