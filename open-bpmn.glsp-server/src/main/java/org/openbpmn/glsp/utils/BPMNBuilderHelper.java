@@ -27,6 +27,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
@@ -78,8 +79,8 @@ public class BPMNBuilderHelper {
 
         return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
                 .id(node.getId() + "_header") //
+                .layout(GConstants.Layout.STACK) //
                 .layoutOptions(layoutOptions) //
-                .addCssClass("label") //
                 .build();
     }
 

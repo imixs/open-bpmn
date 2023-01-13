@@ -242,24 +242,23 @@ export class ContainerHeaderView extends ShapeView {
         if (!this.isVisible(element, context)) {
             return undefined;
         }
-
         const containerNode = findParentByFeature(element,isContainerNode);
+        let headerHeight=0;
+        let labelYOffset=0;
         let containerLabel='undefined';
+        // we center the label vertical to the height of the container
         if (containerNode) {
             containerLabel=containerNode.name;
-        }
-        // we center the label vertical to the height of the container
-        let yOffset=0;
-        if (containerNode && isBoundsAware(containerNode)) {
-            yOffset=containerNode.bounds.height*0.5 - 5;
+            headerHeight= containerNode.bounds.height-2;
+            labelYOffset=containerNode.bounds.height*0.5;
         }
         const vnode: any = (
-            <g class-node={true}>
-                <text class-sprotty-label={true} transform={'scale(1),translate(14,'+yOffset+'),rotate(-90)'}>{containerLabel}</text>
+            <g class-sprotty-node={element instanceof SNode}>
+                <rect class-sprotty-node={element instanceof SNode}
+                  x="1" y="1" width="28" height={headerHeight}></rect>
+                <text class-sprotty-label={true} transform={'scale(1),translate(20,'+labelYOffset+'),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
-
-       // const vnode = <text class-sprotty-label={true}>{containerLabel}</text>;
         const subType = getSubType(element);
         if (subType) {
             setAttr(vnode, 'class', subType);

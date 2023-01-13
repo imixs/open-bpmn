@@ -179,7 +179,10 @@
 .pool > .sprotty-node.mouseover {
 	 opacity: 60%;
 }
-
+.pool .header {
+	fill: var(--theia-titleBar-activeBackground);
+}
+ 
 .lane > .sprotty-node {
     fill: none;
     stroke: var(--theia-focusBorder);
