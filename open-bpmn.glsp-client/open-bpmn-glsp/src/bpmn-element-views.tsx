@@ -318,7 +318,7 @@ export class TextAnnotationNodeView extends ShapeView {
             <polyline points={textBorder} />
             {context.renderChildren(node)}
         </g>;
-    }    
+    }
 }
 
 /**
