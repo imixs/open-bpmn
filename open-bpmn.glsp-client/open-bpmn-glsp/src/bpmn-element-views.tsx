@@ -25,7 +25,8 @@ import {
     hasArguments,
     Hoverable,Selectable,IViewArgs,SPort,SNode,
     TYPES,
-    findParentByFeature, ShapeView, svg
+    findParentByFeature, ShapeView, svg,
+    RoundedCornerWrapper,CornerRadius,RoundedCornerNodeView
 } from '@eclipse-glsp/client';
 import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
 import { Icon,
@@ -71,6 +72,8 @@ export class IconView extends ShapeView {
 
         let icon;
         if (taskNode) {
+	    translateX = 5.0;
+            translateY = 5.0;
             if (taskNode.type === 'manualTask') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
                 icon =
@@ -311,7 +314,7 @@ export class TextAnnotationNodeView extends ShapeView {
             return undefined;
         }
         const textBorder='20,0 0,0 0,' + node.size.height + ' 20,' + node.size.height;
-        return <g >
+        return <g>
              <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
              class-mouseover={node.hoverFeedback} class-selected={node.selected}
                   x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>

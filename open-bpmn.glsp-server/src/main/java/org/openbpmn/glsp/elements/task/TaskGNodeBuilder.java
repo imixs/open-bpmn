@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.Activity;
@@ -30,7 +31,6 @@ import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 /**
  * BPMN 2.0 Task Element.
@@ -82,9 +82,9 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.VBOX);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
+        node.setLayout(GConstants.Layout.STACK);
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
@@ -100,8 +100,12 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                 build();
 
         node.getChildren().add(taskIcon);
-        // node.getChildren().add(BPMNBuilderHelper.createCompartmentIcon(node));
-        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+        // node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+
+        node.getChildren().add(new GNodeBuilder("bpmn-text-node"). //
+                id(id + "_name"). //
+                addArgument("text", name). //
+                build());
 
     }
 

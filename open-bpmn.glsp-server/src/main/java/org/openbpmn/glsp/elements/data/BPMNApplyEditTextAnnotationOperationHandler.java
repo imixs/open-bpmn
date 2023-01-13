@@ -19,7 +19,6 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
@@ -28,10 +27,9 @@ import org.eclipse.glsp.server.operations.Operation;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.glsp.bpmn.BPMNGNode;
+import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
 
 import com.google.inject.Inject;
 
@@ -91,8 +89,11 @@ public class BPMNApplyEditTextAnnotationOperationHandler extends AbstractOperati
                 ((Activity) bpmnElement).setName(operation.getText());
                 // update gNode
                 if (gNodeElement != null) {
-                    GLabel label = BPMNBuilderHelper.findCompartmentHeader((BPMNGNode) gNodeElement);
-                    label.setText(operation.getText());
+                    // update gNode
+                    gNodeElement.getArgs().put("text", operation.getText());
+                    // GLabel label = BPMNBuilderHelper.findCompartmentHeader((BPMNGNode)
+                    // gNodeElement);
+                    // label.setText(operation.getText());
                 }
             }
 
@@ -121,7 +122,8 @@ public class BPMNApplyEditTextAnnotationOperationHandler extends AbstractOperati
             GNode gNodeElement = _gNodeElement.get();
             String type = gNodeElement.getType();
             GModelElement parent = gNodeElement.getParent();
-            if ("bpmn-text-node".equals(type) && parent instanceof TextAnnotationGNode) {
+            if ("bpmn-text-node".equals(type)
+                    && (parent instanceof TaskGNode || parent instanceof TextAnnotationGNode)) {
                 // it is a TextAnnotation...
                 elementID = parent.getId();
             } else {
