@@ -22,7 +22,6 @@ import {
     SelectAction,
     setAttr,SShapeElement,
     SModelRoot,
-    isBoundsAware,
     hasArguments,
     Hoverable,Selectable,IViewArgs,SPort,SNode,
     TYPES,
