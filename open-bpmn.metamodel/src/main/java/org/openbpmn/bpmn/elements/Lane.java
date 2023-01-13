@@ -87,7 +87,7 @@ public class Lane extends BPMNElementNode {
     public boolean contains(BPMNElementNode bpmnElement) {
         // get all bpmn2:flowNodeRef
         Set<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
-                BPMNNS.BPMN2.prefix + ":flowNodeRef");
+                getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":flowNodeRef");
         for (Element element : refs) {
             if (bpmnElement.getId().equals(element.getTextContent())) {
                 return true;
@@ -105,7 +105,7 @@ public class Lane extends BPMNElementNode {
     public Set<String> getFlowElementIDs() {
         Set<String> result = new LinkedHashSet<String>();
         Set<Element> refs = BPMNModel.findChildNodesByName(this.getElementNode(),
-                BPMNNS.BPMN2.prefix + ":flowNodeRef");
+                getModel().getNameSpacePrefix(BPMNNS.BPMN2) + ":flowNodeRef");
         for (Element element : refs) {
             result.add(element.getTextContent());
         }
