@@ -45,7 +45,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
@@ -155,7 +155,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 if (!label.isEmpty()) {
                     LabelGNode lgn = (LabelGNode) label.get();
 
-                    GLabel glabel = BPMNBuilderHelper.findCompartmentHeader((lgn));
+                    GLabel glabel = BPMNGraphUtil.findCompartmentHeader((lgn));
                     if (glabel != null) {
                         glabel.setText(json.getString(feature));
                     }

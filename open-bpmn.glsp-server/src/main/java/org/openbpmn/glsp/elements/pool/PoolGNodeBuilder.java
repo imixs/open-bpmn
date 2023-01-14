@@ -29,7 +29,7 @@ import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.PoolGNode;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
@@ -88,10 +88,10 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         // Set min width/height for the Pool element
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Participant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Participant.MIN_HEIGHT);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
-        node.getChildren().add(BPMNBuilderHelper.createBPMNContainerHeader(node));
+        node.getChildren().add(BPMNGraphUtil.createBPMNContainerHeader(node));
         node.getChildren().add(createContainerCompartment(node));
 
     }

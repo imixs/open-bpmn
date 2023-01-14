@@ -33,7 +33,7 @@ import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -122,7 +122,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         for (String feature : features) {
             if ("name".equals(feature)) {
                 // update the task CompartmentHeader (GLabel)
-                GLabel label = BPMNBuilderHelper.findCompartmentHeader((BPMNGNode) gNodeElement);
+                GLabel label = BPMNGraphUtil.findCompartmentHeader((BPMNGNode) gNodeElement);
                 if (label != null) {
                     label.setText(json.getString(feature));
                 }

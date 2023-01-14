@@ -27,7 +27,7 @@ import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LaneGNode;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 /**
  * BPMN 2.0 Pool Element.
@@ -85,14 +85,14 @@ public class LaneGNodeBuilder extends AbstractGNodeBuilder<LaneGNode, LaneGNodeB
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Lane.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Lane.MIN_HEIGHT);
 
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 10);
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, "center");
 
         // node.getChildren().add(createHeaderCompartment(node));
-        node.getChildren().add(BPMNBuilderHelper.createBPMNContainerHeader(node));
+        node.getChildren().add(BPMNGraphUtil.createBPMNContainerHeader(node));
 
         // node.getChildren().add(createContainerCompartment(node));
 
