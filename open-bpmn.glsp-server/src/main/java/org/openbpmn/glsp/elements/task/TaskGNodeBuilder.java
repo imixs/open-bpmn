@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.Activity;
@@ -31,6 +30,7 @@ import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 /**
  * BPMN 2.0 Task Element.
@@ -44,7 +44,8 @@ import org.openbpmn.glsp.model.BPMNGModelFactory;
 public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeBuilder> {
 
     private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
-
+    private static final String V_GRAB = "vGrab";
+    private static final String H_GRAB = "hGrab";
     private final String name;
 
     public TaskGNodeBuilder(final Activity activity) {
@@ -82,15 +83,18 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.STACK);
+        node.setLayout(GConstants.Layout.VBOX);
 //        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
 //        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
 
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+        node.getLayoutOptions().put(H_GRAB, true);
+        node.getLayoutOptions().put(V_GRAB, true);
+
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
 
@@ -100,12 +104,9 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                 build();
 
         node.getChildren().add(taskIcon);
-        // node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+        // node.getChildren().add(BPMNGraphUtil.createCompartmentHeader(node));
 
-        node.getChildren().add(new GNodeBuilder("bpmn-text-node"). //
-                id(id + "_name"). //
-                addArgument("text", name). //
-                build());
+        node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id + "_name", name));
 
     }
 
