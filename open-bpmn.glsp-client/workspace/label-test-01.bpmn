@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xs="http://www.w3.org/2001/XMLSchema" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" id="Definitions_1">
+    <bpmn2:process id="Process_1" isExecutable="false" name="Process 1" processType="Public">
+        <bpmn2:startEvent id="StartEvent_1" name="Start Event&#10;with a very long&#10;multi-line&#10;label">
+            <bpmn2:documentation id="documentation_s469bw"/>
+        </bpmn2:startEvent>
+        <bpmn2:task id="Task_1" name="Task 1">
+            <bpmn2:documentation id="documentation_c4ScUA"/>
+        </bpmn2:task>
+        <bpmn2:documentation id="documentation_W9FWWg"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+        <bpmndi:BPMNPlane bpmnElement="Process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="BPMNShape_StartEvent_1">
+                <dc:Bounds height="36.0" width="36.0" x="140.0" y="100.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="64.0" width="100.0" x="110.0" y="139.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="Task_1" id="BPMNShape_Task_1" isExpanded="true">
+                <dc:Bounds height="50.0" width="112.0" x="248.0" y="93.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
+                    <dc:Bounds height="14.0" width="35.0" x="345.0" y="110.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+            <dc:Font name="arial" size="9.0"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

@@ -86,7 +86,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureView({ bind, isBound }, 'helpline', HelperLineView);
     configureDefaultModelElements(context);
 
- 
     configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
