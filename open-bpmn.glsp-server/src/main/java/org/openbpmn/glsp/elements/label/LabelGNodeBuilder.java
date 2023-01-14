@@ -22,9 +22,10 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LabelGNode;
-import org.openbpmn.glsp.utils.BPMNBuilderHelper;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 /**
  * BPMN 2.0 Label Element.
@@ -49,14 +50,29 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
         super(BPMNTypes.BPMNLABEL);
         this.name = flowElement.getName();// _name;
         this.id = flowElement.getId() + "_bpmnlabel";
-
         double width = BPMNLabel.DEFAULT_WIDTH;
         double height = BPMNLabel.DEFAULT_HEIGHT;
+
+        // compute size
+        try {
+            if (flowElement.getLabel() != null && flowElement.getLabel().getBounds() != null) {
+                width = flowElement.getLabel().getBounds().getDimension().getWidth();
+                height = flowElement.getLabel().getBounds().getDimension().getHeight();
+                // adjust default size if no bounds are set....
+                if (width == 0 || height == 0) {
+                    width = BPMNLabel.DEFAULT_WIDTH;
+                    height = BPMNLabel.DEFAULT_HEIGHT;
+                    flowElement.getLabel().getBounds().setDimension(width, height);
+                }
+            }
+        } catch (BPMNMissingElementException e) {
+            // failed to compute size
+            e.printStackTrace();
+        }
         this.size = GraphUtil.dimension(width, height);
 
         // set Layout options
         this.addCssClass(type);
-
     }
 
     @Override
@@ -77,15 +93,13 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
     public void setProperties(final LabelGNode node) {
         super.setProperties(node);
         node.setName(name);
-
-        node.setLayout(GConstants.Layout.VBOX);
+        node.setLayout(GConstants.Layout.STACK);
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
-        // we have no! min width/height here! So we set the size only.
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
-
-        node.getChildren().add(BPMNBuilderHelper.createCompartmentHeader(node));
+        node.getLayoutOptions().put(GLayoutOptions.KEY_RESIZE_CONTAINER, true);
+        // add a mulitLine text block to show and edit long text blocks
+        this.id = node.getId() + "_bpmntext";
+        node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id, name));
     }
 
 }
