@@ -23,13 +23,13 @@ import {
     LogLevel,
     overrideViewerOptions,
     RevealNamedElementActionProvider,
-    RoundedCornerNodeView,
+    RoundedCornerNodeView,RectangularNodeView,
     SCompartment,
     SCompartmentView,
     SLabel,CircularNodeView,DiamondNodeView,
     SLabelView,configureView,
     configureCommand,
-    TYPES,ForeignObjectView
+    TYPES,ForeignObjectView, boundsFeature
 } from '@eclipse-glsp/client';
 // import { DefaultTypes } from '@eclipse-glsp/protocol';
 import 'balloon-css/balloon.min.css';
@@ -86,8 +86,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureView({ bind, isBound }, 'helpline', HelperLineView);
     configureDefaultModelElements(context);
 
-    configureModelElement(context, 'BPMNLabel', LabelNode, RoundedCornerNodeView);
-
+ 
     configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
     configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
@@ -112,7 +111,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
 
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
-    configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
+    // configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
     configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
@@ -123,9 +122,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'message', MessageNode, MessageNodeView);
     configureModelElement(context, 'textAnnotation', TextAnnotationNode, TextAnnotationNodeView);
 
-    // textNode of TextAnnotation...
+    configureModelElement(context, 'BPMNLabel', LabelNode, RectangularNodeView);
+
+    // textNode of BPMNLable, TextAnnotation...
     configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, ForeignObjectView, {
-         disable: [moveFeature, selectFeature],
+         disable: [moveFeature, selectFeature,boundsFeature],
          enable: [editLabelFeature]}
     );
 
