@@ -607,7 +607,8 @@ public class BPMNGModelFactory implements GModelFactory {
         logger.debug("label GPoint: x=" + labelPoint.getX() + " y=" + labelPoint.getY());
         LabelGNode labelNode = new LabelGNodeBuilder(flowElement) //
                 .position(labelPoint) //
-                .size(bpmnLabel.getBounds().getDimension().getWidth(), bpmnLabel.getBounds().getDimension().getHeight()) //
+                // .size(bpmnLabel.getBounds().getDimension().getWidth(),
+                // bpmnLabel.getBounds().getDimension().getHeight()) //
                 .build();
 
         return labelNode;

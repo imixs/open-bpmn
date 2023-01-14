@@ -25,8 +25,7 @@ import {
     hasArguments,
     Hoverable,Selectable,IViewArgs,SPort,SNode,
     TYPES,
-    findParentByFeature, ShapeView, svg,
-    RoundedCornerWrapper,CornerRadius,RoundedCornerNodeView
+    findParentByFeature, ShapeView, svg
 } from '@eclipse-glsp/client';
 import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
 import { Icon,
@@ -72,7 +71,7 @@ export class IconView extends ShapeView {
 
         let icon;
         if (taskNode) {
-	    translateX = 5.0;
+            translateX = 5.0;
             translateY = 5.0;
             if (taskNode.type === 'manualTask') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d

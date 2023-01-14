@@ -44,6 +44,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 import com.google.inject.Inject;
 
@@ -139,9 +140,9 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
                     }
                 } else {
                     // test if we have a BPMNLable element was selected?
-                    if (id.endsWith("_bpmnlabel")) {
+                    if (BPMNGraphUtil.isBPMNLabelID(id)) {
                         // find parent
-                        String flowElementID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
+                        String flowElementID = BPMNGraphUtil.resolveFlowElementIDfromLabelID(id);
                         BPMNElementNode _bpmnElement = modelState.getBpmnModel().findElementNodeById(flowElementID);
                         BPMNLabel bpmnLabel = _bpmnElement.getLabel();
 
@@ -512,8 +513,8 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         while (iter.hasNext()) {
             ElementAndBounds element = iter.next();
             String id = element.getElementId();
-            if (id.endsWith("_bpmnlabel")) {
-                String flowElementID = id.substring(0, id.lastIndexOf("_bpmnlabel"));
+            if (BPMNGraphUtil.isBPMNLabelID(id)) {
+                String flowElementID = BPMNGraphUtil.resolveFlowElementIDfromLabelID(id);
                 // test if the id is part of our primary list...
                 for (ElementAndBounds e : elementBounds) {
                     if (flowElementID.equals(e.getElementId())) {

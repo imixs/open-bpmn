@@ -24,9 +24,11 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
@@ -36,14 +38,15 @@ import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 /**
- * The BPMNBuilderHelper provides helper methods to create GNode Elements
+ * The BPMNGraphUtil provides helper methods to create GNode Elements and
+ * resolve GNodes within a bpmn diagram
  *
  * @author rsoika
  *
  */
-public class BPMNBuilderHelper {
+public class BPMNGraphUtil {
 
-    private static Logger logger = LogManager.getLogger(BPMNBuilderHelper.class);
+    private static Logger logger = LogManager.getLogger(BPMNGraphUtil.class);
 
     private static final String V_GRAB = "vGrab";
 
@@ -59,11 +62,26 @@ public class BPMNBuilderHelper {
      * @param node
      * @return GPort
      */
+    @Deprecated
     public static GLabel createCompartmentHeader(final BPMNGNode node) {
         return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .id(node.getId() + "_header") //
                 .text(node.getName()) //
                 .build();
+    }
+
+    /**
+     * Creates a Multiline GLable node
+     *
+     * @param id
+     * @param text
+     * @return - GNode element containing the text
+     */
+    public static GNode createMultiLineTextNode(final String id, final String text) {
+        return new GNodeBuilder("bpmn-text-node"). //
+                id(id). //
+                addArgument("text", text). //
+                build();
     }
 
     /**
@@ -91,6 +109,7 @@ public class BPMNBuilderHelper {
      *
      * @return GLabel of an element or null if no GLabel was found
      */
+    @Deprecated
     public static GLabel findCompartmentHeader(final BPMNGNode element) {
 
         EList<GModelElement> childs = element.getChildren();
@@ -135,4 +154,30 @@ public class BPMNBuilderHelper {
         }
         return bpmnProcess;
     }
+
+    /**
+     * This method returns true if a given GNodeID is assigned to a BPMNLabel
+     * element
+     *
+     * @param id
+     * @return true if the id is a bpmnlabel id
+     */
+    public static boolean isBPMNLabelID(final String id) {
+        return id.endsWith("_bpmnlabel");
+    }
+
+    /**
+     * Returns the FlowElent ID to a given BPMNLabel ID
+     *
+     * @param id
+     * @return the id of the assigned BPMN Flow Element or null if no such a element
+     *         exits.
+     */
+    public static String resolveFlowElementIDfromLabelID(final String id) {
+        if (isBPMNLabelID(id)) {
+            return id.substring(0, id.lastIndexOf("_bpmnlabel"));
+        }
+        return null;
+    }
+
 }

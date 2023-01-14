@@ -41,7 +41,7 @@ import org.openbpmn.extension.DefaultBPMNMessageExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.extension.DefaultBPMNTextAnnotationExtension;
-import org.openbpmn.glsp.elements.data.BPMNApplyEditTextAnnotationOperationHandler;
+import org.openbpmn.glsp.elements.data.BPMNApplyEditLabelOperationHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateDataObjectHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateMessageHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateTextAnnotationHandler;
@@ -112,7 +112,7 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Inline Edit
 
-        binding.add(BPMNApplyEditTextAnnotationOperationHandler.class);
+        binding.add(BPMNApplyEditLabelOperationHandler.class);
 
 //        binding.add(ChangeBoundsOperationHandler.class);
 //        binding.add(ChangeRoutingPointsHandler.class);

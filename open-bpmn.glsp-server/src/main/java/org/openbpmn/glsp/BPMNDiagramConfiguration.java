@@ -258,8 +258,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         return hint;
     }
 
+    /**
+     * A BPMN Label is moveable but not deleteabel or resizeable
+     *
+     * @return
+     */
     private ShapeTypeHint createBPMNLabelHint() {
-        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.BPMNLABEL, true, true, true, true);
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.BPMNLABEL, true, false, false, true);
 
         return shapeTypeHint;
     }

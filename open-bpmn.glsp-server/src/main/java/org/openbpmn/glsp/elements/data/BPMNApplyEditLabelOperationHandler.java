@@ -19,26 +19,36 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 import com.google.inject.Inject;
 
 /**
- * This BPMNApplyEditOperationHandler is used to apply label changes on Tasks,
- * TextAnnotations and BPMNLabels. The method updates also the GNode and reset
- * the mode state..
+ * This BPMNApplyEditLabelOperationHandler is used to apply label changes on
+ * Tasks, TextAnnotations and BPMNLabels. The method updates also the GNode and
+ * reset the mode state.
  * <p>
- * For TextAnnotation the the handler resolves the corresponding embedded GNode.
+ * For TextAnnotation the the handler updates the BPMN 'text' property, for all
+ * other BPMNNodeElements it updates the 'name' property.
  * <p>
  * (See also:
  * https://www.eclipse.org/glsp/documentation/rendering/#default-views)
@@ -52,9 +62,9 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class BPMNApplyEditTextAnnotationOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
+public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler<ApplyLabelEditOperation> {
 
-    private static Logger logger = LogManager.getLogger(BPMNApplyEditTextAnnotationOperationHandler.class);
+    private static Logger logger = LogManager.getLogger(BPMNApplyEditLabelOperationHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -84,21 +94,47 @@ public class BPMNApplyEditTextAnnotationOperationHandler extends AbstractOperati
 
             }
 
-            // For Activity we need to update the CompartmentHeader
-            if (bpmnElement instanceof Activity) {
-                ((Activity) bpmnElement).setName(operation.getText());
+            // For Activity, Events and Gateways we need to update the 'name' attribute from
+            // the BPMNElementNode and the 'text' argument from the GNodeElement.
+            if (bpmnElement instanceof Activity || bpmnElement instanceof Event || bpmnElement instanceof Gateway) {
+                ((BPMNElementNode) bpmnElement).setName(operation.getText());
                 // update gNode
                 if (gNodeElement != null) {
                     // update gNode
-                    gNodeElement.getArgs().put("text", operation.getText());
-                    // GLabel label = BPMNBuilderHelper.findCompartmentHeader((BPMNGNode)
-                    // gNodeElement);
-                    // label.setText(operation.getText());
+                    String text = operation.getText();
+                    gNodeElement.getArgs().put("text", text);
+
+                    GModelElement parent = gNodeElement.getParent();
+                    if (parent != null && parent instanceof LabelGNode) {
+                        int FONT_SIZE = 16;
+                        LabelGNode label = (LabelGNode) parent;
+                        // resize based on the lines....
+                        int count = text.length() - text.replaceAll("\n", "").length() + 1;
+                        GDimension newLabelSize = GraphUtil.dimension(100, FONT_SIZE * count);
+                        label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newLabelSize.getWidth());
+                        label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newLabelSize.getHeight());
+                        // calling the size method does not have an effect.
+                        // see:
+                        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+                        label.setSize(newLabelSize);
+
+                        if (bpmnElement instanceof Event) {
+                            Event event = (Event) bpmnElement;
+                            try {
+                                event.getLabel().getBounds().setDimension(newLabelSize.getWidth(),
+                                        newLabelSize.getHeight());
+                            } catch (BPMNMissingElementException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
                 }
             }
 
             // reset model
-            modelState.reset();
+            // modelState.reset();
         } else {
             logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
         }
@@ -122,14 +158,17 @@ public class BPMNApplyEditTextAnnotationOperationHandler extends AbstractOperati
             GNode gNodeElement = _gNodeElement.get();
             String type = gNodeElement.getType();
             GModelElement parent = gNodeElement.getParent();
-            if ("bpmn-text-node".equals(type)
-                    && (parent instanceof TaskGNode || parent instanceof TextAnnotationGNode)) {
+            if ("bpmn-text-node".equals(type) && (parent instanceof LabelGNode || parent instanceof TaskGNode
+                    || parent instanceof TextAnnotationGNode)) {
                 // it is a TextAnnotation...
                 elementID = parent.getId();
             } else {
                 elementID = gNodeElement.getId();
             }
             // find element
+            if (BPMNGraphUtil.isBPMNLabelID(elementID)) {
+                elementID = BPMNGraphUtil.resolveFlowElementIDfromLabelID(elementID);
+            }
             result = modelState.getBpmnModel().findElementById(elementID);
         }
 
