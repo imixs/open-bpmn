@@ -43,32 +43,16 @@ import {
 export interface BPMNFlowElement {
 }
 
-export class LabelNode extends RectangularNode implements Nameable, WithEditableLabel{
+export class LabelNode extends RectangularNode {
 	static override readonly DEFAULT_FEATURES = [
 		selectFeature,
-		boundsFeature,
 		moveFeature,
 		layoutContainerFeature,
-		hoverFeedbackFeature,
-		nameFeature,
-		withEditLabelFeature
+		hoverFeedbackFeature
 	];
-
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
-		const label = this.children.find(element => element.type === 'label:heading');
-		if (label && isEditableLabel(label)) {
-			return label;
-		}
-		return undefined;
-	}
-
-	get name(): string {
-		const labelText = this.editableLabel?.text;
-		return labelText ? labelText : '<unknown>';
-	}
 }
 
-export class TaskNode extends RectangularNode implements Nameable, WithEditableLabel, BPMNFlowElement {
+export class TaskNode extends RectangularNode implements BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -77,25 +61,8 @@ export class TaskNode extends RectangularNode implements Nameable, WithEditableL
 		moveFeature,
 		layoutContainerFeature,
 		fadeFeature,
-		hoverFeedbackFeature,
-		popupFeature,
-		nameFeature,
-		withEditLabelFeature
+		hoverFeedbackFeature
 	];
-
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
-		const label = this.children.find(element => element.type === 'label:heading');
-		if (label && isEditableLabel(label)) {
-			return label;
-		}
-		return undefined;
-	}
-
-	get name(): string {
-		const labelText = this.editableLabel?.text;
-		return labelText ? labelText : '<unknown>';
-	}
-
 }
 
 /* CircularNode RectangularNode */
@@ -160,8 +127,7 @@ export class MessageNode extends RectangularNode implements BPMNFlowElement {
 		layoutContainerFeature,
 		fadeFeature,
 		hoverFeedbackFeature,
-		popupFeature,
-		nameFeature
+		popupFeature
 	];
 	documentation: string;
 }
@@ -176,8 +142,7 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
 		layoutContainerFeature,
 		fadeFeature,
 		hoverFeedbackFeature,
-		popupFeature,
-		nameFeature
+		popupFeature
 	];
 	documentation: string;
 }
