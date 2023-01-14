@@ -67,17 +67,6 @@
     fill: transparent;
 }
 
-.BPMNLabel > .sprotty-node {
-	fill: transparent;
-}
-
-.BPMNLabel > .sprotty-label.heading {
-	fill: var(--theia-titleBar-activeForeground);
-}
-.BPMNLabel > .sprotty-node.mouseover {
-	fill: var(--theia-activityBar-background);
-}
-
 .task > .sprotty-node {
     fill: #425C81;
 }
@@ -171,6 +160,29 @@
 	white-space: pre-wrap;
 	margin: 7px 20px 0px 20px;
 }
+
+
+.BPMNLabel > .sprotty-node {
+	fill: transparent;
+}
+
+.BPMNLabel > .sprotty-label.heading {
+	fill: var(--theia-titleBar-activeForeground);
+}
+.BPMNLabel > .sprotty-node.mouseover {
+	fill: var(--theia-activityBar-background);
+}
+
+.BPMNLabel > .bpmn-text-node pre {
+	color: #f0f3f8;
+	text-align: center;
+	font-size: 0.6em;
+	font-family: sans-serif;
+	white-space: pre-wrap;
+	margin: 0;
+}
+
+
 
 .label-edit textarea {
     margin: 1px;
