@@ -61,6 +61,38 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     }
 
     /**
+     * Helper method resolves the containing BPMNProcess for a CreateNodeOperation.
+     * This can be either the default process or the process of a Participant
+     * (Pool).
+     * <p>
+     * The method computes the matching process by testing the DropPoint with the
+     * dimensions of the existing BPMN Pools (Participants). In case the model is
+     * not a collaboration diagram, the method always returns the default process.
+     * <p>
+     * The reason why we can't use the getContainer method here is because a
+     * Participant has the CSS attribute <code>pointer-events: none</code>. So the
+     * <code>operation.getContainerId()</code> always returns the root element.
+     *
+     * @param operation - a CreateNodeOperation
+     * @return the corresponding BPMNProcess
+     */
+    protected BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation)
+            throws BPMNInvalidTypeException {
+        if (!modelState.getBpmnModel().isCollaborationDiagram()) {
+            return modelState.getBpmnModel().openDefaultProcess();
+        }
+        GPoint dropPoint = operation.getLocation().orElse(null);
+
+        Participant participant = modelState.getBpmnModel()
+                .findParticipantByPoint(BPMNGraphUtil.createBPMNPoint(dropPoint));
+
+        if (participant != null) {
+            return participant.getBpmnProcess();
+        }
+        return null;
+    }
+
+    /**
      * This method is a helper method to compute the container element. E.g. when a
      * EventDefinition is placed into a Event or when a Extension is placed into a
      * BPMNElementNode. This information is needed by BPMN Model Factory to create
@@ -78,8 +110,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
      */
     protected Optional<GModelElement> getContainer(final CreateNodeOperation operation) {
         Optional<GModelElement> container = modelState.getIndex().get(operation.getContainerId());
-        // super.getContainer(operation);
-        // If the container is a Category node, find its structure compartment
+        // If the container is a PoolGNode, find its structure compartment
         Optional<GModelElement> containerCompt = container.filter(PoolGNode.class::isInstance)
                 .map(PoolGNode.class::cast).flatMap(this::getPoolCompartment);
         return containerCompt.isPresent() ? containerCompt : container;
@@ -88,31 +119,6 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     protected Optional<GCompartment> getPoolCompartment(final PoolGNode category) {
         return category.getChildren().stream().filter(GCompartment.class::isInstance).map(GCompartment.class::cast)
                 .filter(comp -> ModelTypes.CONTAINER.equals(comp.getType())).findFirst();
-    }
-
-    /**
-     * Helper method computes the container BPMNProcess for a CreateNodeOperation.
-     * The method computes matching process by testing the DropPoint with the
-     * existing BPMN Pools (Participants) In case the model is not a collaboration
-     * diagram, the method always returns the default process.
-     *
-     * @param operation - a CreateNodeOperation
-     * @return the corresponding BPMNProcess
-     */
-    public BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation)
-            throws BPMNInvalidTypeException {
-        if (!modelState.getBpmnModel().isCollaborationDiagram()) {
-            return modelState.getBpmnModel().openDefaultProcess();
-        }
-        GPoint dropPoint = operation.getLocation().orElse(null);
-
-        Participant participant = modelState.getBpmnModel()
-                .findParticipantByPoint(BPMNGraphUtil.createBPMNPoint(dropPoint));
-
-        if (participant != null) {
-            return participant.getBpmnProcess();
-        }
-        return null;
     }
 
 }
