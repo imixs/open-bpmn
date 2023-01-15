@@ -27,11 +27,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
-import org.openbpmn.bpmn.elements.Activity;
-import org.openbpmn.bpmn.elements.Event;
-import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.TextAnnotation;
-import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.LabelGNode;
@@ -80,7 +76,7 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
         }
 
         // resolve the corresponding BPMN Element
-        BPMNElement bpmnElement = resolveBPMNElement(operation);
+        BPMNElementNode bpmnElement = resolveBPMNElement(operation);
         if (bpmnElement != null) {
 
             // For TextAnnotation we need to updat the 'text' argument on the gNode
@@ -92,12 +88,9 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
                     gNodeElement.getArgs().put("text", operation.getText());
                 }
 
-            }
-
-            // For Activity, Events and Gateways we need to update the 'name' attribute from
-            // the BPMNElementNode and the 'text' argument from the GNodeElement.
-            if (bpmnElement instanceof Activity || bpmnElement instanceof Event || bpmnElement instanceof Gateway) {
-                ((BPMNElementNode) bpmnElement).setName(operation.getText());
+            } else {
+                // For all other elements the text is stored in the 'name' attribute.
+                bpmnElement.setName(operation.getText());
                 // update gNode
                 if (gNodeElement != null) {
                     // update gNode
@@ -106,38 +99,60 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
 
                     GModelElement parent = gNodeElement.getParent();
                     if (parent != null && parent instanceof LabelGNode) {
-                        int FONT_SIZE = 16;
+                        int FONT_SIZE = 14;
                         LabelGNode label = (LabelGNode) parent;
                         // resize based on the lines....
-                        int count = text.length() - text.replaceAll("\n", "").length() + 1;
-                        GDimension newLabelSize = GraphUtil.dimension(100, FONT_SIZE * count);
+                        int estimatedLines = estimateLineCount(operation.getText(), FONT_SIZE, 100);
+                        GDimension newLabelSize = GraphUtil.dimension(100, FONT_SIZE * estimatedLines);
                         label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newLabelSize.getWidth());
                         label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newLabelSize.getHeight());
                         // calling the size method does not have an effect.
                         // see:
                         // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
                         label.setSize(newLabelSize);
-
-                        if (bpmnElement instanceof Event) {
-                            Event event = (Event) bpmnElement;
-                            try {
-                                event.getLabel().getBounds().setDimension(newLabelSize.getWidth(),
+                        // Update the BPMNLabel bounds...
+                        try {
+                            if (bpmnElement.getLabel() != null) {
+                                bpmnElement.getLabel().getBounds().setDimension(newLabelSize.getWidth(),
                                         newLabelSize.getHeight());
-                            } catch (BPMNMissingElementException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
                             }
+                        } catch (BPMNMissingElementException e) {
+                            e.printStackTrace();
                         }
 
                     }
                 }
             }
-
-            // reset model
-            // modelState.reset();
+            // we do NOT reset the model
         } else {
             logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
         }
+    }
+
+    /**
+     * Helper method to estimate the number of lines a text will need in a panel
+     * with a given width
+     *
+     * @param text
+     * @param fontSize
+     * @param width
+     * @return estimated number of lines
+     */
+    private int estimateLineCount(final String text, final int fontSize, final int width) {
+        int result = 0;
+        // first split the text by hard line breaks...
+        String[] paragraphs = text.split("\n");
+
+        // Estimate the number of characters per line based on the font size and the
+        // given width
+        double charactersPerLine = width / (fontSize * 0.5);
+
+        // Estimate the number of lines per paragraph based on the number of characters
+        for (String paragraph : paragraphs) {
+            int lineCount = (int) Math.ceil(paragraph.length() / charactersPerLine);
+            result += lineCount;
+        }
+        return result;
     }
 
     /**
@@ -147,8 +162,8 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
      * @param operation
      * @return
      */
-    private BPMNElement resolveBPMNElement(final ApplyLabelEditOperation operation) {
-        BPMNElement result = null;
+    private BPMNElementNode resolveBPMNElement(final ApplyLabelEditOperation operation) {
+        BPMNElementNode result = null;
         String labelId = operation.getLabelId();
         String elementID = null;
 
@@ -169,7 +184,7 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
             if (BPMNGraphUtil.isBPMNLabelID(elementID)) {
                 elementID = BPMNGraphUtil.resolveFlowElementIDfromLabelID(elementID);
             }
-            result = modelState.getBpmnModel().findElementById(elementID);
+            result = (BPMNElementNode) modelState.getBpmnModel().findElementById(elementID);
         }
 
         return result;
