@@ -25,6 +25,7 @@ import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
@@ -32,6 +33,7 @@ import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
@@ -153,6 +155,19 @@ public class BPMNGraphUtil {
             }
         }
         return bpmnProcess;
+    }
+
+    /**
+     * Creates a BPMNPoint from a GPoint
+     *
+     * @param point
+     * @return - bpmn point
+     */
+    public static BPMNPoint createBPMNPoint(final GPoint point) {
+        if (point == null) {
+            return null;
+        }
+        return new BPMNPoint(point.getX(), point.getY());
     }
 
     /**

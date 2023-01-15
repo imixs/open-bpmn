@@ -84,19 +84,24 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         String eventID = BPMNModel.generateShortID("event"); // "event-" + BPMNModel.generateShortID();
         logger.debug("createNode eventnodeID=" + eventID);
         try {
-            GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
-            String containerId = container.getId();
-            logger.debug("containerId = " + container.getId());
+
             BPMNProcess bpmnProcess = null;
             String attachedToRef = null;
             // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {
+                // find the container element
+                GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
+                String containerId = container.getId();
+                logger.debug("containerId = " + container.getId());
+
                 // we assume that the containerId is the Task Element...
                 containerElement = modelState.getBpmnModel().findElementNodeById(containerId);
                 if (containerElement != null && containerElement instanceof Activity) {
                     // it is a BPMNActivity
                     bpmnProcess = ((Activity) containerElement).getBpmnProcess();
                     attachedToRef = containerElement.getId();
+                } else {
+                    logger.warn("BounderyEvent can only be dropped on a Activity!");
                 }
             }
             // did we have yet a process ?
