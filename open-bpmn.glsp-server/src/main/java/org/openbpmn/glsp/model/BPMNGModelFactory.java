@@ -499,51 +499,6 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
-     * Helper method to import a list of BPMNElementEges into a gModel
-     *
-     * @param bpmnEdges
-     * @param gNodeList
-     * @param participant
-     */
-    private void readEdges(final Set<BPMNElementEdge> bpmnEdges, final List<GModelElement> gNodeList,
-            final Participant participant) {
-        // Add all SequenceFlows
-        for (BPMNElementEdge sequenceFlow : bpmnEdges) {
-            // first we need to verify if the target and source objects exist in our model
-            // if not we need to skip this sequenceFlow element!
-            GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
-            GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
-            if (source == null) {
-                logger.warn("Source element '" + sequenceFlow.getSourceRef() + "' not found - skip SequenceFlow id="
-                        + sequenceFlow.getId());
-                continue;
-            }
-            if (target == null) {
-                logger.warn("Target element '" + sequenceFlow.getTargetRef() + "' not found - skip SequenceFlow id="
-                        + sequenceFlow.getId());
-                continue;
-            }
-
-            // now construct the GNode and add it to the model....
-            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(sequenceFlow);
-            builder.target(computeGPort(target));
-            builder.source(computeGPort(source));
-            BPMNGEdge bpmnGEdge = builder.build();
-            bpmnGEdge.setKind("");
-            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
-                // add the waypoint to the GLSP model....
-                GPoint point = computeRelativeGPoint(wayPoint, participant);
-                bpmnGEdge.getRoutingPoints().add(point);
-            }
-
-            // apply BPMN Extensions
-            applyBPMNExtensions(bpmnGEdge, sequenceFlow);
-
-            gNodeList.add(bpmnGEdge);
-        }
-    }
-
-    /**
      * This helper method returns a GModelElement list from all MessageFlows
      * contained in the current model.
      * <p>
@@ -583,39 +538,13 @@ public class BPMNGModelFactory implements GModelFactory {
                 bpmnGEdge.getRoutingPoints().add(point);
             }
             gNodeList.add(bpmnGEdge);
+            // apply BPMN Extensions
+            applyBPMNExtensions(bpmnGEdge, messageFlow);
+
         }
 
         return gNodeList;
 
-    }
-
-    /**
-     * This helper method creates a GLSP LableGNode element to a corresponding
-     * BPMNFlowElement (Event|Gateway|DataObject)
-     *
-     * @param bpmnLabel
-     * @param flowElement
-     * @param participant
-     * @return
-     * @throws BPMNMissingElementException
-     */
-    private LabelGNode createLabelNode(final BPMNLabel bpmnLabel, final BPMNElementNode flowElement,
-            final Participant participant) throws BPMNMissingElementException {
-        logger.debug("BPMNLabel: x=" + bpmnLabel.getBounds().getPosition().getX() + " y="
-                + bpmnLabel.getBounds().getPosition().getY());
-        GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
-        // compute relative point...
-        labelPoint = computeRelativeGPoint(labelPoint, participant);
-        labelPoint.setX(labelPoint.getX() - 0);
-        // now we build the LabelGNode
-        logger.debug("label GPoint: x=" + labelPoint.getX() + " y=" + labelPoint.getY());
-        LabelGNode labelNode = new LabelGNodeBuilder(flowElement) //
-                .position(labelPoint) //
-                // .size(bpmnLabel.getBounds().getDimension().getWidth(),
-                // bpmnLabel.getBounds().getDimension().getHeight()) //
-                .build();
-
-        return labelNode;
     }
 
     /**
@@ -672,5 +601,79 @@ public class BPMNGModelFactory implements GModelFactory {
         }
         // we did not found a GPort
         return element;
+    }
+
+    /**
+     * Helper method to import a list of BPMNElementEges into a gModel
+     *
+     * @param bpmnEdges
+     * @param gNodeList
+     * @param participant
+     */
+    private void readEdges(final Set<BPMNElementEdge> bpmnEdges, final List<GModelElement> gNodeList,
+            final Participant participant) {
+        // Add all SequenceFlows
+        for (BPMNElementEdge sequenceFlow : bpmnEdges) {
+            // first we need to verify if the target and source objects exist in our model
+            // if not we need to skip this sequenceFlow element!
+            GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
+            GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
+            if (source == null) {
+                logger.warn("Source element '" + sequenceFlow.getSourceRef() + "' not found - skip SequenceFlow id="
+                        + sequenceFlow.getId());
+                continue;
+            }
+            if (target == null) {
+                logger.warn("Target element '" + sequenceFlow.getTargetRef() + "' not found - skip SequenceFlow id="
+                        + sequenceFlow.getId());
+                continue;
+            }
+
+            // now construct the GNode and add it to the model....
+            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(sequenceFlow);
+            builder.target(computeGPort(target));
+            builder.source(computeGPort(source));
+            BPMNGEdge bpmnGEdge = builder.build();
+            bpmnGEdge.setKind("");
+            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
+                // add the waypoint to the GLSP model....
+                GPoint point = computeRelativeGPoint(wayPoint, participant);
+                bpmnGEdge.getRoutingPoints().add(point);
+            }
+
+            // apply BPMN Extensions
+            applyBPMNExtensions(bpmnGEdge, sequenceFlow);
+
+            gNodeList.add(bpmnGEdge);
+        }
+    }
+
+    /**
+     * This helper method creates a GLSP LableGNode element to a corresponding
+     * BPMNFlowElement (Event|Gateway|DataObject)
+     *
+     * @param bpmnLabel
+     * @param flowElement
+     * @param participant
+     * @return
+     * @throws BPMNMissingElementException
+     */
+    private LabelGNode createLabelNode(final BPMNLabel bpmnLabel, final BPMNElementNode flowElement,
+            final Participant participant) throws BPMNMissingElementException {
+        logger.debug("BPMNLabel: x=" + bpmnLabel.getBounds().getPosition().getX() + " y="
+                + bpmnLabel.getBounds().getPosition().getY());
+        GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
+        // compute relative point...
+        labelPoint = computeRelativeGPoint(labelPoint, participant);
+        labelPoint.setX(labelPoint.getX() - 0);
+        // now we build the LabelGNode
+        logger.debug("label GPoint: x=" + labelPoint.getX() + " y=" + labelPoint.getY());
+        LabelGNode labelNode = new LabelGNodeBuilder(flowElement) //
+                .position(labelPoint) //
+                // .size(bpmnLabel.getBounds().getDimension().getWidth(),
+                // bpmnLabel.getBounds().getDimension().getHeight()) //
+                .build();
+
+        return labelNode;
     }
 }

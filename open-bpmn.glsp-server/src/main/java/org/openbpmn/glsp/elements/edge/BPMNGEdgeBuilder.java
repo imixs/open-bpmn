@@ -54,8 +54,8 @@ public class BPMNGEdgeBuilder extends AbstractGEdgeBuilder<BPMNGEdge, BPMNGEdgeB
         GLabel edgeLabel = new GLabelBuilder(ModelTypes.LABEL_HEADING) //
                 .edgePlacement(new GEdgePlacementBuilder()//
                         .side(GConstants.EdgeSide.TOP)//
-                        .position(0.5d)//
-                        // .offset(1.5d) //
+                        .position(0.5d) // center (50%)
+                        .offset(3.0d) // 3px offset
                         .rotate(false) //
                         .build())//
                 .id(id + "_bpmnlabel") //
