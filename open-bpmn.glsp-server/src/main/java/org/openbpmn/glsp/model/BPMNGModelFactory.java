@@ -535,6 +535,10 @@ public class BPMNGModelFactory implements GModelFactory {
                 GPoint point = computeRelativeGPoint(wayPoint, participant);
                 bpmnGEdge.getRoutingPoints().add(point);
             }
+
+            // apply BPMN Extensions
+            applyBPMNExtensions(bpmnGEdge, sequenceFlow);
+
             gNodeList.add(bpmnGEdge);
         }
     }

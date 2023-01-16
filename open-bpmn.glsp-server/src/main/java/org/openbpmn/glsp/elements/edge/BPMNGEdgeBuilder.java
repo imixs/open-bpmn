@@ -15,11 +15,15 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.edge;
 
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.builder.AbstractGEdgeBuilder;
+import org.eclipse.glsp.graph.builder.impl.GEdgePlacementBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
+import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
  * BPMN SequenceFlow
@@ -46,7 +50,18 @@ public class BPMNGEdgeBuilder extends AbstractGEdgeBuilder<BPMNGEdge, BPMNGEdgeB
         edge.setName(name);
         // set the custom BPMN Router Kind
         edge.setRouterKind(GConstants.RouterKind.MANHATTAN);
-        // edge.setRouterKind(ModelTypes.BPMN_ROUTER_KIND);
+        // set the label
+        GLabel edgeLabel = new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+                .edgePlacement(new GEdgePlacementBuilder()//
+                        .side(GConstants.EdgeSide.TOP)//
+                        .position(0.5d)//
+                        // .offset(1.5d) //
+                        .rotate(false) //
+                        .build())//
+                .id(id + "_bpmnlabel") //
+                .text(edge.getName()).build();
+
+        edge.getChildren().add(edgeLabel);
     }
 
     @Override

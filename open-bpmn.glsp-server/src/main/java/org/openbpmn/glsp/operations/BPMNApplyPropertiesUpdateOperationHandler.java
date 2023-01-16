@@ -31,6 +31,7 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -78,6 +79,14 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             if (!_baseElement.isEmpty()) {
                 gModelElement = _baseElement.get();
                 bpmnElement = modelState.getBpmnModel().findElementNodeById(elementID);
+            }
+            if (bpmnElement == null) {
+                // not yet found - check Edges....
+                Optional<BPMNGEdge> _baseEdge = modelState.getIndex().findElementByClass(elementID, BPMNGEdge.class);
+                if (!_baseEdge.isEmpty()) {
+                    gModelElement = _baseEdge.get();
+                    bpmnElement = modelState.getBpmnModel().findElementEdgeById(elementID);
+                }
             }
         }
 
