@@ -1,8 +1,9 @@
 package org.openbpmn.output;
 
+import static org.junit.jupiter.api.Assertions.fail;
+
 import java.util.logging.Logger;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -18,15 +19,6 @@ public class TestPrettifyModel {
 
     private static Logger logger = Logger.getLogger(TestPrettifyModel.class.getName());
 
-    static BPMNModel model = null;
-
-    @BeforeAll
-    public static void init() throws BPMNModelException {
-        logger.info("...read model");
-        model = BPMNModelFactory.read("/prettify_test1.bpmn");
-        logger.info("...read ok");
-    }
-
     /**
      * Test if the save method works as expected and did remove white space
      * <p>
@@ -36,8 +28,15 @@ public class TestPrettifyModel {
     @Test
     public void testPrettify() {
 
-        model.save("src/test/resources/prettify_test1.xml");
+        BPMNModel model;
+        try {
+            model = BPMNModelFactory.read("/prettify_test1.bpmn");
 
+            model.save("src/test/resources/prettify_test1.xml");
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
         logger.info("...model save sucessful ");
     }
 

@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -25,14 +24,6 @@ public class TestUpdateRoutingPoints {
 
     private static Logger logger = Logger.getLogger(TestUpdateRoutingPoints.class.getName());
 
-    static BPMNModel model = null;
-
-    @BeforeAll
-    public static void init() throws BPMNModelException {
-        logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-1.bpmn");
-    }
-
     /**
      * This test parses a bpmn file
      */
@@ -41,6 +32,7 @@ public class TestUpdateRoutingPoints {
         String out = "src/test/resources/update-routingpoints-process_2.bpmn";
         logger.info("...read model");
         try {
+            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
             // read Sequcen....
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
@@ -62,12 +54,12 @@ public class TestUpdateRoutingPoints {
             flow1.addWayPoint(new BPMNPoint(118.0, 174.0));
             flow1.addWayPoint(new BPMNPoint(270.0, 174.0));
             assertEquals(2, flow1.getWayPoints().size());
-
+            model.save(out);
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
-        model.save(out);
+       
 
         logger.info("...model update sucessful: " + out);
     }

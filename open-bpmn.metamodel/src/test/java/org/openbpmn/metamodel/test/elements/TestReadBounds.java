@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -27,14 +26,6 @@ public class TestReadBounds {
 
     private static Logger logger = Logger.getLogger(TestReadBounds.class.getName());
 
-    static BPMNModel model = null;
-
-    @BeforeAll
-    public static void init() throws BPMNModelException {
-        logger.info("...read model");
-        model = BPMNModelFactory.read("/refmodel-1.bpmn");
-    }
-
     /**
      * This test verifies bounds of the start event
      */
@@ -43,6 +34,7 @@ public class TestReadBounds {
 
         logger.info("...read model");
         try {
+            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
             // read tasks....
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);
@@ -73,6 +65,7 @@ public class TestReadBounds {
 
         logger.info("...read model");
         try {
+            BPMNModel model = BPMNModelFactory.read("/refmodel-1.bpmn");
             // read tasks....
             BPMNProcess process = model.openProcess(null);
             assertNotNull(process);

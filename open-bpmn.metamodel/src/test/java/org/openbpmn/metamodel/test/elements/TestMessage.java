@@ -12,10 +12,6 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Message;
-import org.openbpmn.bpmn.elements.Signal;
-import org.openbpmn.bpmn.elements.core.BPMNBounds;
-import org.openbpmn.bpmn.elements.core.BPMNDimension;
-import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
