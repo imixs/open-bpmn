@@ -26,6 +26,10 @@ if [[ $1 == "-h" ]]; then
 fi
 echo "***************************************"
 
+# First compute the current version number from the pom.xml
+version=$(grep -oP '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
+echo "... current snapshot version: $version"
+
 if [[ "$1" == "" ]]; then
   buildAll='true'
 fi
@@ -69,9 +73,9 @@ if [ "$clean" == "true" ]; then
 fi
 
 if [ "$buildBackend" == "true" ]; then
-  mvn clean install -DskipTests
+  mvn clean install
   cd open-bpmn.glsp-server/target
-  java -jar open-bpmn.server-0.7.0-SNAPSHOT-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
+  java -jar open-bpmn.server*-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
   cd ../
 fi
 

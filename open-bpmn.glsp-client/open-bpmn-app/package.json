@@ -1,6 +1,5 @@
 {
-  "private": true,
-  "name": "open-bpmn-app",
+  "name": "@open-bpmn/open-bpmn-app",
   "version": "0.7.0",
   "description": "Web App for Open BPMN",
   "license": "(GPL-3.0)",     
