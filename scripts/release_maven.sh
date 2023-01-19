@@ -3,6 +3,15 @@ echo "***************************************"
 echo "* Open BPMN - Release Process.....    *"
 echo "***************************************"
 
+# Check java_home
+if [[ "$JAVA_HOME" == *"11"* ]]; then
+    echo $JAVA_HOME
+else
+    echo "JAVA_HOME is not set to JDK 11!"
+    exit 0
+fi
+
+
 # First compute the current version number from the pom.xml
 SOURCE_VERSION=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
 echo "... current version: $SOURCE_VERSION"
