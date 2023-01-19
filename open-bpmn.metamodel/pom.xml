@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.imixs.bpmn</groupId>
 		<artifactId>open-bpmn</artifactId>
-		<version>0.7.0-SNAPSHOT</version>
+		<version>0.7.0</version>
 	</parent>
 	<artifactId>open-bpmn.metamodel</artifactId>
 	<name>Imixs Open BPMN - Metamodel</name>
