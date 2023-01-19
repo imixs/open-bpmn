@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
+        <bpmn2:participant id="participant_Ddxtjg" name="Default Process" processRef="process_1"/>
+        <bpmn2:participant id="participant_RrZQFA" name="Pool-1" processRef="process_7LE50g">
+            <bpmn2:documentation id="documentation_cuOSPw"/>
+        </bpmn2:participant>
+    </bpmn2:collaboration>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="Default Process" processType="Public">
+        <bpmn2:documentation id="documentation_JOldbw"/>
+        <bpmn2:task id="task_iruKEg" name="Task-2">
+            <bpmn2:documentation id="documentation_lACtQA"/>
+        </bpmn2:task>
+    </bpmn2:process>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_7LE50g" name="Pool-1" processType="Private">
+        <bpmn2:laneSet id="laneset_1" name="Lane Set 1">
+            <bpmn2:lane id="lane_d6KlnQ" name="Lane 1">
+                <bpmn2:documentation id="documentation_5X90yw"/>
+            </bpmn2:lane>
+            <bpmn2:lane id="lane_Zp8mhw" name="Lane 2">
+                <bpmn2:documentation id="documentation_RBmhkA"/>
+            </bpmn2:lane>
+        </bpmn2:laneSet>
+        <bpmn2:task id="task_P0LRxQ" name="Task-1">
+            <bpmn2:documentation id="documentation_We88eg"/>
+        </bpmn2:task>
+        <bpmn2:startEvent id="event_OnW51g" name="Event-1">
+            <bpmn2:documentation id="documentation_zC7vyA"/>
+            <bpmn2:errorEventDefinition id="errorEventDefinition_PRuP1w"/>
+        </bpmn2:startEvent>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="participant_RrZQFA" id="BPMNShape_8EHyJw">
+                <dc:Bounds height="258.0" width="540.0" x="66.5" y="48.5"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_p84b2A">
+                    <dc:Bounds x="10.0" y="10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_P0LRxQ" id="BPMNShape_5hyAyg">
+                <dc:Bounds height="66.0" width="148.0" x="157.5" y="75.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_iruKEg" id="BPMNShape_DD2nvA">
+                <dc:Bounds height="74.0" width="223.0" x="186.0" y="333.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event_OnW51g" id="BPMNShape_5LvdYQ">
+                <dc:Bounds height="36.0" width="36.0" x="341.5" y="82.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_KaUd0A">
+                    <dc:Bounds height="16.0" width="100.0" x="309.5" y="118.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="lane_d6KlnQ" id="BPMNShape_Lane_61l7cg">
+                <dc:Bounds height="129.0" width="510.0" x="96.0" y="48.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="lane_Zp8mhw" id="BPMNShape_Lane_tqcplA">
+                <dc:Bounds height="129.0" width="510.0" x="96.0" y="177.0"/>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
