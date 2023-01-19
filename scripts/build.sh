@@ -69,6 +69,7 @@ done
 if [ "$clean" == "true" ]; then
   # clean up gitignore files
   #git clean -xdf
+  mvn clean
   rm open-bpmn.glsp-client/yarn.lock
 fi
 
