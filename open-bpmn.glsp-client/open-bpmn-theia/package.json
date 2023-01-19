@@ -1,6 +1,6 @@
 {
   "name": "@open-bpmn/open-bpmn-theia",
-  "version": "0.7.0",
+  "version": "0.7.2",
   "description": "Theia extension for the BPMN GLSP Client",
   "license": "(GPL-3.0)",
   "keywords": [
@@ -22,7 +22,7 @@
     }
   ],
   "dependencies": {
-    "@open-bpmn/open-bpmn-glsp": "0.7.0",
+    "@open-bpmn/open-bpmn-glsp": "0.7.2",
     "@eclipse-glsp/theia-integration": "1.1.0-RC03"
   },
   "files": [

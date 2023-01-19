@@ -16,12 +16,14 @@ Chack status:
 
  https://npmjs.com/package/open-bpmn
 
-Login into :
 
-	$ npm login
+To be able to publish to the npm repository (https://www.npmjs.com/) create frist an *automation token* and set this token in your local environment first!
+
+	$ cd open-bpmn.glsp-client/ 
+	$ npm config set _authToken=%YOUR_ACCES_TOKEN%
+
+Replace `%YOUR_ACCES_TOKEN%` with a valid Token!
 	
-Publish with
+Now you can run the release script:
 
-	$ npm publish --access public 
-
-https://www.npmjs.com/
+	$ ./scripts/release.sh

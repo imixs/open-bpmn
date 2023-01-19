@@ -14,16 +14,17 @@ if [ "$#" -ne 2 ]; then
 fi
 
 
-
 SOURCE_VERSION=$1
 NEXT_VERSION=$2
-
 
 echo "...current version: $SOURCE_VERSION"
 
 echo "...release node.js modules.....    *"
 cd open-bpmn.glsp-client
-npm login
+echo "...publish to https://www.npmjs.com/"
+# 
+# We use a automated API token here!
+# $ npm config set _authToken=%YOUR_ACCES_TOKEN%
 
 # Publish model
 cd open-bpmn-model
@@ -65,18 +66,7 @@ find * -name 'launch.json' | xargs perl -pi -e "s/\"version\": \"${SOURCE_VERSIO
 find * -name 'bpmn-glsp-server-contribution.ts' | xargs perl -pi -e "s/open-bpmn.server-${SOURCE_VERSION}/open-bpmn.server-$NEXT_VERSION/g"
 find * -name 'build.sh' | xargs perl -pi -e "s/open-bpmn.server-${SOURCE_VERSION}/open-bpmn.server-$NEXT_VERSION/g"
 
-
 echo "... done"
-
-
-
-
-
-
-
-
-
-
 
 echo "***************************************"
 echo "* npm Release Process completed!      *"

@@ -24,7 +24,11 @@ mvn release:perform
 
 echo "...release node.js modules.....    *"
 cd open-bpmn.glsp-client
-npm login
+echo "...publish to https://www.npmjs.com/"
+# 
+# We use a automated API token here!
+# $ npm config set _authToken=%YOUR_ACCES_TOKEN%
+
 
 # Publish model
 cd open-bpmn-model
