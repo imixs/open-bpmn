@@ -27,7 +27,7 @@ fi
 echo "***************************************"
 
 # First compute the current version number from the pom.xml
-version=$(grep -oP '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
+version=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
 echo "... current snapshot version: $version"
 
 if [[ "$1" == "" ]]; then
@@ -68,7 +68,7 @@ done
 
 if [ "$clean" == "true" ]; then
   # clean up gitignore files
-  git clean -xdf
+  #git clean -xdf
   rm open-bpmn.glsp-client/yarn.lock
 fi
 
