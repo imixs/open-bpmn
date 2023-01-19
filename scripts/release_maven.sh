@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "***************************************"
-echo "* Open BPMN - Release Process.....    *"
+echo "* Open BPMN - Maven Release Process   *"
 echo "***************************************"
 
 # Check java_home
@@ -14,7 +14,7 @@ fi
 
 # First compute the current version number from the pom.xml
 SOURCE_VERSION=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
-echo "... current version: $SOURCE_VERSION"
+echo "...current version: $SOURCE_VERSION"
 
 echo "...release server part.....    "
 mvn clean install

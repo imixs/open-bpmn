@@ -1,26 +1,25 @@
 #!/bin/bash
 echo "***************************************"
-echo "* Open BPMN - Release Process.....    *"
+echo "* npm Open BPMN - Release Process     *"
 echo "***************************************"
 
-# Check java_home
-if [[ "$JAVA_HOME" == *"11"* ]]; then
-    echo $JAVA_HOME
-else
-    echo "JAVA_HOME is not set to JDK 11!"
+# check parameter count and provide help if count doesn't match
+if [ "$#" -ne 2 ]; then
+    echo "Illegal number of parameters"
+    echo "Please specify the old and the new version like this:"
+    echo "	changeVersion.sh <oldVersionString> <newVersionString>"
+    echo "Example:"
+    echo "	changeVersion.sh 0.2.0 0.3.0"
     exit 0
 fi
 
-# First compute the current version number from the pom.xml
-SOURCE_VERSION=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
+
+
+SOURCE_VERSION=$1
+NEXT_VERSION=$2
+
+
 echo "...current version: $SOURCE_VERSION"
-
-echo "...release server part.....    "
-mvn clean install
-mvn release:clean release:prepare -DautoVersionSubmodules=true
-mvn release:perform
-
-
 
 echo "...release node.js modules.....    *"
 cd open-bpmn.glsp-client
@@ -44,7 +43,7 @@ npm publish --access public
 
 cd ../..
 
-NEXT_VERSION=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
+
 echo "... upgrade open-bpmn client version: $NEXT_VERSION"
 
 ###################
@@ -80,6 +79,6 @@ echo "... done"
 
 
 echo "***************************************"
-echo "* Release Process completed!          *"
+echo "* npm Release Process completed!      *"
 echo "* New Version: $NEXT_VERSION"
 echo "***************************************"
