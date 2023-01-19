@@ -4,7 +4,7 @@ echo "* Open BPMN - Release Process.....    *"
 echo "***************************************"
 
 # First compute the current version number from the pom.xml
-SOURCE_VERSION=$(grep -oP '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
+SOURCE_VERSION=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
 echo "... current version: $SOURCE_VERSION"
 
 echo "...release server part.....    "
@@ -14,7 +14,7 @@ mvn release:perform
 
 
 
-NEXT_VERSION=$(grep -oP '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
+NEXT_VERSION=$(grep -oP -m1 '(?<=<version>)[^-SNAPSHOT]+' pom.xml)
 
 
 
