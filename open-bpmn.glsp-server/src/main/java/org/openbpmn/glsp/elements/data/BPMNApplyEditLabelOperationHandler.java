@@ -20,6 +20,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GDimension;
+import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
@@ -28,7 +29,9 @@ import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
 import org.openbpmn.bpmn.elements.TextAnnotation;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
@@ -41,11 +44,11 @@ import com.google.inject.Inject;
 
 /**
  * This BPMNApplyEditLabelOperationHandler is used to apply label changes on
- * Tasks, TextAnnotations and BPMNLabels. The method updates also the GNode and
+ * BPMNElementNodes or BPMNEdges. The method updates also the GNode/GEdge and
  * reset the mode state.
  * <p>
  * For TextAnnotation the the handler updates the BPMN 'text' property, for all
- * other BPMNNodeElements it updates the 'name' property.
+ * other BPMNElements it updates the 'name' property.
  * <p>
  * (See also:
  * https://www.eclipse.org/glsp/documentation/rendering/#default-views)
@@ -66,34 +69,30 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
     @Inject
     protected BPMNGModelState modelState;
 
+    /**
+     * This method updates the corresponding BPMN Element form a given Label. This
+     * object can either be a Node or an Edge
+     */
     @Override
     public void executeOperation(final ApplyLabelEditOperation operation) {
-        GNode gNodeElement = null;
 
-        // resolve the GNode element
+        // Do we have an GNode?
         Optional<GNode> _gNodeElement = modelState.getIndex().findElementByClass(operation.getLabelId(), GNode.class);
-        if (_gNodeElement != null && _gNodeElement.isPresent()) {
-            gNodeElement = _gNodeElement.get();
-        }
-
-        // resolve the corresponding BPMN Element
-        BPMNElementNode bpmnElement = resolveBPMNElement(operation);
-        if (bpmnElement != null) {
-
-            // For TextAnnotation we need to updat the 'text' argument on the gNode
-            if (bpmnElement instanceof TextAnnotation) {
-                ((TextAnnotation) bpmnElement).setText(operation.getText());
-                // update gNode
-                if (gNodeElement != null) {
+        GNode gNodeElement = _gNodeElement.orElse(null);
+        if (gNodeElement != null) {
+            BPMNElementNode bpmnElementNode = resolveBPMNElementNode(gNodeElement);
+            if (bpmnElementNode != null) {
+                // For TextAnnotation we need to update the 'text' argument on the gNode
+                if (bpmnElementNode instanceof TextAnnotation) {
+                    ((TextAnnotation) bpmnElementNode).setText(operation.getText());
                     // update gNode
                     gNodeElement.getArgs().put("text", operation.getText());
-                }
 
-            } else {
-                // For all other elements the text is stored in the 'name' attribute.
-                bpmnElement.setName(operation.getText());
-                // update gNode
-                if (gNodeElement != null) {
+                } else {
+                    // For all other elements the text is stored in the 'name' attribute.
+                    bpmnElementNode.setName(operation.getText());
+                    // update gNode
+
                     // update gNode
                     String text = operation.getText();
                     gNodeElement.getArgs().put("text", text);
@@ -113,9 +112,9 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
                         label.setSize(newLabelSize);
                         // Update the BPMNLabel bounds...
                         try {
-                            if (bpmnElement.getLabel() != null) {
-                                bpmnElement.getLabel().getBounds().setDimension(newLabelSize.getWidth(),
-                                        newLabelSize.getHeight());
+                            BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
+                            if (bpmnLabel != null) {
+                                bpmnLabel.getBounds().setDimension(newLabelSize.getWidth(), newLabelSize.getHeight());
                             }
                         } catch (BPMNMissingElementException e) {
                             e.printStackTrace();
@@ -124,11 +123,26 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
                     }
                 }
             }
-            // we do need to reset the model because of the properties panels
-            modelState.reset();
         } else {
-            logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
+            // it was not a GNode - so test if we have a Edge...
+
+            Optional<GEdge> _gEdgeElement = modelState.getIndex().findElementByClass(operation.getLabelId(),
+                    GEdge.class);
+            GEdge gEdgeElement = _gEdgeElement.orElse(null);
+            if (gEdgeElement != null) {
+
+                gEdgeElement.getArgs().put("text", operation.getText());
+                BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(gEdgeElement.getId());
+
+                bpmnElement.setName(operation.getText());
+            }
         }
+
+        // we do need to reset the model because of the properties panels
+        modelState.reset();
+
+        logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
+
     }
 
     /**
@@ -164,15 +178,10 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
      * @param operation
      * @return
      */
-    private BPMNElementNode resolveBPMNElement(final ApplyLabelEditOperation operation) {
+    private BPMNElementNode resolveBPMNElementNode(final GNode gNodeElement) {
         BPMNElementNode result = null;
-        String labelId = operation.getLabelId();
         String elementID = null;
-
-        Optional<GNode> _gNodeElement = modelState.getIndex().findElementByClass(labelId, GNode.class);
-
-        if (_gNodeElement != null && _gNodeElement.isPresent()) {
-            GNode gNodeElement = _gNodeElement.get();
+        if (gNodeElement != null) {
             String type = gNodeElement.getType();
             GModelElement parent = gNodeElement.getParent();
             if (ModelTypes.BPMN_TEXT_NODE.equals(type) && (parent instanceof LabelGNode || parent instanceof TaskGNode
@@ -186,9 +195,10 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
             if (BPMNGraphUtil.isBPMNLabelID(elementID)) {
                 elementID = BPMNGraphUtil.resolveFlowElementIDfromLabelID(elementID);
             }
-            result = (BPMNElementNode) modelState.getBpmnModel().findElementById(elementID);
-        }
 
+        }
+        // find the BPMNElement....
+        result = (BPMNElementNode) modelState.getBpmnModel().findElementById(elementID);
         return result;
 
     }
