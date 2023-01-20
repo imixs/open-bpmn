@@ -23,8 +23,8 @@ import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
@@ -121,10 +121,12 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         Set<String> features = json.keySet();
         for (String feature : features) {
             if ("name".equals(feature)) {
-                // update the task CompartmentHeader (GLabel)
-                GLabel label = BPMNGraphUtil.findCompartmentHeader((BPMNGNode) gNodeElement);
-                if (label != null) {
-                    label.setText(json.getString(feature));
+                String text = json.getString(feature);
+                bpmnElement.setName(text);
+                // update the bpmn-text-node of the GNodeElement
+                GNode gnode = BPMNGraphUtil.findMultiLineTextNode((BPMNGNode) gNodeElement);
+                if (gnode != null) {
+                    gnode.getArgs().put("text", text);
                 }
                 continue;
             }

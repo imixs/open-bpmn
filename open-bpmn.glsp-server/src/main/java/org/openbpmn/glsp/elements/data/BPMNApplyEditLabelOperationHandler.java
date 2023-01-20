@@ -35,6 +35,7 @@ import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
 
@@ -123,7 +124,8 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
                     }
                 }
             }
-            // we do NOT reset the model
+            // we do need to reset the model because of the properties panels
+            modelState.reset();
         } else {
             logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
         }
@@ -173,7 +175,7 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
             GNode gNodeElement = _gNodeElement.get();
             String type = gNodeElement.getType();
             GModelElement parent = gNodeElement.getParent();
-            if ("bpmn-text-node".equals(type) && (parent instanceof LabelGNode || parent instanceof TaskGNode
+            if (ModelTypes.BPMN_TEXT_NODE.equals(type) && (parent instanceof LabelGNode || parent instanceof TaskGNode
                     || parent instanceof TextAnnotationGNode)) {
                 // it is a TextAnnotation...
                 elementID = parent.getId();

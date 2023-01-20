@@ -80,7 +80,7 @@ public class BPMNGraphUtil {
      * @return - GNode element containing the text
      */
     public static GNode createMultiLineTextNode(final String id, final String text) {
-        return new GNodeBuilder("bpmn-text-node"). //
+        return new GNodeBuilder(ModelTypes.BPMN_TEXT_NODE). //
                 id(id). //
                 addArgument("text", text). //
                 build();
@@ -119,6 +119,28 @@ public class BPMNGraphUtil {
             if (child instanceof GLabel) {
                 // return Optional.of(child);
                 return (GLabel) child;
+            }
+        }
+        // we did not found a GLabel
+        return null;
+    }
+
+    /**
+     * This method tests if the given element has a Child of type bpmn-text-node.
+     * This is the case for BPMN Flow Elements. In this case the method returns the
+     * GNode. Otherwise the method returns null.
+     *
+     * @return GNode of an element or null if no bpmn-text-node was found
+     */
+    public static GNode findMultiLineTextNode(final BPMNGNode element) {
+
+        EList<GModelElement> childs = element.getChildren();
+        for (GModelElement child : childs) {
+            if (child instanceof GNode) {
+                if (ModelTypes.BPMN_TEXT_NODE.equals(child.getType())) {
+                    return (GNode) child;
+                }
+
             }
         }
         // we did not found a GLabel

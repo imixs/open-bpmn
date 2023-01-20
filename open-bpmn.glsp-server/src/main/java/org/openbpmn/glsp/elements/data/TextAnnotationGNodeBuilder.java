@@ -84,11 +84,6 @@ public class TextAnnotationGNodeBuilder extends AbstractGNodeBuilder<TextAnnotat
         }
         // add a mulitLine text block to show and edit long text blocks
         this.id = node.getId() + "_bpmntext";
-//        node.getChildren().add(new GNodeBuilder("bpmn-text-node"). //
-//                id(id). //
-//                addArgument("text", text). //
-//                build());
-
         node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id, text));
     }
 

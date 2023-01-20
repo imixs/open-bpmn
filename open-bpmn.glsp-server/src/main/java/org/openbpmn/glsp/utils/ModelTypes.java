@@ -24,5 +24,6 @@ public final class ModelTypes {
     public static final String ICON = "icon";
     public static final String CONTAINER = "container"; // used within Pools
     public static final String BPMN_ROUTER_KIND = "bpmn"; // custom BPMN Routing
+    public static final String BPMN_TEXT_NODE = "bpmn-text-node";
 
 }

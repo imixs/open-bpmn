@@ -23,8 +23,8 @@ import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
@@ -114,15 +114,18 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
         for (String feature : features) {
 
             if ("name".equals(feature)) {
-                bpmnElement.setName(json.getString(feature));
+                String text = json.getString(feature);
+                bpmnElement.setName(text);
                 // Update Label...
                 Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
                 if (!label.isEmpty()) {
                     LabelGNode lgn = (LabelGNode) label.get();
-                    GLabel glabel = BPMNGraphUtil.findCompartmentHeader((lgn));
-                    if (glabel != null) {
-                        glabel.setText(json.getString(feature));
+                    // update the bpmn-text-node of the GNodeElement
+                    GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
+                    if (gnode != null) {
+                        gnode.getArgs().put("text", text);
                     }
+                    continue;
                 }
 
                 continue;
