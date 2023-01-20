@@ -41,19 +41,19 @@ Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](ht
  - [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) - the GLSP Client components and Theia integration
 
 
-# Open-BPMN - BPMN 2.0 Metamodel
+### Open-BPMN - BPMN 2.0 Metamodel
 
 OpenBPMN provides a BPMN 2.0 Metamodel based on pure java. This library can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the `org.w3c.dom` XML API and includes a set of junit test classes which may be helpful to implement you own business logic. 
 
  - [OpenBPMN Metamodel](./open-bpmn.metamodel/README.md)
 
 
-# Open-BPMN GLSP-Server
+### Open-BPMN GLSP-Server
 
 The [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) provides the GLSP Server part. The server part is responsible to load and store the diagram from a .bpmn file.
 
 
-# Open-BPMN GLSP-Client
+### Open-BPMN GLSP-Client
 
 The [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) is the GLSP Client part of Open BPMN providing the graphical modeling tool. 
 
