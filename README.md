@@ -34,19 +34,28 @@ Open Source Workflow Engines like [Imixs-Workflow](https://www.imixs.org) integr
 
 ## Architecture
 
-Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/), an extensible open-source framework for building custom diagram editors based on web technologies.
-Open BPMN supports this technology and provides the following building blocks:
+Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/) and provides the following building blocks:
 
  - [open-bpmn.metamodel](./open-bpmn.metamodel/README.md) - an open BPMN 2.0 metamodel
  - [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) - the GLSP Server implementation
  - [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) - the GLSP Client components and Theia integration
 
 
-# The BPMN 2.0 Metamodel
+# Open-BPMN - BPMN 2.0 Metamodel
 
-OpenBPMN provides a Java Metamodel which can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the `org.w3c.dom` XML API and includes a set of junit test classes which may be helpful to implement you own business logic. 
+OpenBPMN provides a BPMN 2.0 Metamodel based on pure java. This library can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the `org.w3c.dom` XML API and includes a set of junit test classes which may be helpful to implement you own business logic. 
 
  - [OpenBPMN Metamodel](./open-bpmn.metamodel/README.md)
+
+
+# Open-BPMN GLSP-Server
+
+The [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) provides the GLSP Server part. The server part is responsible to load and store the diagram from a .bpmn file.
+
+
+# Open-BPMN GLSP-Client
+
+The [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) is the GLSP Client part of Open BPMN providing the graphical modeling tool. 
 
 
 
@@ -99,28 +108,9 @@ Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts t
  
 ### NodeJS
 
-We use nodejs on Linux Debian during development. To manage version of node js see: https://phoenixnap.com/kb/update-node-js-version
+We use nodejs on Linux Debian during development. To manage version of nodejs see: https://phoenixnap.com/kb/update-node-js-version
 
 For development with Eclipse Theia the expected version is ">=10.11.0 <13". For that reason we tested with following version 12.22.10.
 
-
-### How to update the pom version
-
-Bumping the version number of OpenBPMN you can use a script.
-
-* First create an issiue in bugzilla
-* Next you can use the script changeVersion.sh
-
-Specify the old and the new version like this:
-
-	$ changeVersion.sh <oldVersionString> <newVersionString>
-
-Example:
-
-	$ changeVersion.sh 0.3.0 0.4.0
-
-Finally commit your changes
-	
-	 
 
 	

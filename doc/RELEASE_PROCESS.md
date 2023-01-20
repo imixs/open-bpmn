@@ -8,11 +8,11 @@ The release management process of Open-BPMN is based on the [Releasemanagement a
 
 A release can be performed by calling the script "release.sh". This script is as far as possible automated. It releases the current maven snapshots and publish the node.js modules into the [Open-BPMN nmp repository](https://www.npmjs.com/settings/open-bpmn/packages). 
 
-Before you start the release process verifiy if the general build of open-bpmn is sucessfull:
+Before you start the release process verify if the general build of open-bpmn is successful:
 
 	$ ./scripts/build.sh -b -f
 
-Chack status:
+Check status:
 
  https://npmjs.com/package/open-bpmn
 
@@ -27,3 +27,20 @@ Replace `%YOUR_ACCES_TOKEN%` with a valid Token!
 Now you can run the release script:
 
 	$ ./scripts/release.sh
+
+Finally commit your changes.	
+
+
+### How to update the pom version
+
+If you not run the release script you can also bumping the version number of OpenBPMN using a script:
+
+	$ changeVersion.sh <oldVersionString> <newVersionString>
+
+Specify the old and the new version. Example:
+
+	$ changeVersion.sh 0.3.0 0.4.0
+
+Finally commit your changes.
+	
+	 
