@@ -13,17 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ContainerContext, GLSPTheiaFrontendModule } from '@eclipse-glsp/theia-integration/lib/browser';
-import { DiagramConfiguration } from 'sprotty-theia';
+import { ContainerContext, GLSPDiagramConfiguration, GLSPTheiaFrontendModule } from '@eclipse-glsp/theia-integration';
 import { BPMNLanguage } from '../common/bpmn-language';
-import { BPMNDiagramConfiguration } from './diagram/bpmn-diagram-configuration';
+import { BPMNDiagramConfiguration } from './bpmn-diagram-configuration';
 
 export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
     protected override enableCopyPaste = true;
     readonly diagramLanguage = BPMNLanguage;
 
     bindDiagramConfiguration(context: ContainerContext): void {
-        context.bind(DiagramConfiguration).to(BPMNDiagramConfiguration);
+        context.bind(GLSPDiagramConfiguration).to(BPMNDiagramConfiguration);
     }
 }
 

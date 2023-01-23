@@ -17,12 +17,10 @@ import { createBPMNDiagramContainer } from '@open-bpmn/open-bpmn-glsp';
 import {
     configureDiagramServer,
     GLSPDiagramConfiguration,
-    GLSPTheiaDiagramServer,
-    TheiaDiagramServer
+    GLSPTheiaDiagramServer
 } from '@eclipse-glsp/theia-integration/lib/browser';
 import { Container, injectable } from 'inversify';
-import 'sprotty-theia/css/theia-sprotty.css';
-import { BPMNLanguage } from '../../common/bpmn-language';
+import { BPMNLanguage } from '../common/bpmn-language';
 
 @injectable()
 export class BPMNDiagramConfiguration extends GLSPDiagramConfiguration {
@@ -31,7 +29,7 @@ export class BPMNDiagramConfiguration extends GLSPDiagramConfiguration {
     doCreateContainer(widgetId: string): Container {
         const container = createBPMNDiagramContainer(widgetId);
         configureDiagramServer(container, GLSPTheiaDiagramServer);
-        container.bind(TheiaDiagramServer).toService(GLSPTheiaDiagramServer);
+        container.bind(GLSPTheiaDiagramServer).toService(GLSPTheiaDiagramServer);
         return container;
     }
 }

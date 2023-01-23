@@ -4,7 +4,7 @@
   "description": "GLSP property panel for BPMN 2.0",
   "license": "(GPL-3.0)",
   "dependencies": {
-    "@eclipse-glsp/client": "1.1.0-RC03",
+    "@eclipse-glsp/client": "1.1.0-RC04",
     "@open-bpmn/open-bpmn-model": "0.8.0",
     "@jsonforms/core": "3.0.0",
     "@jsonforms/react": "3.0.0",
@@ -14,7 +14,7 @@
   "peerDependencies": {
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
-  },
+  },  
   "scripts": {
     "prepare": "yarn clean && yarn build && yarn lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",

@@ -13,7 +13,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { GLSPDiagramLanguage } from '@eclipse-glsp/theia-integration/lib/common';
+import { GLSPDiagramLanguage } from '@eclipse-glsp/theia-integration';
 
 export const BPMNLanguage: GLSPDiagramLanguage = {
     contributionId: 'Bpmn',

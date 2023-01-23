@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "@open-bpmn/open-bpmn-glsp": "0.8.0",
-    "@eclipse-glsp/theia-integration": "1.1.0-RC03"
+    "@eclipse-glsp/theia-integration": "1.1.0-RC04"
   },
   "files": [
     "lib",
