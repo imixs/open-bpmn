@@ -28,7 +28,7 @@ echo "...publish to https://www.npmjs.com/"
 # 
 # We use a automated API token here!
 # $ npm config set _authToken=%YOUR_ACCES_TOKEN%
-
+npm login
 
 # Publish model
 cd open-bpmn-model
