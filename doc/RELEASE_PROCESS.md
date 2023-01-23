@@ -23,6 +23,10 @@ To be able to publish to the npm repository (https://www.npmjs.com/) create fris
 	$ npm config set _authToken=%YOUR_ACCES_TOKEN%
 
 Replace `%YOUR_ACCES_TOKEN%` with a valid Token!
+
+As an alternative you can also do a local login against https://www.npmjs.com/ first 
+
+	$ npm login
 	
 Now you can run the release script:
 
