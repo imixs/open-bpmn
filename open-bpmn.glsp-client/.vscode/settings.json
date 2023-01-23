@@ -50,7 +50,7 @@
       "ul_multi": 3
     },
     "no-inline-html": {
-      "allowed_elements": ["br", "details", "summary"]
+      "allowed_elements": ["details", "summary"]
     }
   }
 }

@@ -2,72 +2,41 @@
   // Use IntelliSense to learn about possible Node.js debug attributes.
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-  "version": "0.7.2",
+  "version": "0.2.0",
   "configurations": [
     {
-      "type": "node",
+      "name": "Workflow GLSP Example Extension",
+      "type": "extensionHost",
       "request": "launch",
-      "name": "Launch BPMN Theia Backend (Embedded GLSP Server)",
-      "program": "${workspaceRoot}/open-bpmn-app/src-gen/backend/main.js",
+      "runtimeExecutable": "${execPath}",
       "args": [
-        "--port=3000",
-        "--no-cluster",
-        "--GLSP_PORT=5007",
-        "--app-project-path=${workspaceRoot}/open-bpmn-app",
-        "--root-dir=${workspaceRoot}/workspace"
+        "${workspaceFolder}/workspace",
+        "--extensionDevelopmentPath=${workspaceFolder}/open-bpmn-vscode"
       ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "sourceMaps": true,
       "outFiles": [
-        "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
-        "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-app/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-theia/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-glsp/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-app/src-gen/**/*.js"
+        "${workspaceFolder}/open-bpmn-vscode/lib/*.js",
+        "${workspaceFolder}/vscode-integration/lib/**/*.js"
       ],
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "outputCapture": "std"
+      "sourceMaps": true
     },
     {
-      "type": "node",
+      "name": "Workflow GLSP Example Extension (External GLSP Server)",
+      "type": "extensionHost",
       "request": "launch",
-      "name": "Launch BPMN Theia Backend (External GLSP Server)",
-      "program": "${workspaceRoot}/open-bpmn-app/src-gen/backend/main.js",
+      "runtimeExecutable": "${execPath}",
       "args": [
-        "--port=3000",
-        "--no-cluster",
-        "--GLSP_PORT=5007",
-        "--debug",
-        "--app-project-path=${workspaceRoot}/open-bpmn-app",
-        "--root-dir=${workspaceRoot}/workspace"
+        "${workspaceFolder}/workspace",
+        "--extensionDevelopmentPath=${workspaceFolder}/open-bpmn-vscode"
       ],
-      "env": {
-        "NODE_ENV": "development"
-      },
-      "sourceMaps": true,
       "outFiles": [
-        "${workspaceRoot}/node_modules/@theia/*/lib/**/*.js",
-        "${workspaceRoot}/node_modules/@eclipse-glsp/*/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-app/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-theia/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-glsp/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn-app/src-gen/**/*.js"
+        "${workspaceFolder}/open-bpmn-vscode/lib/*.js",
+        "${workspaceFolder}/vscode-integration/lib/**/*.js"
       ],
-      "smartStep": true,
-      "internalConsoleOptions": "openOnSessionStart",
-      "outputCapture": "std"
-    },
-    {
-      "name": "Launch BPMN Theia Frontend",
-      "type": "chrome",
-      "request": "launch",
-      "url": "http://localhost:3000/",
       "sourceMaps": true,
-      "webRoot": "${workspaceRoot}/open-bpmn-app"
+      "env": {
+        "GLSP_SERVER_DEBUG": "true",
+        "GLSP_SERVER_PORT": "5007"
+      }
     }
   ]
 }

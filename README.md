@@ -108,9 +108,16 @@ Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts t
  
 ### NodeJS
 
-We use nodejs on Linux Debian during development. To manage version of nodejs see: https://phoenixnap.com/kb/update-node-js-version
+We use nodejs on Linux Debian during development. To manage version of nodejs in debian see: https://phoenixnap.com/kb/update-node-js-version
 
-For development with Eclipse Theia the expected version is ">=10.11.0 <13". For that reason we tested with following version 12.22.10.
+For development with Eclipse Theia the expected version is ">=10.11.0 <17". For that reason we tested with following version  16.11.0. You can list all current versions [here](https://nodejs.org/en/download/releases/). 
 
+In case you have install npm you can install a specific nodejs version with:
 
+	$ sudo n 16.11.0
+ 
+ 
+To install typescript run:
+
+	$ sudo npm install -g typescript 
 	
