@@ -43,8 +43,8 @@
   },
   "theiaExtensions": [
     {
-      "frontend": "lib/browser/frontend-module",
-      "backend": "lib/node/backend-module"
+      "frontend": "lib/browser/bpmn-frontend-module",
+      "backend": "lib/node/bpmn-backend-module"
     }
   ]
 }
