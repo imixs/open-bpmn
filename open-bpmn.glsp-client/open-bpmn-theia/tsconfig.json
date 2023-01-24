@@ -3,8 +3,10 @@
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "reactNamespace": "JSX",
+    "skipLibCheck": true,
+    "types": []
   },
-  "include": ["src", "server"],
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

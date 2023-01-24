@@ -34,7 +34,7 @@
     "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
   },
   "devDependencies": {
-    "@eclipse-glsp/config": "1.1.0-next.fe535db.107",
+    "@eclipse-glsp/config": "1.1.0-next.d03ad9f.112",
     "rimraf": "^2.6.1",
     "lerna": "^6.1.0",
     "typescript": "^4.9.3"
@@ -45,14 +45,5 @@
     "open-bpmn-properties",
     "open-bpmn-theia",
     "open-bpmn-app"
-  ],
-  "resolutions": {
-    "**/@theia/core": "1.29.2",
-    "**/@theia/editor": "1.29.2",
-    "**/@theia/filesystem": "1.29.2",
-    "**/@theia/messages": "1.29.2",
-    "**/@theia/monaco": "1.29.2",
-    "**/@theia/cli": "1.29.2",
-    "sprotty": "0.13.0-next.1c4343c.328"
-  }
+  ]
 }

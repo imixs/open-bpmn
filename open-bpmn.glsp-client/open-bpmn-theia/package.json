@@ -21,20 +21,25 @@
       "email": "ralph.soika@imixs.com"
     }
   ],
+  "files": [
+    "lib",
+    "src",
+    "server"
+  ],
   "dependencies": {
     "@open-bpmn/open-bpmn-glsp": "0.8.0",
     "@eclipse-glsp/theia-integration": "1.1.0-RC04"
   },
-  "files": [
-    "lib",
-    "src"
-  ],
   "scripts": {
-    "prepare": "yarn run clean && yarn run build",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "build": "tsc && yarn run lint",
+    "build": "tsc -b",
+    "clean": "rimraf lib tsconfig.tsbuildinfo server/*.log",
     "lint": "eslint --ext .ts,.tsx ./src",
+    "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
+    "prepare": "yarn clean && yarn build",
     "watch": "tsc -w"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "theiaExtensions": [
     {

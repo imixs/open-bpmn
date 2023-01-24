@@ -1,5 +1,5 @@
 /********************************************************************************
- * Copyright (c) 2022 EclipseSource and others.
+ * Copyright (c) 2020-2022 EclipseSource and others.
  *
  * This program and the accompanying materials are made available under the
  * terms of the Eclipse Public License v. 2.0 which is available at
@@ -13,17 +13,16 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-// @ts-check
-const config = require('./gen-webpack.config.js');
+// import { ApplyTaskEditOperation } from '@eclipse-glsp-examples/workflow-glsp/lib/direct-task-editing/direct-task-editor';
+import { ActionHandlerRegistry } from '@eclipse-glsp/client';
+import { GLSPTheiaDiagramServer } from '@eclipse-glsp/theia-integration';
+import { injectable } from '@theia/core/shared/inversify';
 
-/**
- * Expose bundled modules on window.theia.moduleName namespace, e.g.
- * window['theia']['@theia/core/lib/common/uri'].
- * Such syntax can be used by external code, for instance, for testing.
-config.module.rules.push({
-    test: /\.js$/,
-    loader: require.resolve('@theia/application-manager/lib/expose-loader')
-}); */
-
-module.exports = config;
-config.ignoreWarnings = [/Failed to parse source map/];
+@injectable()
+export class BPMNDiagramServer extends GLSPTheiaDiagramServer {
+    override initialize(registry: ActionHandlerRegistry): void {
+        super.initialize(registry);
+        // registry.register('editTask', this);
+        // registry.register(ApplyTaskEditOperation.KIND, this);
+    }
+}

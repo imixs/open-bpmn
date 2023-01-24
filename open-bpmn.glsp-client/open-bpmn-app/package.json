@@ -4,25 +4,26 @@
   "description": "Web App for Open BPMN",
   "license": "(GPL-3.0)",     
   "dependencies": {
-    "@theia/core": "1.29.2",
-    "@theia/editor": "1.29.2",
-    "@theia/filesystem": "1.29.2",
-    "@theia/markers": "1.29.2",
-    "@theia/messages": "1.29.2",
-    "@theia/monaco": "1.29.2",
-    "@theia/navigator": "1.29.2",
-    "@theia/preferences": "1.29.2",
-    "@theia/process": "1.29.2",
-    "@theia/terminal": "1.29.2",
-    "@theia/workspace": "1.29.2",
-    "@open-bpmn/open-bpmn-theia": "0.8.0"
+    "@open-bpmn/open-bpmn-theia": "0.8.0",  
+    "@theia/core": "1.33.0",
+    "@theia/editor": "1.33.0",
+    "@theia/filesystem": "1.33.0",
+    "@theia/markers": "1.33.0",
+    "@theia/messages": "1.33.0",
+    "@theia/monaco": "1.33.0",
+    "@theia/navigator": "1.33.0",
+    "@theia/preferences": "1.33.0",
+    "@theia/process": "1.33.0",
+    "@theia/terminal": "1.33.0",
+    "@theia/workspace": "1.33.0",
+    "sprotty-theia": "0.13.0-next.9cbedec"
   },
   "devDependencies": {
-    "@theia/cli": "1.29.2"
+    "@theia/cli": "1.33.0"
   },
   "scripts": {
-    "prepare": "yarn build",
     "build": "theia build --mode development",
+    "prepare": "yarn build",
     "start": "theia start --GLSP_PORT=5007 --root-dir=../workspace",
     "start:external": "theia start --GLSP_PORT=5007 --root-dir=../workspace --debug",
     "watch": "theia build --watch --mode development"
