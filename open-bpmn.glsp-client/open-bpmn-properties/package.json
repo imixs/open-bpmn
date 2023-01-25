@@ -11,10 +11,6 @@
     "@jsonforms/vanilla-renderers": "3.0.0",
     "balloon-css": "^0.5.0"
   },
-  "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
-  },  
   "scripts": {
     "prepare": "yarn clean && yarn build && yarn lint",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
