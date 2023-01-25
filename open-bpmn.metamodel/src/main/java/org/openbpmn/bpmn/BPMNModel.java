@@ -393,7 +393,7 @@ public class BPMNModel {
         Participant bpmnParticipant = new Participant(this, participantNode);
         getParticipants().add(bpmnParticipant);
 
-        // now add the corresponding Process
+        // now create and add a new Process to this Participant...
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
         int processNumber = this.getProcesses().size() + 1;
@@ -401,11 +401,11 @@ public class BPMNModel {
                 BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
         bpmnParticipant.setProcessRef(process.getId());
-        // create the pool
+        bpmnParticipant.setBpmnProcess(process);
+        // create the pool shape
         createPool(bpmnParticipant);
 
         return bpmnParticipant;
-
     }
 
     /**
