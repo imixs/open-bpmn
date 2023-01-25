@@ -42,5 +42,6 @@ lib
 
 **/*-app/**
 !**/*-app/package.json
+!**/*-app/README.md
 
 
