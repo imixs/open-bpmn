@@ -145,18 +145,27 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                     for (JsonValue laneValue : laneSetValues) {
                         // update lane properties
                         JsonObject laneData = (JsonObject) laneValue;
-                        String id = laneData.getString("id");
-                        laneDataIDs.add(id);
-                        Lane bpmnLane = process.findLaneById(id);
-                        if (bpmnLane != null) {
-                            bpmnLane.setName(laneData.getString("name"));
-                            bpmnLane.setDocumentation(laneData.getString("documentation"));
-                            // update gnode...
-                            Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
-                            if (_gLane.isPresent()) {
-                                LaneGNode gLane = (LaneGNode) _gLane.get();
-                                gLane.setName(laneData.getString("name"));
+                        if (laneData.get("id") != null) {
+                            String id = laneData.getJsonString("id").getString();
+                            // String id = jsonID.toString();
+                            laneDataIDs.add(id);
+                            Lane bpmnLane = process.findLaneById(id);
+                            if (bpmnLane != null) {
+                                bpmnLane.setName(laneData.getString("name"));
+                                bpmnLane.setDocumentation(laneData.getString("documentation"));
+                                // update gnode...
+                                Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
+                                if (_gLane.isPresent()) {
+                                    LaneGNode gLane = (LaneGNode) _gLane.get();
+                                    gLane.setName(laneData.getString("name"));
+                                }
                             }
+                        } else {
+                            // this is a new lane - construct the lane in the BPMN model first..
+                            Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
+                            laneDataIDs.add(bpmnLane.getId());
+                            // TODO we need to reset the panel - maybe by deselecting the pool?
+                            modelState.reset();
                         }
                     }
 

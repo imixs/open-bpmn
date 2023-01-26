@@ -66,8 +66,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
             // find the process - should be the corresponding participant process
             BPMNProcess bpmnProcess = findProcessByCreateNodeOperation(operation);
             if (bpmnProcess != null) {
-                Lane bpmnLane = bpmnProcess.addLane(modelState.getBpmnModel(),
-                        "Lane " + (bpmnProcess.getLanes().size() + 1));
+                Lane bpmnLane = bpmnProcess.addLane("Lane " + (bpmnProcess.getLanes().size() + 1));
                 logger.debug("===== > created lane=" + bpmnLane.getId());
 
             } else {

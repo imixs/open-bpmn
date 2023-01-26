@@ -89,7 +89,7 @@ public class TestBPMNLanes {
 
             BPMNProcess process = participantSales.openProcess();
             // add a new Lane
-            Lane lane=process.addLane(model,"Lane 1");
+            Lane lane=process.addLane("Lane 1");
             assertNotNull(lane);
             
             // add a task
@@ -137,7 +137,7 @@ public class TestBPMNLanes {
 
             
             // add new Lane...
-            Lane laneTest = process.addLane(model, "Lane Test");
+            Lane laneTest = process.addLane( "Lane Test");
             assertNotNull(laneTest);
             // read laneset.....
             assertEquals(3, process.getLanes().size());

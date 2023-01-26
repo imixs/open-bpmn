@@ -153,8 +153,8 @@ public class TestCollaborationModel {
 
             BPMNProcess salesProcess = participantSales.openProcess();
             // add a BPMNLane
-            Lane lane1 = salesProcess.addLane(model, "Europe");
-            Lane lane2 = salesProcess.addLane(model, "United States");
+            Lane lane1 = salesProcess.addLane("Europe");
+            Lane lane2 = salesProcess.addLane("United States");
             lane1.setBounds(40, 10, 470, 100);
             lane2.setBounds(40, 110, 470, 100);
 
@@ -195,9 +195,9 @@ public class TestCollaborationModel {
 
             BPMNProcess salesProcess = participantSales.openProcess();
             // add a BPMNLane
-            Lane lane1 = salesProcess.addLane(model, "Europe");
-            Lane lane2 = salesProcess.addLane(model, "United States");
-            Lane lane3 = salesProcess.addLane(model, "Africa");
+            Lane lane1 = salesProcess.addLane("Europe");
+            Lane lane2 = salesProcess.addLane("United States");
+            Lane lane3 = salesProcess.addLane("Africa");
 
             // add a task
             Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);

@@ -569,7 +569,7 @@ public class BPMNProcess extends BPMNElement {
      * @return BPMNLane
      * @throws BPMNMissingElementException
      */
-    public Lane addLane(BPMNModel model, String name) throws BPMNMissingElementException {
+    public Lane addLane(String name) throws BPMNMissingElementException {
 
         if (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(this.getProcessType())) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
@@ -579,7 +579,6 @@ public class BPMNProcess extends BPMNElement {
         // first verify if the process already contains a LaneSet. If not we create
         // a bpmn2:laneSet
         if (this.laneSet == null) {
-
             BPMNModel.log("create laneset...");
             // create the default collaboration element
             String laneSetID = "laneset_1";
