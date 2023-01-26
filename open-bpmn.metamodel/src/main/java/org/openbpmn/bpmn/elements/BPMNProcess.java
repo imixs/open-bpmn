@@ -712,15 +712,22 @@ public class BPMNProcess extends BPMNElement {
             return;
         }
 
+        // delete all elements contained in this lane
         Set<String> flowElementList = lane.getFlowElementIDs();
         for (String flowEleemntID : flowElementList) {
             this.removeAllEdgesFromElement(flowEleemntID);
         }
-
-        // delete the shape
+        
+        // delete the shape from bpmndi:BPMNDiagram
         if (lane.getBpmnShape() != null) {
             model.getBpmnPlane().removeChild(lane.getBpmnShape());
         }
+        
+        // delete lane form bpmn2:laneSet
+        Element laneSet = lane.getLaneSet();
+        laneSet.removeChild(lane.getElementNode());
+        
+        // remove the lane object
         this.getLanes().remove(lane);
     }
 

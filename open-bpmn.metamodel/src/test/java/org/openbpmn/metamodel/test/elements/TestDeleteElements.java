@@ -2,6 +2,7 @@ package org.openbpmn.metamodel.test.elements;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.logging.Logger;
@@ -25,16 +26,15 @@ public class TestDeleteElements {
 
     private static Logger logger = Logger.getLogger(TestDeleteElements.class.getName());
 
-
     /**
      * This test creates a bpmn file
      */
     @Test
     public void testDeleteTask() {
-        BPMNModel model=null;
+        BPMNModel model = null;
         String out = "src/test/resources/output/delete-process_1.bpmn";
         try {
-             model = BPMNModelFactory.read("/refmodel-1.bpmn");
+            model = BPMNModelFactory.read("/refmodel-1.bpmn");
             BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
@@ -50,18 +50,17 @@ public class TestDeleteElements {
      */
     @Test
     public void testDeleteTaskAndStartEvent() {
-        BPMNModel model=null;
+        BPMNModel model = null;
         String out = "src/test/resources/output/delete-process_2.bpmn";
         try {
-             model = BPMNModelFactory.read("/refmodel-1.bpmn");
-           
+            model = BPMNModelFactory.read("/refmodel-1.bpmn");
+
             BPMNProcess process = model.openProcess(null);
-            assertEquals(2,process.getActivities().size());
+            assertEquals(2, process.getActivities().size());
             process.deleteTask("Task_1");
-            
-            assertEquals(1,process.getActivities().size());
-      
-            
+
+            assertEquals(1, process.getActivities().size());
+
             process.deleteEvent("StartEvent_1");
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -101,27 +100,25 @@ public class TestDeleteElements {
         }
 
     }
-    
-    
-    
+
     /**
      * This test delete TextAnnotation
      */
     @Test
     public void testDeleteTextAnnotation() {
-        BPMNModel model=null;
+        BPMNModel model = null;
         String out = "src/test/resources/output/delete-process_3.bpmn";
         try {
-             model = BPMNModelFactory.read("/refmodel-6.bpmn");
-           
+            model = BPMNModelFactory.read("/refmodel-6.bpmn");
+
             BPMNProcess process = model.openProcess(null);
-           
-            assertEquals(1,process.getTextAnnotations().size());
-            
+
+            assertEquals(1, process.getTextAnnotations().size());
+
             process.deleteTextAnnotation("TextAnnotation_1");
-            
-            assertEquals(0,process.getTextAnnotations().size());
-           
+
+            assertEquals(0, process.getTextAnnotations().size());
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
@@ -129,8 +126,6 @@ public class TestDeleteElements {
         model.save(out);
         logger.info("...model update sucessful: " + out);
     }
-
-    
 
     /**
      * This test build new model one participant and a task. The test delete
@@ -175,6 +170,37 @@ public class TestDeleteElements {
             fail();
         }
 
+    }
+
+    /**
+     * This test deletes a Lane from a participant
+     */
+    @Test
+    public void testDeleteLane() {
+        BPMNModel model = null;
+        String out = "src/test/resources/output/delete-process_4.bpmn";
+        try {
+            model = BPMNModelFactory.read("/refmodel-5.bpmn");
+
+            Participant participant = model.findParticipantById("Participant_1");
+            assertNotNull(participant);
+            BPMNProcess process = participant.openProcess();
+            assertNotNull(process);
+            assertEquals("Process_1", process.getId());
+
+            // now delete 2nd line from process_1....
+            process.deleteLane("Lane_2");
+
+            // now the laneSet should only contain one more lane....
+            assertTrue(process.hasLanes());
+            assertEquals(1, process.getLanes().size());
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+        model.save(out);
+        logger.info("...model update sucessful: " + out);
     }
 
 }
