@@ -28,7 +28,6 @@ import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
-import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -55,7 +54,6 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
                 // delete participant with the pool and all contained elements
                 modelState.getBpmnModel().deleteParticipant(participant);
                 continue;
-
             }
 
             // find the bpmnBaseElement
@@ -67,13 +65,8 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             if (bpmnElement instanceof Lane) {
                 // delete lane
                 Lane lane = (Lane) bpmnElement;
-                try {
-                    modelState.getBpmnModel().openProcess(lane.getProcessId()).deleteLane(id);
-                } catch (BPMNModelException e) {
-                    logger.severe("Failed to delete lane: " + e.getMessage());
-                }
+                lane.getBpmnProcess().deleteLane(id);
                 continue;
-
             }
             // Check if the element is a BPMNElementNode...
             if (bpmnElement instanceof BPMNElementNode) {
