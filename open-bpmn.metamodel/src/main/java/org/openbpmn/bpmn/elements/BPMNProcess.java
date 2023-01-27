@@ -397,7 +397,6 @@ public class BPMNProcess extends BPMNElement {
         return dataObject;
     }
 
-    
     /**
      * Creates a new BPMN TextAnnotation element.
      * <p>
@@ -432,8 +431,6 @@ public class BPMNProcess extends BPMNElement {
         return textAnnotation;
     }
 
-    
-    
     /**
      * Adds a SequenceFlow. The method computes and validates the source and target
      * elements based on this process context.
@@ -563,6 +560,9 @@ public class BPMNProcess extends BPMNElement {
      * <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
      * <bpmn2:lane id="Lane_1" name="Lane 1">
      * }
+     * <p>
+     * In addition, the method also recalculates the size of the containing Pool and
+     * increases the Height automatically.
      * 
      * @param model - current model instance
      * @param name  - name of the Lane
@@ -716,18 +716,46 @@ public class BPMNProcess extends BPMNElement {
         for (String flowEleemntID : flowElementList) {
             this.removeAllEdgesFromElement(flowEleemntID);
         }
-        
+
         // delete the shape from bpmndi:BPMNDiagram
         if (lane.getBpmnShape() != null) {
             model.getBpmnPlane().removeChild(lane.getBpmnShape());
         }
-        
+
         // delete lane form bpmn2:laneSet
         Element laneSet = lane.getLaneSet();
         laneSet.removeChild(lane.getElementNode());
-        
-        // remove the lane object
-        this.getLanes().remove(lane);
+
+        try {
+            double laneHeight = lane.getBounds().getDimension().getHeight();
+
+            // remove the lane object
+            this.getLanes().remove(lane);
+
+            // finally recalculate the size of the remaining lanes....
+            // Note: we are not changing the size of the Pool, we just expand the height of
+            // the remaining lanes
+            Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
+            if (bpmnParticipant != null && this.getLanes().size() > 0) {
+                int currentLaneCount = this.getLanes().size();
+                double laneExtension = laneHeight / currentLaneCount;
+
+                double yOffset = bpmnParticipant.getBounds().getPosition().getY();
+               
+                for (Lane _lane : this.getLanes()) {
+                    double _laneH = _lane.getBounds().getDimension().getHeight();
+                    double _laneW = _lane.getBounds().getDimension().getWidth();
+                    double x = _lane.getBounds().getPosition().getX();
+                    _lane.setDimension(_laneW, _laneH + laneExtension);
+                    _lane.setPosition(x, yOffset);
+                    // also adjust the y-pos for the next lane
+                    yOffset = yOffset + _laneH+ laneExtension;
+                }
+            }
+        } catch (BPMNMissingElementException e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -923,7 +951,7 @@ public class BPMNProcess extends BPMNElement {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
                         && (child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + ":incoming")
-                                || child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2)+ ":outgoing"))) {
+                                || child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + ":outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;
@@ -1033,7 +1061,7 @@ public class BPMNProcess extends BPMNElement {
                 return element;
             }
         }
-        
+
         Set<TextAnnotation> listT = this.getTextAnnotations();
         for (TextAnnotation element : listT) {
             if (id.equals(element.getId())) {
@@ -1169,14 +1197,14 @@ public class BPMNProcess extends BPMNElement {
 
     private TextAnnotation createBPMNTextAnnotationByNode(Element element) throws BPMNModelException {
         TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
-        
+
         // read text <bpmn2:text>
         Set<Element> textNodes = BPMNModel.findChildNodesByName(element, getModel().getPrefix(BPMNNS.BPMN2) + ":text");
-        if (textNodes!=null && textNodes.size()>0) {
+        if (textNodes != null && textNodes.size() > 0) {
             Element textNode = textNodes.iterator().next();
             textAnnotation.setText(textNode.getTextContent());
         }
-        
+
         getTextAnnotations().add(textAnnotation);
         return textAnnotation;
     }
