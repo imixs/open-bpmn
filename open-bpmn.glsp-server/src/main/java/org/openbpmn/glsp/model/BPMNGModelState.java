@@ -66,24 +66,4 @@ public class BPMNGModelState extends DefaultGModelState {
         this.initalized = false;
     }
 
-    /**
-     * Register all extensions kinds
-     *
-     * @return
-     */
-//    protected List<PaletteItem> registerExtensions() {
-//        List<PaletteItem> extensionKinds = new ArrayList<>();
-//
-//        if (extensions != null) {
-//            for (BPMNExtension extension : extensions) {
-//                // validate if the extension is no Default Extension kind.
-//                if (!AbstractBPMNElementExtension.DEFAULT_EXTENSION_KIND.equals(extension.getKind())
-//                        && !extensionKinds.contains(extension.getKind())) {
-//                    extensionKinds.add(extension.getKind());
-//                }
-//            }
-//        }
-//
-//        return result;
-//    }
 }

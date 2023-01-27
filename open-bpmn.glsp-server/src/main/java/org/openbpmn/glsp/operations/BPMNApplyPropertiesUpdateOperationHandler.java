@@ -91,14 +91,14 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         }
 
         // validate BPMN element
-
         if (bpmnElement == null) {
             throw new IllegalArgumentException(
                     "BPMN Element with id " + operation.getId() + " is not defined in current model!");
         }
         // parse json....
         JsonObject json = null;
-        try (JsonReader reader = Json.createReader(new StringReader(jsonData))) {
+        String jsonDataClone = String.valueOf(jsonData);
+        try (JsonReader reader = Json.createReader(new StringReader(jsonDataClone))) {
             json = reader.readObject();
         } catch (JsonException e) {
             throw new RuntimeException("Cannot read json data : " + e.getMessage());
@@ -115,8 +115,6 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             }
         }
 
-        // finally we need to update the JSONFormsData property of the selected element
-        gModelElement.getArgs().put("JSONFormsData", json.toString());
         logger.debug("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
     }

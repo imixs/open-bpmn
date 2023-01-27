@@ -116,8 +116,6 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
             final GModelElement gNodeElement) {
 
         long l = System.currentTimeMillis();
-        // default update of name and documentation
-        // super.updatePropertiesData(json, bpmnElement, gNodeElement);
 
         Participant participant = (Participant) bpmnElement;
         try {
@@ -164,18 +162,22 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                             // this is a new lane - construct the lane in the BPMN model first..
                             Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
                             laneDataIDs.add(bpmnLane.getId());
-                            // TODO we need to reset the panel - maybe by deselecting the pool?
                             modelState.reset();
                         }
                     }
-
                     // now we need to delete all lanes no longer part of the laneSetValues
-                    Set<Lane> bpmnLanes = process.getLanes();
-                    for (Lane bpmnLane : bpmnLanes) {
-                        if (!laneDataIDs.contains(bpmnLane.getId())) {
+                    // We need two loops here to avoid concurrency exceptions!
+                    List<String> laneIDsToBeRemoved = new ArrayList<>();
+                    for (Lane bpmnLane : process.getLanes()) {
+                        if (bpmnLane != null && !laneDataIDs.contains(bpmnLane.getId())) {
+                            laneIDsToBeRemoved.add(bpmnLane.getId());
+                        }
+                    }
+                    if (laneIDsToBeRemoved.size() > 0) {
+                        modelState.reset();
+                        for (String lid : laneIDsToBeRemoved) {
                             // lane was removed, so remove the lane form the process too
-                            process.deleteLane(bpmnLane.getId());
-                            modelState.reset();
+                            process.deleteLane(lid);
                         }
                     }
                 }
@@ -185,6 +187,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
         }
 
         logger.debug("laneSet update in " + (System.currentTimeMillis() - l) + "ms");
+
     }
 
     /**
