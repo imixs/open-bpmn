@@ -84,18 +84,13 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         node.setName(name);
 
         node.setLayout(GConstants.Layout.VBOX);
-//        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
-//        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
-
         node.getLayoutOptions().put(H_GRAB, true);
         node.getLayoutOptions().put(V_GRAB, true);
-
-//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
-
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
 
         IconGCompartment taskIcon = new IconGCompartmentBuilder(). //
@@ -104,10 +99,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                 build();
 
         node.getChildren().add(taskIcon);
-        // node.getChildren().add(BPMNGraphUtil.createCompartmentHeader(node));
-
         node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id + "_name", name));
-
     }
 
 }
