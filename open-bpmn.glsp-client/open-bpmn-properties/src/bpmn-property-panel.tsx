@@ -51,9 +51,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
     protected selectionService: SelectionService;
 
     protected bodyDiv: HTMLElement;
+    protected headerDiv: HTMLElement;
     modelRootId: string;
     selectedElementId: string;
     initForm: boolean;
+    isResizing: boolean;
+    currentY: number;
     headerTitle: HTMLElement;
     protected panelContainer: any;
 
@@ -85,19 +88,47 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         this.modelRootId = root.id;
     }
 
+    /*
+     * This method creates a header bar that can be grabbed with the mouse
+     * to resize the height of the property panel. 
+     */
     protected createHeader(): void {
-        console.log('....createHeader...');
         const headerCompartment = document.createElement('div');
-        console.log('...headerCompartment=' + headerCompartment);
         headerCompartment.classList.add('bpmn-property-header');
         headerCompartment.append(this.createHeaderTitle());
         headerCompartment.appendChild(this.createHeaderTools());
         this.containerElement.appendChild(headerCompartment);
+        this.headerDiv = headerCompartment;
+        
+        this.headerDiv.addEventListener('mousedown', (e) => {
+          this.isResizing = true;
+          this.currentY = e.clientY;
+        });
+        this.headerDiv.addEventListener('mouseup', (e) => {
+          this.isResizing = false;
+        });
+        window.addEventListener('mousemove', (e) => {
+          if (!this.isResizing) return;
+
+          const parent=this.containerElement.parentElement;
+          let _newheight=this.containerElement.offsetHeight - (e.clientY - this.currentY);
+          // fix minheigt
+          if (_newheight<25) {
+              _newheight=25;
+              this.isResizing = false;
+          }
+          // fix maxheight
+          if (parent && _newheight>parent.offsetHeight-25) {
+                _newheight=parent.offsetHeight-25;	
+                this.isResizing = false;
+          }         
+          this.containerElement.style.height = `${_newheight}px`;
+          this.currentY = e.clientY;
+        });           
     }
 
     protected createBody(): void {
         const bodyDiv = document.createElement('div');
-        // , 'jsonforms-property-view'
         bodyDiv.classList.add('bpmn-properties-body');
         this.containerElement.appendChild(bodyDiv);
         this.bodyDiv = bodyDiv;
@@ -128,11 +159,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         hideToolButton.onclick = this.onClickResizePanel(hideToolButton, 'TOOL_COMMAND_HIDE');
         headerTools.appendChild(hideToolButton);
 
-        const minimizeToolButton = createIcon('chevron-down');
-        minimizeToolButton.title = 'Minimize Property Panel';
-        minimizeToolButton.onclick = this.onClickResizePanel(minimizeToolButton, 'TOOL_COMMAND_MINIMIZE');
-        headerTools.appendChild(minimizeToolButton);
-
         const maximizeToolButton = createIcon('chevron-up');
         maximizeToolButton.title = 'Maximize Property Panel';
         maximizeToolButton.onclick = this.onClickResizePanel(maximizeToolButton, 'TOOL_COMMAND_MAXIMIZE');
@@ -146,9 +172,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
             if (!this.editorContext.isReadonly) {
                 const action = toolId ? EnableToolsAction.create([toolId]) : EnableDefaultToolsAction.create();
                 this.actionDispatcher.dispatch(action);
-                if (toolId === 'TOOL_COMMAND_MINIMIZE') {
-                    this.containerElement.style.height = '33.333%';
-                }
                 if (toolId === 'TOOL_COMMAND_MAXIMIZE') {
                     this.containerElement.style.height = '50%';
                 }

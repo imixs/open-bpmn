@@ -39,9 +39,10 @@
 
 .bpmn-property-header {
 	padding-left: 8px;
-    color: var(--theia-titleBar-activeForeground);
+    background: var(--theia-titleBar-activeBackground);
+    color: var(--theia-foreground);
+    font-weight: bold;
     border: 0;
-    font-weight: normal;
     overflow: hidden;
     padding: 0.2em;
     line-height: 1.5em;
@@ -51,13 +52,16 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    cursor: row-resize;
 }
 
 .bpmn-property-header .header-icon i {
     padding-left: 4px;
     padding-right: 4px;
 }
-
+.bpmn-property-header .header-tools {
+	cursor: default;
+}
 .bpmn-property-header .header-tools i {
     border: none;
 }
