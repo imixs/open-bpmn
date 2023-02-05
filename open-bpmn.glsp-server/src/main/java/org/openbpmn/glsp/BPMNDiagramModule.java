@@ -207,7 +207,8 @@ public class BPMNDiagramModule extends DiagramModule {
 
     @Override
     public String getDiagramType() {
-        return "bpmn-diagram";
+        // return "bpmn-diagram";
+        return BPMNDiagramConfiguration.DIAGRAM_TYPE;
     }
 
     /**

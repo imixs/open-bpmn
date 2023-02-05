@@ -42,19 +42,11 @@ import com.google.inject.Inject;
  * implementation is identified via its diagram type.
  */
 public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
+
+    public static String DIAGRAM_TYPE = "bpmn-diagram";
+
     @Inject
     protected Set<BPMNExtension> extensions;
-
-    /**
-     * Returns the diagram type of the diagram implementation that corresponds to
-     * this configuration.
-     *
-     * @return The diagram type.
-     */
-    @Override
-    public String getDiagramType() {
-        return "BPMN 2.0";
-    }
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are

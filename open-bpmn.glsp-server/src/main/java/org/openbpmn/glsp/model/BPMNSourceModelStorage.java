@@ -32,6 +32,7 @@ import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
+import org.openbpmn.glsp.BPMNDiagramConfiguration;
 
 import com.google.inject.Inject;
 
@@ -61,7 +62,7 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         boolean bNeedsClientLayout = Boolean.parseBoolean(options.get("needsClientLayout"));
         String uri = options.get("uri");
         String diagramType = options.get("diagramType");
-        if (bNeedsClientLayout && uri != null && "bpmn-diagram".equals(diagramType)) {
+        if (bNeedsClientLayout && uri != null && BPMNDiagramConfiguration.DIAGRAM_TYPE.equals(diagramType)) {
             final File file = convertToFile(modelState);
             BPMNModel model;
             try {
