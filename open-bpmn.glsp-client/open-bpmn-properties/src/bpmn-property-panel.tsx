@@ -13,19 +13,24 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
 import {
     AbstractUIExtension,
-    Action,
-    ActionDispatcher,
-    EditModeListener,
-    EditorContextService,
     EnableDefaultToolsAction,
     EnableToolsAction,
-    hasArguments,
+    IActionHandler,
+    ICommand,
     SetUIExtensionVisibilityAction,
     SModelRoot,
     TYPES
+} from 'sprotty';
+import {
+    EditorContextService,
+    hasArguments,
+    EnableToolPaletteAction,
+    GLSPActionDispatcher
 } from '@eclipse-glsp/client';
+
 import { inject, injectable, postConstruct } from 'inversify';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
@@ -33,16 +38,14 @@ import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/fe
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import * as React from 'react';
-// import * as ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 
 @injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeListener, SelectionListener { // IActionHandler
+export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionListener, IActionHandler { // IActionHandler EditModeListener
 
     static readonly ID = 'bpmn-property-panel';
 
-    @inject(TYPES.IActionDispatcher)
-    protected readonly actionDispatcher: ActionDispatcher;
+    @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: GLSPActionDispatcher;
 
     @inject(EditorContextService)
     protected readonly editorContext: EditorContextService;
@@ -62,8 +65,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
 
     @postConstruct()
     postConstruct(): void {
-		console.log('...running postConstruct');
-        this.editorContext.register(this);
+		console.log('...running postConstruct v-01');
+        // this.editorContext.register(this);
         this.selectionService.register(this);
     }
 
@@ -77,20 +80,19 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
     /*
      * Initalize the elemnts of property panel
      */
-    protected override initializeContents(_containerElement: HTMLElement): void {
+    protected initializeContents(_containerElement: HTMLElement): void {
 		console.log('...running initializeContents');
         this.createHeader();
         this.createBody();
     }
 
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
-        console.log('....onBeforeShow - root.id='+root.id);
         this.modelRootId = root.id;
     }
 
     /*
      * This method creates a header bar that can be grabbed with the mouse
-     * to resize the height of the property panel. 
+     * to resize the height of the property panel.
      */
     protected createHeader(): void {
         const headerCompartment = document.createElement('div');
@@ -99,7 +101,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         headerCompartment.appendChild(this.createHeaderTools());
         this.containerElement.appendChild(headerCompartment);
         this.headerDiv = headerCompartment;
-        
+
         this.headerDiv.addEventListener('mousedown', (e) => {
           this.isResizing = true;
           this.currentY = e.clientY;
@@ -119,12 +121,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
           }
           // fix maxheight
           if (parent && _newheight>parent.offsetHeight-25) {
-                _newheight=parent.offsetHeight-25;	
+                _newheight=parent.offsetHeight-25;
                 this.isResizing = false;
-          }         
+          }
           this.containerElement.style.height = `${_newheight}px`;
           this.currentY = e.clientY;
-        });           
+        });
     }
 
     protected createBody(): void {
@@ -184,11 +186,31 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
         };
     }
 
-    editModeChanged(_oldValue: string, _newValue: string): void {
-        // eslint-disable-next-line max-len
-        this.actionDispatcher.dispatch(
-            SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly })
-        );
+    /*
+     * We react on the EnableToolPaletteAction to make the property panel visible
+     * If we already have the bodyDiv defined, than we skip this event.
+     */
+    handle(action: Action): ICommand | Action | void {
+        if (this.bodyDiv) {
+           return;
+        }
+        if (action.kind === EnableToolPaletteAction.KIND) {
+            const requestAction = RequestContextActions.create({
+                // contextId: ToolPalette.ID,
+                contextId: BPMNPropertyPanel.ID,
+                editorContext: {
+                    selectedElementIds: []
+                }
+            });
+            this.actionDispatcher.requestUntil(requestAction).then(response => {
+                if (SetContextActions.is(response)) {
+                    console.log('...dispatching action...phase-2.');
+                    this.actionDispatcher.dispatch(
+                        SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly })
+                    );
+                }
+            });
+        }
     }
 
     /*
@@ -196,6 +218,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements EditModeLi
      * and updates the property panel input fields
      */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
+        // return if the prperty panel is not yet visible
+        if (!this.bodyDiv) {
+           return;
+        }
+
         // first we need to verify if a Symbol/BPMNLabel combination was selected.
         // In this case we are only interested in the BPMNFlowElement and not in the label
         if (selectedElements.length > 1) {

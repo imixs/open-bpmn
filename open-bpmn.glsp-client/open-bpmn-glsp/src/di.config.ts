@@ -64,7 +64,7 @@ import { HelperLineListener,
          BPMNElementSnapper
        } from './bpmn-helperlines';
 
-import {bpmnPropertyModule} from '@open-bpmn/open-bpmn-properties';
+import bpmnPropertyModule from '@open-bpmn/open-bpmn-properties';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
