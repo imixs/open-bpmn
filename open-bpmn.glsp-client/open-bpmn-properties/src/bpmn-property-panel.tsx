@@ -81,7 +81,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * Initalize the elemnts of property panel
      */
     protected initializeContents(_containerElement: HTMLElement): void {
-		console.log('...running initializeContents');
         this.createHeader();
         this.createBody();
     }
@@ -152,7 +151,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * https://microsoft.github.io/vscode-codicons/dist/codicon.html
      */
     private createHeaderTools(): HTMLElement {
-	console.log('...running createHeaderTools');
         const headerTools = document.createElement('div');
         headerTools.classList.add('header-tools');
 
@@ -204,7 +202,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             });
             this.actionDispatcher.requestUntil(requestAction).then(response => {
                 if (SetContextActions.is(response)) {
-                    console.log('...dispatching action...phase-2.');
                     this.actionDispatcher.dispatch(
                         SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly })
                     );
