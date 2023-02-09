@@ -187,6 +187,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     /*
      * We react on the EnableToolPaletteAction to make the property panel visible
      * If we already have the bodyDiv defined, than we skip this event.
+     * See Discussion: https://github.com/eclipse-glsp/glsp/discussions/910
      */
     handle(action: Action): ICommand | Action | void {
         if (this.bodyDiv) {
