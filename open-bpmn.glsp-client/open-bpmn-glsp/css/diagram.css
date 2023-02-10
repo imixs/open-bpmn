@@ -20,13 +20,8 @@
     height: 100%;
     background-size: 10px 10px;
 
-	background-image: linear-gradient(to right, #E4E4E4 1px, transparent 1px), linear-gradient(to bottom, #E4E4E4 1px, transparent 1px);
+	background-image: linear-gradient(to right, var(--theia-titleBar-activeBackground) 1px, transparent 1px), linear-gradient(to bottom, var(--theia-titleBar-activeBackground) 1px, transparent 1px);
     
-}
-
-.vs-dark .sprotty-graph { 
-    /* vs-dark dark-theia theia-dark    vs light-theia theia-light  */
-	background-image: linear-gradient(to right, #2A2A2A 1px, transparent 1px), linear-gradient(to bottom, #2A2A2A 1px, transparent 1px);
 }
 
 .sprotty-text {
@@ -174,7 +169,7 @@
 }
 
 .BPMNLabel > .bpmn-text-node pre {
-	color: #f0f3f8;
+	color: var(--theia-titleBar-activeForeground);
 	text-align: center;
 	font-size: 0.6em;
 	font-family: sans-serif;
