@@ -6,14 +6,16 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch BPMN GLSP Server",
+      "name": "Open BPMN GLSP Server",
       "request": "launch",
       "mainClass": "org.openbpmn.glsp.BPMNServerLauncher",
-      "projectName": "org.imixs.bpmn.glsp",
-      "args": ["--port", "5007"],
+      "projectName": "open-bpmn.server",
+      "args": [
+        "--port",
+        "5007"
+      ],
       "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart",
-      "outputCapture": "std"
+      "internalConsoleOptions": "openOnSessionStart"
     }
   ]
 }
