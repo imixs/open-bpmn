@@ -199,6 +199,7 @@ public class TestUISchemaBuilder extends DefaultGModelState {
     /**
      * Test the LaneSet layout
      */
+    @SuppressWarnings("unused") 
     @Test
     public void testLaneSetLayout() {
 
