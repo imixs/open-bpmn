@@ -159,4 +159,4 @@ public final class ImixsBPMNServerLauncher {
 
 After the new ServerModule is started Open-BPMN will add the Extension to the Tool-Palette to add the Extension to a BPMN Element. After an Element was extended, the Open-BPMN Property Section will automatically show a new Section to edit the extension attributes.
 
-<img src="./../images/open-bpmn-extension-01.png" />
+<img src="./images/open-bpmn-extension-01.png" />
