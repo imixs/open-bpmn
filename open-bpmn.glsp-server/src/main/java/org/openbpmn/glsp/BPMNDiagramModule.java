@@ -30,7 +30,6 @@ import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
-import org.imixs.openbpmn.ImixsBPMNTaskExtension;
 import org.openbpmn.extension.BPMNCreateExtensionHandler;
 import org.openbpmn.extension.BPMNExtension;
 import org.openbpmn.extension.DefaultBPMNDataObjectExtension;
@@ -115,13 +114,13 @@ public class BPMNDiagramModule extends DiagramModule {
 
         binding.add(BPMNApplyEditLabelOperationHandler.class);
 
-//        binding.add(ChangeBoundsOperationHandler.class);
-//        binding.add(ChangeRoutingPointsHandler.class);
+        // binding.add(ChangeBoundsOperationHandler.class);
+        // binding.add(ChangeRoutingPointsHandler.class);
         binding.add(CutOperationHandler.class);
         // binding.add(DeleteOperationHandler.class);
-//        binding.add(LayoutOperationHandler.class);
-//        binding.add(PasteOperationHandler.class);
-//        binding.add(ReconnectEdgeOperationHandler.class);
+        // binding.add(LayoutOperationHandler.class);
+        // binding.add(PasteOperationHandler.class);
+        // binding.add(ReconnectEdgeOperationHandler.class);
 
         binding.add(BPMNChangeBoundsOperationHandler.class);
         binding.add(BPMNChangeRoutingPointsOperationHandler.class);
@@ -230,7 +229,5 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNTextAnnotationExtension.class);
         binding.addBinding().to(DefaultBPMNEdgeExtension.class);
 
-        // Imixs Extensions (just for testing)
-        binding.addBinding().to(ImixsBPMNTaskExtension.class);
     }
 }
