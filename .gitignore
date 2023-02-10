@@ -1,16 +1,7 @@
-
-### Eclipse ###
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.loadpath
-.recommenders
-
+# ignore eclipse directories and project files
+.settings/
+.project
+.classpath
 
 ### Maven ###
 target/
