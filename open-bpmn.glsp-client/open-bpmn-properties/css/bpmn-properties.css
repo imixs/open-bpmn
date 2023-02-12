@@ -33,21 +33,22 @@
     background: var(--theia-editorWidget-background);
     opacity: 0.9 !important;
     color: var(--theia-foreground);
-    height: 25px;
+    height: 28px;
 }
 
 
 .bpmn-property-header {
 	padding-left: 8px;
-    background: var(--theia-titleBar-activeBackground);
-    color: var(--theia-foreground);
+    background: var(--theia-statusBar-background);
+    color: var(--theia-statusBar-foreground);
+    opacity: 0.75; 
     font-weight: bold;
     border: 0;
     overflow: hidden;
-    padding: 0.2em;
+    padding: 2px 5px 3px 5px;
     line-height: 1.5em;
     box-shadow: none;
-    border-top: 1px solid var(--theia-focusBorder);
+    border-top: 3px solid var(--theia-focusBorder);
     display: flex;
     align-items: center;
     justify-content: space-between;

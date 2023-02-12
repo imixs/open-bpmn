@@ -13,6 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import {
+    EditorContextService, EnableToolPaletteAction,
+    GLSPActionDispatcher, hasArguments
+} from '@eclipse-glsp/client';
 import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
 import {
     AbstractUIExtension,
@@ -24,16 +28,10 @@ import {
     SModelRoot,
     TYPES
 } from 'sprotty';
-import {
-    EditorContextService,
-    hasArguments,
-    EnableToolPaletteAction,
-    GLSPActionDispatcher
-} from '@eclipse-glsp/client';
 
+import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
 import { inject, injectable, postConstruct } from 'inversify';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
-import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
 // Import Instruction sReact and JsonForms
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
@@ -114,17 +112,22 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
           const parent=this.containerElement.parentElement;
           let _newheight=this.containerElement.offsetHeight - (e.clientY - this.currentY);
           // fix minheigt
-          if (_newheight<25) {
-              _newheight=25;
+          if (_newheight<28) {
+              _newheight=28;
               this.isResizing = false;
           }
           // fix maxheight
-          if (parent && _newheight>parent.offsetHeight-25) {
-                _newheight=parent.offsetHeight-25;
+          if (parent && _newheight>parent.offsetHeight-28) {
+                _newheight=parent.offsetHeight-28;
                 this.isResizing = false;
           }
           this.containerElement.style.height = `${_newheight}px`;
           this.currentY = e.clientY;
+
+          // if the mouse is no longer within the diagram plane, we stop the resizing
+          if (parent && !parent.matches(":hover")) {
+            this.isResizing = false;
+          }
         });
     }
 
@@ -176,7 +179,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     this.containerElement.style.height = '50%';
                 }
                 if (toolId === 'TOOL_COMMAND_HIDE') {
-                    this.containerElement.style.height = '25px';
+                    this.containerElement.style.height = '28px';
                 }
                 // restore the defautl actions in the diagram panel (like move elements)
                 this.actionDispatcher.dispatch(EnableDefaultToolsAction.create());
