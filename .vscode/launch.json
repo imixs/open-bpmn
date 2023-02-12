@@ -6,7 +6,7 @@
   "configurations": [
     {
       "type": "java",
-      "name": "Launch Dev GLSP Server",
+      "name": "Launch Open-BPMN Server (Debug Mode)",
       "request": "launch",
       "mainClass": "org.openbpmn.glsp.BPMNServerLauncher",
       "projectName": "open-bpmn.server",
