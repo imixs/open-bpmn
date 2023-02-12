@@ -114,7 +114,10 @@ public class BPMNApplyPropertiesUpdateOperationHandler
                 }
             }
         }
-
+        
+        // finally we need to update the JSONFormsData property of the selected element
+        // See also issue #164
+        gModelElement.getArgs().put("JSONFormsData", json.toString());
         logger.debug("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
     }
