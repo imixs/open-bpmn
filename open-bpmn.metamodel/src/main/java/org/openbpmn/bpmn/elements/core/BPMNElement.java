@@ -124,7 +124,7 @@ public abstract class BPMNElement {
     public void setDocumentation(String content) {
         this.setChildNodeContent("documentation", content);
     }
-    
+
     /**
      * Set the new childNode with a given content for this element in a CDATA
      * element.

@@ -7,8 +7,8 @@ import java.util.Set;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
@@ -130,20 +130,6 @@ public class BPMNProcess extends BPMNElement {
             initalized = true;
         }
     }
-
-    /**
-     * Returns all BPMNFlowElements contained in this process
-     * 
-     * @return
-     */
-//    public Set<BPMNElementNode> getBPMNNodes() {
-//        Set<BPMNElementNode> result = new LinkedHashSet<BPMNElementNode>();
-//
-//        result.addAll(this.getActivities());
-//        result.addAll(this.getEvents());
-//        result.addAll(this.getGateways());
-//        return result;
-//    }
 
     /**
      * Returns all BPMNElementNodes contained in this process
@@ -741,7 +727,7 @@ public class BPMNProcess extends BPMNElement {
                 double laneExtension = laneHeight / currentLaneCount;
 
                 double yOffset = bpmnParticipant.getBounds().getPosition().getY();
-               
+
                 for (Lane _lane : this.getLanes()) {
                     double _laneH = _lane.getBounds().getDimension().getHeight();
                     double _laneW = _lane.getBounds().getDimension().getWidth();
@@ -749,7 +735,7 @@ public class BPMNProcess extends BPMNElement {
                     _lane.setDimension(_laneW, _laneH + laneExtension);
                     _lane.setPosition(x, yOffset);
                     // also adjust the y-pos for the next lane
-                    yOffset = yOffset + _laneH+ laneExtension;
+                    yOffset = yOffset + _laneH + laneExtension;
                 }
             }
         } catch (BPMNMissingElementException e) {
@@ -1268,7 +1254,7 @@ public class BPMNProcess extends BPMNElement {
      * @param id of a flowElement
      * @return list of SequenceFlows
      */
-    private Set<SequenceFlow> findSequenceFlowsByElementId(String id) {
+    public Set<SequenceFlow> findSequenceFlowsByElementId(String id) {
         Set<SequenceFlow> result = new LinkedHashSet<SequenceFlow>();
         if (id == null || id.isEmpty()) {
             return result;
