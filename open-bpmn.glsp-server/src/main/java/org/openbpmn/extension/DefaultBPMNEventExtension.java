@@ -247,9 +247,10 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                     bpmnEvent.addEventDefinition("conditionalEventDefinition");
                 }
                 if (conditionalEventDefinitions.size() > dataList.size()) {
-                    // delete last condition from the list
-                    bpmnEvent.deleteEventDefinition(
-                            conditionalEventDefinitions.iterator().next().getAttributeNode("id").toString());
+                    // delete first condition from the list
+                    Element definition = conditionalEventDefinitions.iterator().next();
+                    String id = definition.getAttribute("id");
+                    bpmnEvent.deleteEventDefinition(id);
                 }
             } catch (BPMNModelException e) {
                 logger.error("Failed to update BPMN Event Definition list: " + e.getMessage());
@@ -259,6 +260,9 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             conditionalEventDefinitions = bpmnEvent.getEventDefinitionsByType("conditionalEventDefinition");
         }
         // now we can update the values one by one
+        // NOTE: the id can change within the definitionList if an element was deleted
+        // or moved!
+        // but we do not care about this issue.
         Iterator<Element> iter = conditionalEventDefinitions.iterator();
         int i = 0;
         while (iter.hasNext()) {
