@@ -17,18 +17,16 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -38,38 +36,43 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * This is the Default BPMNEdge extension providing the JSONForms schemata for
- * all types of edges (SequenceFlow, MessageFlow, Association).
- *
+ * The DefaultBPMNSequenceFlowExtension add an addional section for the
+ * conditional SquenceFlows.
+ * 
  * @author rsoika
  *
  */
-public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtension {
 
     @SuppressWarnings("unused")
-    private static Logger logger = LogManager.getLogger(DefaultBPMNEdgeExtension.class);
+    private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Inject
     protected BPMNGModelState modelState;
 
-    public DefaultBPMNEdgeExtension() {
+    public DefaultBPMNSequenceFlowExtension() {
         super();
     }
 
-    /**
-     * Returns if this Extension can be applied to the given elementTypeID
-     */
     @Override
-    public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.BPMN_EDGES.contains(elementTypeId);
+    public int getPriority() {
+        return 100; // below default settings from Edge element
     }
 
     /**
-     * This Extension is for BPMNEvents only
+     * Returns if this Extension is of type SEQUENCE_FLOW
+     */
+    @Override
+    public boolean handlesElementTypeId(final String elementTypeId) {
+        return BPMNTypes.SEQUENCE_FLOW.equals(elementTypeId);
+    }
+
+    /**
+     * This Extension is for SequenceFlow elements only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof BPMNElementEdge);
+        return (bpmnElement instanceof SequenceFlow);
     }
 
     /**
@@ -81,53 +84,36 @@ public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
+        SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
         dataBuilder //
-                .addData("name", bpmnElement.getName()) //
-                .addData("documentation", bpmnElement.getDocumentation());
+                .addData("conditionExpression", sequenceFlow.getConditionExpression()) //
+                .addData("Default", "test");
 
         schemaBuilder. //
-                addProperty("name", "string", null). //
-                addProperty("documentation", "string", null);
+                addProperty("conditionExpression", "string", "add an optional conditional expression."). //
+                addProperty("default", "boolean", null);
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
         uiSchemaBuilder. //
-                addCategory("General"). //
-                addLayout(Layout.HORIZONTAL). //
-                addElements("name"). //
+                addCategory("Condition"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption);
+                addElement("conditionExpression", "Expression", multilineOption);
 
     }
 
-    /**
-     * This Helper Method updates the BPMNElement data properties.
-     * <p>
-     */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
+        SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
+        // check conditionExpression features
         Set<String> features = json.keySet();
         for (String feature : features) {
-
-            if ("name".equals(feature)) {
-                bpmnElement.setName(json.getString(feature));
-                // Update Label...
-                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
-                if (!label.isEmpty()) {
-                    GLabel glabel = (GLabel) label.get();
-                    if (glabel != null) {
-                        glabel.setText(json.getString(feature));
-                    }
-                }
+            if ("conditionExpression".equals(feature)) {
+                sequenceFlow.setConditionExpression(json.getString(feature));
                 continue;
             }
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(json.getString(feature));
-                continue;
-            }
-
         }
 
     }

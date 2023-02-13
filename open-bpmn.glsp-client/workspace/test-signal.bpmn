@@ -4,17 +4,20 @@
         <bpmn2:documentation id="documentation_GHJJpA"/>
         <bpmn2:intermediateCatchEvent id="event_Mb6RHg" name="Event-1">
             <bpmn2:documentation id="documentation_QHL8lQ"/>
-            <bpmn2:signalEventDefinition id="signalEventDefinition_ecjjKQ" signalRef="signal_1"/>
+            <bpmn2:signalEventDefinition id="signalEventDefinition_XWYS7A" signalRef="signal_3"/>
+            <bpmn2:signalEventDefinition id="signalEventDefinition_5FSzHg" signalRef="signal_1"/>
+            <bpmn2:signalEventDefinition id="signalEventDefinition_mb5bIw" signalRef="signal_2"/>
         </bpmn2:intermediateCatchEvent>
     </bpmn2:process>
     <bpmn2:signal id="signal_1" name="Signal 1b"/>
     <bpmn2:signal id="signal_2" name="Signal 2b"/>
+    <bpmn2:signal id="signal_3" name="My SUPER Signal"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
             <bpmndi:BPMNShape bpmnElement="event_Mb6RHg" id="BPMNShape_DndWfg">
-                <dc:Bounds height="36.0" width="36.0" x="85.0" y="35.0"/>
+                <dc:Bounds height="36.0" width="36.0" x="85.0" y="34.0"/>
                 <bpmndi:BPMNLabel id="BPMNLabel_u0K6xg">
-                    <dc:Bounds height="24.0" width="100.0" x="53.0" y="71.0"/>
+                    <dc:Bounds height="24.0" width="100.0" x="53.0" y="70.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
         </bpmndi:BPMNPlane>

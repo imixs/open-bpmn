@@ -39,6 +39,7 @@ import org.openbpmn.extension.DefaultBPMNEventExtension;
 import org.openbpmn.extension.DefaultBPMNGatewayExtension;
 import org.openbpmn.extension.DefaultBPMNMessageExtension;
 import org.openbpmn.extension.DefaultBPMNParticipantExtension;
+import org.openbpmn.extension.DefaultBPMNSequenceFlowExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.extension.DefaultBPMNTextAnnotationExtension;
 import org.openbpmn.glsp.elements.data.BPMNApplyEditLabelOperationHandler;
@@ -228,6 +229,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNMessageExtension.class);
         binding.addBinding().to(DefaultBPMNTextAnnotationExtension.class);
         binding.addBinding().to(DefaultBPMNEdgeExtension.class);
+        binding.addBinding().to(DefaultBPMNSequenceFlowExtension.class);
 
     }
 }
