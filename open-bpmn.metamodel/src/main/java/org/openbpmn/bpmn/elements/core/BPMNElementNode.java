@@ -1,9 +1,13 @@
 package org.openbpmn.bpmn.elements.core;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
@@ -29,7 +33,7 @@ public abstract class BPMNElementNode extends BPMNElement {
     protected BPMNBounds bounds = null;
 
     /**
-     * Create a new BPMN Base Element. The constructor expects a model instnace and
+     * Create a new BPMN Base Element. The constructor expects a model instance and
      * a node.
      * 
      * @param node
@@ -263,4 +267,33 @@ public abstract class BPMNElementNode extends BPMNElement {
         return false;
     }
 
+    /**
+     * Returns a List of all outgoing SequenceFlows associated with this element
+     * 
+     * @return
+     */
+    public Set<SequenceFlow> getOutgoingSequenceFlows() {
+        // filter all sequenceFlows with a sourceRef to this elementNode
+        Set<SequenceFlow> result = this.bpmnProcess.getSequenceFlows()
+                .stream()
+                .filter(c -> c.sourceRef.equals(this.getId()))
+                .collect(Collectors.toSet());
+        return result;
+
+    }
+
+    /**
+     * Returns a List of all ingoing SequenceFlows associated with this element
+     * 
+     * @return
+     */
+    public Set<SequenceFlow> getIngoingSequenceFlows() {
+        // filter all sequenceFlows with a sourceRef to this elementNode
+        Set<SequenceFlow> result = this.bpmnProcess.getSequenceFlows()
+                .stream()
+                .filter(c -> c.targetRef.equals(this.getId()))
+                .collect(Collectors.toSet());
+        return result;
+
+    }
 }
