@@ -16,6 +16,7 @@
 package org.openbpmn.extension;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +40,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -137,8 +139,9 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     }
 
     /**
-     * Builds the different property tabs for the core attributes and the event
-     * definitions
+     * Updates the core attributes of the BPMN element and also the
+     * eventDefinitions based on the different property tabs for each definition
+     * type.
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
@@ -169,7 +172,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 continue;
             }
 
-            // Update eventDefinitions...
+            // Update eventDefinitions for each definition type...
             Set<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
             if ("signals".equals(feature)) {
                 JsonArray signalDataList = json.getJsonArray("signals");
@@ -179,12 +182,8 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 updateSignalEventDefinitions(signalEventDefinitions, signalDataList);
             }
             if ("conditions".equals(feature)) {
-                JsonArray signalDataList = json.getJsonArray("conditions");
-                // find all Signal definitions of this event
-                List<Element> conditionalEventDefinitions = eventDefinitions.stream()
-                        .filter(c -> "conditionalEventDefinition".equals(c.getLocalName()))
-                        .collect(Collectors.toList());
-                updateConditionalEventDefinitions(conditionalEventDefinitions, signalDataList);
+                JsonArray conditionsDataList = json.getJsonArray("conditions");
+                updateConditionalEventDefinitions(bpmnEvent, conditionsDataList);
             }
             if ("links".equals(feature)) {
                 JsonArray signalDataList = json.getJsonArray("links");
@@ -197,8 +196,11 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
     }
 
+    /*
+     * See addSignalEventDefinitions how we map between the signal name and its id.
+     */
     private void updateSignalEventDefinitions(final List<Element> eventDefinitions, final JsonArray dataList) {
-        // If the size of the singnalDataList is not equals the size of the known
+        // If the size of the signalDataList is not equals the size of the known
         // eventSignalDefinitions we print a warning
         if (eventDefinitions.size() != dataList.size()) {
             logger.warn("dataList does not match the EventDefinition list!");
@@ -223,21 +225,50 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
         }
     }
 
-    private void updateConditionalEventDefinitions(final List<Element> eventDefinitions, final JsonArray dataList) {
-        // If the size of the conditionalDataList is not equals the size of the known
-        // eventConditionalDefinitions we print a warning
-        if (eventDefinitions.size() != dataList.size()) {
-            logger.warn("dataList does not match the EventDefinition list!");
+    /**
+     * This method updates the conditionalEventDefinitions. The method expects a
+     * dataList containing all
+     * conditions with its values (including the id).
+     * The method simpl overwrites all conditionalEventDefinitions.
+     * 
+     * @param bpmnEvent
+     * @param dataList
+     */
+    private void updateConditionalEventDefinitions(final Event bpmnEvent, final JsonArray dataList) {
+        // find all conditionalEventDefinitions for this event
+        Set<Element> conditionalEventDefinitions = bpmnEvent.getEventDefinitionsByType("conditionalEventDefinition");
+        // If the size of the conditionalDataList is not equals the size of the
+        // DefinitionList we add or
+        // remove conditions...
+        while (conditionalEventDefinitions.size() != dataList.size()) {
+            try {
+                if (conditionalEventDefinitions.size() < dataList.size()) {
+                    // add a new empty condition placeholder...
+                    bpmnEvent.addEventDefinition("conditionalEventDefinition");
+                }
+                if (conditionalEventDefinitions.size() > dataList.size()) {
+                    // delete last condition from the list
+                    bpmnEvent.deleteEventDefinition(
+                            conditionalEventDefinitions.iterator().next().getAttributeNode("id").toString());
+                }
+            } catch (BPMNModelException e) {
+                logger.error("Failed to update BPMN Event Definition list: " + e.getMessage());
+                e.printStackTrace();
+            }
+            // Update event definition list
+            conditionalEventDefinitions = bpmnEvent.getEventDefinitionsByType("conditionalEventDefinition");
         }
-        // just update the values one by one by referring to the signalRef id by
-        // comparing the name
-        for (int i = 0; i < eventDefinitions.size(); i++) {
-            Element eventDefinitionElement = eventDefinitions.get(i);
+        // now we can update the values one by one
+        Iterator<Element> iter = conditionalEventDefinitions.iterator();
+        int i = 0;
+        while (iter.hasNext()) {
+            Element eventDefinitionElement = iter.next();
             JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
             if (jsonData != null) {
                 eventDefinitionElement.setAttribute("language", jsonData.getString("language", ""));
                 eventDefinitionElement.setAttribute("expression", jsonData.getString("expression", ""));
             }
+            i++;
             // update completed
         }
     }
@@ -323,6 +354,14 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
     /**
      * Adds the SignalEvent definitions
+     * <p>
+     * Note: Internally we need a mapping between the Signal name (Label) and the
+     * Signal id (value). As
+     * discussed here
+     * (https://jsonforms.discourse.group/t/how-to-separate-value-and-label-in-a-combobox/1200)
+     * we do not have this feature yet. Currently the efforts seems to be to high to
+     * implement a new
+     * renderer for JsonForms.
      *
      * @param eventDefinitions
      * @param dataBuilder
