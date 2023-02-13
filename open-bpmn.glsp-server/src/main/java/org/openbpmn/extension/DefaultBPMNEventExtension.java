@@ -176,10 +176,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             Set<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
             if ("signals".equals(feature)) {
                 JsonArray signalDataList = json.getJsonArray("signals");
-                // find all Signal definitions of this event
-                List<Element> signalEventDefinitions = eventDefinitions.stream()
-                        .filter(c -> "signalEventDefinition".equals(c.getLocalName())).collect(Collectors.toList());
-                updateSignalEventDefinitions(signalEventDefinitions, signalDataList);
+                updateSignalEventDefinitions(bpmnEvent, signalDataList);
             }
             if ("conditions".equals(feature)) {
                 JsonArray conditionsDataList = json.getJsonArray("conditions");
@@ -197,38 +194,77 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     }
 
     /*
-     * See addSignalEventDefinitions how we map between the signal name and its id.
+     * This method updates the signalEventDefinitions. The method expects a
+     * dataList containing all conditions with its values (including the id).
+     * The method simply overwrites all csignalEventDefinitions.
+     * 
+     * @See addSignalEventDefinitions how we map between the signal name and its id.
      */
-    private void updateSignalEventDefinitions(final List<Element> eventDefinitions, final JsonArray dataList) {
-        // If the size of the signalDataList is not equals the size of the known
-        // eventSignalDefinitions we print a warning
-        if (eventDefinitions.size() != dataList.size()) {
-            logger.warn("dataList does not match the EventDefinition list!");
+    private void updateSignalEventDefinitions(final Event bpmnEvent, final JsonArray dataList) {
+
+        // find all conditionalEventDefinitions for this event
+        Set<Element> signalEventDefinitions = bpmnEvent.getEventDefinitionsByType("signalEventDefinition");
+        // If the size of the conditionalDataList is not equals the size of the
+        // DefinitionList we add or remove conditions...
+        while (signalEventDefinitions.size() != dataList.size()) {
+            try {
+                if (signalEventDefinitions.size() < dataList.size()) {
+                    // add a new empty condition placeholder...
+                    bpmnEvent.addEventDefinition("signalEventDefinition");
+                }
+                if (signalEventDefinitions.size() > dataList.size()) {
+                    // delete first condition from the list
+                    Element definition = signalEventDefinitions.iterator().next();
+                    String id = definition.getAttribute("id");
+                    bpmnEvent.deleteEventDefinition(id);
+                }
+            } catch (BPMNModelException e) {
+                logger.error("Failed to update BPMN Event Definition list: " + e.getMessage());
+                e.printStackTrace();
+            }
+            // Update event definition list
+            signalEventDefinitions = bpmnEvent.getEventDefinitionsByType("signalEventDefinition");
         }
-        // just update the values one by one by referring to the signalRef id by
+
+        // now we can update the values one by referring to the signalRef id by
         // comparing the name
-        for (int i = 0; i < eventDefinitions.size(); i++) {
-            Element eventDefinitionElement = eventDefinitions.get(i);
+        Iterator<Element> iter = signalEventDefinitions.iterator();
+        int i = 0;
+        while (iter.hasNext()) {
+            Element eventDefinitionElement = iter.next();
             JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
             if (jsonData != null) {
-                String signalName = jsonData.getString("signal");
+
+                String signalName = "";
+
+                try {
+                    signalName = jsonData.getString("signal");
+                } catch (NullPointerException en) {
+                    // no name defined!
+                }
                 logger.debug("signal=" + signalName);
                 try {
+                    // fetch the signal from teh Model Signal list by name...
                     Signal signal = modelState.getBpmnModel().findSignalByName(signalName);
-                    eventDefinitionElement.setAttribute("signalRef", signal.getId());
+                    if (signal != null) {
+                        eventDefinitionElement.setAttribute("signalRef", signal.getId());
+                    } else {
+                        // no signal defintion found - delete signalRef...
+                        eventDefinitionElement.setAttribute("signalRef", "");
+                    }
                 } catch (BPMNInvalidReferenceException | BPMNMissingElementException | BPMNInvalidTypeException e) {
-
                     e.printStackTrace();
                 }
             }
+            i++;
             // update completed
         }
+
     }
 
     /**
      * This method updates the conditionalEventDefinitions. The method expects a
-     * dataList containing all
-     * conditions with its values (including the id).
+     * dataList containing all conditions with its values (including the id).
      * The method simpl overwrites all conditionalEventDefinitions.
      * 
      * @param bpmnEvent
@@ -238,8 +274,7 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
         // find all conditionalEventDefinitions for this event
         Set<Element> conditionalEventDefinitions = bpmnEvent.getEventDefinitionsByType("conditionalEventDefinition");
         // If the size of the conditionalDataList is not equals the size of the
-        // DefinitionList we add or
-        // remove conditions...
+        // DefinitionList we add or remove conditions...
         while (conditionalEventDefinitions.size() != dataList.size()) {
             try {
                 if (conditionalEventDefinitions.size() < dataList.size()) {
