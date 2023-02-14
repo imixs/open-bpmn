@@ -1179,7 +1179,10 @@ public class BPMNModel {
 
     /**
      * This helper method returns a set of child nodes by name from a given parent
-     * node.
+     * node. If no nodes were found, the method returns an empty list.
+     * 
+     * See also {@link #findChildNodeByName(Element parent, String nodeName)
+     * findChildNodeByName}
      * 
      * @param parent
      * @param nodeName
@@ -1198,6 +1201,29 @@ public class BPMNModel {
             }
         }
         return result;
+    }
+
+    /**
+     * This helper method returns the first child node by name from a given parent
+     * node. If no nodes were found the method returns null.
+     * 
+     * See also {@link #findChildNodesByName(Element parent, String nodeName)
+     * findChildNodesByName}
+     * 
+     * @param parent
+     * @param nodeName
+     * @return - Child Element matching the given node name. If no nodes were found,
+     *         the method returns null
+     */
+    public static Element findChildNodeByName(Element parent, String nodeName) {
+        Set<Element> elementList = findChildNodesByName(parent, nodeName);
+        if (elementList.iterator().hasNext()) {
+            // return first element
+            return elementList.iterator().next();
+        } else {
+            // no child elements with the given name found!
+            return null;
+        }
     }
 
     /**

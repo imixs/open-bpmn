@@ -332,7 +332,8 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     }
 
     /**
-     * Adds the ConditionalEvent definitions
+     * Adds the ConditionalEvent definitions. Here we use a detail-control layout to
+     * have more flexibility designing the widgets.
      *
      * @param eventDefinitions
      * @param dataBuilder

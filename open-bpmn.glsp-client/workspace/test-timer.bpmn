@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1" name="Default Process" processType="Public">
+        <bpmn2:documentation id="documentation_irBnnQ"/>
+        <bpmn2:startEvent id="event_n8bj0g" name="Event-1">
+            <bpmn2:documentation id="documentation_4XhEKA"/>
+            <bpmn2:timerEventDefinition id="timerEventDefinition_hElKhw">
+                <bpmn2:timeDuration id="FormalExpression_0" xsi:type="bpmn2:tFormalExpression">3cc</bpmn2:timeDuration>
+            </bpmn2:timerEventDefinition>
+            <bpmn2:timerEventDefinition id="timerEventDefinition_dFC6Sg">
+                <bpmn2:timeCycle id="FormalExpression_1" xsi:type="bpmn2:tFormalExpression">2bx</bpmn2:timeCycle>
+            </bpmn2:timerEventDefinition>
+            <bpmn2:timerEventDefinition id="timerEventDefinition_peWH9A">
+                <bpmn2:timeDate id="FormalExpression_2" xsi:type="bpmn2:tFormalExpression">1ay</bpmn2:timeDate>
+            </bpmn2:timerEventDefinition>
+        </bpmn2:startEvent>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="event_n8bj0g" id="BPMNShape_KvjEBA">
+                <dc:Bounds height="36.0" width="36.0" x="90.0" y="54.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_HFenEA">
+                    <dc:Bounds height="16.0" width="100.0" x="58.0" y="90.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
