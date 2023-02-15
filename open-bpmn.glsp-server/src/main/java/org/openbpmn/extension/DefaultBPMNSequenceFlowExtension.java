@@ -27,6 +27,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -102,20 +103,36 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
 
     }
 
+    /**
+     * This method updates the conditions of a sequenceFlow.
+     * If no conditionExpression feature exits in the current json dataset the
+     * method clears existing conditions from the sequence flow.
+     */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
-
-        SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
-        // check conditionExpression features
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-            if ("conditionExpression".equals(feature)) {
-                sequenceFlow.setConditionExpression(json.getString(feature));
-                continue;
+        try {
+            SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
+            // check conditionExpression features
+            Set<String> features = json.keySet();
+            boolean conditionsFound = false;
+            for (String feature : features) {
+                if ("conditionExpression".equals(feature)) {
+                    String expression = json.getString(feature);
+                    sequenceFlow.setConditionExpression(expression);
+                    conditionsFound = true;
+                    continue;
+                }
             }
-        }
 
+            // if no conditions exits we clear them form the sequenceflow
+            if (!conditionsFound) {
+                sequenceFlow.setConditionExpression(null);
+            }
+        } catch (BPMNModelException e) {
+            logger.warn("Failed to update condition: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }

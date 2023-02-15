@@ -91,7 +91,7 @@ public class Event extends BPMNElementNode {
      * @throws BPMNMissingElementException
      */
     public void deleteEventDefinition(String id) throws BPMNModelException {
-        this.deleteChild(id);
+        this.deleteChildNodeByID(id);
     }
 
     /**

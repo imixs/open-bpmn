@@ -126,31 +126,24 @@ public abstract class BPMNElement {
     }
 
     /**
-     * Set the new childNode with a given content for this element in a CDATA
-     * element.
+     * Creates or updates the first childNode with a given nodeName and
+     * set the content for this element in a CDATA element.
      * <p>
-     * The id is optional and is only set if not null
+     * The method returns the new generated child node
      * 
      * @param nodeName name of the new child node
      * @param content  the content
-     * @param id       optional id
+     * @return child node
      */
     public Element setChildNodeContent(String nodeName, String content) {
         // test if the child node was already loaded (lazy loading)
         Element childNode = loadOrCreateChildNode(nodeName);
-
         if (childNode != null) {
-
-            // get the first one and remove old values
-
-            // remove old child nodes of the the node...
-            NodeList subChildList = childNode.getChildNodes();
-
-            for (int i = 0; i < subChildList.getLength(); i++) {
-                Node child = subChildList.item(i);
-                childNode.removeChild(child);
+            // remove old sub_child nodes of this childNode...
+            while (childNode.hasChildNodes()) {
+                childNode.removeChild(childNode.getFirstChild());
             }
-
+            // create new cdata section for this child node and add the content....
             CDATASection cdata = getDoc().createCDATASection(content);
             childNode.appendChild(cdata);
             return childNode;
@@ -318,13 +311,13 @@ public abstract class BPMNElement {
      * 
      * @throws BPMNMissingElementException
      */
-    public void deleteChild(String id) throws BPMNModelException {
+    public void deleteChildNodeByID(String id) throws BPMNModelException {
 
         if (this.getElementNode() == null) {
             throw new BPMNMissingElementException("Missing ElementNode!");
         }
 
-        // iterate over all childs
+        // iterate over all child nodes
         NodeList childList = this.getElementNode().getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
@@ -343,4 +336,22 @@ public abstract class BPMNElement {
 
     }
 
+    /**
+     * Deletes each child node that has the specified local.
+     * 
+     * @param localName
+     * @throws BPMNModelException
+     */
+    public void deleteChildNodesByName(String localName) throws BPMNModelException {
+        if (this.getElementNode() == null) {
+            throw new BPMNMissingElementException("Missing ElementNode!");
+        }
+        NodeList childNodes = this.getElementNode().getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node childNode = childNodes.item(i);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE && childNode.getLocalName().equals(localName)) {
+                this.getElementNode().removeChild(childNode);
+            }
+        }
+    }
 }

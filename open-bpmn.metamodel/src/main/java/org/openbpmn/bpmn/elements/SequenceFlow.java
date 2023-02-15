@@ -3,6 +3,7 @@ package org.openbpmn.bpmn.elements;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
 public class SequenceFlow extends BPMNElementEdge {
@@ -33,12 +34,28 @@ public class SequenceFlow extends BPMNElementEdge {
     }
 
     /**
-     * Set the new conditionExpression content for this SequenceFlow.
+     * Set the new bpmn2:conditionExpression content for this SequenceFlow.
+     * <p>
+     * If the given expression is null or blank, the method will remove an existing
+     * bpmn2:conditionExpression.
      * 
-     * @param expression
+     * @param String expression
+     * @return the new child node or null if no expression was set.
+     * @throws BPMNModelException
      */
-    public void setConditionExpression(String expression) {
-        this.setChildNodeContent("conditionExpression", expression);
+    public Element setConditionExpression(String expression) throws BPMNModelException {
+        if (expression != null && !expression.isEmpty()) {
+            Element expressionNode = this.setChildNodeContent("conditionExpression", expression);
+
+            // xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1"
+            expressionNode.setAttribute("xsi:type", "bpmn2:tFormalExpression");
+            expressionNode.setAttribute("id", BPMNModel.generateShortID("FormalExpression"));
+
+            return expressionNode;
+        } else {
+            this.deleteChildNodesByName("conditionExpression");
+            return null;
+        }
     }
 
     /**
