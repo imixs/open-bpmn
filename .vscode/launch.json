@@ -14,6 +14,10 @@
         "--port",
         "5007"
       ],
+      "vmArgs": [
+        "--add-opens",
+        "java.base/java.util=ALL-UNNAMED",
+      ],      
       "console": "internalConsole",
       "internalConsoleOptions": "openOnSessionStart"
     }
