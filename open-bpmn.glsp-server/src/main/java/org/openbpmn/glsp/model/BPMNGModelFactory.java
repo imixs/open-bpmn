@@ -52,6 +52,7 @@ import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
@@ -613,36 +614,45 @@ public class BPMNGModelFactory implements GModelFactory {
     private void readEdges(final Set<BPMNElementEdge> bpmnEdges, final List<GModelElement> gNodeList,
             final Participant participant) {
         // Add all SequenceFlows
-        for (BPMNElementEdge sequenceFlow : bpmnEdges) {
+        for (BPMNElementEdge bpmnEdge : bpmnEdges) {
             // first we need to verify if the target and source objects exist in our model
             // if not we need to skip this sequenceFlow element!
-            GModelElement source = findElementById(gNodeList, sequenceFlow.getSourceRef());
-            GModelElement target = findElementById(gNodeList, sequenceFlow.getTargetRef());
+            GModelElement source = findElementById(gNodeList, bpmnEdge.getSourceRef());
+            GModelElement target = findElementById(gNodeList, bpmnEdge.getTargetRef());
             if (source == null) {
-                logger.warn("Source element '" + sequenceFlow.getSourceRef() + "' not found - skip SequenceFlow id="
-                        + sequenceFlow.getId());
+                logger.warn("Source element '" + bpmnEdge.getSourceRef() + "' not found - skip SequenceFlow id="
+                        + bpmnEdge.getId());
                 continue;
             }
             if (target == null) {
-                logger.warn("Target element '" + sequenceFlow.getTargetRef() + "' not found - skip SequenceFlow id="
-                        + sequenceFlow.getId());
+                logger.warn("Target element '" + bpmnEdge.getTargetRef() + "' not found - skip SequenceFlow id="
+                        + bpmnEdge.getId());
                 continue;
             }
 
             // now construct the GNode and add it to the model....
-            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(sequenceFlow);
+            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(bpmnEdge);
             builder.target(computeGPort(target));
             builder.source(computeGPort(source));
             BPMNGEdge bpmnGEdge = builder.build();
             bpmnGEdge.setKind("");
-            for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
+            for (BPMNPoint wayPoint : bpmnEdge.getWayPoints()) {
                 // add the waypoint to the GLSP model....
                 GPoint point = computeRelativeGPoint(wayPoint, participant);
                 bpmnGEdge.getRoutingPoints().add(point);
             }
 
+            // if the edge is a SequenceFlow and also is the Default flow, than we add the
+            // argument "default=true"
+            if (bpmnEdge instanceof SequenceFlow) {
+                SequenceFlow sequenceFlow = (SequenceFlow) bpmnEdge;
+                if (sequenceFlow.isDefault()) {
+                    bpmnGEdge.getArgs().put("default", "true");
+                }
+            }
+
             // apply BPMN Extensions
-            applyBPMNExtensions(bpmnGEdge, sequenceFlow);
+            applyBPMNExtensions(bpmnGEdge, bpmnEdge);
 
             gNodeList.add(bpmnGEdge);
         }

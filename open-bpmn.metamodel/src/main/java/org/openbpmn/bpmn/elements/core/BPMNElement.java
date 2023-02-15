@@ -168,6 +168,17 @@ public abstract class BPMNElement {
     }
 
     /**
+     * This helper method returns true if a childNode with the given node name
+     * exits.
+     *
+     * @return boolean - true if a child node exits
+     */
+    public boolean hasChildNode(String nodeName) {
+        // lazy loading child node
+        return loadChildNode(nodeName) != null;
+    }
+
+    /**
      * This helper method returns a childNode by name. If no child node with the
      * name exists, the method creates a new empty node.
      * <p>
@@ -195,6 +206,34 @@ public abstract class BPMNElement {
                 childNode = model.createElement(BPMNNS.BPMN2, nodeName);
                 childNode.setAttribute("id", BPMNModel.generateShortID(nodeName));
                 elementNode.appendChild(childNode);
+            }
+            // put into cache
+            childNodes.put(nodeName, childNode);
+        }
+        return childNode;
+    }
+
+    /**
+     * This helper method returns a childNode by name. If no child node with the
+     * name exists, the method return null.
+     * <p>
+     * The method uses a lazy loading mechanism and a cache to access the same node
+     * faster
+     * 
+     * @return String - can be empty
+     */
+    private Element loadChildNode(String nodeName) {
+
+        // test if the child node was already loaded (la7y loading)
+        Element childNode = childNodes.get(nodeName);
+        if (childNode == null) {
+
+            // lazy loading of child node element
+            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
+                    getModel().getPrefix(BPMNNS.BPMN2) + ":" + nodeName);
+            if (elementList.size() > 0) {
+                // get the first one and update the value only
+                childNode = elementList.iterator().next();
             }
             // put into cache
             childNodes.put(nodeName, childNode);
@@ -350,6 +389,8 @@ public abstract class BPMNElement {
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node childNode = childNodes.item(i);
             if (childNode.getNodeType() == Node.ELEMENT_NODE && childNode.getLocalName().equals(localName)) {
+                // clear cache
+                this.childNodes.remove(childNode.getLocalName());
                 this.getElementNode().removeChild(childNode);
             }
         }

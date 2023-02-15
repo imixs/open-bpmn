@@ -229,6 +229,9 @@
     stroke: #ffdf8b;
 }
 
+.sequenceFlow .default-symbol {
+    stroke-width: 3;
+}
 /* messageFlow */
 .sprotty-edge.messageFlow .line {
    stroke-dasharray: 6,4;

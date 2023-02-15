@@ -37,8 +37,14 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * The DefaultBPMNSequenceFlowExtension add an addional section for the
- * conditional SquenceFlows.
+ * The DefaultBPMNSequenceFlowExtension add an additional section for the
+ * conditional SequenceFlows.
+ * <p>
+ * The Extension also updates the default attribute of an optional connected
+ * Gateway and reset the modelState in case the Gateway default status has
+ * changed.
+ * This mechanism will automatically update the SequenceFlow Default Symbol in
+ * the diagram.
  * 
  * @author rsoika
  *
@@ -85,13 +91,21 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
+        String description = "An optional boolean Expression that acts as a gating condition. " + //
+                "A token will only  be placed on this Sequence Flow if this conditionExpression" + //
+                "evaluates to true." + //
+                "The default Sequence Flow should not have a conditionExpression. ";
         SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
+        String conditionalExpression = sequenceFlow.getConditionExpression();
+        if (conditionalExpression == null) {
+            conditionalExpression = "";
+        }
         dataBuilder //
-                .addData("conditionExpression", sequenceFlow.getConditionExpression()) //
+                .addData("conditionExpression", conditionalExpression) //
                 .addData("Default", "test");
 
         schemaBuilder. //
-                addProperty("conditionExpression", "string", "add an optional conditional expression."). //
+                addProperty("conditionExpression", "string", description). //
                 addProperty("default", "boolean", null);
 
         Map<String, String> multilineOption = new HashMap<>();
@@ -107,10 +121,14 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
      * This method updates the conditions of a sequenceFlow.
      * If no conditionExpression feature exits in the current json dataset the
      * method clears existing conditions from the sequence flow.
+     * <p>
+     * The method also updates the default state of an optional gateway and reset
+     * the modelState in case the default status has changed.
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+        boolean stateUpdate = false;
         try {
             SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
             // check conditionExpression features
@@ -119,7 +137,7 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
             for (String feature : features) {
                 if ("conditionExpression".equals(feature)) {
                     String expression = json.getString(feature);
-                    sequenceFlow.setConditionExpression(expression);
+                    stateUpdate = sequenceFlow.setConditionExpression(expression);
                     conditionsFound = true;
                     continue;
                 }
@@ -127,11 +145,17 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
 
             // if no conditions exits we clear them form the sequenceflow
             if (!conditionsFound) {
-                sequenceFlow.setConditionExpression(null);
+                stateUpdate = sequenceFlow.setConditionExpression(null);
             }
         } catch (BPMNModelException e) {
             logger.warn("Failed to update condition: " + e.getMessage());
             e.printStackTrace();
+        }
+
+        if (stateUpdate) {
+            // in case the default state for a gateway has changed we need to reset the
+            // model
+            modelState.reset();
         }
     }
 

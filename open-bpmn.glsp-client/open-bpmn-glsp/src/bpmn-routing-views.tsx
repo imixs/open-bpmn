@@ -14,15 +14,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    angleOfPoint,
-    isIntersectingRoutedPoint,
+    angleOfPoint, hasArguments, isIntersectingRoutedPoint,
     IViewArgs,
     Point,
     PolylineEdgeViewWithGapsOnIntersections,
-    RenderingContext,
-    SEdge,
-    toDegrees,
-    svg
+    RenderingContext, SEdge, svg, toDegrees
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
@@ -32,7 +28,10 @@ import { VNode } from 'snabbdom';
  *
  * Layout for the bpmn sequence flow. The View extends the `PolylineEdgeView` that renders gaps on intersections,
  * and the `JumpingPolylineEdgeView` that renders jumps over intersections.
+ *
  * In addition the view render rounded corners for a manhattan routing and an arrow on the edge end point
+ *
+ * For SequenceFlows the view also adds the BPMN default symbol
  ****************************************************************************/
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -42,8 +41,10 @@ const JSX = { createElement: svg };
 export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
     protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
         const additionals = super.renderAdditionals(edge, segments, context);
-        const p1 = segments[segments.length - 2];
-        const p2 = segments[segments.length - 1];
+        const endP1 = segments[segments.length - 2];
+        const endP2 = segments[segments.length - 1];
+        const startP1=segments[0];
+        const startP2=segments[1];
 
         // arrow depends on the type of the BPMNEdge
         if ('sequenceFlow'===edge.type || 'messageFlow'===edge.type) {
@@ -52,11 +53,31 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
                 class-sprotty-edge={true}
                 class-arrow={true}
                 d='M 1,0 L 14,-4 L 14,4 Z'
-                transform={`rotate(${toDegrees(angleOfPoint({ x: p1.x - p2.x, y: p1.y - p2.y }))} ${p2.x} ${p2.y}) translate(${p2.x} ${
-                    p2.y
-                })`}
+                transform={`rotate(${toDegrees(angleOfPoint({ x: endP1.x - endP2.x, y: endP1.y - endP2.y }))}
+                    ${endP2.x} ${endP2.y}) translate(${endP2.x} ${endP2.y}
+                )`}
             />
           );
+
+        // Default Sequcnece flow?
+        const defaultSymbol: any = (
+            <path
+                class-sprotty-edge={true}
+                class-default-symbol={true}
+                d='M 5,-4 L 10,4 Z'
+                transform={`rotate(${toDegrees(angleOfPoint({ x: startP2.x - startP1.x, y: startP2.y - startP1.y }))} 
+                    ${startP1.x} ${startP1.y}) translate(${startP1.x} ${startP1.y}
+                )`}
+            />
+          );
+
+          // if the edge is a sequence flow with the default property than add the default symbol
+          if (hasArguments(edge)) {
+            if (edge.args.default && 'true'===edge.args.default) {
+                additionals.push(defaultSymbol);
+             }
+          }
+
           additionals.push(arrow);
         }
         return additionals;
