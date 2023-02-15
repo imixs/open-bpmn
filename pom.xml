@@ -3,12 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.imixs.bpmn</groupId>
 	<artifactId>open-bpmn</artifactId>
-	<description>Imixs Open BPMN</description>
 	<version>0.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
-
-	<name>Imixs Open BPMN</name>
-
+	<name>Open BPMN</name>
+	<description>The Open BPMN Modeling Platform</description>
+	
 	<modules>
 		<module>open-bpmn.metamodel</module>
 		<module>open-bpmn.glsp-server</module>

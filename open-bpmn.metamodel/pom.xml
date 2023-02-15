@@ -6,8 +6,8 @@
 		<version>0.9.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>open-bpmn.metamodel</artifactId>
-	<name>Imixs Open BPMN - Metamodel</name>
-	<description>The BPMN2 Metamodel Project</description>
+	<name>Open BPMN - Metamodel</name>
+	<description>The Open BPMN Metamodel Project</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
