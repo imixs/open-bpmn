@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
+        <bpmn2:participant id="participant_e8hA9w" name="Default Process" processRef="process_1"/>
+        <bpmn2:participant id="participant_1s7oeQ" name="Pool-1" processRef="process_z6kIUg">
+            <bpmn2:documentation id="documentation_Qmy8Lw"/>
+        </bpmn2:participant>
+    </bpmn2:collaboration>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="Default Process" processType="Public"/>
+    <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_z6kIUg" name="Pool-1" processType="Private">
+        <bpmn2:laneSet id="laneset_1" name="Lane Set 1">
+            <bpmn2:lane id="lane_Xu8azw" name="Lane 1">
+                <bpmn2:documentation id="documentation_qL0V4w"/>
+            </bpmn2:lane>
+            <bpmn2:lane id="lane_PS5rkg" name="Lane 2">
+                <bpmn2:documentation id="documentation_H0JB0A"/>
+            </bpmn2:lane>
+        </bpmn2:laneSet>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="lane_euPbsg" id="BPMNShape_Lane_ybb33w">
+                <dc:Bounds height="100.0" width="470.0" x="40.0" y="10.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="lane_48iEbQ" id="BPMNShape_Lane_WFEyIA">
+                <dc:Bounds height="100.0" width="470.0" x="40.0" y="110.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_1" id="BPMNShape_K5105Q">
+                <dc:Bounds height="50.0" width="110.0" x="100.0" y="40.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="participant_1s7oeQ" id="BPMNShape_5dMaWA">
+                <dc:Bounds height="400.0" width="800.0" x="79.0" y="72.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_cm02lg">
+                    <dc:Bounds x="10.0" y="10.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="lane_Xu8azw" id="BPMNShape_Lane_UQppBw">
+                <dc:Bounds height="200.0" width="770.0" x="109.0" y="72.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="lane_PS5rkg" id="BPMNShape_Lane_17z75Q">
+                <dc:Bounds height="200.0" width="770.0" x="109.0" y="272.0"/>
+            </bpmndi:BPMNShape>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

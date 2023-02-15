@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+    <bpmn2:process id="process_1" name="Default Process" processType="Public">
+        <bpmn2:startEvent id="event_TY6wqg" name="Event-1">
+            <bpmn2:outgoing>SequenceFlow_W9YBMg</bpmn2:outgoing>
+        </bpmn2:startEvent>
+        <bpmn2:manualTask id="task_hpKNrQ" name="Task-1">
+            <bpmn2:incoming>SequenceFlow_W9YBMg</bpmn2:incoming>
+            <bpmn2:outgoing>SequenceFlow_dU4dhw</bpmn2:outgoing>
+        </bpmn2:manualTask>
+        <bpmn2:endEvent id="event_4JS37w" name="Event-2">
+            <bpmn2:incoming>SequenceFlow_dU4dhw</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="SequenceFlow_W9YBMg" sourceRef="event_TY6wqg" targetRef="task_hpKNrQ"/>
+        <bpmn2:sequenceFlow id="SequenceFlow_dU4dhw" sourceRef="task_hpKNrQ" targetRef="event_4JS37w"/>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="event_TY6wqg" id="BPMNShape_gQ9Qvw">
+                <dc:Bounds height="36.0" width="36.0" x="81.0" y="56.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_pnfHZg">
+                    <dc:Bounds height="24.0" width="100.0" x="49.0" y="92.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_hpKNrQ" id="BPMNShape_DqK7hQ">
+                <dc:Bounds height="50.0" width="110.0" x="207.0" y="120.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event_4JS37w" id="BPMNShape_OuuZhw">
+                <dc:Bounds height="36.0" width="36.0" x="420.0" y="210.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_30XmxA">
+                    <dc:Bounds height="24.0" width="100.0" x="388.0" y="246.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_W9YBMg" id="BPMNEdge_D4AH9g">
+                <di:waypoint x="262.0" y="74.0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_dU4dhw" id="BPMNEdge_R2gDoA">
+                <di:waypoint x="260.5" y="228.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
