@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+    <bpmn2:process id="process_1" name="Default Process" processType="Public">
+        <bpmn2:documentation id="documentation_Inkwbw"/>
+        <bpmn2:startEvent id="event_5HFf2w" name="Event-1">
+            <bpmn2:documentation id="documentation_pUx8iw"/>
+            <bpmn2:outgoing>SequenceFlow_MMTung</bpmn2:outgoing>
+        </bpmn2:startEvent>
+        <bpmn2:endEvent id="event_d1wlsg" name="Event-2">
+            <bpmn2:documentation id="documentation_1m42UA"/>
+            <bpmn2:incoming>SequenceFlow_MMTung</bpmn2:incoming>
+        </bpmn2:endEvent>
+        <bpmn2:sequenceFlow id="SequenceFlow_MMTung" name="" sourceRef="event_5HFf2w" targetRef="event_d1wlsg">
+            <bpmn2:documentation id="documentation_a3rTDA"><![CDATA[docu]]></bpmn2:documentation>
+            <bpmn2:conditionExpression id="FormalExpression_1" xsi:type="bpmn2:tFormalExpression"><![CDATA[1=1]]></bpmn2:conditionExpression>
+        </bpmn2:sequenceFlow>
+    </bpmn2:process>
+    <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+        <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+            <bpmndi:BPMNShape bpmnElement="event_5HFf2w" id="BPMNShape_jqaafQ">
+                <dc:Bounds height="36.0" width="36.0" x="89.0" y="80.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_1BImpg">
+                    <dc:Bounds height="16.0" width="100.0" x="57.0" y="116.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="event_d1wlsg" id="BPMNShape_x6AjAw">
+                <dc:Bounds height="36.0" width="36.0" x="261.0" y="80.0"/>
+                <bpmndi:BPMNLabel id="BPMNLabel_WCk2BA">
+                    <dc:Bounds height="16.0" width="100.0" x="229.0" y="116.0"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge bpmnElement="SequenceFlow_MMTung" id="BPMNEdge_5t0CyA" sourceElement="BPMNShape_jqaafQ" targetElement="BPMNShape_x6AjAw">
+                                
+            
+                <di:waypoint x="125.0" y="98.0"/>
+                <di:waypoint x="261.0" y="98.0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+    </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
