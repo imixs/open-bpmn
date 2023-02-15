@@ -1,4 +1,4 @@
-# Imixs BPMN - GLSP Server
+# Open BPMN - Server
 
 This is the Imixs BPMN GLSP Server module used by the Imixs BPMN Client modules. 
 
@@ -14,6 +14,28 @@ From the /target/ folder you can now start the server by executing the following
 
 	$ cd target
 	$ java -jar open-bpmn.server-0.3.0-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
+
+
+### Failed to send notification message.
+
+In case you see server exceptions like this one:
+
+```
+WARNUNG: Failed to send notification message.
+java.lang.reflect.InaccessibleObjectException: Unable to make private java.util.Collections$EmptyMap() accessible: module java.base does not "opens java.util" to unnamed module @23fe1d71
+	at java.base/java.lang.reflect.AccessibleObject.checkCanSetAccessible(AccessibleObject.java:354)
+```
+
+it indicates a problem with the JVM / Gson Libraries. Find details [here](https://github.com/eclipse-glsp/glsp/discussions/702)
+
+A possible solution is to add the VM Option `java.base/java.util=ALL-UNNAMED`. For VSCode this can be done by adding the following vmArgs to the launch config:
+
+```
+"vmArgs": [
+    "--add-opens",
+    "java.base/java.util=ALL-UNNAMED",
+],
+```
 
 ## Build & Run
 
