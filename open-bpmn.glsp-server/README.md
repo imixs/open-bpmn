@@ -6,15 +6,16 @@ This is the Imixs BPMN GLSP Server module used by the Imixs BPMN Client modules.
 
 To build the server part of Open BPMN run the maven command:
 
-	$ mvn clean verify -Pm2 -Pfatjar
+	$ mvn clean install
 
-This will generate a sever jar including your EMF model and all necessary components. This is called a 'fatjar'. 
+This will automatically launch the default profile 'fatjar'. This maven profile  will generate a sever jar including your EMF model and all necessary components. This is called a 'fatjar'. 
 
 From the /target/ folder you can now start the server by executing the following commands (whereas X.X.X is the current version):
 
 	$ cd target
-	$ java -jar open-bpmn.server-0.3.0-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
+	$ java -jar open-bpmn.server-[VERSION]-SNAPSHOT-glsp.jar org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher
 
+For VSCode there is a corresponding launch configuration available.
 
 ### Failed to send notification message.
 
