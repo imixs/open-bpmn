@@ -125,23 +125,20 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
             }
         } else {
             // it was not a GNode - so test if we have a Edge...
-
             Optional<GEdge> _gEdgeElement = modelState.getIndex().findElementByClass(operation.getLabelId(),
                     GEdge.class);
             GEdge gEdgeElement = _gEdgeElement.orElse(null);
             if (gEdgeElement != null) {
-
                 gEdgeElement.getArgs().put("text", operation.getText());
                 BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(gEdgeElement.getId());
-
                 bpmnElement.setName(operation.getText());
+            } else {
+                logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
             }
         }
 
         // we do need to reset the model because of the properties panels
         modelState.reset();
-
-        logger.warn("Unable to resolve the corresponding BPMN element Node for " + operation.getLabelId());
 
     }
 

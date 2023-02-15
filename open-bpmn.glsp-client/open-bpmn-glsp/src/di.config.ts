@@ -14,55 +14,38 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    configureDefaultModelElements,
-    configureModelElement,
-    ConsoleLogger,
+    boundsFeature, CircularNodeView, configureCommand, configureDefaultModelElements,
+    configureModelElement, configureView, ConsoleLogger,
     createDiagramContainer,
     DeleteElementContextMenuItemProvider,
-    editLabelFeature, moveFeature, selectFeature,
-    LogLevel,
-    overrideViewerOptions,
-    RevealNamedElementActionProvider,
-    RoundedCornerNodeView,RectangularNodeView,
-    SCompartment,
-    SCompartmentView,
-    SLabel,CircularNodeView,DiamondNodeView,
-    SLabelView,configureView,
-    configureCommand,
-    TYPES,ForeignObjectView, boundsFeature
+    DiamondNodeView,
+    editLabelFeature,
+    ForeignObjectView, LogLevel, moveFeature, overrideViewerOptions, RectangularNodeView, RevealNamedElementActionProvider,
+    RoundedCornerNodeView, SCompartment,
+    SCompartmentView, selectFeature, SLabel, SLabelView, TYPES
 } from '@eclipse-glsp/client';
 // import { DefaultTypes } from '@eclipse-glsp/protocol';
+import {
+    BPMNEdge,
+    DataObjectNode,
+    EventNode,
+    GatewayNode,
+    Icon, LabelNode,
+    LaneNode,
+    MessageNode, MultiLineTextNode, PoolNode, TaskNode, TextAnnotationNode
+} from '@open-bpmn/open-bpmn-model';
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
-	LabelNode,
-	GatewayNode,
-	PoolNode,
-	LaneNode,
-	DataObjectNode,
-	MessageNode,
-	TextAnnotationNode,
-	Icon,
-	TaskNode,
-	EventNode,
-	BPMNEdge,
-	MultiLineTextNode
-} from '@open-bpmn/open-bpmn-model';
-import { IconView,ContainerHeaderView,
-         BPMNLabelNodeSelectionListener,
-         DataObjectNodeView,
-         MessageNodeView,
-         TextAnnotationNodeView
+    BPMNLabelNodeSelectionListener, ContainerHeaderView, DataObjectNodeView, IconView, MessageNodeView,
+    TextAnnotationNodeView
 } from './bpmn-element-views';
+import {
+    BPMNElementSnapper, DrawHelperLinesCommand, HelperLineListener, HelperLineView, RemoveHelperLinesCommand
+} from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
-import { HelperLineListener,
-         DrawHelperLinesCommand,
-         RemoveHelperLinesCommand,
-         HelperLineView,
-         BPMNElementSnapper
-       } from './bpmn-helperlines';
 
 import bpmnPropertyModule from '@open-bpmn/open-bpmn-properties';
 
@@ -123,7 +106,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     configureModelElement(context, 'BPMNLabel', LabelNode, RectangularNodeView);
 
-    // textNode of BPMNLable, TextAnnotation...
+    // textNode of BPMNLabel, TextAnnotation...
     configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, ForeignObjectView, {
          disable: [moveFeature, selectFeature,boundsFeature],
          enable: [editLabelFeature]}
