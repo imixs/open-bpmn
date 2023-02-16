@@ -66,17 +66,7 @@
     fill: #425C81;
 }
 
-.task.bpmnextension-imixs > .sprotty-node {
-	stroke: darkorange;
-	stroke-width: 1;
-}
-.event.bpmnextension-imixs > .sprotty-node {
-	stroke: darkorange;
-	stroke-width: 1;
-}
-
 /*** Events ***/
-
 
 .event.startEvent > circle {
 	fill: #57A14C;
@@ -86,10 +76,10 @@
 }
 
 .event.intermediateCatchEvent > circle {
-	fill: #82848a;
+	fill: #6f8dab;
 }
 .event.intermediateThrowEvent > circle {
-	fill: #82848a;
+	fill: #6f8dab;
 }
 
 .event.boundaryEvent > circle {
@@ -108,22 +98,22 @@
 .dataObject > .sprotty-node {
 	opacity: 80%;
 	stroke: var(--theia-focusBorder);
-    outline-color: #ccc;
+    outline-color: var(--theia-editor-foreground);
     outline-style: solid;
-    outline-width: 1px;
+    outline-width: 2px;
     fill: #82848a;
 }
 
 .message > .sprotty-node {
 	opacity: 80%;
 	stroke: var(--theia-focusBorder);
-    outline-color: #ccc;
+    outline-color: var(--theia-editor-foreground);
     outline-style: solid;
-    outline-width: 1px;
-    fill: #CFE9F5;
+    outline-width: 2px;
+    fill: #6083a6;
 }
 .message > polyline {
-    stroke: #eee;
+    stroke: var(--theia-editor-foreground);
     stroke-width: 2;
     fill: none;
 }

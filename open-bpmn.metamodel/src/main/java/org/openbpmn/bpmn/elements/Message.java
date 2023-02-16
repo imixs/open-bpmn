@@ -17,13 +17,12 @@ public class Message extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 30.0;
     public final static double DEFAULT_HEIGHT = 20.0;
-    public static final double LABEL_OFFSET = 0;
+    public static final double LABEL_OFFSET = 5;
 
     public Message(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess)
             throws BPMNModelException {
-        super(model, node, type, bpmnProcess); 
+        super(model, node, type, bpmnProcess);
     }
-
 
     @Override
     public double getDefaultWidth() {

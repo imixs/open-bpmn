@@ -27,8 +27,8 @@ public class DataObject extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 35.0;
     public final static double DEFAULT_HEIGHT = 50.0;
-    public static final double LABEL_OFFSET = 0;
-    
+    public static final double LABEL_OFFSET = 5;
+
     protected DataObject(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess)
             throws BPMNModelException {
         super(model, node, type, bpmnProcess);
