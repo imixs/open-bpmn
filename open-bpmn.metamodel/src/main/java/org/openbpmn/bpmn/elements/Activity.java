@@ -24,9 +24,8 @@ public class Activity extends BPMNElementNode {
     public final static double DEFAULT_WIDTH = 110.0;
     public final static double DEFAULT_HEIGHT = 50.0;
 
-    
     protected Activity(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
-        super(model, node, type,bpmnProcess);
+        super(model, node, type, bpmnProcess);
     }
 
     @Override
@@ -34,9 +33,8 @@ public class Activity extends BPMNElementNode {
         return DEFAULT_WIDTH;
     }
 
-
     @Override
-    public double getDefaultHeigth() {
+    public double getDefaultHeight() {
         return DEFAULT_HEIGHT;
     }
 }

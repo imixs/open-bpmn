@@ -34,7 +34,7 @@ public class TextAnnotation extends BPMNElementNode {
     }
 
     @Override
-    public double getDefaultHeigth() {
+    public double getDefaultHeight() {
         return DEFAULT_HEIGHT;
     }
 

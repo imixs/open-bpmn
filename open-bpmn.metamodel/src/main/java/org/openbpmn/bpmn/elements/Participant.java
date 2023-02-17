@@ -22,21 +22,21 @@ public class Participant extends BPMNElementNode {
     public final static double DEFAULT_WIDTH = 800.0;
     public final static double DEFAULT_HEIGHT = 200.0;
     public final static double POOL_OFFSET = 30.0;
-    
+
     protected BPMNLabel label = null;
     private String processRef = null;
 
     public Participant(BPMNModel model, Element node) throws BPMNModelException {
         super(model, node);
-        
-        // find the BPMNShape element. 
+
+        // find the BPMNShape element.
         bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
     }
-
 
     public boolean hasPool() {
         return (bpmnShape != null);
     }
+
     /**
      * Returns the initialized BPMNProcess of this participant or returns null if no
      * proces exists
@@ -51,7 +51,7 @@ public class Participant extends BPMNElementNode {
         }
         return null;
     }
-  
+
     public String getProcessRef() {
         return processRef;
     }
@@ -60,7 +60,7 @@ public class Participant extends BPMNElementNode {
         this.processRef = processRef;
         this.getElementNode().setAttribute("processRef", processRef);
     }
-    
+
     /**
      * This method returns the corresponding BPMNProcess ID for this Element.
      * 
@@ -72,28 +72,24 @@ public class Participant extends BPMNElementNode {
         return getProcessRef();
     }
 
-    
     /**
      * Updates the BPMNProcessRef of the Participant
      * 
      * @return
      */
     public void setBpmnProcess(BPMNProcess _process) {
-        this.bpmnProcess=_process;
+        this.bpmnProcess = _process;
         this.setProcessRef(_process.getId());
     }
-
-
 
     @Override
     public double getDefaultWidth() {
         return DEFAULT_WIDTH;
     }
 
-
     @Override
-    public double getDefaultHeigth() {
+    public double getDefaultHeight() {
         return DEFAULT_HEIGHT;
     }
-  
+
 }

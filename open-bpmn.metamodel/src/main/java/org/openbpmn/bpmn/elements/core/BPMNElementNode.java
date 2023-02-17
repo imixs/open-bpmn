@@ -61,7 +61,7 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (bpmnShape == null) {
             // create shape element
             bpmnShape = model.buildBPMNShape(this);
-            this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeigth());
+            this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeight());
             // create BPMNLabel
             label = this.getLabel();
             if (label != null) {
@@ -205,7 +205,7 @@ public abstract class BPMNElementNode extends BPMNElement {
      * 
      * @return
      */
-    public abstract double getDefaultHeigth();
+    public abstract double getDefaultHeight();
 
     /**
      * Returns the BPMN sub type
