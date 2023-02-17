@@ -377,7 +377,7 @@ public class BPMNModel {
 
                 collaborationElement.appendChild(migratedParticipantNode);
                 existingProcess.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
-                // finally add a new BPMNParticipatn to the paticipant list
+                // finally add a new BPMNParticipant to the participant list
                 getParticipants().add(new Participant(this, migratedParticipantNode));
             }
 
@@ -687,7 +687,7 @@ public class BPMNModel {
         }
 
         String targetRef = bpmnEdge.getTargetRef();
-        String soureRef = bpmnEdge.getSourceRef();
+        String sourceRef = bpmnEdge.getSourceRef();
         // first we need to update the elements still connected with this flow
         // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
         // <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
@@ -706,7 +706,7 @@ public class BPMNModel {
                 }
             }
         }
-        BPMNElementNode sourceElement = findElementNodeById(soureRef);
+        BPMNElementNode sourceElement = findElementNodeById(sourceRef);
         if (sourceElement != null) {
             NodeList childs = sourceElement.getElementNode().getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
@@ -1047,7 +1047,7 @@ public class BPMNModel {
      * given ID. This finder method can be used to just adjust the Bounds in the
      * Diagram section of a model.
      * <p>
-     * In case of a process diagram, the method verfies all FlowElements within the
+     * In case of a process diagram, the method verifies all FlowElements within the
      * default process.
      * <p>
      * In case of a collaboration diagram, the method verifies all Participants and
@@ -1270,7 +1270,7 @@ public class BPMNModel {
     }
 
     /**
-     * Generates a random short 6 byte id with a prafix
+     * Generates a random short 6 byte id with a prefix
      * <p>
      * HEX: 0-9, a-f. For example: BPMNShape_a55ac5, BPMNShape_1382c1
      * 
@@ -1364,7 +1364,7 @@ public class BPMNModel {
     }
 
     /**
-     * Returns true if the node is a textAnnotaion node.
+     * Returns true if the node is a textAnnotation node.
      * 
      * @param node
      * @return
@@ -1398,7 +1398,7 @@ public class BPMNModel {
     }
 
     /**
-     * Returns true if the node is a Accociation.
+     * Returns true if the node is a Association.
      * 
      * @param node
      * @return
@@ -1448,7 +1448,7 @@ public class BPMNModel {
     }
 
     /**
-     * Returns the central loger instance
+     * Returns the central logger instance
      * 
      * @return
      */
@@ -1557,7 +1557,8 @@ public class BPMNModel {
                 processes.add(bpmnProcess);
 
                 // we need to update the containing Participant
-                // This assignment can only be done now because the loadParticpantList is called
+                // This assignment can only be done now because the loadParticipantList is
+                // called
                 // before this method.
                 Participant participant = bpmnProcess.findParticipant();
                 if (participant != null) {
@@ -1652,7 +1653,7 @@ public class BPMNModel {
      * @throws TransformerException
      */
     private void writeXml(Document doc, OutputStream output) throws TransformerException {
-        // clenup blank lines
+        // cleanup blank lines
         clearBlankLines();
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -1666,7 +1667,7 @@ public class BPMNModel {
 
     /**
      * This helper method use XPath to find all whitespace-only TEXT nodes in the
-     * current doucment, iterate through them and remove each one from its parent
+     * current document, iterate through them and remove each one from its parent
      * (using getParentNode().removeChild()). Something like this would do (doc
      * would be your DOM document object):
      * 

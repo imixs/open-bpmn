@@ -127,7 +127,7 @@ public class BPMNGModelFactory implements GModelFactory {
             logger.warn("no BPMNExtension found! Check DiagramModule->configureBPMNExtensions");
         }
 
-        if (!modelState.isInitalized()) {
+        if (!modelState.isInitialized()) {
             long l = System.currentTimeMillis();
             GGraph newGModel = buildGGraph(getBpmnModel());
             modelState.updateRoot(newGModel);
@@ -138,7 +138,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 createNewEmptyRoot("process_0");
             }
 
-            modelState.setInitalized(true);
+            modelState.setInitialized(true);
             logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
         } else {
             logger.debug("===> createGModel skipped!");

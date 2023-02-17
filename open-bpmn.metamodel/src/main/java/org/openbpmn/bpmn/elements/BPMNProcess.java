@@ -233,8 +233,8 @@ public class BPMNProcess extends BPMNElement {
         return associations;
     }
 
-    public void setAssociations(Set<Association> accociations) {
-        this.associations = accociations;
+    public void setAssociations(Set<Association> associations) {
+        this.associations = associations;
     }
 
     /**
@@ -586,7 +586,7 @@ public class BPMNProcess extends BPMNElement {
         BPMNModel.debug("new lane '" + laneId + "' added");
         Lane bpmnLane = new Lane(model, lane);
 
-        // Autocompute the Lane Bounds
+        // AutoCompute the Lane Bounds
         Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
         if (bpmnParticipant != null) {
             // add shape
@@ -597,7 +597,7 @@ public class BPMNProcess extends BPMNElement {
              * y="100.0"/> </bpmndi:BPMNShape>
              */
 
-            // if the pool already contains lanes, than we autoincrease the height of the
+            // if the pool already contains lanes, than we auto increase the height of the
             // pool
             int currentWidth = (int) bpmnParticipant.getBounds().getDimension().getWidth();
             int currentHeight = (int) bpmnParticipant.getBounds().getDimension().getHeight();
@@ -609,11 +609,11 @@ public class BPMNProcess extends BPMNElement {
                 bpmnParticipant.getBounds().setDimension(currentWidth, currentHeight + expansion);
             }
 
-            Element lanebpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
-            lanebpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
-            lanebpmnShape.setAttribute("bpmnElement", laneId);
-            model.getBpmnPlane().appendChild(lanebpmnShape);
-            bpmnLane.setBpmnShape(lanebpmnShape);
+            Element laneBpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
+            laneBpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
+            laneBpmnShape.setAttribute("bpmnElement", laneId);
+            model.getBpmnPlane().appendChild(laneBpmnShape);
+            bpmnLane.setBpmnShape(laneBpmnShape);
 
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
 
@@ -673,7 +673,7 @@ public class BPMNProcess extends BPMNElement {
      */
     public void deleteAllNodes() {
 
-        // frist delete all lanes
+        // first delete all lanes
         Iterator<Lane> ll = this.getLanes().iterator();
         while (ll.hasNext()) {
             deleteLane(ll.next().getId());
@@ -702,8 +702,8 @@ public class BPMNProcess extends BPMNElement {
 
         // delete all elements contained in this lane
         Set<String> flowElementList = lane.getFlowElementIDs();
-        for (String flowEleemntID : flowElementList) {
-            this.removeAllEdgesFromElement(flowEleemntID);
+        for (String flowElementID : flowElementList) {
+            this.removeAllEdgesFromElement(flowElementID);
         }
 
         // delete the shape from bpmndi:BPMNDiagram
@@ -797,7 +797,7 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Deletes a SquenceFlow from this context.
+     * Deletes a SequenceFlow from this context.
      * <p>
      * 
      * @param id
@@ -888,7 +888,7 @@ public class BPMNProcess extends BPMNElement {
         }
 
         String targetRef = bpmnEdge.getTargetRef();
-        String soureRef = bpmnEdge.getSourceRef();
+        String sourceRef = bpmnEdge.getSourceRef();
         // In case of a SequenceFlow we need to update the referenced inside the
         // referred elements
         // <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
@@ -908,7 +908,7 @@ public class BPMNProcess extends BPMNElement {
                 }
             }
         }
-        BPMNElementNode sourceElement = findElementNodeById(soureRef);
+        BPMNElementNode sourceElement = findElementNodeById(sourceRef);
         if (sourceElement != null) {
             NodeList childs = sourceElement.getElementNode().getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
@@ -945,8 +945,8 @@ public class BPMNProcess extends BPMNElement {
         }
 
         // remove all Associations
-        Set<Association> accociationList = findAssociationsByElementId(elementId);
-        for (Association flow : accociationList) {
+        Set<Association> associationList = findAssociationsByElementId(elementId);
+        for (Association flow : associationList) {
             deleteAssociation(flow.getId());
         }
 
@@ -1247,10 +1247,10 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Returns a list of accociations associated with a given FlowElement
+     * Returns a list of associations associated with a given FlowElement
      * 
      * @param id of a flowElement
-     * @return list of Accociations
+     * @return list of Associations
      */
     private Set<Association> findAssociationsByElementId(String id) {
         Set<Association> result = new LinkedHashSet<Association>();
@@ -1287,8 +1287,8 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * This method inserts a lane before a target lane within an existing laneset. A
-     * client need to re-initalize the process after an insert.
+     * This method inserts a lane before a target lane within an existing laneSet. A
+     * client need to re-initialize the process after an insert.
      * 
      * @param laneTest
      * @param lane2

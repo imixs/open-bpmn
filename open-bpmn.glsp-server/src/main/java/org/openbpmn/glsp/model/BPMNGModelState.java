@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 public class BPMNGModelState extends DefaultGModelState {
 
     private BPMNModel bpmnModel;
-    private boolean initalized = false;
+    private boolean initialized = false;
     List<String> extensionKinds = new ArrayList<>();
 
     @Inject
@@ -50,12 +50,12 @@ public class BPMNGModelState extends DefaultGModelState {
         this.setRoot(null);
     }
 
-    public boolean isInitalized() {
-        return initalized;
+    public boolean isInitialized() {
+        return initialized;
     }
 
-    public void setInitalized(final boolean initalized) {
-        this.initalized = initalized;
+    public void setInitialized(final boolean initialized) {
+        this.initialized = initialized;
     }
 
     /**
@@ -63,7 +63,7 @@ public class BPMNGModelState extends DefaultGModelState {
      * BPMNGModelFactory.createGModel() method
      */
     public void reset() {
-        this.initalized = false;
+        this.initialized = false;
     }
 
 }
