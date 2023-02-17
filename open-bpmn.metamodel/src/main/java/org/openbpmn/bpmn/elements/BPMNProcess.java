@@ -3,6 +3,7 @@ package org.openbpmn.bpmn.elements;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -41,6 +42,8 @@ import org.w3c.dom.NodeList;
  */
 public class BPMNProcess extends BPMNElement {
 
+    private static Logger logger = Logger.getLogger(BPMNProcess.class.getName());
+
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<Activity> activities = null;
     protected Set<DataObject> dataObjects = null;
@@ -53,7 +56,7 @@ public class BPMNProcess extends BPMNElement {
     protected Set<Lane> lanes = null;
     protected Element laneSet = null;
 
-    private boolean initalized = false;
+    private boolean initialized = false;
 
     /**
      * The method creates a BPMNProcess instance form a bpmn2:process model element.
@@ -93,7 +96,7 @@ public class BPMNProcess extends BPMNElement {
      * @throws BPMNModelException
      */
     public void init() throws BPMNModelException {
-        if (!initalized) {
+        if (!initialized) {
             // now find all relevant bpmn meta elements
             NodeList childs = this.getElementNode().getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
@@ -127,7 +130,7 @@ public class BPMNProcess extends BPMNElement {
                     // unsupported node type
                 }
             }
-            initalized = true;
+            initialized = true;
         }
     }
 
@@ -745,7 +748,9 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Deletes a BPMN Element from this process
+     * Deletes a BPMN Element from this process. This will also remove all edges
+     * connected with this element. In case the element id is a BPMN lane, all
+     * referred elements for this lane will be deleted too.
      * 
      * @param id
      */
@@ -753,10 +758,11 @@ public class BPMNProcess extends BPMNElement {
         BPMNElementNode bpmnElement = findElementNodeById(id);
         if (bpmnElement == null) {
             // does not exist
+            logger.warning("Element '" + id + "' does not exists in current process!");
             return;
         }
 
-        // test if the elmen tis a lane
+        // test if the element is a lane
         Lane lane = this.findLaneById(id);
         if (lane != null) {
             this.deleteLane(id);
@@ -791,40 +797,12 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Deletes a BPMNBase element from this process
-     * 
-     * @param id
-     */
-    public void deleteBPMNElementNode(String id) {
-
-        BPMNElementNode baseElement = findElementNodeById(id);
-        if (baseElement instanceof Lane) {
-            this.deleteLane(id);
-            return;
-        }
-        if (baseElement instanceof Activity) {
-            this.deleteTask(id);
-            return;
-        }
-        if (baseElement instanceof Event) {
-            this.deleteEvent(id);
-            return;
-        }
-        if (baseElement instanceof Gateway) {
-            this.deleteGateway(id);
-            return;
-        }
-
-    }
-
-    /**
      * Deletes a SquenceFlow from this context.
      * <p>
      * 
      * @param id
      */
     public void deleteSequenceFlow(String id) {
-
         BPMNElementEdge bpmnEdge = (BPMNElementEdge) findElementEdgeById(id);
         if (bpmnEdge != null && bpmnEdge instanceof SequenceFlow) {
             removeElementEdge(id);

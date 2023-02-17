@@ -22,7 +22,7 @@ import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
@@ -32,6 +32,11 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
+/**
+ * Default Delete handler for all BPMN elements including all BPMN Node, Edges,
+ * Lanes, Processes and
+ * Messages.
+ */
 public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperation> {
     private static Logger logger = Logger.getLogger(BPMNDeleteNodeHandler.class.getName());
 
@@ -59,20 +64,25 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             // find the bpmnBaseElement
             BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
             if (bpmnElement == null) {
-                logger.warning("...no BPMN elmenet with id: " + id + " found!");
+                logger.warning("...no BPMN element with id: " + id + " found!");
                 continue;
             }
-            if (bpmnElement instanceof Lane) {
-                // delete lane
-                Lane lane = (Lane) bpmnElement;
-                lane.getBpmnProcess().deleteLane(id);
+
+            // Message nodes and edges are handled by the BPMNModel
+            if (bpmnElement instanceof Message) {
+                bpmnElement.getModel().deleteMessage(id);
                 continue;
             }
+            if (bpmnElement instanceof MessageFlow) {
+                bpmnElement.getModel().deleteMessageFlow(id);
+                continue;
+            }
+
             // Check if the element is a BPMNElementNode...
             if (bpmnElement instanceof BPMNElementNode) {
                 // open the corresponding process
                 BPMNProcess process = ((BPMNElementNode) bpmnElement).getBpmnProcess();
-                process.deleteBPMNElementNode(id);
+                process.deleteElementNode(id);
                 continue;
             }
 
@@ -89,10 +99,6 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
                     process.deleteAssociation(id);
                 }
                 continue;
-            }
-
-            if (bpmnElement instanceof MessageFlow) {
-                bpmnElement.getModel().deleteMessageFlow(id);
             }
 
         }

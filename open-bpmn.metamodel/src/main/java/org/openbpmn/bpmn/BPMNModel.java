@@ -876,6 +876,7 @@ public class BPMNModel {
     /**
      * Deletes a Message element from this diagram.
      * <p>
+     * The method removes the message element and the corresponding shape element.
      * 
      * @param id
      */
@@ -918,10 +919,13 @@ public class BPMNModel {
             }
         }
 
-        // delete the element from teh definitions
+        // delete the element from the definitions and also the shape
         this.definitions.removeChild(message.getElementNode());
+        if (message.getBpmnShape() != null) {
+            getBpmnPlane().removeChild(message.getBpmnShape());
+        }
 
-        // finally we remove the signal object form the signals list
+        // finally we remove the message object form the message list
         getMessages().remove(message);
 
     }
