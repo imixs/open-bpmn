@@ -51,9 +51,7 @@ public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperat
             System.out.println("Elements to delete are not specified");
         }
         for (String id : elementIds) {
-            // Update the source model
-            System.out.println("...delete Element " + id);
-            // test if the element is a participant or a FlowElement
+            // test if the element is a participant
             Participant participant = modelState.getBpmnModel().findParticipantById(id);
             if (participant != null) {
                 // delete participant with the pool and all contained elements

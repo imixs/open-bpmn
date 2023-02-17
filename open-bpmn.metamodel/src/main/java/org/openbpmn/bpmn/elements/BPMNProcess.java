@@ -755,6 +755,14 @@ public class BPMNProcess extends BPMNElement {
      * @param id
      */
     public void deleteElementNode(String id) {
+
+        // First test if the element is a lane
+        Lane lane = this.findLaneById(id);
+        if (lane != null) {
+            this.deleteLane(id);
+            return;
+        }
+
         BPMNElementNode bpmnElement = findElementNodeById(id);
         if (bpmnElement == null) {
             // does not exist
@@ -762,23 +770,16 @@ public class BPMNProcess extends BPMNElement {
             return;
         }
 
-        // test if the element is a lane
-        Lane lane = this.findLaneById(id);
-        if (lane != null) {
-            this.deleteLane(id);
-            return;
-        }
-
-        // remove all flows
+        // remove all flows...
         removeAllEdgesFromElement(bpmnElement.getId());
 
-        // delete the shape
+        // delete the shape....
         this.getElementNode().removeChild(bpmnElement.getElementNode());
         if (bpmnElement.getBpmnShape() != null) {
             model.getBpmnPlane().removeChild(bpmnElement.getBpmnShape());
         }
 
-        // finally delete the element from the corresponding list
+        // ...and finally delete the element from the corresponding element list
         if (bpmnElement instanceof Activity) {
             this.getActivities().remove(bpmnElement);
         }
