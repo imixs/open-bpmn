@@ -27,20 +27,20 @@ import org.w3c.dom.NodeList;
 public abstract class BPMNElementEdge extends BPMNElement {
     private static Logger logger = Logger.getLogger(BPMNElementEdge.class.getName());
     protected String type = null;
-    
+
     protected String sourceRef = null;
     protected String targetRef = null;
     protected Element bpmnEdge = null;
     protected Set<BPMNPoint> wayPoints = null;
 
     public BPMNElementEdge(BPMNModel model, Element node) {
-       super(model,node);
+        super(model, node);
     }
-    
+
     public BPMNElementEdge(BPMNModel model, Element node, String _type) {
         super(model, node);
         this.type = _type;
-        
+
         wayPoints = new LinkedHashSet<BPMNPoint>();
 
         this.sourceRef = this.getAttribute("sourceRef");
@@ -54,24 +54,23 @@ public abstract class BPMNElementEdge extends BPMNElement {
         }
 
         // find the BPMNShape element. If not defined create a new one
-       
-            bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
-            if (bpmnEdge == null) {
-                // create shape element
-                createBPMNEdge();
-            } else {
-                // parse waypoints (di:waypoint)
-                Set<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge,model.getPrefix( BPMNNS.DI) + ":waypoint");
-                for (Element wayPoint : wayPoints) {
-                    NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
-                    BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
-                            wayPointattributeMap.getNamedItem("y").getNodeValue());
-                    getWayPoints().add(point);
-                }
-            }
-        
-    }
 
+        bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
+        if (bpmnEdge == null) {
+            // create shape element
+            createBPMNEdge();
+        } else {
+            // parse waypoints (di:waypoint)
+            Set<Element> wayPoints = model.findChildNodesByName(bpmnEdge, BPMNNS.DI, "waypoint");
+            for (Element wayPoint : wayPoints) {
+                NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
+                BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //
+                        wayPointattributeMap.getNamedItem("y").getNodeValue());
+                getWayPoints().add(point);
+            }
+        }
+
+    }
 
     public Element getBpmnEdge() {
         return bpmnEdge;

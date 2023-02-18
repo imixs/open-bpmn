@@ -1,6 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
@@ -44,7 +45,7 @@ public class TextAnnotation extends BPMNElementNode {
      * @return String - can be empty
      */
     public String getText() {
-        return this.getChildNodeContent("text");
+        return this.getChildNodeContent(BPMNNS.BPMN2, "text");
 
     }
 
@@ -54,7 +55,7 @@ public class TextAnnotation extends BPMNElementNode {
      * @param content
      */
     public void setText(String content) {
-        this.setChildNodeContent("text", content);
+        this.setChildNodeContent(BPMNNS.BPMN2, "text", content, true);
     }
 
 }

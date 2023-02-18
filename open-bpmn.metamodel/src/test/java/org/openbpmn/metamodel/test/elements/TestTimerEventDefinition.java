@@ -54,8 +54,8 @@ public class TestTimerEventDefinition {
             assertEquals(1, eventDefinitions.size());
             // test the first definition
             timerDefinition = eventDefinitions.iterator().next();
-            Set<Element> timeDateList = BPMNModel.findChildNodesByName(timerDefinition,
-                    process.getModel().getPrefix(BPMNNS.BPMN2) + ":timeDate");
+            Set<Element> timeDateList = model.findChildNodesByName(timerDefinition,
+                    BPMNNS.BPMN2, "timeDate");
             Element timeDate = timeDateList.iterator().next();
             assertEquals("42", timeDate.getTextContent());
 
@@ -65,8 +65,8 @@ public class TestTimerEventDefinition {
             eventDefinitions = event.getEventDefinitionsByType("timerEventDefinition");
             assertEquals(1, eventDefinitions.size());
             timerDefinition = eventDefinitions.iterator().next();
-            Set<Element> timeCycleList = BPMNModel.findChildNodesByName(timerDefinition,
-                    process.getModel().getPrefix(BPMNNS.BPMN2) + ":timeCycle");
+            Set<Element> timeCycleList = model.findChildNodesByName(timerDefinition,
+                    BPMNNS.BPMN2, "timeCycle");
             Element timeCycle = timeCycleList.iterator().next();
             assertEquals("43", timeCycle.getTextContent());
 
@@ -76,8 +76,8 @@ public class TestTimerEventDefinition {
             eventDefinitions = event.getEventDefinitionsByType("timerEventDefinition");
             assertEquals(1, eventDefinitions.size());
             timerDefinition = eventDefinitions.iterator().next();
-            Element timeDuration = BPMNModel.findChildNodeByName(timerDefinition,
-                    process.getModel().getPrefix(BPMNNS.BPMN2) + ":timeDuration");
+            Element timeDuration = model.findChildNodeByName(timerDefinition,
+                    BPMNNS.BPMN2, "timeDuration");
 
             assertEquals("44", timeDuration.getTextContent());
 

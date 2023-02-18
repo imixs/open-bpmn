@@ -1141,7 +1141,7 @@ public class BPMNProcess extends BPMNElement {
     private void createBPMNLanesByNode(Element laneSet) {
         this.laneSet = laneSet;
         // find Child Nodes
-        Set<Element> laneNodes = BPMNModel.findChildNodesByName(laneSet, getModel().getPrefix(BPMNNS.BPMN2) + ":lane");
+        Set<Element> laneNodes = model.findChildNodesByName(laneSet, BPMNNS.BPMN2, "lane");
         for (Element _lane : laneNodes) {
             Lane bpmnLane = new Lane(model, _lane);
             this.getLanes().add(bpmnLane);
@@ -1164,7 +1164,7 @@ public class BPMNProcess extends BPMNElement {
         TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
 
         // read text <bpmn2:text>
-        Set<Element> textNodes = BPMNModel.findChildNodesByName(element, getModel().getPrefix(BPMNNS.BPMN2) + ":text");
+        Set<Element> textNodes = model.findChildNodesByName(element, BPMNNS.BPMN2, "text");
         if (textNodes != null && textNodes.size() > 0) {
             Element textNode = textNodes.iterator().next();
             textAnnotation.setText(textNode.getTextContent());

@@ -613,6 +613,9 @@ public class BPMNModel {
 
     }
 
+    /**
+     * Creates an element with a given namespace
+     */
     public Element createElement(BPMNNS ns, String type) {
         Element element = this.getDoc().createElementNS(getUri(ns), getPrefix(ns) + ":" + type);
         return element;
@@ -1184,7 +1187,9 @@ public class BPMNModel {
     /**
      * This helper method returns a set of child nodes by name from a given parent
      * node. If no nodes were found, the method returns an empty list.
-     * 
+     * <p>
+     * The method compares the Name including the namespace of the child elements.
+     * <p>
      * See also {@link #findChildNodeByName(Element parent, String nodeName)
      * findChildNodeByName}
      * 
@@ -1193,13 +1198,16 @@ public class BPMNModel {
      * @return - list of nodes. If no nodes were found, the method returns an empty
      *         list
      */
-    public static Set<Element> findChildNodesByName(Element parent, String nodeName) {
+    public Set<Element> findChildNodesByName(Element parent, BPMNNS ns, String nodeName) {
         Set<Element> result = new LinkedHashSet<Element>();
+        // resolve the tag name
+        String tagName = getPrefix(ns) + ":" + nodeName;
         if (parent != null && nodeName != null) {
             NodeList childs = parent.getChildNodes();
             for (int i = 0; i < childs.getLength(); i++) {
                 Node childNode = childs.item(i);
-                if (childNode.getNodeType() == Node.ELEMENT_NODE && nodeName.equals(childNode.getNodeName())) {
+
+                if (childNode.getNodeType() == Node.ELEMENT_NODE && tagName.equals(childNode.getNodeName())) {
                     result.add((Element) childNode);
                 }
             }
@@ -1219,8 +1227,8 @@ public class BPMNModel {
      * @return - Child Element matching the given node name. If no nodes were found,
      *         the method returns null
      */
-    public static Element findChildNodeByName(Element parent, String nodeName) {
-        Set<Element> elementList = findChildNodesByName(parent, nodeName);
+    public Element findChildNodeByName(Element parent, BPMNNS ns, String nodeName) {
+        Set<Element> elementList = findChildNodesByName(parent, ns, nodeName);
         if (elementList.iterator().hasNext()) {
             // return first element
             return elementList.iterator().next();

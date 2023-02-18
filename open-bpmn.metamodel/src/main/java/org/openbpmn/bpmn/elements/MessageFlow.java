@@ -18,8 +18,8 @@ public class MessageFlow extends BPMNElementEdge {
 
     public MessageFlow(BPMNModel model, Element node) {
         super(model, node);
-       
-        this.type=BPMNTypes.MESSAGE_FLOW;
+
+        this.type = BPMNTypes.MESSAGE_FLOW;
 
         wayPoints = new LinkedHashSet<BPMNPoint>();
 
@@ -41,7 +41,7 @@ public class MessageFlow extends BPMNElementEdge {
             createBPMNEdge();
         } else {
             // parse waypoints (di:waypoint)
-            Set<Element> wayPoints = BPMNModel.findChildNodesByName(bpmnEdge, model.getPrefix(BPMNNS.DI) + ":waypoint");
+            Set<Element> wayPoints = model.findChildNodesByName(bpmnEdge, BPMNNS.DI, "waypoint");
             for (Element wayPoint : wayPoints) {
                 NamedNodeMap wayPointattributeMap = wayPoint.getAttributes();
                 BPMNPoint point = new BPMNPoint(wayPointattributeMap.getNamedItem("x").getNodeValue(), //

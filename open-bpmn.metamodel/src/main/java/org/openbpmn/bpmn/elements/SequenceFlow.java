@@ -3,6 +3,7 @@ package org.openbpmn.bpmn.elements;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -34,9 +35,9 @@ public class SequenceFlow extends BPMNElementEdge {
      * @return String - can be null
      */
     public String getConditionExpression() {
-        if (conditionExpression == null && this.hasChildNode("conditionExpression")) {
+        if (conditionExpression == null && this.hasChildNode(BPMNNS.BPMN2, "conditionExpression")) {
             // lazy loading of content
-            conditionExpression = this.getChildNodeContent("conditionExpression");
+            conditionExpression = this.getChildNodeContent(BPMNNS.BPMN2, "conditionExpression");
         }
         return conditionExpression;
     }
@@ -57,7 +58,8 @@ public class SequenceFlow extends BPMNElementEdge {
     public boolean setConditionExpression(String expression) throws BPMNModelException {
         Element expressionNode = null;
         if (expression != null && !expression.isEmpty()) {
-            expressionNode = this.setChildNodeContent("conditionExpression", expression);
+            expressionNode = this.setChildNodeContent(BPMNNS.BPMN2, "conditionExpression",
+                    expression, true);
             // xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1"
             expressionNode.setAttribute("xsi:type", "bpmn2:tFormalExpression");
             expressionNode.setAttribute("id", BPMNModel.generateShortID("FormalExpression"));

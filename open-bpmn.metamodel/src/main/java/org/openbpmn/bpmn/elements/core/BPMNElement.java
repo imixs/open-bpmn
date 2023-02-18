@@ -113,7 +113,7 @@ public abstract class BPMNElement {
      * @return String - can be empty
      */
     public String getDocumentation() {
-        return this.getChildNodeContent("documentation");
+        return this.getChildNodeContent(BPMNNS.BPMN2, "documentation");
     }
 
     /**
@@ -122,30 +122,50 @@ public abstract class BPMNElement {
      * @param content
      */
     public void setDocumentation(String content) {
-        this.setChildNodeContent("documentation", content);
+        this.setChildNodeContent(BPMNNS.BPMN2, "documentation", content, true);
     }
 
     /**
-     * Creates or updates the first childNode with a given nodeName and
-     * set the content for this element in a CDATA element.
+     * Set the content for this element. The content can be set as normal text
+     * content or as a CDATA element. If the value is null or empty the method will
+     * create an empty tag.
+     * <p>
+     * The method operates directly on the dom-tree. If the content has not changed,
+     * the method
+     * will not update the element.
      * <p>
      * The method returns the new generated child node
      * 
-     * @param nodeName name of the new child node
-     * @param content  the content
+     * @param nodeName - name of the new child node
+     * @param content  - the content
+     * @param cdata    - if true the a CDATA element will be created
      * @return child node
      */
-    public Element setChildNodeContent(String nodeName, String content) {
+    public Element setChildNodeContent(BPMNNS ns, String nodeName, String content, boolean cdata) {
+
         // test if the child node was already loaded (lazy loading)
-        Element childNode = loadOrCreateChildNode(nodeName);
+        Element childNode = loadOrCreateChildNode(ns, nodeName);
         if (childNode != null) {
+
+            // test if the content has changed
+            String oldContent = getChildNodeContent(ns, nodeName);
+            if ((content == null && oldContent == null) | content.equals(oldContent)) {
+                // no update needed
+                return childNode;
+            }
+
             // remove old sub_child nodes of this childNode...
             while (childNode.hasChildNodes()) {
                 childNode.removeChild(childNode.getFirstChild());
             }
             // create new cdata section for this child node and add the content....
-            CDATASection cdata = getDoc().createCDATASection(content);
-            childNode.appendChild(cdata);
+            if (cdata) {
+                CDATASection cdataSection = getDoc().createCDATASection(content);
+                childNode.appendChild(cdataSection);
+            } else {
+                // normal text node
+                childNode.setTextContent(content);
+            }
             return childNode;
         }
         return null;
@@ -156,9 +176,9 @@ public abstract class BPMNElement {
      *
      * @return String - can be empty
      */
-    public String getChildNodeContent(String nodeName) {
+    public String getChildNodeContent(BPMNNS ns, String nodeName) {
         // lazy loading child node
-        Element childNode = loadOrCreateChildNode(nodeName);
+        Element childNode = loadOrCreateChildNode(ns, nodeName);
 
         if (childNode != null && childNode.getFirstChild() != null) {
             return childNode.getFirstChild().getNodeValue();
@@ -173,29 +193,29 @@ public abstract class BPMNElement {
      *
      * @return boolean - true if a child node exits
      */
-    public boolean hasChildNode(String nodeName) {
+    public boolean hasChildNode(BPMNNS ns, String nodeName) {
         // lazy loading child node
-        return loadChildNode(nodeName) != null;
+        return loadChildNode(ns, nodeName) != null;
     }
 
     /**
      * This helper method returns a childNode by name. If no child node with the
-     * name exists, the method creates a new empty node.
+     * name exists, the method creates a new empty node. The method expects the full
+     * node name including the namespace
      * <p>
      * The method uses a lazy loading mechanism and a cache to access the same node
      * faster
      * 
      * @return String - can be empty
      */
-    private Element loadOrCreateChildNode(String nodeName) {
+    private Element loadOrCreateChildNode(BPMNNS ns, String nodeName) {
 
         // test if the child node was already loaded (la7y loading)
         Element childNode = childNodes.get(nodeName);
         if (childNode == null) {
 
             // lazy loading of documentation element
-            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    getModel().getPrefix(BPMNNS.BPMN2) + ":" + nodeName);
+            Set<Element> elementList = model.findChildNodesByName(elementNode, ns, nodeName);
             if (elementList.size() > 0) {
                 // get the first one and update the value only
                 childNode = elementList.iterator().next();
@@ -203,7 +223,7 @@ public abstract class BPMNElement {
             } else {
                 // create a new childnode....
                 // create new node
-                childNode = model.createElement(BPMNNS.BPMN2, nodeName);
+                childNode = model.createElement(ns, nodeName);
                 childNode.setAttribute("id", BPMNModel.generateShortID(nodeName));
                 elementNode.appendChild(childNode);
             }
@@ -222,15 +242,15 @@ public abstract class BPMNElement {
      * 
      * @return String - can be empty
      */
-    private Element loadChildNode(String nodeName) {
+    private Element loadChildNode(BPMNNS ns, String nodeName) {
 
         // test if the child node was already loaded (la7y loading)
         Element childNode = childNodes.get(nodeName);
         if (childNode == null) {
 
             // lazy loading of child node element
-            Set<Element> elementList = BPMNModel.findChildNodesByName(elementNode,
-                    getModel().getPrefix(BPMNNS.BPMN2) + ":" + nodeName);
+            Set<Element> elementList = model.findChildNodesByName(elementNode,
+                    ns, nodeName);
             if (elementList.size() > 0) {
                 // get the first one and update the value only
                 childNode = elementList.iterator().next();
