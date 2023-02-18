@@ -142,7 +142,7 @@
 }
 
 .control>.validation {
-    font-size: var(--theia-ui-font-size0);
+    font-size: var(--theia-ui-font-size1);
     text-align: left;
     font-family: var(--theia-ui-font-family);
     padding-left: 3px;
@@ -175,7 +175,7 @@
 
 .array-table-layout.control>table>tbody>tr>td>span {
     /* .validation error */
-    font-size: var(--theia-ui-font-size0);
+    font-size: var(--theia-ui-font-size1);
     text-align: left;
     font-family: var(--theia-ui-font-family);
     padding-left: 3px;
