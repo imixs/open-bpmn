@@ -44,13 +44,21 @@ import org.w3c.dom.Element;
  * 
  * @author rsoika
  */
-public class LinkEventDefinitionExtension extends DefaultBPMNEventExtension {
+public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Override
     public int getPriority() {
         return 102;
+    }
+
+    /**
+     * This Extension is for BPMNEvents only
+     */
+    @Override
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
+        return (bpmnElement instanceof Event);
     }
 
     /**

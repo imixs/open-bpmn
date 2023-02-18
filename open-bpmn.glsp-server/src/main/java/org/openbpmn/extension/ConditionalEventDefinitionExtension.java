@@ -44,13 +44,21 @@ import org.w3c.dom.Element;
  * 
  * @author rsoika
  */
-public class ConditionalEventDefinitionExtension extends DefaultBPMNEventExtension {
+public class ConditionalEventDefinitionExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Override
     public int getPriority() {
         return 101;
+    }
+
+    /**
+     * This Extension is for BPMNEvents only
+     */
+    @Override
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
+        return (bpmnElement instanceof Event);
     }
 
     /**
@@ -77,10 +85,8 @@ public class ConditionalEventDefinitionExtension extends DefaultBPMNEventExtensi
         Set<Element> conditionalEventDefinition = event.getEventDefinitionsByType("conditionalEventDefinition");
 
         if (conditionalEventDefinition.size() > 0) {
-
             JsonObject multilineOption = Json.createObjectBuilder() //
                     .add("multi", true).build();
-
             uiSchemaBuilder. //
                     addCategory("Conditions"). //
                     addLayout(Layout.VERTICAL);

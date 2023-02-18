@@ -293,7 +293,9 @@ public class BPMNGModelFactory implements GModelFactory {
 
         // Build JSONForms Data
         try (Writer writer = new StringWriter()) {
-            elementNode.getArgs().put("JSONFormsData", dataBuilder.build());
+            String dataSchema = dataBuilder.build();
+            logger.debug(dataSchema);
+            elementNode.getArgs().put("JSONFormsData", dataSchema);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -17,9 +17,7 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
@@ -28,15 +26,10 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.model.BPMNGModelState;
-import org.w3c.dom.Element;
-
-import com.google.inject.Inject;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -46,9 +39,6 @@ import com.google.inject.Inject;
  */
 public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
     private static Logger logger = LogManager.getLogger(DefaultBPMNTaskExtension.class);
-
-    @Inject
-    protected BPMNGModelState modelState;
 
     public DefaultBPMNEventExtension() {
         super();
@@ -94,9 +84,6 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
-        Map<String, String> radioOption = new HashMap<>();
-        radioOption.put("format", "radio");
-
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.VERTICAL). //
@@ -120,50 +107,4 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
     }
 
-    /**
-     * This helper method verifies if the count of definitions matches the given
-     * size of a dataList containing definition data and updates the elements
-     * definition list.
-     * The method returns an updated list of definition elements
-     * 
-     * @param definitionName
-     * @param bpmnEvent
-     * @param dataList
-     * @return - updated list of definition elements
-     */
-    Set<Element> synchronizeEventDefinitions(final String definitionName, final Event bpmnEvent,
-            final JsonArray dataList) {
-
-        // find all named eventDefinitions for this event
-        Set<Element> eventDefinitions = bpmnEvent.getEventDefinitionsByType(definitionName);
-
-        if (dataList == null && eventDefinitions.size() == 0) {
-            // no update needed at all
-            return eventDefinitions;
-        }
-        // If the size of the eventDefinition List is not equals the size of the
-        // dataList we add or remove eventDefinitions...
-        while ((dataList == null && eventDefinitions.size() > 0)
-                || (eventDefinitions.size() != dataList.size())) {
-            try {
-                if ((dataList == null && eventDefinitions.size() > 0)
-                        || eventDefinitions.size() > dataList.size()) {
-                    // delete first condition from the list
-                    Element definition = eventDefinitions.iterator().next();
-                    String id = definition.getAttribute("id");
-                    bpmnEvent.deleteEventDefinition(id);
-                } else if (eventDefinitions.size() < dataList.size()) {
-                    // add a new empty condition placeholder...
-                    bpmnEvent.addEventDefinition(definitionName);
-                }
-
-            } catch (BPMNModelException e) {
-                logger.error("Failed to update BPMN Event Definition list: " + e.getMessage());
-                e.printStackTrace();
-            }
-            // Update event definition list
-            eventDefinitions = bpmnEvent.getEventDefinitionsByType(definitionName);
-        }
-        return eventDefinitions;
-    }
 }

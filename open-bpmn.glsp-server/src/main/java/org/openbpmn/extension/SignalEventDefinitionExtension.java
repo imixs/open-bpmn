@@ -48,13 +48,21 @@ import org.w3c.dom.Element;
  * 
  * @author rsoika
  */
-public class SignalEventDefinitionExtension extends DefaultBPMNEventExtension {
+public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Override
     public int getPriority() {
         return 103;
+    }
+
+    /**
+     * This Extension is for BPMNEvents only
+     */
+    @Override
+    public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
+        return (bpmnElement instanceof Event);
     }
 
     /**
@@ -109,7 +117,6 @@ public class SignalEventDefinitionExtension extends DefaultBPMNEventExtension {
                 // signalOptions[i] = bpmnSignal.getId() + "|" + bpmnSignal.getName();
             }
             schemaBuilder.addProperty("signal", "string", null, signalOptions);
-            // schemaBuilder.addPropertyOneOf("signal", "string", null, signalOptions);
 
             /*
              * Now we can create the data structure - each signalEventDefinition is

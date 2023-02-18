@@ -78,16 +78,15 @@ public interface BPMNExtension {
 
     /**
      * Validates whether the given {@link BPMNElement} can be handled by this BPMN
-     * extension. The default implementation returns true. Implementations can
-     * accept only specific BPMN element types or elements containing specific BPMN
-     * 2.0 extensions.
+     * extension.
+     * 
+     * Implementations must overwrite this method and accept only specific BPMN
+     * element types or elements containing specific BPMN 2.0 extensions.
      *
-     * @param bpmnElement The BPMNBaseElement that should be handled.
+     * @param bpmnElement - the BPMNBaseElement that should be handled.
      * @return `true` if the given bpmnElement can be handled by this extension.
      */
-    default boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return true;
-    }
+    boolean handlesBPMNElement(final BPMNElement bpmnElement);
 
     /**
      * Returns the priority of this action handler. The priority is used to derive

@@ -48,7 +48,7 @@ import com.google.inject.Inject;
  * 
  * @author rsoika
  */
-public class TimerEventDefinitionExtension extends DefaultBPMNEventExtension {
+public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
@@ -92,9 +92,9 @@ public class TimerEventDefinitionExtension extends DefaultBPMNEventExtension {
         Event event = (Event) bpmnElement;
 
         // Link
-        Set<Element> linkEventDefinitions = event.getEventDefinitionsByType("timerEventDefinition");
+        Set<Element> timerEventDefinitions = event.getEventDefinitionsByType("timerEventDefinition");
 
-        if (linkEventDefinitions.size() > 0) {
+        if (timerEventDefinitions.size() > 0) {
             /******************************
              * Create UISchema
              ******************************/
@@ -138,7 +138,7 @@ public class TimerEventDefinitionExtension extends DefaultBPMNEventExtension {
              **************************/
             dataBuilder.addArray("timers");
 
-            for (Element timerDefinition : linkEventDefinitions) {
+            for (Element timerDefinition : timerEventDefinitions) {
                 dataBuilder.addObject();
                 // test the type of the timer object....
                 Element timeDuration = event.getModel().findChildNodeByName(timerDefinition, BPMNNS.BPMN2,

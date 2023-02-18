@@ -16,7 +16,9 @@
 package org.openbpmn.extension;
 
 import java.util.Optional;
+import java.util.Set;
 
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,15 +26,18 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
 
 /**
- * This is Abstract implementation provides some core funtionallity like update
+ * This is Abstract implementation provides some core functionality like update
  * the data fields name and documentation which is identically for all
  * BPMNElements.
  *
@@ -112,4 +117,52 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
         }
     }
 
+    /**
+     * This helper method verifies if the count of definitions matches the given
+     * size of a dataList containing definition data and updates the elements
+     * definition list.
+     * The method returns an updated list of definition elements.
+     * <p>
+     * The method is used by the different eventDefinitionExtensions
+     * 
+     * @param definitionName
+     * @param bpmnEvent
+     * @param dataList
+     * @return - updated list of definition elements
+     */
+    Set<Element> synchronizeEventDefinitions(final String definitionName, final Event bpmnEvent,
+            final JsonArray dataList) {
+
+        // find all named eventDefinitions for this event
+        Set<Element> eventDefinitions = bpmnEvent.getEventDefinitionsByType(definitionName);
+
+        if (dataList == null && eventDefinitions.size() == 0) {
+            // no update needed at all
+            return eventDefinitions;
+        }
+        // If the size of the eventDefinition List is not equals the size of the
+        // dataList we add or remove eventDefinitions...
+        while ((dataList == null && eventDefinitions.size() > 0)
+                || (eventDefinitions.size() != dataList.size())) {
+            try {
+                if ((dataList == null && eventDefinitions.size() > 0)
+                        || eventDefinitions.size() > dataList.size()) {
+                    // delete first condition from the list
+                    Element definition = eventDefinitions.iterator().next();
+                    String id = definition.getAttribute("id");
+                    bpmnEvent.deleteEventDefinition(id);
+                } else if (eventDefinitions.size() < dataList.size()) {
+                    // add a new empty condition placeholder...
+                    bpmnEvent.addEventDefinition(definitionName);
+                }
+
+            } catch (BPMNModelException e) {
+                logger.error("Failed to update BPMN Event Definition list: " + e.getMessage());
+                e.printStackTrace();
+            }
+            // Update event definition list
+            eventDefinitions = bpmnEvent.getEventDefinitionsByType(definitionName);
+        }
+        return eventDefinitions;
+    }
 }
