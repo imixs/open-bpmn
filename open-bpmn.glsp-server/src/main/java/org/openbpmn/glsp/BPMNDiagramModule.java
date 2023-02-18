@@ -32,6 +32,7 @@ import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.extension.BPMNCreateExtensionHandler;
 import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extension.ConditionalEventDefinitionExtension;
 import org.openbpmn.extension.DefaultBPMNDataObjectExtension;
 import org.openbpmn.extension.DefaultBPMNDefinitionsExtension;
 import org.openbpmn.extension.DefaultBPMNEdgeExtension;
@@ -42,6 +43,8 @@ import org.openbpmn.extension.DefaultBPMNParticipantExtension;
 import org.openbpmn.extension.DefaultBPMNSequenceFlowExtension;
 import org.openbpmn.extension.DefaultBPMNTaskExtension;
 import org.openbpmn.extension.DefaultBPMNTextAnnotationExtension;
+import org.openbpmn.extension.LinkEventDefinitionExtension;
+import org.openbpmn.extension.SignalEventDefinitionExtension;
 import org.openbpmn.extension.TimerEventDefinitionExtension;
 import org.openbpmn.glsp.elements.data.BPMNApplyEditLabelOperationHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateDataObjectHandler;
@@ -232,6 +235,9 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNEdgeExtension.class);
         binding.addBinding().to(DefaultBPMNSequenceFlowExtension.class);
         binding.addBinding().to(TimerEventDefinitionExtension.class);
+        binding.addBinding().to(SignalEventDefinitionExtension.class);
+        binding.addBinding().to(ConditionalEventDefinitionExtension.class);
+        binding.addBinding().to(LinkEventDefinitionExtension.class);
 
     }
 }

@@ -17,24 +17,18 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
-import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 import com.google.inject.Inject;
 
@@ -94,37 +88,14 @@ public class DefaultBPMNMessageExtension extends AbstractBPMNElementExtension {
 
     }
 
+    /**
+     * Update the Message default properties
+     */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
-
-        // default update of name and documentation
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-
-            if ("name".equals(feature)) {
-                String text = json.getString(feature);
-                bpmnElement.setName(text);
-                // Update GModelElement Label...
-                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
-                if (!label.isEmpty()) {
-                    LabelGNode lgn = (LabelGNode) label.get();
-                    // update the bpmn-text-node of the GNodeElement
-                    GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
-                    if (gnode != null) {
-                        gnode.getArgs().put("text", text);
-                    }
-                    continue;
-                }
-                continue;
-            }
-            if ("documentation".equals(feature)) {
-                ((BPMNElementNode) bpmnElement).setDocumentation(json.getString(feature));
-                continue;
-            }
-
-        }
-
+        updateNameProperty(json, bpmnElement, gNodeElement);
+        // update attributes and tags
+        bpmnElement.setDocumentation(json.getString("documentation"));
     }
-
 }

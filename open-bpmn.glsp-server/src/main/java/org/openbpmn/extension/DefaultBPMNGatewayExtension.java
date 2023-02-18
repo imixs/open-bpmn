@@ -17,26 +17,18 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
-
-import com.google.inject.Inject;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -48,9 +40,6 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(DefaultBPMNGatewayExtension.class.getName());
-
-    @Inject
-    protected BPMNGModelState modelState;
 
     public DefaultBPMNGatewayExtension() {
         super();
@@ -106,42 +95,16 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
     }
 
+    /**
+     * Update the Gateway Properties
+     */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-
-            if ("name".equals(feature)) {
-                String text = json.getString(feature);
-                bpmnElement.setName(text);
-                // Update Label...
-                Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
-                if (!label.isEmpty()) {
-                    LabelGNode lgn = (LabelGNode) label.get();
-                    // update the bpmn-text-node of the GNodeElement
-                    GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
-                    if (gnode != null) {
-                        gnode.getArgs().put("text", text);
-                    }
-                    continue;
-                }
-
-                continue;
-            }
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(json.getString(feature));
-                continue;
-            }
-
-            if ("gatewaydirection".equals(feature)) {
-                bpmnElement.setAttribute("gatewayDirection", json.getString(feature));
-                continue;
-            }
-            // TODO implement Event features
-        }
-
+        updateNameProperty(json, bpmnElement, gNodeElement);
+        // update attributes and tags
+        bpmnElement.setDocumentation(json.getString("documentation"));
+        bpmnElement.setAttribute("gatewayDirection", json.getString("gatewaydirection"));
     }
-
 }

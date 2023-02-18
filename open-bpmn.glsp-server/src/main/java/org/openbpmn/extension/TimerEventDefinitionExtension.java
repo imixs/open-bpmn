@@ -27,12 +27,10 @@ import javax.json.JsonObjectBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
-import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -50,9 +48,8 @@ import com.google.inject.Inject;
  * 
  * @author rsoika
  */
-public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension {
+public class TimerEventDefinitionExtension extends DefaultBPMNEventExtension {
 
-    @SuppressWarnings("unused")
     private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Inject
@@ -64,7 +61,7 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
 
     @Override
     public int getPriority() {
-        return 100; // below default settings from Edge element
+        return 104; // below default settings from Edge element
     }
 
     /**
@@ -144,14 +141,10 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
             for (Element timerDefinition : linkEventDefinitions) {
                 dataBuilder.addObject();
                 // test the type of the timer object....
-                Element timeDuration = BPMNModel.findChildNodeByName(timerDefinition,
-                        event.getBpmnProcess().getModel().getPrefix(BPMNNS.BPMN2) + ":timeDuration");
-
-                Element timeCycle = BPMNModel.findChildNodeByName(timerDefinition,
-                        event.getBpmnProcess().getModel().getPrefix(BPMNNS.BPMN2) + ":timeCycle");
-
-                Element timeDate = BPMNModel.findChildNodeByName(timerDefinition,
-                        event.getBpmnProcess().getModel().getPrefix(BPMNNS.BPMN2) + ":timeDate");
+                Element timeDuration = event.getModel().findChildNodeByName(timerDefinition, BPMNNS.BPMN2,
+                        "timeDuration");
+                Element timeCycle = event.getModel().findChildNodeByName(timerDefinition, BPMNNS.BPMN2, "timeCycle");
+                Element timeDate = event.getModel().findChildNodeByName(timerDefinition, BPMNNS.BPMN2, "timeDate");
 
                 String timerValue = "";
                 String timerType = "Time/Date"; // default
@@ -175,26 +168,7 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
 
     /**
      * Update the timers definitions
-     */
-    @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
-            final GModelElement gNodeElement) {
-
-        Event bpmnEvent = (Event) bpmnElement;
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-
-            // Update eventDefinitions for each definition type...
-            Set<Element> eventDefinitions = bpmnEvent.getEventDefinitions();
-            if ("timers".equals(feature)) {
-                JsonArray dataList = json.getJsonArray("timers");
-                updateTimerEventDefinitions(bpmnEvent, dataList);
-            }
-
-        }
-    }
-
-    /**
+     * 
      * This method updates all timerEventDefinitions. The method expects a
      * dataList containing all timer definitions with its values.
      * The method simply overwrites all timerEventDefinitions.
@@ -212,34 +186,15 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
      *   </bpmn2:startEvent>
      * }
     * </pre>
-     * 
-     * @param bpmnEvent
-     * @param dataList
      */
-    private void updateTimerEventDefinitions(final Event bpmnEvent, final JsonArray dataList) {
-        // find all conditionalEventDefinitions for this event
-        Set<Element> timerEventDefinitions = bpmnEvent.getEventDefinitionsByType("timerEventDefinition");
-        // If the size of the DataList is not equals the size of the
-        // DefinitionList we add or remove definitions...
-        while (timerEventDefinitions.size() != dataList.size()) {
-            try {
-                if (timerEventDefinitions.size() < dataList.size()) {
-                    // add a new empty condition placeholder...
-                    bpmnEvent.addEventDefinition("timerEventDefinition");
-                }
-                if (timerEventDefinitions.size() > dataList.size()) {
-                    // delete first condition from the list
-                    Element definition = timerEventDefinitions.iterator().next();
-                    String id = definition.getAttribute("id");
-                    bpmnEvent.deleteEventDefinition(id);
-                }
-            } catch (BPMNModelException e) {
-                logger.error("Failed to update BPMN Event Definition list: " + e.getMessage());
-                e.printStackTrace();
-            }
-            // Update event definition list
-            timerEventDefinitions = bpmnEvent.getEventDefinitionsByType("timerEventDefinition");
-        }
+    @Override
+    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+            final GModelElement gNodeElement) {
+        Event bpmnEvent = (Event) bpmnElement;
+        JsonArray dataList = json.getJsonArray("timers");
+
+        // synchronize the definition list of the event element
+        Set<Element> timerEventDefinitions = synchronizeEventDefinitions("timerEventDefinition", bpmnEvent, dataList);
 
         // now we can update the values one by one
         // NOTE: the id can change within the definitionList if an element was deleted

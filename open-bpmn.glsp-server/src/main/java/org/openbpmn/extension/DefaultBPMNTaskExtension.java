@@ -17,23 +17,20 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.graph.GNode;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms shemata.
@@ -95,7 +92,8 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
             dataBuilder //
                     .addData("scriptformat", taskElement.getAttribute("scriptFormat")) //
-                    .addData("script", taskElement.getChildNodeContent("script"));
+                    .addData("script", taskElement
+                            .getChildNodeContent(BPMNNS.BPMN2, "script"));
 
             schemaBuilder. //
                     addProperty("scriptformat", "string", "Format of the script"). //
@@ -112,42 +110,18 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
     }
 
+    /**
+     * Update the default activity properties.
+     */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
-        // default update of name and documentation
-
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-            if ("name".equals(feature)) {
-                String text = json.getString(feature);
-                bpmnElement.setName(text);
-                // update the bpmn-text-node of the GNodeElement
-                GNode gnode = BPMNGraphUtil.findMultiLineTextNode((BPMNGNode) gNodeElement);
-                if (gnode != null) {
-                    gnode.getArgs().put("text", text);
-                }
-                continue;
-            }
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(json.getString(feature));
-                continue;
-            }
-
-            logger.debug("...update feature = " + feature);
-
-            if ("scriptformat".equals(feature)) {
-                bpmnElement.setAttribute("scriptFormat", json.getString(feature));
-                continue;
-            }
-
-            if ("script".equals(feature)) {
-                bpmnElement.setChildNodeContent("script", json.getString(feature));
-                continue;
-            }
-        }
-
+        updateNameProperty(json, bpmnElement, gNodeElement);
+        // update attributes and tags
+        bpmnElement.setDocumentation(json.getString("documentation"));
+        bpmnElement.setAttribute("scriptFormat", json.getString("scriptformat"));
+        bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", json.getString("script"), true);
     }
 
 }

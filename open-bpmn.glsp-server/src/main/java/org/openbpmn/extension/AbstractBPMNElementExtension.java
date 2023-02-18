@@ -15,8 +15,21 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
+import java.util.Optional;
+
+import javax.json.JsonObject;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.glsp.bpmn.LabelGNode;
+import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
+
+import com.google.inject.Inject;
 
 /**
  * This is Abstract implementation provides some core funtionallity like update
@@ -27,6 +40,15 @@ import org.openbpmn.bpmn.elements.core.BPMNElement;
  *
  */
 abstract class AbstractBPMNElementExtension implements BPMNExtension {
+
+    private static Logger logger = LogManager.getLogger(AbstractBPMNElementExtension.class);
+
+    @Inject
+    protected BPMNGModelState modelState;
+
+    public BPMNGModelState getModelState() {
+        return modelState;
+    }
 
     /**
      * Returns the Extension label to be used in the Tool Palette. The default name
@@ -61,7 +83,33 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
 
     @Override
     public int getPriority() {
-        return 999999;
+        return 1;
+    }
+
+    /**
+     * This method updates the name attribute of a BPMNElement and also the
+     * corresponding GNode Element in the diagram plane.
+     * 
+     * @param json
+     * @param bpmnElement
+     * @param gNodeElement
+     */
+    public void updateNameProperty(final JsonObject json, BPMNElement bpmnElement, final GModelElement gNodeElement) {
+        // Update the name feature
+        String name = json.getString("name", "");
+        if (!name.equals(bpmnElement.getName())) {
+            bpmnElement.setName(name);
+            // Update Label...
+            Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
+            if (!label.isEmpty()) {
+                LabelGNode lgn = (LabelGNode) label.get();
+                // update the bpmn-text-node of the GNodeElement
+                GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
+                if (gnode != null) {
+                    gnode.getArgs().put("text", name);
+                }
+            }
+        }
     }
 
 }

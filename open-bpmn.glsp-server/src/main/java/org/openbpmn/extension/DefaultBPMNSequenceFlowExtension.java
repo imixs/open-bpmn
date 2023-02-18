@@ -102,11 +102,10 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
         }
         dataBuilder //
                 .addData("conditionExpression", conditionalExpression) //
-                .addData("Default", "test");
+        ;
 
         schemaBuilder. //
-                addProperty("conditionExpression", "string", description). //
-                addProperty("default", "boolean", null);
+                addProperty("conditionExpression", "string", description); //
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");

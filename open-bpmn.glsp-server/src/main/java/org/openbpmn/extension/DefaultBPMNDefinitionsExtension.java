@@ -17,7 +17,6 @@ package org.openbpmn.extension;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -122,57 +121,37 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
 
     }
 
+    /**
+     * Updates the BPMN Diagram definition properties
+     */
     @Override
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
         Element definitions = modelState.getBpmnModel().getDefinitions();
-        // check custom features
-        Set<String> features = json.keySet();
-        for (String feature : features) {
-            if ("name".equals(feature)) {
-                bpmnElement.setName(json.getString(feature));
-                continue;
-            }
-            if ("documentation".equals(feature)) {
-                bpmnElement.setDocumentation(json.getString(feature));
-                continue;
-            }
-            if ("targetNamespace".equals(feature)) {
-                definitions.setAttribute(feature, json.getString(feature));
-                continue;
-            }
-            if ("exporter".equals(feature)) {
-                definitions.setAttribute(feature, json.getString(feature));
-                continue;
-            }
-            if ("exporterVersion".equals(feature)) {
-                definitions.setAttribute(feature, json.getString(feature));
-                continue;
-            }
 
-            // Signals...
-            if ("signals".equals(feature)) {
-                logger.debug("...update feature = " + feature);
-                JsonArray signalSetValues = json.getJsonArray(feature);
-                for (JsonValue laneValue : signalSetValues) {
-                    // update signal properties
-                    JsonObject signalData = (JsonObject) laneValue;
+        bpmnElement.setName(json.getString("name"));
+        bpmnElement.setDocumentation(json.getString("documentation"));
+        definitions.setAttribute("targetNamespace", json.getString("targetNamespace"));
+        definitions.setAttribute("exporter", json.getString("exporter"));
+        definitions.setAttribute("exporterVersion", json.getString("exporterVersion"));
 
-                    String id = signalData.getString("id", null);
-                    Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
-                    if (signal != null) {
-                        signal.setName(signalData.getString("name"));
-                    } else {
-                        // signal did not yet exist in definition list - so we create a new one
-                        int i = modelState.getBpmnModel().getSignals().size() + 1;
-                        try {
-                            modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
-                            modelState.reset();
-                        } catch (BPMNModelException e) {
-                            logger.warn("Unable to add new signal: " + e.getMessage());
-                        }
-
-                    }
+        // update signal properties...
+        logger.debug("...update signals.. ");
+        JsonArray signalSetValues = json.getJsonArray("signals");
+        for (JsonValue laneValue : signalSetValues) {
+            JsonObject signalData = (JsonObject) laneValue;
+            String id = signalData.getString("id", null);
+            Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
+            if (signal != null) {
+                signal.setName(signalData.getString("name"));
+            } else {
+                // signal did not yet exist in definition list - so we create a new one
+                int i = modelState.getBpmnModel().getSignals().size() + 1;
+                try {
+                    modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
+                    modelState.reset();
+                } catch (BPMNModelException e) {
+                    logger.warn("Unable to add new signal: " + e.getMessage());
                 }
             }
         }

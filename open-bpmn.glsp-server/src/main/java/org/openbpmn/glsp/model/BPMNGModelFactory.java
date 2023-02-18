@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -264,7 +266,14 @@ public class BPMNGModelFactory implements GModelFactory {
          * extensions we also add a CSS class
          */
         if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
+
+            // sort extensions by priority
+            List<BPMNExtension> sortedExtensions = new ArrayList<>();
+            sortedExtensions.addAll(extensions);
+            Comparator<BPMNExtension> byPriority = Comparator.comparing(BPMNExtension::getPriority);
+            Collections.sort(sortedExtensions, byPriority);
+
+            for (BPMNExtension extension : sortedExtensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     // add JSONForms Schemata

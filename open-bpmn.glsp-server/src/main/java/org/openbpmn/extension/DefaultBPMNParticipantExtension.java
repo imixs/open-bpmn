@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -120,68 +119,57 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
         Participant participant = (Participant) bpmnElement;
         try {
             BPMNProcess process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
-            // check custom features
-            Set<String> features = json.keySet();
-            for (String feature : features) {
-                if ("name".equals(feature)) {
-                    bpmnElement.setName(json.getString(feature));
-                    process.setName(json.getString(feature));
-                    // Update Label...
-                    ((BPMNGNode) gNodeElement).setName(json.getString(feature));
-                    continue;
-                }
-                if ("documentation".equals(feature)) {
-                    bpmnElement.setDocumentation(json.getString(feature));
-                    continue;
-                }
 
-                // LaneSet...
-                if ("lanes".equals(feature)) {
-                    List<String> laneDataIDs = new ArrayList<>(); // collect remaining lanes
-                    logger.debug("...update feature = " + feature);
-                    JsonArray laneSetValues = json.getJsonArray(feature);
-                    for (JsonValue laneValue : laneSetValues) {
-                        // update lane properties
-                        JsonObject laneData = (JsonObject) laneValue;
-                        if (laneData.get("id") != null) {
-                            String id = laneData.getJsonString("id").getString();
-                            // String id = jsonID.toString();
-                            laneDataIDs.add(id);
-                            Lane bpmnLane = process.findLaneById(id);
-                            if (bpmnLane != null) {
-                                bpmnLane.setName(laneData.getString("name"));
-                                bpmnLane.setDocumentation(laneData.getString("documentation"));
-                                // update gnode...
-                                Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
-                                if (_gLane.isPresent()) {
-                                    LaneGNode gLane = (LaneGNode) _gLane.get();
-                                    gLane.setName(laneData.getString("name"));
-                                }
-                            }
-                        } else {
-                            // this is a new lane - construct the lane in the BPMN model first..
-                            Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
-                            laneDataIDs.add(bpmnLane.getId());
-                            modelState.reset();
+            bpmnElement.setName(json.getString("name", ""));
+            process.setName(json.getString("name", ""));
+            ((BPMNGNode) gNodeElement).setName(json.getString("name", ""));
+            bpmnElement.setDocumentation(json.getString("documentation"));
+
+            // LaneSet...
+            List<String> laneDataIDs = new ArrayList<>(); // collect remaining lanes
+            logger.debug("...update feature = " + "lanes");
+            JsonArray laneSetValues = json.getJsonArray("lanes");
+            for (JsonValue laneValue : laneSetValues) {
+                // update lane properties
+                JsonObject laneData = (JsonObject) laneValue;
+                if (laneData.get("id") != null) {
+                    String id = laneData.getJsonString("id").getString();
+                    // String id = jsonID.toString();
+                    laneDataIDs.add(id);
+                    Lane bpmnLane = process.findLaneById(id);
+                    if (bpmnLane != null) {
+                        bpmnLane.setName(laneData.getString("name"));
+                        bpmnLane.setDocumentation(laneData.getString("documentation"));
+                        // update gnode...
+                        Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
+                        if (_gLane.isPresent()) {
+                            LaneGNode gLane = (LaneGNode) _gLane.get();
+                            gLane.setName(laneData.getString("name"));
                         }
                     }
-                    // now we need to delete all lanes no longer part of the laneSetValues
-                    // We need two loops here to avoid concurrency exceptions!
-                    List<String> laneIDsToBeRemoved = new ArrayList<>();
-                    for (Lane bpmnLane : process.getLanes()) {
-                        if (bpmnLane != null && !laneDataIDs.contains(bpmnLane.getId())) {
-                            laneIDsToBeRemoved.add(bpmnLane.getId());
-                        }
-                    }
-                    if (laneIDsToBeRemoved.size() > 0) {
-                        modelState.reset();
-                        for (String lid : laneIDsToBeRemoved) {
-                            // lane was removed, so remove the lane form the process too
-                            process.deleteLane(lid);
-                        }
-                    }
+                } else {
+                    // this is a new lane - construct the lane in the BPMN model first..
+                    Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
+                    laneDataIDs.add(bpmnLane.getId());
+                    modelState.reset();
                 }
             }
+            // now we need to delete all lanes no longer part of the laneSetValues
+            // We need two loops here to avoid concurrency exceptions!
+            List<String> laneIDsToBeRemoved = new ArrayList<>();
+            for (Lane bpmnLane : process.getLanes()) {
+                if (bpmnLane != null && !laneDataIDs.contains(bpmnLane.getId())) {
+                    laneIDsToBeRemoved.add(bpmnLane.getId());
+                }
+            }
+            if (laneIDsToBeRemoved.size() > 0) {
+                modelState.reset();
+                for (String lid : laneIDsToBeRemoved) {
+                    // lane was removed, so remove the lane form the process too
+                    process.deleteLane(lid);
+                }
+            }
+
         } catch (BPMNModelException e) {
             logger.error("Failed to update laneSet properties: " + e.getMessage());
         }

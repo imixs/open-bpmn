@@ -277,7 +277,8 @@ public abstract class BPMNElement {
     }
 
     /**
-     * Set the value of a given attribute by name.
+     * Set the value of a given attribute by name. If the value is null, the
+     * attribute will be removed.
      * <p>
      * The method operates directly on the attriubteMap loaded in the constructor.
      * 
@@ -288,9 +289,12 @@ public abstract class BPMNElement {
         if (name == null || name.isEmpty() || attributeMap == null) {
             return;
         }
-        // if we did not found the attribute, we add a new one...
-        this.getElementNode().setAttribute(name, value);
-
+        // if the value is null we remove the attibute
+        if (value == null) {
+            this.getElementNode().removeAttribute(name);
+        } else {
+            this.getElementNode().setAttribute(name, value);
+        }
     }
 
     /**
