@@ -144,6 +144,7 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
                 eventDefinitionElement.setAttribute("name", jsonData.getString("name", ""));
                 eventDefinitionElement.setAttribute("target", jsonData.getString("target", ""));
             }
+            i++;
             // update completed
         }
 
