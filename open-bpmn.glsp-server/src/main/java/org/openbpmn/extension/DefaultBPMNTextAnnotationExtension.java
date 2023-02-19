@@ -21,8 +21,6 @@ import java.util.Optional;
 
 import javax.json.JsonObject;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.TextAnnotation;
@@ -31,10 +29,6 @@ import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.model.BPMNGModelFactory;
-import org.openbpmn.glsp.model.BPMNGModelState;
-
-import com.google.inject.Inject;
 
 /**
  * This is the Default TextAnnotation extension providing the JSONForms
@@ -44,10 +38,6 @@ import com.google.inject.Inject;
  *
  */
 public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExtension {
-    private static Logger logger = LogManager.getLogger(BPMNGModelFactory.class);
-
-    @Inject
-    protected BPMNGModelState modelState;
 
     public DefaultBPMNTextAnnotationExtension() {
         super();

@@ -144,7 +144,7 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
     /**
      * This method updates the signalEventDefinitions. The method expects a
      * dataList containing all conditions with its values (including the id).
-     * The method simply overwrites all csignalEventDefinitions.
+     * The method simply overwrites all signalEventDefinitions.
      * 
      * @See addSignalEventDefinitions how we map between the signal name and its id.
      * 
@@ -181,7 +181,7 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
                     if (signal != null) {
                         eventDefinitionElement.setAttribute("signalRef", signal.getId());
                     } else {
-                        // no signal defintion found - delete signalRef...
+                        // no signal definition found - delete signalRef...
                         eventDefinitionElement.setAttribute("signalRef", "");
                     }
                 } catch (BPMNInvalidReferenceException | BPMNMissingElementException | BPMNInvalidTypeException e) {

@@ -24,8 +24,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
@@ -45,8 +43,6 @@ import org.w3c.dom.Element;
  * @author rsoika
  */
 public class ConditionalEventDefinitionExtension extends AbstractBPMNElementExtension {
-
-    private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Override
     public int getPriority() {

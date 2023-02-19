@@ -24,8 +24,6 @@ import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
@@ -49,8 +47,6 @@ import com.google.inject.Inject;
  * @author rsoika
  */
 public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension {
-
-    private static Logger logger = LogManager.getLogger(DefaultBPMNSequenceFlowExtension.class);
 
     @Inject
     protected BPMNGModelState modelState;

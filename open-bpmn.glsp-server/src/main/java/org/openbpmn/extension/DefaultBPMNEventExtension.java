@@ -20,8 +20,6 @@ import java.util.Map;
 
 import javax.json.JsonObject;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
@@ -32,13 +30,12 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 
 /**
- * This is the Default BPMNEvent extension providing the JSONForms shemata.
+ * This is the Default BPMNEvent extension providing the JSONForms schemata.
  *
  * @author rsoika
  *
  */
 public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
-    private static Logger logger = LogManager.getLogger(DefaultBPMNTaskExtension.class);
 
     public DefaultBPMNEventExtension() {
         super();
@@ -106,5 +103,4 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
         bpmnElement.setDocumentation(json.getString("documentation"));
 
     }
-
 }

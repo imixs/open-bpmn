@@ -26,7 +26,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- * The DataBuilder can be used to define a data structure for JSONFOrms
+ * The DataBuilder can be used to define a data structure for JSONForms
  * <p>
  * The schema of the data is defined by the SchemaBuilder class.
  * <p>
