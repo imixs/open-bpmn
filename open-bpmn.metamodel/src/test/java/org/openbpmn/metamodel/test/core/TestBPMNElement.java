@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -25,8 +24,11 @@ import org.w3c.dom.NodeList;
 public class TestBPMNElement {
     BPMNModel model;
 
-    @BeforeEach
-    public void init() {
+    /**
+     * Test the default bpmn namespaces
+     */
+    @Test
+    public void testContent() {
 
         String exporter = "demo";
         String version = "1.0.0";
@@ -34,13 +36,6 @@ public class TestBPMNElement {
         model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         assertNotNull(model);
 
-    }
-
-    /**
-     * Test the default bpmn namespaces
-     */
-    @Test
-    public void testContent() {
         try {
             BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);

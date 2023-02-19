@@ -24,15 +24,19 @@
         </bpmn2:sequenceFlow>
         <bpmn2:sequenceFlow id="SequenceFlow_I43D0g" name="" sourceRef="gateway_1zTmAA" targetRef="event_3cX4lQ">
             <bpmn2:documentation id="documentation_eOr7sA"/>
-            <bpmn2:conditionExpression id="FormalExpression_1PuBqg" xsi:type="bpmn2:tFormalExpression"><![CDATA[1==1]]></bpmn2:conditionExpression>
+            <bpmn2:conditionExpression id="FormalExpression_w6NIeg" xsi:type="bpmn2:tFormalExpression">
+                <![CDATA[2==2]]>
+            </bpmn2:conditionExpression>
         </bpmn2:sequenceFlow>
         <bpmn2:endEvent id="event_WnsvSg" name="Event-3">
             <bpmn2:documentation id="documentation_O8HcBg"/>
             <bpmn2:incoming>SequenceFlow_FvH7LA</bpmn2:incoming>
         </bpmn2:endEvent>
-        <bpmn2:sequenceFlow id="SequenceFlow_FvH7LA" name="s" sourceRef="gateway_1zTmAA" targetRef="event_WnsvSg">
+        <bpmn2:sequenceFlow id="SequenceFlow_FvH7LA" name="" sourceRef="gateway_1zTmAA" targetRef="event_WnsvSg">
             <bpmn2:documentation id="documentation_KPFASA"/>
-            <bpmn2:conditionExpression id="FormalExpression_E00juw" xsi:type="bpmn2:tFormalExpression"><![CDATA[asdasd]]></bpmn2:conditionExpression>
+            <bpmn2:conditionExpression id="FormalExpression_QAVvZQ" xsi:type="bpmn2:tFormalExpression">
+                <![CDATA[asdasd 1=1]]>
+            </bpmn2:conditionExpression>
         </bpmn2:sequenceFlow>
         <bpmn2:intermediateCatchEvent id="event_gkDiWA" name="Event-4">
             <bpmn2:documentation id="documentation_Maiz2A"/>
@@ -47,7 +51,15 @@
         </bpmn2:intermediateCatchEvent>
         <bpmn2:sequenceFlow id="SequenceFlow_0VprFQ" name="" sourceRef="event_J40Y8w" targetRef="event_O0ZW0w">
             <bpmn2:documentation id="documentation_g9iwAQ"/>
-            <bpmn2:conditionExpression id="FormalExpression_lmBU7w" xsi:type="bpmn2:tFormalExpression"><![CDATA[ddd]]></bpmn2:conditionExpression>
+            <bpmn2:conditionExpression id="FormalExpression_lmBU7w" xsi:type="bpmn2:tFormalExpression">
+                                                                
+                
+                
+                <![CDATA[ddd]]>
+                                                            
+            
+            
+            </bpmn2:conditionExpression>
         </bpmn2:sequenceFlow>
     </bpmn2:process>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
@@ -65,23 +77,18 @@
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNShape bpmnElement="gateway_1zTmAA" id="BPMNShape_xdEQPw">
-                <dc:Bounds height="50.0" width="50.0" x="342.0" y="165.0"/>
+                <dc:Bounds height="50.0" width="50.0" x="340.0" y="165.0"/>
                 <bpmndi:BPMNLabel id="BPMNLabel_nFxuZw">
-                    <dc:Bounds height="16.0" width="100.0" x="317.0" y="215.0"/>
+                    <dc:Bounds height="16.0" width="100.0" x="315.0" y="215.0"/>
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_yOTKsQ" id="BPMNEdge_X3Nbvg" sourceElement="BPMNShape_oMsdpw" targetElement="BPMNShape_xdEQPw">
-                                
-            
                 <di:waypoint x="261.0" y="190.0"/>
-                <di:waypoint x="342.0" y="190.0"/>
+                <di:waypoint x="340.0" y="190.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_I43D0g" id="BPMNEdge_Kyf5AQ" sourceElement="BPMNShape_xdEQPw" targetElement="BPMNShape_z0fRjw">
-                                
-                
-            
-                <di:waypoint x="362.5" y="210.5"/>
-                <di:waypoint x="362.5" y="293.0"/>
+                <di:waypoint x="365.5" y="214.5"/>
+                <di:waypoint x="365.5" y="293.0"/>
                 <di:waypoint x="502.45007122521577" y="293.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNShape bpmnElement="event_WnsvSg" id="BPMNShape_wnkCSQ">
@@ -91,9 +98,7 @@
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_FvH7LA" id="BPMNEdge_0p8Psg" sourceElement="BPMNShape_xdEQPw" targetElement="BPMNShape_wnkCSQ">
-                                
-            
-                <di:waypoint x="392.0" y="190.0"/>
+                <di:waypoint x="390.0" y="190.0"/>
                 <di:waypoint x="502.0" y="190.0"/>
             </bpmndi:BPMNEdge>
             <bpmndi:BPMNShape bpmnElement="event_gkDiWA" id="BPMNShape_e008ow">
@@ -103,10 +108,7 @@
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_XYc7OA" id="BPMNEdge_QBAxbA" sourceElement="BPMNShape_xdEQPw" targetElement="BPMNShape_e008ow">
-                                
-                
-            
-                <di:waypoint x="365.0" y="167.0"/>
+                <di:waypoint x="365.0" y="165.0"/>
                 <di:waypoint x="365.0" y="101.0"/>
                 <di:waypoint x="502.45007122521577" y="101.0"/>
             </bpmndi:BPMNEdge>
@@ -117,8 +119,6 @@
                 </bpmndi:BPMNLabel>
             </bpmndi:BPMNShape>
             <bpmndi:BPMNEdge bpmnElement="SequenceFlow_0VprFQ" id="BPMNEdge_SdYVsA" sourceElement="BPMNShape_oMsdpw" targetElement="BPMNShape_HIWbAw">
-                                
-            
                 <di:waypoint x="225.0" y="190.0"/>
                 <di:waypoint x="144.0" y="190.0"/>
             </bpmndi:BPMNEdge>

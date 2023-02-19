@@ -4,14 +4,8 @@
         <bpmn2:documentation id="documentation_irBnnQ"/>
         <bpmn2:startEvent id="event_n8bj0g" name="Event-1">
             <bpmn2:documentation id="documentation_4XhEKA"/>
-            <bpmn2:timerEventDefinition id="timerEventDefinition_hElKhw">
-                <bpmn2:timeDuration id="FormalExpression_0" xsi:type="bpmn2:tFormalExpression">3cc</bpmn2:timeDuration>
-            </bpmn2:timerEventDefinition>
-            <bpmn2:timerEventDefinition id="timerEventDefinition_dFC6Sg">
-                <bpmn2:timeCycle id="FormalExpression_1" xsi:type="bpmn2:tFormalExpression">2bx</bpmn2:timeCycle>
-            </bpmn2:timerEventDefinition>
-            <bpmn2:timerEventDefinition id="timerEventDefinition_peWH9A">
-                <bpmn2:timeDate id="FormalExpression_2" xsi:type="bpmn2:tFormalExpression">1ay</bpmn2:timeDate>
+            <bpmn2:timerEventDefinition id="timerEventDefinition_bVkPMg">
+                <bpmn2:timeDate id="FormalExpression_0" xsi:type="bpmn2:tFormalExpression">2</bpmn2:timeDate>
             </bpmn2:timerEventDefinition>
         </bpmn2:startEvent>
     </bpmn2:process>
