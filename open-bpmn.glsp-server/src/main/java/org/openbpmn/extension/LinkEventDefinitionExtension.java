@@ -104,7 +104,7 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
              * represented as a separate object
              */
             dataBuilder.addArray("links");
-            logger.warn(" addLinkEventDefinitions not yet implemented");
+            logger.warn(" addLinkEventDefinitions - no full support!");
             for (Element definition : linkEventDefinitions) {
                 dataBuilder.addObject();
                 dataBuilder.addData("name", definition.getAttribute("name"));
