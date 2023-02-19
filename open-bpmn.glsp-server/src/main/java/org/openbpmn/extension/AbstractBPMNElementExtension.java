@@ -23,6 +23,7 @@ import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNNS;
@@ -95,6 +96,10 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
      * This method updates the name attribute of a BPMNElement and also the
      * corresponding GNode Element in the diagram plane.
      * 
+     * <p>
+     * The method distinguish between LabelGNode elements (multiline) and simple
+     * GLabel elements
+     * 
      * @param json
      * @param bpmnElement
      * @param gNodeElement
@@ -107,12 +112,21 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
             // Update Label...
             Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
             if (!label.isEmpty()) {
-                LabelGNode lgn = (LabelGNode) label.get();
-                // update the bpmn-text-node of the GNodeElement
-                GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
-                if (gnode != null) {
-                    gnode.getArgs().put("text", name);
+                GModelElement gModelElement = label.get();
+                // do we have a BPMN LabelGNode
+                if (gModelElement instanceof LabelGNode) {
+                    LabelGNode lgn = (LabelGNode) gModelElement;
+                    // update the bpmn-text-node of the GNodeElement
+                    GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
+                    if (gnode != null) {
+                        gnode.getArgs().put("text", name);
+                    }
+                } else {
+                    // we expect a GLabel
+                    GLabel gLabel = (GLabel) gModelElement;
+                    gLabel.setText(name);
                 }
+
             }
         }
     }
