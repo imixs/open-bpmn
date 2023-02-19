@@ -26,13 +26,11 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
 /**
- * The SchemaBuilder can be used to define a JSONFOrms Schema used by JSONForms
+ * The DataBuilder can be used to define a data structure for JSONFOrms
  * <p>
- * The schema defines the data type for each data element. If no schema
- * definition is available, JSONForms will treat the property as a String.
+ * The schema of the data is defined by the SchemaBuilder class.
  * <p>
- * The mandatory scope property, which expects a JSON schema reference value,
- * defines to which property of the data the control should be bound to.
+ * The DataBuilder can add simple key/value pairs as also complex data arrays
  *
  * @author rsoika
  *
@@ -41,37 +39,39 @@ public class DataBuilder {
 
     private static Logger logger = Logger.getLogger(DataBuilder.class.getName());
 
-    JsonObjectBuilder jsonObjectBuilder;
+    JsonObjectBuilder rootBuilder;
     // arrays
-    JsonArrayBuilder objectArrayBuilder;
-    JsonObjectBuilder objectArrayItemBuilder;
-    String objectName = null;
+    JsonArrayBuilder arrayBuilder;
+    JsonObjectBuilder arrayObjectBuilder;
+    String arrayName = null;
 
+    /**
+     * Initialize the root json object builder
+     */
     public DataBuilder() {
-
-        jsonObjectBuilder = Json.createObjectBuilder();
+        rootBuilder = Json.createObjectBuilder();
     }
 
     /**
-     * Adds a new property
+     * Adds a new property to the root object.
+     * <p>
+     * In case an arrayBuilder was created before, the key/value pair is added into
+     * the arrayObjectBuilder
      *
      * @param name  - name of the data property
      * @param value - value of the data property
      *
      */
     public DataBuilder addData(final String name, final String value) {
-
-        if (objectArrayBuilder != null) {
-            if (objectArrayItemBuilder == null) {
-                objectArrayItemBuilder = Json.createObjectBuilder();
+        if (arrayBuilder != null) {
+            if (arrayObjectBuilder == null) {
+                arrayObjectBuilder = Json.createObjectBuilder();
             }
-            objectArrayItemBuilder.add(name, value);
-
+            arrayObjectBuilder.add(name, value);
         } else {
-            jsonObjectBuilder.add(name, value);
+            rootBuilder.add(name, value);
         }
         return this;
-
     }
 
     /**
@@ -81,30 +81,26 @@ public class DataBuilder {
      * @return this
      */
     public DataBuilder addArray(final String name) {
-
         // close old array builder if exits
         closeArrayBuilder();
-
         // create new array builder
-        objectArrayBuilder = Json.createArrayBuilder();
-        objectName = name;
-
+        arrayBuilder = Json.createArrayBuilder();
+        arrayName = name;
         return this;
     }
 
     /**
-     * Adds a new object to an existing objectArrayBuilder
+     * Adds a new object to the arrayObjectBuilder
      *
      * @return this
      */
     public DataBuilder addObject() {
-
-        if (objectArrayBuilder != null) {
-            if (objectArrayItemBuilder != null) {
-                objectArrayBuilder.add(objectArrayItemBuilder);
+        if (arrayBuilder != null) {
+            // add an existing arrayItem into the arrayObject
+            if (arrayObjectBuilder != null) {
+                arrayBuilder.add(arrayObjectBuilder);
             }
-
-            objectArrayItemBuilder = Json.createObjectBuilder();
+            arrayObjectBuilder = Json.createObjectBuilder();
         } else {
             logger.severe("You can not add an object to an array if no array was defined before!");
         }
@@ -113,19 +109,18 @@ public class DataBuilder {
     }
 
     /**
-     * Helper Method to close an open array builder
+     * Helper Method to close an open array builder. The method adds an existing
+     * arrayObjectBuilder.
      */
     private void closeArrayBuilder() {
-        if (objectArrayItemBuilder != null) {
+        if (arrayObjectBuilder != null) {
+            if (arrayObjectBuilder != null) {
+                arrayBuilder.add(arrayObjectBuilder.build());
+                arrayObjectBuilder = null;
 
-            if (objectArrayItemBuilder != null) {
-                objectArrayBuilder.add(objectArrayItemBuilder);
             }
-
-            jsonObjectBuilder.add(objectName, objectArrayBuilder);
-
+            rootBuilder.add(arrayName, arrayBuilder);
         }
-
     }
 
     /**
@@ -134,7 +129,7 @@ public class DataBuilder {
     public String build() {
         closeArrayBuilder();
         // write result
-        JsonObject jsonObject = jsonObjectBuilder.build();
+        JsonObject jsonObject = rootBuilder.build();
         String result = null;
         try (Writer writer = new StringWriter()) {
             Json.createWriter(writer).write(jsonObject);

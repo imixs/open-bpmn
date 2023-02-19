@@ -23,9 +23,16 @@
  ********************************************************************************/
 package org.openbpmn.glsp.jsonforms;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.io.StringReader;
 import java.util.logging.Logger;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.junit.jupiter.api.Test;
@@ -80,6 +87,55 @@ public class TestDataBuilder extends DefaultGModelState {
 
         logger.info(json);
 
+    }
+
+    /**
+     * Verifies the creation of multiple arrays.
+     * 
+     * See Issue #186
+     */
+    @Test
+    public void testMultiArray() {
+
+        // ========================================
+        // Build a data object with 2 arrays
+        DataBuilder builder = new DataBuilder(). //
+                addData("name", "John"). //
+                addData("description", "Hello World");
+
+        // first array with one object
+        builder.addArray("scripts");
+        builder.addObject();
+        builder.addData("language", "javascript");
+        builder.addData("script", "1+1");
+        builder.addObject();
+        builder.addData("language", "java");
+        builder.addData("script", "1+1");
+
+        // second array with one object
+        builder.addArray("links");
+        builder.addObject();
+        builder.addData("source", "a-connector");
+        builder.addData("target", "b-connector");
+
+        String json = builder.build();
+        assertNotNull(json);
+        logger.info(json);
+
+        // ========================================
+        // validate the json structure
+        JsonReader jsonReader = Json.createReader(new StringReader(json));
+        JsonObject dataObject = jsonReader.readObject();
+        jsonReader.close();
+        // each array should contain exactly one object
+        assertNotNull(dataObject);
+        JsonArray array1 = dataObject.getJsonArray("scripts");
+        assertNotNull(array1);
+        assertEquals(2, array1.size());
+
+        JsonArray array2 = dataObject.getJsonArray("links");
+        assertNotNull(array2);
+        assertEquals(1, array2.size());
     }
 
 }
