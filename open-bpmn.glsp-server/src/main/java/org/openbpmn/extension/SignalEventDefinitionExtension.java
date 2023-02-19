@@ -126,12 +126,14 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
             for (Element definition : signalEventDefinitions) {
                 dataBuilder.addObject();
                 String signalRefID = definition.getAttribute("signalRef");
-                // fetch the corresponding Signal
-                Signal bpmnSignal = (Signal) modelState.getBpmnModel().findElementById(signalRefID);
-                if (bpmnSignal != null) {
-                    dataBuilder.addData("signal", bpmnSignal.getName());
-                } else {
-                    logger.warn("invalid signalRefID found: " + signalRefID);
+                if (!signalRefID.isEmpty()) {
+                    // fetch the corresponding Signal
+                    Signal bpmnSignal = (Signal) modelState.getBpmnModel().findElementById(signalRefID);
+                    if (bpmnSignal != null) {
+                        dataBuilder.addData("signal", bpmnSignal.getName());
+                    } else {
+                        logger.warn("invalid signalRefID found: " + signalRefID);
+                    }
                 }
 
             }
@@ -151,7 +153,7 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
     public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
         Event bpmnEvent = (Event) bpmnElement;
-        JsonArray dataList = json.getJsonArray("links");
+        JsonArray dataList = json.getJsonArray("signals");
 
         // synchronize the definition list of the event element
         Set<Element> signalEventDefinitions = synchronizeEventDefinitions("signalEventDefinition", bpmnEvent, dataList);
