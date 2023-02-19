@@ -35,6 +35,7 @@ import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 // Import Instruction sReact and JsonForms
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
+import { isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 
@@ -76,7 +77,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     }
 
     /*
-     * Initalize the elemnts of property panel
+     * Initialize the elements of property panel
      */
     protected initializeContents(_containerElement: HTMLElement): void {
         this.createHeader();
@@ -107,7 +108,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
           this.isResizing = false;
         });
         window.addEventListener('mousemove', (e) => {
-          if (!this.isResizing) return;
+          if (!this.isResizing) {
+            return;
+          }
 
           const parent=this.containerElement.parentElement;
           let _newheight=this.containerElement.offsetHeight - (e.clientY - this.currentY);
@@ -149,7 +152,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     }
 
     /*
-     * This method creads the header tool buttons to controle the size of the panel
+     * This method creates the header tool buttons to control the size of the panel
      * Icons can be found here:
      * https://microsoft.github.io/vscode-codicons/dist/codicon.html
      */
@@ -181,7 +184,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                 if (toolId === 'TOOL_COMMAND_HIDE') {
                     this.containerElement.style.height = '28px';
                 }
-                // restore the defautl actions in the diagram panel (like move elements)
+                // restore the default actions in the diagram panel (like move elements)
                 this.actionDispatcher.dispatch(EnableDefaultToolsAction.create());
             }
         };
@@ -215,11 +218,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     }
 
     /*
-     * This mehtod reacts on the selection of a BPMN element
+     * This method reacts on the selection of a BPMN element
      * and updates the property panel input fields
      */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-        // return if the prperty panel is not yet visible
+        // return if the property panel is not yet visible
         if (!this.bodyDiv) {
            return;
         }
@@ -230,8 +233,17 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             const filteredArr = selectedElements.filter(val => !val.endsWith('_bpmnlabel'));
             selectedElements = filteredArr;
         }
+        // Next verify if we have task/Boundary selection
+        // In this case we are only interested in the Task  and not in the Event
+        if (selectedElements.length === 2) {
+            const element_test=root.index.getById(selectedElements[1]);
+            if (element_test && isBoundaryEvent(element_test)) {
+                // remove Boundary event from selection list
+                selectedElements.pop();
+            }
+        }
 
-        // Check if we now have exactly one elemnt selected. Only in this case we show
+        // Check if we now have exactly one element selected. Only in this case we show
         // a property panel.
         if (selectedElements.length === 1 || selectedElements.length ===0 ) {
             let element;
@@ -254,7 +266,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                 // set new selectionId
                 this.selectedElementId = element.id;
                 console.log('======== > setup new property panel - selectionID=' + element.id);
-                // because the jsonFomrs send a onchange event after init we mark this state here
+                // because the jsonForms send a onchange event after init we mark this state here
                 this.initForm = true;
                 // update header
                 if (element===root) {

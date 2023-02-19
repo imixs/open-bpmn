@@ -84,6 +84,7 @@
 
 .event.boundaryEvent > circle {
 	fill: #627ea5;
+    opacity: 80%;
 	stroke-width: 1;
 	stroke: #354152a8
 }
