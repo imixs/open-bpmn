@@ -112,9 +112,9 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation"));
-        bpmnElement.setAttribute("scriptFormat", json.getString("scriptformat"));
-        bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", json.getString("script"), true);
+        bpmnElement.setDocumentation(json.getString("documentation", ""));
+        bpmnElement.setAttribute("scriptFormat", json.getString("scriptformat", ""));
+        bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", json.getString("script", ""), true);
     }
 
 }

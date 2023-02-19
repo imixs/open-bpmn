@@ -149,7 +149,7 @@ public abstract class BPMNElement {
 
             // test if the content has changed
             String oldContent = getChildNodeContent(ns, nodeName);
-            if ((content == null && oldContent == null) | content.equals(oldContent)) {
+            if ((content == null && oldContent == null) || content.equals(oldContent)) {
                 // no update needed
                 return childNode;
             }
@@ -158,13 +158,17 @@ public abstract class BPMNElement {
             while (childNode.hasChildNodes()) {
                 childNode.removeChild(childNode.getFirstChild());
             }
-            // create new cdata section for this child node and add the content....
-            if (cdata) {
-                CDATASection cdataSection = getDoc().createCDATASection(content);
-                childNode.appendChild(cdataSection);
-            } else {
-                // normal text node
-                childNode.setTextContent(content);
+
+            // we only create a text node if the content is not null
+            if (content != null && !content.isEmpty()) {
+                // create new cdata section for this child node and add the content....
+                if (cdata) {
+                    CDATASection cdataSection = getDoc().createCDATASection(content);
+                    childNode.appendChild(cdataSection);
+                } else {
+                    // normal text node
+                    childNode.setTextContent(content);
+                }
             }
             return childNode;
         }
@@ -180,11 +184,34 @@ public abstract class BPMNElement {
         // lazy loading child node
         Element childNode = loadOrCreateChildNode(ns, nodeName);
 
-        if (childNode != null && childNode.getFirstChild() != null) {
-            return childNode.getFirstChild().getNodeValue();
+        Node cdata = findCDATA(childNode);
+        if (cdata != null) {
+            return cdata.getNodeValue();
         } else {
-            return ""; // element
+            // normal text node
+            return childNode.getTextContent();
         }
+
+    }
+
+    /**
+     * Helper method that finds an optional CDATA node within the current element
+     * content.
+     * 
+     * @param element
+     * @return
+     */
+    private Node findCDATA(Element element) {
+        // search CDATA node
+        NodeList childNodes = element.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node node = childNodes.item(i);
+            if (node instanceof CDATASection) {
+                return (CDATASection) node;
+
+            }
+        }
+        return null;
     }
 
     /**

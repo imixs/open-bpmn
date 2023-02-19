@@ -123,7 +123,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
             bpmnElement.setName(json.getString("name", ""));
             process.setName(json.getString("name", ""));
             ((BPMNGNode) gNodeElement).setName(json.getString("name", ""));
-            bpmnElement.setDocumentation(json.getString("documentation"));
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
 
             // LaneSet...
             List<String> laneDataIDs = new ArrayList<>(); // collect remaining lanes

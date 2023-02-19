@@ -96,8 +96,8 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
             final GModelElement gNodeElement) {
 
         // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation"));
-        bpmnElement.setAttribute("textFormat", json.getString("textFormat"));
+        bpmnElement.setDocumentation(json.getString("documentation", ""));
+        bpmnElement.setAttribute("textFormat", json.getString("textFormat", ""));
 
         // Update the text property
         String text = json.getString("text", "");

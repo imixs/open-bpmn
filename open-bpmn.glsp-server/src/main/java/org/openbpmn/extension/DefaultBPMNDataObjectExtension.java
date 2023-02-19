@@ -96,6 +96,6 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
             final GModelElement gNodeElement) {
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation"));
+        bpmnElement.setDocumentation(json.getString("documentation", ""));
     }
 }

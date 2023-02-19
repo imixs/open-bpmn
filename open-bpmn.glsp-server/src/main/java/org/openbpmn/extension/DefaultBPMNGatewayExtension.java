@@ -104,7 +104,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation"));
-        bpmnElement.setAttribute("gatewayDirection", json.getString("gatewaydirection"));
+        bpmnElement.setDocumentation(json.getString("documentation", ""));
+        bpmnElement.setAttribute("gatewayDirection", json.getString("gatewaydirection", ""));
     }
 }

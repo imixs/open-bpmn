@@ -129,11 +129,11 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             final GModelElement gNodeElement) {
         Element definitions = modelState.getBpmnModel().getDefinitions();
 
-        bpmnElement.setName(json.getString("name"));
-        bpmnElement.setDocumentation(json.getString("documentation"));
-        definitions.setAttribute("targetNamespace", json.getString("targetNamespace"));
-        definitions.setAttribute("exporter", json.getString("exporter"));
-        definitions.setAttribute("exporterVersion", json.getString("exporterVersion"));
+        bpmnElement.setName(json.getString("name", ""));
+        bpmnElement.setDocumentation(json.getString("documentation", ""));
+        definitions.setAttribute("targetNamespace", json.getString("targetNamespace", ""));
+        definitions.setAttribute("exporter", json.getString("exporter", ""));
+        definitions.setAttribute("exporterVersion", json.getString("exporterVersion", ""));
 
         // update signal properties...
         logger.debug("...update signals.. ");
