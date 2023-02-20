@@ -100,13 +100,16 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         this.containerElement.appendChild(headerCompartment);
         this.headerDiv = headerCompartment;
 
+        // eslint-disable-next-line arrow-parens
         this.headerDiv.addEventListener('mousedown', (e) => {
           this.isResizing = true;
           this.currentY = e.clientY;
         });
+        // eslint-disable-next-line arrow-parens
         this.headerDiv.addEventListener('mouseup', (e) => {
           this.isResizing = false;
         });
+        // eslint-disable-next-line arrow-parens
         window.addEventListener('mousemove', (e) => {
           if (!this.isResizing) {
             return;
@@ -128,7 +131,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
           this.currentY = e.clientY;
 
           // if the mouse is no longer within the diagram plane, we stop the resizing
-          if (parent && !parent.matches(":hover")) {
+          if (parent && !parent.matches(':hover')) {
             this.isResizing = false;
           }
         });
@@ -210,7 +213,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             this.actionDispatcher.requestUntil(requestAction).then(response => {
                 if (SetContextActions.is(response)) {
                     this.actionDispatcher.dispatch(
-                        SetUIExtensionVisibilityAction.create({ extensionId: BPMNPropertyPanel.ID, visible: !this.editorContext.isReadonly })
+                        SetUIExtensionVisibilityAction.create({
+                            extensionId: BPMNPropertyPanel.ID,
+                            visible: !this.editorContext.isReadonly
+                        })
                     );
                 }
             });
@@ -265,7 +271,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                 }
                 // set new selectionId
                 this.selectedElementId = element.id;
-                console.log('======== > setup new property panel - selectionID=' + element.id);
                 // because the jsonForms send a onchange event after init we mark this state here
                 this.initForm = true;
                 // update header
@@ -298,6 +303,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     ];
 
                     // render JSONForm // vanillaRenderers
+                    // we also set the key to the current elementID to reinitialize the form panel
                     this.panelContainer.render(<JsonForms
                             data={bpmnPropertiesData}
                             schema={bpmnPropertiesSchema}
@@ -305,6 +311,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                             cells={vanillaCells}
                             renderers={bpmnRenderers}
                             onChange={({ errors, data }) => this.setState({ data })}
+                            key={this.selectedElementId}
                         />);
                 }
             } else {
