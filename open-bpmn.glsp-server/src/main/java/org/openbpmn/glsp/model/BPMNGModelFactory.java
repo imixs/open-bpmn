@@ -278,6 +278,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     // add JSONForms Schemata
                     extension.buildPropertiesForm(bpmnElement, dataBuilder, schemaBuilder, uiSchemaBuilder);
+                    dataBuilder.closeArrayBuilder();
 
                     // if the extension is not a Default Extension then we add the extension css
                     // class

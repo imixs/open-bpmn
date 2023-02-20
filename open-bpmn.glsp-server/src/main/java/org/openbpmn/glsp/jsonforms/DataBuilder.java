@@ -112,14 +112,15 @@ public class DataBuilder {
      * Helper Method to close an open array builder. The method adds an existing
      * arrayObjectBuilder.
      */
-    private void closeArrayBuilder() {
+    public void closeArrayBuilder() {
         if (arrayObjectBuilder != null) {
             if (arrayObjectBuilder != null) {
                 arrayBuilder.add(arrayObjectBuilder.build());
                 arrayObjectBuilder = null;
 
             }
-            rootBuilder.add(arrayName, arrayBuilder);
+            rootBuilder.add(arrayName, arrayBuilder.build());
+            arrayBuilder = null;
         }
     }
 

@@ -137,6 +137,7 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
                 }
 
             }
+
         }
 
     }
