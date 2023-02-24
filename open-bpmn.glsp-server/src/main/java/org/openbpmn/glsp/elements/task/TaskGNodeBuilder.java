@@ -83,23 +83,27 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.VBOX);
+        node.setLayout(GConstants.Layout.VBOX); // .VBOX
         // Set min width/height
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
-        node.getLayoutOptions().put(H_GRAB, true);
-        node.getLayoutOptions().put(V_GRAB, true);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
 
+        GLayoutOptions iconLayoutOptions = new GLayoutOptions().hAlign(GConstants.HAlign.LEFT);
+        // icon can grab the vertical space, so that the extension label will be aligned
+        // to the bottom
+        iconLayoutOptions.put(V_GRAB, true);
         IconGCompartment taskIcon = new IconGCompartmentBuilder(). //
                 id(node.getId() + "_icon"). //
-                layoutOptions(new GLayoutOptions().hAlign(GConstants.HAlign.LEFT)). //
+                layoutOptions(iconLayoutOptions). //
                 build();
 
         node.getChildren().add(taskIcon);
+        node.getChildren().add(BPMNGraphUtil.createExtensionLabel(node));
         node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id + "_name", name));
+
     }
 
 }

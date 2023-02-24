@@ -33,6 +33,7 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GPoint;
@@ -89,6 +90,7 @@ import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.openbpmn.glsp.utils.BPMNGraphUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -280,6 +282,10 @@ public class BPMNGModelFactory implements GModelFactory {
                     extension.buildPropertiesForm(bpmnElement, dataBuilder, schemaBuilder, uiSchemaBuilder);
                     dataBuilder.closeArrayBuilder();
 
+                    // set the optional extension label
+                    elementNode.getArgs().put(BPMNExtension.INFO, extension.getInfo(bpmnElement));
+                    bpmnElement.getArgs().put(BPMNExtension.INFO, extension.getInfo(bpmnElement));
+
                     // if the extension is not a Default Extension then we add the extension css
                     // class
                     if (!BPMNNS.BPMN2.name().equals(extension.getNamespace())
@@ -297,6 +303,7 @@ public class BPMNGModelFactory implements GModelFactory {
             String dataSchema = dataBuilder.build();
             logger.debug(dataSchema);
             elementNode.getArgs().put("JSONFormsData", dataSchema);
+            bpmnElement.getArgs().put("JSONFormsData", dataSchema);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -306,6 +313,7 @@ public class BPMNGModelFactory implements GModelFactory {
             String uiSchema = uiSchemaBuilder.build();
             logger.debug(uiSchema);
             elementNode.getArgs().put("JSONFormsUISchema", uiSchema);
+            bpmnElement.getArgs().put("JSONFormsData", uiSchema);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -315,6 +323,7 @@ public class BPMNGModelFactory implements GModelFactory {
             String schema = schemaBuilder.build();
             logger.debug(schema);
             elementNode.getArgs().put("JSONFormsSchema", schema);
+            bpmnElement.getArgs().put("JSONFormsData", schema);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -377,6 +386,12 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // apply BPMN Extensions
             applyBPMNExtensions(taskNode, activity);
+
+            GLabel extensionLabelNode = BPMNGraphUtil.findExtensionLabel(taskNode);
+            if (extensionLabelNode != null) {
+                extensionLabelNode.setText((String) taskNode.getArgs().get(BPMNExtension.INFO));
+            }
+
             gNodeList.add(taskNode);
         }
 

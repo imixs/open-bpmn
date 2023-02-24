@@ -28,6 +28,7 @@ public abstract class BPMNElement {
     protected Element elementNode = null;
     protected BPMNModel model = null;
     protected Map<String, Element> childNodes = null;
+    protected Map<String, Object> args = null;
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -45,6 +46,7 @@ public abstract class BPMNElement {
             this.attributeMap = this.elementNode.getAttributes();
         }
         childNodes = new HashMap<String, Element>();
+        args = new HashMap<String, Object>();
 
     }
 
@@ -123,6 +125,16 @@ public abstract class BPMNElement {
      */
     public void setDocumentation(String content) {
         this.setChildNodeContent(BPMNNS.BPMN2, "documentation", content, true);
+    }
+
+    /**
+     * Returns an optional argument map which can be used to hold additional
+     * arguments
+     * 
+     * @return the value of the '<em>Args</em>' map
+     */
+    public Map<String, Object> getArgs() {
+        return args;
     }
 
     /**

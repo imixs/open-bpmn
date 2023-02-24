@@ -147,6 +147,10 @@
 	margin: 7px 20px 0px 20px;
 }
 
+.task > .extension .label {
+	fill: #f0f3f8;
+}
+
 
 .BPMNLabel > .sprotty-node {
 	fill: transparent;
@@ -217,7 +221,7 @@
 /* selected sequence flow */
 .sprotty-edge.bpmnedge.selected .line,
 .sprotty-edge.bpmnedge.selected .arrow {
-    stroke: #ffdf8b;
+ 
 }
 
 .sequenceFlow .default-symbol {

@@ -45,6 +45,8 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
  */
 public interface BPMNExtension {
 
+    public final static String INFO = "bpmnExtensionInfo";
+
     /**
      * Unique identifier specifying the Extension namespace. The default namespace
      * is 'bpmn2'. Implementations should overwrite this method.
@@ -65,6 +67,16 @@ public interface BPMNExtension {
      * @return String
      */
     String getLabel();
+
+    /**
+     * Returns an optional Extension information label to be displayed within the
+     * diagram plane
+     *
+     * @return String
+     */
+    default String getInfo(final BPMNElement bpmnElement) {
+        return ""; // return empty string as default
+    }
 
     /**
      * Returns true if the given ElementTypeID can be handled by this extension.

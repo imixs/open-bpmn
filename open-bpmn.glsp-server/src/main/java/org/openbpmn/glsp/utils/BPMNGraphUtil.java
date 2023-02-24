@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
@@ -36,6 +37,7 @@ import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
+import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -112,7 +114,7 @@ public class BPMNGraphUtil {
      * @return GLabel of an element or null if no GLabel was found
      */
     @Deprecated
-    public static GLabel findCompartmentHeader(final BPMNGNode element) {
+    private static GLabel findCompartmentHeader(final BPMNGNode element) {
 
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {
@@ -122,6 +124,52 @@ public class BPMNGraphUtil {
             }
         }
         // we did not found a GLabel
+        return null;
+    }
+
+    /**
+     * Builds the optional label on the bottom for extension information
+     * 
+     * @return
+     */
+    public static GCompartment createExtensionLabel(final TaskGNode node) {
+
+        // test if we have a label
+
+        String extensionLabel = (String) node.getArgs().get("extensionLabel");
+
+        GLayoutOptions extensionLabelLayoutOptions = new GLayoutOptions().hAlign(GConstants.HAlign.RIGHT);
+        GCompartment footer = new GCompartmentBuilder()
+                .type(DefaultTypes.COMPARTMENT)
+                .layoutOptions(extensionLabelLayoutOptions) //
+                .add(new GLabelBuilder()
+                        .text(extensionLabel)
+                        .build())
+                .addCssClass("extension")
+                .build();
+        return footer;
+    }
+
+    /**
+     * This method tests if the given element has a BPMN extension label.
+     * The extension label is used for example in task nodes to display additional
+     * information
+     * 
+     * @return GLabel of an element or null if no GLabel was found
+     */
+    public static GLabel findExtensionLabel(final BPMNGNode element) {
+
+        EList<GModelElement> childs = element.getChildren();
+        for (GModelElement child : childs) {
+            if (child instanceof GCompartment) {
+                // test css class
+                if (child.getCssClasses().contains("extension")) {
+                    // return first label of this compartment
+                    return (GLabel) child.getChildren().get(0);
+                }
+            }
+        }
+        // we did not found a extension GLabel
         return null;
     }
 

@@ -1,87 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:BPMN2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:BPMN2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn11" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
     <bpmn2:process id="process_1" name="Default Process" processType="Public">
         <bpmn2:documentation id="documentation_53zO2Q"/>
-        <bpmn2:intermediateCatchEvent id="event_LcowIw" name="Event-1">
-            <bpmn2:documentation id="documentation_2oDdAg">
-                                                                                                                                                                                                                                                                                                                                                                                                                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                <![CDATA[f
-                a]]>
-                                                                                                                                                                                                                                                                                                                                                                                                            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            </bpmn2:documentation>
-            <bpmn2:timerEventDefinition id="timerEventDefinition_FH7vqg">
-                <bpmn2:timeDuration id="FormalExpression_0" xsi:type="bpmn2:tFormalExpression">30</bpmn2:timeDuration>
-            </bpmn2:timerEventDefinition>
-            <bpmn2:conditionalEventDefinition expression="2==2" id="conditionalEventDefinition_tsuKvw" language="lll"/>
-            <bpmn2:conditionalEventDefinition expression="1==1" id="conditionalEventDefinition_98USbQ" language="asdf"/>
-            <bpmn2:signalEventDefinition id="signalEventDefinition_x0sWUA" signalRef="signal_2"/>
-            <bpmn2:linkEventDefinition id="linkEventDefinition_qfUZ2A" name="ap" target="1"/>
-            <bpmn2:timerEventDefinition id="timerEventDefinition_W2Y0YQ">
-                <bpmn2:timeCycle id="FormalExpression_1" xsi:type="bpmn2:tFormalExpression">10</bpmn2:timeCycle>
-            </bpmn2:timerEventDefinition>
-            <bpmn2:timerEventDefinition id="timerEventDefinition_mIDbwQ">
-                <bpmn2:timeDate id="FormalExpression_2" xsi:type="bpmn2:tFormalExpression">5</bpmn2:timeDate>
-            </bpmn2:timerEventDefinition>
-            <bpmn2:signalEventDefinition id="signalEventDefinition_rq4YHw" signalRef="signal_1"/>
-            <bpmn2:linkEventDefinition id="linkEventDefinition_0em6ZQ" name="cü" target="3"/>
-        </bpmn2:intermediateCatchEvent>
+        <bpmn2:userTask id="task_TXnOeg" name="Task-2">
+            <bpmn2:documentation id="documentation_iYjOWw"/>
+        </bpmn2:userTask>
+        <bpmn2:task id="task_CxWCrA" imixs:processid="1200" name="Task-2" scriptFormat="">
+            <bpmn2:documentation id="documentation_6NWNfg"/>
+            <bpmn2:script id="script_Pd9j0Q"/>
+            <bpmn2:extensionElements/>
+        </bpmn2:task>
     </bpmn2:process>
     <bpmn2:signal id="signal_1" name="Signal 1"/>
     <bpmn2:signal id="signal_2" name="Signal 2"/>
     <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
         <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
-            <bpmndi:BPMNShape bpmnElement="event_LcowIw" id="BPMNShape_38YHLQ">
-                <dc:Bounds height="36.0" width="36.0" x="324.0" y="58.0"/>
-                <bpmndi:BPMNLabel id="BPMNLabel_VnnwhA">
-                    <dc:Bounds height="16.0" width="100.0" x="292.0" y="94.0"/>
-                </bpmndi:BPMNLabel>
+            <bpmndi:BPMNShape bpmnElement="task_TXnOeg" id="BPMNShape_NBD99g">
+                <dc:Bounds height="50.0" width="110.0" x="286.0" y="38.0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape bpmnElement="task_CxWCrA" id="BPMNShape_mHFPlw">
+                <dc:Bounds height="50.0" width="110.0" x="62.0" y="38.0"/>
             </bpmndi:BPMNShape>
         </bpmndi:BPMNPlane>
     </bpmndi:BPMNDiagram>
+    <bpmn2:extensionElements>
+        <imixs:item name="txtworkflowmodelversion" type="xs:string">v1</imixs:item>
+        <imixs:item name="txttimefieldmapping" type="xs:string">a1</imixs:item>
+        <imixs:item name="txtfieldmapping" type="xs:string">a2</imixs:item>
+        <imixs:item name="txtplugins" type="xs:string">
+            <imixs:value>
+                                                
+                
+                <![CDATA[org.imixs.workflow.engine.plugins.ResultPlugin]]>
+                                            
+            
+            </imixs:value>
+            <imixs:value>
+                                                
+                
+                <![CDATA[org.imixs.workflow.engine.plugins.RulePlugin]]>
+                                            
+            
+            </imixs:value>
+            <imixs:value>
+                                                
+                
+                <![CDATA[org.imixs.marty.profile.ProfilePlugin]]>
+                                            
+            
+            </imixs:value>
+            <imixs:value>
+                                                
+                
+                <![CDATA[org.imixs.marty.plugins.CommentPlugin]]>
+                                            
+            
+            </imixs:value>
+        </imixs:item>
+    </bpmn2:extensionElements>
 </bpmn2:definitions>
