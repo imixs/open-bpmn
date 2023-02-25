@@ -3,7 +3,9 @@ package org.openbpmn.bpmn;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
@@ -1657,10 +1660,51 @@ public class BPMNModel {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(output);
+
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-        transformer.transform(source, result);
+
+        /*
+         * The following code section is to handle a bad implementation in the
+         * Imixs-BPMN (Eclipse-BPMN2) implementation
+         * 
+         * To ensure that the Open-BPMN model file is still readable by eclipse-bpmn we
+         * need to remove the whitespace before and after CDATA tags.
+         * 
+         * See details: https://github.com/imixs/open-bpmn/issues/194
+         * 
+         * Otherwise we could just do here:
+         * 
+         * StreamResult result = new StreamResult(output);
+         * transformer.transform(source, result);
+         */
+        // === BUGFIX START ===
+
+        // first transform the result xml into a string
+        StringWriter w = new StringWriter();
+        Result dest = new StreamResult(w);
+        transformer.transform(source, dest);
+        String xmlString = w.toString();
+        // No indentation (whitespace) for elements with a CDATA section.
+        // See.
+        // https://stackoverflow.com/questions/55853220/handling-change-in-newlines-by-xml-transformation-for-cdata-from-java-8-to-java/75568933
+        xmlString = xmlString.replaceAll(">\\s*(<\\!\\[CDATA\\[(.|\\n|\\r\\n)*?]\\]>)\\s*</", ">$1</");
+        // write output
+        try {
+            output.write(xmlString.getBytes(Charset.forName("UTF-8")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (output != null) {
+                try {
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        // === BUGFIX END ===
     }
 }
