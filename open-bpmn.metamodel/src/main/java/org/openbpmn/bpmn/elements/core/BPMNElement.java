@@ -303,7 +303,7 @@ public abstract class BPMNElement {
     /**
      * Returns the value of a given attribute by name.
      * <p>
-     * The method operates directly on the attriubteMap loaded in the constructor.
+     * The method operates directly on the attributeMap loaded in the constructor.
      * 
      * @param name
      * @return
@@ -319,7 +319,7 @@ public abstract class BPMNElement {
      * Set the value of a given attribute by name. If the value is null, the
      * attribute will be removed.
      * <p>
-     * The method operates directly on the attriubteMap loaded in the constructor.
+     * The method operates directly on the attributeMap loaded in the constructor.
      * 
      * @param name
      * @return
@@ -381,11 +381,12 @@ public abstract class BPMNElement {
     }
 
     /**
-     * Returns the value of a given extension attribute by name.
+     * Returns the value of a given extension attribute by name. If empty or not
+     * set, the method returns null.
      * <p>
      * 
      * @param name
-     * @return
+     * @return attribute value
      */
     public String getExtensionAttribute(String extensionNamespace, String name) {
         if (name == null || name.isEmpty() || attributeMap == null) {
