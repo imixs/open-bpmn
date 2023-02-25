@@ -80,17 +80,11 @@ public class BPMNModelFactory {
             doc.appendChild(definitions);
 
             BPMNModel model = new BPMNModel(doc);
-
-            // add an empty public default process
-            // model.buildProcess("process_1", "Default Process",
-            // BPMNTypes.PROCESS_TYPE_PUBLIC);
-
             return model;
         } catch (ParserConfigurationException | BPMNModelException e1) {
 
             e1.printStackTrace();
         }
-
         return null;
     }
 
@@ -126,6 +120,9 @@ public class BPMNModelFactory {
 
     /**
      * Reads a BPMNModel instance from an InputStream
+     * <p>
+     * The method cleans whitespace after reading the file for a better handling and
+     * later output format.
      * 
      * @param modelFile
      * @return a BPMNModel instance
@@ -138,15 +135,13 @@ public class BPMNModelFactory {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have any effect!
         docFactory.setNamespaceAware(true);
+
         try {
             if (is.available() == 0) {
-                logger.warning("Emtpy BPMN file - creating a default process");
+                logger.warning("Empty BPMN file - creating a default process");
                 // create a default model
                 BPMNModel defaultModel = BPMNModelFactory
                         .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
-                // add an empty public default process
-                // defaultModel.buildProcess("process_1", "Default Process",
-                // BPMNTypes.PROCESS_TYPE_PUBLIC);
                 return defaultModel;
             }
 
@@ -202,5 +197,6 @@ public class BPMNModelFactory {
                 removeWhitespaceNodes((Element) child);
             }
         }
+
     }
 }

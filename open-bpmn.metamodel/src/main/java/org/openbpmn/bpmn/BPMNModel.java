@@ -22,10 +22,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
 
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
@@ -1598,7 +1594,6 @@ public class BPMNModel {
         messageFlows = new LinkedHashSet<MessageFlow>();
         NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
-
             // we only take the first collaboration element (this is what is expected)
             collaborationElement = (Element) collaborationNodeList.item(0);
             // now find all messageFlows...
@@ -1652,51 +1647,20 @@ public class BPMNModel {
     /**
      * Helper method to write the dom document to an output stream
      * <p>
-     * We also call the helper method 'clearBlankLines' to get rid of unnecessary
-     * white space. See also discussion here
-     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
+     * The output file is prettified with an indent of 2 spaces
      * 
      * @param doc
      * @param output
      * @throws TransformerException
      */
     private void writeXml(Document doc, OutputStream output) throws TransformerException {
-        // cleanup blank lines
-        clearBlankLines();
-
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(doc);
         StreamResult result = new StreamResult(output);
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
         transformer.transform(source, result);
     }
-
-    /**
-     * This helper method use XPath to find all whitespace-only TEXT nodes in the
-     * current document, iterate through them and remove each one from its parent
-     * (using getParentNode().removeChild()). Something like this would do (doc
-     * would be your DOM document object):
-     * 
-     * See:
-     * https://stackoverflow.com/questions/12669686/how-to-remove-extra-empty-lines-from-xml-file/12670194#12670194
-     * 
-     * @param element
-     */
-    private void clearBlankLines() {
-        try {
-            XPath xp = XPathFactory.newInstance().newXPath();
-            NodeList nl;
-            nl = (NodeList) xp.evaluate("//text()[normalize-space(.)='']", doc, XPathConstants.NODESET);
-            for (int i = 0; i < nl.getLength(); ++i) {
-                Node node = nl.item(i);
-                node.getParentNode().removeChild(node);
-            }
-        } catch (XPathExpressionException e) {
-            logger.warning("Failed to clean blank up lines during save: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
 }
