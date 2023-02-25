@@ -15,6 +15,9 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
 /**
@@ -75,12 +78,12 @@ public class BPMNModelFactory {
             definitions.setAttribute("exporterVersion", exporterVersion);
             definitions.setAttribute("targetNamespace", targetNamespace);
             doc.appendChild(definitions);
-            
+
             BPMNModel model = new BPMNModel(doc);
-            
+
             // add an empty public default process
-          //  model.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
-          
+            // model.buildProcess("process_1", "Default Process",
+            // BPMNTypes.PROCESS_TYPE_PUBLIC);
 
             return model;
         } catch (ParserConfigurationException | BPMNModelException e1) {
@@ -96,7 +99,7 @@ public class BPMNModelFactory {
      * 
      * @param modelFile
      * @return a BPMNModel instance
-     * @throws BPMNModelException 
+     * @throws BPMNModelException
      * @throws FileNotFoundException
      * @throws IOException
      */
@@ -114,7 +117,7 @@ public class BPMNModelFactory {
      * 
      * @param modelFile
      * @return a BPMNModel instance
-     * @throws BPMNModelException 
+     * @throws BPMNModelException
      * @throws IOException
      */
     public static BPMNModel read(String modelFilePath) throws BPMNModelException {
@@ -126,13 +129,14 @@ public class BPMNModelFactory {
      * 
      * @param modelFile
      * @return a BPMNModel instance
-     * @throws BPMNModelException 
+     * @throws BPMNModelException
      * @throws FileNotFoundException
      * @throws IOException
      */
     public static BPMNModel read(InputStream is) throws BPMNModelException {
         logger.fine("read from inputStream...");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have any effect!
         docFactory.setNamespaceAware(true);
         try {
             if (is.available() == 0) {
@@ -141,7 +145,8 @@ public class BPMNModelFactory {
                 BPMNModel defaultModel = BPMNModelFactory
                         .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
                 // add an empty public default process
-                //defaultModel.buildProcess("process_1", "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+                // defaultModel.buildProcess("process_1", "Default Process",
+                // BPMNTypes.PROCESS_TYPE_PUBLIC);
                 return defaultModel;
             }
 
@@ -150,10 +155,13 @@ public class BPMNModelFactory {
             // read from a project's resources folder
             Document doc = db.parse(is);
             Element root = doc.getDocumentElement();
-                      
+
+            // explicit remove whitespace
+            removeWhitespaceNodes(root);
+
             if (!"bpmn2:definitions".equals(root.getNodeName())
-                  && 
-                  !"bpmn:definitions".equals(root.getNodeName())) {
+                    &&
+                    !"bpmn:definitions".equals(root.getNodeName())) {
                 logger.severe("Missing root element 'bpmn2:definitions'!");
                 return null;
             } else {
@@ -172,5 +180,27 @@ public class BPMNModelFactory {
             }
         }
         return null;
+    }
+
+    /**
+     * Removes whitespace from an Element
+     * <p>
+     * This helper method is needed as the Dom XML parser does not remove
+     * whitespaces despite the hint enabled.
+     *
+     * @see https://coderbyheart.com/jaxp-dom-whitespace-aus-xml-entfernen
+     * @see http://forums.java.net/jive/thread.jspa?messageID=345459
+     * @param e
+     */
+    private static void removeWhitespaceNodes(Element e) {
+        NodeList children = e.getChildNodes();
+        for (int i = children.getLength() - 1; i >= 0; i--) {
+            Node child = children.item(i);
+            if (child instanceof Text && ((Text) child).getData().trim().length() == 0) {
+                e.removeChild(child);
+            } else if (child instanceof Element) {
+                removeWhitespaceNodes((Element) child);
+            }
+        }
     }
 }
