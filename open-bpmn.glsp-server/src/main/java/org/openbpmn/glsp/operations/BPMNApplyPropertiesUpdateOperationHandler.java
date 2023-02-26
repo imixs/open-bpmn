@@ -63,6 +63,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
     protected void executeOperation(final BPMNApplyPropertiesUpdateOperation operation) {
         long l = System.currentTimeMillis();
         String jsonData = operation.getJsonData();
+        String category = operation.getCategory();
 
         // validate GModel id
         String elementID = operation.getId();
@@ -110,7 +111,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
             for (BPMNExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
-                    extension.updatePropertiesData(json, bpmnElement, gModelElement);
+                    extension.updatePropertiesData(json, category, bpmnElement, gModelElement);
                 }
             }
         }

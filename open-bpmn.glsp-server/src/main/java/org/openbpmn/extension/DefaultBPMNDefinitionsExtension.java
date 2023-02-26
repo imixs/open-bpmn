@@ -125,7 +125,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
      * Updates the BPMN Diagram definition properties
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
         Element definitions = modelState.getBpmnModel().getDefinitions();
 

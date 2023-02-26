@@ -104,7 +104,9 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
      * @param bpmnElement
      * @param gNodeElement
      */
-    public void updateNameProperty(final JsonObject json, BPMNElement bpmnElement, final GModelElement gNodeElement) {
+    public void updateNameProperty(final JsonObject json, BPMNElement bpmnElement,
+            final GModelElement gNodeElement) {
+
         // Update the name feature
         String name = json.getString("name", "");
         if (!name.equals(bpmnElement.getName())) {

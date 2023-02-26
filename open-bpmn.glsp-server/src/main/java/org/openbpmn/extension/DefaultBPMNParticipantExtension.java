@@ -111,8 +111,13 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
     }
 
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+
+        // we are only interested in category general and lanes
+        if (!"General".equals(category) && !"Lanes".equals(category)) {
+            return;
+        }
 
         long l = System.currentTimeMillis();
 

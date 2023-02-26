@@ -125,8 +125,14 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
      * the modelState in case the default status has changed.
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+
+        // we are only interested in category condition
+        if (!"Condition".equals(category)) {
+            return;
+        }
+
         boolean stateUpdate = false;
         try {
             SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;

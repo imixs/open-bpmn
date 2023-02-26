@@ -92,8 +92,13 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
      * Updates the textAnnotation properties
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+
+        // we are only interested in category general
+        if (!"General".equals(category)) {
+            return;
+        }
 
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));

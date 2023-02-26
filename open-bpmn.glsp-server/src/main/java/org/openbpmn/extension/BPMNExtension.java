@@ -147,13 +147,20 @@ public interface BPMNExtension {
     /**
      * Updates the properties data of a BPMN Element.
      * <p>
+     * The new data is provided in the JsonObject 'json'.
+     * <p>
+     * The parameter 'category' is optional and specifies a part of the data
+     * structure to be updated. This can be useful for complex BPMN objects to
+     * updated only parts of the data, which can have a positive performance issue.
+     * <p>
      * An extension can also update the given json object during this operation if
      * needed.
      *
      * @param json         - a JSON structure representing the data
+     * @param category     - an optional data category
      * @param bpmnElement  - the BPMN element to be updated
      * @param gNodeElement - the GModelElement element
      */
-    void updatePropertiesData(JsonObject json, BPMNElement bpmnElement, GModelElement gNodeElement);
+    void updatePropertiesData(JsonObject json, String category, BPMNElement bpmnElement, GModelElement gNodeElement);
 
 }

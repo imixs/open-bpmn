@@ -124,8 +124,14 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
      * 
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+
+        // we are only interested in category link
+        if (!"Link".equals(category)) {
+            return;
+        }
+
         Event bpmnEvent = (Event) bpmnElement;
         JsonArray dataList = json.getJsonArray("links");
 

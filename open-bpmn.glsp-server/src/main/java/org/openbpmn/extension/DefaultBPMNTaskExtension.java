@@ -107,14 +107,24 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
      * Update the default activity properties.
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
-        updateNameProperty(json, bpmnElement, gNodeElement);
-        // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation", ""));
-        bpmnElement.setAttribute("scriptFormat", json.getString("scriptformat", ""));
-        bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", json.getString("script", ""), true);
+        if ("General".equals(category)) {
+            updateNameProperty(json, bpmnElement, gNodeElement);
+            // update attributes and tags
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
+        }
+
+        // Update script data
+        // we are only interested in category condition
+        if ("Script".equals(category)) {
+            Activity taskElement = (Activity) bpmnElement;
+            if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
+                bpmnElement.setAttribute("scriptFormat", json.getString("scriptformat", ""));
+                bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", json.getString("script", ""), true);
+            }
+        }
     }
 
 }

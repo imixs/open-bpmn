@@ -151,8 +151,14 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
      * 
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final BPMNElement bpmnElement,
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+
+        // we are only interested in category signals
+        if (!"Signals".equals(category)) {
+            return;
+        }
+
         Event bpmnEvent = (Event) bpmnElement;
         JsonArray dataList = json.getJsonArray("signals");
 

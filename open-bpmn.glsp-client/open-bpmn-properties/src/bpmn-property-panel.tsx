@@ -343,8 +343,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             this.initForm = false;
             return;
         }
+        // figure out the active category
+        let category='';
+        const selectedListItem = this.bodyDiv.querySelector('ul.category-subcategories li.selected');
+        if (selectedListItem && selectedListItem.textContent) {
+           category=selectedListItem.textContent;
+        }
         const newJsonData = JSON.stringify(_newData.data);
-        const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData);
+        const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData, category);
         this.actionDispatcher.dispatch(action);
     }
 }
@@ -355,7 +361,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 export class BPMNApplyPropertiesUpdateOperation implements Action {
     static readonly KIND = 'applyBPMNPropertiesUpdate';
     readonly kind = BPMNApplyPropertiesUpdateOperation.KIND;
-    constructor(readonly id: string, readonly jsonData: string) {}
+    constructor(readonly id: string, readonly jsonData: string, readonly category: string) {}
 }
 
 export function createIcon(codiconId: string): HTMLElement {

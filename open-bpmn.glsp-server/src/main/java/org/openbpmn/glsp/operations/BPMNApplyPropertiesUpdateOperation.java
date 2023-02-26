@@ -21,7 +21,7 @@ import org.eclipse.glsp.server.operations.Operation;
 /**
  * The ApplyEventEditOperation is an {@link Action} that directly manipulates
  * the EventNode model representation on server side. The action is send from
- * the client to the server.
+ * the client property panel to the server.
  * <p>
  * Each operation is uniquely defined by its KIND
  * <p>
@@ -30,8 +30,11 @@ import org.eclipse.glsp.server.operations.Operation;
  * responsible of processing the operation and updates the model representation
  * accordingly.
  * <p>
- * The operation provides the Elment ID and a JSON data structure with the
- * new/updated data.
+ * The operation provides the Element ID, a JSON data structure with the
+ * new/updated data and an optional category. The category can be used by the
+ * {@link BPMNApplyPropertiesUpdateOperationHandler} to update only parts on an
+ * element. This is to optimize the update performance as the data structure can
+ * become very complex or various BPMN elements.
  *
  */
 public class BPMNApplyPropertiesUpdateOperation extends Operation {
@@ -43,15 +46,17 @@ public class BPMNApplyPropertiesUpdateOperation extends Operation {
 
     private String id;
     private String jsonData;
+    private String category;
 
     public BPMNApplyPropertiesUpdateOperation() {
         super(OPERATION_KIND);
     }
 
-    public BPMNApplyPropertiesUpdateOperation(final String nodeId, final String jsonData) {
+    public BPMNApplyPropertiesUpdateOperation(final String nodeId, final String jsonData, final String category) {
         this();
         this.id = nodeId;
         this.jsonData = jsonData;
+        this.category = category;
     }
 
     public String getId() {
@@ -68,6 +73,14 @@ public class BPMNApplyPropertiesUpdateOperation extends Operation {
 
     public void setJsonData(final String jsonData) {
         this.jsonData = jsonData;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
 }
