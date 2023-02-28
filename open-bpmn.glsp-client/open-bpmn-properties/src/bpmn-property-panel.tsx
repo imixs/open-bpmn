@@ -38,7 +38,8 @@ import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-
+import ImixsRadioGroupControl, { imixsRadioGroupControlTester } from './ImixsRadioGroupControl';
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionListener, IActionHandler { // IActionHandler EditModeListener
 
@@ -298,8 +299,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                 if (bpmnPropertiesUISchema) {
                     // list of renderers declared outside the App component
                     const bpmnRenderers = [
-                       ...vanillaRenderers
+                       ...vanillaRenderers,
                        // optional register custom renderers...
+                      { tester: imixsRadioGroupControlTester, renderer: ImixsRadioGroupControl }
                     ];
 
                     // render JSONForm // vanillaRenderers

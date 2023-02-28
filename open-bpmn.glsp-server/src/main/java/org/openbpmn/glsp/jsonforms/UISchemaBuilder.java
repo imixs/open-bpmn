@@ -53,21 +53,21 @@ public class UISchemaBuilder {
     public UISchemaBuilder(final Layout layoutType) {
 
         switch (layoutType) {
-        case HORIZONTAL:
-            rootLayoutBuilder = Json.createObjectBuilder() //
-                    .add("type", "HorizontalLayout");
-            layoutContext = rootLayoutBuilder;
-            break;
-        case CATEGORIZATION:
-            rootLayoutBuilder = Json.createObjectBuilder() //
-                    .add("type", "Categorization");
-            this.groupArrayBuilder = Json.createArrayBuilder();
+            case HORIZONTAL:
+                rootLayoutBuilder = Json.createObjectBuilder() //
+                        .add("type", "HorizontalLayout");
+                layoutContext = rootLayoutBuilder;
+                break;
+            case CATEGORIZATION:
+                rootLayoutBuilder = Json.createObjectBuilder() //
+                        .add("type", "Categorization");
+                this.groupArrayBuilder = Json.createArrayBuilder();
 
-            break;
-        default:
-            rootLayoutBuilder = Json.createObjectBuilder() //
-                    .add("type", "VerticalLayout");
-            layoutContext = rootLayoutBuilder;
+                break;
+            default:
+                rootLayoutBuilder = Json.createObjectBuilder() //
+                        .add("type", "VerticalLayout");
+                layoutContext = rootLayoutBuilder;
         }
     }
 
@@ -130,13 +130,13 @@ public class UISchemaBuilder {
 
         // layout context
         switch (layoutType) {
-        case HORIZONTAL:
-            layoutContext = Json.createObjectBuilder() //
-                    .add("type", "HorizontalLayout");
-            break;
-        default:
-            layoutContext = Json.createObjectBuilder() //
-                    .add("type", "VerticalLayout");
+            case HORIZONTAL:
+                layoutContext = Json.createObjectBuilder() //
+                        .add("type", "HorizontalLayout");
+                break;
+            default:
+                layoutContext = Json.createObjectBuilder() //
+                        .add("type", "VerticalLayout");
         }
         return this;
     }
@@ -197,6 +197,8 @@ public class UISchemaBuilder {
         // add optional description?
         if (label != null && !label.isBlank()) {
             controlBuilder.add("label", label);
+
+            controlBuilder.add("classNames", "test-abc");
         }
 
         // add optional options?
