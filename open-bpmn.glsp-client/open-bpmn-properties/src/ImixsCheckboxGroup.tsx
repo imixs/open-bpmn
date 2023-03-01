@@ -23,7 +23,7 @@ import { VanillaRendererProps } from '@jsonforms/vanilla-renderers';
 import merge from 'lodash/merge';
 import React, { useState } from 'react';
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const ImixsRadioGroup = ({
+export const ImixsCheckboxGroup = ({
   classNames,
   id,
   label,
@@ -56,9 +56,28 @@ export const ImixsRadioGroup = ({
       flexDirection: ('vertical' === uischema!.options!.orientation) ? 'column' : 'row'
     };
 
+  // onChange={ev => handleChange(path, ev.currentTarget.value)}
+  const handleCheckboxChange = (path,value) => {
+      console.log('Hello Checkbox Click');
+      console.log('path='+path);
+      console.log('value='+value);
+      // add value only if not yed done
+      if (!data.includes(value)) {
+        data.push(value);
+      } else {
+        console.log('we unchcke it');
+        const ipos = data.indexOf(value);
+        if (ipos !== -1) {
+          data.splice(ipos, 1);
+        }
+      }
+      // call main handler
+      handleChange(path, data);
+  };
+
   return (
     <div
-      className={'control imixs-radio-group'}
+      className={'control imixs-checkbox-group'}
       hidden={!visible}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
@@ -73,13 +92,14 @@ export const ImixsRadioGroup = ({
       <div style={groupStyle}>
         {options!.map(option => (
           <div key={option.label}>
+            <h4>{data.length}</h4>
             <input
-              type='radio'
+              type='checkbox'
               value={option.value}
               id={option.value}
               name={id}
-              checked={data === option.value}
-              onChange={ev => handleChange(path, ev.currentTarget.value)}
+              checked={data.includes(option.value)}
+              onChange={ev => handleCheckboxChange(path, ev.currentTarget.value)}
               disabled={!enabled}
             />
             <label

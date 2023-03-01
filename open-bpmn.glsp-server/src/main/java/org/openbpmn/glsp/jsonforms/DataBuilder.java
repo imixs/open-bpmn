@@ -18,6 +18,7 @@ package org.openbpmn.glsp.jsonforms;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.json.Json;
@@ -70,6 +71,22 @@ public class DataBuilder {
             arrayObjectBuilder.add(name, value);
         } else {
             rootBuilder.add(name, value);
+        }
+        return this;
+    }
+
+    public DataBuilder addDataList(final String name, final List<String> values) {
+        if (arrayBuilder != null) {
+            if (arrayObjectBuilder == null) {
+                arrayObjectBuilder = Json.createObjectBuilder();
+            }
+
+            JsonArrayBuilder jsonValueArray = Json.createArrayBuilder(values);
+            arrayObjectBuilder.add(name, jsonValueArray);
+
+        } else {
+            JsonArrayBuilder jsonValueArray = Json.createArrayBuilder(values);
+            rootBuilder.add(name, jsonValueArray);
         }
         return this;
     }
