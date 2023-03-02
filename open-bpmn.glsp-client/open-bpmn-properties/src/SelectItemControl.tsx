@@ -22,14 +22,15 @@ import merge from 'lodash/merge';
 import React, { useState } from 'react';
 
 /***********************
- * This is a custom renderer for selectItems represented as RadioBottons or CheckBoxes.
- * The control can handle single String values (Radrio Button) or Arrays of Strings (Checkboxes).
+ * This is a custom renderer for selectItems represented as RadioButtons or CheckBoxes.
+ * The control can handle single String values (represented as a Radio Button)
+ * or Arrays of Strings (represented as Checkboxes).
  * <p>
- * In addition the renderer support label|value pairs separated by a | char.
+ * In addition the renderer support label|value pairs separated by a | char. This allows
+ * to separate the label and data value in one string.
  * <p>
  * The layout can be customized by the option 'orientation=horizontal|vertical'.
  */
-
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const SelectItemGroup = ({
   classNames,
@@ -75,34 +76,34 @@ export const SelectItemGroup = ({
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleSelectionChange = (target: any, value: any) => {
+      // In React props should not be directly modified and handleChange
+      // should receive a new data array. Otherwise an update bypasses
+      // the React conventions, that changed props should have a different identity.
+      // As a result React thinks data did not change and optimizes the update process
+      // by not rerendering teh control. For this reason we copy the data object here!
+      // see: https://jsonforms.discourse.group/t/checkbox-did-not-update-during-onchange-event-vanilla-react/1366/2
+      let newData;
       console.log('===> handleSelection');
       // test if we have an array
       if (Array.isArray(data)) {
         // add value only if not yed done
         if (!data.includes(value)) {
-          data.push(value);
+          // data.push(value);
+          newData = [...data, value];
         } else {
+          newData = data.slice();
           const iPos: number = data.indexOf(value);
           if (iPos !== -1) {
-            data.splice(iPos, 1);
+            // data.splice(iPos, 1);
+            newData.splice(iPos, 1);
           }
         }
-       console.log('target check status='+target.checked);
-      // target.setState(target.checked);
-       target.focus();
-       console.log('nex id='+target.id);
-
-       console.log('target id='+target.id);
-       const nextElement =document.getElementById('keyscheduledbaseobject2');
-       console.log('nex id='+nextElement!.id);
-       nextElement.focus();
-
       } else {
-        data = value;
+        // data = value;
+        newData=value;
       }
-
       // finally we call the default change event handler...
-      handleChange(path, data);
+      handleChange(path, newData);
   };
 
   /**
@@ -111,14 +112,10 @@ export const SelectItemGroup = ({
    * @param value
    */
   const isSelected = (value: string): boolean => {
-    console.log('===> isSelected');
     // test if we have an array
     const _valuePart=getValuePart(value);
     if (Array.isArray(data)) {
-      const result=data.includes(_valuePart);
-      console.log('===> isSelected='+result);
-
-      return result;
+      return data.includes(_valuePart);
     } else {
       return data === _valuePart;
     }
