@@ -27,7 +27,7 @@ import React, { useState } from 'react';
  * <p>
  * In addition the renderer support label|value pairs separated by a | char.
  * <p>
- * The layout can be customized by the option 'orientation=horizontal|vertical'. 
+ * The layout can be customized by the option 'orientation=horizontal|vertical'.
  */
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
@@ -48,7 +48,7 @@ export const SelectItemGroup = ({
   handleChange
 }: ControlProps & VanillaRendererProps & OwnPropsOfEnum) => {
   const [isFocused, setFocus] = useState(false);
-  const isValid = errors.length === 0;
+  // const isValid = errors.length === 0;
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
   const showDescription = !isDescriptionHidden(
     visible,
@@ -69,31 +69,35 @@ export const SelectItemGroup = ({
    * or the String array (CheckBox)
    * <p>
    * The method verifies if the value is of type string or array
-   * 
-   * @param path 
-   * @param value 
+   *
+   * @param path
+   * @param value
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const handleSelectionChange = (path: string, value: any) => {
-      console.log('select case...');
-      console.log('path='+path);
-      console.log('value='+value);
-
+  const handleSelectionChange = (target: any, value: any) => {
+      console.log('===> handleSelection');
       // test if we have an array
       if (Array.isArray(data)) {
-        console.log("checkbox case...");
         // add value only if not yed done
         if (!data.includes(value)) {
           data.push(value);
         } else {
-          console.log('unselect ....');
           const iPos: number = data.indexOf(value);
           if (iPos !== -1) {
             data.splice(iPos, 1);
           }
         }
+       console.log('target check status='+target.checked);
+      // target.setState(target.checked);
+       target.focus();
+       console.log('nex id='+target.id);
+
+       console.log('target id='+target.id);
+       const nextElement =document.getElementById('keyscheduledbaseobject2');
+       console.log('nex id='+nextElement!.id);
+       nextElement.focus();
+
       } else {
-        console.log("radiobutton case...");
         data = value;
       }
 
@@ -107,11 +111,14 @@ export const SelectItemGroup = ({
    * @param value
    */
   const isSelected = (value: string): boolean => {
+    console.log('===> isSelected');
     // test if we have an array
     const _valuePart=getValuePart(value);
-    console.log('was ist den wohl selected von ' + _valuePart);
     if (Array.isArray(data)) {
-      return data.includes(_valuePart);
+      const result=data.includes(_valuePart);
+      console.log('===> isSelected='+result);
+
+      return result;
     } else {
       return data === _valuePart;
     }
@@ -167,15 +174,13 @@ export const SelectItemGroup = ({
             <input
               type={(Array.isArray(data)) ? 'checkbox' : 'radio'}
               value={getValuePart(option.value)}
-              id={getValuePart(option.value)}
+              id={path + getValuePart(option.value)}
               name={id}
               checked={isSelected(option.value)}
-              onChange={ev => handleSelectionChange(path, ev.currentTarget.value)}
+              onChange={ev => handleSelectionChange(ev.currentTarget, ev.currentTarget.value)}
               disabled={!enabled}
             />
-            <label
-              htmlFor={getValuePart(option.value)}
-            >
+            <label>
               {getLabelPart(option.label)}
             </label>
           </div>

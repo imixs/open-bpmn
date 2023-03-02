@@ -38,8 +38,6 @@ import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
-import ImixsCheckboxGroupControl, { imixsCheckboxGroupControlTester } from './ImixsCheckboxGroupControl';
-import ImixsRadioGroupControl, { imixsRadioGroupControlTester } from './ImixsRadioGroupControl';
 import SelectItemGroupControl, { selectItemControlTester } from './SelectItemControl';
  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
@@ -303,9 +301,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     const bpmnRenderers = [
                        ...vanillaRenderers,
                        // optional register custom renderers...
-                       { tester: selectItemControlTester, renderer: SelectItemGroupControl },
-                       { tester: imixsRadioGroupControlTester, renderer: ImixsRadioGroupControl },
-                       { tester: imixsCheckboxGroupControlTester, renderer: ImixsCheckboxGroupControl }
+                       { tester: selectItemControlTester, renderer: SelectItemGroupControl }
                     ];
 
                     // render JSONForm // vanillaRenderers
