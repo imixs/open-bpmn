@@ -75,6 +75,18 @@ public class DataBuilder {
         return this;
     }
 
+    public DataBuilder addData(final String name, final boolean value) {
+        if (arrayBuilder != null) {
+            if (arrayObjectBuilder == null) {
+                arrayObjectBuilder = Json.createObjectBuilder();
+            }
+            arrayObjectBuilder.add(name, value);
+        } else {
+            rootBuilder.add(name, value);
+        }
+        return this;
+    }
+
     public DataBuilder addDataList(final String name, final List<String> values) {
         if (arrayBuilder != null) {
             if (arrayObjectBuilder == null) {
