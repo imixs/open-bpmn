@@ -17,7 +17,7 @@ public class Event extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 36.0;
     public final static double DEFAULT_HEIGHT = 36.0;
-    public static final double LABEL_OFFSET = 0;
+    public static final double LABEL_OFFSET = 3;
 
     protected Event(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
         super(model, node, type, bpmnProcess);

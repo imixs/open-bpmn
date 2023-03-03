@@ -58,49 +58,115 @@ Zeile2]]></bpmn2:documentation>
           <imixs:value><![CDATA[true]]></imixs:value>
         </imixs:item>
         <imixs:item name="keyownershipfields" type="xs:string">
-          <imixs:value><![CDATA[creator]]></imixs:value>
+          <imixs:value><![CDATA[$owner]]></imixs:value>
         </imixs:item>
         <imixs:item name="keyaddreadfields" type="xs:string">
-          <imixs:value><![CDATA[$owner]]></imixs:value>
-          <imixs:value><![CDATA[space.team]]></imixs:value>
-        </imixs:item>
-        <imixs:item name="keyaddwritefields" type="xs:string">
           <imixs:value><![CDATA[space.team]]></imixs:value>
           <imixs:value><![CDATA[creator]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string">
+          <imixs:value><![CDATA[$owner]]></imixs:value>
         </imixs:item>
         <imixs:item name="namownershipnames" type="xs:string">
           <imixs:value><![CDATA[asdf]]></imixs:value>
+          <imixs:value><![CDATA[3]]></imixs:value>
+          <imixs:value><![CDATA[2]]></imixs:value>
         </imixs:item>
         <imixs:item name="namaddreadaccess" type="xs:string">
-          <imixs:value><![CDATA[aaaa]]></imixs:value>
+          <imixs:value><![CDATA[a]]></imixs:value>
+          <imixs:value><![CDATA[b]]></imixs:value>
+          <imixs:value><![CDATA[c]]></imixs:value>
         </imixs:item>
         <imixs:item name="namaddwriteaccess" type="xs:string">
-          <imixs:value><![CDATA[bbb
-CCC]]></imixs:value>
+          <imixs:value><![CDATA[x]]></imixs:value>
+          <imixs:value><![CDATA[y]]></imixs:value>
+          <imixs:value><![CDATA[z]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:documentation id="documentation_C0nJlw"><![CDATA[44444]]></bpmn2:documentation>
       <bpmn2:outgoing/>
     </bpmn2:intermediateCatchEvent>
-    <bpmn2:intermediateCatchEvent id="event_XXWt5A" imixs:activityid="10" name="Event-2">
-      <bpmn2:documentation id="documentation_Mye64A"/>
-    </bpmn2:intermediateCatchEvent>
+    <bpmn2:task id="task_rJ0U4w" imixs:processid="1001" name="Task-1">
+      <bpmn2:extensionElements>
+        <imixs:item name="keyupdateacl" type="xs:string">
+          <imixs:value><![CDATA[true]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddreadfields" type="xs:string">
+          <imixs:value><![CDATA[space.team]]></imixs:value>
+          <imixs:value><![CDATA[$owner]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="namownershipnames" type="xs:string">
+          <imixs:value><![CDATA[coo]]></imixs:value>
+          <imixs:value><![CDATA[1]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="namaddreadaccess" type="xs:string">
+          <imixs:value><![CDATA[bool]]></imixs:value>
+          <imixs:value><![CDATA[2]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="namaddwriteaccess" type="xs:string">
+          <imixs:value><![CDATA[too]]></imixs:value>
+          <imixs:value><![CDATA[3]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string">
+          <imixs:value><![CDATA[$owner]]></imixs:value>
+          <imixs:value><![CDATA[creator]]></imixs:value>
+          <imixs:value><![CDATA[space.team]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyownershipfields" type="xs:string">
+          <imixs:value><![CDATA[space.team]]></imixs:value>
+        </imixs:item>
+      </bpmn2:extensionElements>
+      <bpmn2:documentation id="documentation_z0ceoQ"/>
+    </bpmn2:task>
+    <bpmn2:startEvent id="event_vXnvnw" name="Event-2">
+      <bpmn2:documentation id="documentation_3fPhyQ"/>
+    </bpmn2:startEvent>
+    <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway_GZ9kOA" name="Gateway-1">
+      <bpmn2:documentation id="documentation_yd2RkA"/>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:dataObject id="dataObject_RChpGg" name="Data Object-1">
+      <bpmn2:documentation id="documentation_Cy17sQ"/>
+    </bpmn2:dataObject>
   </bpmn2:process>
   <bpmn2:signal id="signal_1" name="Signal 1a"/>
   <bpmn2:signal id="signal_2" name="Signal 2"/>
   <bpmn2:signal id="signal_3" name="Test Signal"/>
+  <bpmn2:message id="message_JBuTZw" name="Message-1">
+    <bpmn2:documentation id="documentation_6G3RPg"/>
+  </bpmn2:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
     <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
       <bpmndi:BPMNShape bpmnElement="event_yLJbvQ" id="BPMNShape_EahNDg">
-        <dc:Bounds height="36.0" width="36.0" x="62.0" y="34.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="-54.10582966154597" y="12.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_Avlfpg">
-          <dc:Bounds height="16.0" width="100.0" x="30.0" y="70.0"/>
+          <dc:Bounds height="16.0" width="100.0" x="-85.62132415927569" y="51.1122459474055"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="event_XXWt5A" id="BPMNShape_8dKtQw">
-        <dc:Bounds height="36.0" width="36.0" x="220.0" y="29.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_hzPsXA">
-          <dc:Bounds height="16.0" width="100.0" x="188.0" y="65.0"/>
+      <bpmndi:BPMNShape bpmnElement="task_rJ0U4w" id="BPMNShape_0rOygw">
+        <dc:Bounds height="50.0" width="110.0" x="120.00098171739964" y="5.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="event_vXnvnw" id="BPMNShape_A30xeA">
+        <dc:Bounds height="36.0" width="36.0" x="-144.69269013719656" y="12.000000033986659"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_AD3uQA">
+          <dc:Bounds height="16.0" width="100.0" x="-176.69269013719656" y="51.00000003398666"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gateway_GZ9kOA" id="BPMNShape_mmI9xw">
+        <dc:Bounds height="50.0" width="50.0" x="-246.4330417408919" y="5.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_FwShkA">
+          <dc:Bounds height="16.0" width="100.0" x="-271.43304443359375" y="58.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="dataObject_RChpGg" id="BPMNShape_99fbDA">
+        <dc:Bounds height="50.0" width="35.0" x="-342.74416844987627" y="5.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_0jQJZg">
+          <dc:Bounds height="16.0" width="100.0" x="-375.24416844987627" y="60.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="message_JBuTZw" id="BPMNShape_l4w4Eg">
+        <dc:Bounds height="20.0" width="30.0" x="36.53709530830383" y="20.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_QJgfqQ">
+          <dc:Bounds height="16.0" width="100.0" x="1.5370941162109375" y="45.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
