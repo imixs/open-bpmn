@@ -39,7 +39,7 @@ import { isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 // import SelectItemGroupControl, { selectItemControlTester } from './SelectItemControl';
-import { SelectItemRendererEntry } from './SelectItemControl';
+import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionListener, IActionHandler { // IActionHandler EditModeListener
@@ -302,7 +302,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     const bpmnRenderers = [
                        ...vanillaRenderers,
                        // optional register custom renderers...
-                       SelectItemRendererEntry
+                       SelectItemRendererEntry,
+                       SelectItemComboRendererEntry
                     ];
 
                     // render JSONForm // vanillaRenderers
