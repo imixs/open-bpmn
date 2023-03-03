@@ -14,7 +14,12 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-  and, computeLabel, ControlProps, isDescriptionHidden, isEnumControl, optionIs, OwnPropsOfEnum, RankedTester, rankWith
+  and,
+  computeLabel,
+  ControlProps,
+  isDescriptionHidden,
+  isEnumControl, JsonFormsRendererRegistryEntry, optionIs,
+  OwnPropsOfEnum, rankWith
 } from '@jsonforms/core';
 import { withJsonFormsEnumProps } from '@jsonforms/react';
 import { VanillaRendererProps, withVanillaControlProps } from '@jsonforms/vanilla-renderers';
@@ -196,8 +201,10 @@ export const SelectItemGroupControl = (props: ControlProps & VanillaRendererProp
   return <SelectItemGroup {...props} />;
 };
 
-export const selectItemControlTester: RankedTester = rankWith(
-  3,
-  and(isEnumControl, optionIs('format', 'selectitem'))
-);
-export default withVanillaControlProps(withJsonFormsEnumProps(SelectItemGroupControl));
+/**
+ * Export the Custom Renderer and  Tester for SelectItemGroupControl
+ */
+export const SelectItemRendererEntry: JsonFormsRendererRegistryEntry = {
+  tester: rankWith(3,  and(isEnumControl, optionIs('format', 'selectitem'))),
+  renderer: withVanillaControlProps(withJsonFormsEnumProps(SelectItemGroupControl))
+};
