@@ -47,10 +47,10 @@ import React, { useState } from 'react';
 const getLabelPart = (value: string): string => {
   const parts = value.split('|');
   if (parts.length===2) {
-    return parts[0];
+    return parts[0].trim();
   }
   else {
-    return value;
+    return value.trim();
   }
 };
 
@@ -62,10 +62,10 @@ const getLabelPart = (value: string): string => {
 const getValuePart = (value: string): string => {
   const parts = value.split('|');
   if (parts.length===2) {
-    return parts[1];
+    return parts[1].trim();
   }
   else {
-    return value;
+    return value.trim();
   }
 };
 
