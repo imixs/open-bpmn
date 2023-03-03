@@ -5,26 +5,27 @@
       <imixs:value><![CDATA[test-de-1.0.1]]></imixs:value>
     </imixs:item>
     <imixs:item name="txttimefieldmapping" type="xs:string">
-      <imixs:value><![CDATA[heute|@now]]></imixs:value>
+      <imixs:value>
+          <![CDATA[heute|@now]]>
+      </imixs:value>
       <imixs:value><![CDATA[morgen|@tomorrow]]></imixs:value>
+      <imixs:value><![CDATA[Chef|txtsepp]]></imixs:value>
+      <imixs:value><![CDATA[Buchhaltung|space.team]]></imixs:value>
     </imixs:item>
     <imixs:item name="txtplugins" type="xs:string">
       <imixs:value><![CDATA[com.imixs.test]]></imixs:value>
       <imixs:value><![CDATA[com.foo.test]]></imixs:value>
       <imixs:value><![CDATA[org.imixs.workflow.MailPlugin2]]></imixs:value>
     </imixs:item>
-    <imixs:item name="txtfieldmapping" type="xs:string">
-      <imixs:value><![CDATA[Ersteller|$creator]]></imixs:value>
-    </imixs:item>
   </bpmn2:extensionElements>
   <bpmn2:process id="process_1" name="Default Processss" processType="Public">
     <bpmn2:documentation id="documentation_53zO2Q"><![CDATA[Doku zeile 1
 Zeile2]]></bpmn2:documentation>
-    <bpmn2:task id="task_CxWCrA" imixs:processid="11303" name="Task-2s" scriptFormat="">
+    <bpmn2:task id="task_CxWCrA" imixs:processid="6501" name="Task-2s">
       <bpmn2:extensionElements>
         <imixs:item name="txtworkflowabstract" type="xs:string">
           <imixs:value><![CDATA[Besonders langer
-und jetzt noch mit Geminheit
+und jetzt noch mit Geminheitd
 <itemvalue>txttest</itemvalue>
 <item name="sepp">test</item>]]></imixs:value>
         </imixs:item>
@@ -35,27 +36,69 @@ und jetzt noch mit Geminheit
           <imixs:value><![CDATA[Toll]]></imixs:value>
         </imixs:item>
         <imixs:item name="form.definition" type="xs:string">
-          <imixs:value><![CDATA[d]]></imixs:value>
+          <imixs:value><![CDATA[s]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="txteditorid" type="xs:string">
+          <imixs:value><![CDATA[Data Object-1]]></imixs:value>
         </imixs:item>
       </bpmn2:extensionElements>
       <bpmn2:documentation id="documentation_6NWNfg"><![CDATA[testasdf
-asdf]]></bpmn2:documentation>
-      <bpmn2:script id="script_Pd9j0Q"/>
+asdfd]]></bpmn2:documentation>
       <bpmn2:incoming/>
     </bpmn2:task>
     <bpmn2:intermediateCatchEvent id="event_yLJbvQ" imixs:activityid="20" name="Save">
+      <bpmn2:extensionElements>
+        <imixs:item name="keypublicresult" type="xs:string">
+          <imixs:value><![CDATA[0]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="txtactivityresult" type="xs:string">
+          <imixs:value><![CDATA[stest]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="rtfresultlog" type="xs:string">
+          <imixs:value><![CDATA[<itemvalue>_subject</itemvalue>s]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="txtbusinessruleengine" type="xs:string">
+          <imixs:value><![CDATA[a]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="txtbusinessrule" type="xs:string">
+          <imixs:value><![CDATA[bs]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyscheduledactivity" type="xs:string">
+          <imixs:value><![CDATA[1]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyscheduledbaseobject" type="xs:string">
+          <imixs:value><![CDATA[4]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyactivitydelayunit" type="xs:string">
+          <imixs:value><![CDATA[2]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="numactivitydelay" type="xs:string">
+          <imixs:value><![CDATA[42]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keytimecomparefield" type="xs:string">
+          <imixs:value><![CDATA[@now]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="txtscheduledview" type="xs:string">
+          <imixs:value><![CDATA[*]]></imixs:value>
+        </imixs:item>
+      </bpmn2:extensionElements>
       <bpmn2:documentation id="documentation_C0nJlw"><![CDATA[44444]]></bpmn2:documentation>
       <bpmn2:outgoing/>
     </bpmn2:intermediateCatchEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_hScKhA" sourceRef="event_yLJbvQ" targetRef="task_CxWCrA">
       <bpmn2:documentation id="documentation_3lOogA"/>
     </bpmn2:sequenceFlow>
-    <bpmn2:manualTask id="task_e1crIA" name="Task-2" scriptFormat="">
+    <bpmn2:manualTask id="task_e1crIA" name="Task-2">
       <bpmn2:documentation id="documentation_J3M0iQ"><![CDATA[asdf
-asdf
+asdfs
 asdf]]></bpmn2:documentation>
-      <bpmn2:script id="script_lpADuw"/>
     </bpmn2:manualTask>
+    <bpmn2:exclusiveGateway gatewayDirection="Mixed" id="gateway_FJDI9A" name="Gateway-1">
+      <bpmn2:documentation id="documentation_9yCABQ"/>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:dataObject id="dataObject_R3UlbQ" name="Data Object-1">
+      <bpmn2:documentation id="documentation_Xr2SLg"/>
+    </bpmn2:dataObject>
   </bpmn2:process>
   <bpmn2:signal id="signal_1" name="Signal 1a"/>
   <bpmn2:signal id="signal_2" name="Signal 2"/>
@@ -63,16 +106,16 @@ asdf]]></bpmn2:documentation>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
     <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
       <bpmndi:BPMNShape bpmnElement="task_CxWCrA" id="BPMNShape_mHFPlw">
-        <dc:Bounds height="50.0" width="110.0" x="48.0" y="29.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="49.0" y="29.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="event_yLJbvQ" id="BPMNShape_EahNDg">
-        <dc:Bounds height="36.0" width="36.0" x="125.0" y="129.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="126.0" y="128.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_Avlfpg">
-          <dc:Bounds height="16.0" width="100.0" x="93.0" y="165.0"/>
+          <dc:Bounds height="16.0" width="100.0" x="94.0" y="164.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_hScKhA" id="BPMNEdge_Y4VEnQ" sourceElement="BPMNShape_EahNDg" targetElement="BPMNShape_mHFPlw">
-        <di:waypoint x="125.70838353420942" y="142.0"/>
+        <di:waypoint x="126.45007122521575" y="142.0"/>
         <di:waypoint x="117.0" y="142.0"/>
         <di:waypoint x="117.0" y="105.0"/>
         <di:waypoint x="128.0" y="105.0"/>
@@ -80,6 +123,18 @@ asdf]]></bpmn2:documentation>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="task_e1crIA" id="BPMNShape_IaqmSA">
         <dc:Bounds height="50.0" width="110.0" x="232.0" y="29.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gateway_FJDI9A" id="BPMNShape_RLgV8g">
+        <dc:Bounds height="50.0" width="50.0" x="314.0" y="111.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_bTVIiQ">
+          <dc:Bounds height="16.0" width="100.0" x="289.0" y="161.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="dataObject_R3UlbQ" id="BPMNShape_KhWDKw">
+        <dc:Bounds height="50.0" width="35.0" x="444.40460205078125" y="42.0789680480957"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_Qf3pjw">
+          <dc:Bounds height="16.0" width="100.0" x="411.90460205078125" y="97.07896423339844"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
