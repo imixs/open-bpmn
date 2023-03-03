@@ -18,8 +18,7 @@ import {
   computeLabel,
   ControlProps,
   isDescriptionHidden,
-  isEnumControl, JsonFormsRendererRegistryEntry, optionIs,
-  OwnPropsOfEnum, rankWith
+  isEnumControl, JsonFormsRendererRegistryEntry, optionIs, OwnPropsOfEnum, rankWith
 } from '@jsonforms/core';
 import { withJsonFormsEnumProps } from '@jsonforms/react';
 import { VanillaRendererProps, withVanillaControlProps } from '@jsonforms/vanilla-renderers';
@@ -27,15 +26,49 @@ import merge from 'lodash/merge';
 import React, { useState } from 'react';
 
 /***********************
- * This is a custom renderer for selectItems represented as RadioButtons or CheckBoxes.
- * The control can handle single String values (represented as a Radio Button)
+ * This is a custom renderer for selectItems represented as RadioButtons, CheckBoxes or ComboBoxes.
+ * The control can handle single String values (represented as a Radio Button or ComboBox)
  * or Arrays of Strings (represented as Checkboxes).
  * <p>
- * In addition the renderer support label|value pairs separated by a | char. This allows
- * to separate the label and data value in one string.
+ * In addition the renderer support label|value pairs separated by a | char. 
  * <p>
- * The layout can be customized by the option 'orientation=horizontal|vertical'.
+ * {@code  My Value | val-1}
+ * <p>
+ * This allows to separate the label and data value in one string.
+ * <p>
+ * The layout for Checkboxes and RadtioButtons can be customized by the option 'orientation=horizontal|vertical'.
  */
+
+/**
+ * Returns the label part of a label|value pair
+ * @param value
+ * @returns
+ */
+const getLabelPart = (value: string): string => {
+  const parts = value.split('|');
+  if (parts.length===2) {
+    return parts[0];
+  }
+  else {
+    return value;
+  }
+};
+
+/**
+ * Returns the value part of a label|value pair
+ * @param value
+ * @returns
+ */
+const getValuePart = (value: string): string => {
+  const parts = value.split('|');
+  if (parts.length===2) {
+    return parts[1];
+  }
+  else {
+    return value;
+  }
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const SelectItemGroup = ({
   classNames,
@@ -126,44 +159,14 @@ export const SelectItemGroup = ({
     }
   };
 
-  /**
-   * Returns the value part of a label|value pair
-   * @param value
-   * @returns
-   */
-  const getValuePart = (value: string): string => {
-    const parts = value.split('|');
-    if (parts.length===2) {
-      return parts[1];
-    }
-    else {
-      return value;
-    }
-  };
-
-  /**
-   * Returns the label part of a label|value pair
-   * @param value
-   * @returns
-   */
-  const getLabelPart = (value: string): string => {
-    const parts = value.split('|');
-    if (parts.length===2) {
-      return parts[0];
-    }
-    else {
-      return value;
-    }
-  };
-
   return (
     <div
-      className={'control imixs-checkbox-group'}
+      className={'control select-item-group'}
       hidden={!visible}
       onFocus={() => setFocus(true)}
       onBlur={() => setFocus(false)}
     >
-      <label htmlFor={id} className={'imixs'}>
+      <label htmlFor={id}>
         {computeLabel(
           label,
           false,
@@ -195,10 +198,82 @@ export const SelectItemGroup = ({
   );
 };
 
+/**
+ * A ComboBox style for SelectItems
+ * @param props
+ * @returns
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const SelectItemCombo = ({
+  classNames,
+  id,
+  label,
+  options,
+  required,
+  description,
+  errors,
+  data,
+  uischema,
+  visible,
+  config,
+  enabled,
+  path,
+  handleChange
+}: ControlProps & VanillaRendererProps & OwnPropsOfEnum) => {
+  const [isFocused, setFocus] = useState(false);
+  // const isValid = errors.length === 0;
+  const appliedUiSchemaOptions = merge({}, config, uischema.options);
+  const showDescription = !isDescriptionHidden(
+    visible,
+    description,
+    isFocused,
+    appliedUiSchemaOptions.showUnfocusedDescription
+  );
+
+  return (
+    <div
+      className={'control  select-item-combo'}
+      hidden={!visible}
+      onFocus={() => setFocus(true)}
+      onBlur={() => setFocus(false)}
+    >
+      <label htmlFor={id}>
+        {computeLabel(
+          label,
+          false,
+          appliedUiSchemaOptions.hideRequiredAsterisk
+        )}
+      </label>
+      <select
+        id={id}
+        disabled={!enabled}
+        autoFocus={uischema.options && uischema.options.focus}
+        value={data}
+        onChange={ev => handleChange(path, ev.target.value)}
+      >
+        {options!.map(option => (
+          //  <option value={optionValue.value} label={optionValue.label} key={optionValue.value}/>
+          <option
+            value={getValuePart(option.label)}
+            label={getLabelPart(option.label)}
+            key={getValuePart(option.label)} />
+        ))}
+      </select>
+      <div className={'input-description'}>
+        {showDescription ? description : undefined}
+      </div>
+    </div>
+  );
+};
+
 /* eslint-disable arrow-body-style */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const SelectItemGroupControl = (props: ControlProps & VanillaRendererProps) => {
   return <SelectItemGroup {...props} />;
+};
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const SelectItemComboControl = (props: ControlProps & VanillaRendererProps) => {
+  return <SelectItemCombo {...props} />;
 };
 
 /**
@@ -207,4 +282,9 @@ export const SelectItemGroupControl = (props: ControlProps & VanillaRendererProp
 export const SelectItemRendererEntry: JsonFormsRendererRegistryEntry = {
   tester: rankWith(3,  and(isEnumControl, optionIs('format', 'selectitem'))),
   renderer: withVanillaControlProps(withJsonFormsEnumProps(SelectItemGroupControl))
+};
+
+export const SelectItemComboRendererEntry: JsonFormsRendererRegistryEntry = {
+  tester: rankWith(3,  and(isEnumControl, optionIs('format', 'selectitemcombo'))),
+  renderer: withVanillaControlProps(withJsonFormsEnumProps(SelectItemCombo))
 };
