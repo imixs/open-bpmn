@@ -14,6 +14,9 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
+ .tool-palette .palette-body .group-header {
+    background: var(--theia-sideBar-background);
+ }
 .sprotty-graph {
     font-size: 15pt;
     border: none;
@@ -161,7 +164,7 @@
 	fill: var(--theia-titleBar-activeForeground);
 }
 .BPMNLabel > .sprotty-node.mouseover {
-	fill: var(--theia-activityBar-background);
+	fill: var(--theia-sideBar-background);
 }
 
 .BPMNLabel > .bpmn-text-node pre {
@@ -184,7 +187,7 @@
 
 /* --theia-titleBar-activeBackground */
 .pool > .sprotty-node {
-    fill: var(--theia-activityBar-background);
+    fill: var(--theia-sideBar-background);
     pointer-events: none;
     opacity: 70%;
     stroke: var(--theia-focusBorder);

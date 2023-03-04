@@ -93,7 +93,8 @@
     background: var(--theia-titleBar-activeBackground);
 }
 .categorization>.categorization-master ul li.selected>span {
-    color: var(--theia-activityBar-foreground);
+    color: var(--theia-sideBar-foreground);
+    background: var(--theia-sideBar-background);
 }
 
 .bpmn-properties-body .categorization-detail {
