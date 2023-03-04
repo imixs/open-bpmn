@@ -182,10 +182,11 @@
 
 /*** Pool and Lances **/
 
+/* --theia-titleBar-activeBackground */
 .pool > .sprotty-node {
-    fill: var(--theia-titleBar-activeBackground);
+    fill: var(--theia-activityBar-background);
     pointer-events: none;
-    opacity: 50%;
+    opacity: 70%;
     stroke: var(--theia-focusBorder);
     outline-color: var(--theia-focusBorder);
     outline-style: solid;
