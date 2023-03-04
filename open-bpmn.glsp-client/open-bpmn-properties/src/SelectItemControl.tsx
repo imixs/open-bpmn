@@ -30,7 +30,7 @@ import React, { useState } from 'react';
  * The control can handle single String values (represented as a Radio Button or ComboBox)
  * or Arrays of Strings (represented as Checkboxes).
  * <p>
- * In addition the renderer support label|value pairs separated by a | char. 
+ * In addition the renderer support label|value pairs separated by a | char.
  * <p>
  * {@code  My Value | val-1}
  * <p>
