@@ -30,18 +30,19 @@
 	bottom: 0px;
 	z-index: 20;
 	width: 100%;
-    background: var(--theia-editorWidget-background);
-    opacity: 0.9 !important;
-    color: var(--theia-foreground);
+    xxxbackground: var(--theia-titleBar-activeBackground);
+    background: var(--theia-editor-background);
+    opacity: 0.98 !important;
+    color: var(--theia-editor-foreground);
     height: 28px;
 }
 
-
+/* theia-editorWidget-background */
 .bpmn-property-header {
 	padding-left: 8px;
-    background: var(--theia-statusBar-background);
-    color: var(--theia-statusBar-foreground);
-    opacity: 0.75; 
+    background: var(--theia-titleBar-activeBackground);
+    color: var(--theia-titleBar-activeForeground);
+    opacity: 1; 
     font-weight: bold;
     border: 0;
     overflow: hidden;
@@ -88,6 +89,13 @@
 .bpmn-properties-body .categorization {
 	height: 100%;
 }
+.bpmn-properties-body .categorization-master {
+    background: var(--theia-titleBar-activeBackground);
+}
+.categorization>.categorization-master ul li.selected>span {
+    color: var(--theia-activityBar-foreground);
+}
+
 .bpmn-properties-body .categorization-detail {
     overflow: auto;
     margin-bottom: 28px;
