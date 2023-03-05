@@ -15,7 +15,7 @@
  ********************************************************************************/
 
  .tool-palette .palette-body .group-header {
-    background: var(--theia-sideBar-background);
+    background: var(--theia-editorHoverWidget-statusBarBackground);
  }
 .sprotty-graph {
     font-size: 15pt;
