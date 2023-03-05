@@ -283,9 +283,11 @@ public class BPMNGModelFactory implements GModelFactory {
                     dataBuilder.closeArrayBuilder();
 
                     // set the optional extension label
-                    elementNode.getArgs().put(BPMNExtension.INFO, extension.getInfo(bpmnElement));
-                    bpmnElement.getArgs().put(BPMNExtension.INFO, extension.getInfo(bpmnElement));
-
+                    String extensionInfo = extension.getInfo(bpmnElement);
+                    if (extensionInfo != null && !extensionInfo.isEmpty()) {
+                        elementNode.getArgs().put(BPMNExtension.INFO, extensionInfo);
+                        bpmnElement.getArgs().put(BPMNExtension.INFO, extensionInfo);
+                    }
                     // if the extension is not a Default Extension then we add the extension css
                     // class
                     if (!BPMNNS.BPMN2.name().equals(extension.getNamespace())
