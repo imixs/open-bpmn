@@ -59,6 +59,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     modelRootId: string;
     selectedElementId: string;
     initForm: boolean;
+    lastCategory: string;
     isResizing: boolean;
     currentY: number;
     headerTitle: HTMLElement;
@@ -66,8 +67,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 
     @postConstruct()
     postConstruct(): void {
-		console.log('...running postConstruct v-01');
-        // this.editorContext.register(this);
         this.selectionService.register(this);
     }
 
@@ -228,6 +227,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     /*
      * This method reacts on the selection of a BPMN element
      * and updates the property panel input fields
+     *
+     * The method also computes the last selected category. This is used in the setState method
+     * to restore the last category if the element type has not changed.
      */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
         // return if the property panel is not yet visible
@@ -271,6 +273,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     // skip this event!
                     return;
                 }
+
+                 // compute the current category....
+                this.updateLastCategory();
+
                 // set new selectionId
                 this.selectedElementId = element.id;
                 // because the jsonForms send a onchange event after init we mark this state here
@@ -342,21 +348,44 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      */
     setState(_newData: any): void {
         if (this.initForm) {
-            // we ignore the first onChange event
+            // try to pre-select the last category
+            const listCategories = this.bodyDiv.querySelectorAll('ul.category-subcategories li');
+            for (let i = 0; i < listCategories.length; i++) {
+                // Check if the LI element's text content matches our lastCategory
+                if (listCategories[i].textContent === this.lastCategory) {
+                    // Simulate the click event on the LI element
+                    const event = new MouseEvent('click', {
+                        view: window,
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    listCategories[i].dispatchEvent(event);
+                    break;
+                }
+            }
+
+            // we do not dispatch the first onChange event
             // see https://jsonforms.io/docs/integrations/react/#onchange
             this.initForm = false;
             return;
         }
         // figure out the active category
-        let category='';
-        const selectedListItem = this.bodyDiv.querySelector('ul.category-subcategories li.selected');
-        if (selectedListItem && selectedListItem.textContent) {
-           category=selectedListItem.textContent;
-        }
+        this.updateLastCategory();
         const newJsonData = JSON.stringify(_newData.data);
-        const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData, category);
+        const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData, this.lastCategory);
         this.actionDispatcher.dispatch(action);
     }
+
+    /**
+     * Computes the current selected category
+     */
+    protected updateLastCategory(): void {
+        const selectedListItem = this.bodyDiv.querySelector('ul.category-subcategories li.selected');
+        if (selectedListItem && selectedListItem.textContent) {
+            this.lastCategory=selectedListItem.textContent;
+        }
+    }
+
 }
 
 /**
