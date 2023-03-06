@@ -41,10 +41,10 @@ public class SchemaBuilder {
     JsonObjectBuilder rootSchemaBuilder;
     JsonObjectBuilder propertiesBuilder;
     // arrays
-    JsonObjectBuilder propertyArrayBuilder;
-    JsonObjectBuilder itemDingens;
-    JsonObjectBuilder propertyArrayItemBuilder;
-//    JsonObjectBuilder propertyArrayItemSubBuilder;
+    JsonObjectBuilder arrayBuilder;
+    JsonObjectBuilder arrayItemsBuilder;
+    JsonObjectBuilder arrayItemsPropertyBuilder;
+    // JsonObjectBuilder propertyArrayItemSubBuilder;
     String arrayName = null;
 
     public SchemaBuilder() {
@@ -64,13 +64,14 @@ public class SchemaBuilder {
      */
     public SchemaBuilder addProperty(final String name, final String type, final String description) {
 
-        JsonObjectBuilder typeBuilder = Json.createObjectBuilder(). //
-                add("type", type);
-        if (description != null && !description.isBlank()) {
-            typeBuilder.add("description", description);
-        }
+        addProperty(name, type, description, null);
+        // JsonObjectBuilder typeBuilder = Json.createObjectBuilder(). //
+        // add("type", type);
+        // if (description != null && !description.isBlank()) {
+        // typeBuilder.add("description", description);
+        // }
 
-        propertiesBuilder.add(name, typeBuilder);
+        // propertiesBuilder.add(name, typeBuilder);
 
         return this;
     }
@@ -104,8 +105,8 @@ public class SchemaBuilder {
             typeBuilder.add("enum", enumArrayBuilder.build());
         }
 
-        if (propertyArrayItemBuilder != null) {
-            propertyArrayItemBuilder.add(name, typeBuilder);
+        if (arrayItemsPropertyBuilder != null) {
+            arrayItemsPropertyBuilder.add(name, typeBuilder);
         } else {
             propertiesBuilder.add(name, typeBuilder);
         }
@@ -121,18 +122,18 @@ public class SchemaBuilder {
     public SchemaBuilder addArray(final String name) {
 
         // close old array builder if exits
-        closeArrayBuilder();
+        closeArray();
 
         // create new array builder
-        propertyArrayBuilder = Json.createObjectBuilder();
-        propertyArrayBuilder.add("type", "array");
+        arrayBuilder = Json.createObjectBuilder();
+        arrayBuilder.add("type", "array");
 
         // create new property Item builder
-        itemDingens = Json.createObjectBuilder();
-        itemDingens.add("type", "object");
+        arrayItemsBuilder = Json.createObjectBuilder();
+        arrayItemsBuilder.add("type", "object");
 
         arrayName = name;
-        propertyArrayItemBuilder = Json.createObjectBuilder();
+        arrayItemsPropertyBuilder = Json.createObjectBuilder();
 
         return this;
     }
@@ -140,22 +141,38 @@ public class SchemaBuilder {
     /**
      * Helper Method to close an open array builder
      */
-    private void closeArrayBuilder() {
-        if (propertyArrayItemBuilder != null) {
-             itemDingens.add("type", "object");
-            itemDingens.add("properties", propertyArrayItemBuilder);
-            propertyArrayBuilder.add("items", itemDingens);
-            propertiesBuilder.add(arrayName, propertyArrayBuilder);
+    public void closeArray() {
+        if (arrayBuilder != null) {
+            // arrayObjectBuilder.add("type", "object");
+            if (arrayItemsBuilder != null) {
 
+                if (arrayItemsPropertyBuilder != null) {
+                    arrayItemsBuilder.add("properties", arrayItemsPropertyBuilder.build());
+                    arrayItemsPropertyBuilder = null;
+                }
+                arrayBuilder.add("items", arrayItemsBuilder.build());
+                arrayItemsBuilder = null;
+            }
+            propertiesBuilder.add(arrayName, arrayBuilder.build());
+            arrayBuilder = null;
         }
 
     }
+
+    // public void closeArray() {
+    // if (arrayObjectBuilder != null) {
+    // arrayBuilder.add(arrayObjectBuilder.build());
+    // arrayObjectBuilder = null;
+    // rootBuilder.add(arrayName, arrayBuilder.build());
+    // arrayBuilder = null;
+    // }
+    // }
 
     /**
      * Returns a String with the JSON UISchema
      */
     public String build() {
-        closeArrayBuilder();
+        closeArray();
 
         rootSchemaBuilder.add("type", "object");
         rootSchemaBuilder.add("properties", propertiesBuilder);

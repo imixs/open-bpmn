@@ -208,7 +208,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                 // the id is used to find the signal in the bpmn model later
                 dataBuilder.addData("id", bpmnSignal.getId());
             }
-            dataBuilder.closeArrayBuilder();
+            dataBuilder.closeArray();
         }
 
     }

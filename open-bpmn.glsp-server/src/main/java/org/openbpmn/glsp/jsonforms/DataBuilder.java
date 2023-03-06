@@ -111,7 +111,7 @@ public class DataBuilder {
      */
     public DataBuilder addArray(final String name) {
         // close old array builder if exits
-        closeArrayBuilder();
+        closeArray();
         // create new array builder
         arrayBuilder = Json.createArrayBuilder();
         arrayName = name;
@@ -141,13 +141,10 @@ public class DataBuilder {
      * Helper Method to close an open array builder. The method adds an existing
      * arrayObjectBuilder.
      */
-    public void closeArrayBuilder() {
+    public void closeArray() {
         if (arrayObjectBuilder != null) {
-            if (arrayObjectBuilder != null) {
-                arrayBuilder.add(arrayObjectBuilder.build());
-                arrayObjectBuilder = null;
-
-            }
+            arrayBuilder.add(arrayObjectBuilder.build());
+            arrayObjectBuilder = null;
             rootBuilder.add(arrayName, arrayBuilder.build());
             arrayBuilder = null;
         }
@@ -157,7 +154,7 @@ public class DataBuilder {
      * Returns a String with the JSON Data Schema
      */
     public String build() {
-        closeArrayBuilder();
+        closeArray();
         // write result
         JsonObject jsonObject = rootBuilder.build();
         String result = null;

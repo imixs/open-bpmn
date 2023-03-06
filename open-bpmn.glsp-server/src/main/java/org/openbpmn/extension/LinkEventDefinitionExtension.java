@@ -98,7 +98,7 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
             schemaBuilder.addArray("links");
             schemaBuilder.addProperty("name", "string", null, null);
             schemaBuilder.addProperty("target", "string", null, null);
-
+            schemaBuilder.closeArray();
             /*
              * Now we can create the data structure - each conditionalEventDefinition is
              * represented as a separate object
