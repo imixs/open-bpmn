@@ -1,14 +1,14 @@
 <img width="200" src="./doc/images/logo-openbpmn.png" />
 
-**Open BPMN** is a free BPMN 2.0 modeling platform that can be extended and customized by any BPMN 2.0 compliant execution engine.
-Open BPMN is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/) providing an open-source framework for building diagram editors based on modern web technologies.
+**Open BPMN** is a free and open modeling platform to create and maintain business models based on the BPMN 2.0 standard. **Open BPMN** can be used by business analysts to design a top level business process, as also by architects and developers to model the technical details of complex processing logic.
+Further more, **Open BPMN** provides an extension mechanism to adapt the modeling platform to the individual requirements in any business process project.
 
-The primary goal of this project is to provide a graphical BPMN editing framework that can be extended in various ways by different solutions to create an agile and innovative community around the BPMN standard.
+The goal of this project is to provide an open and extensible graphical BPMN modelling framework for an agile and innovative community around the BPMN standard.
 
 <center><img  width="800" src="./doc/images/imixs-bpmn-001.png" /></center>
 <h2 align="center"><a href="https://open-bpmn.imixs.org" target="_blank">Start the Online Demo</a></h2>
 
-**Please Note:** The project is still under development and we invite you to join this project. See the developer details below.
+**Open BPMN** is based on the [Eclipse Graphical Language Server Platform (GLSP)](https://www.eclipse.org/glsp/) - an open-source framework for building diagram editors based on modern web technologies. This architecture allows to run **Open BPMN** on various IDEs and platforms like Visual Studio Code, Eclipse IDE, Eclipse Theia, as also as a standalone Web Application.
 
 ## What is BPMN 2.0?
 
