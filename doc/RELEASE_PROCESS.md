@@ -1,6 +1,6 @@
 # The Open-BPMN Release Process
 
-The release management process of Open-BPMN is based on the [Releasemanagement and versioning](https://github.com/imixs/imixs-workflow/wiki/Releasemanagement-and-versioning) of the Imixs Workflow main project. Because the project contains a Java part and JavaScript (Node.JS) part also the release process is split into two parts. The java part is based on the Maven Release Plugin, the JavaScript part is based on [nmp]((https://docs.npmjs.com/creating-and-publishing-scoped-public-packages).
+The release management process of Open-BPMN is based on the [Releasemanagement and versioning](https://github.com/imixs/imixs-workflow/wiki/Releasemanagement-and-versioning) of the Imixs Workflow main project. Because the project contains a Java part and JavaScript (Node.JS) part also the release process is split into two parts. The java part is based on the Maven Release Plugin, the JavaScript part is based on [nmp](https://docs.npmjs.com/creating-and-publishing-scoped-public-packages).
 
 ## How to Release a new Version
 
@@ -15,16 +15,12 @@ Check current release status on npm:
 
 https://www.npmjs.com/settings/open-bpmn/packages
 
-To be able to publish to the npm repository (https://www.npmjs.com/) create frist an _automation token_ and set this token in your local environment first!
+To be able to publish to the npm repository (https://www.npmjs.com/) you need to login during the release process with your npmjs.com account. Alternatively you can create an _automation token_ and set this token in your local environment first!
 
     $ cd open-bpmn.glsp-client/
     $ npm config set _authToken=%YOUR_ACCES_TOKEN%
 
 Replace `%YOUR_ACCES_TOKEN%` with a valid Token!
-
-As an alternative you can also do a local login against https://www.npmjs.com/ first
-
-    $ npm login
 
 Now you can run the release script:
 
