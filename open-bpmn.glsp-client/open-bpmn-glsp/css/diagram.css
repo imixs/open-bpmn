@@ -176,8 +176,6 @@
 	margin: 0;
 }
 
-
-
 .label-edit textarea {
     margin: 1px;
     font-size: 1em !important;
@@ -232,7 +230,14 @@
 .sequenceFlow .default-symbol {
     stroke-width: 3;
 }
-/* messageFlow */
+
+/* SequenceFlow */
+.bpmnedge > .sprotty-label {
+    fill: var(--theia-titleBar-activeForeground);
+    text-align: center;
+}
+
+/* MessageFlow */
 .sprotty-edge.messageFlow .line {
    stroke-dasharray: 6,4;
 }
