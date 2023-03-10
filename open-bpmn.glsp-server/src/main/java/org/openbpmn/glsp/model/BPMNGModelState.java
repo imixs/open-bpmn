@@ -15,15 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.glsp.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.extension.BPMNExtension;
-
-import com.google.inject.Inject;
 
 /**
  * The BPMNGModelState extends the DefaultGModelState and provides the property
@@ -36,10 +29,7 @@ public class BPMNGModelState extends DefaultGModelState {
 
     private BPMNModel bpmnModel;
     private boolean initialized = false;
-    List<String> extensionKinds = new ArrayList<>();
-
-    @Inject
-    protected Set<BPMNExtension> extensions;
+    private String rootID = "undefined_root_id";
 
     public BPMNModel getBpmnModel() {
         return bpmnModel;
@@ -47,7 +37,13 @@ public class BPMNGModelState extends DefaultGModelState {
 
     public void setBpmnModel(final BPMNModel bpmnModel) {
         this.bpmnModel = bpmnModel;
+        // create a new unique id
+        rootID = "root_" + BPMNModel.generateShortID();
         this.setRoot(null);
+    }
+
+    public String getRootID() {
+        return rootID;
     }
 
     public boolean isInitialized() {

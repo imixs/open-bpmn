@@ -29,7 +29,6 @@ import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
-import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.utils.BPMNGraphUtil;
 
 /**
@@ -43,7 +42,7 @@ import org.openbpmn.glsp.utils.BPMNGraphUtil;
  */
 public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeBuilder> {
 
-    private static Logger logger = Logger.getLogger(BPMNGModelFactory.class.getName());
+    private static Logger logger = Logger.getLogger(TaskGNodeBuilder.class.getName());
     private static final String V_GRAB = "vGrab";
     private static final String H_GRAB = "hGrab";
     private final String name;

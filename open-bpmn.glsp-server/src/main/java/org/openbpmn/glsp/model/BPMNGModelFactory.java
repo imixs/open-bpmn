@@ -132,10 +132,13 @@ public class BPMNGModelFactory implements GModelFactory {
         }
 
         if (!modelState.isInitialized()) {
+
             long l = System.currentTimeMillis();
             GGraph newGModel = buildGGraph(getBpmnModel());
+
             modelState.updateRoot(newGModel);
-            modelState.getRoot().setRevision(-1);
+            // modelState.getRoot().setRevision(-1); // do not reset revision!
+            // see https://github.com/eclipse-glsp/glsp/discussions/949
 
             if (newGModel == null) {
                 logger.warn("Unable to create model - no processes found - creating an empty model");
@@ -194,9 +197,9 @@ public class BPMNGModelFactory implements GModelFactory {
      */
     public GGraph buildGGraph(final BPMNModel model) {
 
-        // create the RootBuiler
+        // create the RootBuilder
         GGraphBuilder rootBuilder = new GGraphBuilder() //
-                .id("root_" + BPMNModel.generateShortID());
+                .id(modelState.getRootID());
 
         List<GModelElement> gRootNodeList = new ArrayList<>();
         try {
