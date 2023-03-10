@@ -44,6 +44,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNXMLUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -1687,9 +1688,13 @@ public class BPMNModel {
         transformer.transform(source, dest);
         String xmlString = w.toString();
         // No indentation (whitespace) for elements with a CDATA section.
-        // See.
+        // See
         // https://stackoverflow.com/questions/55853220/handling-change-in-newlines-by-xml-transformation-for-cdata-from-java-8-to-java/75568933
-        xmlString = xmlString.replaceAll(">\\s*(<\\!\\[CDATA\\[(.|\\n|\\r\\n)*?]\\]>)\\s*</", ">$1</");
+        // xmlString =
+        // xmlString.replaceAll(">\\s*+(<\\!\\[CDATA\\[(.|\\n|\\r\\n)*?]\\]>)\\s*</",
+        // ">$1</");
+        xmlString = BPMNXMLUtil.cleanCDATAWhiteSpace(xmlString);
+
         // write output
         try {
             output.write(xmlString.getBytes(Charset.forName("UTF-8")));
