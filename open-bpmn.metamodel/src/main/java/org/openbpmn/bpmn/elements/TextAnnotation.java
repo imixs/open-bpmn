@@ -2,9 +2,7 @@ package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
-import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
@@ -62,17 +60,19 @@ public class TextAnnotation extends BPMNElementNode {
 
     /**
      * Remove any embedded bpmndi:BPMNLabel element within the bpmndi:BPMNShape
+     * 
+     * Positioning of the label is part of the client. Any position update should
+     * ignore these settings in Open-BPMN.
+     * 
      */
     @Override
-    public BPMNBounds setBounds(double x, double y, double width, double height) throws BPMNMissingElementException {
-
-        BPMNBounds result = super.setBounds(x, y, width, height);
+    public void setPosition(double x, double y) {
+        super.setPosition(x, y);
 
         // remove optional BPMNLabel
         Element bpmnLabel = getModel().findChildNodeByName(this.bpmnShape, BPMNNS.BPMNDI, "BPMNLabel");
         if (bpmnLabel != null) {
             this.bpmnShape.removeChild(bpmnLabel);
         }
-        return result;
     }
 }
