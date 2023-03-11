@@ -232,7 +232,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
         // return if the property panel is not yet visible
-        if (!this.bodyDiv) {
+        if (!this.bodyDiv || !selectedElements || selectedElements.length===0) {
            return;
         }
 
@@ -289,7 +289,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 
                 // init the react container only once....
                 if (!this.panelContainer) {
-                    this.panelContainer = createRoot(this.bodyDiv); // createRoot(container!) if you use TypeScript
+                    this.panelContainer = createRoot(this.bodyDiv);
                 }
                 // BPMN Node selected, collect JSONForms schemata....
                 let bpmnPropertiesData;
@@ -331,12 +331,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         } else {
             // no single element selected!
             this.selectedElementId = '';
-            if (this.bodyDiv) {
+            if (this.bodyDiv && this.panelContainer) {
                 this.headerTitle.textContent = 'BPMN Properties';
                 // multi selection - we can not show a property panel
-                if (this.bodyDiv) {
-                    this.panelContainer.render(<React.Fragment>Please select a single element </React.Fragment>);
-                }
+                this.panelContainer.render(<React.Fragment>Please select a single element </React.Fragment>);
             }
         }
     }

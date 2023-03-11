@@ -19,12 +19,11 @@ import {
     createDiagramContainer,
     DeleteElementContextMenuItemProvider,
     DiamondNodeView,
-    editLabelFeature,
-    ForeignObjectView, LogLevel, moveFeature, overrideViewerOptions, RectangularNodeView, RevealNamedElementActionProvider,
+    editLabelFeature, ForeignObjectView, LogLevel, moveFeature, overrideViewerOptions,
+    RectangularNodeView, RevealNamedElementActionProvider,
     RoundedCornerNodeView, SCompartment,
     SCompartmentView, selectFeature, SLabel, SLabelView, TYPES
 } from '@eclipse-glsp/client';
-// import { DefaultTypes } from '@eclipse-glsp/protocol';
 import {
     BPMNEdge,
     DataObjectNode,
@@ -39,13 +38,16 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
-    BPMNLabelNodeSelectionListener, ContainerHeaderView, DataObjectNodeView, IconView, MessageNodeView,
+    ContainerHeaderView, DataObjectNodeView, IconView, MessageNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
 import {
     BPMNElementSnapper, DrawHelperLinesCommand, HelperLineListener, HelperLineView, RemoveHelperLinesCommand
 } from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
+import {
+    BPMNLabelNodeSelectionListener, BPMNMultiNodeSelectionListener
+} from './bpmn-select-listeners';
 
 import bpmnPropertyModule from '@open-bpmn/open-bpmn-properties';
 
@@ -61,6 +63,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 	// bind new SelectionListener for BPMNLabels and BoundaryEvents
 	bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
+	bind(TYPES.SelectionListener).to(BPMNMultiNodeSelectionListener);
 
 	// bpmn helper lines
     bind(TYPES.MouseListener).to(HelperLineListener);

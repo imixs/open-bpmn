@@ -14,14 +14,8 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-	boundsFeature,
-	connectableFeature,
-	CircularNode,DiamondNode,
-	deletableFeature,
-	EditableLabel,
-	fadeFeature,
-	hoverFeedbackFeature,
-	isEditableLabel,
+	Args, Bounds, boundsFeature, CircularNode, connectableFeature, deletableFeature, DiamondNode, Dimension, EditableLabel,
+	fadeFeature, ForeignObjectElement, hoverFeedbackFeature, isBoundsAware, isEditableLabel,
 	layoutableChildFeature,
 	LayoutContainer,
 	layoutContainerFeature,
@@ -29,15 +23,13 @@ import {
 	Nameable,
 	nameFeature,
 	popupFeature,
-	RectangularNode,
-	SChildElement,
+	RectangularNode, SArgumentable, SChildElement,
 	SEdge,
 	selectFeature,
 	SModelElement,
 	SShapeElement,
 	WithEditableLabel,
-	withEditLabelFeature,
-	ForeignObjectElement,SArgumentable,Args,Bounds,isBoundsAware,Dimension
+	withEditLabelFeature
 } from '@eclipse-glsp/client';
 
 export interface BPMNFlowElement {
@@ -148,7 +140,7 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
 }
 
 /*
- * This class provides a new Node displaying a multiline textblock.
+ * This class provides a new Node displaying a multiline text block.
  * The node also allows editing the text.
  * We are using this model object for BPMN TextAnnotations.
  *
@@ -197,7 +189,7 @@ export class MultiLineTextNode extends ForeignObjectElement implements SArgument
 }
 
 /*
- * Helper Methods to determind if a ModelElement is of a specific type
+ * Helper Methods to determine if a ModelElement is of a specific type
  * The methods return the corresponding node
  */
 export function isTaskNode(element: SModelElement): element is TaskNode {
@@ -225,7 +217,7 @@ export function isGatewayNode(element: SModelElement): element is GatewayNode {
 }
 
 /*
- * Indicates that the ModelElement has a independed BPNNLabel
+ * Indicates that the ModelElement has a independent BPMNLabel
  */
 export function isBPMNLabelNode(element: SModelElement): element is SModelElement {
 	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode
@@ -244,7 +236,7 @@ export function isBPMNNode(element: SModelElement): element is TaskNode | EventN
 }
 
 /*
- * Returns ture if the BPMN Node Elmeent is a BoundaryEvent
+ * Returns true if the BPMN Node Element is a BoundaryEvent
  */
 export function isBoundaryEvent(element: SModelElement): element is EventNode {
     return element instanceof EventNode && element.type === 'boundaryEvent';

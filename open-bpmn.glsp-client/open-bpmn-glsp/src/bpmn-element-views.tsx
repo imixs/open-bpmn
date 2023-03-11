@@ -14,29 +14,24 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    ActionDispatcher,
-    getElements,
-    filter,
+    findParentByFeature,
     getSubType,
+    Hoverable,
+    IViewArgs,
     RenderingContext,
-    SelectAction,
-    setAttr,SShapeElement,
-    SModelRoot,
-    hasArguments,
-    Hoverable,Selectable,IViewArgs,SPort,SNode,
-    TYPES,
-    findParentByFeature, ShapeView, svg
+    Selectable, setAttr,
+    ShapeView, SNode, SPort,
+    SShapeElement,
+    svg
 } from '@eclipse-glsp/client';
-import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
-import { Icon,
-         isContainerNode,
-         isBPMNLabelNode,
-         isEventNode,
-         isGatewayNode,
-         isTaskNode,
-         isBoundaryEvent
-       } from '@open-bpmn/open-bpmn-model';
-import { inject, injectable } from 'inversify';
+import {
+    Icon,
+    isContainerNode,
+    isEventNode,
+    isGatewayNode,
+    isTaskNode
+} from '@open-bpmn/open-bpmn-model';
+import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 
 /****************************************************************************
@@ -320,47 +315,5 @@ export class TextAnnotationNodeView extends ShapeView {
             <polyline points={textBorder} />
             {context.renderChildren(node)}
         </g>;
-    }
-}
-
-/**
- * This selectionListener selects additional associated BundaryEvents and BPMNLabels.
- * This allows to move both independent Nodes (TaskNode and BoundaryEvent, GNode and GLabel)
- */
-@injectable()
-export class BPMNLabelNodeSelectionListener implements SelectionListener {
-    @inject(TYPES.IActionDispatcher)
-    protected actionDispatcher: ActionDispatcher;
-
-    selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-        const additionalSelection: string[]=[''];
-        // We are intersted in Tasks with BoundaryEvents ...
-        const selectedTaskNodes = getElements(root.index, selectedElements, isTaskNode);
-        // - first get a list of all selected TaskIDs
-        const taskIds = selectedTaskNodes.map(task => task.id);
-        // - next iterate over all BoundaryEvents
-        const boundaryEvents=filter(root.index,isBoundaryEvent);
-        if (selectedTaskNodes.length > 0) {
-          // do we have a boundaryEvent that matches this taskID?
-          boundaryEvents.forEach( b => {
-            if (hasArguments(b)) {
-              const taskRef=b.args.attachedToRef+'';
-              if (taskIds.includes(taskRef)) {
-                additionalSelection.push(b.id);
-              }
-            }
-          });
-        }
-        // ... and we are intersted in BPMNLabelNodes
-        const eventNodes = getElements(root.index, selectedElements, isBPMNLabelNode);
-        if (eventNodes.length > 0) {
-            // find the associated BPMNLabels
-            const eventLabelIds = eventNodes.map(node => node.id + '_bpmnlabel');
-            eventLabelIds.forEach( l => {
-              additionalSelection.push(l);
-            });
-        }
-        // finally dispatch the additional elementIDs...
-        this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: additionalSelection }));
     }
 }
