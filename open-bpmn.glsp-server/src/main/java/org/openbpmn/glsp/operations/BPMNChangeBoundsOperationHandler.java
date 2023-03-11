@@ -188,82 +188,83 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         double offsetX = newPoint.getX() - gNode.getPosition().getX();
         double offsetY = newPoint.getY() - gNode.getPosition().getY();
 
-        BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
-        if (bpmnBounds != null) {
-            BPMNPoint oldBpmnPoint = bpmnBounds.getPosition();
-            BPMNPoint newBpmnPoint = new BPMNPoint(oldBpmnPoint.getX() + offsetX, oldBpmnPoint.getY() + offsetY);
+        BPMNPoint oldBpmnPoint = bpmnElementNode.getBounds().getPosition();
+        BPMNPoint newBpmnPoint = new BPMNPoint(oldBpmnPoint.getX() + offsetX, oldBpmnPoint.getY() + offsetY);
 
-            // now we can verify if the element is contained by a new BPMN Pool. This is
-            // only needed for CollaborationDiagrams...
-            if (modelState.getBpmnModel().isCollaborationDiagram()) {
-                // find the containing participant
-                Participant participant = modelState.getBpmnModel().findParticipantByPoint(newBpmnPoint);
-                // verify if the participant ID has changed
-                if (participant != null && !bpmnElementNode.getProcessId().equals(participant.getProcessId())) {
-                    logger.debug("Element was dropped on a new Participant - Processid=" + participant.getId());
-                    bpmnElementNode.updateParticipant(participant);
-                    // next we can update the GModel Parent node
-                    Optional<GNode> _participantGNode = modelState.getIndex().findElementByClass(participant.getId(),
-                            GNode.class);
-                    if (_participantGNode.isPresent()) {
-                        GNode parentGnode = _participantGNode.get();
-                        gNode.setParent(parentGnode);
+        // now we can verify if the element is contained by a new BPMN Pool. This is
+        // only needed for CollaborationDiagrams...
+        if (modelState.getBpmnModel().isCollaborationDiagram()) {
+            // find the containing participant
+            Participant participant = modelState.getBpmnModel().findParticipantByPoint(newBpmnPoint);
+            // verify if the participant ID has changed
+            if (participant != null && !bpmnElementNode.getProcessId().equals(participant.getProcessId())) {
+                logger.debug("Element was dropped on a new Participant - Processid=" + participant.getId());
+                bpmnElementNode.updateParticipant(participant);
+                // next we can update the GModel Parent node
+                Optional<GNode> _participantGNode = modelState.getIndex().findElementByClass(participant.getId(),
+                        GNode.class);
+                if (_participantGNode.isPresent()) {
+                    GNode parentGnode = _participantGNode.get();
+                    gNode.setParent(parentGnode);
 
-                        // update relative position...
-                        GPoint relativePoint = GraphUtil.point(newBpmnPoint.getX() - parentGnode.getPosition().getX(),
-                                newBpmnPoint.getY() - parentGnode.getPosition().getY());
-                        gNode.setPosition(relativePoint);
+                    // update relative position...
+                    GPoint relativePoint = GraphUtil.point(newBpmnPoint.getX() - parentGnode.getPosition().getX(),
+                            newBpmnPoint.getY() - parentGnode.getPosition().getY());
+                    gNode.setPosition(relativePoint);
 
-                        // update Label parent...
-                        String labelID = gNode.getId() + "_bpmnlabel";
-                        Optional<GNode> _labelNode = modelState.getIndex().findElementByClass(labelID, GNode.class);
-                        if (_labelNode.isPresent()) {
-                            _labelNode.get().setParent(parentGnode);
-                        }
-                    } else {
-                        // move to root
-                        gNode.setParent(modelState.getIndex().getRoot());
-                        // update absolute position...
-                        GPoint absolutePoint = GraphUtil.point(newBpmnPoint.getX(), newBpmnPoint.getY());
-                        gNode.setPosition(absolutePoint);
-
-                        // update Label parent...
-                        String labelID = gNode.getId() + "_bpmnlabel";
-                        Optional<GNode> _labelNode = modelState.getIndex().findElementByClass(labelID, GNode.class);
-                        if (_labelNode.isPresent()) {
-                            _labelNode.get().setParent(modelState.getIndex().getRoot());
-                        }
+                    // update Label parent...
+                    String labelID = gNode.getId() + "_bpmnlabel";
+                    Optional<GNode> _labelNode = modelState.getIndex().findElementByClass(labelID, GNode.class);
+                    if (_labelNode.isPresent()) {
+                        _labelNode.get().setParent(parentGnode);
                     }
                 } else {
-                    // we are still in the same pool so we can simply update the x/y offset
-                    gNode.setPosition(newPoint);
+                    // move to root
+                    gNode.setParent(modelState.getIndex().getRoot());
+                    // update absolute position...
+                    GPoint absolutePoint = GraphUtil.point(newBpmnPoint.getX(), newBpmnPoint.getY());
+                    gNode.setPosition(absolutePoint);
+
+                    // update Label parent...
+                    String labelID = gNode.getId() + "_bpmnlabel";
+                    Optional<GNode> _labelNode = modelState.getIndex().findElementByClass(labelID, GNode.class);
+                    if (_labelNode.isPresent()) {
+                        _labelNode.get().setParent(modelState.getIndex().getRoot());
+                    }
                 }
             } else {
-                // update absolute position as we are not in a collaboration diagram
+                // we are still in the same pool so we can simply update the x/y offset
                 gNode.setPosition(newPoint);
             }
-
-            // The BPMN Position is always absolute so we can simply update the element
-            // BPMN Position by the new offset and new dimensions.
-            bpmnBounds.setPosition(newBpmnPoint);
-            bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
-
-            // Finally Update GNode dimension....
-            gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
-            gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
-            // calling the size method does not have an effect.
-            // see:
-            // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-            gNode.setSize(newSize);
-            // if the flow Element has a BPMNLabel, than we need to adjust finally the
-            // position of the label too
-            if (bpmnElementNode.hasBPMNLabel()) {
-                BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
-                Optional<GNode> _labelnode = modelState.getIndex()
-                        .findElementByClass(bpmnElementNode.getId() + "_bpmnlabel", GNode.class);
-                updateLabel(_labelnode.get(), bpmnLabel, offsetX, offsetY);
-            }
+        } else {
+            // update absolute position as we are not in a collaboration diagram
+            gNode.setPosition(newPoint);
         }
+
+        // The BPMN Position is always absolute so we can simply update the element
+        // bounds by the new offset and new dimensions.
+        // @see https://github.com/imixs/open-bpmn/issues/208
+        bpmnElementNode.setBounds(newBpmnPoint.getX(), newBpmnPoint.getY(), newSize.getWidth(),
+                newSize.getHeight());
+        // bpmnBounds.setPosition(newBpmnPoint);
+        // bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
+
+        // Finally Update GNode dimension....
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+        // calling the size method does not have an effect.
+        // see:
+        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+        gNode.setSize(newSize);
+        // if the flow Element has a BPMNLabel, than we need to adjust finally the
+        // position of the label too
+        if (bpmnElementNode.hasBPMNLabel()) {
+            BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
+            Optional<GNode> _labelnode = modelState.getIndex()
+                    .findElementByClass(bpmnElementNode.getId() + "_bpmnlabel", GNode.class);
+            updateLabel(_labelnode.get(), bpmnLabel, offsetX, offsetY);
+        }
+
     }
 
     /**
