@@ -70,7 +70,7 @@ public class BPMNXMLUtil {
             if (pos > backwardTagPos - 1) {
                 xml = xml.substring(0, backwardTagPos + 1) + xml.substring(pos);
             }
-            lastPos = pos + 1;
+            lastPos = backwardTagPos + 9;
             /**
              * next search for
              * CDATA end ']]>'

@@ -11,7 +11,31 @@ public class TestCleanCDATA {
     @Test
     public void testSimple() {
 
-        String xml = "<imixs:value>   \n  <![CDATA[ some data ]]>\n   </imixs:value>";
+        String xml = "<imixs:value>\n<![CDATA[ some data ]]>\n</imixs:value>";
+
+        System.out.println(xml);
+        String result = BPMNXMLUtil.cleanCDATAWhiteSpace(xml);
+
+        System.out.println(result);
+
+    }
+
+    @Test
+    public void testNoneWhitespace() {
+
+        String xml = "<imixs:value><![CDATA[ some data ]]></imixs:value>";
+
+        System.out.println(xml);
+        String result = BPMNXMLUtil.cleanCDATAWhiteSpace(xml);
+
+        System.out.println(result);
+
+    }
+
+    @Test
+    public void testMoreWhitespace() {
+
+        String xml = "<imixs:value>   \n                              <![CDATA[ some data ]]>\n     </imixs:value>";
 
         System.out.println(xml);
         String result = BPMNXMLUtil.cleanCDATAWhiteSpace(xml);
