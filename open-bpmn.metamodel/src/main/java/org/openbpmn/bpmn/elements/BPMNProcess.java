@@ -147,6 +147,7 @@ public class BPMNProcess extends BPMNElement {
         result.addAll(getEvents());
         result.addAll(getGateways());
         result.addAll(getDataObjects());
+        result.addAll(getTextAnnotations());
 
         return result;
     }
