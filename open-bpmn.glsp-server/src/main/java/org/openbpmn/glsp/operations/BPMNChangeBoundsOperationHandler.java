@@ -300,11 +300,13 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
         BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
         // update BPMNElement bounds....
-        if (bpmnBounds != null) {
-            bpmnBounds.setPosition(bpmnBounds.getPosition().getX() + offsetX,
-                    bpmnBounds.getPosition().getY() + offsetY);
-            bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
-        }
+        // The BPMN Position is always absolute so we can simply update the element
+        // bounds by the new offset and new dimensions.
+        // @see https://github.com/imixs/open-bpmn/issues/208
+        bpmnElementNode.setBounds(bpmnBounds.getPosition().getX() + offsetX,
+                bpmnBounds.getPosition().getY() + offsetY, newSize.getWidth(),
+                newSize.getHeight());
+
         // if we have a Participant element selected than we also need to update
         // all embedded FlowElements and also the LaneSet if available.
         Participant participant = modelState.getBpmnModel().findParticipantById(id);
@@ -410,14 +412,14 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             if (_node.isPresent()) {
                 gNode = _node.get();
             }
-            if (bpmnLaneBounds == null || gNode == null) {
+            if (gNode == null) {
                 logger.warn("invalid LaneSet - model can not be synchronized!");
                 continue;
             }
 
             if (offsetWidth == 0 && offsetHeight == 0) {
                 // Update absolute BPMN position
-                bpmnLaneBounds.setPosition(bpmnLaneX, bpmnLaneY);
+                lane.setPosition(bpmnLaneX, bpmnLaneY);
                 // adjust laneY for the next iteration
                 bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
                 // no further update needed
@@ -439,7 +441,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
 
             logger.debug("  ===> Lane " + lane.getId() + " new Height = " + bpmnLaneBounds.getDimension().getHeight());
 
-            bpmnLaneBounds.setPosition(bpmnLaneX, bpmnLaneY);
+            lane.setPosition(bpmnLaneX, bpmnLaneY);
             // adjust laneY for the next iteration
             bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
 
@@ -480,10 +482,9 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             logger.debug("update element bounds: " + flowElement.getId());
             try {
                 BPMNBounds bounds = flowElement.getBounds();
-                if (bounds != null) {
-                    bounds.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
-                }
-                // if the flowElemen has a BPMNLabel element we adjust position of the label too
+                flowElement.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
+                // if the flowElement has a BPMNLabel element we adjust position of the label
+                // too
                 BPMNLabel bpmnLabel = flowElement.getLabel();
                 if (bpmnLabel != null) {
                     bpmnLabel.updateLocation(bpmnLabel.getPosition().getX() + offsetX,
