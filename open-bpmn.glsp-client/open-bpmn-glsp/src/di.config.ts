@@ -59,7 +59,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
-	// neuer SelectionListener for Event BPMNLabels
+	// bind new SelectionListener for BPMNLabels and BoundaryEvents
 	bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
 
 	// bpmn helper lines
@@ -93,7 +93,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
 
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
-    // configureModelElement(context, 'comp:header', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
     configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);

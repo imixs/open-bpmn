@@ -26,12 +26,15 @@ import { VNode } from 'snabbdom';
 /****************************************************************************
  * This module provides BPMN Routings views for sequence flows
  *
- * Layout for the bpmn sequence flow. The View extends the `PolylineEdgeView` that renders gaps on intersections,
- * and the `JumpingPolylineEdgeView` that renders jumps over intersections.
+ * Layout for the bpmn sequence flow. The View extends the `PolylineEdgeView`,
+ * that renders gaps on intersections, and the `JumpingPolylineEdgeView` that
+ * renders jumps over intersections.
  *
- * In addition the view render rounded corners for a manhattan routing and an arrow on the edge end point
+ * In addition the view render rounded corners for a manhattan routing and an
+ * arrow on the edge end point
  *
- * For SequenceFlows the view also adds the BPMN default symbol
+ * For conditional SequenceFlows the view also adds the BPMN default symbol
+ *
  ****************************************************************************/
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -59,7 +62,7 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
             />
           );
 
-        // Default Sequcnece flow?
+        // Conditional default Sequence flow?
         const defaultSymbol: any = (
             <path
                 class-sprotty-edge={true}
@@ -137,7 +140,7 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
                         path += ` L ${p.x},${p.y}`;
                     }
                 } else {
-                    // default behaviour
+                    // default behavior
                     path += ` L ${p.x},${p.y}`;
                 }
             }
@@ -149,12 +152,12 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
 
     /**
      * Helper method to compute the maximum possible radius.
-     * If two poins are very close the radius need to be reduced
+     * If two points are very close the radius need to be reduced
      */
     protected computeMaxRadius(pCurrent: Point, pLast: Point, pNext: Point): number {
         let radius = 10;
         const dRef = 0.5;
-        // verfiy last point
+        // verify last point
         let xDif = Math.abs(pCurrent.x - pLast.x);
         let yDif = Math.abs(pCurrent.y - pLast.y);
         if (xDif > 0 && xDif < 10) {

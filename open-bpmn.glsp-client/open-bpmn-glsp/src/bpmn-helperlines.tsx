@@ -15,16 +15,13 @@
  ********************************************************************************/
 import {
 	Action,
-	FeedbackCommand,
-	hasObjectProp,
+	FeedbackCommand, hasArguments, hasObjectProp,
 	isBoundsAware,
-	ISnapper,
-	hasArguments,
-	MouseListener,
+	ISnapper, MouseListener,
 	SModelElement,
 	SModelRoot
 } from '@eclipse-glsp/client';
-import { isBPMNNode, isBPMNLabelNode, LabelNode, isBoundaryEvent, TaskNode, EventNode } from '@open-bpmn/open-bpmn-model';
+import { EventNode, isBoundaryEvent, isBPMNLabelNode, isBPMNNode, LabelNode, TaskNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { CommandExecutionContext, CommandReturn, getAbsoluteBounds, IView, RenderingContext, SChildElement, svg, TYPES } from 'sprotty';
@@ -34,13 +31,13 @@ const JSX = { createElement: svg };
 
 /****************************************************************************
  * This module extends the mouseListener to support helper lines.
- * HelperLines are displayed when a element is selected and draged on the diagram pane.
+ * HelperLines are displayed when a element is selected and dragged on the diagram pane.
  *
- * If the moved element is alligned to the center of another element on the diagram
- * the helper line is shown. There are can be up to two helperlines be displayed
+ * If the moved element is aligned to the center of another element on the diagram
+ * the helper line is shown. There are can be up to two helper-lines be displayed
  * - horizontal and vertical
  *
- * The method 'findHelperLines' can be extended to proivde more helper lines
+ * The method 'findHelperLines' can be extended to provide more helper lines
  * to show a different behavior.
  ****************************************************************************/
 
