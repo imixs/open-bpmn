@@ -84,8 +84,17 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         this.createBody();
     }
 
+    /**
+     * Updates the containerElement under the given context before it becomes visible.
+     * We override this method to preselect the root element as a default selection.
+     *
+     * @param _containerElement
+     * @param root
+     */
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
         this.modelRootId = root.id;
+        // preselect the root element showing the diagram properties
+        this.selectionChanged(root,[]);
     }
 
     /*
@@ -200,7 +209,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      */
     handle(action: Action): ICommand | Action | void {
         if (this.bodyDiv) {
-           return;
+            // return if we do not yet have a body DIV.
+            return;
         }
         if (action.kind === EnableToolPaletteAction.KIND) {
             const requestAction = RequestContextActions.create({
@@ -231,100 +241,102 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * to restore the last category if the element type has not changed.
      */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-        // return if the property panel is not yet visible
-        if (!this.bodyDiv || !selectedElements || selectedElements.length===0) {
+        // return if we do not yet have a body DIV.
+        if (!this.bodyDiv) {
            return;
         }
 
-        // first we need to verify if a Symbol/BPMNLabel combination was selected.
-        // In this case we are only interested in the BPMNFlowElement and not in the label
-        if (selectedElements.length > 1) {
-            const filteredArr = selectedElements.filter(val => !val.endsWith('_bpmnlabel'));
-            selectedElements = filteredArr;
-        }
-        // Next verify if we have task/Boundary selection
-        // In this case we are only interested in the Task  and not in the Event
-        if (selectedElements.length === 2) {
-            const element_test=root.index.getById(selectedElements[1]);
-            if (element_test && isBoundaryEvent(element_test)) {
-                // remove Boundary event from selection list
-                selectedElements.pop();
+        if (selectedElements && selectedElements.length>0) {
+            // first we need to verify if a Symbol/BPMNLabel combination was selected.
+            // In this case we are only interested in the BPMNFlowElement and not in the label
+            if (selectedElements.length > 1) {
+                const filteredArr = selectedElements.filter(val => !val.endsWith('_bpmnlabel'));
+                selectedElements = filteredArr;
+            }
+            // Next verify if we have task/Boundary selection
+            // In this case we are only interested in the Task  and not in the Event
+            if (selectedElements.length === 2) {
+                const element_test=root.index.getById(selectedElements[1]);
+                if (element_test && isBoundaryEvent(element_test)) {
+                    // remove Boundary event from selection list
+                    selectedElements.pop();
+                }
             }
         }
 
-        // Check if we now have exactly one element selected. Only in this case we show
-        // a property panel.
-        if (selectedElements.length === 1 || selectedElements.length ===0 ) {
-            let element;
-            if (selectedElements.length === 1) {
-              element = root.index.getById(selectedElements[0]);
-            } else {
-              element=root;
+        // if no element is selected we default to the root element (diagram plane)
+        let element;
+        if (!selectedElements || selectedElements.length===0) {
+            element=root;
+        } else if (selectedElements.length === 1 ) {
+            // we  have exactly one element selected. 
+            element = root.index.getById(selectedElements[0]);
+        }
+
+        // now if we have an element we show teh panel..
+        if (element) {
+            // did we have a change?
+            // avoid message loop...
+            if (element.id === this.selectedElementId) {
+                // skip this event!
+                return;
             }
-            if (element) {
-                // did we have a change?
-                // avoid message loop...
-                if (element.id === this.selectedElementId) {
-                    // skip this event!
-                    return;
-                }
-                if (element.id === 'EMPTY') {
-                    // skip this event!
-                    return;
-                }
+            if (element.id === 'EMPTY') {
+                // skip this event!
+                return;
+            }
 
-                 // compute the current category....
-                this.updateLastCategory();
+            // compute the current category....
+            this.updateLastCategory();
 
-                // set new selectionId
-                this.selectedElementId = element.id;
-                // because the jsonForms send a onchange event after init we mark this state here
-                this.initForm = true;
-                // update header
-                if (element===root) {
-                    this.headerTitle.textContent = 'Default Process';
-                } else {
-                    this.headerTitle.textContent = element.type;
-                }
-
-                // init the react container only once....
-                if (!this.panelContainer) {
-                    this.panelContainer = createRoot(this.bodyDiv);
-                }
-                // BPMN Node selected, collect JSONForms schemata....
-                let bpmnPropertiesData;
-                let bpmnPropertiesSchema;
-                let bpmnPropertiesUISchema;
-                if (hasArguments(element)) {
-                   // parse the jsonForms schema details
-                   bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
-                   bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
-                   bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
-                }
-                // Build a generic JSONForms Property panel if we have at least an UISchema
-                if (bpmnPropertiesUISchema) {
-                    // list of renderers declared outside the App component
-                    const bpmnRenderers = [
-                       ...vanillaRenderers,
-                       // optional register custom renderers...
-                       SelectItemRendererEntry,
-                       SelectItemComboRendererEntry
-                    ];
-
-                    // render JSONForm // vanillaRenderers
-                    // we also set the key to the current elementID to reinitialize the form panel
-                    this.panelContainer.render(<JsonForms
-                            data={bpmnPropertiesData}
-                            schema={bpmnPropertiesSchema}
-                            uischema={bpmnPropertiesUISchema}
-                            cells={vanillaCells}
-                            renderers={bpmnRenderers}
-                            onChange={({ errors, data }) => this.setState({ data })}
-                            key={this.selectedElementId}
-                        />);
-                }
+            // set new selectionId
+            this.selectedElementId = element.id;
+            // because the jsonForms send a onchange event after init we mark this state here
+            this.initForm = true;
+            // update header
+            if (element===root) {
+                this.headerTitle.textContent = 'Default Process';
             } else {
-                // element not defined!
+                this.headerTitle.textContent = element.type;
+            }
+
+            // init the react container only once....
+            if (!this.panelContainer) {
+                this.panelContainer = createRoot(this.bodyDiv);
+            }
+            // BPMN Node selected, collect JSONForms schemata....
+            let bpmnPropertiesData;
+            let bpmnPropertiesSchema;
+            let bpmnPropertiesUISchema;
+            if (hasArguments(element)) {
+                // parse the jsonForms schema details
+                bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
+                bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
+                bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
+            }
+            // Build a generic JSONForms Property panel if we have at least an UISchema
+            if (bpmnPropertiesUISchema) {
+                // list of renderers declared outside the App component
+                const bpmnRenderers = [
+                    ...vanillaRenderers,
+                    // optional register custom renderers...
+                    SelectItemRendererEntry,
+                    SelectItemComboRendererEntry
+                ];
+
+                // render JSONForm // vanillaRenderers
+                // we also set the key to the current elementID to reinitialize the form panel
+                this.panelContainer.render(<JsonForms
+                        data={bpmnPropertiesData}
+                        schema={bpmnPropertiesSchema}
+                        uischema={bpmnPropertiesUISchema}
+                        cells={vanillaCells}
+                        renderers={bpmnRenderers}
+                        onChange={({ errors, data }) => this.setState({ data })}
+                        key={this.selectedElementId}
+                    />);
+            }  else {
+                // we have no UISchema!
                 this.selectedElementId = '';
                 this.headerTitle.textContent = 'BPMN Properties';
             }
@@ -382,7 +394,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             this.lastCategory=selectedListItem.textContent;
         }
     }
-
 }
 
 /**
