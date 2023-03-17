@@ -212,6 +212,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             // return if we do not yet have a body DIV.
             return;
         }
+
         if (action.kind === EnableToolPaletteAction.KIND) {
             const requestAction = RequestContextActions.create({
                 // contextId: ToolPalette.ID,
@@ -269,7 +270,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         if (!selectedElements || selectedElements.length===0) {
             element=root;
         } else if (selectedElements.length === 1 ) {
-            // we  have exactly one element selected. 
+            // we  have exactly one element selected.
             element = root.index.getById(selectedElements[0]);
         }
 
