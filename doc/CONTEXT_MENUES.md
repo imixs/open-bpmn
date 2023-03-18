@@ -1,6 +1,14 @@
 # How to configure Context Menus
 
-Context menus in GLSP are menu actions triggered in the conext of a selected element or a the diagram plane. Conext menues are tightly coupled to the execution platform. For example in Theia the context menu is shown by a right-mouse-click on the diagram plane. In Visual-Code the same menu action is handled as a so called sub-menu which appears on the top bar of the diagram.  For this reason the implementation is different for both platforms.
+Context menus in GLSP are menu actions triggered in the conext of a selected element or a the diagram plane. Conext menues are tightly coupled to the execution platform. For example in Theia the context menu is shown by a right-mouse-click on the diagram plane.
+
+<img src="./images/context-menu-01.png" />
+
+ In Visual-Code the same menu action is handled as a so called sub-menu which appears on the top bar of the diagram.  
+ 
+<img src="./images/context-menu-02.png" />
+ 
+For this reason the implementation is different for both platforms.
 To add custom menu elements in the diagram context menu the following parts need to be implemented
 
 ## Context Menu in Theia Module
