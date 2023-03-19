@@ -51,6 +51,22 @@ The [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) provides the GLSP
 
 The [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) is the GLSP Client part of Open BPMN providing the graphical modeling tool.
 
+# Tutorials
+
+Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts the different concepts in various ways. 
+We provide a short collection of tutorials regarding the GLSP framework and how to customize and adapt Open-BPMN.
+in Open BPMN.
+
+- [The Module System](./doc/MODULE_SYSTEM.md)
+- [Build your Own BPMN Extension](./doc/BPMN_EXTENSIONS.md)
+- [BPMN Properties](./doc/BPMN_PROPERTIES.md)
+- [Tool Palette](./doc/TOOL_PALETTE.md)
+- [Custom Element Views](./doc/CUSTOM_VIEWS.md)
+- [Context Menus](./doc/CONTEXT_MENUS.md)
+- [BPMN Router](./doc/BPMN_ROUTER.md)
+- [Build your Own EMF Model](./doc/BPMN_EMF.md)
+- [Anchors and Ports](./doc/ANCHORS_AND_PORTS.md)
+ 
 # Build and Run
 
 To build the complete project run
@@ -86,15 +102,6 @@ For a full clean & reinstall of the GLSP Client (after upgrades), run:
     $ ./build.sh -c -i
 
 You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
-
-## Development
-
-Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts the different concepts in various ways. The following sections provide details about the development with Eclipse GLSP and the solutions used in Open BPMN.
-
-- [Build your Own EMF Model](./doc/BPMN_EMF.md)
-- [Tool Palette](./doc/TOOL_PALETTE.md)
-- [Custom Element Views](./doc/CUSTOM_VIEWS.md)
-- [Ports](./doc/PORTS.md)
 
 ### NodeJS
 
