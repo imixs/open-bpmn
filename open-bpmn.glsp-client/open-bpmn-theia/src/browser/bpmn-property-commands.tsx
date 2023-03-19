@@ -16,12 +16,11 @@
 
 import { NavigateAction } from '@eclipse-glsp/client';
 import { GLSPCommandHandler, GLSPContextMenu } from '@eclipse-glsp/theia-integration';
-import {
-    BPMNPropertyAction
-} from '@open-bpmn/open-bpmn-glsp';
+import { BPMNPropertyPanelToggleAction } from '@open-bpmn/open-bpmn-properties';
 import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry } from '@theia/core';
 import { ApplicationShell } from '@theia/core/lib/browser';
 import { inject, injectable } from '@theia/core/shared/inversify';
+
 /**
  * This module defines different commands and menu actions that fire a specific action.
  * These actions can be handled by the server or client part.
@@ -42,7 +41,7 @@ export class BPMNPropertiesCommandContribution implements CommandContribution {
         commands.registerCommand(
             { id: PropertyPanelCommands.PROPERTIES_OPEN, label: 'Open Properties' },
             new GLSPCommandHandler(this.shell, {
-                actions: () => [BPMNPropertyAction.create()],
+                actions: () => [BPMNPropertyPanelToggleAction.create()],
                 isEnabled: context => context.selectedElements.length === 1
             })
         );

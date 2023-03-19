@@ -187,7 +187,7 @@ Next you can register the sub menu entries in the extension configuration in the
 ....
 ```
 
-That's it! Your new context menu is now successful integrated.
+**Note:** To integrate GLSP Actions into the VSCode you need to define the Action class again in your extension module. We do this in the file `open-bpmn-actions.ts`. For some reason it is not possible to import this class from a other package. 
 
 ## The NaviateAction
 

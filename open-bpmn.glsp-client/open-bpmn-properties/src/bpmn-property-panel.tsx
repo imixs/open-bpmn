@@ -30,14 +30,14 @@ import {
 } from 'sprotty';
 
 import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
-import { inject, injectable, postConstruct } from 'inversify';
-import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
-// Import Instruction sReact and JsonForms
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
+import { inject, injectable, postConstruct } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
+import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
+
 import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
@@ -412,8 +412,27 @@ export function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
-export class BPMNPropertyPanelAction implements Action {
-  static readonly KIND = 'BPMNPropertyPanelAction';
-  kind = BPMNPropertyPanelAction.KIND;
-  constructor(public readonly additionalInformation: string) {}
+export interface BPMNPropertyPanelToggleAction extends Action {
+    kind: typeof BPMNPropertyPanelToggleAction.KIND;
+  }
+
+export namespace BPMNPropertyPanelToggleAction {
+    export const KIND = 'properties';
+
+    export function is(object: any): object is BPMNPropertyPanelToggleAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): BPMNPropertyPanelToggleAction {
+        return { kind: KIND };
+    }
+}
+
+@injectable()
+export class BPMNPropertyPanelToggleActionHandler implements IActionHandler {
+    handle(action: BPMNPropertyPanelToggleAction): void | BPMNPropertyPanelToggleAction {
+        console.log('--------> toggle action arrived');
+        // implement your custom logic to handle the action
+        // Optionally issue a response action
+    }
 }
