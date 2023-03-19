@@ -16,6 +16,8 @@
 import createBPMNDiagramContainer from './di.config';
 
 export * from './bpmn-element-views';
+export * from './bpmn-property-actions';
 export * from './bpmn-routing-views';
-
 export { createBPMNDiagramContainer };
+
+
