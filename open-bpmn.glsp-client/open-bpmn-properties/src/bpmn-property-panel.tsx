@@ -208,6 +208,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * See Discussion: https://github.com/eclipse-glsp/glsp/discussions/910
      */
     handle(action: Action): ICommand | Action | void {
+        console.log('-------------------hi we ar in a action hanle method');
         if (this.bodyDiv) {
             // return if we do not yet have a body DIV.
             return;
@@ -231,6 +232,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     );
                 }
             });
+        }
+
+        if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
+            console.log('We are in our handler toggle toggle toggle !!!');
         }
     }
 
@@ -431,7 +436,7 @@ export namespace BPMNPropertyPanelToggleAction {
 @injectable()
 export class BPMNPropertyPanelToggleActionHandler implements IActionHandler {
     handle(action: BPMNPropertyPanelToggleAction): void | BPMNPropertyPanelToggleAction {
-        console.log('--------> toggle action arrived');
+        console.log('--------> toggle action arrived v2');
         // implement your custom logic to handle the action
         // Optionally issue a response action
     }
