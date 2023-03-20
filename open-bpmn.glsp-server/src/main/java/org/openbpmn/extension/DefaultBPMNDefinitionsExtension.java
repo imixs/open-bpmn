@@ -129,30 +129,45 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             final GModelElement gNodeElement) {
         Element definitions = modelState.getBpmnModel().getDefinitions();
 
-        bpmnElement.setName(json.getString("name", ""));
-        bpmnElement.setDocumentation(json.getString("documentation", ""));
-        definitions.setAttribute("targetNamespace", json.getString("targetNamespace", ""));
-        definitions.setAttribute("exporter", json.getString("exporter", ""));
-        definitions.setAttribute("exporterVersion", json.getString("exporterVersion", ""));
+        if ("General".equals(category)) {
+            bpmnElement.setName(json.getString("name", ""));
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
+        }
+        if ("Definitions".equals(category)) {
+            definitions.setAttribute("targetNamespace", json.getString("targetNamespace", ""));
+            definitions.setAttribute("exporter", json.getString("exporter", ""));
+            definitions.setAttribute("exporterVersion", json.getString("exporterVersion", ""));
+        }
 
-        // update signal properties...
-        logger.debug("...update signals.. ");
-        JsonArray signalSetValues = json.getJsonArray("signals");
-        for (JsonValue laneValue : signalSetValues) {
-            JsonObject signalData = (JsonObject) laneValue;
-            String id = signalData.getString("id", null);
-            Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
-            if (signal != null) {
-                signal.setName(signalData.getString("name"));
-            } else {
-                // signal did not yet exist in definition list - so we create a new one
-                int i = modelState.getBpmnModel().getSignals().size() + 1;
-                try {
-                    modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
-                    modelState.reset();
-                } catch (BPMNModelException e) {
-                    logger.warn("Unable to add new signal: " + e.getMessage());
+        if ("Signals".equals(category)) {
+            // update signal properties...
+            boolean update = false;
+            logger.debug("...update signals.. ");
+            JsonArray signalSetValues = json.getJsonArray("signals");
+
+            if (signalSetValues != null) {
+                for (JsonValue laneValue : signalSetValues) {
+                    JsonObject signalData = (JsonObject) laneValue;
+                    String id = signalData.getString("id", null);
+                    Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
+                    if (signal != null) {
+                        signal.setName(signalData.getString("name"));
+                    } else {
+                        // signal did not yet exist in definition list - so we create a new one
+                        int i = modelState.getBpmnModel().getSignals().size() + 1;
+                        try {
+                            modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
+                        } catch (BPMNModelException e) {
+                            logger.warn("Unable to add new signal: " + e.getMessage());
+                        }
+                        update = true; // reset signal state
+                    }
                 }
+            } else {
+                update = true; // reset signal state
+            }
+            if (update) {
+                modelState.reset();
             }
         }
     }
