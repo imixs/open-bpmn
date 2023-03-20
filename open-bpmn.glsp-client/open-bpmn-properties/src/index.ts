@@ -16,7 +16,7 @@
 import { EnableToolPaletteAction, TYPES } from '@eclipse-glsp/client';
 import { ContainerModule } from 'inversify';
 import { configureActionHandler } from 'sprotty';
-import { BPMNPropertyPanel } from './bpmn-property-panel';
+import { BPMNPropertyPanel, BPMNPropertyPanelToggleAction } from './bpmn-property-panel';
 // css styles
 import '../css/bpmn-properties.css';
 import '../css/jsonforms-theia.css';
@@ -25,6 +25,6 @@ export const BPMNPropertyModule = new ContainerModule((bind, _unbind, isBound, r
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
+    configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
 });
-export { BPMNPropertyPanelToggleAction, BPMNPropertyPanelToggleActionHandler } from './bpmn-property-panel';
-// export default bpmnPropertyModule;
+export { BPMNPropertyPanelToggleAction } from './bpmn-property-panel';

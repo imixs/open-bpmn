@@ -25,6 +25,8 @@ node_modules/.yarn-integrity
 .browser_modules
 lib
 *.log
+tsconfig.tsbuildinfo
+gen-webpack.config.js
 
 # see: https://github.com/eclipse-glsp/glsp/issues/952#issuecomment-1463472294
 #**/*-app/**

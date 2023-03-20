@@ -60,6 +60,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     initForm: boolean;
     lastCategory: string;
     isResizing: boolean;
+    panelToggle: boolean;
     currentY: number;
     headerTitle: HTMLElement;
     protected panelContainer: any;
@@ -123,7 +124,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
           if (!this.isResizing) {
             return;
           }
-
           const parent=this.containerElement.parentElement;
           let _newheight=this.containerElement.offsetHeight - (e.clientY - this.currentY);
           // fix minheigt
@@ -206,15 +206,13 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * We react on the EnableToolPaletteAction to make the property panel visible
      * If we already have the bodyDiv defined, than we skip this event.
      * See Discussion: https://github.com/eclipse-glsp/glsp/discussions/910
+     *
+     * In addition we also handle the BPMNPropertyPanelToggleAction to show/hide the
+     * propertyPanel.
      */
     handle(action: Action): ICommand | Action | void {
-        console.log('-------------------hi we ar in a action hanle method');
-        if (this.bodyDiv) {
-            // return if we do not yet have a body DIV.
-            return;
-        }
-
-        if (action.kind === EnableToolPaletteAction.KIND) {
+        // check enable state
+        if (!this.bodyDiv && action.kind === EnableToolPaletteAction.KIND) {
             const requestAction = RequestContextActions.create({
                 // contextId: ToolPalette.ID,
                 contextId: BPMNPropertyPanel.ID,
@@ -234,8 +232,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             });
         }
 
+        // Toggle the property panel. Action is triggered by context menu
         if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
-            console.log('We are in our handler toggle toggle toggle !!!');
+            if (!this.panelToggle) {
+                this.containerElement.style.height = '50%';
+            } else {
+                this.containerElement.style.height = '28px';
+            }
+            this.panelToggle=!this.panelToggle;
         }
     }
 
@@ -430,14 +434,5 @@ export namespace BPMNPropertyPanelToggleAction {
 
     export function create(): BPMNPropertyPanelToggleAction {
         return { kind: KIND };
-    }
-}
-
-@injectable()
-export class BPMNPropertyPanelToggleActionHandler implements IActionHandler {
-    handle(action: BPMNPropertyPanelToggleAction): void | BPMNPropertyPanelToggleAction {
-        console.log('--------> toggle action arrived v2b');
-        // implement your custom logic to handle the action
-        // Optionally issue a response action
     }
 }

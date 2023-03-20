@@ -14,7 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    boundsFeature, CircularNodeView, configureActionHandler, configureCommand,
+    boundsFeature, CircularNodeView, configureCommand,
     configureDefaultModelElements, configureModelElement, configureView, ConsoleLogger,
     createDiagramContainer,
     DeleteElementContextMenuItemProvider,
@@ -50,9 +50,7 @@ import {
 } from './bpmn-select-listeners';
 
 import {
-    BPMNPropertyModule,
-    BPMNPropertyPanelToggleAction,
-    BPMNPropertyPanelToggleActionHandler
+    BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -124,9 +122,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'sequenceFlow', BPMNEdge, BPMNEdgeView);
     configureModelElement(context, 'messageFlow', BPMNEdge, BPMNEdgeView);
     configureModelElement(context, 'association', BPMNEdge, BPMNEdgeView);
-
-    // Action BPMN Property Action Handler
-    configureActionHandler(context, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanelToggleActionHandler);
 
 });
 

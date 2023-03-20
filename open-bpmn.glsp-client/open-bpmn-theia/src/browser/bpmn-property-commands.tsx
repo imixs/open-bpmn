@@ -14,7 +14,6 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { NavigateAction } from '@eclipse-glsp/client';
 import { GLSPCommandHandler, GLSPContextMenu } from '@eclipse-glsp/theia-integration';
 import { BPMNPropertyPanelToggleAction } from '@open-bpmn/open-bpmn-properties';
 import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry } from '@theia/core';
@@ -29,8 +28,7 @@ import { inject, injectable } from '@theia/core/shared/inversify';
  *
  */
 export namespace PropertyPanelCommands {
-    export const PROPERTIES_CLOSE = 'glsp-bpmn-properties-close';
-    export const PROPERTIES_OPEN = 'glsp-bpmn-properties-open';
+    export const PROPERTIES_TOGGLE = 'glsp-bpmn-properties-toggle';
 }
 
 @injectable()
@@ -39,17 +37,9 @@ export class BPMNPropertiesCommandContribution implements CommandContribution {
     registerCommands(commands: CommandRegistry): void {
         // register commands...
         commands.registerCommand(
-            { id: PropertyPanelCommands.PROPERTIES_OPEN, label: 'Open Properties' },
+            { id: PropertyPanelCommands.PROPERTIES_TOGGLE, label: 'BPMN Properties' },
             new GLSPCommandHandler(this.shell, {
                 actions: () => [BPMNPropertyPanelToggleAction.create()],
-                isEnabled: context => context.selectedElements.length === 1
-            })
-        );
-
-        commands.registerCommand(
-            { id: PropertyPanelCommands.PROPERTIES_CLOSE, label: 'Close Properties' },
-            new GLSPCommandHandler(this.shell, {
-                actions: () => [NavigateAction.create('properties')],
                 isEnabled: context => context.selectedElements.length === 1
             })
         );
@@ -63,12 +53,8 @@ export class BPMNPropertiesMenuContribution implements MenuContribution {
     registerMenus(menus: MenuModelRegistry): void {
 
         menus.registerMenuAction(GLSPContextMenu.MENU_PATH.concat('z'), {
-            commandId: PropertyPanelCommands.PROPERTIES_OPEN,
-            label: 'Open Properties'
-        });
-        menus.registerMenuAction(GLSPContextMenu.MENU_PATH.concat('z'), {
-            commandId: PropertyPanelCommands.PROPERTIES_CLOSE,
-            label: 'Close Properties'
+            commandId: PropertyPanelCommands.PROPERTIES_TOGGLE,
+            label: 'BPMN Properties'
         });
 
     }
