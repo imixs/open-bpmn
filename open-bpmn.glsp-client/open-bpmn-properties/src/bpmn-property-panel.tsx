@@ -436,7 +436,7 @@ export namespace BPMNPropertyPanelToggleAction {
 @injectable()
 export class BPMNPropertyPanelToggleActionHandler implements IActionHandler {
     handle(action: BPMNPropertyPanelToggleAction): void | BPMNPropertyPanelToggleAction {
-        console.log('--------> toggle action arrived v2');
+        console.log('--------> toggle action arrived v2b');
         // implement your custom logic to handle the action
         // Optionally issue a response action
     }

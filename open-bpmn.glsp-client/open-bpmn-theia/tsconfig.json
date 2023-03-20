@@ -5,7 +5,6 @@
     "outDir": "lib",
     "baseUrl": ".",
     "reactNamespace": "JSX",
-    "skipLibCheck": true,
     "types": []
   },
   "include": ["src"]

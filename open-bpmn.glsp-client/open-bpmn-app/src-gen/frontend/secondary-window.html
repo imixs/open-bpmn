@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Theia — Secondary Window</title>
+    <style>
+    html, body {
+        overflow: hidden;
+        -ms-overflow-style: none;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    html,
+    head,
+    body,
+    .secondary-widget-root,
+    #widget-host {
+        width: 100% !important;
+        height: 100% !important;
+    }
+    </style>
+    <link rel="stylesheet" href="./secondary-window.css">
+    <script>
+    window.addEventListener('message', e => {
+        // Only process messages from Theia main window
+        if (e.source === window.opener) {
+            // Delegate message to iframe
+            document.getElementsByTagName('iframe').item(0).contentWindow.postMessage({ ...e.data }, '*');
+        }
+    });
+    </script>
+</head>
+
+<body>
+    <div id="widget-host"></div>
+</body>
+
+</html>
