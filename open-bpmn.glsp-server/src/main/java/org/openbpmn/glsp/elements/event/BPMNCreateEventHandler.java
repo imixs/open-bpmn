@@ -155,7 +155,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(eventID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(eventID)));
     }
 
     @Override

@@ -73,7 +73,7 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(participantID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(participantID)));
     }
 
     @Override

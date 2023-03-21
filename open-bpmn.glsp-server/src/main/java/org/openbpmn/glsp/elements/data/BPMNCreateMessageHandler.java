@@ -99,7 +99,7 @@ public class BPMNCreateMessageHandler extends CreateBPMNNodeOperationHandler {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(messageID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(messageID)));
     }
 
     @Override

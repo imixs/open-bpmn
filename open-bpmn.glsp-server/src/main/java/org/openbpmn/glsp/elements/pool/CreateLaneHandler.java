@@ -76,7 +76,7 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(laneID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(laneID)));
     }
 
     @Override

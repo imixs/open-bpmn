@@ -98,7 +98,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(gatewayID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(gatewayID)));
     }
 
     @Override

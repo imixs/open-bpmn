@@ -103,7 +103,7 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(dataObjectID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(dataObjectID)));
     }
 
     @Override

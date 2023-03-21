@@ -40,11 +40,10 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.w3c.dom.Element;
 
 /**
- * The LinkEventDefinitionExtension is responsible to read and update optional
- * LinkEventDefinitions from the BPMN model. The Extension builds a custom
- * property section named 'Link Definitions' shown a list of all
- * LinkEventDefinitions
- * define in a Event.
+ * The SignalEventDefinitionExtension is responsible to read and update optional
+ * SignalEventDefinitions from the BPMN model. The Extension builds a custom
+ * property section named 'Signals' shown a list of all
+ * SignalEventDefinitions defined in an Event.
  * 
  * @author rsoika
  */

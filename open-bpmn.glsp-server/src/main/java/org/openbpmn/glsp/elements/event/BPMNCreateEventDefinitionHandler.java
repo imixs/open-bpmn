@@ -92,7 +92,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
         modelState.reset();
         if (eventID != null) {
             // select event
-            actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(eventID)));
+            actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(eventID)));
         }
     }
 

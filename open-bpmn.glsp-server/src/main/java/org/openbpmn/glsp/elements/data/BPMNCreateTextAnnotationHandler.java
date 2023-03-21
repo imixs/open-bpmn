@@ -87,7 +87,7 @@ public class BPMNCreateTextAnnotationHandler extends CreateBPMNNodeOperationHand
             e.printStackTrace();
         }
         modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(), new SelectAction(List.of(textAnnotationID)));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(textAnnotationID)));
     }
 
     /**

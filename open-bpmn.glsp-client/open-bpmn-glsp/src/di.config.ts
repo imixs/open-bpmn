@@ -18,8 +18,7 @@ import {
     configureDefaultModelElements, configureModelElement, configureView, ConsoleLogger,
     createDiagramContainer,
     DeleteElementContextMenuItemProvider,
-    DiamondNodeView,
-    editLabelFeature, ForeignObjectView, LogLevel, moveFeature, overrideViewerOptions,
+    DiamondNodeView, editLabelFeature, ForeignObjectView, LogLevel, moveFeature, overrideViewerOptions,
     RectangularNodeView, RevealNamedElementActionProvider,
     RoundedCornerNodeView, SCompartment,
     SCompartmentView, selectFeature, SLabel, SLabelView, TYPES
