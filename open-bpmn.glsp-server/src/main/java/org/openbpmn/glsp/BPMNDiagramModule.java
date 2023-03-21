@@ -17,6 +17,7 @@ package org.openbpmn.glsp;
 
 import java.util.logging.Logger;
 
+import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
@@ -65,6 +66,7 @@ import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
+import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNModelValidator;
@@ -109,7 +111,18 @@ public class BPMNDiagramModule extends DiagramModule {
         // Edit lable actions..
         binding.add(BPMNComputedBoundsActionHandler.class);
 
+        // configure panelupdate action which is send from the server to the client
+        // binding.add(BPMNPropertyPanelUpdateAction.class);
+
     }
+
+    // @Override
+    // protected void configureClientActions(final MultiBinding<Action> binding) {
+    // //super.configureClientAction(binding);
+    // binding.add(BPMNPropertyPanelUpdateAction.class);
+    // }
+    // protected void configureClientActions(final MultiBinding<Action> binding) {
+    // }
 
     @Override
     protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
@@ -163,6 +176,20 @@ public class BPMNDiagramModule extends DiagramModule {
         // Extension handler
         binding.add(BPMNCreateExtensionHandler.class);
 
+    }
+
+    /**
+     * Each handler that should be handled by the GLSP client has to be
+     * configured as dedicated client action to indicate that it needs to be
+     * dispatched to the client.
+     * 
+     * The BPMNPropertyPanelUpdateAction is used by Extensions to signal the
+     * propertyPanel that we have an update of the current selected element
+     */
+    @Override
+    protected void configureClientActions(MultiBinding<Action> binding) {
+        super.configureClientActions(binding);
+        binding.add(BPMNPropertyPanelUpdateAction.class);
     }
 
     /**
