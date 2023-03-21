@@ -28,6 +28,7 @@ import javax.json.JsonValue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -39,6 +40,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
@@ -54,6 +56,9 @@ import com.google.inject.Inject;
 public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(DefaultBPMNDefinitionsExtension.class);
+
+    @Inject
+    protected ActionDispatcher actionDispatcher;
 
     @Inject
     protected BPMNGModelState modelState;
@@ -146,8 +151,8 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             JsonArray signalSetValues = json.getJsonArray("signals");
 
             if (signalSetValues != null) {
-                for (JsonValue laneValue : signalSetValues) {
-                    JsonObject signalData = (JsonObject) laneValue;
+                for (JsonValue signalValue : signalSetValues) {
+                    JsonObject signalData = (JsonObject) signalValue;
                     String id = signalData.getString("id", null);
                     Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
                     if (signal != null) {
@@ -155,8 +160,10 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                     } else {
                         // signal did not yet exist in definition list - so we create a new one
                         int i = modelState.getBpmnModel().getSignals().size() + 1;
+                        String newSignalID = "signal_" + i;
+                        String newSignalName = "Signal " + i;
                         try {
-                            modelState.getBpmnModel().addSignal("signal_" + i, "Signal " + i);
+                            modelState.getBpmnModel().addSignal(newSignalID, newSignalName);
                         } catch (BPMNModelException e) {
                             logger.warn("Unable to add new signal: " + e.getMessage());
                         }
@@ -168,6 +175,10 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             }
             if (update) {
                 modelState.reset();
+                // send an update for the property panel to the client...
+                actionDispatcher
+                        .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
+
             }
         }
     }

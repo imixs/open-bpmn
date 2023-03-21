@@ -25,6 +25,7 @@ import {
     IActionHandler,
     ICommand,
     SetUIExtensionVisibilityAction,
+    SModelElement,
     SModelRoot,
     TYPES
 } from 'sprotty';
@@ -56,6 +57,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     protected bodyDiv: HTMLElement;
     protected headerDiv: HTMLElement;
     modelRootId: string;
+    modelRoot: Readonly<SModelRoot>;
     selectedElementId: string;
     initForm: boolean;
     lastCategory: string;
@@ -185,6 +187,13 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         return headerTools;
     }
 
+    /**
+     * Helper method to resize the property panel
+     *
+     * @param button
+     * @param toolId
+     * @returns
+     */
     protected onClickResizePanel(button: HTMLElement, toolId?: string) {
         return (_ev: MouseEvent) => {
             if (!this.editorContext.isReadonly) {
@@ -203,12 +212,17 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     }
 
     /*
-     * We react on the EnableToolPaletteAction to make the property panel visible
+     * We react on different event actions.
+     *
+     * The EnableToolPaletteAction is used to make the property panel visible
      * If we already have the bodyDiv defined, than we skip this event.
      * See Discussion: https://github.com/eclipse-glsp/glsp/discussions/910
      *
-     * In addition we also handle the BPMNPropertyPanelToggleAction to show/hide the
-     * propertyPanel.
+     * The BPMNPropertyPanelToggleAction is used to show/hide the
+     * propertyPanel. This action is called by context menus.
+     *
+     * The BPMNPropertyPanelUpdateAction is send by the server during an update
+     * of the data state and indicates that the property panel need to be refreshed.
      */
     handle(action: Action): ICommand | Action | void {
         // check enable state
@@ -241,25 +255,30 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             }
             this.panelToggle=!this.panelToggle;
         }
+
+        // Update content of the property panel. Action is triggered by the server
+        if (action.kind === BPMNPropertyPanelUpdateAction.KIND) {
+            this.updatePropertyPanel(this.selectedElementId);
+        }
     }
 
     /*
-     * This method reacts on the selection of a BPMN element
-     * and updates the property panel input fields
+     * This method reacts on the selection of a BPMN element. It can handel different
+     * situations of a selection and updates the property panel input fields.
      *
      * The method also computes the last selected category. This is used in the setState method
      * to restore the last category if the element type has not changed.
      */
     selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
+        this.modelRoot=root;
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
            return;
         }
-
         if (selectedElements && selectedElements.length>0) {
             // first we need to verify if a Symbol/BPMNLabel combination was selected.
             // In this case we are only interested in the BPMNFlowElement and not in the label
-            if (selectedElements.length > 1) {
+            if (selectedElements.length > 1) { 
                 const filteredArr = selectedElements.filter(val => !val.endsWith('_bpmnlabel'));
                 selectedElements = filteredArr;
             }
@@ -275,45 +294,74 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         }
 
         // if no element is selected we default to the root element (diagram plane)
-        let element;
+        let _id;
         if (!selectedElements || selectedElements.length===0) {
-            element=root;
+            _id=root.id;
         } else if (selectedElements.length === 1 ) {
             // we  have exactly one element selected.
-            element = root.index.getById(selectedElements[0]);
+            _id=selectedElements[0];
+        }
+
+         // avoid message loop...
+        if (!_id || _id === this.selectedElementId || _id === 'EMPTY') {
+            // skip this event!
+            return;
         }
 
         // now if we have an element we show teh panel..
-        if (element) {
+        if (_id) {
             // did we have a change?
-            // avoid message loop...
-            if (element.id === this.selectedElementId) {
-                // skip this event!
-                return;
-            }
-            if (element.id === 'EMPTY') {
-                // skip this event!
-                return;
-            }
-
-            // compute the current category....
-            this.updateLastCategory();
-
             // set new selectionId
-            this.selectedElementId = element.id;
+            this.selectedElementId = _id;
             // because the jsonForms send a onchange event after init we mark this state here
             this.initForm = true;
-            // update header
-            if (element===root) {
-                this.headerTitle.textContent = 'Default Process';
-            } else {
-                this.headerTitle.textContent = element.type;
-            }
-
             // init the react container only once....
             if (!this.panelContainer) {
                 this.panelContainer = createRoot(this.bodyDiv);
             }
+            // finally update the panel
+            this.updatePropertyPanel(_id);
+        } else {
+            // no single element selected!
+            this.selectedElementId = '';
+            if (this.bodyDiv && this.panelContainer) {
+                this.headerTitle.textContent = 'BPMN Properties';
+                // multi selection - we can not show a property panel
+                this.panelContainer.render(<React.Fragment>Please select a single element </React.Fragment>);
+            }
+        }
+    }
+
+    /**
+     * This helper method is responsible to refresh teh property panel.
+     * The method loads the element from the root model context and updates
+     * the JsonForms schemata.
+     *
+     * @param _elementID
+     */
+    updatePropertyPanel(_elementID: string): void {
+        // return if we do not yet have a body DIV.
+        if (!this.bodyDiv) {
+            return;
+        }
+        // compute the current category....
+        this.updateLastCategory();
+
+        let element: SModelElement | undefined;
+        // first we load the element from the model root
+        if (this.modelRoot.id===_elementID) {
+            element=this.modelRoot;
+            this.headerTitle.textContent = 'Default Process';
+        } else {
+            // load element from index#
+            element=this.modelRoot.index.getById(_elementID);
+            if (element) {
+                this.headerTitle.textContent = element.type;
+            }
+        }
+
+        // update the property panel if we have a valid element
+        if (element) {
             // BPMN Node selected, collect JSONForms schemata....
             let bpmnPropertiesData;
             let bpmnPropertiesSchema;
@@ -351,13 +399,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                 this.headerTitle.textContent = 'BPMN Properties';
             }
         } else {
-            // no single element selected!
+            // we have no UISchema!
             this.selectedElementId = '';
-            if (this.bodyDiv && this.panelContainer) {
-                this.headerTitle.textContent = 'BPMN Properties';
-                // multi selection - we can not show a property panel
-                this.panelContainer.render(<React.Fragment>Please select a single element </React.Fragment>);
-            }
+            this.headerTitle.textContent = 'BPMN Properties';
         }
     }
 
@@ -426,13 +470,29 @@ export interface BPMNPropertyPanelToggleAction extends Action {
   }
 
 export namespace BPMNPropertyPanelToggleAction {
-    export const KIND = 'properties';
+    export const KIND = 'propertyPanelToggle';
 
     export function is(object: any): object is BPMNPropertyPanelToggleAction {
         return Action.hasKind(object, KIND);
     }
 
     export function create(): BPMNPropertyPanelToggleAction {
+        return { kind: KIND };
+    }
+}
+
+export interface BPMNPropertyPanelUpdateAction extends Action {
+    kind: typeof BPMNPropertyPanelUpdateAction.KIND;
+    // selectedElementID: string;
+    // category: string;
+}
+
+export namespace BPMNPropertyPanelUpdateAction {
+    export const KIND = 'propertyPanelUpdate';
+    export function is(object: any): object is BPMNPropertyPanelUpdateAction {
+      return Action.hasKind(object, KIND);
+    }
+    export function create(): BPMNPropertyPanelUpdateAction {
         return { kind: KIND };
     }
 }
