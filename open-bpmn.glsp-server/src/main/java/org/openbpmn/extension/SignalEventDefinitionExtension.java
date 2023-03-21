@@ -20,8 +20,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,9 +33,6 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
-import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -76,48 +76,22 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
      * Adds the SignalEvent definitions
      * <p>
      * Note: Internally we need a mapping between the Signal name (Label) and the
-     * Signal id (value). As
-     * discussed here
-     * (https://jsonforms.discourse.group/t/how-to-separate-value-and-label-in-a-combobox/1200)
-     * we do not have this feature yet. Currently the efforts seems to be to high to
-     * implement a new
-     * renderer for JsonForms.
+     * Signal id (value). This can be done with the Imixs selectitem renderer using
+     * using label|value pairs.
      */
     @Override
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
         Event event = (Event) bpmnElement;
-
-        // Conditional
-
         Set<Element> signalEventDefinitions = event.getEventDefinitionsByType("signalEventDefinition");
-
         if (signalEventDefinitions.size() > 0) {
             Map<String, String> arrayDetailOption = new HashMap<>();
-            // GENERATED HorizontalLayout
             arrayDetailOption.put("detail", "GENERATED");
 
-            uiSchemaBuilder. //
-                    addCategory("Signals"). //
-                    addLayout(Layout.VERTICAL);
-            uiSchemaBuilder.addElement("signals", "Signals", arrayDetailOption);
-            // uiSchemaBuilder.addElement("formalExpression", "Script", multilineOption);
-
-            schemaBuilder.addArray("signals");
-
-            // find all signals in the current model and build an array...
-            Set<Signal> bpmnSignals = modelState.getBpmnModel().getSignals();
-            String[] signalOptions = new String[bpmnSignals.size()];
-            int i = 0;
-            for (Signal bpmnSignal : bpmnSignals) {
-                signalOptions[i] = bpmnSignal.getName();
-                i++;
-                // signalOptions[i] = bpmnSignal.getId() + "|" + bpmnSignal.getName();
-            }
-            schemaBuilder.addProperty("signal", "string", null, signalOptions);
-
-            /*
+            /***********
+             * Data
+             *
              * Now we can create the data structure - each signalEventDefinition is
              * represented as a separate object. We resolve the signalRef
              */
@@ -126,27 +100,59 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
                 dataBuilder.addObject();
                 String signalRefID = definition.getAttribute("signalRef");
                 if (!signalRefID.isEmpty()) {
-                    // fetch the corresponding Signal
-                    Signal bpmnSignal = (Signal) modelState.getBpmnModel().findElementById(signalRefID);
-                    if (bpmnSignal != null) {
-                        dataBuilder.addData("signal", bpmnSignal.getName());
-                    } else {
-                        logger.warn("invalid signalRefID found: " + signalRefID);
-                    }
+                    dataBuilder.addData("signal", signalRefID);
                 }
-
             }
+
+            /***********
+             * Schema
+             * 
+             * providing the label|value paris for each signal defined in the bpmn
+             * definitions
+             */
+            schemaBuilder.addArray("signals");
+            Set<Signal> bpmnSignals = modelState.getBpmnModel().getSignals();
+            String[] signalOptions = new String[bpmnSignals.size()];
+            int i = 0;
+            for (Signal bpmnSignal : bpmnSignals) {
+                // signalOptions[i] = bpmnSignal.getName();
+                signalOptions[i] = bpmnSignal.getName() + "|" + bpmnSignal.getId();
+                i++;
+            }
+            schemaBuilder.addProperty("signal", "string", "", signalOptions);
+
+            /***********
+             * UISchema
+             *
+             * for signal we use the custom renderer for imixs-selectitems
+             */
+            JsonObject comboBoxOption = Json.createObjectBuilder() //
+                    .add("format", "selectitemcombo").build();
+            uiSchemaBuilder. //
+                    addCategory("Signals"). //
+                    addLayout(Layout.VERTICAL);
+            // create a detail control Layout....
+            JsonArrayBuilder controlsArrayBuilder = Json.createArrayBuilder();
+            controlsArrayBuilder //
+                    .add(Json.createObjectBuilder() //
+                            .add("type", "Control") //
+                            .add("scope", "#/properties/signal")//
+                            .add("options", comboBoxOption) //
+                    );
+            JsonObjectBuilder detailLayoutBuilder = Json.createObjectBuilder(). //
+                    add("type", "VerticalLayout"). ///
+                    add("elements", controlsArrayBuilder);
+            JsonObjectBuilder detailBuilder = Json.createObjectBuilder(). //
+                    add("detail", detailLayoutBuilder.build());
+            uiSchemaBuilder.addDetailLayout("signals", "Signals", detailBuilder.build());
 
         }
 
     }
 
     /**
-     * This method updates the signalEventDefinitions. The method expects a
-     * dataList containing all conditions with its values (including the id).
-     * The method simply overwrites all signalEventDefinitions.
-     * 
-     * @See addSignalEventDefinitions how we map between the signal name and its id.
+     * This method updates the signalEventDefinitions. With the help of
+     * the imixs selectItem holding label|value pairs we can update the id directly.
      * 
      */
     @Override
@@ -160,39 +166,16 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
 
         Event bpmnEvent = (Event) bpmnElement;
         JsonArray dataList = json.getJsonArray("signals");
-
         // synchronize the definition list of the event element
         Set<Element> signalEventDefinitions = synchronizeEventDefinitions("signalEventDefinition", bpmnEvent, dataList);
-
-        // now we can update the values one by referring to the signalRef id by
-        // comparing the name
+        // now we can update the values
         Iterator<Element> iter = signalEventDefinitions.iterator();
         int i = 0;
         while (iter.hasNext()) {
             Element eventDefinitionElement = iter.next();
-            JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
+            JsonObject jsonData = dataList.getJsonObject(i);
             if (jsonData != null) {
-
-                String signalName = "";
-
-                try {
-                    signalName = jsonData.getString("signal");
-                } catch (NullPointerException en) {
-                    // no name defined!
-                }
-                logger.debug("signal=" + signalName);
-                try {
-                    // fetch the signal from teh Model Signal list by name...
-                    Signal signal = modelState.getBpmnModel().findSignalByName(signalName);
-                    if (signal != null) {
-                        eventDefinitionElement.setAttribute("signalRef", signal.getId());
-                    } else {
-                        // no signal definition found - delete signalRef...
-                        eventDefinitionElement.setAttribute("signalRef", "");
-                    }
-                } catch (BPMNInvalidReferenceException | BPMNMissingElementException | BPMNInvalidTypeException e) {
-                    e.printStackTrace();
-                }
+                eventDefinitionElement.setAttribute("signalRef", jsonData.getString("signal", ""));
             }
             i++;
             // update completed

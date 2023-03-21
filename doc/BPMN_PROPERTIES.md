@@ -57,11 +57,9 @@ In some cases the `BPMNApplyPropertiesUpdateOperation` causes on the server side
 
 In this cases the server sends a `BPMNPropertyPanelUpdateAction` to the client. The BPMN Property Panel reacts on this kind of action and updates the panel content.
 
-# Custom Renderer (Imixs-Workflow)
+# Custom Renderer SelectItemControl
 
-Most of the data to be displayed can be handled by JsonForms out of the box, so we only need to provide the corresponding schemata. But in some cases - e.g. the Imixs-Workflow extension - the corresponding input form is more complex. For this we implement a [custom renderer](https://jsonforms.io/docs/tutorial/custom-renderers) to provide an optimized input form. 
-
-## SelectItemControl
+Most of the data to be displayed can be handled by JsonForms out of the box, so we only need to provide the corresponding schemata. But in some cases - e.g. the SignalEvent option or the Imixs-Workflow extensions - the corresponding input form is more complex. For this we implement a [custom renderer](https://jsonforms.io/docs/tutorial/custom-renderers) to provide an optimized input form.
 
 The `SelectItemControl` is a custom renderer for selectItems represented as RadioButtons, CheckBoxes or ComboBoxes.
 The control can handle single String values (represented as a Radio Button or ComboBox) or Arrays of Strings (represented as Checkboxes).
@@ -73,3 +71,45 @@ In addition the renderer support label|value pairs separated by a | char.
 This allows to separate the label and data value in one string.
 
 In addition the layout for Checkboxes and RadioButtons can be customized by the option `orientation=horizontal|vertical`.
+
+<img src="./images/property-panel-selectitem.png" />
+
+Even the user can select the option by the name, internally the value will be mapped to the id. 
+## UI Schema
+To set the UISchema using  a radio button:
+
+```java
+      Map<String, String> selectVertical = new HashMap<>();
+      selectVertical.put("format", "selectitem");
+      selectVertical.put("orientation", "vertical");
+	  uiSchemaBuilder //
+                    .addElement("keyownershipfields", "Owner", selectVertical)
+```
+
+To set the UISchema using  a comboBox:
+
+```java
+      Map<String, String> selectVertical = new HashMap<>();
+      selectVertical.put("format", "selectitemcombo");
+	  uiSchemaBuilder //
+                    .addElement("keyownershipfields", "Owner", selectVertical)
+```
+
+## Schema
+
+The schema defines the option list as `label | value` pairs
+
+```java
+	String[] enabledOption = { "Yes|true", "No|false" };
+	schemaBuilder.addProperty("myitem", "string", "", enabledOption);
+```
+
+## Data
+
+The data can be either a single string displayed as a radio-button or comboBox. Or a String Array displayed as check-boxes.
+
+```java
+ 	dataBuilder //
+			.addData("keyupdateacl",mystringValue) //
+			.addDataList("keyownershipfields",myValueList)) //
+```
