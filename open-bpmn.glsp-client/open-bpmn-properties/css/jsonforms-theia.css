@@ -127,7 +127,6 @@
 
 .control>select {
     padding: 0 !important;
-    border: none;
 }
 
 .control>input[type="checkbox"] {

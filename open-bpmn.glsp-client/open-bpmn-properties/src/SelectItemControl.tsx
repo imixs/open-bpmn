@@ -121,18 +121,15 @@ export const SelectItemGroup = ({
       // by not rerendering teh control. For this reason we copy the data object here!
       // see: https://jsonforms.discourse.group/t/checkbox-did-not-update-during-onchange-event-vanilla-react/1366/2
       let newData;
-      console.log('===> handleSelection');
       // test if we have an array
       if (Array.isArray(data)) {
         // add value only if not yed done
         if (!data.includes(value)) {
-          // data.push(value);
           newData = [...data, value];
         } else {
           newData = data.slice();
           const iPos: number = data.indexOf(value);
           if (iPos !== -1) {
-            // data.splice(iPos, 1);
             newData.splice(iPos, 1);
           }
         }
