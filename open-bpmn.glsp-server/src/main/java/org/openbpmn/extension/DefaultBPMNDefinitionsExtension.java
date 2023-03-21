@@ -156,7 +156,14 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                     String id = signalData.getString("id", null);
                     Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
                     if (signal != null) {
-                        signal.setName(signalData.getString("name"));
+                        // did the name change?
+                        String newName = signalData.getString("name", "");
+                        if (!newName.equals(signal.getName())) {
+                            signal.setName(newName);
+                            // update = true; // Causes loop
+                            // modelState.reset();
+                        }
+
                     } else {
                         // signal did not yet exist in definition list - so we create a new one
                         int i = modelState.getBpmnModel().getSignals().size() + 1;
