@@ -993,7 +993,7 @@ public class BPMNModel {
      * <p>
      * If no event exists, the method returns an empty list.
      * 
-     * @return
+     * @return the list of events or an empty is if no events exist.
      */
     public Set<Event> findAllEvents() {
         LinkedHashSet<Event> result = new LinkedHashSet<Event>();

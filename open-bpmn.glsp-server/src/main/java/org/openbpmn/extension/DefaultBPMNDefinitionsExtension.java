@@ -15,8 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.json.Json;
 import javax.json.JsonArray;
@@ -32,13 +36,16 @@ import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.w3c.dom.Element;
@@ -62,6 +69,11 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
 
     @Inject
     protected BPMNGModelState modelState;
+
+    @Inject
+    protected BPMNGModelFactory bpmnGModelFactory;
+
+    private boolean refreshProperties = false;
 
     public DefaultBPMNDefinitionsExtension() {
         super();
@@ -122,72 +134,8 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                 addElements("targetNamespace", "exporter", "exporterVersion"); //
 
         // Signal List
-        addSignals(modelState.getBpmnModel(), dataBuilder, schemaBuilder, uiSchemaBuilder);
+        buildSignalProperties(modelState.getBpmnModel(), dataBuilder, schemaBuilder, uiSchemaBuilder);
 
-    }
-
-    /**
-     * Updates the BPMN Diagram definition properties
-     */
-    @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
-            final GModelElement gNodeElement) {
-        Element definitions = modelState.getBpmnModel().getDefinitions();
-
-        if ("General".equals(category)) {
-            bpmnElement.setName(json.getString("name", ""));
-            bpmnElement.setDocumentation(json.getString("documentation", ""));
-        }
-        if ("Definitions".equals(category)) {
-            definitions.setAttribute("targetNamespace", json.getString("targetNamespace", ""));
-            definitions.setAttribute("exporter", json.getString("exporter", ""));
-            definitions.setAttribute("exporterVersion", json.getString("exporterVersion", ""));
-        }
-
-        if ("Signals".equals(category)) {
-            // update signal properties...
-            boolean update = false;
-            logger.debug("...update signals.. ");
-            JsonArray signalSetValues = json.getJsonArray("signals");
-
-            if (signalSetValues != null) {
-                for (JsonValue signalValue : signalSetValues) {
-                    JsonObject signalData = (JsonObject) signalValue;
-                    String id = signalData.getString("id", null);
-                    Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
-                    if (signal != null) {
-                        // did the name change?
-                        String newName = signalData.getString("name", "");
-                        if (!newName.equals(signal.getName())) {
-                            signal.setName(newName);
-                            // update = true; // Causes loop
-                            // modelState.reset();
-                        }
-
-                    } else {
-                        // signal did not yet exist in definition list - so we create a new one
-                        int i = modelState.getBpmnModel().getSignals().size() + 1;
-                        String newSignalID = "signal_" + i;
-                        String newSignalName = "Signal " + i;
-                        try {
-                            modelState.getBpmnModel().addSignal(newSignalID, newSignalName);
-                        } catch (BPMNModelException e) {
-                            logger.warn("Unable to add new signal: " + e.getMessage());
-                        }
-                        update = true; // reset signal state
-                    }
-                }
-            } else {
-                update = true; // reset signal state
-            }
-            if (update) {
-                modelState.reset();
-                // send an update for the property panel to the client...
-                actionDispatcher
-                        .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
-
-            }
-        }
     }
 
     /**
@@ -198,7 +146,8 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
      * @param schemaBuilder
      * @param uiSchemaBuilder
      */
-    private void addSignals(final BPMNModel model, final DataBuilder dataBuilder, final SchemaBuilder schemaBuilder,
+    private void buildSignalProperties(final BPMNModel model, final DataBuilder dataBuilder,
+            final SchemaBuilder schemaBuilder,
             final UISchemaBuilder uiSchemaBuilder) {
 
         Map<String, String> multilineOption = new HashMap<>();
@@ -244,6 +193,129 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             dataBuilder.closeArray();
         }
 
+    }
+
+    /**
+     * Updates the BPMN Diagram definition properties
+     */
+    @Override
+    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+            final GModelElement gNodeElement) {
+
+        Element definitions = modelState.getBpmnModel().getDefinitions();
+
+        if ("General".equals(category)) {
+            bpmnElement.setName(json.getString("name", ""));
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
+        }
+        if ("Definitions".equals(category)) {
+            definitions.setAttribute("targetNamespace", json.getString("targetNamespace", ""));
+            definitions.setAttribute("exporter", json.getString("exporter", ""));
+            definitions.setAttribute("exporterVersion", json.getString("exporterVersion", ""));
+        }
+
+        if ("Signals".equals(category)) {
+            // update signal properties...
+            boolean update = false;
+            logger.debug("...update signals.. ");
+            JsonArray signalSetValues = json.getJsonArray("signals");
+            List<String> signalIdList = new ArrayList<String>();
+            if (signalSetValues != null) {
+                for (JsonValue signalValue : signalSetValues) {
+                    JsonObject signalData = (JsonObject) signalValue;
+                    String id = signalData.getString("id", null);
+                    Signal signal = (Signal) modelState.getBpmnModel().findElementById(id);
+                    if (signal != null) {
+                        signalIdList.add(id);
+                        // did the name change?
+                        String newName = signalData.getString("name", "");
+                        if (!newName.equals(signal.getName())) {
+                            signal.setName(newName);
+                            // Update the properties for all signal events!
+                            updateSignalEvents();
+                        }
+
+                    } else {
+                        // signal did not yet exist in definition list - so we create a new one
+                        int i = modelState.getBpmnModel().getSignals().size() + 1;
+                        String newSignalID = "signal_" + i;
+                        String newSignalName = "Signal " + i;
+                        signalIdList.add(newSignalID);
+                        try {
+                            modelState.getBpmnModel().addSignal(newSignalID, newSignalName);
+                        } catch (BPMNModelException e) {
+                            logger.warn("Unable to add new signal: " + e.getMessage());
+                        }
+                        update = true; // reset signal state
+                    }
+                }
+
+                // remove signals from definitions which are not longer in the list
+                // collect all affected ids...
+                if (removeDeprecatedSignals(signalIdList)) {
+                    update = true;
+                }
+
+            } else {
+                update = true; // reset signal state
+            }
+            if (update) {
+                modelState.reset();
+                bpmnGModelFactory.applyBPMNExtensions(gNodeElement, bpmnElement);
+                // send an update for the property panel to the client...
+                actionDispatcher
+                        .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
+
+            }
+        }
+    }
+
+    /**
+     * Remove signals from definitions which are not longer in a given list of
+     * signal Ids
+     * <p>
+     * The method returns true if the list was updated
+     * 
+     */
+    private boolean removeDeprecatedSignals(List<String> signalIdList) {
+        boolean update = false;
+        // remove signals from definitions which are not longer in the list
+        // collect all affected ids...
+        Iterator<Signal> _signalsIter = modelState.getBpmnModel().getSignals().iterator();
+        List<String> _toRemove = new ArrayList<String>();
+        while (_signalsIter.hasNext()) {
+            Signal _signal = _signalsIter.next();
+            if (!signalIdList.contains(_signal.getId())) {
+                _toRemove.add(_signal.getId());
+            }
+        }
+        // now remove all signals no longer listed in the properties
+        for (String idToRemove : _toRemove) {
+            modelState.getBpmnModel().deleteSignal(idToRemove);
+            update = true;
+        }
+        // return final update state
+        return update;
+    }
+
+    /**
+     * This helper method updates the property data for all signal events. This
+     * method is needed in case the name of an existing event changed.
+     */
+    private void updateSignalEvents() {
+        Set<Event> events = modelState.getBpmnModel().findAllEvents();
+        for (Event event : events) {
+            // test if this event is an signal event
+            Set<Element> signalEventDefinitions = event.getEventDefinitionsByType("signalEventDefinition");
+            if (signalEventDefinitions.size() > 0) {
+                // find the gmodel
+                BPMNGNode _baseElement = modelState.getIndex().findElementByClass(event.getId(),
+                        BPMNGNode.class).orElse(null);
+                if (_baseElement != null) {
+                    bpmnGModelFactory.applyBPMNExtensions(_baseElement, event);
+                }
+            }
+        }
     }
 
 }

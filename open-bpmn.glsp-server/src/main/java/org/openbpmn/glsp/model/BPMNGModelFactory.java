@@ -258,7 +258,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param elementNode
      * @param bpmnElement
      */
-    void applyBPMNExtensions(final GModelElement elementNode, final BPMNElement bpmnElement) {
+    public void applyBPMNExtensions(final GModelElement elementNode, final BPMNElement bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
