@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:BPMN2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+  <bpmn2:process id="process_1" name="Default Process" processType="Public">
+    <bpmn2:documentation id="documentation_ZxNkOA"/>
+    <bpmn2:task id="task_CQoJ1A" imixs:processid="100" name="Task-1">
+      <bpmn2:documentation id="documentation_rYdYEw"/>
+      <bpmn2:outgoing>SequenceFlow_W02XQA</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:intermediateCatchEvent id="event_lzucQQ" name="Event-1">
+      <bpmn2:documentation id="documentation_JMyUqQ"/>
+      <bpmn2:incoming>SequenceFlow_W02XQA</bpmn2:incoming>
+      <bpmn2:signalEventDefinition id="signalEventDefinition_7FMuBw" signalRef="signal_1"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_W02XQA" sourceRef="task_CQoJ1A" targetRef="event_lzucQQ">
+      <bpmn2:documentation id="documentation_29LNww"/>
+    </bpmn2:sequenceFlow>
+  </bpmn2:process>
+  <bpmn2:signal id="signal_1" name="Signal 1"/>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+    <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="task_CQoJ1A" id="BPMNShape_Sb48dQ">
+        <dc:Bounds height="50.0" width="110.0" x="49.0" y="49.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="event_lzucQQ" id="BPMNShape_RkDKAQ">
+        <dc:Bounds height="36.0" width="36.0" x="216.0" y="56.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_HJLRuw">
+          <dc:Bounds height="16.0" width="100.0" x="184.0" y="95.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_W02XQA" id="BPMNEdge_aWWiLQ" sourceElement="BPMNShape_Sb48dQ" targetElement="BPMNShape_RkDKAQ">
+        <di:waypoint x="159.0" y="74.0"/>
+        <di:waypoint x="216.0" y="74.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
