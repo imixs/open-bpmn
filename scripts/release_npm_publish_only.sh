@@ -24,9 +24,11 @@ npm publish --access public
 cd ..
 cd open-bpmn-theia
 npm publish --access public 
-cd ..
-cd open-bpmn-app
-npm publish --access public 
+# The app will no longer be published to npmjs
+# Because this is not necessary
+#cd ..
+#cd open-bpmn-app
+#npm publish --access public 
 
 cd ../..
 
