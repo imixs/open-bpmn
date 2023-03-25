@@ -278,7 +278,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         if (selectedElements && selectedElements.length>0) {
             // first we need to verify if a Symbol/BPMNLabel combination was selected.
             // In this case we are only interested in the BPMNFlowElement and not in the label
-            if (selectedElements.length > 1) { 
+            if (selectedElements.length > 1) {
                 const filteredArr = selectedElements.filter(val => !val.endsWith('_bpmnlabel'));
                 selectedElements = filteredArr;
             }
