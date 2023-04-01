@@ -1155,6 +1155,52 @@ public class BPMNProcess extends BPMNElement {
         return task;
     }
 
+    /**
+     * Clone an existing BPMN Element Node
+     * 
+     * @param bpmnNodeElement
+     * @return cloned activity
+     * @throws BPMNModelException
+     */
+    public BPMNElementNode cloneBPMNElementNode(BPMNElementNode _bpmnElementNode) throws BPMNModelException {
+        BPMNElementNode result = null;
+        Element newElement = (Element) _bpmnElementNode.getElementNode().cloneNode(true);
+
+        // update id and create new Instance..
+        if (_bpmnElementNode instanceof Activity) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("task"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNActivityByNode(element);
+        }
+        if (_bpmnElementNode instanceof Event) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("event"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNEventByNode(element);
+        }
+        if (_bpmnElementNode instanceof Gateway) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("gateway"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNGatewayByNode(element);
+        }
+        if (_bpmnElementNode instanceof DataObject) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("dataObject"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNDataObjectByNode(element);
+        }
+        if (_bpmnElementNode instanceof TextAnnotation) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("textAnnotation"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNTextAnnotationByNode(element);
+        }
+        // if (_bpmnElementNode instanceof Message) {
+        // newElement.setAttribute("id", BPMNModel.generateShortID("message"));
+        // Element element = (Element) this.getElementNode().appendChild(newElement);
+        // result = this.getModel()..createBPMNMessageByNode(element);
+        // }
+
+        return result;
+    }
+
     private DataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
         DataObject dataObject = new DataObject(model, element, element.getLocalName(), this);
         getDataObjects().add(dataObject);

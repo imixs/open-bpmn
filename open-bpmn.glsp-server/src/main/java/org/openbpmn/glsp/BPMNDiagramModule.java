@@ -64,8 +64,10 @@ import org.openbpmn.glsp.model.BPMNSourceModelStorage;
 import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
+import org.openbpmn.glsp.operations.BPMNClipboardDataActionHandler;
 import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
+import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
 import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
@@ -106,7 +108,9 @@ public class BPMNDiagramModule extends DiagramModule {
     @Override
     protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
         super.configureActionHandlers(binding);
-        // binding.add(RequestClipboardDataActionHandler.class);
+
+        // Clipboard
+        binding.add(BPMNClipboardDataActionHandler.class);
 
         // Edit lable actions..
         binding.add(BPMNComputedBoundsActionHandler.class);
@@ -140,6 +144,10 @@ public class BPMNDiagramModule extends DiagramModule {
         // binding.add(PasteOperationHandler.class);
         // binding.add(ReconnectEdgeOperationHandler.class);
 
+        // Clipboard
+        binding.add(BPMNPasteOperationHandler.class);
+
+        // Bounds & Routing Points
         binding.add(BPMNChangeBoundsOperationHandler.class);
         binding.add(BPMNChangeRoutingPointsOperationHandler.class);
 
