@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>org.imixs.bpmn</groupId>
 		<artifactId>open-bpmn</artifactId>
-		<version>0.9.3</version>
+		<version>0.9.4-SNAPSHOT</version>
 	</parent>
 	<artifactId>open-bpmn.server</artifactId>
 	<name>Open BPMN - Server</name>
