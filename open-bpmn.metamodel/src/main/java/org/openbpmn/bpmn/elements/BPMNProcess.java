@@ -1201,6 +1201,25 @@ public class BPMNProcess extends BPMNElement {
         return result;
     }
 
+    /**
+     * Clone an existing BPMN Element Edge
+     * 
+     * @param bpmnNodeElement
+     * @return cloned activity
+     * @throws BPMNModelException
+     */
+    public BPMNElementEdge cloneBPMNElementEdge(BPMNElementEdge _bpmnElementEdge) throws BPMNModelException {
+        BPMNElementEdge result = null;
+        Element newElement = (Element) _bpmnElementEdge.getElementNode().cloneNode(true);
+        // update id and create new Instance..
+        if (_bpmnElementEdge instanceof SequenceFlow) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("sequenceFlow"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNSequenceFlowByNode(element);
+        }
+        return result;
+    }
+
     private DataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
         DataObject dataObject = new DataObject(model, element, element.getLocalName(), this);
         getDataObjects().add(dataObject);

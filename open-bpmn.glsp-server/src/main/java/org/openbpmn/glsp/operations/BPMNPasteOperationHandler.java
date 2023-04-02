@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,9 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -52,18 +55,22 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
     protected BPMNGModelState modelState;
 
     /**
-     * This method copies the current element selection into the diagram.
-     * 
-     * The method verifies if we have a data structure with the key 'bpmn'
-     * containing the element IDs to be copied.
+     * This method copies the current element selection into the diagram. The
+     * selection is stored in the data structure with the key 'bpmn' which is
+     * created by the BPMNClipboardDataActionHandler.
      * 
      * The position is computed based on the current mouse position
+     * 
+     * The method first copies all BPMN Nodes and creates a mapping table for the
+     * new ElementIDs. Next the method copies the BPMN Edges by reconnecting the
+     * clone to the new ElementIDs.
      */
     @Override
     protected void executeOperation(PasteOperation operation) {
         BPMNPoint refPoint = null;
         double xOffset = 0;
         double yOffset = 0;
+        Map<String, String> clonedIDs = new HashMap<String, String>();
 
         Map<String, String> data = operation.getClipboardData();
         // get list of ids...
@@ -84,14 +91,15 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
         yOffset = mousePosition.getY() - refPoint.getY();
 
         for (String id : selectedElements) {
-            BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
-            if (bpmnElement != null) {
+            BPMNElementNode bpmnElementNode = modelState.getBpmnModel().findElementNodeById(id);
+            if (bpmnElementNode != null) {
                 try {
                     // close BPMNElementNodes....
-                    if (bpmnElement instanceof BPMNElementNode) {
-                        BPMNProcess process = modelState.getBpmnModel().openProcess(bpmnElement.getProcessId());
-                        BPMNElementNode bpmnElementNode = (BPMNElementNode) bpmnElement;
-                        BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
+                    BPMNProcess process = modelState.getBpmnModel().openProcess(bpmnElementNode.getProcessId());
+                    BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
+                    if (newElementNode != null) {
+                        clonedIDs.put(bpmnElementNode.getId(), newElementNode.getId());
+
                         // adjust position...
                         newElementNode.setPosition(bpmnElementNode.getBounds().getPosition().getX() + xOffset,
                                 bpmnElementNode.getBounds().getPosition().getY() + yOffset);
@@ -101,12 +109,48 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
                             label.updateLocation(bpmnElementNode.getLabel().getBounds().getPosition().getX() + xOffset,
                                     bpmnElementNode.getLabel().getBounds().getPosition().getY() + yOffset);
                         }
+
                     }
                 } catch (BPMNModelException e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        // Next we try to copy the BPMNEdges....
+        for (String id : selectedElements) {
+            BPMNElementEdge bpmnElementEdge = modelState.getBpmnModel().findElementEdgeById(id);
+            if (bpmnElementEdge != null && bpmnElementEdge instanceof SequenceFlow) {
+                try {
+                    logger.info("...copy SequenceFlow - " + bpmnElementEdge.getId());
+
+                    // do we have the corresponding source and target element?
+                    String newSourceID = clonedIDs.get(bpmnElementEdge.getSourceRef());
+                    String newTargetID = clonedIDs.get(bpmnElementEdge.getTargetRef());
+
+                    if (newSourceID != null && newTargetID != null) {
+                        BPMNProcess process = modelState.getBpmnModel().openProcess(bpmnElementEdge.getProcessId());
+                        BPMNElementEdge newElementEdge = process.cloneBPMNElementEdge(bpmnElementEdge);
+                        if (newElementEdge != null) {
+                            newElementEdge.setSourceRef(newSourceID);
+                            newElementEdge.setTargetRef(newTargetID);
+
+                            // BPMNElementNode sourceNode =
+                            // modelState.getBpmnModel().findElementNodeById(newSourceID);
+
+                            // BPMNElementNode targetNode =
+                            // modelState.getBpmnModel().findElementNodeById(newTargetID);
+
+                            // sourceNode.
+                        }
+                    }
+                } catch (BPMNModelException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
         // reset model state..
         modelState.reset();
     }
