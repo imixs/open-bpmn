@@ -1,6 +1,7 @@
 package org.openbpmn.bpmn.elements.core;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -116,8 +117,53 @@ public abstract class BPMNElementEdge extends BPMNElement {
         return this.model.findElementNodeById(sourceRef);
     }
 
+    /**
+     * This method updates the sourceReference of the edge and also updates
+     * the outgoing child element of the corresponding element node
+     * 
+     * @param sourceRef
+     */
     public void setSourceRef(String sourceRef) {
+
+        if (sourceRef != null && sourceRef.equals(this.sourceRef)) {
+            return; // no op!
+        }
+
+        // do we have an old connection?
+        if (this.sourceRef != null && !this.sourceRef.isEmpty()) {
+            // find old source Element and remove the outgoing connection
+            BPMNElementNode oldSourceNode = this.model.findElementNodeById(this.sourceRef);
+            // first remove outgoing reference list
+            Set<Element> outgoingElements = model.findChildNodesByName(oldSourceNode.elementNode, BPMNNS.BPMN2,
+                    "outgoing");
+            Iterator<Element> iter = outgoingElements.iterator();
+            while (iter.hasNext()) {
+                Element child = iter.next();
+                if (this.getId().equals(child.getTextContent())) {
+                    oldSourceNode.getElementNode().removeChild(child);
+                    break;
+                }
+            }
+        }
+
+        // Now update the ref id
         this.sourceRef = sourceRef;
+        this.getElementNode().setAttribute("sourceRef", this.sourceRef);
+
+        // add outgoing reference to source element
+        BPMNElementNode newSourceNode = this.model.findElementNodeById(sourceRef);
+        if (newSourceNode != null) {
+            Element refOut = model.createElement(BPMNNS.BPMN2, "outgoing");
+            refOut.setTextContent(this.getId());
+            newSourceNode.getElementNode().appendChild(refOut);
+
+            // update ref of edgeShape
+            Element edgeShape = this.getBpmnEdge();
+            if (edgeShape != null) {
+                edgeShape.setAttribute("sourceElement", newSourceNode.getBpmnShape().getAttribute("id"));
+            }
+        }
+
     }
 
     /**
@@ -130,7 +176,43 @@ public abstract class BPMNElementEdge extends BPMNElement {
     }
 
     public void setTargetRef(String targetRef) {
+
+        if (targetRef != null && targetRef.equals(this.targetRef)) {
+            return; // no op!
+        }
+        // do we have an old connection?
+        if (this.targetRef != null && !this.targetRef.isEmpty()) {
+            // find old source Element and remove the outgoing connection
+            BPMNElementNode oldTargetNode = this.model.findElementNodeById(this.targetRef);
+            // first remove outgoing reference list
+            Set<Element> outgoingElements = model.findChildNodesByName(oldTargetNode.elementNode, BPMNNS.BPMN2,
+                    "incoming");
+            Iterator<Element> iter = outgoingElements.iterator();
+            while (iter.hasNext()) {
+                Element child = iter.next();
+                if (this.getId().equals(child.getTextContent())) {
+                    oldTargetNode.getElementNode().removeChild(child);
+                    break;
+                }
+            }
+        }
+        // Now update the ref and the outcoing connection
         this.targetRef = targetRef;
+        this.getElementNode().setAttribute("targetRef", this.targetRef);
+
+        BPMNElementNode newTargetNode = this.model.findElementNodeById(targetRef);
+        // add outgoing reference to source element
+        if (newTargetNode != null) {
+            Element refOut = model.createElement(BPMNNS.BPMN2, "incoming");
+            refOut.setTextContent(this.getId());
+            newTargetNode.getElementNode().appendChild(refOut);
+
+            // update ref of edgeShape
+            Element edgeShape = this.getBpmnEdge();
+            if (edgeShape != null) {
+                edgeShape.setAttribute("targetElement", newTargetNode.getBpmnShape().getAttribute("id"));
+            }
+        }
     }
 
     /**

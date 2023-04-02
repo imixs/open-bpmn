@@ -57,6 +57,7 @@ public class BPMNReconnectEdgeOperationHandler extends AbstractOperationHandler<
         if (bpmnElementEdge != null && targetElement != null && sourceElement != null) {
             bpmnElementEdge.setSourceRef(sourceElementID);
             bpmnElementEdge.setTargetRef(targetElementID);
+
             // remove routing points
             bpmnElementEdge.clearWayPoints();
             modelState.reset();
