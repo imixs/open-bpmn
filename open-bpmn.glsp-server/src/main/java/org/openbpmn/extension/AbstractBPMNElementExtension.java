@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
-import java.util.Optional;
 import java.util.Set;
 
 import javax.json.JsonArray;
@@ -30,6 +29,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGraphUtil;
@@ -95,9 +95,10 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
     /**
      * This method updates the name attribute of a BPMNElement and also the
      * corresponding GNode Element in the diagram plane.
-     * 
      * <p>
-     * The method distinguish between LabelGNode elements (multiline) and simple
+     * The method distinguish between embedded labels (Task) and BPMNLabes.
+     * 
+     * In case of a LabelGNode elements can support multilineor simple line
      * GLabel elements
      * 
      * @param json
@@ -111,24 +112,32 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
         String name = json.getString("name", "");
         if (!name.equals(bpmnElement.getName())) {
             bpmnElement.setName(name);
-            // Update Label...
-            Optional<GModelElement> label = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel");
-            if (!label.isEmpty()) {
-                GModelElement gModelElement = label.get();
-                // do we have a BPMN LabelGNode
-                if (gModelElement instanceof LabelGNode) {
-                    LabelGNode lgn = (LabelGNode) gModelElement;
-                    // update the bpmn-text-node of the GNodeElement
-                    GNode gnode = BPMNGraphUtil.findMultiLineTextNode(lgn);
-                    if (gnode != null) {
-                        gnode.getArgs().put("text", name);
-                    }
+            if (gNodeElement instanceof BPMNGNode) {
+                // find MultiLineTextNode used in Tasks and BPMNLabels
+                GNode gMultiLineTextNode = BPMNGraphUtil.findMultiLineTextNode((BPMNGNode) gNodeElement);
+                if (gMultiLineTextNode != null) {
+                    gMultiLineTextNode.getArgs().put("text", name);
                 } else {
-                    // we expect a GLabel
-                    GLabel gLabel = (GLabel) gModelElement;
-                    gLabel.setText(name);
+                    // test if we find a corresponding bpmnLabel (Events, Gateways,...)
+                    GModelElement gModelElement = modelState.getIndex().get(gNodeElement.getId() + "_bpmnlabel")
+                            .orElse(null);
+                    // is it a multiline label?
+                    if (gModelElement != null) {
+                        // do we have a BPMN LabelGNode
+                        if (gModelElement instanceof LabelGNode) {
+                            LabelGNode lgn = (LabelGNode) gModelElement;
+                            // update the bpmn-text-node of the GNodeElement
+                            gMultiLineTextNode = BPMNGraphUtil.findMultiLineTextNode(lgn);
+                            if (gMultiLineTextNode != null) {
+                                gMultiLineTextNode.getArgs().put("text", name);
+                            }
+                        } else {
+                            // default to GLabel
+                            GLabel gLabel = (GLabel) gModelElement;
+                            gLabel.setText(name);
+                        }
+                    }
                 }
-
             }
         }
     }
