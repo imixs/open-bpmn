@@ -88,8 +88,6 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         // Set min width/height for the Pool element
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Participant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Participant.MIN_HEIGHT);
-//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-//        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
         node.getChildren().add(BPMNGraphUtil.createBPMNContainerHeader(node));
         node.getChildren().add(createContainerCompartment(node));
@@ -97,7 +95,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
     }
 
     /**
-     * Creates the Container compartment used for the process BPMNFlowElements
+     * Creates the Container compartment
      *
      * @param node
      * @return
