@@ -62,7 +62,7 @@ public class SequenceFlow extends BPMNElementEdge {
                     expression, true);
             // xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1"
             expressionNode.setAttribute("xsi:type", "bpmn2:tFormalExpression");
-            expressionNode.setAttribute("id", BPMNModel.generateShortID("FormalExpression"));
+            expressionNode.setAttribute("id", BPMNModel.generateShortID("formalExpression"));
         } else {
             this.deleteChildNodesByName("conditionExpression");
 

@@ -92,17 +92,17 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                 }
                 // open the process and create the sequence flow...
                 BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
-                bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("SequenceFlow"), sourceId, targetId);
+                bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("sequenceFlow"), sourceId, targetId);
             }
 
             if (BPMNTypes.ASSOCIATION.equals(edgeType)) {
                 String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
                 BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
-                bpmnProcess.addAssociation(BPMNModel.generateShortID("Association"), sourceId, targetId);
+                bpmnProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
             }
 
             if (BPMNTypes.MESSAGE_FLOW.equals(edgeType)) {
-                modelState.getBpmnModel().addMessageFlow(BPMNModel.generateShortID("MessageFlow"), sourceId, targetId);
+                modelState.getBpmnModel().addMessageFlow(BPMNModel.generateShortID("messageFlow"), sourceId, targetId);
             }
 
             modelState.reset();
