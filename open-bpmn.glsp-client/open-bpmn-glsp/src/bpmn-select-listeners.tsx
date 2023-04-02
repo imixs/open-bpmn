@@ -74,7 +74,7 @@ export class BPMNLabelNodeSelectionListener implements SelectionListener {
  * This selectionListener reacts on multiple selection. In case the selection list contains
  * a Pool or a Lane, these elements are removed from the selection. This is to support
  * multi-node selections within a Pool with the Marquee Tool.
- * As a consequence it is not possible to select
+ * As a consequence it is not possible to select multiple Pools
  */
 @injectable()
 export class BPMNMultiNodeSelectionListener implements SelectionListener {
@@ -107,7 +107,6 @@ export class BPMNMultiNodeSelectionListener implements SelectionListener {
         selectedElements = selectedElements.filter(function (element: string) {
           return !containerIDs.includes(element);
         });
-
         // finally dispatch the updated selected and unselected IDs...
         this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: selectedElements, deselectedElementsIDs: containerIDs }));
     }

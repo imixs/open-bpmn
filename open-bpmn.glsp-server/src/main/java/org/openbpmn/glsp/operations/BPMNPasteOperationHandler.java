@@ -61,8 +61,9 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
      */
     @Override
     protected void executeOperation(PasteOperation operation) {
-        // operation.
-        logger.info("--------__> PasteOperation");
+        BPMNPoint refPoint = null;
+        double xOffset = 0;
+        double yOffset = 0;
 
         Map<String, String> data = operation.getClipboardData();
         // get list of ids...
@@ -72,58 +73,77 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
             return;
         }
 
-        GPoint mousePosition = operation.getEditorContext().getLastMousePosition().orElse(null);
-        BPMNPoint refPoint = null;
-        double xOffset = 0;
-        double yOffset = 0;
-
         // split stringList
-        List<String> ids = List.of(idStringList.split(","));
-        logger.info("-------- Past " + ids.size() + " elements...");
-        for (String id : ids) {
-            logger.info("..." + id);
+        List<String> selectedElements = List.of(idStringList.split(","));
+        logger.debug("... paste " + selectedElements.size() + " elements...");
 
-            // find the gmodel
+        // compute offset
+        GPoint mousePosition = operation.getEditorContext().getLastMousePosition().orElse(null);
+        refPoint = computeRefPoint(selectedElements);
+        xOffset = mousePosition.getX() - refPoint.getX();
+        yOffset = mousePosition.getY() - refPoint.getY();
 
+        for (String id : selectedElements) {
             BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
             if (bpmnElement != null) {
-
                 try {
-
+                    // close BPMNElementNodes....
                     if (bpmnElement instanceof BPMNElementNode) {
                         BPMNProcess process = modelState.getBpmnModel().openProcess(bpmnElement.getProcessId());
                         BPMNElementNode bpmnElementNode = (BPMNElementNode) bpmnElement;
-
-                        // compute ref position - form first element...
-                        if (refPoint == null) {
-                            refPoint = bpmnElementNode.getBounds().getPosition();
-                            xOffset = mousePosition.getX() - refPoint.getX();
-                            yOffset = mousePosition.getY() - refPoint.getY();
-                        }
-
                         BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
                         // adjust position...
                         newElementNode.setPosition(bpmnElementNode.getBounds().getPosition().getX() + xOffset,
                                 bpmnElementNode.getBounds().getPosition().getY() + yOffset);
-
                         // adjust label position?
                         BPMNLabel label = newElementNode.getLabel();
                         if (label != null) {
                             label.updateLocation(bpmnElementNode.getLabel().getBounds().getPosition().getX() + xOffset,
                                     bpmnElementNode.getLabel().getBounds().getPosition().getY() + yOffset);
                         }
-
                     }
-
                 } catch (BPMNModelException e) {
                     e.printStackTrace();
                 }
             }
-
         }
-
         // reset model state..
         modelState.reset();
     }
 
+    /**
+     * This helper method computes the most upper left point from the list of
+     * selected elements.
+     * This ref point is used to clone elements and adjust its position according to
+     * the mouse position.
+     */
+    private BPMNPoint computeRefPoint(List<String> ids) {
+        double x = 0;
+        double y = 0;
+        for (String id : ids) {
+            // find the BPMNNode
+            BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
+            if (bpmnElement != null && bpmnElement instanceof BPMNElementNode) {
+                try {
+                    BPMNElementNode bpmnElementNode = (BPMNElementNode) bpmnElement;
+                    // compute most upper left ref position...
+                    BPMNPoint _point = bpmnElementNode.getBounds().getPosition();
+                    if (_point.getX() > 0) {
+                        if ((x > 0 && _point.getX() < x) || x == 0) {
+                            x = _point.getX();
+                        }
+                    }
+                    if (_point.getY() > 0) {
+                        if ((y > 0 && _point.getY() < y) || y == 0) {
+                            y = _point.getY();
+                        }
+                    }
+                    logger.debug("...  x=" + x + " y=" + y);
+                } catch (BPMNModelException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return new BPMNPoint(x, y);
+    }
 }

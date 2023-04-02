@@ -18,8 +18,9 @@ package org.openbpmn.glsp.operations;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataAction;
@@ -40,7 +41,7 @@ import com.google.inject.Inject;
  */
 public class BPMNClipboardDataActionHandler extends AbstractActionHandler<RequestClipboardDataAction> {
 
-    private static Logger logger = Logger.getLogger(BPMNClipboardDataActionHandler.class.getName());
+    private static Logger logger = LogManager.getLogger(BPMNClipboardDataActionHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
@@ -58,10 +59,9 @@ public class BPMNClipboardDataActionHandler extends AbstractActionHandler<Reques
      */
     @Override
     protected List<Action> executeAction(final RequestClipboardDataAction actualAction) {
-        logger.info("--------__> RequestClipboardDataAction");
-
         EditorContext ctx = actualAction.getEditorContext();
         List<String> selectedElements = ctx.getSelectedElementIds();
+        logger.debug("... copy " + selectedElements.size() + " elements...");
 
         // return a data action with the selected ids
         Map<String, String> data = new HashMap<String, String>();
