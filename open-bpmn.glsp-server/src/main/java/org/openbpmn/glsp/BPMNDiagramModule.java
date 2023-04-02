@@ -69,6 +69,7 @@ import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
 import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
+import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNModelValidator;
@@ -133,16 +134,11 @@ public class BPMNDiagramModule extends DiagramModule {
         super.configureOperationHandlers(binding);
 
         // Inline Edit
-
         binding.add(BPMNApplyEditLabelOperationHandler.class);
 
-        // binding.add(ChangeBoundsOperationHandler.class);
-        // binding.add(ChangeRoutingPointsHandler.class);
         binding.add(CutOperationHandler.class);
         // binding.add(DeleteOperationHandler.class);
         // binding.add(LayoutOperationHandler.class);
-        // binding.add(PasteOperationHandler.class);
-        // binding.add(ReconnectEdgeOperationHandler.class);
 
         // Clipboard
         binding.add(BPMNPasteOperationHandler.class);
@@ -150,6 +146,7 @@ public class BPMNDiagramModule extends DiagramModule {
         // Bounds & Routing Points
         binding.add(BPMNChangeBoundsOperationHandler.class);
         binding.add(BPMNChangeRoutingPointsOperationHandler.class);
+        binding.add(BPMNReconnectEdgeOperationHandler.class);
 
         // Tasks
         binding.add(BPMNCreateTaskHandler.class);
