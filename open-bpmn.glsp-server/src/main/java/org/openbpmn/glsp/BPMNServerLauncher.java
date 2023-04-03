@@ -15,9 +15,13 @@
  ********************************************************************************/
 package org.openbpmn.glsp;
 
+import java.io.FileReader;
 import java.io.IOException;
 
 import org.apache.commons.cli.ParseException;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.DefaultCLIParser;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
@@ -25,12 +29,15 @@ import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 
 public final class BPMNServerLauncher {
+
     private BPMNServerLauncher() {
     }
 
     @SuppressWarnings("uncommentedmain")
     public static void main(final String[] args) {
         try {
+
+            System.out.println("[Open-BPMN-Server] Version " + getMavenProjectVersion());
             DefaultCLIParser cliParser = new DefaultCLIParser(args, "bpmn server");
             LaunchUtil.configure(cliParser);
             int port = cliParser.parsePort();
@@ -43,4 +50,22 @@ public final class BPMNServerLauncher {
         }
     }
 
+    /**
+     * Helper method to receive dynamically the maven version
+     * See:
+     * https://stackoverflow.com/questions/3697449/retrieve-version-from-maven-pom-xml-in-code
+     * 
+     * @return
+     */
+    private static String getMavenProjectVersion() {
+        try {
+            MavenXpp3Reader reader = new MavenXpp3Reader();
+            Model model = reader.read(new FileReader("pom.xml"));
+            return model.getVersion();
+        } catch (IOException | XmlPullParserException e) {
+            System.out.println("Failed to read server version: " + e.getMessage());
+        }
+        return "";
+
+    }
 }
