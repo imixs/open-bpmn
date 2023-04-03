@@ -57,9 +57,19 @@ public class Participant extends BPMNElementNode {
         return processRef;
     }
 
+    /**
+     * This method updates the processRef attribute of the participant.
+     * If the id is empty or null the attribute will be removed.
+     * 
+     * @param processRef
+     */
     public void setProcessRef(String processRef) {
         this.processRef = processRef;
-        this.getElementNode().setAttribute("processRef", processRef);
+        if (processRef != null && !processRef.isEmpty()) {
+            this.getElementNode().setAttribute("processRef", processRef);
+        } else {
+            this.getElementNode().removeAttribute("processRef");
+        }
     }
 
     /**
