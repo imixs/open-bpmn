@@ -32,9 +32,11 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
 import org.eclipse.glsp.server.types.ElementAndBounds;
+import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
@@ -162,7 +164,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      * The new absolute position can be computed with the given x/y offset in the
      * BPMN model.
      * <p>
-     * In addition the method computes the absolute position on the diagram an
+     * In addition the method computes the absolute position on the diagram and
      * verifies if the bpmnElementNode has a new parent BPMN Pool. This is the case
      * when a Flow Element is dropped on a Pool or outside a Pool. In this case the
      * method changes the containing BPMN Process in the source model for this
@@ -246,12 +248,13 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         // @see https://github.com/imixs/open-bpmn/issues/208
         bpmnElementNode.setBounds(newBpmnPoint.getX(), newBpmnPoint.getY(), newSize.getWidth(),
                 newSize.getHeight());
-        // bpmnBounds.setPosition(newBpmnPoint);
-        // bpmnBounds.setDimension(newSize.getWidth(), newSize.getHeight());
 
+        /* */
         // Finally Update GNode dimension....
-        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
-        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH,
+                newSize.getWidth());
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT,
+                newSize.getHeight());
         // calling the size method does not have an effect.
         // see:
         // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
@@ -265,6 +268,26 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             updateLabel(_labelnode.get(), bpmnLabel, offsetX, offsetY);
         }
 
+        // lets see if the offset is to large so that we should remove the waypoints
+        // from edges..
+        if (Math.abs(offsetX) > gNode.getSize().getWidth() * 0.5
+                || Math.abs(offsetY) > gNode.getSize().getHeight() * 0.5) {
+
+            Set<SequenceFlow> sequenceFlows = bpmnElementNode.getIngoingSequenceFlows();
+            for (SequenceFlow sf : sequenceFlows) {
+                sf.clearWayPoints();
+            }
+            sequenceFlows = bpmnElementNode.getOutgoingSequenceFlows();
+            for (SequenceFlow sf : sequenceFlows) {
+                sf.clearWayPoints();
+            }
+            // reset associations
+            Set<Association> associations = bpmnElementNode.getAssociations();
+            for (Association a : associations) {
+                a.clearWayPoints();
+            }
+            modelState.reset();
+        }
     }
 
     /**

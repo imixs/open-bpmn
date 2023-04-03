@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
@@ -288,6 +289,21 @@ public abstract class BPMNElementNode extends BPMNElement {
         Set<SequenceFlow> result = this.bpmnProcess.getSequenceFlows()
                 .stream()
                 .filter(c -> c.targetRef.equals(this.getId()))
+                .collect(Collectors.toSet());
+        return result;
+
+    }
+
+    /**
+     * Returns a List of all Associations associated with this element
+     * 
+     * @return
+     */
+    public Set<Association> getAssociations() {
+        // filter all Associations with a sourceRef or targetRef to this elementNode
+        Set<Association> result = this.bpmnProcess.getAssociations()
+                .stream()
+                .filter(c -> c.getSourceRef().equals(this.getId()) || c.getTargetRef().equals(this.getId()))
                 .collect(Collectors.toSet());
         return result;
 
