@@ -247,8 +247,8 @@
 }
 
 .helper-line {
-	stroke: #f18e00;
-	stroke-width:1;
+    stroke: var(--theia-focusBorder);
+	stroke-width:0.5;
 }
 
 .sprotty-comp {
