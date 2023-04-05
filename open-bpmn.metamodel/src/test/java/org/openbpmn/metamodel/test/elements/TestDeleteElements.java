@@ -88,8 +88,8 @@ public class TestDeleteElements {
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
             Activity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
-            task.getBounds().setPosition(10.0, 10.0);
-            task.getBounds().setDimension(140.0, 60.0);
+            task.setPosition(10.0, 10.0);
+            task.setDimension(140.0, 60.0);
 
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");

@@ -607,7 +607,7 @@ public class BPMNProcess extends BPMNElement {
             if (currentLaneCount > 0) {
                 // increase height...
                 expansion = currentHeight / currentLaneCount;
-                bpmnParticipant.getBounds().setDimension(currentWidth, currentHeight + expansion);
+                bpmnParticipant.setDimension(currentWidth, currentHeight + expansion);
             }
 
             Element laneBpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
@@ -632,8 +632,8 @@ public class BPMNProcess extends BPMNElement {
                 // laneHeight++;
             }
 
-            bpmnLane.getBounds().setDimension(laneWidth, laneHeight);
-            bpmnLane.getBounds().setPosition(laneX, laneY);
+            bpmnLane.setDimension(laneWidth, laneHeight);
+            bpmnLane.setPosition(laneX, laneY);
 
         }
 
@@ -642,7 +642,10 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Return true if the process is the public default process
+     * Return true if the process is the public default process of the diagram.
+     * 
+     * The method returns false in case the process is a private process assigned to
+     * a bpmn2:participant.
      */
     public boolean isPublicProcess() {
         return BPMNTypes.PROCESS_TYPE_PUBLIC.equals(getProcessType());

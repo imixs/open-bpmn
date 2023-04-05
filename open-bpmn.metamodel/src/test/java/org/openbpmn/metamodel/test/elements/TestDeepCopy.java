@@ -41,14 +41,14 @@ public class TestDeepCopy {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext=  model.openDefaultProcess();
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
             // add a start and end event
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             processContext.addEvent("end_1", "End", BPMNTypes.END_EVENT);
             Activity task = processContext.addTask("task_1", "Task", BPMNTypes.TASK);
-            task.getBounds().setPosition(10.0, 10.0);
-            task.getBounds().setDimension(140.0, 60.0);
+            task.setPosition(10.0, 10.0);
+            task.setDimension(140.0, 60.0);
 
             processContext.addSequenceFlow("SequenceFlow_1", "start_1", "task_1");
             processContext.addSequenceFlow("SequenceFlow_2", "task_1", "end_1");
@@ -60,10 +60,9 @@ public class TestDeepCopy {
             // remove elements from origin
             processContext.deleteEvent("start_1");
 
-            
             // one Process expected
-            assertEquals(1,model.getProcesses().size());
-            
+            assertEquals(1, model.getProcesses().size());
+
             model.save(out);
 
             // test structure of clone....

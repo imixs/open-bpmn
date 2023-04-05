@@ -66,8 +66,8 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 // set the bounds
-                participant.getBounds().setPosition(point.get().getX(), point.get().getY());
-                participant.getBounds().setDimension(Participant.DEFAULT_WIDTH, Participant.DEFAULT_HEIGHT);
+                participant.setPosition(point.get().getX(), point.get().getY());
+                participant.setDimension(Participant.DEFAULT_WIDTH, Participant.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();

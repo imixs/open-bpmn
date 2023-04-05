@@ -40,7 +40,7 @@ public class Participant extends BPMNElementNode {
 
     /**
      * Returns the initialized BPMNProcess of this participant or returns null if no
-     * proces exists
+     * process exists
      * 
      * @return BPMNProcess
      */

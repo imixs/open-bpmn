@@ -87,8 +87,8 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
                 elementX = elementX - (DataObject.DEFAULT_WIDTH / 2);
                 elementY = elementY - (DataObject.DEFAULT_HEIGHT / 2);
 
-                dataObject.getBounds().setPosition(elementX, elementY);
-                dataObject.getBounds().setDimension(DataObject.DEFAULT_WIDTH, DataObject.DEFAULT_HEIGHT);
+                dataObject.setPosition(elementX, elementY);
+                dataObject.setDimension(DataObject.DEFAULT_WIDTH, DataObject.DEFAULT_HEIGHT);
                 // set label bounds
 
                 // set label bounds

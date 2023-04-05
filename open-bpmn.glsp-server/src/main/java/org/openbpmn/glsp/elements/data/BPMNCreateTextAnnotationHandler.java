@@ -80,8 +80,8 @@ public class BPMNCreateTextAnnotationHandler extends CreateBPMNNodeOperationHand
                 // compute relative center position...
                 elementX = elementX - (TextAnnotation.DEFAULT_WIDTH / 2);
                 elementY = elementY - (TextAnnotation.DEFAULT_HEIGHT / 2);
-                textAnnotation.getBounds().setPosition(elementX, elementY);
-                textAnnotation.getBounds().setDimension(TextAnnotation.DEFAULT_WIDTH, TextAnnotation.DEFAULT_HEIGHT);
+                textAnnotation.setPosition(elementX, elementY);
+                textAnnotation.setDimension(TextAnnotation.DEFAULT_WIDTH, TextAnnotation.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
