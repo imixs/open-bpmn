@@ -19,7 +19,7 @@ import {
 	isBoundsAware, ISnapper, MouseListener,
 	SModelElement, SModelRoot, SParentElement
 } from '@eclipse-glsp/client';
-import { EventNode, isBoundaryEvent, isBPMNLabelNode, isBPMNNode, LabelNode, TaskNode } from '@open-bpmn/open-bpmn-model';
+import { EventNode, isBoundaryEvent, isBPMNLabelNode, isBPMNNode, isTaskNode, LabelNode, TaskNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
 import { CommandExecutionContext, CommandReturn, IView, RenderingContext, SChildElement, svg, TYPES } from 'sprotty';
@@ -229,7 +229,7 @@ export class HelperLineListener extends MouseListener {
 
 	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
 		// check if target is relevant....
-		if (isBPMNNode(target) || target.type === 'icon') {
+		if (isBPMNNode(target) || target.type === 'icon' || target.type === 'bpmn-text-node') {
 			// switch into active mode
 			this.isActive = true;
 		} else {
@@ -246,6 +246,13 @@ export class HelperLineListener extends MouseListener {
 	 */
 	override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
 		if (this.isActive) {
+			// if  we have a bpmn-text-node we need ot find the corresponding Task node...
+			if (target.type === 'bpmn-text-node') {
+				const task = findParentByFeature(target, isTaskNode);
+				if (task) {
+					target=task;
+				}
+			}
 			// first test if we have a mouseMove on a BPMNNode
 			// const bpmnNode = isBPMNNode(target);
 			if (isBPMNNode(target)) {
@@ -319,8 +326,7 @@ export class HelperLineListener extends MouseListener {
 					canvasBounds=pool.bounds;
 				}
 			}
-
-			// const modelElementCenter = Bounds.center(modelElement.bounds);
+			// const modelElementCenter = Bounds.center(modelElement.bounds); 
 			const modelElementCenter = Bounds.center(modelElement.bounds);
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
