@@ -277,7 +277,6 @@ export class HelperLineListener extends MouseListener {
 		return [RemoveHelperLinesAction.create()]; //  EnableDefaultToolsAction.create()
 	}
 
-
 	/*
 	 * Helper Method to find an optional parent pool of a given element.
 	 * If the element is not part of a Pool the method returns undefined.
@@ -326,7 +325,6 @@ export class HelperLineListener extends MouseListener {
 					canvasBounds=pool.bounds;
 				}
 			}
-			// const modelElementCenter = Bounds.center(modelElement.bounds); 
 			const modelElementCenter = Bounds.center(modelElement.bounds);
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
