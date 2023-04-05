@@ -7,6 +7,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
@@ -104,9 +105,36 @@ public abstract class BPMNElementNode extends BPMNElement {
         return bounds;
     }
 
+    /**
+     * Update the absolute position of a BPMNElementNode.
+     * 
+     * When BPMNElementNode is part of a participant with lanes, this method
+     * automatically updates the bpmn2:flowNodeRef of the containing lane.
+     * 
+     * @param x
+     * @param y
+     */
     public void setPosition(double x, double y) {
         try {
             this.getBounds().setPosition(x, y);
+
+            // update lane flowNodeRef if the element is part of a pool with lanes....
+            if (BPMNTypes.isFlowElement(this)
+                    && this.getBpmnProcess().getProcessType() == BPMNTypes.PROCESS_TYPE_PRIVATE) {
+                // get all lanes and test if a lane is the containing lane according to the
+                // position.
+                Set<Lane> lanes = this.getBpmnProcess().getLanes();
+                for (Lane lane : lanes) {
+                    BPMNBounds laneBounds = lane.getBounds();
+                    if (laneBounds.containsPoint(new BPMNPoint(x, y))) {
+                        // found containing lane!
+                        lane.insert(this);
+                    } else {
+                        // remove if listed in this lane....
+                        lane.remove(this);
+                    }
+                }
+            }
         } catch (BPMNMissingElementException e) {
             BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
         }

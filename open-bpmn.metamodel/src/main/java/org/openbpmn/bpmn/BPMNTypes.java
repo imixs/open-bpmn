@@ -3,8 +3,14 @@ package org.openbpmn.bpmn;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+
 /**
- * The BPMNTypes provides constants defining the visual elements contained in a BPMNDiagram.  
+ * The BPMNTypes provides constants defining the visual elements contained in a
+ * BPMNDiagram.
+ * 
  * @author rsoika
  *
  */
@@ -14,7 +20,7 @@ public class BPMNTypes {
     public static final String PROCESS_TYPE_PUBLIC = "Public";
     public static final String PROCESS_TYPE_PRIVATE = "Private";
     public static final String PROCESS_TYPE_NONE = "None";
-    
+
     // Tasks
     public static final String TASK = "task";
     public static final String USER_TASK = "userTask";
@@ -24,15 +30,15 @@ public class BPMNTypes {
     public static final String MANUAL_TASK = "manualTask";
     public static final String BUSINESSRULE_TASK = "businessRuleTask";
     public static final String RECEIVE_TASK = "receiveTask";
-    
+
     // Events
     public static final String EVENT = "event";
     public static final String START_EVENT = "startEvent";
-    public static final String END_EVENT= "endEvent";
+    public static final String END_EVENT = "endEvent";
     public static final String CATCH_EVENT = "intermediateCatchEvent";
     public static final String THROW_EVENT = "intermediateThrowEvent";
     public static final String BOUNDARY_EVENT = "boundaryEvent";
-    
+
     // Event Definitions
     public static final String EVENT_DEFINITION_CONDITIONAL = "conditionalEventDefinition";
     public static final String EVENT_DEFINITION_COMPENSATION = "compensationEventDefinition";
@@ -44,19 +50,19 @@ public class BPMNTypes {
     public static final String EVENT_DEFINITION_ERROR = "errorEventDefinition";
     public static final String EVENT_DEFINITION_TERMINATE = "terminateEventDefinition";
     public static final String EVENT_DEFINITION_CANCEL = "cancelEventDefinition";
-   
+
     // Multiple Event Definitions
     public static final String MULTIPLE_EVENT_DEFINITIONS = "multipleEventDefinition";
-    
+
     // Gateways
-    public static final String GATEWAY = "gateway"; 
+    public static final String GATEWAY = "gateway";
     public static final String EXCLUSIVE_GATEWAY = "exclusiveGateway";
     public static final String INCLUSIVE_GATEWAY = "inclusiveGateway";
     public static final String EVENTBASED_GATEWAY = "eventBasedGateway";
     public static final String PARALLEL_GATEWAY = "parallelGateway";
     public static final String COMPLEX_GATEWAY = "complexGateway";
-    
-    // Others  
+
+    // Others
     public static final String DATAOBJECT = "dataObject";
     public static final String TEXTANNOTATION = "textAnnotation";
     public static final String POOL = "pool";
@@ -127,6 +133,20 @@ public class BPMNTypes {
 
             BPMNTypes.SEQUENCE_FLOW);
 
+    /**
+     * Returns true if the given element is a FlowElement,
+     * which are Events, Gateways , Sequence Flows or Activities
+     */
+    public static boolean isFlowElement(BPMNElement element) {
+        if (element instanceof SequenceFlow) {
+            return true;
+        }
+        if (element instanceof BPMNElementNode) {
+            return BPMN_FLOWELEMENTS.contains(((BPMNElementNode) element).getType());
+        }
+        return false;
+    }
+
     public final static List<String> BPMN_NODE_ELEMENTS = Arrays.asList(//
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
@@ -180,4 +200,3 @@ public class BPMNTypes {
     });
 
 }
-
