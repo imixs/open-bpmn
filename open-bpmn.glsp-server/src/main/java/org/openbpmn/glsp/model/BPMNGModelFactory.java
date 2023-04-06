@@ -336,17 +336,32 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
-     * Finds an GModelElement by its ID in a given List of GModelElements. The
+     * This helper method finds an GModelElement by its ID in a given List of
+     * GModelElements. The
      * method returns null if not element with the given ID exists.
+     * 
+     * If the list of elements contains Pools the method searches recursively the
+     * elements within the pool.
      *
      * @param entityNodes - List of GModelElements
      * @param id          - id to search for
      * @return GModelElement - or null if no elment was found.
      */
     GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
-        for (GModelElement element : entityNodes) {
-            if (element.getId().equals(id)) {
-                return element;
+        if (entityNodes != null) {
+            for (GModelElement element : entityNodes) {
+                if (element.getId().equals(id)) {
+                    return element;
+                }
+                // do we have a pool
+                if (element instanceof PoolGNode) {
+                    // recursive call!
+                    PoolGNode gPool = (PoolGNode) element;
+                    GModelElement child = findElementById(gPool.getChildren(), id);
+                    if (child != null) {
+                        return child;
+                    }
+                }
             }
         }
         return null;
@@ -523,11 +538,11 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all SequenceFlows
         Set<BPMNElementEdge> list = new LinkedHashSet<>();
         list.addAll(process.getSequenceFlows());
-        readEdges(list, gNodeList, participant);
+        createGEdges(list, gNodeList, participant);
 
         list = new LinkedHashSet<>();
         list.addAll(process.getAssociations());
-        readEdges(list, gNodeList, participant);
+        createGEdges(list, gNodeList, participant);
 
         return gNodeList;
     }
@@ -644,7 +659,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param gNodeList
      * @param participant
      */
-    private void readEdges(final Set<BPMNElementEdge> bpmnEdges, final List<GModelElement> gNodeList,
+    private void createGEdges(final Set<BPMNElementEdge> bpmnEdges, final List<GModelElement> gNodeList,
             final Participant participant) {
         // Add all SequenceFlows
         for (BPMNElementEdge bpmnEdge : bpmnEdges) {
