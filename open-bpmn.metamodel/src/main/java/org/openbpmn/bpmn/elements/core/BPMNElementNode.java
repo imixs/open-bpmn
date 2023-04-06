@@ -120,7 +120,7 @@ public abstract class BPMNElementNode extends BPMNElement {
 
             // update lane flowNodeRef if the element is part of a pool with lanes....
             if (BPMNTypes.isFlowElement(this)
-                    && this.getBpmnProcess().getProcessType() == BPMNTypes.PROCESS_TYPE_PRIVATE) {
+                    && BPMNTypes.PROCESS_TYPE_PRIVATE.equals(this.getBpmnProcess().getProcessType())) {
                 // get all lanes and test if a lane is the containing lane according to the
                 // position.
                 Set<Lane> lanes = this.getBpmnProcess().getLanes();
