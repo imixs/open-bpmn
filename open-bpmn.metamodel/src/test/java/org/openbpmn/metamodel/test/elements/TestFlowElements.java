@@ -11,9 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -91,7 +91,6 @@ public class TestFlowElements {
         logger.info("...model read sucessful");
     }
 
-    
     /**
      * This test parses refmodel-6
      * 
@@ -102,33 +101,32 @@ public class TestFlowElements {
 
         logger.info("...read model");
         try {
-            BPMNModel model = BPMNModelFactory.read("/refmodel-6.bpmn");            
-            BPMNProcess process = model.openDefaultProcess();
+            BPMNModel model = BPMNModelFactory.read("/refmodel-6.bpmn");
+            BPMNProcess process = model.openDefaultProces();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 
-            // we expect 2 data objects 
+            // we expect 2 data objects
             assertEquals(2, process.getDataObjects().size());
             // and one association between the two data objects
-            assertEquals(1,process.getAssociations().size());
-            assertEquals(0,process.getSequenceFlows().size());
-            
+            assertEquals(1, process.getAssociations().size());
+            assertEquals(0, process.getSequenceFlows().size());
+
             // Analyze the structure of the TextAnnotation
-            Set<TextAnnotation>  annotations=process.getTextAnnotations();
-            assertEquals(1,annotations.size());
-            TextAnnotation textAnnotation=annotations.iterator().next();
+            Set<TextAnnotation> annotations = process.getTextAnnotations();
+            assertEquals(1, annotations.size());
+            TextAnnotation textAnnotation = annotations.iterator().next();
             assertEquals("Text Annotation Example\n"
-                    + "2nd LIne\n<br />",textAnnotation.getText());            
-            assertEquals("text/html",textAnnotation.getAttribute("textFormat"));
-            
+                    + "2nd LIne\n<br />", textAnnotation.getText());
+            assertEquals("text/html", textAnnotation.getAttribute("textFormat"));
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
         logger.info("...model read sucessful");
     }
-    
-    
+
     /**
      * This test parses refmodel-7
      */
@@ -151,8 +149,7 @@ public class TestFlowElements {
 
             assertEquals(2, process.getActivities().size());
             assertEquals(5, process.getSequenceFlows().size());
-            
-            
+
             // read gateways....
             Set<Gateway> gateways = process.getGateways();
             assertEquals(1, gateways.size());
@@ -162,15 +159,14 @@ public class TestFlowElements {
                 logger.info("....... Gateway Bounds=" + element.getBounds());
 
             }
-            
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
         logger.info("...model read sucessful");
     }
-    
-    
+
     /**
      * This test parses refmodel-8 - Boundary Event
      */
@@ -193,22 +189,20 @@ public class TestFlowElements {
 
             assertEquals(1, process.getActivities().size());
             assertEquals(1, process.getEvents().size());
-            
+
             // Load Boundary event and test attribute attachedToRef
-            Event boundaryEvent=(Event) process.findElementNodeById("BoundaryEvent_1");
+            Event boundaryEvent = (Event) process.findElementNodeById("BoundaryEvent_1");
             assertNotNull(boundaryEvent);
-            String attachedRef=boundaryEvent.getAttribute("attachedToRef");
+            String attachedRef = boundaryEvent.getAttribute("attachedToRef");
             assertEquals("Task_1", attachedRef);
-            
-            
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
         logger.info("...model read sucessful");
     }
-    
-    
+
     private static void printNote(NodeList nodeList) {
 
         for (int count = 0; count < nodeList.getLength(); count++) {

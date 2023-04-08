@@ -24,16 +24,15 @@ public class TestDeleteModel {
 
     private static Logger logger = Logger.getLogger(TestDeleteModel.class.getName());
 
-
     /**
      * This test creates a bpmn file
      */
     @Test
     public void testDeleteTask() {
-        BPMNModel model=null;
+        BPMNModel model = null;
         String out = "src/test/resources/output/delete-process_1.bpmn";
         try {
-             model = BPMNModelFactory.read("/refmodel-1.bpmn");
+            model = BPMNModelFactory.read("/refmodel-1.bpmn");
             BPMNProcess process = model.openProcess(null);
             process.deleteTask("Task_1");
         } catch (BPMNModelException e) {
@@ -43,7 +42,6 @@ public class TestDeleteModel {
         model.save(out);
         logger.info("...model update sucessful: " + out);
     }
-
 
     /**
      * This test build new model one participant and a task. The test delete
@@ -58,7 +56,7 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            BPMNProcess defaultProcess = model.openDefaultProcess();
+            BPMNProcess defaultProcess = model.openDefaultProces();
             assertNotNull(defaultProcess);
 
             // create Participant

@@ -22,7 +22,6 @@ public class TestCreateElements {
 
     private static Logger logger = Logger.getLogger(TestCreateElements.class.getName());
 
-   
     /**
      * This test creates a bpmn file with a process definition
      */
@@ -38,7 +37,7 @@ public class TestCreateElements {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProces();
             // Create a DataObject
             process.addDataObject("dataobject_1", "DataObject-1");
         } catch (BPMNModelException e) {

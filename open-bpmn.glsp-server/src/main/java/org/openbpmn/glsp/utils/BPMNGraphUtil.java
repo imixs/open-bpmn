@@ -212,7 +212,7 @@ public class BPMNGraphUtil {
         BPMNProcess bpmnProcess = null;
         // is it the root?
         if (modelState.getRoot().getId().equals(containerId)) {
-            bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
+            bpmnProcess = modelState.getBpmnModel().openDefaultProces();
         } else {
             // it should be a participant container
             if (containerId.startsWith("participant_")) {

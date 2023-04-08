@@ -29,7 +29,7 @@ public class TestModifyDom {
             model = BPMNModelFactory.read("/process_1-empty-1.bpmn");
 
             // add a new task....
-            model.openDefaultProcess().addTask("task-2", "Task", BPMNTypes.TASK);
+            model.openDefaultProces().addTask("task-2", "Task", BPMNTypes.TASK);
             // store the model
             model.save("src/test/resources/output/process_1-update-1.bpmn");
         } catch (BPMNModelException e) {

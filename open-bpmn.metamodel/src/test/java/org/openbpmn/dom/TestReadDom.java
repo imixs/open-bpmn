@@ -28,7 +28,8 @@ public class TestReadDom {
 
     /**
      * This test parses a bpmn file
-     * @throws BPMNModelException 
+     * 
+     * @throws BPMNModelException
      */
     @Test
     public void testReadEmptyModel() throws BPMNModelException {
@@ -47,11 +48,11 @@ public class TestReadDom {
 
         logger.info("...model read sucessful");
     }
-    
-    
+
     /**
      * This test parses a bpmn file
-     * @throws BPMNModelException 
+     * 
+     * @throws BPMNModelException
      */
     @Test
     public void testProcessExample01() throws BPMNModelException {
@@ -69,23 +70,24 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
-        
-        BPMNProcess process = model.openDefaultProcess();
+        BPMNProcess process = model.openDefaultProces();
         assertNotNull(process);
         assertEquals(1, process.getEvents().size()); // we expect 1 start event
-        
+
         logger.info("...model read sucessful");
-        
-        // Now if we add a new task element to this model the xml namespace should be 'bpmn:task' and not 'bpmn2:task'
-        model.openDefaultProcess().addTask("task-2","Task 2",BPMNTypes.TASK);
-       
+
+        // Now if we add a new task element to this model the xml namespace should be
+        // 'bpmn:task' and not 'bpmn2:task'
+        model.openDefaultProces().addTask("task-2", "Task 2", BPMNTypes.TASK);
+
         model.save(out);
         logger.info("...model update sucessful: " + out);
     }
 
     /**
      * This Test verifies if a BPMN model with custom namespace URIs can be read.
-     * @throws BPMNModelException 
+     * 
+     * @throws BPMNModelException
      * 
      */
     @Test
@@ -110,7 +112,8 @@ public class TestReadDom {
 
     /**
      * This test parses a blank (empty) bpmn file and creaes a default process
-     * @throws BPMNModelException 
+     * 
+     * @throws BPMNModelException
      */
     @Test
     public void testReadBlankFile() throws BPMNModelException {
@@ -124,9 +127,9 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
         assertNotNull(model);
-        BPMNProcess defaultProcess=model.openDefaultProcess();
+        BPMNProcess defaultProcess = model.openDefaultProces();
         assertNotNull(defaultProcess);
-        assertEquals("process_1",defaultProcess.getId());
+        assertEquals("process_1", defaultProcess.getId());
 
         model.save(out);
         logger.info("...blank model created sucessful: " + out);

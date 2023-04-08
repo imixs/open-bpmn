@@ -45,7 +45,7 @@ public class TestCreateEdges {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProces();
             // Create a DataObject
             Event event = process.addEvent("start_1", "Start 1", BPMNTypes.START_EVENT);
             Activity task = process.addTask("task_1", "Task 1", BPMNTypes.TASK);
@@ -81,7 +81,7 @@ public class TestCreateEdges {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProces();
             // Create a DataObject
             DataObject dataObject1 = process.addDataObject("dataobject_1", "DataObject-1");
             dataObject1.setPosition(100, 50);
@@ -120,7 +120,7 @@ public class TestCreateEdges {
         try {
             Participant participant1 = model.addParticipant("paticipant_1");
             participant1.setPosition(10, 10);
-            Activity task1 = model.openDefaultProcess().addTask("task1", "Task", BPMNTypes.MANUAL_TASK);
+            Activity task1 = model.openDefaultProces().addTask("task1", "Task", BPMNTypes.MANUAL_TASK);
             task1.setPosition(350, 300);
 
             // create messageFlow

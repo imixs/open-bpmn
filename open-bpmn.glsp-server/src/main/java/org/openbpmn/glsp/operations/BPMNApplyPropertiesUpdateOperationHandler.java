@@ -73,7 +73,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         if (modelState.getRoot().getId().equals(elementID)) {
 
             gModelElement = modelState.getRoot();
-            bpmnElement = modelState.getBpmnModel().openDefaultProcess();
+            bpmnElement = modelState.getBpmnModel().openDefaultProces();
         } else {
             // find the corresponding bpmn element....
             Optional<BPMNGNode> _baseElement = modelState.getIndex().findElementByClass(elementID, BPMNGNode.class);

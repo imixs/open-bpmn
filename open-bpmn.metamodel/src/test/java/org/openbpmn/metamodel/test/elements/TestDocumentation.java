@@ -39,7 +39,7 @@ public class TestDocumentation {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProcess();
+            BPMNProcess processContext = model.openDefaultProces();
             assertNotNull(processContext);
             // add a start and end event
             Event bpmnElement = processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
@@ -68,18 +68,17 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_CDATA.bpmn");
-           BPMNProcess process = model.openProcess(null);
-           Event startEvent = (Event) process.findElementNodeById("start_1");
-           assertEquals("Some text with \n"
-                   + "<markup>code</markup>!",startEvent.getDocumentation());
+            BPMNProcess process = model.openProcess(null);
+            Event startEvent = (Event) process.findElementNodeById("start_1");
+            assertEquals("Some text with \n"
+                    + "<markup>code</markup>!", startEvent.getDocumentation());
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
 
     }
-        
-    
+
     /**
      * Test to read a documentation element with a Text (no CDATA)
      * <p>
@@ -90,14 +89,14 @@ public class TestDocumentation {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/process_documentation_TEXT.bpmn");
-           BPMNProcess process = model.openProcess(null);
-           Event startEvent = (Event) process.findElementNodeById("start_1");
-           assertEquals("Some text with",startEvent.getDocumentation());
+            BPMNProcess process = model.openProcess(null);
+            Event startEvent = (Event) process.findElementNodeById("start_1");
+            assertEquals("Some text with", startEvent.getDocumentation());
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
         }
 
     }
-        
+
 }

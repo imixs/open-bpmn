@@ -232,7 +232,7 @@ public class BPMNGModelFactory implements GModelFactory {
             } else {
                 // We have a simple 'Process Diagram' type - build the GModel from default
                 // process
-                BPMNProcess bpmnProcess = model.openDefaultProcess();
+                BPMNProcess bpmnProcess = model.openDefaultProces();
                 gRootNodeList.addAll(computeGModelElements(bpmnProcess, null));
             }
 
@@ -246,7 +246,7 @@ public class BPMNGModelFactory implements GModelFactory {
         rootBuilder.addAll(gRootNodeList);
         GGraph newGModel = rootBuilder.build();
         // finally add the root extensions
-        applyBPMNExtensions(newGModel, model.openDefaultProcess());
+        applyBPMNExtensions(newGModel, model.openDefaultProces());
 
         return newGModel;
     }

@@ -79,7 +79,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     protected BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation)
             throws BPMNInvalidTypeException {
         if (!modelState.getBpmnModel().isCollaborationDiagram()) {
-            return modelState.getBpmnModel().openDefaultProcess();
+            return modelState.getBpmnModel().openDefaultProces();
         }
         GPoint dropPoint = operation.getLocation().orElse(null);
 

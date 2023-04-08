@@ -36,7 +36,7 @@ public class TestReadBPMNNodes {
             logger.info("...read model");
             model = BPMNModelFactory.read("/refmodel-6.bpmn");
 
-            BPMNProcess process = model.openDefaultProcess();
+            BPMNProcess process = model.openDefaultProces();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 
@@ -55,7 +55,5 @@ public class TestReadBPMNNodes {
         }
         logger.info("...model read sucessful: ");
     }
-
-   
 
 }

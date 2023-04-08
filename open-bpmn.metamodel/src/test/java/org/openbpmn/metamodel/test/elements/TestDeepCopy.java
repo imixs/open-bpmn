@@ -41,7 +41,7 @@ public class TestDeepCopy {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProcess();
+            BPMNProcess processContext = model.openDefaultProces();
             assertNotNull(processContext);
             // add a start and end event
             processContext.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
