@@ -400,6 +400,8 @@ public class BPMNModel {
         BPMNProcess process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
                 BPMNTypes.PROCESS_TYPE_PRIVATE);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
+        process.setName(name);
+
         bpmnParticipant.setProcessRef(process.getId());
         bpmnParticipant.setBpmnProcess(process);
         // create the pool shape
@@ -570,7 +572,7 @@ public class BPMNModel {
      * elements of the Process. The default process always exists and is not
      * embedded in a Pool.
      */
-    public BPMNProcess openDefaultProcess() {
+    public BPMNProcess openDefaultProces() {
         try {
             return openProcess(null);
         } catch (BPMNModelException e) {
@@ -791,7 +793,7 @@ public class BPMNModel {
 
         this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
 
-        Message message = new Message(this, bpmnElement, BPMNTypes.MESSAGE, this.openDefaultProcess());
+        Message message = new Message(this, bpmnElement, BPMNTypes.MESSAGE, this.openDefaultProces());
         getMessages().add(message);
 
         return message;
@@ -1084,7 +1086,7 @@ public class BPMNModel {
                 }
             } else {
                 // just analyze the default process
-                BPMNElementNode baseElement = openDefaultProcess().findElementNodeById(id);
+                BPMNElementNode baseElement = openDefaultProces().findElementNodeById(id);
                 if (baseElement != null) {
                     return baseElement.getBounds();
                 }
@@ -1133,7 +1135,7 @@ public class BPMNModel {
             }
         }
         // no participant - return the default Participant
-        Participant defaultParticipant = findParticipantByProcessId(this.openDefaultProcess().getId());
+        Participant defaultParticipant = findParticipantByProcessId(this.openDefaultProces().getId());
         return defaultParticipant;
     }
 
@@ -1642,7 +1644,7 @@ public class BPMNModel {
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
-                Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProcess());
+                Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProces());
                 messages.add(message);
             }
         }

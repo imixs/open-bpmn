@@ -5,8 +5,11 @@ import java.util.stream.Collectors;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
@@ -109,7 +112,10 @@ public abstract class BPMNElementNode extends BPMNElement {
      * Update the absolute position of a BPMNElementNode.
      * 
      * When BPMNElementNode is part of a participant with lanes, this method
-     * automatically updates the bpmn2:flowNodeRef of the containing lane.
+     * automatically updates the containing participant and/or the bpmn2:flowNodeRef
+     * of the containing lane.
+     * 
+     * 
      * 
      * @param x
      * @param y
@@ -117,27 +123,114 @@ public abstract class BPMNElementNode extends BPMNElement {
     public void setPosition(double x, double y) {
         try {
             this.getBounds().setPosition(x, y);
-
-            // update lane flowNodeRef if the element is part of a pool with lanes....
-            if (BPMNTypes.isFlowElement(this)
-                    && BPMNTypes.PROCESS_TYPE_PRIVATE.equals(this.getBpmnProcess().getProcessType())) {
-                // get all lanes and test if a lane is the containing lane according to the
-                // position.
-                Set<Lane> lanes = this.getBpmnProcess().getLanes();
-                for (Lane lane : lanes) {
-                    BPMNBounds laneBounds = lane.getBounds();
-                    if (laneBounds.containsPoint(new BPMNPoint(x, y))) {
-                        // found containing lane!
-                        lane.insert(this);
-                    } else {
-                        // remove if listed in this lane....
-                        lane.remove(this);
-                    }
-                }
+            // update containment only if position is not 0,0
+            if (x != 0 && y != 0) {
+                updateContainment(x, y);
             }
         } catch (BPMNMissingElementException e) {
             BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
         }
+    }
+
+    /**
+     * This helper method verifies the current containment and updates the
+     * participant and/or lane in case the containment has changed.
+     * 
+     * The method first verifies if the BPMNElementNode is still contained by the
+     * current Participant or is moved from the default process into a pool. In this
+     * cases the method updates the process ref of the element.
+     * 
+     */
+    private void updateContainment(double x, double y) {
+        // update is only needed for collaboration diagrams and FlowElements
+        if (!this.model.isCollaborationDiagram() || !BPMNTypes.isFlowElement(this)) {
+            return;
+        }
+        try {
+            // first test if the participant need to be updated...
+            Set<Participant> participants = this.model.getParticipants();
+            BPMNProcess newProcess = this.model.openDefaultProces(); // default process
+            for (Participant participant : participants) {
+                if (participant.bounds == null) {
+                    continue; // no bounds!
+                }
+                BPMNBounds participantBounds = participant.getBounds();
+                if (participantBounds.containsPoint(new BPMNPoint(x, y))) {
+                    newProcess = participant.bpmnProcess;
+                    break;
+                }
+            }
+            if (!this.getProcessId().equals(newProcess.getId())) {
+                // change process!
+                updateBPMNProcess(newProcess);
+            }
+
+            // In any case we finally update the lane flowNodeRef if the element is or was
+            // part of a pool with lanes....
+            // For this we iterate over all lanes and test if a lane is the containing lane
+            // according to the position.
+            Set<Lane> lanes = this.getBpmnProcess().getLanes();
+            for (Lane lane : lanes) {
+                BPMNBounds laneBounds = lane.getBounds();
+                if (laneBounds.containsPoint(new BPMNPoint(x, y))) {
+                    // found containing lane!
+                    lane.insert(this);
+                } else {
+                    // remove if listed in this lane....
+                    lane.remove(this);
+                }
+            }
+
+        } catch (BPMNMissingElementException | BPMNInvalidTypeException e) {
+            BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "' - " + e.getMessage());
+        }
+    }
+
+    /**
+     * This method updates the process assignment of a FlowElement. The element will
+     * be removed form the current process and added to the new process. All edges
+     * will be removed.
+     * 
+     * Also the element will be removed from an optional laneSet of the old process.
+     * 
+     * @param newProcess
+     * @throws BPMNInvalidTypeException
+     */
+    public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
+
+        if (!BPMNTypes.isFlowElement(this)) {
+            throw new BPMNInvalidTypeException(
+                    "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity)");
+        }
+
+        // remove element from an optional laneSet
+        Set<Lane> lanes = this.bpmnProcess.getLanes();
+        for (Lane lane : lanes) {
+            lane.remove(this);
+        }
+
+        // remove all flows...
+        this.bpmnProcess.removeAllEdgesFromElement(this.getId());
+
+        // ...remove the element from the corresponding element list
+        // and add it to the new process
+        if (this instanceof Activity) {
+            this.bpmnProcess.getActivities().remove(this);
+            newProcess.getActivities().add((Activity) this);
+        }
+        if (this instanceof Gateway) {
+            this.bpmnProcess.getGateways().remove(this);
+            newProcess.getGateways().add((Gateway) this);
+        }
+        if (this instanceof Event) {
+            this.bpmnProcess.getEvents().remove(this);
+            newProcess.getEvents().add((Event) this);
+        }
+
+        // remove element from old process and assign it ot the new
+        this.bpmnProcess.elementNode.removeChild(this.elementNode);
+        this.bpmnProcess = newProcess;
+        this.bpmnProcess.elementNode.appendChild(this.elementNode);
     }
 
     public void setDimension(double width, double height) {

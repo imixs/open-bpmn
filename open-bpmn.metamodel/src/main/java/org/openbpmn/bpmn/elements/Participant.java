@@ -29,9 +29,18 @@ public class Participant extends BPMNElementNode {
 
     public Participant(BPMNModel model, Element node) throws BPMNModelException {
         super(model, node);
-
         // find the BPMNShape element.
         bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+    }
+
+    /**
+     * Updates the name of the participant and also the corresponding process name.
+     */
+    @Override
+    public void setName(String name) {
+        super.setName(name);
+        // update name of corresponding process
+        this.bpmnProcess.setName(name);
     }
 
     public boolean hasPool() {
