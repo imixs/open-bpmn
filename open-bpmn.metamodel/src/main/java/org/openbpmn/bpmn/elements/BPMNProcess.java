@@ -571,10 +571,10 @@ public class BPMNProcess extends BPMNElement {
         if (this.laneSet == null) {
             BPMNModel.log("create laneset...");
             // create the default collaboration element
-            String laneSetID = "laneset_1";
+            String laneSetID = BPMNModel.generateShortID("laneset");
             laneSet = model.createElement(BPMNNS.BPMN2, "laneSet");
             laneSet.setAttribute("id", laneSetID);
-            laneSet.setAttribute("name", "Lane Set 1");
+            laneSet.setAttribute("name", "Lane Set");
             this.getElementNode().insertBefore(laneSet, this.getElementNode().getFirstChild());
         }
         // add the new Lane
@@ -590,14 +590,6 @@ public class BPMNProcess extends BPMNElement {
         // AutoCompute the Lane Bounds
         Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
         if (bpmnParticipant != null) {
-            // add shape
-            // create shape element
-            /*
-             * <bpmndi:BPMNShape id="BPMNShape_Lane_1" bpmnElement="Lane_1"
-             * isHorizontal="true"> <dc:Bounds height="150.0" width="500.0" x="130.0"
-             * y="100.0"/> </bpmndi:BPMNShape>
-             */
-
             // if the pool already contains lanes, than we auto increase the height of the
             // pool
             int currentWidth = (int) bpmnParticipant.getBounds().getDimension().getWidth();
@@ -938,11 +930,11 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Helper method to deletes all SequenceFlows, Associations and MessageFlows
+     * This method deletes all SequenceFlows, Associations and MessageFlows
      * from an element
      * 
      */
-    private void removeAllEdgesFromElement(String elementId) {
+    public void removeAllEdgesFromElement(String elementId) {
         // remove all SequenceFlows
         Set<SequenceFlow> flowList = findSequenceFlowsByElementId(elementId);
         for (SequenceFlow flow : flowList) {
