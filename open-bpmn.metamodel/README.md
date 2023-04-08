@@ -1,4 +1,4 @@
-<h1><img width="200" src="../doc/images/logo-openbpmn.png" /> Metamodel</h1>
+<h1><img width="200" src="../doc/images/logo-test.png" /> Metamodel</h1>
 
 # Open BPMN 2.0 - Metamodel
 
