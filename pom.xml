@@ -49,11 +49,12 @@
 
 	<licenses>
 		<license>
-			<name>GNU General Public License</name>
-			<url>http://www.gnu.org/licenses/gpl-2.0.txt</url>
+			<name>Eclipse Public License - v 2.0</name>
+			<url>LICENSE</url>
 			<distribution>repo</distribution>
 			<comments>
-			All the results of the imixs workflow project are subject to the GPL licensing model.
+			This program and the accompanying materials are made available under the
+terms of the Eclipse Public License v. 2.0
 			</comments>
 		</license>
 	</licenses>
@@ -133,25 +134,25 @@
 
 
 	<reporting>
-		<plugins>
-			<!-- java doc -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<additionalOptions>-Xdoclint:none</additionalOptions>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>3.0.0</version>
-			</plugin>
-		</plugins>
-	</reporting>
+		
+	     <plugins>
+	         <plugin>
+	             <groupId>org.apache.maven.plugins</groupId>
+	             <artifactId>maven-project-info-reports-plugin</artifactId>
+	             <version>3.4.0</version>
+	             <reportSets>
+	                 <reportSet>
+	                     <configuration>
+	                         <!-- Just disable the generation of default files like index.html -->
+	                         <skip>true</skip>
+	                     </configuration>
+	                 </reportSet>
+	             </reportSets>
+	         </plugin>
+	     </plugins>
+	 </reporting>
 	
-<profiles>
+	<profiles>
 		<!-- Activate using the release property -->
 		<profile>
 			<id>release</id>

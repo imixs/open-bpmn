@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Open BPMN - Documentation">
+
+	<skin>
+		<groupId>org.imixs.workflow</groupId>
+		<artifactId>imixs-maven-skin-openbpmn</artifactId>
+		<version>1.0.0</version>
+	</skin>
+
+
+	<body>
+
+		<menu name="Documentation">
+			<item name="Overview" href="overview.html" collapse="true">
+				<item name="Installation" href="install/quick_install.html" />
+				<item name="Minikube" href="install/minikube.html" />
+				<item name="K3S" href="install/k3s.html" />
+				<item name="WOPI" href="wopi.html" />
+				<item name="Lucene" href="lucene.html" />
+			</item>
+
+			<item name="Architecture" href="architecture/index.html" collapse="true">
+				<item name="Module System" href="architecture/MODULE_SYSTEM.html" />
+				<item name="EMF" href="architecture/BPMN_EMF.html" />
+			</item>
+
+
+			<item name="Web View"  collapse="true">
+				<item name="Context Menus" href="webview/CONTEXT_MENUS.html" />
+				<item name="Custom Views" href="webview/CUSTOM_VIEW.html" />
+				<item name="Routing" href="webview/BPMN_ROUTER.html" />
+				<item name="Anchors and Ports" href="webview/SPROTTY_ANCHORS_AND_PORTS.html" />
+			</item>
+
+			<item name="Build" href="build/index.html" collapse="true">
+				<item name="Integration" href="build/integration.html" />
+				<item name="Dependencies" href="dependency-info.html" />
+				
+			</item>
+
+		</menu>
+
+
+	</body>
+
+</project>
