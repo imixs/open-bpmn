@@ -87,13 +87,13 @@ After the EMF file is defined you can need to recreate the genmodel file. Choose
 
 and create a new file ‘bpmn.genmodel’. Choose the importer ‘ecoremodel’. 
 
-<img src="./images/emf-generator-01.png" />
+<img src="../images/emf-generator-01.png" />
 
 Click on load will verify the EMF model file created before.
 
 Next select both packages in the 'Package Selection' (the glsp-graph package includes the core elements form the GLSP project)
 
-<img src="./images/emf-generator-02.png" />
+<img src="../images/emf-generator-02.png" />
 
 Click on 'Finish' to generate the *.genmodel* file.
 
@@ -102,11 +102,11 @@ Click on 'Finish' to generate the *.genmodel* file.
 Now you can generate the java classes. Before you can start, you need to change some of the details of the new *.genfile*.  Open the *.genfile* and choose the root element of the bpmn graph elements. In the property view change the package name into `org.openbpmn.glsp`
 
 
-<img src="./images/emf-generator-03.png" />
+<img src="../images/emf-generator-03.png" />
 
 Next choose the root element of your glsp graph model. In the property view change the package name to `org.eclipse.glsp`. 
 
-<img src="./images/emf-generator-04.png" />
+<img src="../images/emf-generator-04.png" />
 
 
 Change the tag `modelDirectory` to `/open-bpmn.glsp-server/src/main/java-gen` - this will be the source location for the files

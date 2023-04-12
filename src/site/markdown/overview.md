@@ -1,6 +1,6 @@
 # Overview
 
-Open BPMN is a free and open modeling platform to create and maintain business models based on the BPMN 2.0 standard. Open BPMN can be used by business analysts to design a top level business process, as also by architects and developers to model the technical details of complex processing logic. Further more, Open BPMN provides an extension mechanism to adapt the modeling platform to the individual requirements in any business process project.
+**Open BPMN** is a free and open modeling platform to create and maintain business models based on the BPMN 2.0 standard. Open BPMN can be used by business analysts to design a top level business process, as also by architects and developers to model the technical details of complex processing logic. Further more, Open BPMN provides an extension mechanism to adapt the modeling platform to the individual requirements in any business process project.
 
 The goal of this project is to provide an open and extensible graphical BPMN modelling framework for an agile and innovative community around the BPMN standard.
 
@@ -26,17 +26,17 @@ Learn more about Open BPMN Extensions.
 
 ## Architecture
 
-Open BPMN is based on the Eclipse Graphical Language Server Platform (GLSP) and provides the following building blocks:
+**Open BPMN** is based on the Eclipse Graphical Language Server Platform (GLSP) and provides the following building blocks:
 
-    open-bpmn.metamodel - an open BPMN 2.0 metamodel
-    open-bpmn.glsp-server - the GLSP Server implementation
-    open-bpmn.glsp-client - the GLSP Client components and Theia integration
+* [open-bpmn.metamodel](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel) - an open BPMN 2.0 metamodel
+* [open-bpmn.glsp-server](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.glsp-server) - the GLSP Server implementation
+* [open-bpmn.glsp-client](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.glsp-client) - the GLSP Client components and Theia integration
 
 ### Open-BPMN - BPMN 2.0 Metamodel
 
-OpenBPMN provides a BPMN 2.0 Metamodel based on pure java. This library can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the org.w3c.dom XML API and includes a set of junit test classes which may be helpful to implement you own business logic.
+**Open BPMN** provides a BPMN 2.0 Metamodel based on pure java. This library can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the org.w3c.dom XML API and includes a set of junit test classes which may be helpful to implement you own business logic.
 
-    OpenBPMN Metamodel
+* [Open BPMN Metamodel](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel)
 
 ### Open-BPMN GLSP-Server
 

@@ -12,11 +12,7 @@
 
 		<menu name="Documentation">
 			<item name="Overview" href="overview.html" collapse="true">
-				<item name="Installation" href="install/quick_install.html" />
-				<item name="Minikube" href="install/minikube.html" />
-				<item name="K3S" href="install/k3s.html" />
-				<item name="WOPI" href="wopi.html" />
-				<item name="Lucene" href="lucene.html" />
+			
 			</item>
 
 			<item name="Architecture" href="architecture/index.html" collapse="true">
@@ -25,16 +21,23 @@
 			</item>
 
 
-			<item name="Web View"  collapse="true">
-				<item name="Context Menus" href="webview/CONTEXT_MENUS.html" />
-				<item name="Custom Views" href="webview/CUSTOM_VIEW.html" />
-				<item name="Routing" href="webview/BPMN_ROUTER.html" />
-				<item name="Anchors and Ports" href="webview/SPROTTY_ANCHORS_AND_PORTS.html" />
+			<item name="GLSP Client" href="glsp-client/index.html" collapse="true">
+				<item name="Tool Palette" href="glsp-client/TOOL_PALETTE.html" />
+				<item name="Properties Panel" href="glsp-client/BPMN_PROPERTIES.html" />
+				<item name="Context Menus" href="glsp-client/CONTEXT_MENUS.html" />
+				<item name="Custom Views" href="glsp-client/CUSTOM_VIEWS.html" />
+				<item name="Routing" href="glsp-client/BPMN_ROUTER.html" />
+				<item name="Anchors and Ports" href="glsp-client/SPROTTY_ANCHORS_AND_PORTS.html" />
 			</item>
 
+			<item name="GLSP Server" href="glsp-server/index.html" collapse="true">
+				<item name="BPMN Extensions" href="glsp-server/BPMN_EXTENSIONS.html" />
+				<item name="Model Updates" href="glsp-server/UPDATE_MODEL.html" />
+			</item>
+
+
 			<item name="Build" href="build/index.html" collapse="true">
-				<item name="Integration" href="build/integration.html" />
-				<item name="Dependencies" href="dependency-info.html" />
+				<item name="Docker" href="build/DOCKER.html" />
 				
 			</item>
 
