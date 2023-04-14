@@ -112,8 +112,12 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
              */
             schemaBuilder.addArray("signals");
             Set<Signal> bpmnSignals = modelState.getBpmnModel().getSignals();
-            String[] signalOptions = new String[bpmnSignals.size()];
+            String[] signalOptions = new String[bpmnSignals.size() + 1];
             int i = 0;
+            // add empty option (default option if no signal id is found or defined
+            // issue #232
+            signalOptions[i] = " - none - |";
+            i++;
             for (Signal bpmnSignal : bpmnSignals) {
                 // signalOptions[i] = bpmnSignal.getName();
                 signalOptions[i] = bpmnSignal.getName() + "|" + bpmnSignal.getId();
