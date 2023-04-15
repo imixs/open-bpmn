@@ -149,7 +149,23 @@ terms of the Eclipse Public License v. 2.0
 	                 </reportSet>
 	             </reportSets>
 	         </plugin>
-	     </plugins>
+		
+			<!-- java doc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<additionalOptions>-Xdoclint:none</additionalOptions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+		</plugins>
+
 	 </reporting>
 	
 	<profiles>
