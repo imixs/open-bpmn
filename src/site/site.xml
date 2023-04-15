@@ -18,6 +18,7 @@
 			<item name="Architecture" href="architecture/index.html" collapse="true">
 				<item name="Module System" href="architecture/MODULE_SYSTEM.html" />
 				<item name="EMF" href="architecture/BPMN_EMF.html" />
+				<item name="The Theia Plattfomr" href="architecture/THEIA_EXTENSIONS.html" />
 			</item>
 
 

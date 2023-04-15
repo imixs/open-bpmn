@@ -27,7 +27,7 @@ One goal of _Open BPMN_ is to not only provide a graphical modeling tool, but al
 
 Open Source Workflow Engines like [Imixs-Workflow](https://www.imixs.org) integrate Open BPMN into there tooling platforms and extend the core features of BPMN 2.0 with platform specific functionality.
 
-[Learn more about Open BPMN Extensions.](./doc/BPMN_EXTENSIONS.md)
+[Learn more about Open BPMN Extensions.](https://www.open-bpmn.org/glsp-server/BPMN_EXTENSIONS.html)
 
 ## Architecture
 
@@ -49,24 +49,18 @@ The [open-bpmn.glsp-server](./open-bpmn.glsp-server/README.md) provides the GLSP
 
 ### Open-BPMN GLSP-Client
 
-The [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) is the GLSP Client part of Open BPMN providing the graphical modeling tool.
+The [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) is the GLSP Client part of Open BPMN providing the graphical modelling tool.
 
 # Tutorials
 
-Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts the different concepts in various ways. 
-We provide a short collection of tutorials regarding the GLSP framework and how to customize and adapt Open-BPMN.
-in Open BPMN.
+Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts a lot concepts to provide you a flexible and customizable modelling platform.
+You can find many information on the  [Open-BPMN Web site](https://www.open-bpmn.org) including tutorials regarding the GLSP framework and how to customize and adapt Open-BPMN.
 
-- [The Module System](./doc/MODULE_SYSTEM.md)
-- [Build your Own BPMN Extension](./doc/BPMN_EXTENSIONS.md)
-- [BPMN Properties](./doc/BPMN_PROPERTIES.md)
-- [Tool Palette](./doc/TOOL_PALETTE.md)
-- [Custom Element Views](./doc/CUSTOM_VIEWS.md)
-- [Context Menus](./doc/CONTEXT_MENUS.md)
-- [BPMN Router](./doc/BPMN_ROUTER.md)
-- [Build your Own EMF Model](./doc/BPMN_EMF.md)
-- [Anchors and Ports](./doc/ANCHORS_AND_PORTS.md)
- 
+- [Build your Own BPMN Extension](https://www.open-bpmn.org/glsp-server/BPMN_EXTENSIONS.html)
+- [The BPMN Properties Panel](https://www.open-bpmn.org/glsp-client/BPMN_PROPERTIES.html)
+- [Extending the Tool Palette](https://www.open-bpmn.org/glsp-client/TOOL_PALETTE.html)
+- [Build your Own EMF Model](https://www.open-bpmn.org/architecture/BPMN_EMF.html)
+
 # Build and Run
 
 To build the complete project run

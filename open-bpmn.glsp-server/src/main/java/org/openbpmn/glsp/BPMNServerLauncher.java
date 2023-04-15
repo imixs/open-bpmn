@@ -57,10 +57,11 @@ public final class BPMNServerLauncher {
      * 
      * @return
      */
-    private static String getMavenProjectVersion() {
+    public static String getMavenProjectVersion() {
         try {
             MavenXpp3Reader reader = new MavenXpp3Reader();
             Model model = reader.read(new FileReader("pom.xml"));
+
             return model.getVersion();
         } catch (IOException | XmlPullParserException e) {
             System.out.println("Failed to read server version: " + e.getMessage());
