@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
@@ -18,6 +19,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * The BPMNNode is the abstract super class for most BPMN elements like Task,
@@ -231,6 +233,50 @@ public abstract class BPMNElementNode extends BPMNElement {
         this.bpmnProcess.elementNode.removeChild(this.elementNode);
         this.bpmnProcess = newProcess;
         this.bpmnProcess.elementNode.appendChild(this.elementNode);
+    }
+
+    /**
+     * This method updates the bpmn2:incoming and bpmn2:outgoing references of a
+     * BPMNElement.
+     * During cloning a element it may happen that invalid references are copied as
+     * child elements. This method can be called to clean up such references.
+     * 
+     */
+    public void updateSequenceFlowReferences() {
+        // only possible if a bpmnProcess is defined
+        if (bpmnProcess == null) {
+            return; // no op!
+        }
+        // remove incoming childs...
+        NodeList incomingSequenceFlows = getElementNode()
+                .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) + ":incoming");
+        for (int i = 0; i < incomingSequenceFlows.getLength(); i++) {
+            Element item = (Element) incomingSequenceFlows.item(i);
+            // test if the sequence flow exists...
+            BPMNElementEdge flow = bpmnProcess.findElementEdgeById(item.getTextContent());
+            if (flow != null &&
+                    (!getId().equals(flow.getElementNode().getAttribute("sourceRef"))
+                            && !getId().equals(flow.getElementNode().getAttribute("targetRef")))) {
+                // invalid element
+                getElementNode().removeChild(item);
+            }
+
+        }
+        // remove outgoing childs...
+        NodeList outgoingSequenceFlows = getElementNode()
+                .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) + ":outgoing");
+        for (int i = 0; i < outgoingSequenceFlows.getLength(); i++) {
+            Element item = (Element) outgoingSequenceFlows.item(i);
+            // test if the sequence flow exists...
+            BPMNElementEdge flow = bpmnProcess.findElementEdgeById(item.getTextContent());
+            if (flow != null &&
+                    (!getId().equals(flow.getElementNode().getAttribute("sourceRef"))
+                            && !getId().equals(flow.getElementNode().getAttribute("targetRef")))) {
+                // invalid element
+                getElementNode().removeChild(item);
+            }
+        }
+
     }
 
     public void setDimension(double width, double height) {

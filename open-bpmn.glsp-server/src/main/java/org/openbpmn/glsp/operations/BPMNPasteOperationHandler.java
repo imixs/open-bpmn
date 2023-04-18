@@ -94,7 +94,7 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
             BPMNElementNode bpmnElementNode = modelState.getBpmnModel().findElementNodeById(id);
             if (bpmnElementNode != null) {
                 try {
-                    // close BPMNElementNodes....
+                    // clone BPMNElementNodes....
                     BPMNProcess process = modelState.getBpmnModel().openProcess(bpmnElementNode.getProcessId());
                     BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
                     if (newElementNode != null) {

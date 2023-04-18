@@ -1187,11 +1187,18 @@ public class BPMNProcess extends BPMNElement {
             Element element = (Element) this.getElementNode().appendChild(newElement);
             result = this.createBPMNTextAnnotationByNode(element);
         }
-        // if (_bpmnElementNode instanceof Message) {
-        // newElement.setAttribute("id", BPMNModel.generateShortID("message"));
-        // Element element = (Element) this.getElementNode().appendChild(newElement);
-        // result = this.getModel()..createBPMNMessageByNode(element);
-        // }
+
+        // cleanup invalid flow references
+        result.updateSequenceFlowReferences();
+
+        // update alls id of bpmn2:documentation childs
+        NodeList documentationList = this.getElementNode()
+                .getElementsByTagName(this.getModel().getPrefix(BPMNNS.BPMN2) + ":documentation");
+        for (int i = 0; i < documentationList.getLength(); i++) {
+            Element item = (Element) documentationList.item(i);
+            // update id....
+            item.setAttribute("id", BPMNModel.generateShortID("documentation"));
+        }
 
         return result;
     }
