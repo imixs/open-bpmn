@@ -47,7 +47,7 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
      * We use this constructor to overwrite the handledElementTypeIds
      */
     public BPMNGEdgeCreateHandler() {
-        super(BPMNTypes.BPMN_EDGES);
+        super(BPMNTypes.BPMN_EDGE_ELEMENTS);
         this.label = "Sequence Flow";
     }
 

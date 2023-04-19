@@ -58,7 +58,7 @@ public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
      */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.BPMN_EDGES.contains(elementTypeId);
+        return BPMNTypes.BPMN_EDGE_ELEMENTS.contains(elementTypeId);
     }
 
     /**

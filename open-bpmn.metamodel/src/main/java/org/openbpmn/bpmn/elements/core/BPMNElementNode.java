@@ -144,8 +144,8 @@ public abstract class BPMNElementNode extends BPMNElement {
      * 
      */
     private void updateContainment(double x, double y) {
-        // update is only needed for collaboration diagrams and FlowElements
-        if (!this.model.isCollaborationDiagram() || !BPMNTypes.isFlowElement(this)) {
+        // update is only needed for collaboration diagrams and FlowElement Nodes
+        if (!this.model.isCollaborationDiagram() || !BPMNTypes.isFlowElementNode(this)) {
             return;
         }
         try {
@@ -189,9 +189,9 @@ public abstract class BPMNElementNode extends BPMNElement {
     }
 
     /**
-     * This method updates the process assignment of a FlowElement. The element will
-     * be removed form the current process and added to the new process. All edges
-     * will be removed.
+     * This method updates the process assignment of a FlowElement Node. The element
+     * will be removed form the current process and added to the new process. All
+     * edges will be removed.
      * 
      * Also the element will be removed from an optional laneSet of the old process.
      * 
@@ -200,7 +200,7 @@ public abstract class BPMNElementNode extends BPMNElement {
      */
     public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
 
-        if (!BPMNTypes.isFlowElement(this)) {
+        if (!BPMNTypes.isFlowElementNode(this)) {
             throw new BPMNInvalidTypeException(
                     "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity)");
         }

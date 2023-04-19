@@ -19,6 +19,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -47,7 +48,7 @@ public class BPMNReconnectEdgeOperationHandler extends AbstractOperationHandler<
         String sourceElementID = operation.getSourceElementId();
         String targetElementID = operation.getTargetElementId();
 
-        logger.info("Reconnect: " + edgeID + "  " + sourceElementID + "<-->" + targetElementID);
+        logger.debug("Reconnect: " + edgeID + "  " + sourceElementID + "<-->" + targetElementID);
 
         BPMNElementEdge bpmnElementEdge = modelState.getBpmnModel().findElementEdgeById(edgeID);
 
@@ -55,6 +56,22 @@ public class BPMNReconnectEdgeOperationHandler extends AbstractOperationHandler<
         BPMNElementNode sourceElement = modelState.getBpmnModel().findElementNodeById(sourceElementID);
 
         if (bpmnElementEdge != null && targetElement != null && sourceElement != null) {
+
+            // Test some edge-cases for SequenceFlows
+            if (BPMNTypes.isSequenceFlow(bpmnElementEdge)) {
+                // target and the source MUST be a BPMN FlowElement Node!
+                if (!BPMNTypes.isFlowElementNode(sourceElement)
+                        || !BPMNTypes.isFlowElementNode(targetElement)) {
+                    logger.warn("SequenceFlows can only be reconnected with FlowElement Nodes! ");
+                    return;
+                }
+                // Process must be the same for target and source!
+                if (!targetElement.getProcessId().equals(sourceElement.getProcessId())) {
+                    logger.warn("SequenceFlows can only be reconnected within the same Process! ");
+                    return;
+                }
+            }
+
             bpmnElementEdge.setSourceRef(sourceElementID);
             bpmnElementEdge.setTargetRef(targetElementID);
 

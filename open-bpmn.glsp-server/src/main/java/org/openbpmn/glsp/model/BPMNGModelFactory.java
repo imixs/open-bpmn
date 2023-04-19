@@ -337,8 +337,8 @@ public class BPMNGModelFactory implements GModelFactory {
 
     /**
      * This helper method finds an GModelElement by its ID in a given List of
-     * GModelElements. The
-     * method returns null if not element with the given ID exists.
+     * GModelElements. The method returns null if no element with the given ID
+     * exists.
      * 
      * If the list of elements contains Pools the method searches recursively the
      * elements within the pool.
@@ -347,7 +347,7 @@ public class BPMNGModelFactory implements GModelFactory {
      * @param id          - id to search for
      * @return GModelElement - or null if no elment was found.
      */
-    GModelElement findElementById(final List<GModelElement> entityNodes, final String id) {
+    GModelElement findGElementById(final List<GModelElement> entityNodes, final String id) {
         if (entityNodes != null) {
             for (GModelElement element : entityNodes) {
                 if (element.getId().equals(id)) {
@@ -357,7 +357,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 if (element instanceof PoolGNode) {
                     // recursive call!
                     PoolGNode gPool = (PoolGNode) element;
-                    GModelElement child = findElementById(gPool.getChildren(), id);
+                    GModelElement child = findGElementById(gPool.getChildren(), id);
                     if (child != null) {
                         return child;
                     }
@@ -562,8 +562,8 @@ public class BPMNGModelFactory implements GModelFactory {
         for (MessageFlow messageFlow : bpmnModel.getMessageFlows()) {
             // first we need to verify if the target and source objects exist in our model
             // if not we need to skip this messageFlow element!
-            GModelElement source = findElementById(gRootNodeList, messageFlow.getSourceRef());
-            GModelElement target = findElementById(gRootNodeList, messageFlow.getTargetRef());
+            GModelElement source = findGElementById(gRootNodeList, messageFlow.getSourceRef());
+            GModelElement target = findGElementById(gRootNodeList, messageFlow.getTargetRef());
             if (source == null) {
                 logger.warn("Source element '" + messageFlow.getSourceRef() + "' not found - skip MessageFlow id="
                         + messageFlow.getId());
@@ -665,16 +665,16 @@ public class BPMNGModelFactory implements GModelFactory {
         for (BPMNElementEdge bpmnEdge : bpmnEdges) {
             // first we need to verify if the target and source objects exist in our model
             // if not we need to skip this sequenceFlow element!
-            GModelElement source = findElementById(gNodeList, bpmnEdge.getSourceRef());
-            GModelElement target = findElementById(gNodeList, bpmnEdge.getTargetRef());
+            GModelElement source = findGElementById(gNodeList, bpmnEdge.getSourceRef());
+            GModelElement target = findGElementById(gNodeList, bpmnEdge.getTargetRef());
             if (source == null) {
-                logger.warn("Source element '" + bpmnEdge.getSourceRef() + "' not found - skip SequenceFlow id="
-                        + bpmnEdge.getId());
+                logger.warn("createGEdge '" + bpmnEdge.getId() + "' failed: Source element '" + bpmnEdge.getSourceRef()
+                        + "' not found");
                 continue;
             }
             if (target == null) {
-                logger.warn("Target element '" + bpmnEdge.getTargetRef() + "' not found - skip SequenceFlow id="
-                        + bpmnEdge.getId());
+                logger.warn("createGEdge '" + bpmnEdge.getId() + "' failed: Target element '" + bpmnEdge.getTargetRef()
+                        + "' not found");
                 continue;
             }
 

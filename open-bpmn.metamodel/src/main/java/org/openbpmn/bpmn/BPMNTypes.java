@@ -78,7 +78,7 @@ public class BPMNTypes {
     public static final String LANESET = "laneSet";
 
     // Type Collections
-    public static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
+    public final static List<String> BPMN_TASKS = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
             BPMNTypes.USER_TASK, //
@@ -89,7 +89,7 @@ public class BPMNTypes {
             BPMNTypes.RECEIVE_TASK //
     });
 
-    public static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
+    public final static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
             BPMNTypes.USER_TASK, //
@@ -100,7 +100,7 @@ public class BPMNTypes {
             BPMNTypes.RECEIVE_TASK, //
             "subProcess", "adHocSubProcess", "transaction", "callActivity" });
 
-    public static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
+    public final static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT, //
             BPMNTypes.START_EVENT, //
             BPMNTypes.END_EVENT, //
@@ -109,7 +109,7 @@ public class BPMNTypes {
             BPMNTypes.BOUNDARY_EVENT //
     });
 
-    public final static List<String> BPMN_FLOWELEMENTS = Arrays.asList(//
+    public final static List<String> BPMN_FLOWELEMENT_NODES = Arrays.asList(//
             BPMNTypes.TASK, //
             BPMNTypes.MANUAL_TASK, //
             BPMNTypes.USER_TASK, //
@@ -129,20 +129,27 @@ public class BPMNTypes {
             BPMNTypes.END_EVENT, //
             BPMNTypes.CATCH_EVENT, //
             BPMNTypes.THROW_EVENT, //
-            BPMNTypes.BOUNDARY_EVENT, //
-
-            BPMNTypes.SEQUENCE_FLOW);
+            BPMNTypes.BOUNDARY_EVENT //
+    );
 
     /**
-     * Returns true if the given element is a FlowElement,
-     * which are Events, Gateways , Sequence Flows or Activities
+     * Returns true if the given element is a FlowElement, which are all
+     * BPMNElementNodes from the type Event, Gateway or Activity.
+     * SequenceFlows are not included as this is a Edge type!
      */
-    public static boolean isFlowElement(BPMNElement element) {
+    public static boolean isFlowElementNode(BPMNElement element) {
+        if (element instanceof BPMNElementNode) {
+            return BPMN_FLOWELEMENT_NODES.contains(((BPMNElementNode) element).getType());
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given element is a SequenceFlow
+     */
+    public static boolean isSequenceFlow(BPMNElement element) {
         if (element instanceof SequenceFlow) {
             return true;
-        }
-        if (element instanceof BPMNElementNode) {
-            return BPMN_FLOWELEMENTS.contains(((BPMNElementNode) element).getType());
         }
         return false;
     }
@@ -174,7 +181,13 @@ public class BPMNTypes {
 
             BPMNTypes.POOL);
 
-    public static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
+    public final static List<String> BPMN_EDGE_ELEMENTS = Arrays.asList(new String[] { //
+            BPMNTypes.SEQUENCE_FLOW, //
+            BPMNTypes.MESSAGE_FLOW, //
+            BPMNTypes.ASSOCIATION //
+    });
+
+    public final static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
             BPMNTypes.EVENT_DEFINITION_TIMER, //
             BPMNTypes.EVENT_DEFINITION_SIGNAL, //
@@ -184,19 +197,13 @@ public class BPMNTypes {
             BPMNTypes.EVENT_DEFINITION_TERMINATE, //
             BPMNTypes.EVENT_DEFINITION_COMPENSATION });
 
-    public static List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { //
+    public final static List<String> BPMN_GATEWAYS = Arrays.asList(new String[] { //
             BPMNTypes.GATEWAY, //
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.INCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
             BPMNTypes.EVENTBASED_GATEWAY, //
             BPMNTypes.COMPLEX_GATEWAY //
-    });
-
-    public static List<String> BPMN_EDGES = Arrays.asList(new String[] { //
-            BPMNTypes.SEQUENCE_FLOW, //
-            BPMNTypes.MESSAGE_FLOW, //
-            BPMNTypes.ASSOCIATION //
     });
 
 }
