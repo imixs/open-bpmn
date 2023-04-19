@@ -769,6 +769,14 @@ public class BPMNProcess extends BPMNElement {
         // remove all flows...
         removeAllEdgesFromElement(bpmnElement.getId());
 
+        // update lane refs by removing the element from each lane containing a
+        // reference...
+        if (!isPublicProcess() && lanes != null) {
+            for (Lane _lane : lanes) {
+                _lane.remove(bpmnElement);
+            }
+        }
+
         // delete the shape....
         this.getElementNode().removeChild(bpmnElement.getElementNode());
         if (bpmnElement.getBpmnShape() != null) {
