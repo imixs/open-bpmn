@@ -1199,13 +1199,13 @@ public class BPMNProcess extends BPMNElement {
         // cleanup invalid flow references
         result.updateSequenceFlowReferences();
 
-        // update alls id of bpmn2:documentation childs
-        NodeList documentationList = this.getElementNode()
-                .getElementsByTagName(this.getModel().getPrefix(BPMNNS.BPMN2) + ":documentation");
-        for (int i = 0; i < documentationList.getLength(); i++) {
-            Element item = (Element) documentationList.item(i);
+        // update alls id of bpmn2: childs
+        NodeList childList = result.getElementNode().getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Element child = (Element) childList.item(i);
+            String tag = child.getLocalName();
             // update id....
-            item.setAttribute("id", BPMNModel.generateShortID("documentation"));
+            child.setAttribute("id", BPMNModel.generateShortID(tag));
         }
 
         return result;
