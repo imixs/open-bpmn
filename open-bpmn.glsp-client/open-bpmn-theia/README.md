@@ -1,6 +1,6 @@
 # Open-BPMN - Theia
 
-Open-BPMN-Theia is a Node.js library and part of the [Open-BPMN](../../README.md) client library. The module `@open-bpmn/open-bpmn-thea` integrates  Open-BPMN into the Eclipse Theia platform. 
+Open-BPMN-Theia is a Node.js library and part of the [Open-BPMN](https://www.open-bpmn.org/) project. The module `@open-bpmn/open-bpmn-thea` integrates  Open-BPMN into the Eclipse Theia platform. 
 ## Build and Dependencies
 
 To build the client module run

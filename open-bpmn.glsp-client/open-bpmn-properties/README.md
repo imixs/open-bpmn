@@ -1,6 +1,6 @@
 # Open-BPMN - Properties
 
-Open-BPMN-Properties is a Node.js library and part of the [Open-BPMN](../../README.md) client library. The module `@open-bpmn/open-bpmn-properties` is a  GLSP UI extension providing an additional property panel showing element properties. 
+Open-BPMN-Properties is a Node.js library and part of the [Open-BPMN](https://www.open-bpmn.org/) project. The module `@open-bpmn/open-bpmn-properties` is a  GLSP UI extension providing an additional property panel showing element properties. 
 The Open-BPMN Properties are part of the Open-BPMN extensibility mechanism and provides a convinience way to edit BPMN properties of selected elements within a diagram. The panel is realized as a embedded view and can be used with all Integration platforms supported by Eclipse GLSP. 
 
 

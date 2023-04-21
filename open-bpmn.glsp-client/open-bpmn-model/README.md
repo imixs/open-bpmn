@@ -1,6 +1,6 @@
 # Open-BPMN - Model
 
-The Open-BPMN-Model is a Node.js library and part of the [Open-BPMN](../../README.md) client library. The module `@open-bpmn/open-bpmn-model` provides a library to map server side model objects to the GLSP Client library. The module also exports a set of helper methods to categorize model elements and navigate through the GLSP model index. 
+The Open-BPMN-Model is a Node.js library and part of the [Open-BPMN](https://www.open-bpmn.org/) project. The module `@open-bpmn/open-bpmn-model` provides a library to map server side model objects to the GLSP Client library. The module also exports a set of helper methods to categorize model elements and navigate through the GLSP model index.
 
 The module can be used to extend the GLSP Client part of Open-BPMN. 
 
