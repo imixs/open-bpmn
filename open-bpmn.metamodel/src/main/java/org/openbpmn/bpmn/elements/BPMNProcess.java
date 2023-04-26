@@ -139,7 +139,7 @@ public class BPMNProcess extends BPMNElement {
      * 
      * @return
      */
-    public Set<BPMNElementNode> getAllNodes() {
+    public Set<BPMNElementNode> getAllElementNodes() {
 
         LinkedHashSet<BPMNElementNode> result = new LinkedHashSet<BPMNElementNode>();
 
@@ -148,6 +148,22 @@ public class BPMNProcess extends BPMNElement {
         result.addAll(getGateways());
         result.addAll(getDataObjects());
         result.addAll(getTextAnnotations());
+
+        return result;
+    }
+
+    /**
+     * Returns all Activities, Events and Gateways contained in this process
+     * 
+     * @return
+     */
+    public Set<BPMNElementNode> getAllFlowElementNodes() {
+
+        LinkedHashSet<BPMNElementNode> result = new LinkedHashSet<BPMNElementNode>();
+
+        result.addAll(getActivities());
+        result.addAll(getEvents());
+        result.addAll(getGateways());
 
         return result;
     }
@@ -676,7 +692,7 @@ public class BPMNProcess extends BPMNElement {
         }
 
         // now the rest of elements...
-        Iterator<BPMNElementNode> aa = this.getAllNodes().iterator();
+        Iterator<BPMNElementNode> aa = this.getAllElementNodes().iterator();
         while (aa.hasNext()) {
             deleteElementNode(aa.next().getId());
         }

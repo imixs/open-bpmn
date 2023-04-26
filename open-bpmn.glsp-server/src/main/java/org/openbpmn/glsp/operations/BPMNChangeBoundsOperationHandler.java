@@ -458,7 +458,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             throws BPMNMissingElementException {
 
         // Update all FlowElements
-        Set<BPMNElementNode> bpmnFlowElements = process.getAllNodes();
+        Set<BPMNElementNode> bpmnFlowElements = process.getAllElementNodes();
         for (BPMNElementNode flowElement : bpmnFlowElements) {
             logger.debug("update element bounds: " + flowElement.getId());
             try {
