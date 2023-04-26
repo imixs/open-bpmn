@@ -3,6 +3,7 @@ package org.openbpmn.bpmn.elements;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
@@ -1057,6 +1058,26 @@ public class BPMNProcess extends BPMNElement {
         return null;
     }
 
+    /**
+     * Returns a filtered list of elements
+     * 
+     * @param <T>
+     * 
+     * @param <T>
+     * @param id
+     * @return
+     */
+    public <T> Set<? extends BPMNElementNode> findElementNodes(Predicate<BPMNElementNode> filter) {
+        Set<BPMNElementNode> result = new LinkedHashSet<BPMNElementNode>();
+        Set<BPMNElementNode> allElements = this.getAllElementNodes();
+        for (BPMNElementNode _node : allElements) {
+            if (filter.test(_node)) {
+                result.add(_node);
+            }
+        }
+        return result;
+
+    }
     /**
      * Returns all BPMNFlowElements contained in this process
      * 
