@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -46,6 +47,46 @@ public class TestFilter {
         // We expect exactly one result.
 
         assertEquals(1, throwEvents.size());
+
+    }
+
+    /**
+     * In this test we use a more complex filter.
+     * We expect a throw event with at least one Link Definition and the name LINK
+     * 
+     * @throws BPMNModelException
+     */
+    @Test
+    public void testComplexFilterMethod() throws BPMNModelException {
+
+        logger.info("...read model");
+        BPMNModel model = BPMNModelFactory.read("/refmodel-15.bpmn");
+
+        assertEquals(1, model.getProcesses().size());
+        BPMNProcess process = model.openDefaultProces();
+
+        Set<? extends BPMNElementNode> filterResult = process
+                .findElementNodes(
+                        n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
+                                && ((Event) n).getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_LINK)
+                                        .size() == 1 //
+                                && "LINK".equals(n.getName())));
+
+        assertNotNull(filterResult);
+        // We expect exactly one result.
+        assertEquals(1, filterResult.size());
+
+        // now we change the filter and we expect no match !
+        filterResult = process
+                .findElementNodes(
+                        n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
+                                && ((Event) n).getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_CANCEL)
+                                        .size() == 1 //
+                                && "LINK".equals(n.getName())));
+
+        assertNotNull(filterResult);
+        // We expect exactly one result.
+        assertEquals(0, filterResult.size());
 
     }
 

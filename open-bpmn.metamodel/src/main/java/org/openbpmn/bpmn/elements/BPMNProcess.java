@@ -1059,7 +1059,11 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Returns a filtered list of elements
+     * Returns a filtered list of BPMNElementNodes.
+     * <p>
+     * The filter is defined by a Predicate which can contain any kind of complex
+     * boolean expression. If the expression evaluates to true, the BPMNElementNode
+     * will be included in the result set.
      * 
      * @param <T>
      * 
