@@ -75,9 +75,22 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addData("name", bpmnElement.getName()). //
                 addData("documentation", bpmnElement.getDocumentation());
 
+        String documentation = "An Event is something that “happens” during the course of a Process. ";
+
+        Event event = (Event) bpmnElement;
+        if (BPMNTypes.CATCH_EVENT.equals(event.getType())) {
+            documentation = documentation
+                    + "An Intermediate Catch Event is expected to occur in the future and requires an internal or external action.";
+        }
+        if (BPMNTypes.THROW_EVENT.equals(event.getType())) {
+            documentation = documentation
+                    + "An Intermediate Throw Event is a reaction on an internal or external action that is caught by a subsequent event in the process flow.";
+        }
+        // has an impact and requires in general a reaction.
+
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("documentation", "string", null);
+                addProperty("documentation", "string", documentation);
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");

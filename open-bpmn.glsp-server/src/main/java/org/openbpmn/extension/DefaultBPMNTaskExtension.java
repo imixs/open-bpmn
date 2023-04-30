@@ -69,10 +69,12 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 // .addData("execution", "exec") //
                 .addData("documentation", bpmnElement.getDocumentation());
 
+        String documentation = "A Task is work that is performed within the Business Process." +
+                " It describes an atomic action performed by an end-user or application which cannot be broken down to a finer level of detail.";
         schemaBuilder. //
                 addProperty("name", "string", null). //
                 // addProperty("execution", "string", null). //
-                addProperty("documentation", "string", "Task description.");
+                addProperty("documentation", "string", documentation);
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");

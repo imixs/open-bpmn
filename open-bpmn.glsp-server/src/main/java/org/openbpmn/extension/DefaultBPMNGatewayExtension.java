@@ -74,9 +74,11 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
         String[] gatewayDirections = { "Converging", "Diverging", "Mixed", "Unspecified" };
 
+        String documentation = "A Gateway controls how Sequence Flows interact as they converge and diverge within a Process.";
+
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("documentation", "string", "Element description"). //
+                addProperty("documentation", "string", documentation). //
                 addProperty("gatewaydirection", "string", null, gatewayDirections);
 
         Map<String, String> multilineOption = new HashMap<>();
