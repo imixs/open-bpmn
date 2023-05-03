@@ -76,13 +76,19 @@
 }
 .event.endEvent > circle {
 	fill: #BE5961;
+    stroke-width: 3px;
+    stroke: #922828;
 }
 
 .event.intermediateCatchEvent > circle {
 	fill: #6f8dab;
+    stroke-width: 0px;
+    stroke: var(--theia-editor-foreground);;
 }
 .event.intermediateThrowEvent > circle {
 	fill: #6f8dab;
+    stroke-width: 0px;
+    stroke: var(--theia-editor-foreground);;
 }
 
 .event.boundaryEvent > circle {
@@ -257,4 +263,14 @@
 }
 
 
+/* Extension Draft */
+.intermediateCatchEvent.bpmnextension-imixs > circle {
+    stroke-width: 2px;
+    stroke: #d48729;
+}
+
+.task.bpmnextension-imixs > .sprotty-node {
+    stroke-width: 2px;
+    stroke: #d48729;  
+}
 
