@@ -11,8 +11,9 @@
 	<body>
 
 		<menu name="Documentation">
-			<item name="Overview" href="overview.html" collapse="true">
-			
+			<item name="Overview" href="overview.html" collapse="false">
+				<item name="Installation" href="install.html" />
+				<item name="Imixs Workflow" href="install-imixs.html" />
 			</item>
 
 			<item name="Architecture" href="architecture/index.html" collapse="true">

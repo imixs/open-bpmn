@@ -13,7 +13,7 @@ To run the docker image locally run:
       -p 3000:3000 \
       imixs/open-bpmn
 
-After starting the container the applicaiton is available on
+After starting the container the application is available on
 
     http://localhost:3000
 

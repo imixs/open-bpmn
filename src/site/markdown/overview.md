@@ -4,7 +4,9 @@
 
 The goal of this project is to provide an open and extensible graphical BPMN modelling framework for an agile and innovative community around the BPMN standard.
 
-Open BPMN is based on the Eclipse Graphical Language Server Platform (GLSP) - an open-source framework for building diagram editors based on modern web technologies. This architecture allows to run Open BPMN on various IDEs and platforms like Visual Studio Code, Eclipse IDE, Eclipse Theia, as also as a standalone Web Application.
+Open BPMN is based on the Eclipse Graphical Language Server Platform (GLSP) - an open-source framework for building diagram editors based on modern web technologies. This architecture allows to run Open BPMN on various IDEs and platforms like [Visual Studio Code](https://code.visualstudio.com/), [Eclipse IDE](https://eclipse.org/), [Eclipse Theia](https://theia-ide.org/), as also as a standalone Web Application.
+
+See the [Install Guide](install.html) for details how to install Open-BPMN.
 
 ## What is BPMN 2.0?
 
