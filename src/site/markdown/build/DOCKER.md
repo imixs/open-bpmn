@@ -1,44 +1,59 @@
 # Docker
 
-Open-BPMN provides a Docker image to run the BPMN modeler as a Container in Docker or Kubernetes. 
+Open-BPMN provides a Docker image to run the BPMN modeler as a Container in Docker or Kubernetes.
 
-The Open-BPMN Docker image is based on the [official NodeJS image (node:16-buster)](https://hub.docker.com/_/node). The container image contains a prebuild appliction and exposes the port 3000
+The Open-BPMN Docker image is based on the [official NodeJS image (node:16-buster)](https://hub.docker.com/_/node). The container image contains a pre-build application and exposes the HTTP port 3000 to run the Client in a Web Browser.
 
-In the Dockerfile we are using the entrypoint:
+## Run
 
-	ENTRYPOINT [ "yarn", "start", "--hostname=0.0.0.0" ]
+To run the docker image locally run:
 
-setting the environment param `--hostname=0.0.0.0` is important to allow access form outside the container. Find more details also [here](https://dev.to/hagevvashi/don-t-forget-to-give-host-0-0-0-0-to-the-startup-option-of-webpack-dev-server-using-docker-1483) and [here](https://github.com/theia-ide/theia-apps/tree/master/theia-cpp-docker). 
+    $ docker run --name="open-bpmn" \
+      --rm \
+      -p 3000:3000 \
+      imixs/open-bpmn
+
+After starting the container the applicaiton is available on
+
+    http://localhost:3000
+
+To stop the container run:
+
+    $ docker stop open-bpmn
+
+### Workspace Directory
+
+The Theia Client is using a local workspace directory `/usr/src/app/open-bpmn.glsp-client/workspace`. You can change this directory and map it to a local directory with the Docker param -v
+
+In the following example we map the workspace to the local directory /tmp/my-workspace
+
+    $ docker run --name="open-bpmn" \
+      --rm \
+      -p 3000:3000 \
+      -v /tmp/my-workspace:/usr/src/app/open-bpmn.glsp-client/workspace \
+      imixs/open-bpmn
 
 ## Build
 
 To build the docker image from sources run:
 
-	$ docker build . -t imixs/open-bpmn
+    $ docker build . -t imixs/open-bpmn
 
-	
-## Run
+### Start Script
 
-To run the docker image locally run:
+The Open-BPMN Dockerfile is using a start script to launch the GLSP Server and the GLSP Theia client. The script is reading the GLSP Server version from the environment variable `GLSP_SERVER_JAR`. You can overwrite this variable to build custom images.
 
-	$ docker run --name="open-bpmn" \
-	  --rm \
-      -p 3000:3000 \
-      imixs/open-bpmn
-      
-After starting the container the applicaiton is available on 
+Here is an example for a Dockerfile that copies a custom version of a server:
 
-	http://localhost:3000
-	      
-To stop the container run:
+```
+FROM imixs/open-bpmn:latest
+# copy imixs-server module
+COPY imixs-open-bpmn.server/target/imixs-open-bpmn.server-*-glsp.jar ./open-bpmn.glsp-server/target/
+ENV GLSP_SERVER_JAR=open-bpmn.glsp-server/target/imixs-open-bpmn.server-*-glsp.jar
+```
 
-	$ docker stop open-bpmn
+### Dockerfile Entrypoint
 
-	
-# Push to Docker-Hub
+In the Dockerfile we are using a custom entrypoint and set the yarn param `--hostname=0.0.0.0`
 
-To push the image manually to a docker repo:
-
-	$ docker build . -t imixs/open-bpmn:latest
-	$ docker push imixs/open-bpmn:latest
-
+**Note:** Setting the environment param `--hostname=0.0.0.0` is important to allow access form outside the container. Find more details also [here](https://dev.to/hagevvashi/don-t-forget-to-give-host-0-0-0-0-to-the-startup-option-of-webpack-dev-server-using-docker-1483) and [here](https://github.com/theia-ide/theia-apps/tree/master/theia-cpp-docker).

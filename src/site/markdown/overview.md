@@ -28,15 +28,15 @@ Learn more about Open BPMN Extensions.
 
 **Open BPMN** is based on the Eclipse Graphical Language Server Platform (GLSP) and provides the following building blocks:
 
-* [open-bpmn.metamodel](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel) - an open BPMN 2.0 metamodel
-* [open-bpmn.glsp-server](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.glsp-server) - the GLSP Server implementation
-* [open-bpmn.glsp-client](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.glsp-client) - the GLSP Client components and Theia integration
+- [open-bpmn.metamodel](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel) - an open BPMN 2.0 metamodel
+- [open-bpmn.glsp-server](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.glsp-server) - the GLSP Server implementation
+- [open-bpmn.glsp-client](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.glsp-client) - the GLSP Client components and Theia integration
 
 ### Open-BPMN - BPMN 2.0 Metamodel
 
 **Open BPMN** provides a BPMN 2.0 Metamodel based on pure java. This library can be used to generate a BPMN model programmatically as also import or export a model form any .bpmn file. So in case you want to implement you own BPMN workflow engine the OpenBPMN Metamodel is the perfect library to work with BPMN 2.0 files. THe OpenBPMN Metamodel is based o the org.w3c.dom XML API and includes a set of junit test classes which may be helpful to implement you own business logic.
 
-* [Open BPMN Metamodel](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel)
+- [Open BPMN Metamodel](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel)
 
 ### Open-BPMN GLSP-Server
 
@@ -45,17 +45,16 @@ Open-BPMN GLSP-Client
 
 The open-bpmn.glsp-client is the GLSP Client part of Open BPMN providing the graphical modeling tool.
 
-
 ## Tutorials
 
 Open BPMN is based on Eclipse GLSP and adapts the different concepts in various ways. We provide a short collection of tutorials regarding the GLSP framework and how to customize and adapt Open-BPMN. in Open BPMN.
 
-* [The Module System](architecture/MODULE_SYSTEM.html)
-* [Build your Own BPMN Extension](BPMN_EXTENSIONS.html)
-* [BPMN Properties](BPMN_PROPERTIES.html)
-* [Tool Palette](TOOL_PALETTE.html)
-* [Custom Element Views](CUSTOM_VIEWS.html)
-* [Context Menus](CONTEXT_MENUS.html)
-* [BPMN Router](BPMN_ROUTER.html)
-* [Build your Own EMF Model](BPMN_EMF.html)
-* [Anchors and Ports](SPROTTY_ANCHORS_AND_PORTS.html)
+- [The Module System](architecture/MODULE_SYSTEM.html)
+- [Build your Own BPMN Extension](glsp-server/BPMN_EXTENSIONS.html)
+- [BPMN Properties](glsp-client/BPMN_PROPERTIES.html)
+- [Tool Palette](glsp-client/TOOL_PALETTE.html)
+- [Custom Element Views](glsp-client/CUSTOM_VIEWS.html)
+- [Context Menus](glsp-client/CONTEXT_MENUS.html)
+- [BPMN Router](glsp-client/BPMN_ROUTER.html)
+- [Build your Own EMF Model](architecture/BPMN_EMF.html)
+- [Anchors and Ports](glsp-client/SPROTTY_ANCHORS_AND_PORTS.html)
