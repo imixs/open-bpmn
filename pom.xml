@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.imixs.bpmn</groupId>
 	<artifactId>open-bpmn</artifactId>
-	<version>0.9.5</version>
+	<version>0.9.6-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Open BPMN</name>
 	<description>The Open BPMN Modeling Platform</description>
@@ -64,7 +64,7 @@ terms of the Eclipse Public License v. 2.0
 		<connection>scm:git:git@github.com:imixs/open-bpmn.git</connection>
 		<developerConnection>scm:git:git@github.com:imixs/open-bpmn.git</developerConnection>
 		<url>https://github.com/imixs/open-bpmn/</url>
-		<tag>open-bpmn-0.9.5</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<issueManagement>
