@@ -22,7 +22,9 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -206,6 +208,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 .id(modelState.getRootID());
 
         List<GModelElement> gRootNodeList = new ArrayList<>();
+        Map<String, PoolGNode> poolGNodeList = new HashMap<String, PoolGNode>();
 
         try {
             // In case we have collaboration diagram we iterate over all participants and
@@ -228,6 +231,8 @@ public class BPMNGModelFactory implements GModelFactory {
                         // apply BPMN Extensions
                         applyBPMNExtensions(pool, participant);
                         gRootNodeList.add(pool);
+
+                        poolGNodeList.put(participant.getId(), pool);
 
                     } else {
                         // add default process without a pool
@@ -295,10 +300,20 @@ public class BPMNGModelFactory implements GModelFactory {
             // Add all Associations elements...
             Set<BPMNProcess> processList = model.getProcesses();
             for (BPMNProcess _process : processList) {
-                // apply the associations for each process separately...
-                createAssociationGEdges(_process.getAssociations(), gRootNodeList);
+                // apply the associations for each process separately.
+                // NOTE: It is necessary to verify if the Association is inside a Pool. In this
+                // case
+                // the Association becomes a child of the PoolGNode
+                if (!_process.isPublicProcess()) {
+                    // the Associations inside a Pool, we need to add the edge to the
+                    // PoolGNode childList
+                    Participant _participant = _process.findParticipant();
+                    PoolGNode pool = poolGNodeList.get(_participant.getId());
+                    createAssociationGEdges(_process.getAssociations(), pool.getChildren(), _participant);
+                } else {
+                    createAssociationGEdges(_process.getAssociations(), gRootNodeList, null);
+                }
             }
-
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
@@ -745,6 +760,66 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
+     * This helper method adds a list of Associations to gModel
+     * list.
+     * <p>
+     * This method expects that all process instances are already resolved.
+     * <p>
+     * NOTE: The Association has a mixed behaviour. In case the Association is part
+     * of a Participant, than the edge waypoints are relative in the GModel. If the
+     * Association is part of the default process thant the waypoints are absolute.
+     */
+    private void createAssociationGEdges(final Set<Association> associations, final List<GModelElement> gRootNodeList,
+            final Participant participant)
+            throws BPMNMissingElementException {
+
+        // Add all SequenceFlows
+        for (Association association : associations) {
+            // first we need to verify if the target and source objects exist in our model
+            // if not we need to skip this messageFlow element!
+            GModelElement source = findGElementById(gRootNodeList, association.getSourceRef());
+            GModelElement target = findGElementById(gRootNodeList, association.getTargetRef());
+            if (source == null) {
+                logger.warn("Source element '" + association.getSourceRef() + "' not found - skip MessageFlow id="
+                        + association.getId());
+                continue;
+            }
+            if (target == null) {
+                logger.warn("Target element '" + association.getTargetRef() + "' not found - skip MessageFlow id="
+                        + association.getId());
+                continue;
+            }
+
+            // now construct the GNode and add it to the model....
+            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(association);
+            builder.target(computeGPort(target));
+            builder.source(computeGPort(source));
+            BPMNGEdge bpmnGEdge = builder.build();
+            bpmnGEdge.setKind("");
+            // add the waypoints to the GLSP model....
+            for (BPMNPoint wayPoint : association.getWayPoints()) {
+
+                // compute relative waypoints in case we are inside a Particpant
+                GPoint point = null;
+                if (participant != null) {
+                    point = computeRelativeGPoint(wayPoint, participant);
+                } else {
+                    // compute absoulte waypoints, because the association is part of the default
+                    // process.
+                    point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+                }
+                bpmnGEdge.getRoutingPoints().add(point);
+            }
+
+            gRootNodeList.add(bpmnGEdge);
+            // apply BPMN Extensions
+            applyBPMNExtensions(bpmnGEdge, association);
+
+        }
+
+    }
+
+    /**
      * This helper method adds a list of MessageFlows to a given rootNodeElement
      * list.
      * <p>
@@ -785,51 +860,6 @@ public class BPMNGModelFactory implements GModelFactory {
             gRootNodeList.add(bpmnGEdge);
             // apply BPMN Extensions
             applyBPMNExtensions(bpmnGEdge, messageFlow);
-
-        }
-
-    }
-
-    /**
-     * This helper method adds a list of Associations to gModel
-     * list.
-     * <p>
-     * This method expects that all process instances are already resolved.
-     */
-    private void createAssociationGEdges(final Set<Association> associations, final List<GModelElement> gRootNodeList)
-            throws BPMNMissingElementException {
-
-        // Add all SequenceFlows
-        for (Association association : associations) {
-            // first we need to verify if the target and source objects exist in our model
-            // if not we need to skip this messageFlow element!
-            GModelElement source = findGElementById(gRootNodeList, association.getSourceRef());
-            GModelElement target = findGElementById(gRootNodeList, association.getTargetRef());
-            if (source == null) {
-                logger.warn("Source element '" + association.getSourceRef() + "' not found - skip MessageFlow id="
-                        + association.getId());
-                continue;
-            }
-            if (target == null) {
-                logger.warn("Target element '" + association.getTargetRef() + "' not found - skip MessageFlow id="
-                        + association.getId());
-                continue;
-            }
-
-            // now construct the GNode and add it to the model....
-            BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(association);
-            builder.target(computeGPort(target));
-            builder.source(computeGPort(source));
-            BPMNGEdge bpmnGEdge = builder.build();
-            bpmnGEdge.setKind("");
-            for (BPMNPoint wayPoint : association.getWayPoints()) {
-                // add the waypoint to the GLSP model....
-                GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
-                bpmnGEdge.getRoutingPoints().add(point);
-            }
-            gRootNodeList.add(bpmnGEdge);
-            // apply BPMN Extensions
-            applyBPMNExtensions(bpmnGEdge, association);
 
         }
 

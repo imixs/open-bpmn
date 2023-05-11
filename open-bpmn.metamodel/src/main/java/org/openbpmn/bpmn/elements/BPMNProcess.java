@@ -1134,10 +1134,13 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * This method returns the BPMNParticipant in case the Process represents a BPMN
-     * Pool
+     * This method returns the BPMNParticipant of this process in case it represents
+     * a BPMN Participant.
      * 
-     * @return
+     * The method returns null if the process is the default process (no
+     * Participant)
+     * 
+     * @return participant or null if default process
      */
     public Participant findParticipant() {
         Participant result = this.getModel().findParticipantByProcessId(this.getId());
