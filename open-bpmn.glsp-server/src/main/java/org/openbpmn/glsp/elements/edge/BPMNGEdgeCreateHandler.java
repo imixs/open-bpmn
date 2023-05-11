@@ -96,9 +96,18 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             }
 
             if (BPMNTypes.ASSOCIATION.equals(edgeType)) {
+                // if one of the processes is the default, than we assign the association to the
+                // default process
+                String sourceProcessId = modelState.getBpmnModel().findElementNodeById(sourceId).getProcessId();
                 String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
-                BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
-                bpmnProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
+                BPMNProcess sourceProcess = modelState.getBpmnModel().openProcess(sourceProcessId);
+                BPMNProcess targetProcess = modelState.getBpmnModel().openProcess(targetProcessId);
+                if (sourceProcess.isPublicProcess()) {
+                    sourceProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
+                } else {
+                    targetProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
+                }
+
             }
 
             if (BPMNTypes.MESSAGE_FLOW.equals(edgeType)) {

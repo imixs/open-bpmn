@@ -178,6 +178,7 @@ public class BPMNTypes {
 
             BPMNTypes.DATAOBJECT, //
             BPMNTypes.TEXTANNOTATION, //
+            BPMNTypes.MESSAGE, //
 
             BPMNTypes.POOL);
 
