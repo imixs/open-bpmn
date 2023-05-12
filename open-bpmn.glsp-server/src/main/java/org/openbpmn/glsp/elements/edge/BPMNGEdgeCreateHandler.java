@@ -23,6 +23,7 @@ import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.elements.CreateBPMNEdgeOperationHandler;
@@ -96,18 +97,20 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             }
 
             if (BPMNTypes.ASSOCIATION.equals(edgeType)) {
-                // if one of the processes is the default, than we assign the association to the
-                // default process
-                String sourceProcessId = modelState.getBpmnModel().findElementNodeById(sourceId).getProcessId();
-                String targetProcessId = modelState.getBpmnModel().findElementNodeById(targetId).getProcessId();
-                BPMNProcess sourceProcess = modelState.getBpmnModel().openProcess(sourceProcessId);
-                BPMNProcess targetProcess = modelState.getBpmnModel().openProcess(targetProcessId);
+                // if one of the element nodes is assigned to the default process, than we
+                // assign the association also to the default process
+                BPMNElementNode sourceElementNode = (BPMNElementNode) modelState.getBpmnModel()
+                        .findElementById(sourceId);
+                BPMNElementNode targetElementNode = (BPMNElementNode) modelState.getBpmnModel()
+                        .findElementById(targetId);
+                BPMNProcess sourceProcess = sourceElementNode.getBpmnProcess();
+                BPMNProcess targetProcess = targetElementNode.getBpmnProcess();
                 if (sourceProcess.isPublicProcess()) {
                     sourceProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
                 } else {
+                    // in any case this is the best match now
                     targetProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
                 }
-
             }
 
             if (BPMNTypes.MESSAGE_FLOW.equals(edgeType)) {
