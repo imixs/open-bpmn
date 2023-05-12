@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" id="Definitions_1" targetNamespace="http://org.openbpmn">
+  <bpmn2:message id="message_bwT4IA" name="Message-2">
+    <bpmn2:documentation id="documentation_5sQliA"/>
+  </bpmn2:message>
+  <bpmn2:message id="Message_2" name="Message 1">
+    <bpmn2:documentation id="documentation_Y6ke7w"/>
+  </bpmn2:message>
+  <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
+    <bpmn2:participant id="participant_YpDMEA" name="Default Process" processRef="process_1"/>
+    <bpmn2:participant id="participant_Tgdw3w" name="Pool-1" processRef="process_mAX7Og">
+      <bpmn2:documentation id="documentation_MjOQsw"/>
+    </bpmn2:participant>
+  </bpmn2:collaboration>
+  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" isExecutable="false" name="Default Process" processType="Public">
+    <bpmn2:dataObject id="dataObject_Ap4nfw" name="Data Object-1">
+      <bpmn2:documentation id="documentation_Sj1a0A"/>
+    </bpmn2:dataObject>
+    <bpmn2:association id="association_lBBsAA" sourceRef="dataObject_Ap4nfw" targetRef="event_daW8RQ">
+      <bpmn2:documentation id="documentation_pAgLaQ"/>
+    </bpmn2:association>
+    <bpmn2:documentation id="documentation_n7V0gA"/>
+    <bpmn2:association id="association_0jQv6g" sourceRef="event_daW8RQ" targetRef="message_bwT4IA">
+      <bpmn2:documentation id="documentation_KWPzlw"/>
+    </bpmn2:association>
+    <bpmn2:endEvent id="event_bar67A" name="Event-2">
+      <bpmn2:documentation id="documentation_jzlESQ"/>
+    </bpmn2:endEvent>
+    <bpmn2:association id="association_iNmXYg" sourceRef="event_bar67A" targetRef="Message_2">
+      <bpmn2:documentation id="documentation_Up0VDw"/>
+    </bpmn2:association>
+  </bpmn2:process>
+  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_mAX7Og" isExecutable="false" name="Pool-1" processType="Private">
+    <bpmn2:startEvent id="event_daW8RQ" name="Event-1">
+      <bpmn2:documentation id="documentation_Su9bnw"/>
+    </bpmn2:startEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+    <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="participant_Tgdw3w" id="BPMNShape_h0I4yQ" isHorizontal="true">
+        <dc:Bounds height="200.0" width="611.0" x="58.0" y="154.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="event_daW8RQ" id="BPMNShape_SSaxhA">
+        <dc:Bounds height="36.0" width="36.0" x="148.27305603027344" y="224.4853515625"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_MW5YLw" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="42.0" x="145.0" y="260.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="message_bwT4IA" id="BPMNShape_xnvnKw">
+        <dc:Bounds height="20.0" width="30.0" x="258.04754638671875" y="232.4853515625"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_JH5Qdg" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="16.0" width="100.0" x="223.0" y="257.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_2" id="BPMNShape_Message_1">
+        <dc:Bounds height="20.0" width="30.0" x="375.931396484375" y="232.4853515625"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="60.0" x="360.0" y="252.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="dataObject_Ap4nfw" id="BPMNShape_Nug1OA">
+        <dc:Bounds height="50.0" width="35.0" x="75.5" y="55.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_IQyUrQ" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="16.0" width="100.0" x="43.0" y="110.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="association_lBBsAA" id="BPMNEdge_ZZIg5w" sourceElement="BPMNShape_Nug1OA" targetElement="BPMNShape_SSaxhA">
+        <di:waypoint x="110.5" y="70.0"/>
+        <di:waypoint x="171.27305603027344" y="70.0"/>
+        <di:waypoint x="171.27305603027344" y="225.19373509670942"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="association_0jQv6g" id="BPMNEdge_zsgXJw" sourceElement="BPMNShape_SSaxhA" targetElement="BPMNShape_xnvnKw">
+        <di:waypoint x="184.27305603027344" y="242.4853515625"/>
+        <di:waypoint x="258.04754638671875" y="242.4853515625"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="event_bar67A" id="BPMNShape_TdggRg">
+        <dc:Bounds height="36.0" width="36.0" x="407.0" y="442.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_pqfvrQ">
+          <dc:Bounds height="16.0" width="100.0" x="375.0" y="481.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="association_iNmXYg" id="BPMNEdge_AaUasw" sourceElement="BPMNShape_TdggRg" targetElement="BPMNShape_Message_1">
+        <di:waypoint x="425.0" y="442.0"/>
+        <di:waypoint x="425.0" y="351.74267578125"/>
+        <di:waypoint x="390.931396484375" y="351.74267578125"/>
+        <di:waypoint x="390.931396484375" y="252.4853515625"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+      <dc:Font name="arial" size="9.0"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
