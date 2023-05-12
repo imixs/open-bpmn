@@ -35,9 +35,11 @@ import org.eclipse.glsp.server.types.ElementAndBounds;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
+import org.openbpmn.bpmn.elements.core.BPMNDimension;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -106,7 +108,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
 
-            // first sort out all elementBounds from BPMNLabel objects if the flowElment is
+            // first sort out all elementBounds from BPMNLabel objects if the flowElement is
             // part of this selection (see method updateFlowElement)
             List<ElementAndBounds> filteredElementBounds = filterElements(elementBounds);
 
@@ -280,6 +282,11 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         gNode.setSize(newSize);
 
         BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
+        BPMNDimension oldDimensions = new BPMNDimension(bpmnElementNode.getBounds().getDimension().getWidth(),
+                bpmnElementNode.getBounds().getDimension().getHeight());
+        BPMNPoint oldPosition = new BPMNPoint(bpmnElementNode.getBounds().getPosition().getX(),
+                bpmnElementNode.getBounds().getPosition().getY());
+
         // update BPMNElement bounds....
         // The BPMN Position is always absolute so we can simply update the element
         // bounds by the new offset and new dimensions.
@@ -291,12 +298,15 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         // if we have a Participant element selected than we also need to update
         // all embedded FlowElements and also the LaneSet if available.
         Participant participant = modelState.getBpmnModel().findParticipantById(id);
-        if (participant != null) {
-            logger.debug("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
-            BPMNProcess process = participant.openProcess();
-            updateLaneSet(participant, offsetWidth, offsetHeight);
-            updateEmbeddedElementNodes(process, offsetX, offsetY);
+        if (participant == null) {
+            throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
+                    "Participant " + id + " not found in model!");
         }
+        logger.debug("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
+        updateLaneSet(participant, offsetWidth, offsetHeight);
+        updateEmbeddedElements(participant, offsetX, offsetY);
+        updateMessageElements(oldPosition, oldDimensions, offsetX, offsetY);
+
     }
 
     /**
@@ -454,10 +464,11 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      * @param offsetY - new Y offset
      * @throws BPMNMissingElementException
      */
-    void updateEmbeddedElementNodes(final BPMNProcess process, final double offsetX, final double offsetY)
+    void updateEmbeddedElements(final Participant participant, final double offsetX, final double offsetY)
             throws BPMNMissingElementException {
 
         // Update all FlowElements
+        BPMNProcess process = participant.getBpmnProcess();
         Set<BPMNElementNode> bpmnFlowElements = process.getAllElementNodes();
         for (BPMNElementNode flowElement : bpmnFlowElements) {
             logger.debug("update element bounds: " + flowElement.getId());
@@ -480,7 +491,52 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
     }
 
     /**
-     * This helper method removes all BPMNLabels from a list of ElementAndBounds if
+     * This method updates the position off all BPMN Message elements contained in a
+     * given bounds. In BPMN Message elements are not part of a pool or process.
+     * This helper method tests if a Message element is contained by the given
+     * bounds and if so it moves the element with the given offset.
+     * 
+     * This is a convenient way for moving pools and this feature was not supported
+     * by Eclipse BPMN.
+     * 
+     * @param process - the bpmnProcess containing the bpmn element nodes.
+     * @param offsetX - new X offset
+     * @param offsetY - new Y offset
+     * @throws BPMNMissingElementException
+     */
+    void updateMessageElements(final BPMNPoint oldPosition, final BPMNDimension oldDimension, final double offsetX,
+            final double offsetY)
+            throws BPMNMissingElementException {
+
+        // Update all Message Elements contained in the given bounds
+        Set<Message> messageElements = modelState.getBpmnModel().getMessages();
+        for (Message _message : messageElements) {
+            BPMNBounds bounds = _message.getBounds();
+            BPMNPoint point = bounds.getCenter();
+
+            double x = oldPosition.getX();
+            double y = oldPosition.getY();
+            double w = oldDimension.getWidth();
+            double h = oldDimension.getHeight();
+            // is the point within this dimensions?
+            if (point.getX() >= x && point.getX() <= x + w
+                    && point.getY() >= y && point.getY() <= y + h) {
+                _message.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
+                // adjust position of the label
+
+                BPMNLabel bpmnLabel = _message.getLabel();
+                if (bpmnLabel != null) {
+                    bpmnLabel.updateLocation(bpmnLabel.getPosition().getX() + offsetX,
+                            bpmnLabel.getPosition().getY() + offsetY);
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 
+     * 
      * the corresponding Node is already part of the list.
      *
      * @param elementBounds

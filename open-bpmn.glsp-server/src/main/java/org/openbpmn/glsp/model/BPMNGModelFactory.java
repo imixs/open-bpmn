@@ -798,13 +798,12 @@ public class BPMNGModelFactory implements GModelFactory {
             bpmnGEdge.setKind("");
             // add the waypoints to the GLSP model....
             for (BPMNPoint wayPoint : association.getWayPoints()) {
-
                 // compute relative waypoints in case we are inside a Particpant
                 GPoint point = null;
                 if (participant != null) {
                     point = computeRelativeGPoint(wayPoint, participant);
                 } else {
-                    // compute absoulte waypoints, because the association is part of the default
+                    // compute absolute waypoints, because the association is part of the default
                     // process.
                     point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
                 }
