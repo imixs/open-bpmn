@@ -26,15 +26,15 @@ import merge from 'lodash/merge';
 import React, { useState } from 'react';
 
 /***********************
- * This is a custom renderer for text which can be optional linked to a file.
- * The optional file path can be provided in the option 'filePath'.
+ * This is a custom renderer for textare which can be optional linked to a file.
+ * The optional file path is identified if the content starts with 'file://'
  * <p>
  * This allows to edit the text content in a separate file within the same IDE.
  * <p>
  */
 
 /**
- * A Custom Textarea linking ot a file
+ * A Custom Textarea linking to a file
  * @param props
  * @returns
  */
@@ -56,7 +56,6 @@ export const TextFileEditor = ({
   handleChange
 }: ControlProps & VanillaRendererProps & OwnPropsOfEnum) => {
   const [isFocused, setFocus] = useState(false);
-  // const isValid = errors.length === 0;
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
   const showDescription = !isDescriptionHidden(
     visible,
@@ -80,22 +79,7 @@ export const TextFileEditor = ({
           )}
           </span>
           <span className={'file-selector'}>
-            <input type="checkbox" id="file-selector" name="file-selector" checked={data.startsWith('file://')}
-                   value="file" onChange={ev => {
-                      const a='file://';
-                      const fTextarea = document.getElementById(id);
-                      if (fTextarea) {
-                        if (ev.target.checked) {
-                          fTextarea.classList.add('fileInputMode');
-                        } else {
-                          fTextarea.classList.remove('fileInputMode');
-                        }
-                      } else {
-                        // not found textarea!
-                      }
-                      handleChange(path, a);
-                    }} />
-            <label> File Link</label>
+            <label>File Link: {(data.startsWith('file://'))?'ACTIVE':'NONE'}</label>
           </span>
         </label>
 
@@ -104,7 +88,24 @@ export const TextFileEditor = ({
         disabled={!enabled}
         autoFocus={uischema.options && uischema.options.focus}
         value={data}
-        onChange={ev => handleChange(path, ev.target.value)}
+        className={(data.startsWith('file://'))?'fileInputMode':''}
+        onChange={ev => {
+            // change layout depending on input mode
+            const fileSelector = ev.target.closest('div')?.querySelector('span.file-selector');
+            if (ev.target.value.startsWith('file://')) {
+              ev.target.classList.add('fileInputMode');
+              if (fileSelector) {
+                fileSelector.textContent='File Link: ACTIVE';
+              }
+            } else {
+              ev.target.classList.remove('fileInputMode');
+              if (fileSelector) {
+                fileSelector.textContent='File Link: NONE';
+              }
+            }
+            handleChange(path, ev.target.value);
+          }
+        }
       >{data}</textarea>
       <div className={'input-description'}>
         {showDescription ? description : undefined}

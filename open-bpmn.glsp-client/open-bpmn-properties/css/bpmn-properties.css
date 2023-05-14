@@ -137,6 +137,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.bpmn-properties-body .control.text-file-editor>label .file-selector {
+    font-weight: bold;
+    color: var(--theia-focusBorder);
+}
 .bpmn-properties-body .control.text-file-editor>textarea {
     min-height: 12em;
 }

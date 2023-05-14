@@ -29,6 +29,7 @@ import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.w3c.dom.Element;
 
 /**
  * This is the Default BPMNEvent extension providing the JSONForms schemata.
@@ -131,8 +132,16 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
         if ("Script".equals(category)) {
             Activity taskElement = (Activity) bpmnElement;
             if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
+                String dataValue = json.getString("script", "");
                 bpmnElement.setAttribute("scriptFormat", json.getString("scriptformat", ""));
-                bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", json.getString("script", ""), true);
+                Element childElement = bpmnElement.setChildNodeContent(BPMNNS.BPMN2, "script", dataValue, true);
+                // if we have a file:// link than we create an open-bpmn attribute
+                if (dataValue.startsWith("file://")) {
+                    childElement.setAttribute("open-bpmn:file-link", dataValue);
+                } else {
+                    childElement.removeAttribute("open-bpmn:file-link");
+                }
+
             }
         }
     }
