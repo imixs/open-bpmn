@@ -1,52 +1,60 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- origin at X=0.0 Y=0.0 -->
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" targetNamespace="http://org.openbpmn">
   <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
     <bpmn2:participant id="participant_dLmTNA" name="Default Process" processRef="process_1"/>
-    <bpmn2:participant id="participant_0laEIA" name="Pool-1" processRef="process_IP5ckA">
-      <bpmn2:documentation id="documentation_wo1IZw"/>
-    </bpmn2:participant>
+    <bpmn2:participant id="participant_0laEIA" name="Pool-1" processRef="process_IP5ckA"/>
   </bpmn2:collaboration>
-  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="Default Process" processType="Public">
-    <bpmn2:documentation id="documentation_20DpMw"/>
-  </bpmn2:process>
-  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_IP5ckA" name="Pool-1" processType="Private">
+  <bpmn2:process id="process_1" name="Default Process" definitionalCollaborationRef="collaboration_1" isExecutable="false" processType="Public"/>
+  <bpmn2:process id="process_IP5ckA" name="Pool-1" definitionalCollaborationRef="collaboration_1" isExecutable="false" processType="Private">
     <bpmn2:startEvent id="event_ZXMs0A" name="Event-1">
-      <bpmn2:documentation id="documentation_F7CNCw"/>
       <bpmn2:outgoing>sequenceFlow_uKg7KA</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:scriptTask id="task_CYqqqA" name="Task-1" scriptFormat="">
       <bpmn2:documentation id="documentation_KcpMQg"><![CDATA[abcccc]]></bpmn2:documentation>
-      <bpmn2:script id="script_VQHFSw" open-bpmn:file-link="file://imixs.script.js"><![CDATA[file://imixs.script.js]]></bpmn2:script>
       <bpmn2:incoming>sequenceFlow_uKg7KA</bpmn2:incoming>
+      <bpmn2:script>var b=1;
+var c=3;</bpmn2:script>
     </bpmn2:scriptTask>
-    <bpmn2:sequenceFlow id="sequenceFlow_uKg7KA" sourceRef="event_ZXMs0A" targetRef="task_CYqqqA">
-      <bpmn2:documentation id="documentation_mdTTiQ"/>
-    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="sequenceFlow_uKg7KA" sourceRef="event_ZXMs0A" targetRef="task_CYqqqA"/>
     <bpmn2:task id="task_FqIHHg" name="Task-2">
       <bpmn2:documentation id="documentation_sC05RQ"><![CDATA[HAAAAAAAAAAAAAAAAAALO]]></bpmn2:documentation>
     </bpmn2:task>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
-    <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
-      <bpmndi:BPMNShape bpmnElement="participant_0laEIA" id="BPMNShape_fOYZyg">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="collaboration_1">
+      <bpmndi:BPMNShape id="BPMNShape_fOYZyg" bpmnElement="participant_0laEIA" isHorizontal="true">
         <dc:Bounds height="200.0" width="800.0" x="84.0" y="70.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="36.0" width="14.0" x="90.0" y="152.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="event_ZXMs0A" id="BPMNShape_ZFae2w">
+      <bpmndi:BPMNShape id="BPMNShape_ZFae2w" bpmnElement="event_ZXMs0A">
         <dc:Bounds height="36.0" width="36.0" x="176.0" y="135.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_CcGR9w">
+        <bpmndi:BPMNLabel id="BPMNLabel_CcGR9w" labelStyle="BPMNLabelStyle_1">
           <dc:Bounds height="16.0" width="100.0" x="144.0" y="174.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="task_CYqqqA" id="BPMNShape_5hn3Eg">
+      <bpmndi:BPMNShape id="BPMNShape_5hn3Eg" bpmnElement="task_CYqqqA">
         <dc:Bounds height="50.0" width="110.0" x="290.0" y="128.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="36.0" x="327.0" y="146.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_uKg7KA" id="BPMNEdge_Ox20pA" sourceElement="BPMNShape_ZFae2w" targetElement="BPMNShape_5hn3Eg">
-        <di:waypoint x="212.0" y="153.0"/>
-        <di:waypoint x="290.0" y="153.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="task_FqIHHg" id="BPMNShape_04O0sw">
+      <bpmndi:BPMNShape id="BPMNShape_04O0sw" bpmnElement="task_FqIHHg">
         <dc:Bounds height="50.0" width="110.0" x="445.0" y="128.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_4" labelStyle="BPMNLabelStyle_1">
+          <dc:Bounds height="14.0" width="36.0" x="482.0" y="146.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_Ox20pA" bpmnElement="sequenceFlow_uKg7KA" sourceElement="BPMNShape_ZFae2w" targetElement="BPMNShape_5hn3Eg">
+        <di:waypoint xsi:type="dc:Point" x="212.0" y="153.0"/>
+        <di:waypoint xsi:type="dc:Point" x="290.0" y="153.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_3"/>
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
+      <dc:Font name="arial" size="9.0"/>
+    </bpmndi:BPMNLabelStyle>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

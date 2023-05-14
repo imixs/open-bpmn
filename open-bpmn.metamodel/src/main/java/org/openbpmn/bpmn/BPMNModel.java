@@ -6,6 +6,9 @@ import java.io.OutputStream;
 import java.io.StringWriter;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -45,6 +48,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNXMLUtil;
+import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -1243,6 +1247,9 @@ public class BPMNModel {
     /**
      * Writes the current instance to the file system.
      * 
+     * The method also resolves all open-bpmn:file-link elements and updates the
+     * corresponding content.
+     * 
      * @param file
      */
     public void save(String file) {
@@ -1250,6 +1257,8 @@ public class BPMNModel {
             if (doc == null) {
                 logger.severe("...unable to save file - doc is null!");
             }
+            // resolve open-bpmn:file-link....
+            resolveFileLinksOnSave(Paths.get(file));
 
             writeXml(doc, output);
         } catch (TransformerException | IOException e) {
@@ -1259,6 +1268,151 @@ public class BPMNModel {
 
     public void save(URI targetURI) {
         save(Paths.get(targetURI).toString());
+    }
+
+    /**
+     * This helper method is called during the save method. The method resolves all
+     * elements with the attribute 'open-bpmn:file-link'
+     * e.g.
+     * <bpmn2:script id="script_1" open-bpmn:file-link="file://imixs.script.js">
+     * <![CDATA[file://imixs.script.js]]></bpmn2:script>
+     * 
+     * The method opens the corresponding file and replaces the element content.
+     * If no file was found, the method creates an empty one.
+     */
+    public void resolveFileLinksOnSave(Path path) {
+        // Resolve the parent path
+        Path parent = path.getParent();
+        long l = System.currentTimeMillis();
+
+        // Find all elements with the attribute "x"
+        NodeList elements = doc.getElementsByTagName("*");
+        for (int i = 0; i < elements.getLength(); i++) {
+            Element element = (Element) elements.item(i);
+            if (element.hasAttribute("open-bpmn:file-link")) {
+                String fileLink = element.getAttribute("open-bpmn:file-link");
+                fileLink = fileLink.substring(6);
+                fileLink = parent + fileLink;
+                Path pathLinkFileContent = Paths.get(fileLink);
+                try {
+                    // read content...
+                    logger.info(element.getNodeName() + " has attribute open-bpmn:file-link: "
+                            + fileLink);
+
+                    byte[] bytes = Files.readAllBytes(pathLinkFileContent);
+                    String fileData = new String(bytes, StandardCharsets.UTF_8);
+
+                    // remove old sub_child nodes of this childNode...
+                    while (element.hasChildNodes()) {
+                        element.removeChild(element.getFirstChild());
+                    }
+                    // create new cdata section for this child node and add the content....
+                    CDATASection cdataSection = getDoc().createCDATASection(fileData);
+                    element.appendChild(cdataSection);
+
+                } catch (IOException e) {
+                    logger.warning(
+                            "Failed to read content of open-bpmn:file-link '" + fileLink + "' - creating empty file ");
+                    try {
+                        Files.createFile(pathLinkFileContent);
+                    } catch (IOException e1) {
+                        logger.warning(
+                                "Failed creating empty open-bpmn:file-link '" + fileLink + "' : " + e1.getMessage());
+                    }
+
+                }
+
+            }
+        }
+        logger.fine("...resolveFileLinksOnSave took " + (System.currentTimeMillis() - l) + "ms");
+
+    }
+
+    /**
+     * This helper method is called during the load method from the
+     * BPMNModelFactory. The method resolves all elements with the attribute
+     * 'open-bpmn:file-link'
+     * e.g.
+     * <bpmn2:script id="script_1" open-bpmn:file-link="file://imixs.script.js">
+     * <![CDATA[file://imixs.script.js]]></bpmn2:script>
+     * 
+     * The method compares the content of the corresponding file. In case of a
+     * mismatch we assume that the content of the BPMN file is actual and so we
+     * replace the file in the filesystem.
+     * If no file was found, the method creates an empty one.
+     */
+    public void resolveFileLinksOnLoad(Path path) {
+        // Resolve the parent path
+
+        Path parent = path.getParent();
+        long l = System.currentTimeMillis();
+
+        // Find all elements with the attribute "x"
+        NodeList elements = doc.getElementsByTagName("*");
+        for (int i = 0; i < elements.getLength(); i++) {
+            Element element = (Element) elements.item(i);
+            if (element.hasAttribute("open-bpmn:file-link")) {
+                String fileLinkRelative = element.getAttribute("open-bpmn:file-link");
+                String fileLink = fileLinkRelative.substring(6);
+                fileLink = parent + fileLink;
+                Path pathLinkFileContent = Paths.get(fileLink);
+                try {
+                    // read content...
+                    logger.info(element.getNodeName() + " has attribute open-bpmn:file-link: "
+                            + fileLink);
+
+                    byte[] bytes = Files.readAllBytes(pathLinkFileContent);
+                    String fileData = new String(bytes, StandardCharsets.UTF_8);
+
+                    // Now we compare the content with the content of the CDATA Tag. If not equal we
+                    // update the file!! Because we assume the .bpmn file is always right.
+                    String bpmnContent = getElementContent(element);
+
+                    if (!bpmnContent.equals(fileData)) {
+                        logger.warning(
+                                "Updating content of open-bpmn:file-link '" + fileLink + "'... ");
+                        // Update the file !!
+                        Files.write(pathLinkFileContent, bpmnContent.getBytes(StandardCharsets.UTF_8));
+                    }
+
+                    // Now replace the content with the filename
+                    while (element.hasChildNodes()) {
+                        element.removeChild(element.getFirstChild());
+                    }
+                    // create new cdata section for this child node and add the content....
+                    CDATASection cdataSection = getDoc().createCDATASection(fileLinkRelative);
+                    element.appendChild(cdataSection);
+
+                } catch (IOException e) {
+                    logger.warning(
+                            "Failed to read content of open-bpmn:file-link '" + fileLink + "' : " + e.getMessage());
+                }
+            }
+        }
+        logger.fine("...resolveFileLinksOnLoad took " + (System.currentTimeMillis() - l) + "ms");
+
+    }
+
+    /**
+     * Helper method that gets the content of an element and supports an optional
+     * CDATA node
+     * 
+     * @param element
+     * @return
+     */
+    private String getElementContent(Element element) {
+        // search CDATA node
+        NodeList childNodes = element.getChildNodes();
+        for (int i = 0; i < childNodes.getLength(); i++) {
+            Node node = childNodes.item(i);
+            if (node instanceof CDATASection) {
+                return node.getNodeValue();
+            } else {
+                // normal text node
+                return node.getTextContent();
+            }
+        }
+        return "";
     }
 
     /**

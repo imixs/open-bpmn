@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -100,7 +102,8 @@ public class BPMNModelFactory {
      */
     public static BPMNModel read(File modelFile) throws BPMNModelException {
         try {
-            return read(new FileInputStream(modelFile));
+            Path path = modelFile.toPath();
+            return read(new FileInputStream(modelFile), path);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -116,7 +119,8 @@ public class BPMNModelFactory {
      * @throws IOException
      */
     public static BPMNModel read(String modelFilePath) throws BPMNModelException {
-        return read(BPMNModel.class.getResourceAsStream(modelFilePath));
+        Path path = Paths.get(modelFilePath);
+        return read(BPMNModel.class.getResourceAsStream(modelFilePath), path);
     }
 
     /**
@@ -131,7 +135,7 @@ public class BPMNModelFactory {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static BPMNModel read(InputStream is) throws BPMNModelException {
+    public static BPMNModel read(InputStream is, Path path) throws BPMNModelException {
         logger.fine("read from inputStream...");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have any effect!
@@ -158,11 +162,16 @@ public class BPMNModelFactory {
             if (!"bpmn2:definitions".equals(root.getNodeName())
                     &&
                     !"bpmn:definitions".equals(root.getNodeName())) {
-                logger.severe("Missing root element 'bpmn2:definitions'!");
+                logger.severe("Invalid BPMN File: Missing root element 'bpmn2:definitions'!");
                 return null;
             } else {
                 BPMNModel model = new BPMNModel(doc);
                 setOpenBPMNNameSpace(model.getDefinitions());
+
+                // resolve open-bpmn:file-link....
+
+                model.resolveFileLinksOnLoad(path);
+
                 return model;
             }
 
