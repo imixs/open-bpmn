@@ -348,6 +348,17 @@ public abstract class BPMNElement {
     }
 
     /**
+     * This method removes a specific attribute.
+     * 
+     * @param extensionNamespace
+     * @param attribute
+     * @param value
+     */
+    public void removeAttribute(String attribute) {
+        this.getElementNode().removeAttribute(attribute);
+    }
+
+    /**
      * Returns the corresponding dom element node
      * 
      * @return
@@ -378,6 +389,18 @@ public abstract class BPMNElement {
      */
     public void setExtensionAttribute(String extensionNamespace, String attribute, String value) {
         setAttribute(extensionNamespace + ":" + attribute, value);
+    }
+
+    /**
+     * This method removes a specific extension attribute. The extensionNamespace
+     * defines the attribute prefix within the BPMNElement:
+     * 
+     * @param extensionNamespace
+     * @param attribute
+     * @param value
+     */
+    public void removeExtensionAttribute(String extensionNamespace, String attribute) {
+        this.getElementNode().removeAttribute(extensionNamespace + ":" + attribute);
     }
 
     /**
