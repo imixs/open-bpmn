@@ -31,7 +31,7 @@ public class BPMNModelFactory {
 
     public static final String DEFAULT_EXPORTER = "org.openbpmn";
     public static final String DEFAULT_VERSION = "1.0.0";
-    public static final String DEFAULT_TARGETNAMESPACE = "http://org.openbpmn";
+    public static final String DEFAULT_TARGETNAMESPACE = "http://open-bpmn.org";
 
     /**
      * This method creates a new empty BPMNModel instance. The BPMNModel is
@@ -72,6 +72,7 @@ public class BPMNModelFactory {
             definitions.setAttribute("xmlns:dc", "http://www.omg.org/spec/DD/20100524/DC");
             definitions.setAttribute("xmlns:xs", "http://www.w3.org/2001/XMLSchema");
             definitions.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            setOpenBPMNNameSpace(definitions);
 
             // set definitions attributes
             definitions.setAttribute("exporter", exporter);
@@ -160,11 +161,15 @@ public class BPMNModelFactory {
                 logger.severe("Missing root element 'bpmn2:definitions'!");
                 return null;
             } else {
-                return new BPMNModel(doc);
+                BPMNModel model = new BPMNModel(doc);
+                setOpenBPMNNameSpace(model.getDefinitions());
+                return model;
             }
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
-            e.printStackTrace();
+            logger.severe(e.getMessage());
+            // create a runtimeException to show a error message in the client
+            throw new RuntimeException(e);
         } finally {
             if (is != null) {
                 try {
@@ -174,7 +179,17 @@ public class BPMNModelFactory {
                 }
             }
         }
-        return null;
+    }
+
+    /**
+     * Helper Method to add the open-bpmn namespace to the definitions element
+     * 
+     * @param definitions
+     */
+    private static void setOpenBPMNNameSpace(Element definitions) {
+        if (!definitions.hasAttribute("xmlns:open-bpmn")) {
+            definitions.setAttribute("xmlns:open-bpmn", "http://open-bpmn.org/XMLSchema");
+        }
     }
 
     /**
