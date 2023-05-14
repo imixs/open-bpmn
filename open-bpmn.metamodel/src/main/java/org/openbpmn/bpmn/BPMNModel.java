@@ -80,6 +80,7 @@ public class BPMNModel {
     protected Set<Signal> signals = null;
     protected Set<Message> messages = null;
     protected Element collaborationElement = null;
+    private boolean isDirty = false;
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
     private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
@@ -253,6 +254,25 @@ public class BPMNModel {
         if (!definitions.hasAttribute("xmlns:" + namespace)) {
             definitions.setAttribute("xmlns:" + namespace, uri);
         }
+    }
+
+    /**
+     * Returns an internal isDirty flag
+     * 
+     * @return
+     */
+    public boolean isDirty() {
+        return isDirty;
+    }
+
+    /**
+     * Set the internal isDirty flag. This flag can be used to mark a model as
+     * dirty.
+     * 
+     * @param isDirty
+     */
+    public void setDirty(boolean isDirty) {
+        this.isDirty = isDirty;
     }
 
     public Set<Participant> getParticipants() {
@@ -1296,7 +1316,7 @@ public class BPMNModel {
                 Path pathLinkFileContent = Paths.get(fileLink);
                 try {
                     // read content...
-                    logger.info(element.getNodeName() + " has attribute open-bpmn:file-link: "
+                    logger.fine(element.getNodeName() + " has attribute open-bpmn:file-link: "
                             + fileLink);
 
                     byte[] bytes = Files.readAllBytes(pathLinkFileContent);
@@ -1337,13 +1357,16 @@ public class BPMNModel {
      * <![CDATA[file://imixs.script.js]]></bpmn2:script>
      * 
      * The method compares the content of the corresponding file. In case of a
-     * mismatch we assume that the content of the BPMN file is actual and so we
-     * replace the file in the filesystem.
-     * If no file was found, the method creates an empty one.
+     * mismatch we assume that the file content is actual and so we
+     * mark the model immediately as dirty.
+     * 
+     * The method marks the model as dirty if linked file content has changed
+     * 
+     * @param path - file path
+     * @return boolean - true if the linked file content has changed.
      */
     public void resolveFileLinksOnLoad(Path path) {
         // Resolve the parent path
-
         Path parent = path.getParent();
         long l = System.currentTimeMillis();
 
@@ -1358,21 +1381,20 @@ public class BPMNModel {
                 Path pathLinkFileContent = Paths.get(fileLink);
                 try {
                     // read content...
-                    logger.info(element.getNodeName() + " has attribute open-bpmn:file-link: "
+                    logger.fine(element.getNodeName() + " has attribute open-bpmn:file-link: "
                             + fileLink);
 
                     byte[] bytes = Files.readAllBytes(pathLinkFileContent);
                     String fileData = new String(bytes, StandardCharsets.UTF_8);
-
                     // Now we compare the content with the content of the CDATA Tag. If not equal we
                     // update the file!! Because we assume the .bpmn file is always right.
                     String bpmnContent = getElementContent(element);
 
                     if (!bpmnContent.equals(fileData)) {
-                        logger.warning(
-                                "Updating content of open-bpmn:file-link '" + fileLink + "'... ");
-                        // Update the file !!
-                        Files.write(pathLinkFileContent, bpmnContent.getBytes(StandardCharsets.UTF_8));
+                        logger.fine(
+                                "File content of open-bpmn:file-link '" + fileLink + "' updated.");
+                        // mark model as dirty
+                        this.setDirty(true);
                     }
 
                     // Now replace the content with the filename
@@ -1390,7 +1412,6 @@ public class BPMNModel {
             }
         }
         logger.fine("...resolveFileLinksOnLoad took " + (System.currentTimeMillis() - l) + "ms");
-
     }
 
     /**

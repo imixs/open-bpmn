@@ -169,7 +169,6 @@ public class BPMNModelFactory {
                 setOpenBPMNNameSpace(model.getDefinitions());
 
                 // resolve open-bpmn:file-link....
-
                 model.resolveFileLinksOnLoad(path);
 
                 return model;
