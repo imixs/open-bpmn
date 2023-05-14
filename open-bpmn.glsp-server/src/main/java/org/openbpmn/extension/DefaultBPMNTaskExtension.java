@@ -86,6 +86,10 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                 addElement("documentation", "Documentation", multilineOption);
 
         // Script-Task?
+        // custom fileEditor...
+        Map<String, String> fileEditor = new HashMap<>();
+        fileEditor.put("format", "textFileEditor");
+
         Activity taskElement = (Activity) bpmnElement;
         if (BPMNTypes.SCRIPT_TASK.equals(taskElement.getType())) {
             dataBuilder //
@@ -101,7 +105,11 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
                     addCategory("Script"). //
                     addLayout(Layout.VERTICAL). //
                     addElements("scriptformat"). //
-                    addElement("script", "Script", multilineOption); //
+                    // TEST
+                    // addElement("script", "Script", multilineOption); //
+                    //
+                    addElement("script", "Script-Test", fileEditor);
+            // TEST END
         }
     }
 

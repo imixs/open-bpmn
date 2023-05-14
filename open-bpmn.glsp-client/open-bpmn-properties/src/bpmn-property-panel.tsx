@@ -24,9 +24,9 @@ import {
     EnableToolsAction,
     IActionHandler,
     ICommand,
-    SetUIExtensionVisibilityAction,
     SModelElement,
     SModelRoot,
+    SetUIExtensionVisibilityAction,
     TYPES
 } from 'sprotty';
 
@@ -40,6 +40,7 @@ import { createRoot } from 'react-dom/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 
 import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
+import { TextFileEditorRendererEntry } from './TextFileEditorControl';
  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionListener, IActionHandler {
@@ -379,7 +380,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                     ...vanillaRenderers,
                     // optional register custom renderers...
                     SelectItemRendererEntry,
-                    SelectItemComboRendererEntry
+                    SelectItemComboRendererEntry,
+                    TextFileEditorRendererEntry
                 ];
 
                 // render JSONForm // vanillaRenderers

@@ -132,6 +132,20 @@
 
 /* Custom BPMN Styles **/
 
+.bpmn-properties-body .control.text-file-editor>label {
+    width:100%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.bpmn-properties-body .control.text-file-editor>textarea {
+    min-height: 12em;
+}
+
+.bpmn-properties-body .control.text-file-editor>textarea.fileInputMode {
+    min-height: 1em;
+    line-height: 1.7rem;
+}
+
 .root_properties_conditionExpression textarea {
     min-height: 14em !important;    
 }
