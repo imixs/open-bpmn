@@ -15,9 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
@@ -92,13 +89,11 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
                 addProperty("name", "string", null). //
                 addProperty("documentation", "string", documentation);
 
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.VERTICAL). //
                 addElements("name"). //
-                addElement("documentation", "Documentation", multilineOption);
+                addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 

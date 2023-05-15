@@ -56,6 +56,16 @@ public class TextAnnotation extends BPMNElementNode {
      */
     public void setText(String content) {
         this.setChildNodeContent(BPMNNS.BPMN2, "text", content, true);
+
+        // if we have a file:// link than we create an additional open-bpmn attribute
+        Element childElement = this.getChildNode(BPMNNS.BPMN2, "text");
+        if (childElement != null) {
+            if (content.startsWith("file://")) {
+                childElement.setAttribute("open-bpmn:file-link", content);
+            } else {
+                childElement.removeAttribute("open-bpmn:file-link");
+            }
+        }
     }
 
     /**

@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.json.JsonObject;
@@ -24,6 +22,7 @@ import javax.json.JsonObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
@@ -33,6 +32,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
 
@@ -107,12 +107,10 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
         schemaBuilder. //
                 addProperty("conditionExpression", "string", description); //
 
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("Condition"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("conditionExpression", "Expression", multilineOption);
+                addElement("conditionExpression", "Expression", this.getFileEditorOption());
 
     }
 
@@ -144,6 +142,15 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
                     String expression = json.getString(feature);
                     stateUpdate = sequenceFlow.setConditionExpression(expression);
                     conditionsFound = true;
+                    // if we have a file:// link than we create an additional open-bpmn attribute
+                    Element childElement = sequenceFlow.getChildNode(BPMNNS.BPMN2, "conditionExpression");
+                    if (childElement != null) {
+                        if (expression.startsWith("file://")) {
+                            childElement.setAttribute("open-bpmn:file-link", expression);
+                        } else {
+                            childElement.removeAttribute("open-bpmn:file-link");
+                        }
+                    }
                     continue;
                 }
             }

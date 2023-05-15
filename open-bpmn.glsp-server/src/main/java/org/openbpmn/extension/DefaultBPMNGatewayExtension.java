@@ -81,9 +81,6 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
                 addProperty("documentation", "string", documentation). //
                 addProperty("gatewaydirection", "string", null, gatewayDirections);
 
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
-
         Map<String, String> radioOption = new HashMap<>();
         radioOption.put("format", "radio");
 
@@ -93,7 +90,7 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
                 addElements("name"). //
                 addElement("gatewaydirection", "Direction", radioOption). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption);
+                addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 

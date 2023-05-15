@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.json.JsonObject;
@@ -77,14 +75,12 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
                 addProperty("documentation", "string", null). //
                 addProperty("text", "string", "Content");
 
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("text", "Text", multilineOption). //
+                addElement("text", "Text", this.getFileEditorOption()). //
                 addElement("textFormat", "textformat", null). //
-                addElement("documentation", "Documentation", multilineOption);
+                addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 

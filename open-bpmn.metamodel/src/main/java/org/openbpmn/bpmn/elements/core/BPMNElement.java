@@ -125,6 +125,16 @@ public abstract class BPMNElement {
      */
     public void setDocumentation(String content) {
         this.setChildNodeContent(BPMNNS.BPMN2, "documentation", content, true);
+
+        // if we have a file:// link than we create an additional open-bpmn attribute
+        Element childElement = this.getChildNode(BPMNNS.BPMN2, "documentation");
+        if (childElement != null) {
+            if (content.startsWith("file://")) {
+                childElement.setAttribute("open-bpmn:file-link", content);
+            } else {
+                childElement.removeAttribute("open-bpmn:file-link");
+            }
+        }
     }
 
     /**
@@ -365,6 +375,17 @@ public abstract class BPMNElement {
      */
     public Element getElementNode() {
         return elementNode;
+    }
+
+    /**
+     * Returns the corresponding child element node.
+     * 
+     * If no child node with the name exists, the method return null.
+     * 
+     * @return
+     */
+    public Element getChildNode(BPMNNS ns, String nodeName) {
+        return this.loadChildNode(ns, nodeName);
     }
 
     /**

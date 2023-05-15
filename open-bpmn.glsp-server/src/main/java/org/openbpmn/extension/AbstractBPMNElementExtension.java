@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import javax.json.JsonArray;
@@ -189,5 +191,29 @@ abstract class AbstractBPMNElementExtension implements BPMNExtension {
             eventDefinitions = bpmnEvent.getEventDefinitionsByType(definitionName);
         }
         return eventDefinitions;
+    }
+
+    /**
+     * Helper method that returns a Multiline Option for the JSONForms UI Schema
+     * 
+     * @return
+     */
+    Map<String, String> getMultilineOption() {
+        Map<String, String> multilineOption = new HashMap<>();
+        multilineOption.put("multi", "true");
+        return multilineOption;
+    }
+
+    /**
+     * Helper method that returns a textFileEditor Option for the JSONForms UI
+     * Schema
+     * 
+     * @return
+     */
+    Map<String, String> getFileEditorOption() {
+        // custom fileEditor...
+        Map<String, String> fileEditor = new HashMap<>();
+        fileEditor.put("format", "textFileEditor");
+        return fileEditor;
     }
 }

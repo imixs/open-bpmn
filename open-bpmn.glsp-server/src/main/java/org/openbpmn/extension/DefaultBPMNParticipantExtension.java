@@ -96,14 +96,12 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                 // addProperty("execution", "string", null). //
                 addProperty("documentation", "string", "Participant description.");
 
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption);
+                addElement("documentation", "Documentation", this.getFileEditorOption());
 
         // LaneSet
         addLaneSetProperties((Participant) bpmnElement, dataBuilder, schemaBuilder, uiSchemaBuilder);

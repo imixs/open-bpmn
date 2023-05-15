@@ -79,7 +79,9 @@ export const TextFileEditor = ({
           )}
           </span>
           <span className={'file-selector'}>
-            <label>File Link: {(data.startsWith('file://'))?'ACTIVE':'NONE'}</label>
+            <label
+              title='Link the content to a filename starting with file://'
+            >File Link: {(data.startsWith('file://'))?'ACTIVE':'NONE'}</label>
           </span>
         </label>
 

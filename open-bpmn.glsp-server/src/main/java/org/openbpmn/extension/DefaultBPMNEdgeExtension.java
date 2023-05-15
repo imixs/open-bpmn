@@ -15,9 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.extension;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.json.JsonObject;
 
 import org.apache.logging.log4j.LogManager;
@@ -86,14 +83,12 @@ public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
                 addProperty("name", "string", null). //
                 addProperty("documentation", "string", null);
 
-        Map<String, String> multilineOption = new HashMap<>();
-        multilineOption.put("multi", "true");
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", multilineOption);
+                addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 
