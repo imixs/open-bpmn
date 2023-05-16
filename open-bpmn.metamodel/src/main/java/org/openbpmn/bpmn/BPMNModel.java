@@ -1298,7 +1298,7 @@ public class BPMNModel {
      * <![CDATA[file://imixs.script.js]]></bpmn2:script>
      * 
      * The method opens the corresponding file and replaces the element content.
-     * If no file was found, the method creates an empty one.
+     * If no file was found, the method prints a warning.
      */
     public void resolveFileLinksOnSave(Path path) {
         // Resolve the parent path
@@ -1331,14 +1331,12 @@ public class BPMNModel {
                     element.appendChild(cdataSection);
 
                 } catch (IOException e) {
+                    // We do not create the file here and print just a warning. This is because
+                    // if the user has activated autosave mode files will be created even if the
+                    // user does not expect it.
+                    // Files.createFile(pathLinkFileContent);
                     logger.warning(
-                            "Failed to read content of open-bpmn:file-link '" + fileLink + "' - creating empty file ");
-                    try {
-                        Files.createFile(pathLinkFileContent);
-                    } catch (IOException e1) {
-                        logger.warning(
-                                "Failed creating empty open-bpmn:file-link '" + fileLink + "' : " + e1.getMessage());
-                    }
+                            "Missing resource open-bpmn:file-link '" + fileLink + "'!");
 
                 }
 
