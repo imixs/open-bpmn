@@ -18,10 +18,7 @@ package org.openbpmn.glsp.model;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Map;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -98,32 +95,32 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         }
     }
 
+    /**
+     * Saves a model. The SaveModelAction is sent from the client to the server in
+     * order to persist the current model state back to the source model. A new
+     * fileUri can be defined to save the model to a new destination different from
+     * its original source model.
+     */
     @Override
     public void saveSourceModel(final SaveModelAction action) {
+        logger.info("saveSourceModel....");
         Map<String, String> options = modelState.getClientOptions();
-        // resolve file location....
+        // resolve origin file location....
         String uri = MapUtil.getValue(options, "sourceUri").orElse(null);
         if (uri == null || uri.isEmpty()) {
             // fallback
             uri = options.get("uri");
         }
-        Optional<String> uriOpt = action.getFileUri();
-        if (uriOpt.isPresent() && !uriOpt.isEmpty()) {
-            // we got a new URI which means we have a 'saveAs' situaiton!
-            uri = uriOpt.get();
+
+        // test if we have a new fileUri....
+        String newFileURI = action.getFileUri().orElse(null);
+        if (newFileURI != null && !newFileURI.isEmpty()) {
+            // we got a new URI which means we have a 'saveAs' situation!
+            uri = newFileURI;
         }
         BPMNModel model = modelState.getBpmnModel();
-        try {
-            // check protocol
-            if (!uri.contains("://")) {
-                uri = "file://" + uri;
-            }
-            java.net.URI targetURI = new URI(uri);
-            model.save(targetURI);
-        } catch (URISyntaxException e) {
-            logger.error("Invalid Target URI: " + e.getMessage());
-        }
 
+        model.save(uri);
     }
 
     /**

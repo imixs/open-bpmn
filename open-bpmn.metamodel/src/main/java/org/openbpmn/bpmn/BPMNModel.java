@@ -84,6 +84,7 @@ public class BPMNModel {
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
     private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
+    private static final String FILE_PREFIX = "file://";
 
     /**
      * Returns the namespace uri for a given namespace
@@ -1267,12 +1268,18 @@ public class BPMNModel {
     /**
      * Writes the current instance to the file system.
      * 
+     * If the file location is an URI and starting with 'file://' it will be
+     * automatically remove the file protocol
+     * 
      * The method also resolves all open-bpmn:file-link elements and updates the
      * corresponding content.
      * 
      * @param file
      */
     public void save(String file) {
+        // If we have a file prefix from a URI object, we remove this part
+        file = file.replace(FILE_PREFIX, "");
+
         try (FileOutputStream output = new FileOutputStream(file)) {
             if (doc == null) {
                 logger.severe("...unable to save file - doc is null!");
@@ -1280,14 +1287,20 @@ public class BPMNModel {
             // resolve open-bpmn:file-link....
             resolveFileLinksOnSave(Paths.get(file));
 
+            // finally write the xml to disk
             writeXml(doc, output);
         } catch (TransformerException | IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Writes the current instance to the file system.
+     * 
+     * See {@code save(String)}
+     */
     public void save(URI targetURI) {
-        save(Paths.get(targetURI).toString());
+        save(targetURI.toString());
     }
 
     /**
