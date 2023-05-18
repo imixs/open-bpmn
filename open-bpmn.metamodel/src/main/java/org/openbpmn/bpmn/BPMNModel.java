@@ -1449,8 +1449,9 @@ public class BPMNModel {
                     logger.warning(
                             "Failed to read content of open-bpmn:file-link '" + fileLink + "' : " + e.getMessage());
                     this.notifications.add(new ModelNotification(ModelNotification.Severity.WARNING,
-                            "Failed to read linked file content!",
-                            "Failed to read content of open-bpmn:file-link '" + fileLinkRelative + "'"));
+                            "Failed to read linked file content '" + fileLinkRelative + "' !",
+                            "Failed to read content of open-bpmn:file-link '" + fileLinkRelative + "' in element "
+                                    + element.getAttribute("id")));
                 }
             }
         }
