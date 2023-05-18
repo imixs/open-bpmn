@@ -1,57 +1,181 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- origin at X=0.0 Y=0.0 -->
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" targetNamespace="http://org.openbpmn">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- origin at X=0.0 Y=0.0 --><bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:BPMN2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:imixs="http://www.imixs.org/bpmn2" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" id="Definitions_1" targetNamespace="http://org.openbpmn">
   <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
     <bpmn2:participant id="participant_dLmTNA" name="Default Process" processRef="process_1"/>
-    <bpmn2:participant id="participant_0laEIA" name="Pool-1" processRef="process_IP5ckA"/>
+    <bpmn2:participant id="participant_0laEIA" name="Pool-1" processRef="process_IP5ckA">
+      <bpmn2:documentation id="documentation_V473CA"/>
+    </bpmn2:participant>
   </bpmn2:collaboration>
-  <bpmn2:process id="process_1" name="Default Process" definitionalCollaborationRef="collaboration_1" isExecutable="false" processType="Public"/>
-  <bpmn2:process id="process_IP5ckA" name="Pool-1" definitionalCollaborationRef="collaboration_1" isExecutable="false" processType="Private">
+  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" isExecutable="false" name="Default Process" processType="Public">
+    <bpmn2:documentation id="documentation_NZ6yUQ"/>
+    <bpmn2:message id="message_7DqKRw" name="Message-1">
+      <bpmn2:documentation id="documentation_Xpe1dA" open-bpmn:file-link="file://message.txt"><![CDATA[#
+Just a simple text Message
+#]]></bpmn2:documentation>
+    </bpmn2:message>
+  </bpmn2:process>
+  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_IP5ckA" isExecutable="false" name="Pool-1" processType="Private">
+    <bpmn2:laneSet id="laneset_2ptoSA" name="Lane Set">
+      <bpmn2:lane id="lane_oMC0Mg" name="Lane 2">
+        <bpmn2:documentation id="documentation_19wsfg"/>
+        <bpmn2:flowNodeRef>task_CYqqqA</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>task_FqIHHg</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>event_ZXMs0A</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>event_t3hVbA</bpmn2:flowNodeRef>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
     <bpmn2:startEvent id="event_ZXMs0A" name="Event-1">
       <bpmn2:outgoing>sequenceFlow_uKg7KA</bpmn2:outgoing>
+      <bpmn2:documentation id="documentation_rt0uLg"/>
     </bpmn2:startEvent>
     <bpmn2:scriptTask id="task_CYqqqA" name="Task-1" scriptFormat="">
-      <bpmn2:documentation id="documentation_KcpMQg"><![CDATA[abcccc]]></bpmn2:documentation>
+      <bpmn2:documentation id="documentation_KcpMQg"><![CDATA[abcccc
+asdfasd asdf a
+1234567]]></bpmn2:documentation>
       <bpmn2:incoming>sequenceFlow_uKg7KA</bpmn2:incoming>
-      <bpmn2:script>var b=1;
-var c=3;</bpmn2:script>
+      <bpmn2:script open-bpmn:file-link="file://imixs.script.js"><![CDATA[var b=1;
+var c=3;
+// just a test]]></bpmn2:script>
+      <bpmn2:outgoing>sequenceFlow_k38MxQ</bpmn2:outgoing>
     </bpmn2:scriptTask>
-    <bpmn2:sequenceFlow id="sequenceFlow_uKg7KA" sourceRef="event_ZXMs0A" targetRef="task_CYqqqA"/>
-    <bpmn2:task id="task_FqIHHg" name="Task-2">
+    <bpmn2:sequenceFlow id="sequenceFlow_uKg7KA" sourceRef="event_ZXMs0A" targetRef="task_CYqqqA">
+      <bpmn2:documentation id="documentation_aMFVig"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:task id="task_FqIHHg" imixs:processid="100" name="Task-2">
       <bpmn2:documentation id="documentation_sC05RQ"><![CDATA[HAAAAAAAAAAAAAAAAAALO]]></bpmn2:documentation>
+      <bpmn2:incoming>sequenceFlow_fK5elA</bpmn2:incoming>
     </bpmn2:task>
+    <bpmn2:dataObject id="dataObject_5X8MlQ" name="Data Object-1">
+      <bpmn2:documentation id="documentation_12VQdg" open-bpmn:file-link="file://imixs.script.xml"><![CDATA[<?xml version="1.0"?>
+<imixs-form>
+  <imixs-form-section columns="1" label="Bezeichnung">
+    <item name="name" type="text"  label="Kunde:" />
+  </imixs-form-section>
+  <imixs-form-section columns="3" >
+     <item name="residence.street" type="text"  label="Straße:" required="true" />
+     <item name="residence.zip" type="text"  label="PLZ:" required="true" />
+    <item name="residence.city" type="text"  label="Ort:" required="true" />
+  </imixs-form-section>
+
+
+
+
+  <imixs-form-section columns="3" label="Ansprechpartner" >
+    <item name="contact.firstname" type="text"  label="Vorname:"  required="true"/>
+    <item name="contact.surname" type="text"  label="Name:" required="true" />
+    <item name="contact.email" type="text"  label="e-mail:" required="true" />
+    <item name="contact.phone" type="text"  label="Telefon:" required="true" />
+  </imixs-form-section>
+  <imixs-form-section  columns="3" >
+    <item name="" type="custom" path="spaceref"  label="Standort:" />
+    <item name="reminder" type="date"  label="Wiedervorlage:" />
+  </imixs-form-section>
+xxx
+
+</imixs-form>]]></bpmn2:documentation>
+    </bpmn2:dataObject>
+    <bpmn2:intermediateCatchEvent id="event_t3hVbA" imixs:activityid="10" name="Event-2">
+      <bpmn2:extensionElements>
+        <imixs:item name="rtfmailbody" type="xs:string">
+          <imixs:value open-bpmn:file-link="file://imixs.script.js"><![CDATA[var b=1;
+var c=3;
+// just a test]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="nammailreceiver" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="nammailreceivercc" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="nammailreceiverbcc" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+      </bpmn2:extensionElements>
+      <bpmn2:documentation id="documentation_rtQmpA"/>
+      <bpmn2:incoming>sequenceFlow_k38MxQ</bpmn2:incoming>
+      <bpmn2:outgoing>sequenceFlow_fK5elA</bpmn2:outgoing>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="sequenceFlow_k38MxQ" sourceRef="task_CYqqqA" targetRef="event_t3hVbA">
+      <bpmn2:documentation id="documentation_OEEqPw"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="sequenceFlow_fK5elA" sourceRef="event_t3hVbA" targetRef="task_FqIHHg">
+      <bpmn2:documentation id="documentation_IS09Gg"/>
+    </bpmn2:sequenceFlow>
   </bpmn2:process>
+  <bpmn2:message id="message_AeRHew" name="Message-1">
+    <bpmn2:documentation id="documentation_xOY06Q" open-bpmn:file-link="file://message.txt"><![CDATA[#
+Just a simple text Message
+#]]></bpmn2:documentation>
+  </bpmn2:message>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="collaboration_1">
-      <bpmndi:BPMNShape id="BPMNShape_fOYZyg" bpmnElement="participant_0laEIA" isHorizontal="true">
-        <dc:Bounds height="200.0" width="800.0" x="84.0" y="70.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="36.0" width="14.0" x="90.0" y="152.0"/>
-        </bpmndi:BPMNLabel>
+    <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="participant_0laEIA" id="BPMNShape_fOYZyg" isHorizontal="true">
+        <dc:Bounds height="288.0393371582031" width="691.0843505859375" x="33.221588134765625" y="36.788787841796875"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_ZFae2w" bpmnElement="event_ZXMs0A">
-        <dc:Bounds height="36.0" width="36.0" x="176.0" y="135.0"/>
+      <bpmndi:BPMNShape bpmnElement="event_ZXMs0A" id="BPMNShape_ZFae2w">
+        <dc:Bounds height="36.0" width="36.0" x="125.22158813476562" y="101.78878784179688"/>
         <bpmndi:BPMNLabel id="BPMNLabel_CcGR9w" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="16.0" width="100.0" x="144.0" y="174.0"/>
+          <dc:Bounds height="16.0" width="100.0" x="93.22158813476562" y="140.78878784179688"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_5hn3Eg" bpmnElement="task_CYqqqA">
-        <dc:Bounds height="50.0" width="110.0" x="290.0" y="128.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="36.0" x="327.0" y="146.0"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape bpmnElement="task_CYqqqA" id="BPMNShape_5hn3Eg">
+        <dc:Bounds height="50.0" width="110.0" x="229.22158813476562" y="94.78878784179688"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="BPMNShape_04O0sw" bpmnElement="task_FqIHHg">
-        <dc:Bounds height="50.0" width="110.0" x="445.0" y="128.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_4" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="36.0" x="482.0" y="146.0"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape bpmnElement="task_FqIHHg" id="BPMNShape_04O0sw">
+        <dc:Bounds height="50.0" width="110.0" x="466.2215881347656" y="94.78878784179688"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_Ox20pA" bpmnElement="sequenceFlow_uKg7KA" sourceElement="BPMNShape_ZFae2w" targetElement="BPMNShape_5hn3Eg">
-        <di:waypoint xsi:type="dc:Point" x="212.0" y="153.0"/>
-        <di:waypoint xsi:type="dc:Point" x="290.0" y="153.0"/>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_uKg7KA" id="BPMNEdge_Ox20pA" sourceElement="BPMNShape_ZFae2w" targetElement="BPMNShape_5hn3Eg">
         <bpmndi:BPMNLabel id="BPMNLabel_3"/>
+        <di:waypoint x="161.22158813476562" y="119.78878784179688"/>
+        <di:waypoint x="229.22158813476562" y="119.78878784179688"/>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="dataObject_5X8MlQ" id="BPMNShape_2PzEiA">
+        <dc:Bounds height="50.0" width="35.0" x="150.72158813476562" y="205.78878784179688"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_J8mAyQ">
+          <dc:Bounds height="16.0" width="100.0" x="118.22158813476562" y="260.7887878417969"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="message_AeRHew" id="BPMNShape_rZcwmA">
+        <dc:Bounds height="20.0" width="30.0" x="269.2215881347656" y="220.78878784179688"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_mE80oA">
+          <dc:Bounds height="16.0" width="100.0" x="234.22158813476562" y="245.78878784179688"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="lane_oMC0Mg" id="BPMNShape_Lane_g3nfAg">
+        <dc:Bounds height="288.0" width="661.0" x="63.0" y="36.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="event_t3hVbA" id="BPMNShape_TcrXqQ">
+        <dc:Bounds height="36.0" width="36.0" x="385.0" y="101.78878784179688"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_KSYKHQ">
+          <dc:Bounds height="16.0" width="100.0" x="353.0" y="140.78878784179688"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_k38MxQ" id="BPMNEdge_57egAA" sourceElement="BPMNShape_5hn3Eg" targetElement="BPMNShape_TcrXqQ">
+        <di:waypoint x="339.2215881347656" y="119.78878784179688"/>
+        <di:waypoint x="385.0" y="119.78878784179688"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_fK5elA" id="BPMNEdge_31arNg" sourceElement="BPMNShape_TcrXqQ" targetElement="BPMNShape_04O0sw">
+        <di:waypoint x="421.0" y="119.78878784179688"/>
+        <di:waypoint x="466.2215881347656" y="119.78878784179688"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="message_xgDI3g" id="BPMNShape_21GR7A">
+        <dc:Bounds height="20.0" width="30.0" x="421.0" y="222.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_0400ow">
+          <dc:Bounds height="16.0" width="100.0" x="386.0" y="247.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="message_zPwT6Q" id="BPMNShape_bNO1nA">
+        <dc:Bounds height="20.0" width="30.0" x="492.0" y="230.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_g6t5kw">
+          <dc:Bounds height="16.0" width="100.0" x="457.0" y="255.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="message_7DqKRw" id="BPMNShape_zwkZHA">
+        <dc:Bounds height="20.0" width="30.0" x="542.0" y="220.78878784179688"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_g3jKcA">
+          <dc:Bounds height="16.0" width="100.0" x="507.0" y="245.78878784179688"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
       <dc:Font name="arial" size="9.0"/>
