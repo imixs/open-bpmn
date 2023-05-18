@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -41,11 +44,10 @@ import com.google.inject.Inject;
  * 
  * The handler expects a data element with the key 'bpmn' and a the value with a
  * list of element ids to be copied. This is how the
- * BPMNClipboardDataActionHandler stores the ids into memory.
- * <p>
- *
+ * {@link BPMNClipboardDataActionHandler} stores the ids into memory.
+ * 
+ * @see {@link BPMNClipboardDataActionHandler}
  * @author rsoika
- *
  */
 public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOperation> {
 
@@ -53,6 +55,9 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
 
     @Inject
     protected BPMNGModelState modelState;
+
+    @Inject
+    protected ActionDispatcher actionDispatcher;
 
     /**
      * This method copies the current element selection into the diagram. The
@@ -71,6 +76,7 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
         double xOffset = 0;
         double yOffset = 0;
         Map<String, String> clonedIDs = new HashMap<String, String>();
+        List<String> newElementIDList = new ArrayList<String>();
 
         Map<String, String> data = operation.getClipboardData();
         // get list of ids...
@@ -99,6 +105,7 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
                     BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
                     if (newElementNode != null) {
                         clonedIDs.put(bpmnElementNode.getId(), newElementNode.getId());
+                        newElementIDList.add(newElementNode.getId());
 
                         // adjust position...
                         newElementNode.setPosition(bpmnElementNode.getBounds().getPosition().getX() + xOffset,
@@ -109,7 +116,6 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
                             label.updateLocation(bpmnElementNode.getLabel().getBounds().getPosition().getX() + xOffset,
                                     bpmnElementNode.getLabel().getBounds().getPosition().getY() + yOffset);
                         }
-
                     }
                 } catch (BPMNModelException e) {
                     e.printStackTrace();
@@ -134,32 +140,25 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
                         if (newElementEdge != null) {
                             newElementEdge.setSourceRef(newSourceID);
                             newElementEdge.setTargetRef(newTargetID);
-
-                            // BPMNElementNode sourceNode =
-                            // modelState.getBpmnModel().findElementNodeById(newSourceID);
-
-                            // BPMNElementNode targetNode =
-                            // modelState.getBpmnModel().findElementNodeById(newTargetID);
-
-                            // sourceNode.
                         }
                     }
                 } catch (BPMNModelException e) {
                     e.printStackTrace();
                 }
             }
-
         }
 
         // reset model state..
         modelState.reset();
+
+        // preselect new pasted elements
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(newElementIDList));
     }
 
     /**
      * This helper method computes the most upper left point from the list of
-     * selected elements.
-     * This ref point is used to clone elements and adjust its position according to
-     * the mouse position.
+     * selected elements. This ref point is used to clone elements and adjust its
+     * position according to the mouse position.
      */
     private BPMNPoint computeRefPoint(List<String> ids) {
         double x = 0;

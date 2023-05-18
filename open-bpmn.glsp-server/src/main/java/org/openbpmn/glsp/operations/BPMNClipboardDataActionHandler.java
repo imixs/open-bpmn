@@ -36,8 +36,8 @@ import com.google.inject.Inject;
  * This clipboard handler creates a clipboard data map with the selected BPMN
  * elements. This data map can be used in the PastOperation
  *
+ * @see {@link BPMNPasteOperationHandler}
  * @author rsoika
- *
  */
 public class BPMNClipboardDataActionHandler extends AbstractActionHandler<RequestClipboardDataAction> {
 
