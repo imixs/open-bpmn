@@ -81,7 +81,7 @@ public class BPMNModel {
     protected Set<Message> messages = null;
     protected Element collaborationElement = null;
     private boolean isDirty = false;
-    private List<String> updatedFileLinks = null;
+    private List<ModelNotification> notifications = null;
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
     private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
@@ -103,7 +103,7 @@ public class BPMNModel {
         setPrefix(BPMNNS.BPMNDI, "bpmndi");
         setPrefix(BPMNNS.DI, "di");
         setPrefix(BPMNNS.DC, "dc");
-        updatedFileLinks = new ArrayList<String>();
+        notifications = new ArrayList<ModelNotification>();
     }
 
     /**
@@ -267,14 +267,13 @@ public class BPMNModel {
     }
 
     /**
-     * Returns a list of external files with updated content not yet stored in the
-     * current model. The list is generated in the constructor when a new model is
-     * read.
+     * Returns a list of all available ModelNotifications. A client can process the
+     * notifications.
      * 
      * @return
      */
-    public List<String> getUpdatedFileLinks() {
-        return updatedFileLinks;
+    public List<ModelNotification> getNotifications() {
+        return this.notifications;
     }
 
     /**
@@ -836,6 +835,19 @@ public class BPMNModel {
     }
 
     /**
+     * Creates a new Message from a Element node
+     * 
+     * @param element
+     * @return
+     * @throws BPMNModelException
+     */
+    public Message createBPMNMessageByNode(Element element) throws BPMNModelException {
+        Message message = new Message(this, element, BPMNTypes.MESSAGE, this.openDefaultProces());
+        getMessages().add(message);
+        return message;
+    }
+
+    /**
      * Finds a Signal element by name withing the diagram
      * <p>
      * <bpmn2:signal id="Signal_1" name="My Signal"/>
@@ -1300,8 +1312,6 @@ public class BPMNModel {
 
             // finally write the xml to disk
             writeXml(doc, output);
-            // reset fileLink List
-            updatedFileLinks = new ArrayList<String>();
         } catch (TransformerException | IOException e) {
             e.printStackTrace();
         }
@@ -1361,8 +1371,10 @@ public class BPMNModel {
                     // if the user has activated autosave mode files will be created even if the
                     // user does not expect it.
                     // Files.createFile(pathLinkFileContent);
-                    logger.warning(
-                            "Missing resource open-bpmn:file-link '" + fileLink + "'!");
+                    String message = "Missing resource open-bpmn:file-link '" + fileLink + "'!";
+                    logger.warning(message);
+                    this.notifications.add(new ModelNotification(ModelNotification.Severity.WARNING, message,
+                            "The linked file  resource '" + fileLink + "' does not exist!"));
 
                 }
 
@@ -1419,7 +1431,10 @@ public class BPMNModel {
                                 "File content of open-bpmn:file-link '" + fileLink + "' updated.");
                         // mark model as dirty
                         this.setDirty(true);
-                        this.getUpdatedFileLinks().add(fileLink);
+                        this.notifications.add(new ModelNotification(ModelNotification.Severity.WARNING,
+                                "Linked file content was updated!",
+                                "The linked file  resource '" + fileLink
+                                        + "' was updated. Model file should be saved!"));
                     }
 
                     // Now replace the content with the filename
@@ -1433,6 +1448,9 @@ public class BPMNModel {
                 } catch (IOException e) {
                     logger.warning(
                             "Failed to read content of open-bpmn:file-link '" + fileLink + "' : " + e.getMessage());
+                    this.notifications.add(new ModelNotification(ModelNotification.Severity.WARNING,
+                            "Failed to read linked file content!",
+                            "Failed to read content of open-bpmn:file-link '" + fileLinkRelative + "'"));
                 }
             }
         }

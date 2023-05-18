@@ -18,7 +18,6 @@ package org.openbpmn.glsp.model;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
-import java.nio.file.Paths;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -30,13 +29,13 @@ import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.types.Severity;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
+import org.openbpmn.glsp.utils.BPMNActionUtil;
 
 import com.google.inject.Inject;
 
@@ -86,19 +85,14 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                 // DirtyState action...
                 if (model.isDirty()) {
                     logger.info("....external model content has changed.");
-                    SetDirtyStateAction dirtyAction = new SetDirtyStateAction();
-                    dirtyAction.setDirty(true);
-                    dirtyAction.setReason("Updated linked File Content");
-
-                    // create a notification popup....
-                    String message = "The content of the following linked files has changed: \n\n";
-                    for (String updatedFileName : model.getUpdatedFileLinks()) {
-                        message = message + " - " + Paths.get(updatedFileName).getFileName() + "\n";
-                    }
-                    message = message + "\nPlease save your BPMN Model once.";
-                    ServerMessageAction serverMessage = new ServerMessageAction(Severity.INFO,
-                            "Linked file content of this BPMN Model has changed!", message, 1);
-                    actionDispatcher.dispatchAfterNextUpdate(dirtyAction, serverMessage);
+                    SetDirtyStateAction dirtyAction = new SetDirtyStateAction(true, "Updated linked File Content");
+                    actionDispatcher.dispatchAfterNextUpdate(dirtyAction);
+                }
+                // dispatch all model notifications...
+                while (!model.getNotifications().isEmpty()) {
+                    ServerMessageAction serverMessage = BPMNActionUtil
+                            .convertModelNotification(model.getNotifications().remove(0));
+                    actionDispatcher.dispatchAfterNextUpdate(serverMessage);
                 }
             } catch (BPMNModelException e) {
                 logger.error("Failed to load model source: " + e.getMessage());
@@ -133,6 +127,14 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         BPMNModel model = modelState.getBpmnModel();
 
         model.save(uri);
+
+        // process all model notifications...
+        while (!model.getNotifications().isEmpty()) {
+            ServerMessageAction serverMessage = BPMNActionUtil
+                    .convertModelNotification(model.getNotifications().remove(0));
+            actionDispatcher.dispatchAfterNextUpdate(serverMessage);
+        }
+
     }
 
     /**
