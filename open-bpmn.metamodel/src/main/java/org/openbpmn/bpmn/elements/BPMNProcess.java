@@ -1239,6 +1239,11 @@ public class BPMNProcess extends BPMNElement {
             Element element = (Element) this.getElementNode().appendChild(newElement);
             result = this.createBPMNTextAnnotationByNode(element);
         }
+        if (_bpmnElementNode instanceof Message) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("message"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.model.createBPMNMessageByNode(element);
+        }
 
         // cleanup invalid flow references
         result.updateSequenceFlowReferences();
@@ -1274,12 +1279,26 @@ public class BPMNProcess extends BPMNElement {
         return result;
     }
 
+    /**
+     * Creates a new DataObject from a Element node
+     * 
+     * @param element
+     * @return
+     * @throws BPMNModelException
+     */
     private DataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
         DataObject dataObject = new DataObject(model, element, element.getLocalName(), this);
         getDataObjects().add(dataObject);
         return dataObject;
     }
 
+    /**
+     * Creates a new TextAnnotation from a Element node
+     * 
+     * @param element
+     * @return
+     * @throws BPMNModelException
+     */
     private TextAnnotation createBPMNTextAnnotationByNode(Element element) throws BPMNModelException {
         TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
 
