@@ -1240,8 +1240,12 @@ public class BPMNProcess extends BPMNElement {
             result = this.createBPMNTextAnnotationByNode(element);
         }
         if (_bpmnElementNode instanceof Message) {
+            // A message element has a different behavior. It is added to the model
+            // definitions - the root element
             newElement.setAttribute("id", BPMNModel.generateShortID("message"));
-            Element element = (Element) this.getElementNode().appendChild(newElement);
+            // this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
+            Element element = (Element) this.model.getDefinitions().insertBefore(newElement,
+                    this.model.getBpmnDiagram());
             result = new Message(this.model, element, BPMNTypes.MESSAGE, this);
             this.model.getMessages().add((Message) result);
         }

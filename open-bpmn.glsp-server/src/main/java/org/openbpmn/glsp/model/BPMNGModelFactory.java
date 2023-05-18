@@ -252,13 +252,13 @@ public class BPMNGModelFactory implements GModelFactory {
             // See issue #244
             for (Message message : modelState.getBpmnModel().getMessages()) {
                 logger.debug("message: " + message.getName());
-
-                // is the message contained by a private process?
-                List<GModelElement> participantChildList = gRootNodeList;
                 GPoint point = computeRelativeGPoint(message.getBounds(), null);
-                if (modelState.getBpmnModel().isCollaborationDiagram()) {
+                List<GModelElement> containerNodeList = gRootNodeList; // default add message to root
 
-                    Participant participant = modelState.getBpmnModel()
+                // If the message contained by a Pool we add the message to the poolGNode
+                Participant participant = null;
+                if (modelState.getBpmnModel().isCollaborationDiagram()) {
+                    participant = modelState.getBpmnModel()
                             .findParticipantByPoint(message.getBounds().getPosition());
                     if (participant != null) {
                         BPMNGNode poolGNode = null;
@@ -267,30 +267,26 @@ public class BPMNGModelFactory implements GModelFactory {
                             // find PoolGNode
                             poolGNode = (BPMNGNode) findPoolGNode(participant.getId(), gRootNodeList);
                         } catch (BPMNMissingElementException e) {
-                            // no match!
-                            computeRelativeGPoint(message.getBounds(), null);
+                            // no match - add the message to the root...
                         }
-                        if (poolGNode == null) {
-                            // message element is outside of any pool
-                            participantChildList = gRootNodeList;
-                        } else {
-                            participantChildList = poolGNode.getChildren();
+                        if (poolGNode != null) {
+                            containerNodeList = poolGNode.getChildren();
                         }
                     }
-                    // Build the GLSP Node....
-                    MessageGNode messageNode = new MessageGNodeBuilder(message) //
-                            .position(point) //
-                            .build();
-                    participantChildList.add(messageNode);
-                    // apply BPMN Extensions
-                    applyBPMNExtensions(messageNode, message);
-
-                    // now add a GLabel
-                    BPMNLabel bpmnLabel = message.getLabel();
-                    LabelGNode labelNode = createLabelNode(bpmnLabel, message, participant);
-                    participantChildList.add(labelNode);
-
                 }
+
+                // Build the GLSP Node....
+                MessageGNode messageNode = new MessageGNodeBuilder(message) //
+                        .position(point) //
+                        .build();
+                containerNodeList.add(messageNode);
+                // now add a GLabel
+                BPMNLabel bpmnLabel = message.getLabel();
+                LabelGNode labelNode = createLabelNode(bpmnLabel, message, participant);
+                containerNodeList.add(labelNode);
+
+                // finally apply BPMN Extensions
+                applyBPMNExtensions(messageNode, message);
 
             }
 
@@ -302,8 +298,7 @@ public class BPMNGModelFactory implements GModelFactory {
             for (BPMNProcess _process : processList) {
                 // apply the associations for each process separately.
                 // NOTE: It is necessary to verify if the Association is inside a Pool. In this
-                // case
-                // the Association becomes a child of the PoolGNode
+                // case the Association becomes a child of the PoolGNode
                 if (!_process.isPublicProcess()) {
                     // the Associations inside a Pool, we need to add the edge to the
                     // PoolGNode childList
@@ -670,7 +665,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
     GPoint computeRelativeGPoint(final GPoint basisPoint, final Participant participant) {
         // compute relative position if we have a container...
-        if (participant != null) {
+        if (participant != null && !participant.getBpmnProcess().isPublicProcess()) {
             try {
                 BPMNBounds bpmnPoolBounds = participant.getBounds();
                 GPoint poolGPoint = GraphUtil.point(bpmnPoolBounds.getPosition().getX(),

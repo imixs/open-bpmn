@@ -109,7 +109,7 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
      */
     @Override
     public void saveSourceModel(final SaveModelAction action) {
-        logger.info("saveSourceModel....");
+        logger.debug("saveSourceModel....");
         Map<String, String> options = modelState.getClientOptions();
         // resolve origin file location....
         String uri = MapUtil.getValue(options, "sourceUri").orElse(null);
@@ -125,16 +125,13 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
             uri = newFileURI;
         }
         BPMNModel model = modelState.getBpmnModel();
-
         model.save(uri);
-
         // process all model notifications...
         while (!model.getNotifications().isEmpty()) {
             ServerMessageAction serverMessage = BPMNActionUtil
                     .convertModelNotification(model.getNotifications().remove(0));
             actionDispatcher.dispatchAfterNextUpdate(serverMessage);
         }
-
     }
 
     /**
