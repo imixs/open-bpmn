@@ -1,6 +1,6 @@
 {
   "name": "@open-bpmn/open-bpmn-model",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GLSP model for BPMN 2.0",
   "license": "(GPL-3.0)",
   "scripts": {
