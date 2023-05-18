@@ -1242,7 +1242,8 @@ public class BPMNProcess extends BPMNElement {
         if (_bpmnElementNode instanceof Message) {
             newElement.setAttribute("id", BPMNModel.generateShortID("message"));
             Element element = (Element) this.getElementNode().appendChild(newElement);
-            result = this.model.createBPMNMessageByNode(element);
+            result = new Message(this.model, element, BPMNTypes.MESSAGE, this);
+            this.model.getMessages().add((Message) result);
         }
 
         // cleanup invalid flow references

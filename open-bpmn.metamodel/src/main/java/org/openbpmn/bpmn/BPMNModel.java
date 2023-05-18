@@ -835,19 +835,6 @@ public class BPMNModel {
     }
 
     /**
-     * Creates a new Message from a Element node
-     * 
-     * @param element
-     * @return
-     * @throws BPMNModelException
-     */
-    public Message createBPMNMessageByNode(Element element) throws BPMNModelException {
-        Message message = new Message(this, element, BPMNTypes.MESSAGE, this.openDefaultProces());
-        getMessages().add(message);
-        return message;
-    }
-
-    /**
      * Finds a Signal element by name withing the diagram
      * <p>
      * <bpmn2:signal id="Signal_1" name="My Signal"/>
@@ -1859,10 +1846,10 @@ public class BPMNModel {
      */
     private void loadMessageList() throws BPMNModelException {
         messages = new LinkedHashSet<Message>();
-        NodeList signalNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.MESSAGE);
-        if (signalNodeList != null && signalNodeList.getLength() > 0) {
-            for (int i = 0; i < signalNodeList.getLength(); i++) {
-                Element item = (Element) signalNodeList.item(i);
+        NodeList messageNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.MESSAGE);
+        if (messageNodeList != null && messageNodeList.getLength() > 0) {
+            for (int i = 0; i < messageNodeList.getLength(); i++) {
+                Element item = (Element) messageNodeList.item(i);
                 Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProces());
                 messages.add(message);
             }
