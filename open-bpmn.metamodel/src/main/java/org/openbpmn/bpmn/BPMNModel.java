@@ -81,47 +81,11 @@ public class BPMNModel {
     protected Set<Message> messages = null;
     protected Element collaborationElement = null;
     private boolean isDirty = false;
+    private List<String> updatedFileLinks = null;
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
     private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
     private static final String FILE_PREFIX = "file://";
-
-    /**
-     * Returns the namespace uri for a given namespace
-     * 
-     * @param ns
-     * @return
-     */
-    public String getUri(BPMNNS ns) {
-        return URI_BY_NAMESPACE.get(ns);
-    }
-
-    public void setUri(BPMNNS ns, String uri) {
-        URI_BY_NAMESPACE.put(ns, uri);
-    }
-
-    /**
-     * Returns the namespace prefix for a given BPMN namespace - e.g. 'bpmn2' or
-     * 'bpmndi'
-     * <p>
-     * This is necessary because a bpmn model can work with the default namespace
-     * prefix 'bpmn2' or 'bpmn'. The model instance automatically detects the used
-     * namespace prefix and updates the prefix when loading a model file.
-     * 
-     * @param ns
-     * @return
-     */
-    public String getPrefix(BPMNNS ns) {
-        return PREFIX_BY_NAMESPACE.get(ns);
-    }
-
-    /**
-     * Updates the namespace prefix for a given BPMN namespace - e.g. 'bpmn2' or
-     * 'bpmndi'
-     */
-    public void setPrefix(BPMNNS ns, String prefix) {
-        PREFIX_BY_NAMESPACE.put(ns, prefix);
-    }
 
     /**
      * This method instantiates a new BPMN model with the default BPMN namespaces
@@ -139,6 +103,7 @@ public class BPMNModel {
         setPrefix(BPMNNS.BPMNDI, "bpmndi");
         setPrefix(BPMNNS.DI, "di");
         setPrefix(BPMNNS.DC, "dc");
+        updatedFileLinks = new ArrayList<String>();
     }
 
     /**
@@ -232,9 +197,44 @@ public class BPMNModel {
             loadMessageList();
             loadMessageFlowList();
             loadSignalList();
-
         }
+    }
 
+    /**
+     * Returns the namespace uri for a given namespace
+     * 
+     * @param ns
+     * @return
+     */
+    public String getUri(BPMNNS ns) {
+        return URI_BY_NAMESPACE.get(ns);
+    }
+
+    public void setUri(BPMNNS ns, String uri) {
+        URI_BY_NAMESPACE.put(ns, uri);
+    }
+
+    /**
+     * Returns the namespace prefix for a given BPMN namespace - e.g. 'bpmn2' or
+     * 'bpmndi'
+     * <p>
+     * This is necessary because a bpmn model can work with the default namespace
+     * prefix 'bpmn2' or 'bpmn'. The model instance automatically detects the used
+     * namespace prefix and updates the prefix when loading a model file.
+     * 
+     * @param ns
+     * @return
+     */
+    public String getPrefix(BPMNNS ns) {
+        return PREFIX_BY_NAMESPACE.get(ns);
+    }
+
+    /**
+     * Updates the namespace prefix for a given BPMN namespace - e.g. 'bpmn2' or
+     * 'bpmndi'
+     */
+    public void setPrefix(BPMNNS ns, String prefix) {
+        PREFIX_BY_NAMESPACE.put(ns, prefix);
     }
 
     public Element getDefinitions() {
@@ -264,6 +264,17 @@ public class BPMNModel {
      */
     public boolean isDirty() {
         return isDirty;
+    }
+
+    /**
+     * Returns a list of external files with updated content not yet stored in the
+     * current model. The list is generated in the constructor when a new model is
+     * read.
+     * 
+     * @return
+     */
+    public List<String> getUpdatedFileLinks() {
+        return updatedFileLinks;
     }
 
     /**
@@ -1289,6 +1300,8 @@ public class BPMNModel {
 
             // finally write the xml to disk
             writeXml(doc, output);
+            // reset fileLink List
+            updatedFileLinks = new ArrayList<String>();
         } catch (TransformerException | IOException e) {
             e.printStackTrace();
         }
@@ -1406,6 +1419,7 @@ public class BPMNModel {
                                 "File content of open-bpmn:file-link '" + fileLink + "' updated.");
                         // mark model as dirty
                         this.setDirty(true);
+                        this.getUpdatedFileLinks().add(fileLink);
                     }
 
                     // Now replace the content with the filename

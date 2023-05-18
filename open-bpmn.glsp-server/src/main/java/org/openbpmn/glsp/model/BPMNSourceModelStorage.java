@@ -18,16 +18,19 @@ package org.openbpmn.glsp.model;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SaveModelAction;
+import org.eclipse.glsp.server.actions.ServerMessageAction;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.model.GModelState;
+import org.eclipse.glsp.server.types.Severity;
 import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 import org.openbpmn.bpmn.BPMNModel;
@@ -86,7 +89,16 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                     SetDirtyStateAction dirtyAction = new SetDirtyStateAction();
                     dirtyAction.setDirty(true);
                     dirtyAction.setReason("Updated linked File Content");
-                    actionDispatcher.dispatchAfterNextUpdate(dirtyAction);
+
+                    // create a notification popup....
+                    String message = "The content of the following linked files has changed: \n\n";
+                    for (String updatedFileName : model.getUpdatedFileLinks()) {
+                        message = message + " - " + Paths.get(updatedFileName).getFileName() + "\n";
+                    }
+                    message = message + "\nPlease save your BPMN Model once.";
+                    ServerMessageAction serverMessage = new ServerMessageAction(Severity.INFO,
+                            "Linked file content of this BPMN Model has changed!", message, 1);
+                    actionDispatcher.dispatchAfterNextUpdate(dirtyAction, serverMessage);
                 }
             } catch (BPMNModelException e) {
                 logger.error("Failed to load model source: " + e.getMessage());
