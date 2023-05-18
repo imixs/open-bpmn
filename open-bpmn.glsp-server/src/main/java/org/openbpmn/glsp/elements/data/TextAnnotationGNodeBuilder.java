@@ -26,7 +26,7 @@ import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 
 /**
  * BPMN 2.0 Data Object Element.
@@ -84,7 +84,7 @@ public class TextAnnotationGNodeBuilder extends AbstractGNodeBuilder<TextAnnotat
         }
         // add a mulitLine text block to show and edit long text blocks
         this.id = node.getId() + "_bpmntext";
-        node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id, text));
+        node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id, text));
     }
 
 }

@@ -21,7 +21,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.MessageGNode;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 
 /**
  * BPMN 2.0 Message Element.
@@ -66,7 +66,7 @@ public class MessageGNodeBuilder extends AbstractGNodeBuilder<MessageGNode, Mess
         node.getLayoutOptions().put("minWidth", Message.DEFAULT_WIDTH);
         node.getLayoutOptions().put("minHeight", Message.DEFAULT_HEIGHT);
 
-        node.getChildren().add(BPMNGraphUtil.createCompartmentIcon(node));
+        node.getChildren().add(BPMNGModelUtil.createCompartmentIcon(node));
 
     }
 

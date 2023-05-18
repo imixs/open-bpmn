@@ -21,7 +21,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 
 /**
  * BPMN 2.0 Data Object Element.
@@ -66,7 +66,7 @@ public class DataObjectGNodeBuilder extends AbstractGNodeBuilder<DataObjectGNode
         node.getLayoutOptions().put("minWidth", DataObject.DEFAULT_WIDTH);
         node.getLayoutOptions().put("minHeight", DataObject.DEFAULT_HEIGHT);
 
-        node.getChildren().add(BPMNGraphUtil.createCompartmentIcon(node));
+        node.getChildren().add(BPMNGModelUtil.createCompartmentIcon(node));
 
     }
 

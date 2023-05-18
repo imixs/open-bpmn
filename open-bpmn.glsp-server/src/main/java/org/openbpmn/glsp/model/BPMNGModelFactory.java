@@ -92,7 +92,7 @@ import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -536,7 +536,7 @@ public class BPMNGModelFactory implements GModelFactory {
             // apply BPMN Extensions
             applyBPMNExtensions(taskNode, activity);
 
-            GLabel extensionLabelNode = BPMNGraphUtil.findExtensionLabel(taskNode);
+            GLabel extensionLabelNode = BPMNGModelUtil.findExtensionLabel(taskNode);
             if (extensionLabelNode != null) {
                 extensionLabelNode.setText((String) taskNode.getArgs().get(BPMNExtension.INFO));
             }

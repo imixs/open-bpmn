@@ -21,7 +21,7 @@ import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 
 /**
  * BPMN 2.0 Gateway Element.
@@ -67,7 +67,7 @@ public class GatewayGNodeBuilder extends AbstractGNodeBuilder<GatewayGNode, Gate
         node.getLayoutOptions().put("minWidth", Gateway.DEFAULT_WIDTH);
         node.getLayoutOptions().put("minHeight", Gateway.DEFAULT_HEIGHT);
 
-        node.getChildren().add(BPMNGraphUtil.createCompartmentIcon(node));
+        node.getChildren().add(BPMNGModelUtil.createCompartmentIcon(node));
 
     }
 

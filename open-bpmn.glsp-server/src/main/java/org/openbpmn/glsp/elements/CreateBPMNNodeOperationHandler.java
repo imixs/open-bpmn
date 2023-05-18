@@ -29,7 +29,7 @@ import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
@@ -84,7 +84,7 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
         GPoint dropPoint = operation.getLocation().orElse(null);
 
         Participant participant = modelState.getBpmnModel()
-                .findParticipantByPoint(BPMNGraphUtil.createBPMNPoint(dropPoint));
+                .findParticipantByPoint(BPMNGModelUtil.createBPMNPoint(dropPoint));
 
         if (participant != null) {
             return participant.getBpmnProcess();

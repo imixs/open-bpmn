@@ -25,7 +25,7 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LabelGNode;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 
 /**
  * BPMN 2.0 Label Element.
@@ -99,7 +99,7 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
         node.getLayoutOptions().put(GLayoutOptions.KEY_RESIZE_CONTAINER, true);
         // add a mulitLine text block to show and edit long text blocks
         this.id = node.getId() + "_bpmntext";
-        node.getChildren().add(BPMNGraphUtil.createMultiLineTextNode(id, name));
+        node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id, name));
     }
 
 }

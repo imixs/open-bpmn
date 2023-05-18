@@ -29,7 +29,7 @@ import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.PoolGNode;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
@@ -89,7 +89,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Participant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Participant.MIN_HEIGHT);
 
-        node.getChildren().add(BPMNGraphUtil.createBPMNContainerHeader(node));
+        node.getChildren().add(BPMNGModelUtil.createBPMNContainerHeader(node));
         node.getChildren().add(createContainerCompartment(node));
 
     }

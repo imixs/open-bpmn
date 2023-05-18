@@ -37,7 +37,7 @@ import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGraphUtil;
+import org.openbpmn.glsp.utils.BPMNGModelUtil;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
@@ -189,8 +189,8 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
                 elementID = gNodeElement.getId();
             }
             // find element
-            if (BPMNGraphUtil.isBPMNLabelID(elementID)) {
-                elementID = BPMNGraphUtil.resolveFlowElementIDfromLabelID(elementID);
+            if (BPMNGModelUtil.isBPMNLabelID(elementID)) {
+                elementID = BPMNGModelUtil.resolveFlowElementIDfromLabelID(elementID);
             }
 
         }
