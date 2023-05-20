@@ -43,6 +43,8 @@ Open-BPMN will automatically initialize your new model and opens the diagram pla
 
 <img src="./images/howto/img-06.png" />
 
+### The Property Panel
+
 From the bottom of the Diagram plane you can open the Property Panel. The property Panel shows additional elements of the selected diagram element.
 
 <img src="./images/howto/img-07.png" />
