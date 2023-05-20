@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -85,7 +86,7 @@ public class BPMNModel {
 
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
     private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
-    private static final String FILE_PREFIX = "file://";
+    public static final String FILE_PREFIX = "file://";
 
     /**
      * This method instantiates a new BPMN model with the default BPMN namespaces
@@ -1277,6 +1278,37 @@ public class BPMNModel {
 
     /**
      * Writes the current instance to the file system.
+     *
+     * The method also resolves all open-bpmn:file-link elements and updates the
+     * corresponding content.
+     * 
+     * @param file
+     */
+    public void save(File file) {
+        logger.warning("...save BPMN model to file: " + file);
+
+        // On windows the filepath can be something like:
+        // '/c:/Users/Max Musterman/test.bpmn'
+        // See #249
+        // try (FileOutputStream output = new FileOutputStream(filePath)) {
+        try (FileOutputStream output = new FileOutputStream(file)) {
+            logger.warning("...start writing to file outputstream....");
+            if (doc == null) {
+                logger.severe("...unable to save file - doc is null!");
+            }
+            // resolve open-bpmn:file-link....
+            resolveFileLinksOnSave(Paths.get(file.getPath()));
+
+            // finally write the xml to disk
+            writeXml(doc, output);
+        } catch (TransformerException | IOException e) {
+            logger.warning("Failed to save BPMN file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Writes the current instance to the file system.
      * 
      * If the file location is an URI and starting with 'file://' it will be
      * automatically remove the file protocol
@@ -1284,22 +1316,35 @@ public class BPMNModel {
      * The method also resolves all open-bpmn:file-link elements and updates the
      * corresponding content.
      * 
-     * @param file
+     * @param filePath
      */
-    public void save(String file) {
+    @Deprecated
+    public void save(String filePath) {
+        logger.warning("DEPRECATED - SHOULD NOT BE CALLED...save BPMN model to file: " + filePath);
         // If we have a file prefix from a URI object, we remove this part
-        file = file.replace(FILE_PREFIX, "");
+        if (filePath.startsWith(FILE_PREFIX)) {
+            filePath = filePath.replace(FILE_PREFIX, "");
+        }
+        logger.warning("...final file path=" + filePath);
+        logger.warning("...creating file object from " + filePath);
+        File file = new File(filePath);
 
+        // On windows the filepath can be something like:
+        // '/c:/Users/Max Musterman/test.bpmn'
+        // See #249
+        // try (FileOutputStream output = new FileOutputStream(filePath)) {
         try (FileOutputStream output = new FileOutputStream(file)) {
+            logger.warning("...start writing to file outputstream....");
             if (doc == null) {
                 logger.severe("...unable to save file - doc is null!");
             }
             // resolve open-bpmn:file-link....
-            resolveFileLinksOnSave(Paths.get(file));
+            resolveFileLinksOnSave(Paths.get(filePath));
 
             // finally write the xml to disk
             writeXml(doc, output);
         } catch (TransformerException | IOException e) {
+            logger.warning("Failed to save BPMN file: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -1309,8 +1354,12 @@ public class BPMNModel {
      * 
      * See {@code save(String)}
      */
+    @Deprecated
     public void save(URI targetURI) {
-        save(targetURI.toString());
+        logger.warning("...save BPMN model to URI=" + targetURI);
+        String result = Paths.get(targetURI).toString();
+        logger.warning("              => filePath=" + result);
+        save(result);
     }
 
     /**

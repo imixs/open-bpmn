@@ -67,15 +67,17 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         Map<String, String> options = action.getOptions();
         boolean bNeedsClientLayout = Boolean.parseBoolean(options.get("needsClientLayout"));
         // resolve file location....
-        String uri = MapUtil.getValue(options, "sourceUri").orElse(null);
-        if (uri == null || uri.isEmpty()) {
-            // fallback
-            uri = options.get("uri");
-        }
+        // String uri = MapUtil.getValue(options, "sourceUri").orElse(null);
+        // if (uri == null || uri.isEmpty()) {
+        // // fallback
+        // uri = options.get("uri");
+        // }
 
+        final File file = getSourceFile(modelState);
+
+        logger.warn("loadSourceModel from : " + file);
         String diagramType = options.get("diagramType");
-        if (bNeedsClientLayout && uri != null && BPMNDiagramConfiguration.DIAGRAM_TYPE.equals(diagramType)) {
-            final File file = convertToFile(modelState);
+        if (bNeedsClientLayout && file != null && BPMNDiagramConfiguration.DIAGRAM_TYPE.equals(diagramType)) {
             BPMNModel model;
             try {
                 model = BPMNModelFactory.read(file);
@@ -97,7 +99,6 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
             } catch (BPMNModelException e) {
                 logger.error("Failed to load model source: " + e.getMessage());
             }
-
         }
     }
 
@@ -110,22 +111,27 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
     @Override
     public void saveSourceModel(final SaveModelAction action) {
         logger.debug("saveSourceModel....");
-        Map<String, String> options = modelState.getClientOptions();
-        // resolve origin file location....
-        String uri = MapUtil.getValue(options, "sourceUri").orElse(null);
-        if (uri == null || uri.isEmpty()) {
-            // fallback
-            uri = options.get("uri");
-        }
+        // Map<String, String> options = modelState.getClientOptions();
+        // // resolve origin file location....
+        // String filePath = MapUtil.getValue(options, "sourceUri").orElse(null);
+        // if (filePath == null || filePath.isEmpty()) {
+        // // fallback
+        // filePath = options.get("uri");
+        // }
 
-        // test if we have a new fileUri....
-        String newFileURI = action.getFileUri().orElse(null);
-        if (newFileURI != null && !newFileURI.isEmpty()) {
-            // we got a new URI which means we have a 'saveAs' situation!
-            uri = newFileURI;
-        }
+        // // test if we have a new fileUri....
+        // String newFileURI = action.getFileUri().orElse(null);
+        // if (newFileURI != null && !newFileURI.isEmpty()) {
+        // // we got a new URI which means we have a 'saveAs' situation!
+        // filePath = newFileURI;
+        // }
+
+        final File file = getTargetFile(modelState, action);
+        logger.warn("saveSourceModel to : " + file);
+
         BPMNModel model = modelState.getBpmnModel();
-        model.save(uri);
+        model.save(file);
+
         // process all model notifications...
         while (!model.getNotifications().isEmpty()) {
             ServerMessageAction serverMessage = BPMNActionUtil
@@ -141,9 +147,54 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
      * @param modelState
      * @return
      */
+    @Deprecated
     protected File convertToFile(final GModelState modelState) {
         return getOrThrow(ClientOptionsUtil.getSourceUriAsFile(modelState.getClientOptions()),
                 "Invalid file URI:" + ClientOptionsUtil.getSourceUri(modelState.getClientOptions()));
+    }
+
+    private static final String FILE_PREFIX = "file://";
+
+    /**
+     * Resolves to a source File instance from a GModelState to load a model. Can be
+     * called from the method <code>SourceModelStorage.loadSourceModel</code>.
+     * 
+     * @param modelState
+     * @return a File Instance - or null
+     * @throws NullPointerException
+     *                              If the sourceUri resolves to <code>null</code>
+     */
+    public static File getSourceFile(final GModelState modelState) {
+        String filePath = MapUtil.getValue(modelState.getClientOptions(), "sourceUri").orElse(null);
+        // strip the file:// prefix
+        filePath = filePath.replace(FILE_PREFIX, "");
+        logger.warn("source uri=" + filePath);
+        return new File(filePath);
+    }
+
+    /**
+     * Resolves to a target File instance from a SaveModelAction and the GModelState
+     * to save a model. Can be called from the method
+     * <code>SourceModelStorage.loadSourceModel</code>.
+     * 
+     * @param modelState
+     * @return a File Instance - or null
+     * @throws NullPointerException
+     *                              If the sourceUri resolves to <code>null</code>
+     */
+    public static File getTargetFile(final GModelState modelState, final SaveModelAction action) {
+        // first take the origin sourceUri from the current modelState
+        String filePath = MapUtil.getValue(modelState.getClientOptions(), "sourceUri").orElse(null);
+        // test if we have a new optional fileUri....
+        String newFileURI = action.getFileUri().orElse(null);
+        if (newFileURI != null && !newFileURI.isEmpty()) {
+            // we got a new URI which means we have a 'saveAs' situation!
+            filePath = newFileURI;
+        }
+        logger.warn("target uri=" + filePath);
+        // strip the optional file:// prefix
+        filePath = filePath.replace(FILE_PREFIX, "");
+        return new File(filePath);
     }
 
 }
