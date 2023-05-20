@@ -13,6 +13,7 @@
 		<menu name="Documentation">
 			<item name="Overview" href="overview.html" collapse="false">
 				<item name="Installation" href="install.html" />
+				<item name="Start modeling..." href="how_to_model.html" />
 				<item name="Imixs Workflow" href="install-imixs.html" />
 			</item>
 
