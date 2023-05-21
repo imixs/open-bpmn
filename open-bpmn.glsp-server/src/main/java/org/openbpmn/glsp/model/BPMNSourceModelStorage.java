@@ -87,8 +87,18 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                 // DirtyState action...
                 if (model.isDirty()) {
                     logger.info("....external model content has changed.");
-                    SetDirtyStateAction dirtyAction = new SetDirtyStateAction(true, "Updated linked File Content");
-                    actionDispatcher.dispatchAfterNextUpdate(dirtyAction);
+
+                    // here we fire a noop-custom command instead of a SetDirtyStateAction to avoid
+                    // the undo situation
+                    modelState.execute(new SetDirtyCommand());
+
+                    // For Theia the line above is enough,
+                    // but to bypass the current VS Code bug
+                    // (https://github.com/eclipse-glsp/glsp/issues/1006),
+                    // we have to dispatch an additional `SetDirtyStateAction` with reason
+                    // "operation" here. eg.:
+                    this.actionDispatcher.dispatch(
+                            new SetDirtyStateAction(true, SetDirtyStateAction.Reason.OPERATION));
                 }
                 // dispatch all model notifications...
                 while (!model.getNotifications().isEmpty()) {
