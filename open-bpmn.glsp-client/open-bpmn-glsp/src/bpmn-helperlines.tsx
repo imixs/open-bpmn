@@ -69,20 +69,31 @@ export interface HelperLine {
  */
 @injectable()
 export class BPMNElementSnapper implements ISnapper {
-	get snapRange(): number {
+
+	// default gird size
+	constructor(public grid: { x: number; y: number } = { x: 10, y: 10 }) {}
+
+	// minimum snap range to catch a helper line
+	get minSnapRange(): number {
 		return 10;
 	}
 
-	/* Find a possible snapPoint.
-	 * a SnapPoint is found if the x or y coordinates matching the position
-	 * of another element Node.
-	 * We are only interested in BPMNNode elemnets. For all other element we return
-	 * the default.
+	/*
+     * Find a possible snapPoint.
+	 * A SnapPoint is found if the x or y coordinates matching the position
+	 * of another element Node. This behavior is applied for all BPMNNode elements.
+	 *
+	 * For all other element we return general Snapper with 5px.
 	 */
 	snap(position: Point, element: SModelElement): Point {
+
+		// Is it a Element node?
 		if (!isBPMNNode(element)) {
-			// return position;
-			return { x: position.x, y: position.y };
+			// round position to default grid size...
+			return {
+				x: Math.round(position.x / this.grid.x) * this.grid.x,
+				y: Math.round(position.y / this.grid.y) * this.grid.y
+			};
 		}
 
 		let snapPoint: Point;
@@ -93,8 +104,8 @@ export class BPMNElementSnapper implements ISnapper {
 			snapPoint = this.findSnapPoint(element);
 			// if a snapPoint was found and this snapPoint is still in the snapRange,
 			// then we adjust the current mouse Postion. Otherwise we return the current position
-			const snapX = snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.snapRange ? snapPoint.x : position.x;
-			const snapY = snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.snapRange ? snapPoint.y : position.y;
+			const snapX = snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.minSnapRange ? snapPoint.x : position.x;
+			const snapY = snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange ? snapPoint.y : position.y;
 			snapPoint = { x: snapX, y: snapY };
 		}
 
@@ -110,7 +121,6 @@ export class BPMNElementSnapper implements ISnapper {
 				label.position = { x: lx, y: ly };
 			}
 		}
-
 		return snapPoint;
 	}
 
@@ -212,7 +222,7 @@ export class BPMNElementSnapper implements ISnapper {
 	 */
 	private isNear(p1: number, p2: number): boolean {
 		const p3 = Math.abs(p1 - p2);
-		if (p3 < this.snapRange) {
+		if (p3 < this.minSnapRange) {
 			return true;
 		}
 		return false;
