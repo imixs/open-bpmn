@@ -9,13 +9,13 @@ A BPMN 2.0 Extension defines a `ExtensionDefinition` and a `ExtensionAttributeDe
 
 To implement a new extension point within Open-BPMN an adaptor has to implement a BPMNExtension and define a new Server Module to register the new Extension. Open-BPMN will automatically integrate tne BPMNExtension into the modeling life-cycle and manage to store the new attributes into the .bpmn model file.
 
-## The BPMNExtension
+## The BPMNElementExtension
 
-A `BPMNExtension` is a Java interface that need to be implemented to define a new extension point within Open-BPMN .
+A `BPMNElementExtension` is a Java interface that need to be implemented to define a new extension point within Open-BPMN .
 
-As an adopter you implement a new `org.imixs.openbpmn.BPMNExtension` to describe custom properties in a separate schemata. The schemata are defined by the JSONForms project. This is a very flexible an easy to use extension mechanism.
+As an adopter you implement a new `org.imixs.openbpmn.BPMNElementExtension` to describe custom properties in a separate schemata. The schemata are defined by the JSONForms project. This is a very flexible an easy to use extension mechanism.
 
-The `BPMNExtension` defines the following methods:
+The `BPMNElementExtension` defines the following methods:
 
 ### getNamespace
 

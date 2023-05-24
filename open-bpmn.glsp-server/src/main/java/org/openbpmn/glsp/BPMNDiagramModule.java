@@ -32,7 +32,7 @@ import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.extension.BPMNCreateExtensionHandler;
-import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extension.BPMNElementExtension;
 import org.openbpmn.extension.ConditionalEventDefinitionExtension;
 import org.openbpmn.extension.DefaultBPMNDataObjectExtension;
 import org.openbpmn.extension.DefaultBPMNDefinitionsExtension;
@@ -89,7 +89,7 @@ public class BPMNDiagramModule extends DiagramModule {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
 
-    private Multibinder<BPMNExtension> bpmnExtensionBinder;
+    private Multibinder<BPMNElementExtension> bpmnExtensionBinder;
 
     @Override
     protected Class<? extends GModelState> bindGModelState() {
@@ -204,7 +204,7 @@ public class BPMNDiagramModule extends DiagramModule {
     protected void configureAdditionals() {
         super.configureAdditionals();
         // create the BPMNExtension binder
-        bpmnExtensionBinder = Multibinder.newSetBinder(binder(), BPMNExtension.class);
+        bpmnExtensionBinder = Multibinder.newSetBinder(binder(), BPMNElementExtension.class);
         configureBPMNExtensions(bpmnExtensionBinder);
 
     }
@@ -254,7 +254,7 @@ public class BPMNDiagramModule extends DiagramModule {
      *
      * @param binding
      */
-    public void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
+    public void configureBPMNExtensions(final Multibinder<BPMNElementExtension> binding) {
         // bind BPMN default extensions
         binding.addBinding().to(DefaultBPMNDefinitionsExtension.class);
         binding.addBinding().to(DefaultBPMNEventExtension.class);

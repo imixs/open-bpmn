@@ -30,7 +30,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extension.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -54,7 +54,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
     protected BPMNGModelState modelState;
 
     @Inject
-    protected Set<BPMNExtension> extensions;
+    protected Set<BPMNElementExtension> extensions;
 
     /**
      *
@@ -108,7 +108,7 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         // Now call the extensions to update the property data according to the BPMN
         // element. The updatePropertiesData can also update the given JSON object!
         if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
+            for (BPMNElementExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     extension.updatePropertiesData(json, category, bpmnElement, gModelElement);

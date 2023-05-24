@@ -66,7 +66,7 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extension.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
@@ -120,7 +120,7 @@ public class BPMNGModelFactory implements GModelFactory {
     protected BPMNGModelState modelState;
 
     @Inject
-    protected Set<BPMNExtension> extensions;
+    protected Set<BPMNElementExtension> extensions;
 
     private BPMNModel bpmnModel;
 
@@ -229,7 +229,7 @@ public class BPMNGModelFactory implements GModelFactory {
                                 .build();
 
                         // apply BPMN Extensions
-                        applyBPMNExtensions(pool, participant);
+                        applyBPMNElementExtensions(pool, participant);
                         gRootNodeList.add(pool);
 
                         poolGNodeList.put(participant.getId(), pool);
@@ -286,7 +286,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 containerNodeList.add(labelNode);
 
                 // finally apply BPMN Extensions
-                applyBPMNExtensions(messageNode, message);
+                applyBPMNElementExtensions(messageNode, message);
 
             }
 
@@ -317,7 +317,7 @@ public class BPMNGModelFactory implements GModelFactory {
         GGraph newGModel = rootBuilder.build();
 
         // finally add the root extensions
-        applyBPMNExtensions(newGModel, model.openDefaultProces());
+        applyBPMNElementExtensions(newGModel, model.openDefaultProces());
 
         return newGModel;
     }
@@ -343,13 +343,14 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
-     * This method apply all possible BPMNExtension to the GNode. This is to build
+     * This method apply all possible BPMNElementExtension to the GNode. This is to
+     * build
      * the JSONForms Sections and add additional classes for non-default Extensions.
      *
      * @param elementNode
      * @param bpmnElement
      */
-    public void applyBPMNExtensions(final GModelElement elementNode, final BPMNElement bpmnElement) {
+    public void applyBPMNElementExtensions(final GModelElement elementNode, final BPMNElement bpmnElement) {
         // finally we define the JSONForms schemata
         DataBuilder dataBuilder = new DataBuilder();
         UISchemaBuilder uiSchemaBuilder = new UISchemaBuilder(Layout.CATEGORIZATION);
@@ -364,12 +365,12 @@ public class BPMNGModelFactory implements GModelFactory {
         if (extensions != null) {
 
             // sort extensions by priority
-            List<BPMNExtension> sortedExtensions = new ArrayList<>();
+            List<BPMNElementExtension> sortedExtensions = new ArrayList<>();
             sortedExtensions.addAll(extensions);
-            Comparator<BPMNExtension> byPriority = Comparator.comparing(BPMNExtension::getPriority);
+            Comparator<BPMNElementExtension> byPriority = Comparator.comparing(BPMNElementExtension::getPriority);
             Collections.sort(sortedExtensions, byPriority);
 
-            for (BPMNExtension extension : sortedExtensions) {
+            for (BPMNElementExtension extension : sortedExtensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
                     // add JSONForms Schemata
@@ -380,8 +381,8 @@ public class BPMNGModelFactory implements GModelFactory {
                     // set the optional extension label
                     String extensionInfo = extension.getInfo(bpmnElement);
                     if (extensionInfo != null && !extensionInfo.isEmpty()) {
-                        elementNode.getArgs().put(BPMNExtension.INFO, extensionInfo);
-                        bpmnElement.getArgs().put(BPMNExtension.INFO, extensionInfo);
+                        elementNode.getArgs().put(BPMNElementExtension.INFO, extensionInfo);
+                        bpmnElement.getArgs().put(BPMNElementExtension.INFO, extensionInfo);
                     }
                     // if the extension is not a Default Extension then we add the extension css
                     // class
@@ -529,11 +530,11 @@ public class BPMNGModelFactory implements GModelFactory {
                     .build();
 
             // apply BPMN Extensions
-            applyBPMNExtensions(taskNode, activity);
+            applyBPMNElementExtensions(taskNode, activity);
 
             GLabel extensionLabelNode = BPMNGModelUtil.findExtensionLabel(taskNode);
             if (extensionLabelNode != null) {
-                extensionLabelNode.setText((String) taskNode.getArgs().get(BPMNExtension.INFO));
+                extensionLabelNode.setText((String) taskNode.getArgs().get(BPMNElementExtension.INFO));
             }
 
             gNodeList.add(taskNode);
@@ -574,7 +575,7 @@ public class BPMNGModelFactory implements GModelFactory {
             }
             gNodeList.add(eventNode);
             // apply BPMN Extensions
-            applyBPMNExtensions(eventNode, event);
+            applyBPMNElementExtensions(eventNode, event);
 
             // now add a GLabel
             BPMNLabel bpmnLabel = event.getLabel();
@@ -595,7 +596,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
             gNodeList.add(gatewayNode);
             // apply BPMN Extensions
-            applyBPMNExtensions(gatewayNode, gateway);
+            applyBPMNElementExtensions(gatewayNode, gateway);
 
             // now add a GLabel
             BPMNLabel bpmnLabel = gateway.getLabel();
@@ -614,7 +615,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     .build();
             gNodeList.add(dataObjectNode);
             // apply BPMN Extensions
-            applyBPMNExtensions(dataObjectNode, dataObject);
+            applyBPMNElementExtensions(dataObjectNode, dataObject);
 
             // now add a GLabel
             BPMNLabel bpmnLabel = dataObject.getLabel();
@@ -633,7 +634,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     .build();
 
             // apply BPMN Extensions
-            applyBPMNExtensions(textAnnotationNode, textAnnotation);
+            applyBPMNElementExtensions(textAnnotationNode, textAnnotation);
             gNodeList.add(textAnnotationNode);
         }
 
@@ -748,7 +749,7 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             // apply BPMN Extensions
-            applyBPMNExtensions(bpmnGEdge, sequenceFlow);
+            applyBPMNElementExtensions(bpmnGEdge, sequenceFlow);
 
             gNodeList.add(bpmnGEdge);
         }
@@ -807,7 +808,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
             gRootNodeList.add(bpmnGEdge);
             // apply BPMN Extensions
-            applyBPMNExtensions(bpmnGEdge, association);
+            applyBPMNElementExtensions(bpmnGEdge, association);
 
         }
 
@@ -853,7 +854,7 @@ public class BPMNGModelFactory implements GModelFactory {
             }
             gRootNodeList.add(bpmnGEdge);
             // apply BPMN Extensions
-            applyBPMNExtensions(bpmnGEdge, messageFlow);
+            applyBPMNElementExtensions(bpmnGEdge, messageFlow);
 
         }
 

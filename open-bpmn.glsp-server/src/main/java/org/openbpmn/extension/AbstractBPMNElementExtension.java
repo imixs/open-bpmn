@@ -47,7 +47,7 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-abstract class AbstractBPMNElementExtension implements BPMNExtension {
+abstract class AbstractBPMNElementExtension implements BPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(AbstractBPMNElementExtension.class);
 

@@ -24,7 +24,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 
 /**
- * The BPMNExtension is an extension point which allows you to add custom
+ * The BPMNElementExtension is an extension point which allows to add custom
  * properties to any BPMN Element managed within the BPMN modeling tool.
  *
  * Extensions are a core functionality of BPMN 2.0. An Extension defines the
@@ -35,15 +35,13 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
  * already existing model elements.
  * <p>
  * OpenBPMN adapts this concept with the BPMNExtension interface. As an adopter
- * you can implement a new BPMNExtension and describe your properties in a
- * separate schemata. The schemata are defined by the JSONForms project. This is
- * a very flexible an easy to use extension mechanism.
- *
+ * you can implement a new BPMNElementExtension and describe your properties in
+ * a separate schemata. The schemata are defined by the JSONForms project. This
+ * is a very flexible an easy to use extension mechanism.
  *
  * @author rsoika
- *
  */
-public interface BPMNExtension {
+public interface BPMNElementExtension {
 
     public final static String INFO = "bpmnExtensionInfo";
 

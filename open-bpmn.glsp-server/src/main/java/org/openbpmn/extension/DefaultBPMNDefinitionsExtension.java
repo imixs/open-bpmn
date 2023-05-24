@@ -261,7 +261,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             }
             if (update) {
                 modelState.reset();
-                bpmnGModelFactory.applyBPMNExtensions(gNodeElement, bpmnElement);
+                bpmnGModelFactory.applyBPMNElementExtensions(gNodeElement, bpmnElement);
                 // send an update for the property panel to the client...
                 actionDispatcher
                         .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
@@ -312,7 +312,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                 BPMNGNode _baseElement = modelState.getIndex().findElementByClass(event.getId(),
                         BPMNGNode.class).orElse(null);
                 if (_baseElement != null) {
-                    bpmnGModelFactory.applyBPMNExtensions(_baseElement, event);
+                    bpmnGModelFactory.applyBPMNElementExtensions(_baseElement, event);
                 }
             }
         }

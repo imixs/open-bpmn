@@ -30,7 +30,7 @@ import org.eclipse.glsp.server.types.EdgeTypeHint;
 import org.eclipse.glsp.server.types.ShapeTypeHint;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extension.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.utils.ModelTypes;
 
@@ -46,7 +46,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     public static String DIAGRAM_TYPE = "bpmn-diagram";
 
     @Inject
-    protected Set<BPMNExtension> extensions;
+    protected Set<BPMNElementExtension> extensions;
 
     /**
      * Returns the type mappings for the diagram implementation. Type mappings are
@@ -399,7 +399,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private void addExtensionHints(final String bpmnType, final List<String> containables) {
         // Add optional Extension Hints...
         if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
+            for (BPMNElementExtension extension : extensions) {
                 String extensionType = "extension:" + extension.getNamespace();
                 // validate if the extension is no Default Extension kind and if the extension
                 // can handle this task Type
