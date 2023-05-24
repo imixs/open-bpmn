@@ -33,6 +33,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.extensions.AbstractBPMNElementExtension;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;

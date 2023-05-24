@@ -47,7 +47,7 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-abstract class AbstractBPMNElementExtension implements BPMNElementExtension {
+public abstract class AbstractBPMNElementExtension implements BPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(AbstractBPMNElementExtension.class);
 
@@ -157,7 +157,7 @@ abstract class AbstractBPMNElementExtension implements BPMNElementExtension {
      * @param dataList
      * @return - updated list of definition elements
      */
-    Set<Element> synchronizeEventDefinitions(final String definitionName, final Event bpmnEvent,
+    public Set<Element> synchronizeEventDefinitions(final String definitionName, final Event bpmnEvent,
             final JsonArray dataList) {
 
         // find all named eventDefinitions for this event
@@ -198,7 +198,7 @@ abstract class AbstractBPMNElementExtension implements BPMNElementExtension {
      * 
      * @return
      */
-    Map<String, String> getMultilineOption() {
+    public Map<String, String> getMultilineOption() {
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
         return multilineOption;
@@ -210,7 +210,7 @@ abstract class AbstractBPMNElementExtension implements BPMNElementExtension {
      * 
      * @return
      */
-    Map<String, String> getFileEditorOption() {
+    public Map<String, String> getFileEditorOption() {
         // custom fileEditor...
         Map<String, String> fileEditor = new HashMap<>();
         fileEditor.put("format", "textFileEditor");

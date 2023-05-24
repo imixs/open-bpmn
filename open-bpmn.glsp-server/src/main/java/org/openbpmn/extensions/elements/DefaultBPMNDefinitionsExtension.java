@@ -40,6 +40,7 @@ import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Signal;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.extensions.AbstractBPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -53,7 +54,7 @@ import org.w3c.dom.Element;
 import com.google.inject.Inject;
 
 /**
- * This is the Default Root extension providing the JSONForms shemata on the
+ * This is the Default Root extension providing the JSONForms schemata on the
  * BPMN definitions level. This includes general diagram properties and sets
  * like signal or message elements.
  *

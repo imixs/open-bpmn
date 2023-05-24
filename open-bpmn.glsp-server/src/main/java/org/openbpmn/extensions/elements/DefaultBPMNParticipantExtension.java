@@ -37,6 +37,7 @@ import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.extensions.AbstractBPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.LaneGNode;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
