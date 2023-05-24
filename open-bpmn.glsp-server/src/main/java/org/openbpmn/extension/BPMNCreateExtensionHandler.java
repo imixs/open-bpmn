@@ -52,7 +52,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
     private static Logger logger = LogManager.getLogger(BPMNCreateExtensionHandler.class);
 
     @Inject
-    protected Set<BPMNExtension> extensions;
+    protected Set<BPMNElementExtension> extensions;
 
     private List<String> extensionIds = null;
 
@@ -81,7 +81,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
 
         if (extensionIds == null && extensions != null) {
             extensionIds = new ArrayList<>();
-            for (BPMNExtension extension : extensions) {
+            for (BPMNElementExtension extension : extensions) {
                 String extensionID = "extension:" + extension.getNamespace();
                 // validate if the extension is no Default Extension Namspace.
                 if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) && !extensionIds.contains(extensionID)) {
@@ -113,7 +113,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                 if (bpmnElement != null) {
                     // add the new extension
                     if (extensions != null) {
-                        for (BPMNExtension extension : extensions) {
+                        for (BPMNElementExtension extension : extensions) {
                             if (extension.handlesElementTypeId(element.get().getType())) {
                                 // verify that the namespace is added to the model
                                 modelState.getBpmnModel().addNamespace(extension.getNamespace(),
