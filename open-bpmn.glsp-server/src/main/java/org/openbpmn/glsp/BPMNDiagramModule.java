@@ -74,7 +74,7 @@ import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
-import org.openbpmn.glsp.validators.BPMNModelValidator;
+import org.openbpmn.glsp.validators.BPMNGLSPValidator;
 import org.openbpmn.glsp.validators.LabelEditValidator;
 
 import com.google.inject.multibindings.Multibinder;
@@ -229,7 +229,7 @@ public class BPMNDiagramModule extends DiagramModule {
      */
     @Override
     protected Class<? extends ModelValidator> bindModelValidator() {
-        return BPMNModelValidator.class;
+        return BPMNGLSPValidator.class;
     }
 
     @Override
