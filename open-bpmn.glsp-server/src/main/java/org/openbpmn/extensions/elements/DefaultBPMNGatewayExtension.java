@@ -13,48 +13,49 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
+package org.openbpmn.extensions.elements;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.Message;
+import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
-import org.openbpmn.glsp.model.BPMNGModelState;
-
-import com.google.inject.Inject;
 
 /**
- * This is the Default Message extension providing the JSONForms schemata.
+ * This is the Default BPMNEvent extension providing the JSONForms shemata.
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNMessageExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
-    @Inject
-    protected BPMNGModelState modelState;
+    @SuppressWarnings("unused")
+    private static Logger logger = Logger.getLogger(DefaultBPMNGatewayExtension.class.getName());
 
-    public DefaultBPMNMessageExtension() {
+    public DefaultBPMNGatewayExtension() {
         super();
     }
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.MESSAGE.equals(elementTypeId);
+        return BPMNTypes.BPMN_GATEWAYS.contains(elementTypeId);
     }
 
     /**
-     * This Extension is for BPMNActivities only
+     * This Extension is for BPMNGateways only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof Message);
+        return (bpmnElement instanceof Gateway);
     }
 
     /**
@@ -66,25 +67,35 @@ public class DefaultBPMNMessageExtension extends AbstractBPMNElementExtension {
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
-        dataBuilder //
-                .addData("name", bpmnElement.getName()) //
-                .addData("documentation", bpmnElement.getDocumentation());
+        dataBuilder. //
+                addData("name", bpmnElement.getName()). //
+                addData("documentation", bpmnElement.getDocumentation()). //
+                addData("gatewaydirection", bpmnElement.getAttribute("gatewayDirection"));
+
+        String[] gatewayDirections = { "Converging", "Diverging", "Mixed", "Unspecified" };
+
+        String documentation = "A Gateway controls how Sequence Flows interact as they converge and diverge within a Process.";
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("documentation", "string", null);
+                addProperty("documentation", "string", documentation). //
+                addProperty("gatewaydirection", "string", null, gatewayDirections);
+
+        Map<String, String> radioOption = new HashMap<>();
+        radioOption.put("format", "radio");
 
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
+                addElement("gatewaydirection", "Direction", radioOption). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Data", this.getFileEditorOption());
+                addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 
     /**
-     * Update the Message default properties
+     * Update the Gateway Properties
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
@@ -98,5 +109,6 @@ public class DefaultBPMNMessageExtension extends AbstractBPMNElementExtension {
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));
+        bpmnElement.setAttribute("gatewayDirection", json.getString("gatewaydirection", ""));
     }
 }

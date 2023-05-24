@@ -13,17 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
+package org.openbpmn.extensions.elements;
 
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -31,37 +27,42 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 
 /**
- * This is the Default BPMNEvent extension providing the JSONForms shemata.
+ * This is the Default BPMNEvent extension providing the JSONForms schemata.
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
 
-    @SuppressWarnings("unused")
-    private static Logger logger = Logger.getLogger(DefaultBPMNGatewayExtension.class.getName());
-
-    public DefaultBPMNGatewayExtension() {
+    public DefaultBPMNEventExtension() {
         super();
     }
 
+    /**
+     * Returns if this Extension can be applied to the given elementTypeID
+     */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.BPMN_GATEWAYS.contains(elementTypeId);
+        return BPMNTypes.BPMN_EVENTS.contains(elementTypeId);
     }
 
     /**
-     * This Extension is for BPMNGateways only
+     * This Extension is for BPMNEvents only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof Gateway);
+        return (bpmnElement instanceof Event);
     }
 
     /**
-     * This Helper Method generates a JSON Object with the BPMNElement properties.
+     * This Helper Method generates a JSONForms Object with the BPMNElement
+     * properties.
      * <p>
-     * This json object is used on the GLSP Client to generate the EMF JsonForms
+     * This JSON object is used on the GLSP Client to generate the EMF JsonForms
+     * <p>
+     * The method iterates over all eventDefinitions and adds a separate tab
+     * including definitions of this type. Note: an event can have multiple
+     * definitions of the same type.
      */
     @Override
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
@@ -69,33 +70,37 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
 
         dataBuilder. //
                 addData("name", bpmnElement.getName()). //
-                addData("documentation", bpmnElement.getDocumentation()). //
-                addData("gatewaydirection", bpmnElement.getAttribute("gatewayDirection"));
+                addData("documentation", bpmnElement.getDocumentation());
 
-        String[] gatewayDirections = { "Converging", "Diverging", "Mixed", "Unspecified" };
+        String documentation = "An Event is something that “happens” during the course of a Process. ";
 
-        String documentation = "A Gateway controls how Sequence Flows interact as they converge and diverge within a Process.";
+        Event event = (Event) bpmnElement;
+        if (BPMNTypes.CATCH_EVENT.equals(event.getType())) {
+            documentation = documentation
+                    + "An Intermediate Catch Event is expected to occur in the future and requires an internal or external action.";
+        }
+        if (BPMNTypes.THROW_EVENT.equals(event.getType())) {
+            documentation = documentation
+                    + "An Intermediate Throw Event is a reaction on an internal or external action that is caught by a subsequent event in the process flow.";
+        }
+        // has an impact and requires in general a reaction.
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                addProperty("documentation", "string", documentation). //
-                addProperty("gatewaydirection", "string", null, gatewayDirections);
-
-        Map<String, String> radioOption = new HashMap<>();
-        radioOption.put("format", "radio");
+                addProperty("documentation", "string", documentation);
 
         uiSchemaBuilder. //
                 addCategory("General"). //
-                addLayout(Layout.HORIZONTAL). //
-                addElements("name"). //
-                addElement("gatewaydirection", "Direction", radioOption). //
                 addLayout(Layout.VERTICAL). //
+                addElements("name"). //
                 addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 
     /**
-     * Update the Gateway Properties
+     * Updates the core attributes of the BPMN element and also the
+     * eventDefinitions based on the different property tabs for each definition
+     * type.
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
@@ -109,6 +114,6 @@ public class DefaultBPMNGatewayExtension extends AbstractBPMNElementExtension {
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));
-        bpmnElement.setAttribute("gatewayDirection", json.getString("gatewaydirection", ""));
+
     }
 }

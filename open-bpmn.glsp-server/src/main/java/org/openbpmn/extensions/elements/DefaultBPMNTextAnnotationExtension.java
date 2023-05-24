@@ -13,13 +13,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
+package org.openbpmn.extensions.elements;
+
+import java.util.Optional;
 
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -27,80 +29,63 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 
 /**
- * This is the Default BPMNEvent extension providing the JSONForms schemata.
+ * This is the Default TextAnnotation extension providing the JSONForms
+ * schemata.
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExtension {
 
-    public DefaultBPMNEventExtension() {
+    public DefaultBPMNTextAnnotationExtension() {
         super();
     }
 
-    /**
-     * Returns if this Extension can be applied to the given elementTypeID
-     */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.BPMN_EVENTS.contains(elementTypeId);
+        return BPMNTypes.TEXTANNOTATION.equals(elementTypeId);
     }
 
     /**
-     * This Extension is for BPMNEvents only
+     * This Extension is for BPMNActivities only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof Event);
+        return (bpmnElement instanceof TextAnnotation);
     }
 
     /**
-     * This Helper Method generates a JSONForms Object with the BPMNElement
-     * properties.
+     * This Helper Method generates a JSON Object with the BPMNElement properties.
      * <p>
-     * This JSON object is used on the GLSP Client to generate the EMF JsonForms
-     * <p>
-     * The method iterates over all eventDefinitions and adds a separate tab
-     * including definitions of this type. Note: an event can have multiple
-     * definitions of the same type.
+     * This json object is used on the GLSP Client to generate the EMF JsonForms
      */
     @Override
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
-        dataBuilder. //
-                addData("name", bpmnElement.getName()). //
-                addData("documentation", bpmnElement.getDocumentation());
+        String text = ((TextAnnotation) bpmnElement).getText();
 
-        String documentation = "An Event is something that “happens” during the course of a Process. ";
-
-        Event event = (Event) bpmnElement;
-        if (BPMNTypes.CATCH_EVENT.equals(event.getType())) {
-            documentation = documentation
-                    + "An Intermediate Catch Event is expected to occur in the future and requires an internal or external action.";
-        }
-        if (BPMNTypes.THROW_EVENT.equals(event.getType())) {
-            documentation = documentation
-                    + "An Intermediate Throw Event is a reaction on an internal or external action that is caught by a subsequent event in the process flow.";
-        }
-        // has an impact and requires in general a reaction.
+        dataBuilder //
+                .addData("textFormat", bpmnElement.getAttribute("textFormat")) //
+                .addData("documentation", bpmnElement.getDocumentation()) //
+                .addData("text", text);
 
         schemaBuilder. //
-                addProperty("name", "string", null). //
-                addProperty("documentation", "string", documentation);
+                addProperty("textFormat", "string", "e.g. text/plan | text/html"). //
+                addProperty("documentation", "string", null). //
+                addProperty("text", "string", "Content");
 
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.VERTICAL). //
-                addElements("name"). //
+                addElement("text", "Text", this.getFileEditorOption()). //
+                addElement("textFormat", "textformat", null). //
                 addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 
     /**
-     * Updates the core attributes of the BPMN element and also the
-     * eventDefinitions based on the different property tabs for each definition
-     * type.
+     * Updates the textAnnotation properties
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
@@ -111,9 +96,18 @@ public class DefaultBPMNEventExtension extends AbstractBPMNElementExtension {
             return;
         }
 
-        updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));
+        bpmnElement.setAttribute("textFormat", json.getString("textFormat", ""));
 
+        // Update the text property
+        String text = json.getString("text", "");
+        ((TextAnnotation) bpmnElement).setText(text);
+        // Update GModelElement Text Node...
+        Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_bpmntext");
+        if (!textNode.isEmpty()) {
+            textNode.get().getArgs().put("text", text);
+        }
     }
+
 }

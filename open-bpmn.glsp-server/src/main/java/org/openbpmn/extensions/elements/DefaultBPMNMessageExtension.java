@@ -13,13 +13,13 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
+package org.openbpmn.extensions.elements;
 
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
@@ -30,23 +30,23 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * This is the Default DataObject extension providing the JSONForms shemata.
+ * This is the Default Message extension providing the JSONForms schemata.
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNMessageExtension extends AbstractBPMNElementExtension {
 
     @Inject
     protected BPMNGModelState modelState;
 
-    public DefaultBPMNDataObjectExtension() {
+    public DefaultBPMNMessageExtension() {
         super();
     }
 
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.DATAOBJECT.equals(elementTypeId);
+        return BPMNTypes.MESSAGE.equals(elementTypeId);
     }
 
     /**
@@ -54,7 +54,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof DataObject);
+        return (bpmnElement instanceof Message);
     }
 
     /**
@@ -84,7 +84,7 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
     }
 
     /**
-     * Update the DataObject properties
+     * Update the Message default properties
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
@@ -98,6 +98,5 @@ public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));
-
     }
 }

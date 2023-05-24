@@ -13,45 +13,57 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
-
-import java.util.Optional;
+package org.openbpmn.extensions.elements;
 
 import javax.json.JsonObject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
+import org.openbpmn.glsp.model.BPMNGModelState;
+
+import com.google.inject.Inject;
 
 /**
- * This is the Default TextAnnotation extension providing the JSONForms
- * schemata.
+ * This is the Default BPMNEdge extension providing the JSONForms schemata for
+ * all types of edges (SequenceFlow, MessageFlow, Association).
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExtension {
+public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
 
-    public DefaultBPMNTextAnnotationExtension() {
+    @SuppressWarnings("unused")
+    private static Logger logger = LogManager.getLogger(DefaultBPMNEdgeExtension.class);
+
+    @Inject
+    protected BPMNGModelState modelState;
+
+    public DefaultBPMNEdgeExtension() {
         super();
     }
 
+    /**
+     * Returns if this Extension can be applied to the given elementTypeID
+     */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.TEXTANNOTATION.equals(elementTypeId);
+        return BPMNTypes.BPMN_EDGE_ELEMENTS.contains(elementTypeId);
     }
 
     /**
-     * This Extension is for BPMNActivities only
+     * This Extension is for BPMNEvents only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof TextAnnotation);
+        return (bpmnElement instanceof BPMNElementEdge);
     }
 
     /**
@@ -63,29 +75,26 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
-        String text = ((TextAnnotation) bpmnElement).getText();
-
         dataBuilder //
-                .addData("textFormat", bpmnElement.getAttribute("textFormat")) //
-                .addData("documentation", bpmnElement.getDocumentation()) //
-                .addData("text", text);
+                .addData("name", bpmnElement.getName()) //
+                .addData("documentation", bpmnElement.getDocumentation());
 
         schemaBuilder. //
-                addProperty("textFormat", "string", "e.g. text/plan | text/html"). //
-                addProperty("documentation", "string", null). //
-                addProperty("text", "string", "Content");
+                addProperty("name", "string", null). //
+                addProperty("documentation", "string", null);
 
         uiSchemaBuilder. //
                 addCategory("General"). //
+                addLayout(Layout.HORIZONTAL). //
+                addElements("name"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("text", "Text", this.getFileEditorOption()). //
-                addElement("textFormat", "textformat", null). //
                 addElement("documentation", "Documentation", this.getFileEditorOption());
 
     }
 
     /**
-     * Updates the textAnnotation properties
+     * Update the default edge properties.
+     *
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
@@ -96,18 +105,8 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
             return;
         }
 
+        updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));
-        bpmnElement.setAttribute("textFormat", json.getString("textFormat", ""));
-
-        // Update the text property
-        String text = json.getString("text", "");
-        ((TextAnnotation) bpmnElement).setText(text);
-        // Update GModelElement Text Node...
-        Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_bpmntext");
-        if (!textNode.isEmpty()) {
-            textNode.get().getArgs().put("text", text);
-        }
     }
-
 }

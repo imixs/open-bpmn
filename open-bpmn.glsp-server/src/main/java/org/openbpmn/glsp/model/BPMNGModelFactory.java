@@ -66,7 +66,7 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.extension.BPMNElementExtension;
+import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;

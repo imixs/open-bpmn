@@ -13,16 +13,14 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.extension;
+package org.openbpmn.extensions.elements;
 
 import javax.json.JsonObject;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -32,38 +30,31 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * This is the Default BPMNEdge extension providing the JSONForms schemata for
- * all types of edges (SequenceFlow, MessageFlow, Association).
+ * This is the Default DataObject extension providing the JSONForms shemata.
  *
  * @author rsoika
  *
  */
-public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
-
-    @SuppressWarnings("unused")
-    private static Logger logger = LogManager.getLogger(DefaultBPMNEdgeExtension.class);
+public class DefaultBPMNDataObjectExtension extends AbstractBPMNElementExtension {
 
     @Inject
     protected BPMNGModelState modelState;
 
-    public DefaultBPMNEdgeExtension() {
+    public DefaultBPMNDataObjectExtension() {
         super();
     }
 
-    /**
-     * Returns if this Extension can be applied to the given elementTypeID
-     */
     @Override
     public boolean handlesElementTypeId(final String elementTypeId) {
-        return BPMNTypes.BPMN_EDGE_ELEMENTS.contains(elementTypeId);
+        return BPMNTypes.DATAOBJECT.equals(elementTypeId);
     }
 
     /**
-     * This Extension is for BPMNEvents only
+     * This Extension is for BPMNActivities only
      */
     @Override
     public boolean handlesBPMNElement(final BPMNElement bpmnElement) {
-        return (bpmnElement instanceof BPMNElementEdge);
+        return (bpmnElement instanceof DataObject);
     }
 
     /**
@@ -88,13 +79,12 @@ public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
                 addLayout(Layout.VERTICAL). //
-                addElement("documentation", "Documentation", this.getFileEditorOption());
+                addElement("documentation", "Data", this.getFileEditorOption());
 
     }
 
     /**
-     * Update the default edge properties.
-     *
+     * Update the DataObject properties
      */
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
@@ -108,5 +98,6 @@ public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
         updateNameProperty(json, bpmnElement, gNodeElement);
         // update attributes and tags
         bpmnElement.setDocumentation(json.getString("documentation", ""));
+
     }
 }
