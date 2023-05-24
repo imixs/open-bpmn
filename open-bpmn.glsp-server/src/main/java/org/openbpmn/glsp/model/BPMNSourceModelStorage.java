@@ -18,7 +18,13 @@ package org.openbpmn.glsp.model;
 import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
 
 import java.io.File;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +40,7 @@ import org.eclipse.glsp.server.utils.MapUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
+import org.openbpmn.extensions.BPMNModelExtension;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.utils.BPMNActionUtil;
 
@@ -58,6 +65,9 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
     @Inject
     protected ActionDispatcher actionDispatcher;
 
+    @Inject
+    protected Set<BPMNModelExtension> extensions;
+
     /**
      * Loads a source model into the modelState.
      */
@@ -81,6 +91,19 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
             BPMNModel model;
             try {
                 model = BPMNModelFactory.read(file);
+
+                // Apply BPMNModelExtensions
+                if (extensions != null) {
+                    // sort extensions by priority
+                    List<BPMNModelExtension> sortedExtensions = new ArrayList<>();
+                    sortedExtensions.addAll(extensions);
+                    Comparator<BPMNModelExtension> byPriority = Comparator.comparing(BPMNModelExtension::getPriority);
+                    Collections.sort(sortedExtensions, byPriority);
+                    for (BPMNModelExtension extension : sortedExtensions) {
+                        extension.onLoad(model, Paths.get(file.getPath()));
+                    }
+                }
+
                 // we store the BPMN meta model into the modelState
                 modelState.setBpmnModel(model);
                 // if the model is dirty (because linked-file content has change) we send a
@@ -140,6 +163,19 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         logger.warn("saveSourceModel to : " + file);
 
         BPMNModel model = modelState.getBpmnModel();
+
+        // Apply BPMNModelExtensions
+        if (extensions != null) {
+            // sort extensions by priority
+            List<BPMNModelExtension> sortedExtensions = new ArrayList<>();
+            sortedExtensions.addAll(extensions);
+            Comparator<BPMNModelExtension> byPriority = Comparator.comparing(BPMNModelExtension::getPriority);
+            Collections.sort(sortedExtensions, byPriority);
+            for (BPMNModelExtension extension : sortedExtensions) {
+                extension.onSave(model, Paths.get(file.getPath()));
+            }
+        }
+
         model.save(file);
 
         // process all model notifications...

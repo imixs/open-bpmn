@@ -33,6 +33,7 @@ import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.extensions.BPMNCreateExtensionHandler;
 import org.openbpmn.extensions.BPMNElementExtension;
+import org.openbpmn.extensions.BPMNModelExtension;
 import org.openbpmn.extensions.elements.ConditionalEventDefinitionExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNDataObjectExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNDefinitionsExtension;
@@ -47,6 +48,7 @@ import org.openbpmn.extensions.elements.DefaultBPMNTextAnnotationExtension;
 import org.openbpmn.extensions.elements.LinkEventDefinitionExtension;
 import org.openbpmn.extensions.elements.SignalEventDefinitionExtension;
 import org.openbpmn.extensions.elements.TimerEventDefinitionExtension;
+import org.openbpmn.extensions.model.FileLinkExtension;
 import org.openbpmn.glsp.elements.data.BPMNApplyEditLabelOperationHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateDataObjectHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateMessageHandler;
@@ -89,7 +91,8 @@ public class BPMNDiagramModule extends DiagramModule {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
 
-    private Multibinder<BPMNElementExtension> bpmnExtensionBinder;
+    private Multibinder<BPMNElementExtension> bpmnElementExtensionBinder;
+    private Multibinder<BPMNModelExtension> bpmnModelExtensionBinder;
 
     @Override
     protected Class<? extends GModelState> bindGModelState() {
@@ -204,8 +207,10 @@ public class BPMNDiagramModule extends DiagramModule {
     protected void configureAdditionals() {
         super.configureAdditionals();
         // create the BPMNExtension binder
-        bpmnExtensionBinder = Multibinder.newSetBinder(binder(), BPMNElementExtension.class);
-        configureBPMNExtensions(bpmnExtensionBinder);
+        bpmnElementExtensionBinder = Multibinder.newSetBinder(binder(), BPMNElementExtension.class);
+        configureBPMNElementExtensions(bpmnElementExtensionBinder);
+        bpmnModelExtensionBinder = Multibinder.newSetBinder(binder(), BPMNModelExtension.class);
+        configureBPMNModelExtensions(bpmnModelExtensionBinder);
 
     }
 
@@ -248,14 +253,14 @@ public class BPMNDiagramModule extends DiagramModule {
     }
 
     /**
-     * This method adds the BPMN default extensions
+     * This method adds the BPMN default element extensions
      * <p>
      * Overwrite this method to add custom BPMN Extensions
      *
      * @param binding
      */
-    public void configureBPMNExtensions(final Multibinder<BPMNElementExtension> binding) {
-        // bind BPMN default extensions
+    public void configureBPMNElementExtensions(final Multibinder<BPMNElementExtension> binding) {
+        // bind BPMN default element extensions
         binding.addBinding().to(DefaultBPMNDefinitionsExtension.class);
         binding.addBinding().to(DefaultBPMNEventExtension.class);
         binding.addBinding().to(DefaultBPMNTaskExtension.class);
@@ -270,6 +275,20 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(SignalEventDefinitionExtension.class);
         binding.addBinding().to(ConditionalEventDefinitionExtension.class);
         binding.addBinding().to(LinkEventDefinitionExtension.class);
+
+    }
+
+    /**
+     * This method adds the BPMN default model extensions
+     * <p>
+     * Overwrite this method to add custom BPMN Extensions
+     *
+     * @param binding
+     */
+    public void configureBPMNModelExtensions(final Multibinder<BPMNModelExtension> binding) {
+
+        // bind BPMN default model extensions
+        binding.addBinding().to(FileLinkExtension.class);
 
     }
 }

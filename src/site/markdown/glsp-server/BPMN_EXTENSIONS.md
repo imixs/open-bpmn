@@ -119,6 +119,40 @@ This JsonObjectBuilder is used on the BPMNGmodelFactory to generate the JsonForm
 
 Updates the properties data provided by the modeling tool in the corresponding BPMN Element. The method receives the BPMNElement and a json object containing all new values. An extension can also update the given json object during this operation if needed.
 
+## The BPMNModelExtension
+
+A `BPMNModelExtension` is a Java interface that extends the way a BPMN model file is loaded or stored by Open-BPMN
+
+As an adopter you implement a new `org.imixs.openbpmn.extensions.BPMNModelExtension` to implement additional behavior during loading or saving a BPMN model.
+
+The `BPMNModelExtension` defines the following methods:
+
+### onLoad
+
+This method is called after a BPMNModel was loaded the first time. The model can be modified. The parameter `path` provides the file path the model was loaded from.
+
+```java
+    @Override
+    public void onLoad(BPMNModel model, Path path) {
+        ....
+    }
+```
+
+### onSave
+
+This method is called before the BPMNModel is stored to disk. The parameter `path` provides the file path the model was loaded from.
+
+```java
+    @Override
+    public void onLoad(BPMNModel model, Path path) {
+        ....
+    }
+```
+
+### getPriority
+
+Returns the priority of this action handler. The priority is used to derive the execution order if multiple extension handlers should execute the same BPMNBaseElement. The default priority is `0` and the priority is sorted descending. This means handlers with a priority &gt; 0 are executed before handlers with a default priority and handlers with a priority >0 are executed afterwards.
+
 ## Register a BPMNExtension
 
 To register a custom BPMNExtension you need to extend class `BPMNDiagramModule` and overwrite the method `configureBPMNExtensions`. In this method the new custom Extension Points can be registered:
@@ -126,7 +160,7 @@ To register a custom BPMNExtension you need to extend class `BPMNDiagramModule` 
 ```java
 public class MyBPMNDiagramModule extends BPMNDiagramModule {
 
- public void configureBPMNExtensions(final Multibinder<BPMNExtension> binding) {
+ public void configureBPMNExtensions(final Multibinder<BPMNElementExtension> binding) {
         // bind BPMN default extensions
         super.configureBPMNExtensions(binding);
 
