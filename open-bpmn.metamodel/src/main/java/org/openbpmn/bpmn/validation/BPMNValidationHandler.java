@@ -6,8 +6,10 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Gateway;
 
 /**
  * The BPMNValidationHandler validates a complete BPMNModel for validation
@@ -69,13 +71,15 @@ public class BPMNValidationHandler {
                     validationErrors.add(new BPMNValidationError("Start Event",
                             "A Start Event may not have incoming Sequence Flows!", event.getId(),
                             BPMNValidationError.ErrorType.ERROR));
+
                 }
                 if (event.getOutgoingSequenceFlows().size() != 1) {
                     validationErrors.add(new BPMNValidationError("Start Event",
                             "A Start Event must have exactly one outgoing  Sequence Flow!", event.getId(),
                             BPMNValidationError.ErrorType.ERROR));
-                }
 
+                }
+                continue;
             }
 
             // END event?
@@ -91,9 +95,56 @@ public class BPMNValidationHandler {
                             "An End Event must NOT have any outgoing  Sequence Flow!", event.getId(),
                             BPMNValidationError.ErrorType.ERROR));
                 }
+                continue;
+            }
+
+            // Catch Event?
+            if (BPMNTypes.CATCH_EVENT.equals(event.getType())) {
+                if (event.getOutgoingSequenceFlows().size() == 0) {
+                    validationErrors.add(new BPMNValidationError("Catch Event",
+                            "A Catch Event must have at least one outgoing  Sequence Flow!", event.getId(),
+                            BPMNValidationError.ErrorType.ERROR));
+                }
+                continue;
+            }
+
+            // Throw Event?
+            if (BPMNTypes.THROW_EVENT.equals(event.getType())) {
+                if (event.getIngoingSequenceFlows().size() == 0) {
+                    validationErrors.add(new BPMNValidationError("Throw Event",
+                            "A Throw Event must have at least one ingoing  Sequence Flow!", event.getId(),
+                            BPMNValidationError.ErrorType.ERROR));
+                }
+                continue;
+            }
+
+        }
+
+        // validate gateways....
+        Set<Gateway> gateways = process.getGateways();
+        for (Gateway gateway : gateways) {
+            if (gateway.getIngoingSequenceFlows().size() == 0
+                    || gateway.getOutgoingSequenceFlows().size() == 0) {
+                validationErrors.add(new BPMNValidationError("Gateway",
+                        "A Gateway must have at least one ingoing and one outgoing Sequence Flow!", gateway.getId(),
+                        BPMNValidationError.ErrorType.ERROR));
+
+                continue;
+            }
+
+            // validate tasks....
+            Set<Activity> tasks = process.getActivities();
+            for (Activity task : tasks) {
+                if (task.getIngoingSequenceFlows().size() == 0
+                        || task.getOutgoingSequenceFlows().size() == 0) {
+                    validationErrors.add(new BPMNValidationError("Task",
+                            "A Task must have at least one ingoing and one outgoing Sequence Flow!", gateway.getId(),
+                            BPMNValidationError.ErrorType.ERROR));
+
+                    continue;
+                }
 
             }
         }
-
     }
 }

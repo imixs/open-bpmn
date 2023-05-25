@@ -145,6 +145,26 @@ public class BPMNTypes {
     }
 
     /**
+     * Returns true if the given element is a Gateway
+     */
+    public static boolean isGateway(BPMNElement element) {
+        if (element instanceof BPMNElementNode) {
+            return BPMN_GATEWAYS.contains(((BPMNElementNode) element).getType());
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given element is a Task
+     */
+    public static boolean isTask(BPMNElement element) {
+        if (element instanceof BPMNElementNode) {
+            return BPMN_TASKS.contains(((BPMNElementNode) element).getType());
+        }
+        return false;
+    }
+
+    /**
      * Returns true if the given element is a SequenceFlow
      */
     public static boolean isSequenceFlow(BPMNElement element) {
