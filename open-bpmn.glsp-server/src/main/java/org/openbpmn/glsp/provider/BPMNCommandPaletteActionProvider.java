@@ -15,7 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.provider;
 
-import static org.eclipse.glsp.graph.DefaultTypes.EDGE;
 import static org.eclipse.glsp.graph.util.GraphUtil.point;
 
 import java.util.Iterator;
@@ -35,8 +34,10 @@ import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
+import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 
 import com.google.common.collect.Lists;
@@ -58,6 +59,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         List<String> selectedIds = editorContext.getSelectedElementIds();
         // Optional<GPoint> lastMousePosition =
         // GridSnapper.snap(editorContext.getLastMousePosition());
+
         Optional<GPoint> lastMousePosition = editorContext.getLastMousePosition();
         Set<GModelElement> selectedElements = index.getAll(selectedIds);
 
@@ -65,70 +67,90 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         actions.addAll(Sets.newHashSet(
                 new LabeledAction("Create Manual Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.MANUAL_TASK,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create User Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.USER_TASK,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Send Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SEND_TASK,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Service Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SERVICE_TASK,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Script Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SCRIPT_TASK,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
 
                 new LabeledAction("Create Start Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.START_EVENT,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create End Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.END_EVENT,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Catch Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.CATCH_EVENT,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Throw Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.THROW_EVENT,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
 
                 new LabeledAction("Create Exclusive Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EXCLUSIVE_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Parallel Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.PARALLEL_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Inclusive Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.INCLUSIVE_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Event Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EVENTBASED_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
                 new LabeledAction("Create Complex Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.COMPLEX_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)), "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square"))),
 
                 // Pool
-                new LabeledAction("Create Pool", Lists.newArrayList(new CreateNodeOperation(BPMNTypes.POOL,
-                        lastMousePosition.orElse(point(0, 0)), "fa-plus-square")))
+                new LabeledAction("Create Pool",
+                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.POOL,
+                                lastMousePosition.orElse(point(0, 0)),
+                                "fa-plus-square")))
 
         ));
+
+        //
 
         // Create edge actions between two nodes
         if (selectedElements.size() == 1) {
             GModelElement element = selectedElements.iterator().next();
             if (element instanceof GNode) {
-                actions.addAll(createEdgeActions((GNode) element, index.getAllByClass(TaskGNode.class)));
+                actions.addAll(createEdgeActions((GNode) element,
+                        index.getAllByClass(TaskGNode.class)));
             }
         } else if (selectedElements.size() == 2) {
             Iterator<GModelElement> iterator = selectedElements.iterator();
             GModelElement firstElement = iterator.next();
             GModelElement secondElement = iterator.next();
-            if (firstElement instanceof TaskGNode && secondElement instanceof TaskGNode) {
+            if (isBPMNFlowElementNode(firstElement) && isBPMNFlowElementNode(secondElement)) {
                 GNode firstNode = (GNode) firstElement;
                 GNode secondNode = (GNode) secondElement;
-                actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
-                actions.add(createSequenceFlowAction("Connect with Sequence Flow", firstNode, secondNode));
+                // actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
+                actions.add(createSequenceFlowAction("Connect with Sequence Flow", firstNode,
+                        secondNode));
             }
         }
 
@@ -137,30 +159,56 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
             actions.add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)),
                     "fa-minus-square"));
         } else if (selectedElements.size() > 1) {
-            actions.add(new LabeledAction("Delete All", Lists.newArrayList(new DeleteOperation(selectedIds)),
+            actions.add(new LabeledAction("Delete All",
+                    Lists.newArrayList(new DeleteOperation(selectedIds)),
                     "fa-minus-square"));
         }
 
         return actions;
     }
 
-    private LabeledAction createEdgeAction(final String label, final GNode source, final GNode node) {
-        return new LabeledAction(label, Lists.newArrayList(new CreateEdgeOperation(EDGE, source.getId(), node.getId())),
-                "fa-plus-square");
+    /**
+     * Returns true for Tasks, Events and Gateways
+     * 
+     * @param element
+     */
+    public boolean isBPMNFlowElementNode(GModelElement element) {
+        return (element instanceof TaskGNode || element instanceof EventGNode || element instanceof GatewayGNode);
     }
+
+    /**
+     * Returns true for all BPMN element GNodes
+     * 
+     * @param element
+     */
+    public boolean isBPMNElementNode(GModelElement element) {
+        return (isBPMNFlowElementNode(element)
+                || element instanceof MessageGNode || element instanceof DataObjectGNode);
+    }
+
+    // private LabeledAction createEdgeAction(final String label, final GNode
+    // source, final GNode node) {
+    // return new LabeledAction(label,
+    // Lists.newArrayList(new CreateEdgeOperation(EDGE, source.getId(),
+    // node.getId())),
+    // "fa-plus-square");
+    // }
 
     private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {
         return new LabeledAction(label,
-                Lists.newArrayList(new CreateEdgeOperation(BPMNTypes.SEQUENCE_FLOW, source.getId(), node.getId())),
+                Lists.newArrayList(new CreateEdgeOperation(BPMNTypes.SEQUENCE_FLOW, source.getId(),
+                        node.getId())),
                 "fa-plus-square");
     }
 
     private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
         Set<LabeledAction> actions = Sets.newLinkedHashSet();
         // add first all edge, then all weighted edge actions to keep a nice order
-        targets.forEach(node -> actions.add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
+        // targets.forEach(node -> actions
+        // .add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
         targets.forEach(node -> actions
-                .add(createSequenceFlowAction("Create Sequence Flow to " + getLabel(node), source, node)));
+                .add(createSequenceFlowAction("Create Sequence Flow to " + getLabel(node), source,
+                        node)));
         return actions;
     }
 

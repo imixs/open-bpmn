@@ -32,7 +32,7 @@ import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.extension.BPMNExtension;
+import org.openbpmn.extensions.BPMNElementExtension;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -53,7 +53,7 @@ import com.google.inject.Inject;
 public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
 
     @Inject
-    protected Set<BPMNExtension> extensions;
+    protected Set<BPMNElementExtension> extensions;
 
     @Inject
     protected OperationHandlerRegistry operationHandlerRegistry;
@@ -65,11 +65,15 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         counter = 0;
         // Create custom Palette Groups
         return Lists.newArrayList(
-                PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(), "symbol-property", "A"),
-                PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(), "symbol-property", "B"),
-                PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(), "symbol-property",
+                PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(),
+                        "symbol-property", "A"),
+                PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(),
+                        "symbol-property", "B"),
+                PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(),
+                        "symbol-property",
                         "C"),
-                PaletteItem.createPaletteGroup("event-group", "Event Definitions", createPaletteEventDefinitions(),
+                PaletteItem.createPaletteGroup("event-group", "Event Definitions",
+                        createPaletteEventDefinitions(),
                         "symbol-property", "D"),
                 PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
                         "symbol-property", "E"),
@@ -80,7 +84,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 PaletteItem.createPaletteGroup("edge-group", "Edges", createPaletteSequenceFlowItems(),
                         "symbol-property", "G"),
 
-                PaletteItem.createPaletteGroup("extension-group", "Extensions", createPaletteExtensions(),
+                PaletteItem.createPaletteGroup("extension-group", "Extensions",
+                        createPaletteExtensions(),
                         "symbol-property", "H")
 
         );
@@ -122,7 +127,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     protected List<PaletteItem> createPaletteTaskItems() {
 
         List<PaletteItem> result = new ArrayList<>();
-        PaletteItem item = new PaletteItem(BPMNTypes.TASK, "Task", new TriggerNodeCreationAction(BPMNTypes.TASK));
+        PaletteItem item = new PaletteItem(BPMNTypes.TASK, "Task",
+                new TriggerNodeCreationAction(BPMNTypes.TASK));
         item.setSortString("A");
         result.add(item);
 
@@ -131,7 +137,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         item.setSortString("B");
         result.add(item);
 
-        item = new PaletteItem(BPMNTypes.USER_TASK, "User Task", new TriggerNodeCreationAction(BPMNTypes.USER_TASK));
+        item = new PaletteItem(BPMNTypes.USER_TASK, "User Task",
+                new TriggerNodeCreationAction(BPMNTypes.USER_TASK));
         item.setSortString("C");
         result.add(item);
 
@@ -150,7 +157,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         item.setSortString("F");
         result.add(item);
 
-        item = new PaletteItem(BPMNTypes.SEND_TASK, "Send Task", new TriggerNodeCreationAction(BPMNTypes.SEND_TASK));
+        item = new PaletteItem(BPMNTypes.SEND_TASK, "Send Task",
+                new TriggerNodeCreationAction(BPMNTypes.SEND_TASK));
         item.setSortString("G");
         result.add(item);
 
@@ -176,7 +184,8 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         item.setSortString("A");
         result.add(item);
 
-        item = new PaletteItem(BPMNTypes.END_EVENT, "End Event", new TriggerNodeCreationAction(BPMNTypes.END_EVENT));
+        item = new PaletteItem(BPMNTypes.END_EVENT, "End Event",
+                new TriggerNodeCreationAction(BPMNTypes.END_EVENT));
         item.setSortString("B");
         result.add(item);
 
@@ -314,7 +323,7 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         List<PaletteItem> result = new ArrayList<>();
         List<String> extensionNamespaces = new ArrayList<>();
         if (extensions != null) {
-            for (BPMNExtension extension : extensions) {
+            for (BPMNElementExtension extension : extensions) {
                 // validate if the extension is no Default Extension Namspace.
                 if (!BPMNNS.BPMN2.name().equals(extension.getNamespace())
                         && !extensionNamespaces.contains(extension.getNamespace())) {
@@ -340,8 +349,10 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
      */
     protected List<PaletteItem> createPaletteItems(final List<CreateOperationHandler> handlers,
             final Class<? extends CreateOperation> operationClass) {
-        return handlers.stream().filter(h -> operationClass.isAssignableFrom(h.getHandledOperationType())).flatMap(
-                handler -> handler.getTriggerActions().stream().map(action -> create(action, handler.getLabel())))
+        return handlers.stream().filter(h -> operationClass.isAssignableFrom(h.getHandledOperationType()))
+                .flatMap(
+                        handler -> handler.getTriggerActions().stream()
+                                .map(action -> create(action, handler.getLabel())))
                 .sorted(Comparator.comparing(PaletteItem::getLabel)).collect(Collectors.toList());
     }
 

@@ -30,7 +30,7 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.extension.BPMNElementExtension;
+import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
