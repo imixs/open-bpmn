@@ -15,8 +15,6 @@
  ********************************************************************************/
 package org.openbpmn.glsp.model;
 
-import static org.eclipse.glsp.server.types.GLSPServerException.getOrThrow;
-
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -29,13 +27,13 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.CenterAction;
 import org.eclipse.glsp.server.actions.SaveModelAction;
 import org.eclipse.glsp.server.actions.ServerMessageAction;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.utils.ClientOptionsUtil;
 import org.eclipse.glsp.server.utils.MapUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -129,6 +127,11 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                             .convertModelNotification(model.getNotifications().remove(0));
                     actionDispatcher.dispatchAfterNextUpdate(serverMessage);
                 }
+
+                // finally we send the center-action to center the diagram (Issue #257)
+                actionDispatcher
+                        .dispatchAfterNextUpdate(new CenterAction(new ArrayList<String>(), false, true));
+
             } catch (BPMNModelException e) {
                 logger.error("Failed to load model source: " + e.getMessage());
             }
@@ -184,19 +187,6 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                     .convertModelNotification(model.getNotifications().remove(0));
             actionDispatcher.dispatchAfterNextUpdate(serverMessage);
         }
-    }
-
-    /**
-     * This helper method opens the corresponding java.io.File form the given
-     * clientOptions
-     *
-     * @param modelState
-     * @return
-     */
-    @Deprecated
-    protected File convertToFile(final GModelState modelState) {
-        return getOrThrow(ClientOptionsUtil.getSourceUriAsFile(modelState.getClientOptions()),
-                "Invalid file URI:" + ClientOptionsUtil.getSourceUri(modelState.getClientOptions()));
     }
 
     private static final String FILE_PREFIX = "file://";
