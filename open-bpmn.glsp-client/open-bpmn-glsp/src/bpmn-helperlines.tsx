@@ -91,7 +91,7 @@ export class BPMNElementSnapper implements ISnapper {
 
 		// Is it a RoutingPoint?
 		if (element instanceof SRoutingHandle) {
-			// try to find a snsppoint...
+			// try to find a snapPoint...
 			snapPoint=this.findSnapPointForRoutingPoint(element,position);
 			// if a snapPoint was found and this snapPoint is still in the snapRange,
 			// then we adjust the current mouse Postion. Otherwise we return the current position
@@ -108,47 +108,46 @@ export class BPMNElementSnapper implements ISnapper {
 		}
 
 		// Is it a Element node?
-		if (!isBPMNNode(element)) {
-			console.log('...standard ' + position.x  +','+position.y);
-			return {
-				x: Math.round(position.x / this.grid.x) * this.grid.x,
-				y: Math.round(position.y / this.grid.y) * this.grid.y
-			};
-			// return position;
+		if (isBPMNNode(element)) {
+			if (isBoundaryEvent(element)) {
+				snapPoint = this.findBoundarySnapPoint(element, position);
+			} else {
+				// find default snap position
+				snapPoint = this.findSnapPoint(element);
+				// if a snapPoint was found and this snapPoint is still in the snapRange,
+				// then we adjust the current mouse Postion. Otherwise we return the current position
+				let snapX =Math.round(position.x / this.grid.x) * this.grid.x;
+				if (snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.minSnapRange) {
+					snapX= snapPoint.x ;
+				}
+				let snapY=Math.round(position.y / this.grid.y) * this.grid.y;
+				if ( snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange ) {
+					snapY= snapPoint.y ;
+				}
+				snapPoint = { x: snapX, y: snapY };
+			}
+
+			// fix BPMNLabel offset (only needed or Elements with a separate label)?
+			if (isBPMNLabelNode(element)) {
+				const xOffset = snapPoint.x - position.x;
+				const yOffset = snapPoint.y - position.y;
+				const label: any = element.root.index.getById(element.id + '_bpmnlabel');
+				if (label instanceof LabelNode) {
+					// fix offset of the lable position....
+					const ly = label.position.y + yOffset;
+					const lx = label.position.x + xOffset;
+					label.position = { x: lx, y: ly };
+				}
+			}
+			return snapPoint;
 		}
 
-		if (isBoundaryEvent(element)) {
-			snapPoint = this.findBoundarySnapPoint(element, position);
-		} else {
-			// find default snap position
-			snapPoint = this.findSnapPoint(element);
-			// if a snapPoint was found and this snapPoint is still in the snapRange,
-			// then we adjust the current mouse Postion. Otherwise we return the current position
-			let snapX =Math.round(position.x / this.grid.x) * this.grid.x;
-			if (snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.minSnapRange) {
-				snapX= snapPoint.x ;
-			}
-			let snapY=Math.round(position.y / this.grid.y) * this.grid.y;
-			if ( snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange ) {
-				snapY= snapPoint.y ;
-			}
-			snapPoint = { x: snapX, y: snapY };
-		}
-
-		// fix BPMNLabel offset (only needed or Elements with a separate label)?
-		if (isBPMNLabelNode(element)) {
-			const xOffset = snapPoint.x - position.x;
-			const yOffset = snapPoint.y - position.y;
-			const label: any = element.root.index.getById(element.id + '_bpmnlabel');
-			if (label instanceof LabelNode) {
-				// fix offset of the lable position....
-				const ly = label.position.y + yOffset;
-				const lx = label.position.x + xOffset;
-				label.position = { x: lx, y: ly };
-			}
-		}
-
-		return snapPoint;
+		// not a standard BPMN element
+		// return the default snap to grid
+		return {
+			x: Math.round(position.x / this.grid.x) * this.grid.x,
+			y: Math.round(position.y / this.grid.y) * this.grid.y
+		};
 	}
 
 	/*
