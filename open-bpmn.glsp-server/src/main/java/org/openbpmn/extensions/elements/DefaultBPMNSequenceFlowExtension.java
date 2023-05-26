@@ -126,43 +126,46 @@ public class DefaultBPMNSequenceFlowExtension extends AbstractBPMNElementExtensi
     @Override
     public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
-
-        // we are only interested in category condition
-        if (!"Condition".equals(category)) {
-            return;
+        boolean stateUpdate = false;
+        if ("General".equals(category)) {
+            updateNameProperty(json, bpmnElement, gNodeElement);
+            // update attributes and tags
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
         }
 
-        boolean stateUpdate = false;
-        try {
-            SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
-            // check conditionExpression features
-            Set<String> features = json.keySet();
-            boolean conditionsFound = false;
-            for (String feature : features) {
-                if ("conditionExpression".equals(feature)) {
-                    String expression = json.getString(feature);
-                    stateUpdate = sequenceFlow.setConditionExpression(expression);
-                    conditionsFound = true;
-                    // if we have a file:// link than we create an additional open-bpmn attribute
-                    Element childElement = sequenceFlow.getChildNode(BPMNNS.BPMN2, "conditionExpression");
-                    if (childElement != null) {
-                        if (expression.startsWith("file://")) {
-                            childElement.setAttribute("open-bpmn:file-link", expression);
-                        } else {
-                            childElement.removeAttribute("open-bpmn:file-link");
-                        }
-                    }
-                    continue;
-                }
-            }
+        if ("Condition".equals(category)) {
 
-            // if no conditions exits we clear them form the sequenceflow
-            if (!conditionsFound) {
-                stateUpdate = sequenceFlow.setConditionExpression(null);
+            try {
+                SequenceFlow sequenceFlow = (SequenceFlow) bpmnElement;
+                // check conditionExpression features
+                Set<String> features = json.keySet();
+                boolean conditionsFound = false;
+                for (String feature : features) {
+                    if ("conditionExpression".equals(feature)) {
+                        String expression = json.getString(feature);
+                        stateUpdate = sequenceFlow.setConditionExpression(expression);
+                        conditionsFound = true;
+                        // if we have a file:// link than we create an additional open-bpmn attribute
+                        Element childElement = sequenceFlow.getChildNode(BPMNNS.BPMN2, "conditionExpression");
+                        if (childElement != null) {
+                            if (expression.startsWith("file://")) {
+                                childElement.setAttribute("open-bpmn:file-link", expression);
+                            } else {
+                                childElement.removeAttribute("open-bpmn:file-link");
+                            }
+                        }
+                        continue;
+                    }
+                }
+
+                // if no conditions exits we clear them form the sequenceflow
+                if (!conditionsFound) {
+                    stateUpdate = sequenceFlow.setConditionExpression(null);
+                }
+            } catch (BPMNModelException e) {
+                logger.warn("Failed to update condition: " + e.getMessage());
+                e.printStackTrace();
             }
-        } catch (BPMNModelException e) {
-            logger.warn("Failed to update condition: " + e.getMessage());
-            e.printStackTrace();
         }
 
         if (stateUpdate) {

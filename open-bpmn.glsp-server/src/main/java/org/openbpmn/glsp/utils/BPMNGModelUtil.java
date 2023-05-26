@@ -180,7 +180,7 @@ public class BPMNGModelUtil {
      *
      * @return GNode of an element or null if no bpmn-text-node was found
      */
-    public static GNode findMultiLineTextNode(final BPMNGNode element) {
+    public static GNode findMultiLineTextNode(final GModelElement element) {
 
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {

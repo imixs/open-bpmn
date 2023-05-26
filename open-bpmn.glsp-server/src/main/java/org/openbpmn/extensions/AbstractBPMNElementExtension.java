@@ -31,6 +31,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -114,9 +115,10 @@ public abstract class AbstractBPMNElementExtension implements BPMNElementExtensi
         String name = json.getString("name", "");
         if (!name.equals(bpmnElement.getName())) {
             bpmnElement.setName(name);
-            if (gNodeElement instanceof BPMNGNode) {
+            if (gNodeElement instanceof BPMNGNode
+                    || gNodeElement instanceof BPMNGEdge) {
                 // find MultiLineTextNode used in Tasks and BPMNLabels
-                GNode gMultiLineTextNode = BPMNGModelUtil.findMultiLineTextNode((BPMNGNode) gNodeElement);
+                GNode gMultiLineTextNode = BPMNGModelUtil.findMultiLineTextNode(gNodeElement);
                 if (gMultiLineTextNode != null) {
                     gMultiLineTextNode.getArgs().put("text", name);
                 } else {
