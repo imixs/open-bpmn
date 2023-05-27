@@ -16,8 +16,8 @@
 import {
 	Action,
 	FeedbackCommand, findParentByFeature, hasArguments, hasObjectProp,
-	isBoundsAware, ISnapper, MouseListener, SEdge,
-	SModelElement, SModelRoot, SParentElement, SRoutingHandle
+	isBoundsAware, ISnapper, MouseListener,
+	SModelElement, SModelRoot, SParentElement
 } from '@eclipse-glsp/client';
 import { EventNode, isBoundaryEvent, isBPMNLabelNode, isBPMNNode, isTaskNode, LabelNode, TaskNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
@@ -70,12 +70,6 @@ export interface HelperLine {
 @injectable()
 export class BPMNElementSnapper implements ISnapper {
 
-	get outOfRange(): number {
-		return -999999;
-	}
-	// default gird size
-	constructor(public grid: { x: number; y: number } = { x: 10, y: 10 }) {}
-
 	// minimum snap range to catch a helper line
 	get minSnapRange(): number {
 		return 10;
@@ -89,27 +83,7 @@ export class BPMNElementSnapper implements ISnapper {
 	 * For all other element we return general Snapper with 5px.
 	 */
 	snap(position: Point, element: SModelElement): Point {
-
 		let snapPoint: Point;
-
-		// Is it a RoutingPoint?
-		if (element instanceof SRoutingHandle) {
-			// try to find a snapPoint...
-			snapPoint=this.findSnapPointForRoutingPoint(element,position);
-			// if a snapPoint was found and this snapPoint is still in the snapRange,
-			// then we adjust the current mouse Postion. Otherwise we return the current position
-			let snapX = Math.round(position.x / this.grid.x) * this.grid.x;
-			if (snapPoint.x > this.outOfRange ) {
-				snapX= snapPoint.x ;
-			}
-			let snapY= Math.round(position.y / this.grid.y) * this.grid.y;
-			if ( snapPoint.y > this.outOfRange  ) {
-				snapY= snapPoint.y ;
-			}
-			snapPoint = { x: snapX, y: snapY };
-			return snapPoint;
-		}
-
 		// Is it a Element node?
 		if (isBPMNNode(element)) {
 			if (isBoundaryEvent(element)) {
@@ -119,11 +93,11 @@ export class BPMNElementSnapper implements ISnapper {
 				snapPoint = this.findSnapPoint(element);
 				// if a snapPoint was found and this snapPoint is still in the snapRange,
 				// then we adjust the current mouse Postion. Otherwise we return the current position
-				let snapX =Math.round(position.x / this.grid.x) * this.grid.x;
+				let snapX =Math.round(position.x / this.minSnapRange) * this.minSnapRange;
 				if (snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.minSnapRange) {
 					snapX= snapPoint.x ;
 				}
-				let snapY=Math.round(position.y / this.grid.y) * this.grid.y;
+				let snapY=Math.round(position.y / this.minSnapRange) * this.minSnapRange;
 				if ( snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange ) {
 					snapY= snapPoint.y ;
 				}
@@ -146,11 +120,12 @@ export class BPMNElementSnapper implements ISnapper {
 		}
 
 		// not a standard BPMN element
-		// return the default snap to grid
+		// return a snap  grid with 5x5 (supporting the Gatway Width)
 		return {
-			x: Math.round(position.x / this.grid.x) * this.grid.x,
-			y: Math.round(position.y / this.grid.y) * this.grid.y
+			x: Math.round(position.x / 5) * 5,
+			y: Math.round(position.y / 5) * 5
 		};
+
 	}
 
 	/*
@@ -242,69 +217,7 @@ export class BPMNElementSnapper implements ISnapper {
 				}
 			}
 		}
-		// return snapoint (-1,-1 if not match was found)
-		return { x: x, y: y };
-	}
-
-	/**
-	 * This method finds a snapPoint for a routing point which is a virtual routing point.
-	 * The trick here is to translate the coordinates to the containing element/diagram plane.
-	 *
-	 * @param modelElement
-	 * @param point
-	 * @returns
-	 */
-	private findSnapPointForRoutingPoint(modelElement: SRoutingHandle,point: Point): Point  {
-		let x = this.outOfRange;
-		let y = this.outOfRange;
-		let childs: any;
-		const p1=modelElement.parent;
-
-		// we need to find out if we are in a container to get the child elements and the routing point coordinates.
-		const pointIndex=modelElement.pointIndex;
-		if (pointIndex===-1) {
-			// pointIndex=0;
-			return { x: x, y: y };
-		}
-
-		if (p1 instanceof SEdge) {
-			const basisPoint=p1.routingPoints[pointIndex];
-			if (!basisPoint) {
-				// problem
-				return { x: x, y: y };
-				// return undefined;
-			}
-			childs=p1.parent.children;
-
-			const modelElementCenter ={x:basisPoint.x+point.x , y:basisPoint.y+point.y } ;
-			// In the following we iterate over all model elements
-			// and compare the x and y axis of the center points
-			for (const element of childs) {
-				if (isBPMNNode(element) && isBoundsAware(element)) {
-
-					const elementCenter = Bounds.center(element.bounds);
-					// console.log(' ... found element ' + element.id + ' pos=' + elementCenter.x + ','+elementCenter.y);
-					if (elementCenter) {
-						// test horizontal alignment...
-						if (y === this.outOfRange && this.isNear(elementCenter.y, modelElementCenter.y)) {
-							// fount horizontal snap point
-							y = elementCenter.y -basisPoint.y;
-						}
-						// test vertical alignment...
-						if (x === this.outOfRange && this.isNear(elementCenter.x, modelElementCenter.x)) {
-							// found vertical snap point!
-							x = elementCenter.x-basisPoint.x ;
-						}
-					}
-				}
-				if (x !== this.outOfRange || y !== this.outOfRange) {
-					// we can break here as we found already the maximum of two possible matches.
-					break;
-				}
-			}
-		}
-
-		// return snapoint (-1,-1 if not match was found)
+		// return snapPoint (-1,-1 if not match was found)
 		return { x: x, y: y };
 	}
 
