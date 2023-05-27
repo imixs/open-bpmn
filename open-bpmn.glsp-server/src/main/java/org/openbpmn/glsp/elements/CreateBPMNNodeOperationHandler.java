@@ -30,6 +30,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
+import org.openbpmn.glsp.utils.GridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
@@ -58,6 +59,14 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
 
     public CreateBPMNNodeOperationHandler(final List<String> handledElementTypeIds) {
         super(handledElementTypeIds);
+    }
+
+    /**
+     * Snap default position to gird 10x10px
+     */
+    @Override
+    public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+        return GridSnapper.snap(operation.getLocation());
     }
 
     /**

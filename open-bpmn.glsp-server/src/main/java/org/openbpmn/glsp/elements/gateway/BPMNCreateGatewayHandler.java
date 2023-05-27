@@ -34,6 +34,7 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.GridSnapper;
 
 import com.google.inject.Inject;
 
@@ -43,7 +44,7 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { // CreateNodeOperationHandler
+public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler {
 
     private static Logger logger = LogManager.getLogger(BPMNCreateGatewayHandler.class);
 
@@ -82,8 +83,8 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler { /
                 double elementY = point.get().getY();
 
                 // compute relative center position...
-                elementX = elementX - (Gateway.DEFAULT_WIDTH / 2);
-                elementY = elementY - (Gateway.DEFAULT_HEIGHT / 2);
+                elementX = GridSnapper.snap(elementX - (Gateway.DEFAULT_WIDTH / 2));
+                elementY = GridSnapper.snap(elementY - (Gateway.DEFAULT_HEIGHT / 2));
 
                 gateway.setPosition(elementX, elementY);
                 gateway.setDimension(Gateway.DEFAULT_WIDTH, Gateway.DEFAULT_HEIGHT);

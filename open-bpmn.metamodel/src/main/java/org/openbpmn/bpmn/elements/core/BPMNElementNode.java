@@ -135,6 +135,30 @@ public abstract class BPMNElementNode extends BPMNElement {
     }
 
     /**
+     * Update the absolute position of a BPMNElementNode.
+     * 
+     * When BPMNElementNode is part of a participant with lanes, this method
+     * automatically updates the containing participant and/or the bpmn2:flowNodeRef
+     * of the containing lane.
+     * 
+     * 
+     * 
+     * @param point - a BPMN point
+     * @param y
+     */
+    public void setPosition(BPMNPoint point) {
+        try {
+            this.getBounds().setPosition(point);
+            // update containment only if position is not 0,0
+            if (point.getX() != 0 && point.getY() != 0) {
+                updateContainment(point.getX(), point.getY());
+            }
+        } catch (BPMNMissingElementException e) {
+            BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
+        }
+    }
+
+    /**
      * This helper method verifies the current containment and updates the
      * participant and/or lane in case the containment has changed.
      * 
