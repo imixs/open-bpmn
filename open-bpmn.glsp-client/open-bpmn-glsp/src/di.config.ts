@@ -19,7 +19,7 @@ import {
     createDiagramContainer,
     DeleteElementContextMenuItemProvider,
     DiamondNodeView, editLabelFeature, ForeignObjectView, LogLevel, moveFeature, overrideViewerOptions,
-    RectangularNodeView, RevealNamedElementActionProvider,
+    RectangularNodeView,
     RoundedCornerNodeView, SCompartment,
     SCompartmentView, selectFeature, SLabel, SLabelView, TYPES
 } from '@eclipse-glsp/client';
@@ -59,7 +59,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
     bind(TYPES.ISnapper).to(BPMNElementSnapper);
 
-    bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
+    // We do not whant a reveal action in BPMN
+    // bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
+
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
 	// bind new SelectionListener for BPMNLabels and BoundaryEvents

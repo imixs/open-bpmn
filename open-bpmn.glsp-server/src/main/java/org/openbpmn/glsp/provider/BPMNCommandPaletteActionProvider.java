@@ -17,6 +17,7 @@ package org.openbpmn.glsp.provider;
 
 import static org.eclipse.glsp.graph.util.GraphUtil.point;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -37,6 +38,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
+import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 
@@ -59,9 +61,24 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         List<String> selectedIds = editorContext.getSelectedElementIds();
         // Optional<GPoint> lastMousePosition =
         // GridSnapper.snap(editorContext.getLastMousePosition());
-
         Optional<GPoint> lastMousePosition = editorContext.getLastMousePosition();
-        Set<GModelElement> selectedElements = index.getAll(selectedIds);
+
+        // create a list of selected GModelElements but keep the order of the
+        // selectedIDs ....
+        List<GModelElement> selectedElements = new ArrayList<GModelElement>();
+        for (String _id : selectedIds) {
+            Optional<GModelElement> _node = index.get(_id);
+            if (_node.isPresent()) {
+                selectedElements.add(_node.get());
+            }
+        }
+        // filter BPMNLabels from the selection (but keep the order)
+        List<GModelElement> selectedBPMNNodeElements = new ArrayList<GModelElement>();
+        for (GModelElement _gModelElement : selectedElements) {
+            if (!(_gModelElement instanceof LabelGNode)) {
+                selectedBPMNNodeElements.add(_gModelElement);
+            }
+        }
 
         // Create node actions are always possible
         actions.addAll(Sets.newHashSet(
@@ -132,23 +149,14 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
 
         ));
 
-        //
-
-        // Create edge actions between two nodes
-        if (selectedElements.size() == 1) {
-            GModelElement element = selectedElements.iterator().next();
-            if (element instanceof GNode) {
-                actions.addAll(createEdgeActions((GNode) element,
-                        index.getAllByClass(TaskGNode.class)));
-            }
-        } else if (selectedElements.size() == 2) {
-            Iterator<GModelElement> iterator = selectedElements.iterator();
+        // Create edge actions between two nodes only if to BPMN nodes are selected
+        if (selectedBPMNNodeElements.size() == 2) {
+            Iterator<GModelElement> iterator = selectedBPMNNodeElements.iterator();
             GModelElement firstElement = iterator.next();
             GModelElement secondElement = iterator.next();
             if (isBPMNFlowElementNode(firstElement) && isBPMNFlowElementNode(secondElement)) {
                 GNode firstNode = (GNode) firstElement;
                 GNode secondNode = (GNode) secondElement;
-                // actions.add(createEdgeAction("Connect with Edge", firstNode, secondNode));
                 actions.add(createSequenceFlowAction("Connect with Sequence Flow", firstNode,
                         secondNode));
             }
@@ -173,7 +181,8 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
      * @param element
      */
     public boolean isBPMNFlowElementNode(GModelElement element) {
-        return (element instanceof TaskGNode || element instanceof EventGNode || element instanceof GatewayGNode);
+        return (element instanceof TaskGNode || element instanceof EventGNode
+                || element instanceof GatewayGNode);
     }
 
     /**
