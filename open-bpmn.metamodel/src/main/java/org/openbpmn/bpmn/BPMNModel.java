@@ -1283,14 +1283,13 @@ public class BPMNModel {
      * @param file
      */
     public void save(File file) {
-        logger.warning("...save BPMN model to file: " + file);
-
+        logger.finest("...save BPMN model to file: " + file);
         // On windows the filepath can be something like:
         // '/c:/Users/Max Musterman/test.bpmn'
         // See #249
         // try (FileOutputStream output = new FileOutputStream(filePath)) {
         try (FileOutputStream output = new FileOutputStream(file)) {
-            logger.warning("...start writing to file outputstream....");
+            logger.finest("...start writing to file outputstream....");
             if (doc == null) {
                 logger.severe("...unable to save file - doc is null!");
             }

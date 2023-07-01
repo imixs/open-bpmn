@@ -72,19 +72,12 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
      */
     @Override
     public void loadSourceModel(final RequestModelAction action) {
-        logger.debug("loading BPMN Meta model....");
+
         Map<String, String> options = action.getOptions();
         boolean bNeedsClientLayout = Boolean.parseBoolean(options.get("needsClientLayout"));
-        // resolve file location....
-        // String uri = MapUtil.getValue(options, "sourceUri").orElse(null);
-        // if (uri == null || uri.isEmpty()) {
-        // // fallback
-        // uri = options.get("uri");
-        // }
-
         final File file = getSourceFile(modelState);
 
-        logger.warn("loadSourceModel from : " + file);
+        logger.debug("loadSourceModel from : " + file);
         String diagramType = options.get("diagramType");
         if (bNeedsClientLayout && file != null && BPMNDiagramConfiguration.DIAGRAM_TYPE.equals(diagramType)) {
             BPMNModel model;
@@ -152,25 +145,8 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
      */
     @Override
     public void saveSourceModel(final SaveModelAction action) {
-        logger.debug("saveSourceModel....");
-        // Map<String, String> options = modelState.getClientOptions();
-        // // resolve origin file location....
-        // String filePath = MapUtil.getValue(options, "sourceUri").orElse(null);
-        // if (filePath == null || filePath.isEmpty()) {
-        // // fallback
-        // filePath = options.get("uri");
-        // }
-
-        // // test if we have a new fileUri....
-        // String newFileURI = action.getFileUri().orElse(null);
-        // if (newFileURI != null && !newFileURI.isEmpty()) {
-        // // we got a new URI which means we have a 'saveAs' situation!
-        // filePath = newFileURI;
-        // }
-
         final File file = getTargetFile(modelState, action);
-        logger.warn("saveSourceModel to : " + file);
-
+        logger.debug("saveSourceModel to : " + file);
         BPMNModel model = modelState.getBpmnModel();
 
         // Apply BPMNModelExtensions
@@ -210,7 +186,7 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
         String filePath = MapUtil.getValue(modelState.getClientOptions(), "sourceUri").orElse(null);
         // strip the file:// prefix
         filePath = filePath.replace(FILE_PREFIX, "");
-        logger.warn("source uri=" + filePath);
+        logger.debug("source uri=" + filePath);
         return new File(filePath);
     }
 
