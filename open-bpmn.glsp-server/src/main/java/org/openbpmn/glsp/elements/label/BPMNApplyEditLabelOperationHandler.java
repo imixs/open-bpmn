@@ -13,18 +13,15 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-package org.openbpmn.glsp.elements.data;
+package org.openbpmn.glsp.elements.label;
 
 import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
-import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.directediting.ApplyLabelEditOperation;
 import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.Operation;
@@ -99,26 +96,38 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
 
                     GModelElement parent = gNodeElement.getParent();
                     if (parent != null && parent instanceof LabelGNode) {
-                        int FONT_SIZE = 14;
+                        // int FONT_SIZE = 14;
                         LabelGNode label = (LabelGNode) parent;
-                        // resize based on the lines....
-                        int estimatedLines = estimateLineCount(operation.getText(), FONT_SIZE, 100);
-                        GDimension newLabelSize = GraphUtil.dimension(100, FONT_SIZE * estimatedLines);
-                        label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newLabelSize.getWidth());
-                        label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newLabelSize.getHeight());
-                        // calling the size method does not have an effect.
-                        // see:
-                        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-                        label.setSize(newLabelSize);
-                        // Update the BPMNLabel bounds...
                         try {
                             BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
-                            if (bpmnLabel != null) {
-                                bpmnLabel.getBounds().setDimension(newLabelSize.getWidth(), newLabelSize.getHeight());
-                            }
+                            BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel, operation.getText());
                         } catch (BPMNMissingElementException e) {
                             e.printStackTrace();
                         }
+
+                        // // resize based on the lines....
+                        // int estimatedLines = estimateLineCount(operation.getText(), FONT_SIZE, 100);
+                        // GDimension newLabelSize = GraphUtil.dimension(100, FONT_SIZE *
+                        // estimatedLines);
+                        // label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH,
+                        // newLabelSize.getWidth());
+                        // label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT,
+                        // newLabelSize.getHeight());
+                        // // calling the size method does not have an effect.
+                        // // see:
+                        // //
+                        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+                        // label.setSize(newLabelSize);
+                        // // Update the BPMNLabel bounds...
+                        // try {
+                        // BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
+                        // if (bpmnLabel != null) {
+                        // bpmnLabel.getBounds().setDimension(newLabelSize.getWidth(),
+                        // newLabelSize.getHeight());
+                        // }
+                        // } catch (BPMNMissingElementException e) {
+                        // e.printStackTrace();
+                        // }
 
                     }
                 }
@@ -140,32 +149,6 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
         // we do need to reset the model because of the properties panels
         modelState.reset();
 
-    }
-
-    /**
-     * Helper method to estimate the number of lines a text will need in a panel
-     * with a given width
-     *
-     * @param text
-     * @param fontSize
-     * @param width
-     * @return estimated number of lines
-     */
-    private int estimateLineCount(final String text, final int fontSize, final int width) {
-        int result = 0;
-        // first split the text by hard line breaks...
-        String[] paragraphs = text.split("\n");
-
-        // Estimate the number of characters per line based on the font size and the
-        // given width
-        double charactersPerLine = width / (fontSize * 0.5);
-
-        // Estimate the number of lines per paragraph based on the number of characters
-        for (String paragraph : paragraphs) {
-            int lineCount = (int) Math.ceil(paragraph.length() / charactersPerLine);
-            result += lineCount;
-        }
-        return result;
     }
 
     /**

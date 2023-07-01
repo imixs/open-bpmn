@@ -30,6 +30,9 @@ import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
@@ -130,10 +133,19 @@ public abstract class AbstractBPMNElementExtension implements BPMNElementExtensi
                         // do we have a BPMN LabelGNode
                         if (gModelElement instanceof LabelGNode) {
                             LabelGNode lgn = (LabelGNode) gModelElement;
-                            // update the bpmn-text-node of the GNodeElement
+                            // update the bpmn-text-node of the GNodeElement.
+                            // Here we use the recomputeBPMNLabelHeight method to optimize
+                            // the height of the BPMNLabel
                             gMultiLineTextNode = BPMNGModelUtil.findMultiLineTextNode(lgn);
                             if (gMultiLineTextNode != null) {
                                 gMultiLineTextNode.getArgs().put("text", name);
+                                LabelGNode label = (LabelGNode) gModelElement;
+                                try {
+                                    BPMNLabel bpmnLabel = ((BPMNElementNode) bpmnElement).getLabel();
+                                    BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel, name);
+                                } catch (BPMNMissingElementException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         } else {
                             // default to GLabel
