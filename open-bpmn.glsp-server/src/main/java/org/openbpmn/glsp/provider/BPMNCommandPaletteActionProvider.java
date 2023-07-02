@@ -80,74 +80,73 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
             }
         }
 
-        // Create node actions are always possible
-        actions.addAll(Sets.newHashSet(
-                new LabeledAction("Create Manual Task",
+        if (selectedBPMNNodeElements.size() == 0) {
+            actions.add(new LabeledAction("Create Task",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.TASK,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "inspect"));
+            actions.add(new LabeledAction("Create Manual Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.MANUAL_TASK,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create User Task",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "inspect"));
+                actions.add(new LabeledAction("Create User Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.USER_TASK,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Send Task",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "inspect"));
+                actions.add(new LabeledAction("Create Send Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SEND_TASK,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Service Task",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "inspect"));
+                actions.add(new LabeledAction("Create Service Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SERVICE_TASK,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Script Task",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "inspect"));
+                actions.add(new LabeledAction("Create Script Task",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SCRIPT_TASK,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "inspect"));
 
-                new LabeledAction("Create Start Event",
+                // Events
+                actions.add(new LabeledAction("Create Start Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.START_EVENT,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create End Event",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "circle-filled"));
+
+                actions.add(new LabeledAction("Create End Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.END_EVENT,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Catch Event",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "circle-filled"));
+                actions.add(new LabeledAction("Create Catch Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.CATCH_EVENT,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Throw Event",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "circle-filled"));
+                actions.add(new LabeledAction("Create Throw Event",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.THROW_EVENT,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "circle-filled"));
 
-                new LabeledAction("Create Exclusive Gateway",
+                // Gateways
+                actions.add(new LabeledAction("Create Exclusive Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EXCLUSIVE_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Parallel Gateway",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "debug-breakpoint-log-unverified"));
+
+                actions.add(new LabeledAction("Create Parallel Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.PARALLEL_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Inclusive Gateway",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "debug-breakpoint-log-unverified"));
+
+                actions.add(new LabeledAction("Create Inclusive Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.INCLUSIVE_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Event Gateway",
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "debug-breakpoint-log-unverified"));
+
+                actions.add(new LabeledAction("Create Event Gateway",
                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EVENTBASED_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
-                new LabeledAction("Create Complex Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.COMPLEX_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square"))),
+                                lastMousePosition.orElse(point(0, 0)))),
+                        "debug-breakpoint-log-unverified"));
 
-                // Pool
-                new LabeledAction("Create Pool",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.POOL,
-                                lastMousePosition.orElse(point(0, 0)),
-                                "fa-plus-square")))
-
-        ));
+            }
 
         // Create edge actions between two nodes only if to BPMN nodes are selected
         if (selectedBPMNNodeElements.size() == 2) {
@@ -162,14 +161,10 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
             }
         }
 
-        // Delete action
-        if (selectedElements.size() == 1) {
+        // Delete action - symbol-property
+        if (selectedBPMNNodeElements.size() == 1) {
             actions.add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)),
-                    "fa-minus-square"));
-        } else if (selectedElements.size() > 1) {
-            actions.add(new LabeledAction("Delete All",
-                    Lists.newArrayList(new DeleteOperation(selectedIds)),
-                    "fa-minus-square"));
+                    "trash"));
         }
 
         return actions;
@@ -207,7 +202,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
         return new LabeledAction(label,
                 Lists.newArrayList(new CreateEdgeOperation(BPMNTypes.SEQUENCE_FLOW, source.getId(),
                         node.getId())),
-                "fa-plus-square");
+                "export");
     }
 
     private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
