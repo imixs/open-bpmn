@@ -66,27 +66,27 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         // Create custom Palette Groups
         return Lists.newArrayList(
                 PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(),
-                        "symbol-property", "A"),
+                                        "circuit-board", "A"),
                 PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(),
-                        "symbol-property", "B"),
+                                        "inspect", "B"),
                 PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(),
-                        "symbol-property",
+                                        "circle-filled",
                         "C"),
                 PaletteItem.createPaletteGroup("event-group", "Event Definitions",
                         createPaletteEventDefinitions(),
-                        "symbol-property", "D"),
+                                        "layers", "D"),
                 PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
-                        "symbol-property", "E"),
+                                        "debug-breakpoint-log-unverified", "E"),
 
                 PaletteItem.createPaletteGroup("gateway-group", "Data Items", createPaletteDataItems(),
-                        "symbol-property", "F"),
+                                        "notebook-template", "F"),
 
                 PaletteItem.createPaletteGroup("edge-group", "Edges", createPaletteSequenceFlowItems(),
-                        "symbol-property", "G"),
+                                        "export", "G"),
 
                 PaletteItem.createPaletteGroup("extension-group", "Extensions",
                         createPaletteExtensions(),
-                        "symbol-property", "H")
+                                        "extensions", "H")
 
         );
 
