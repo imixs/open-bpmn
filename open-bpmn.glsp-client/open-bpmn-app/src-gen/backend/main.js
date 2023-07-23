@@ -15,4 +15,4 @@ serverAddress.then(({ port, address }) => {
     }
 });
 
-module.exports = serverAddress;
+globalThis.serverAddress = serverAddress;

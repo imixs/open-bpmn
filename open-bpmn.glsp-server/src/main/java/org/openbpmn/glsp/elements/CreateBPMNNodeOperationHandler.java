@@ -21,16 +21,14 @@ import java.util.Optional;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.operations.AbstractCreateOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
-import org.eclipse.glsp.server.operations.CreateNodeOperationHandler;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
-import org.openbpmn.glsp.utils.GridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.common.collect.Lists;
@@ -43,8 +41,7 @@ import com.google.inject.Inject;
  * @author rsoika AbstractGModelCreateNodeOperationHandler
  *         AbstractCreateOperationHandler
  */
-public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOperationHandler<CreateNodeOperation>
-        implements CreateNodeOperationHandler {
+public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperationHandler<CreateNodeOperation> {
 
     @Inject
     protected BPMNGModelState modelState;
@@ -64,10 +61,10 @@ public abstract class CreateBPMNNodeOperationHandler extends AbstractCreateOpera
     /**
      * Snap default position to gird 10x10px
      */
-    @Override
-    public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
-        return GridSnapper.snap(operation.getLocation());
-    }
+    // @Override
+    // public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
+    // return GridSnapper.snap(operation.getLocation());
+    // }
 
     /**
      * Helper method resolves the containing BPMNProcess for a CreateNodeOperation.

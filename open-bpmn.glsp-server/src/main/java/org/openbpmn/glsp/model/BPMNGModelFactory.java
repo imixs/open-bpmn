@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.inject.Inject;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
@@ -95,6 +93,8 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+
+import com.google.inject.Inject;
 
 /**
  * The BPMNGModelFactory is responsible to produce a graph model from the BPMN

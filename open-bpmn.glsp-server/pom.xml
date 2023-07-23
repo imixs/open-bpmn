@@ -9,16 +9,6 @@
 	<name>Open BPMN - Server</name>
 	<description>The Open BPMN Server Project</description>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>11</maven.compiler.release>
-
-		<package-type>eclipse-plugin</package-type>
-		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
-		
-		<!-- 1.0.0 | 1.1.0.RC02 | 1.1.0.RC03 | 1.1.0-SNAPSHOT -->
-		<glsp-server-version>1.1.0.RC03</glsp-server-version>
-	</properties>
 
 	<dependencies>
 	
@@ -27,57 +17,22 @@
 			<artifactId>maven-model</artifactId>
 			<version>3.3.9</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.server</artifactId>
 			<version>${glsp-server-version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
 			<version>2.17.1</version>
-		</dependency>		
-
-		<dependency>
-			<groupId>org.eclipse.glsp</groupId>
-			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
-			<version>${glsp-server-version}</version>
 		</dependency>
-<!--
-		<dependency>
-			<groupId>org.eclipse.glsp</groupId>
-			<artifactId>org.eclipse.glsp.layout</artifactId>
-			<version>${glsp-server-version}</version>
-		</dependency>
-		-->
-		<dependency>
-			<groupId>org.eclipse.elk</groupId>
-			<artifactId>org.eclipse.elk.alg.layered</artifactId>
-			<version>0.7.1</version>
-			<!-- Can be removed once https://github.com/eclipse-glsp/glsp/issues/265 
-				is resolved -->
-			<exclusions>
-				<exclusion>
-					<groupId>com.google.guava</groupId>
-					<artifactId>guava</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
-			<version>1.1</version>
-		</dependency>
-
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
 			<version>1.1</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.imixs.bpmn</groupId>
 			<artifactId>open-bpmn.metamodel</artifactId>
@@ -163,23 +118,34 @@
 							<transformers>
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>org.openbpmn.glsp.BPMNServerLauncher</mainClass>
-								</transformer>
+									<manifestEntries>
+										<Multi-Release>true</Multi-Release>
+									</manifestEntries>
+								</transformer>								
 							</transformers>
+							<artifactSet>
+								<excludes>
+									<exclude>jakarta.websocket:jakarta.websocket-api</exclude>
+									<exclude>javax.websocket:javax.websocket-api</exclude>
+									<exclude>log4j:log4j</exclude>
+								</excludes>
+							</artifactSet>							
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
 									<excludes>
-										<exclude>META-INF/INDEX.LIST</exclude>
-										<exclude>META-INF/*.SF</exclude>
-										<exclude>META-INF/*.DSA</exclude>
-										<exclude>META-INF/*.RSA</exclude>
-										<exclude>META-INF/LICENSE</exclude>
-										<exclude>META-INF/NOTICE</exclude>
-										<exclude>META-INF/DEPENDENCIES</exclude>
 										<exclude>META-INF/MANIFEST.MF</exclude>
+										<exclude>META-INF/DEPENDENCIES</exclude>
+										<exclude>META-INF/ECLIPSE_*</exclude>
+										<exclude>META-INF/LICENSE*</exclude>
+										<exclude>META-INF/services/javax.servlet.ServletContainerInitializer</exclude>
+										<exclude>META-INF/services/jakarta.servlet.ServletContainerInitializer*</exclude>
+										<exclude>META-INF/services/org.eclipse.jetty.webapp.Configuration*</exclude>
+										<exclude>META-INF/services/org.eclipse.elk.core.data.ILayoutMetaDataProvider*</exclude>
+										<exclude>META-INF/versions/9/module-info.class</exclude>
+										<exclude>META-INF/NOTICE*</exclude>
 										<exclude>.options</exclude>
 										<exclude>.api_description</exclude>
-										<exclude>plugin.properties</exclude>
 										<exclude>*.profile</exclude>
 										<exclude>*.html</exclude>
 										<exclude>about.*</exclude>
@@ -188,12 +154,17 @@
 										<exclude>modeling32.png</exclude>
 										<exclude>systembundle.properties</exclude>
 										<exclude>profile.list</exclude>
+										<exclude>module-info.class</exclude>
+										<exclude>plugin.properties</exclude>
 										<exclude>**/*._trace</exclude>
 										<exclude>**/*.g</exclude>
 										<exclude>**/*.tokens</exclude>
 										<exclude>**/*.mwe2</exclude>
 										<exclude>**/*.xtext</exclude>
 										<exclude>**/*.xtextbin</exclude>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+										<exclude>META-INF/*.INF</exclude>
 									</excludes>
 								</filter>
 							</filters>
@@ -214,4 +185,5 @@
 			</build>
 		</profile>
 	</profiles>
+
 </project>

@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -56,6 +57,10 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     }
 
     @Override
+     public Optional<Command> createCommand(final CreateNodeOperation operation) {
+         return commandOf(() -> executeOperation(operation));
+     }
+
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
         // now we add a new participant into the source model

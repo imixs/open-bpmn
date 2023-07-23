@@ -18,6 +18,7 @@ package org.openbpmn.glsp.elements.edge;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
@@ -52,11 +53,15 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
         this.label = "Sequence Flow";
     }
 
+    @Override
+    public Optional<Command> createCommand(final CreateEdgeOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
     /**
      * Adds a new BPMNEdge to the diagram. Depending on the type a SequenceFlow,
      * MessageFlow or Association is crated.
      */
-    @Override
     protected void executeOperation(final CreateEdgeOperation operation) {
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");

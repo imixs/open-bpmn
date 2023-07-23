@@ -72,7 +72,22 @@ terms of the Eclipse Public License v. 2.0
 		<url>https://github.com/imixs/open-bpmn/issues</url>
 	</issueManagement>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.source>11</java.source>
+		<java.target>11</java.target>
+		<project.build.java.target>11</project.build.java.target>
+		<maven.compiler.release>11</maven.compiler.release>
 
+		<package-type>jar</package-type>
+		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
+		
+		<!-- 1.0.0 | 1.1.0.RC03 | 1.1.0-SNAPSHOT -->
+		<glsp-server-version>1.1.0.RC10</glsp-server-version>
+		<google.guava.version>[30.1-jre,)</google.guava.version>
+		<elk.version>[0.8.1,)</elk.version>
+		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
+	</properties>
 
 	<build>
 		<plugins>
@@ -129,6 +144,8 @@ terms of the Eclipse Public License v. 2.0
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>3.0.0</version>
 			</plugin>
+
+
 		</plugins>
 	</build>
 

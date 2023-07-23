@@ -20,7 +20,7 @@ container.load(messagingBackendModule);
 container.load(loggerBackendModule);
 
 function defaultServeStatic(app) {
-    app.use(express.static(path.resolve(__dirname, '../../lib')))
+    app.use(express.static(path.resolve(__dirname, '../../lib/frontend')))
 }
 
 function load(raw) {

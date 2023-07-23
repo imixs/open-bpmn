@@ -16,9 +16,11 @@
 package org.openbpmn.glsp.elements.pool;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
@@ -57,6 +59,10 @@ public class CreateLaneHandler extends CreateBPMNNodeOperationHandler {
     }
 
     @Override
+    public Optional<Command> createCommand(final CreateNodeOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
     public void executeOperation(final CreateNodeOperation operation) {
         logger.debug("===== > created lane....");
         elementTypeId = operation.getElementTypeId();

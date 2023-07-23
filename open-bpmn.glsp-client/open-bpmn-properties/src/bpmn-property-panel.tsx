@@ -15,7 +15,9 @@
  ********************************************************************************/
 import {
     EditorContextService, EnableToolPaletteAction,
-    GLSPActionDispatcher, hasArguments
+    GLSPActionDispatcher, hasArguments,
+    SModelElement,
+    SModelRoot
 } from '@eclipse-glsp/client';
 import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
 import {
@@ -24,8 +26,6 @@ import {
     EnableToolsAction,
     IActionHandler,
     ICommand,
-    SModelElement,
-    SModelRoot,
     SetUIExtensionVisibilityAction,
     TYPES
 } from 'sprotty';

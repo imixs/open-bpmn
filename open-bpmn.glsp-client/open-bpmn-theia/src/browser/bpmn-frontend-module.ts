@@ -13,9 +13,9 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { ContainerContext, GLSPClientContribution, GLSPTheiaFrontendModule } from '@eclipse-glsp/theia-integration';
+
+import { ContainerContext, DiagramConfiguration, GLSPClientContribution, GLSPTheiaFrontendModule } from '@eclipse-glsp/theia-integration';
 import { CommandContribution, MenuContribution } from '@theia/core';
-import { DiagramConfiguration } from 'sprotty-theia';
 import { BPMNLanguage } from '../common/bpmn-language';
 import { BPMNGLSPClientContribution } from './bpmn-glsp-client-contribution';
 import { BPMNPropertiesCommandContribution, BPMNPropertiesMenuContribution } from './bpmn-property-commands';
@@ -23,11 +23,11 @@ import { BPMNDiagramConfiguration } from './diagram/bpmn-diagram-configuration';
 
 export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
     protected override enableCopyPaste = true;
-    readonly diagramLanguage = BPMNLanguage;
 
     bindDiagramConfiguration(context: ContainerContext): void {
         context.bind(DiagramConfiguration).to(BPMNDiagramConfiguration);
     }
+    readonly diagramLanguage = BPMNLanguage;
 
     override configure(context: ContainerContext): void {
         // Custom workflow commands and menus

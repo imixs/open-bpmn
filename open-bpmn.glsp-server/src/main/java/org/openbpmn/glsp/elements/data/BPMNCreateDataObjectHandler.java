@@ -20,6 +20,7 @@ import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -67,7 +68,13 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
         super(BPMNTypes.DATAOBJECT);
     }
 
+
     @Override
+    public Optional<Command> createCommand(final CreateNodeOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
+    // @Override
     protected void executeOperation(final CreateNodeOperation operation) {
 
         elementTypeId = operation.getElementTypeId();
@@ -105,6 +112,7 @@ public class BPMNCreateDataObjectHandler extends CreateBPMNNodeOperationHandler 
         modelState.reset();
         actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(dataObjectID)));
     }
+
 
     @Override
     public String getLabel() {

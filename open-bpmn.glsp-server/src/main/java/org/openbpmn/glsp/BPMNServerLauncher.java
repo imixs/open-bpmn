@@ -45,7 +45,7 @@ public final class BPMNServerLauncher {
             ServerModule serverModule = new ServerModule().configureDiagramModule(new BPMNDiagramModule());
             GLSPServerLauncher launcher = new SocketGLSPServerLauncher(serverModule);
             launcher.start("localhost", port);
-        } catch (ParseException | IOException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
     }

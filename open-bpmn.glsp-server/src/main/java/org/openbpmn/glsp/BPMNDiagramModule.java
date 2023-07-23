@@ -28,8 +28,8 @@ import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
 import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
+import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
 import org.eclipse.glsp.server.model.GModelState;
-import org.eclipse.glsp.server.operations.CutOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.extensions.BPMNCreateExtensionHandler;
 import org.openbpmn.extensions.BPMNElementExtension;
@@ -132,14 +132,15 @@ public class BPMNDiagramModule extends DiagramModule {
     // protected void configureClientActions(final MultiBinding<Action> binding) {
     // }
 
+
     @Override
-    protected void configureOperationHandlers(final MultiBinding<OperationHandler> binding) {
+    protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
         super.configureOperationHandlers(binding);
 
         // Inline Edit
         binding.add(BPMNApplyEditLabelOperationHandler.class);
 
-        binding.add(CutOperationHandler.class);
+        binding.add(GModelCutOperationHandler.class);
         // binding.add(DeleteOperationHandler.class);
         // binding.add(LayoutOperationHandler.class);
 

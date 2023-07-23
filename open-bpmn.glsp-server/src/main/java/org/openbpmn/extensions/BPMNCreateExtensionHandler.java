@@ -22,6 +22,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
@@ -92,12 +93,15 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
         return extensionIds;
     }
 
+    @Override
+    public Optional<Command> createCommand(final CreateNodeOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
     /**
      * We expect that the EventDefintion was dropped on a Event. See
      * {@link BPMNDiagramConfiguration} method getShapeTypeHints
      */
-    @Override
-    public void executeOperation(final CreateNodeOperation operation) {
+    protected void executeOperation(final CreateNodeOperation operation) {
         String elementID = null;
         // now we add this extension directly into the BPMN element of the source
         // model

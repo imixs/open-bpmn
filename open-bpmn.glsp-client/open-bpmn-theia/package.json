@@ -28,7 +28,7 @@
   ],
   "dependencies": {
     "@open-bpmn/open-bpmn-glsp": "1.0.3",
-    "@eclipse-glsp/theia-integration": "1.1.0-RC04"
+    "@eclipse-glsp/theia-integration": "1.1.0-RC10"
   },
   "scripts": {
     "prepare": "yarn run clean && yarn run build",

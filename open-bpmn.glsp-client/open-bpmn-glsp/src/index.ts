@@ -13,9 +13,10 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import createBPMNDiagramContainer from './di.config';
+// import createBPMNDiagramContainer from './di.config';
 
 export * from './bpmn-element-views';
 export * from './bpmn-routing-views';
-export { createBPMNDiagramContainer };
+// export { createBPMNDiagramContainer };
+export * from './di.config';
 

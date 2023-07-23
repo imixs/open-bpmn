@@ -11,7 +11,7 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@eclipse-glsp/client": "1.1.0-RC04"
+    "@eclipse-glsp/client": "1.1.0-RC10"
   },
   "files": [
     "lib",

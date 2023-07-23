@@ -16,19 +16,14 @@
 package org.openbpmn.glsp.provider;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.eclipse.glsp.server.actions.TriggerEdgeCreationAction;
-import org.eclipse.glsp.server.actions.TriggerElementCreationAction;
 import org.eclipse.glsp.server.actions.TriggerNodeCreationAction;
 import org.eclipse.glsp.server.features.toolpalette.PaletteItem;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
-import org.eclipse.glsp.server.operations.CreateOperation;
-import org.eclipse.glsp.server.operations.CreateOperationHandler;
 import org.eclipse.glsp.server.operations.OperationHandlerRegistry;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
@@ -340,24 +335,27 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         return result;
     }
 
-    /**
-     * Create a default palette group for a given CreateOperation type
-     *
-     * @param handlers
-     * @param operationClass
-     * @return
-     */
-    protected List<PaletteItem> createPaletteItems(final List<CreateOperationHandler> handlers,
-            final Class<? extends CreateOperation> operationClass) {
-        return handlers.stream().filter(h -> operationClass.isAssignableFrom(h.getHandledOperationType()))
-                .flatMap(
-                        handler -> handler.getTriggerActions().stream()
-                                .map(action -> create(action, handler.getLabel())))
-                .sorted(Comparator.comparing(PaletteItem::getLabel)).collect(Collectors.toList());
-    }
+    // /**
+    // * Create a default palette group for a given CreateOperation type
+    // *
+    // * @param handlers
+    // * @param operationClass
+    // * @return
+    // */
+    // protected List<PaletteItem> createPaletteItems(final
+    // List<CreateOperationHandler> handlers,
+    // final Class<? extends CreateOperation> operationClass) {
+    // return handlers.stream().filter(h ->
+    // operationClass.isAssignableFrom(h.getHandledOperationType()))
+    // .flatMap(
+    // handler -> handler.getTriggerActions().stream()
+    // .map(action -> create(action, handler.getLabel())))
+    // .sorted(Comparator.comparing(PaletteItem::getLabel)).collect(Collectors.toList());
+    // }
 
-    protected PaletteItem create(final TriggerElementCreationAction action, final String label) {
-        return new PaletteItem("palette-item" + counter++, label, action);
-    }
+// protected PaletteItem create(final TriggerElementCreationAction action, final
+// String label) {
+// return new PaletteItem("palette-item" + counter++, label, action);
+// }
 
 }

@@ -19,5 +19,6 @@ export const BPMNLanguage: GLSPDiagramLanguage = {
     contributionId: 'Bpmn',
     label: 'BPMN 2.0 diagram',
     diagramType: 'bpmn-diagram',
-    fileExtensions: ['.bpmn','.bpmn2']
+    fileExtensions: ['.bpmn','.bpmn2'],
+    iconClass: 'codicon codicon-type-hierarchy-sub'
 };

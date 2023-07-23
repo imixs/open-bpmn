@@ -22,7 +22,7 @@ import {
 import { EventNode, isBoundaryEvent, isBPMNLabelNode, isBPMNNode, isTaskNode, LabelNode, TaskNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { CommandExecutionContext, CommandReturn, IView, RenderingContext, SChildElement, svg, TYPES } from 'sprotty';
+import { CommandExecutionContext, CommandReturn, IView, RenderingContext, SChildElementImpl, svg, TYPES } from 'sprotty';
 import { Bounds, Point } from 'sprotty-protocol';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -43,7 +43,7 @@ const JSX = { createElement: svg };
  * The HelperLinesElement defines the SModelElement
  * to containing a list of helperLines.
  */
-export class HelperLinesElement extends SChildElement {
+export class HelperLinesElement extends SChildElementImpl {
 	override type: string;
 	override id: string;
 	readonly helperLines: ReadonlyArray<HelperLine> = [];
@@ -186,7 +186,7 @@ export class BPMNElementSnapper implements ISnapper {
 
 		if (isBoundsAware(modelElement)) {
 			// we need to find out if we are in a container....
-			if (modelElement instanceof SChildElement) {
+			if (modelElement instanceof SChildElementImpl) {
 				childs=modelElement.parent.children;
 			}
 
@@ -299,7 +299,7 @@ export class HelperLineListener extends MouseListener {
 		const boundsAware = findParentByFeature(element, isBoundsAware);
 		if (boundsAware !== undefined) {
 			let current: SModelElement = boundsAware;
-			while (current instanceof SChildElement) {
+			while (current instanceof SChildElementImpl) {
 				const parent = current.parent;
 				if ('pool' === parent.type) {
 					return parent;
@@ -479,7 +479,7 @@ export class RemoveHelperLinesCommand extends FeedbackCommand {
  */
 export function removeHelperLines(root: SModelRoot): void {
 	const helperLines = root.index.getById(helpLineId(root));
-	if (helperLines instanceof SChildElement) {
+	if (helperLines instanceof SChildElementImpl) {
 		root.remove(helperLines);
 	}
 }

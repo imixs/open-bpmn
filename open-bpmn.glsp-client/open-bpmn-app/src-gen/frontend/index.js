@@ -11,7 +11,7 @@ FrontendApplicationConfigProvider.set({
         "light": "light",
         "dark": "dark"
     },
-    "defaultIconTheme": "none",
+    "defaultIconTheme": "theia-file-icons",
     "electron": {
         "windowOptions": {}
     },
@@ -25,7 +25,6 @@ self.MonacoEnvironment = {
         return './editor.worker.js';
     }
 }
-
 
 const preloader = require('@theia/core/lib/browser/preloader');
 
@@ -47,17 +46,16 @@ module.exports = preloader.preload().then(() => {
     .then(function () { return import('@theia/core/lib/browser/window/browser-window-module').then(load) })
     .then(function () { return import('@theia/core/lib/browser/keyboard/browser-keyboard-module').then(load) })
     .then(function () { return import('@theia/core/lib/browser/request/browser-request-module').then(load) })
-    .then(function () { return import('@theia/messages/lib/browser/messages-frontend-module').then(load) })
-    .then(function () { return import('@theia/variable-resolver/lib/browser/variable-resolver-frontend-module').then(load) })
-    .then(function () { return import('@theia/editor/lib/browser/editor-frontend-module').then(load) })
     .then(function () { return import('@theia/filesystem/lib/browser/filesystem-frontend-module').then(load) })
     .then(function () { return import('@theia/filesystem/lib/browser/download/file-download-frontend-module').then(load) })
     .then(function () { return import('@theia/filesystem/lib/browser/file-dialog/file-dialog-module').then(load) })
+    .then(function () { return import('@theia/messages/lib/browser/messages-frontend-module').then(load) })
+    .then(function () { return import('@theia/variable-resolver/lib/browser/variable-resolver-frontend-module').then(load) })
+    .then(function () { return import('@theia/editor/lib/browser/editor-frontend-module').then(load) })
     .then(function () { return import('@theia/workspace/lib/browser/workspace-frontend-module').then(load) })
     .then(function () { return import('@theia/markers/lib/browser/problem/problem-frontend-module').then(load) })
     .then(function () { return import('@theia/outline-view/lib/browser/outline-view-frontend-module').then(load) })
     .then(function () { return import('@theia/monaco/lib/browser/monaco-frontend-module').then(load) })
-    .then(function () { return import('sprotty-theia/lib/theia/diagram-module').then(load) })
     .then(function () { return import('@eclipse-glsp/theia-integration/lib/browser/theia-integration-frontend-module').then(load) })
     .then(function () { return import('@open-bpmn/open-bpmn-theia/lib/browser/bpmn-frontend-module').then(load) })
     .then(function () { return import('@theia/navigator/lib/browser/navigator-frontend-module').then(load) })
@@ -65,6 +63,7 @@ module.exports = preloader.preload().then(() => {
     .then(function () { return import('@theia/preferences/lib/browser/preference-frontend-module').then(load) })
     .then(function () { return import('@theia/process/lib/common/process-common-module').then(load) })
     .then(function () { return import('@theia/terminal/lib/browser/terminal-frontend-module').then(load) })
+    .then(function () { return import('sprotty-theia/lib/theia/diagram-module').then(load) })
         .then(start).catch(reason => {
             console.error('Failed to start the frontend application.');
             if (reason) {
