@@ -56,6 +56,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
             this.position = GraphUtil.point(bpmnPoolBounds.getPosition().getX(), bpmnPoolBounds.getPosition().getY());
             this.size = GraphUtil.dimension(bpmnPoolBounds.getDimension().getWidth(),
                     bpmnPoolBounds.getDimension().getHeight());
+
         } catch (BPMNMissingElementException e) {
             // should not happen
             logger.severe("BPMNParticipant does not support a BPMNBounds object!");
@@ -85,9 +86,12 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         node.setName(name);
 
         node.setLayout(GConstants.Layout.HBOX);
-        // Set min width/height for the Pool element
+        // Set absolute and min width/height for the Pool element
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Participant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Participant.MIN_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+
         // set padding to 0
         node.getLayoutOptions().put(GLayoutOptions.KEY_PADDING_BOTTOM, 0);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PADDING_TOP, 0);

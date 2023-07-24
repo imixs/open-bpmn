@@ -8,7 +8,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * A BPMNLabel is accociated with a BPMNFlowElement which can provide
+ * A BPMNLabel is associated with a BPMNFlowElement which can provide
  * independent bounds and styles
  * 
  * @author rsoika
@@ -16,6 +16,7 @@ import org.w3c.dom.NodeList;
  */
 public class BPMNLabel {
 
+    public final static double MIN_WIDTH = 16.0;
     public final static double DEFAULT_WIDTH = 100.0;
     public final static double DEFAULT_HEIGHT = 16.0;
 

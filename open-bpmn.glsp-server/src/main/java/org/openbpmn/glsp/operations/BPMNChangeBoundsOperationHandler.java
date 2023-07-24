@@ -226,7 +226,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
         }
 
         /* */
-        // Finally Update GNode dimension (if the model was not alreday reset)...
+        // Finally Update GNode dimension (if the model was not already reset)...
         if (modelState.isInitialized()) {
             gNode.setPosition(newPoint);
 

@@ -227,13 +227,10 @@ public class BPMNGModelFactory implements GModelFactory {
                         PoolGNode pool = new PoolGNodeBuilder(participant) //
                                 .addAll(childList) //
                                 .build();
-
                         // apply BPMN Extensions
                         applyBPMNElementExtensions(pool, participant);
                         gRootNodeList.add(pool);
-
                         poolGNodeList.put(participant.getId(), pool);
-
                     } else {
                         // add default process without a pool
                         gRootNodeList.addAll(computeGModelElements(bpmnProcess, null, gRootNodeList));

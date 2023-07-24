@@ -97,6 +97,13 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         node.getLayoutOptions().put(GLayoutOptions.KEY_RESIZE_CONTAINER, true);
+
+        // Set absolute and min width/height for the Pool element
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNLabel.MIN_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNLabel.DEFAULT_HEIGHT);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+
         // add a multiLine text block to show and edit long text blocks
         this.id = node.getId() + "_bpmntext";
         node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id, name));
