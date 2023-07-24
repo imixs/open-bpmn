@@ -48,9 +48,7 @@ public class SchemaBuilder {
     String arrayName = null;
 
     public SchemaBuilder() {
-
         rootSchemaBuilder = Json.createObjectBuilder();
-
         propertiesBuilder = Json.createObjectBuilder();
     }
 
@@ -63,16 +61,7 @@ public class SchemaBuilder {
      * @return this
      */
     public SchemaBuilder addProperty(final String name, final String type, final String description) {
-
         addProperty(name, type, description, null);
-        // JsonObjectBuilder typeBuilder = Json.createObjectBuilder(). //
-        // add("type", type);
-        // if (description != null && !description.isBlank()) {
-        // typeBuilder.add("description", description);
-        // }
-
-        // propertiesBuilder.add(name, typeBuilder);
-
         return this;
     }
 
