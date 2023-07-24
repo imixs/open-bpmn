@@ -93,11 +93,11 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
     public void setProperties(final LabelGNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.setLayout(GConstants.Layout.STACK);
+        node.setLayout(GConstants.Layout.FREEFORM);
         node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
         node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
         node.getLayoutOptions().put(GLayoutOptions.KEY_RESIZE_CONTAINER, true);
-        // add a mulitLine text block to show and edit long text blocks
+        // add a multiLine text block to show and edit long text blocks
         this.id = node.getId() + "_bpmntext";
         node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id, name));
     }

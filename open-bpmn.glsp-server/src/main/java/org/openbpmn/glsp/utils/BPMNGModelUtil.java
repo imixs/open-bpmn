@@ -103,34 +103,14 @@ public class BPMNGModelUtil {
         Map<String, Object> layoutOptions = new HashMap<>();
         layoutOptions.put(V_GRAB, true);
         layoutOptions.put(GLayoutOptions.KEY_V_ALIGN, "center");
-
         return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
                 .id(node.getId() + "_header") //
-                .layout(GConstants.Layout.STACK) //
+                .layout(GConstants.Layout.FREEFORM) //
                 .layoutOptions(layoutOptions) //
                 .build();
     }
 
-    /**
-     * This method tests if the given element has a Child of type GLabel. This is
-     * the case for Task Elements. In this case the method returns the GLabel.
-     * Otherwise the method returns null.
-     *
-     * @return GLabel of an element or null if no GLabel was found
-     */
-    @Deprecated
-    private static GLabel findCompartmentHeader(final BPMNGNode element) {
 
-        EList<GModelElement> childs = element.getChildren();
-        for (GModelElement child : childs) {
-            if (child instanceof GLabel) {
-                // return Optional.of(child);
-                return (GLabel) child;
-            }
-        }
-        // we did not found a GLabel
-        return null;
-    }
 
     /**
      * Builds the optional label on the bottom for extension information

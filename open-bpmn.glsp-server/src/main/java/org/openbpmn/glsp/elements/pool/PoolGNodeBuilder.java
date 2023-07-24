@@ -88,10 +88,16 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
         // Set min width/height for the Pool element
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Participant.MIN_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Participant.MIN_HEIGHT);
-
+        // set padding to 0
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PADDING_BOTTOM, 0);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PADDING_TOP, 0);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PADDING_LEFT, 0);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_PADDING_RIGHT, 0);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_H_GAP, 0);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 0);
+        // set header with label
         node.getChildren().add(BPMNGModelUtil.createBPMNContainerHeader(node));
         node.getChildren().add(createContainerCompartment(node));
-
     }
 
     /**
