@@ -23,15 +23,18 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GraphUtil;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeBoundsOperation;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndBounds;
+import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
@@ -46,6 +49,7 @@ import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
@@ -85,12 +89,17 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<ChangeBoundsOperation> {
+public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<ChangeBoundsOperation> {
 
     private static Logger logger = LogManager.getLogger(BPMNChangeBoundsOperationHandler.class);
 
     @Inject
     protected BPMNGModelState modelState;
+
+    @Override
+    public Optional<Command> createCommand(ChangeBoundsOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
 
     /**
      * Update the bounds for all selected elements in the GModel and also in the
@@ -100,8 +109,7 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
      * this case we remove the label from the selection because the
      * updateFlowElement method treads the label automatically.
      */
-    @Override
-    public void executeOperation(final ChangeBoundsOperation operation) {
+    private void executeOperation(final ChangeBoundsOperation operation) {
         // iterate over all new Bounds...
         logger.debug("=== ChangeBoundsOperation - " + operation.getNewBounds().size() + " new bounds");
 
@@ -238,6 +246,15 @@ public class BPMNChangeBoundsOperationHandler extends AbstractOperationHandler<C
             // see:
             // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
             gNode.setSize(newSize);
+
+            // If we have a Task, than we need to reposition the extension label too!
+            if (bpmnElementNode instanceof Activity && gNode instanceof BPMNGNode) {
+                GCompartment extensionCompartment = BPMNGModelUtil.findExtensionCompartment((BPMNGNode) gNode);
+                if (extensionCompartment != null) {
+                    extensionCompartment.setPosition(GraphUtil.point(3, newSize.getHeight() - 12));
+                }
+            }
+
         }
         // if the flow Element has a BPMNLabel, than we need to adjust finally the
         // position of the label too

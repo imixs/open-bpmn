@@ -15,9 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
+import java.util.Optional;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.emf.common.command.Command;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.operations.ReconnectEdgeOperation;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
@@ -34,7 +37,7 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class BPMNReconnectEdgeOperationHandler extends AbstractOperationHandler<ReconnectEdgeOperation> {
+public class BPMNReconnectEdgeOperationHandler extends GModelOperationHandler<ReconnectEdgeOperation> {
 
     private static Logger logger = LogManager.getLogger(BPMNReconnectEdgeOperationHandler.class);
 
@@ -42,7 +45,11 @@ public class BPMNReconnectEdgeOperationHandler extends AbstractOperationHandler<
     protected BPMNGModelState modelState;
 
     @Override
-    public void executeOperation(final ReconnectEdgeOperation operation) {
+    public Optional<Command> createCommand(ReconnectEdgeOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
+    private void executeOperation(final ReconnectEdgeOperation operation) {
 
         String edgeID = operation.getEdgeElementId();
         String sourceElementID = operation.getSourceElementId();

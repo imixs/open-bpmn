@@ -19,13 +19,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.SelectAction;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.operations.PasteOperation;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.SequenceFlow;
@@ -49,7 +51,7 @@ import com.google.inject.Inject;
  * @see {@link BPMNClipboardDataActionHandler}
  * @author rsoika
  */
-public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOperation> {
+public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOperation> {
 
     private static Logger logger = LogManager.getLogger(BPMNPasteOperationHandler.class);
 
@@ -58,6 +60,11 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
 
     @Inject
     protected ActionDispatcher actionDispatcher;
+
+    @Override
+    public Optional<Command> createCommand(PasteOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
 
     /**
      * This method copies the current element selection into the diagram. The
@@ -70,8 +77,7 @@ public class BPMNPasteOperationHandler extends AbstractOperationHandler<PasteOpe
      * new ElementIDs. Next the method copies the BPMN Edges by reconnecting the
      * clone to the new ElementIDs.
      */
-    @Override
-    protected void executeOperation(PasteOperation operation) {
+    private void executeOperation(PasteOperation operation) {
         BPMNPoint refPoint = null;
         double xOffset = 0;
         double yOffset = 0;

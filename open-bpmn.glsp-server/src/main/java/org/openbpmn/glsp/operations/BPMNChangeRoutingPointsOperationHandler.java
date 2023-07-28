@@ -19,10 +19,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GPoint;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -39,15 +40,20 @@ import com.google.inject.Inject;
  * @author rsoika
  *
  */
-public class BPMNChangeRoutingPointsOperationHandler extends AbstractOperationHandler<ChangeRoutingPointsOperation> {
+public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHandler<ChangeRoutingPointsOperation> {
 
     private static Logger logger = Logger.getLogger(BPMNChangeRoutingPointsOperationHandler.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
 
+
     @Override
-    public void executeOperation(final ChangeRoutingPointsOperation operation) {
+    public Optional<Command> createCommand(ChangeRoutingPointsOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
+    private void executeOperation(final ChangeRoutingPointsOperation operation) {
 
         List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
         logger.fine("=== ChangeRoutingPointsOperation - " + routingPoints.size() + " routing points");

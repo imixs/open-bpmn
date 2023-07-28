@@ -26,9 +26,10 @@ import javax.json.JsonReader;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
@@ -44,7 +45,7 @@ import com.google.inject.Inject;
  *
  */
 public class BPMNApplyPropertiesUpdateOperationHandler
-        extends AbstractOperationHandler<BPMNApplyPropertiesUpdateOperation> {
+        extends GModelOperationHandler<BPMNApplyPropertiesUpdateOperation> {
     private static Logger logger = LogManager.getLogger(BPMNApplyPropertiesUpdateOperationHandler.class);
 
     @Inject
@@ -56,11 +57,15 @@ public class BPMNApplyPropertiesUpdateOperationHandler
     @Inject
     protected Set<BPMNElementExtension> extensions;
 
+    @Override
+    public Optional<Command> createCommand(BPMNApplyPropertiesUpdateOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
     /**
      *
      */
-    @Override
-    protected void executeOperation(final BPMNApplyPropertiesUpdateOperation operation) {
+    private void executeOperation(final BPMNApplyPropertiesUpdateOperation operation) {
         long l = System.currentTimeMillis();
         String jsonData = operation.getJsonData();
         String category = operation.getCategory();

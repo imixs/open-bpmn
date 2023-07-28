@@ -16,10 +16,12 @@
 package org.openbpmn.glsp.operations;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.server.operations.AbstractOperationHandler;
+import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.operations.DeleteOperation;
+import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Message;
@@ -37,14 +39,18 @@ import com.google.inject.Inject;
  * Lanes, Processes and
  * Messages.
  */
-public class BPMNDeleteNodeHandler extends AbstractOperationHandler<DeleteOperation> {
+public class BPMNDeleteNodeHandler extends GModelOperationHandler<DeleteOperation> {
     private static Logger logger = Logger.getLogger(BPMNDeleteNodeHandler.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
 
     @Override
-    public void executeOperation(final DeleteOperation operation) {
+    public Optional<Command> createCommand(DeleteOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
+
+    private void executeOperation(final DeleteOperation operation) {
 
         List<String> elementIds = operation.getElementIds();
         if (elementIds == null || elementIds.size() == 0) {
