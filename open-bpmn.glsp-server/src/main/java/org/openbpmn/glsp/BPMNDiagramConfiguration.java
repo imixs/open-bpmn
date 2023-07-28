@@ -465,4 +465,9 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         return true;
     }
 
+    @Override
+    public boolean animatedUpdate() {
+        return false;
+    }
+
 }
