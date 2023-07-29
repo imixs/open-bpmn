@@ -84,8 +84,10 @@ terms of the Eclipse Public License v. 2.0
 		
 		<!-- 1.0.0 | 1.1.0.RC03 | 1.1.0-SNAPSHOT -->
 		<glsp-server-version>1.1.0.RC10</glsp-server-version>
+		<!--
 		<google.guava.version>[30.1-jre,)</google.guava.version>
 		<elk.version>[0.8.1,)</elk.version>
+		-->
 		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
 	</properties>
 
