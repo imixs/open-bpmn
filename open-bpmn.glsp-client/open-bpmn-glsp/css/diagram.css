@@ -183,8 +183,9 @@
 }
 
 .label-edit textarea {
-    margin: 1px;
     font-size: 1em !important;
+        text-align: center;
+            margin: 1px;
 }
 
 /*** Pool and Lances **/

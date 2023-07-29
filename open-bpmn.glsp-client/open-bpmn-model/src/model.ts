@@ -14,21 +14,30 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-	Args, Bounds, boundsFeature, CircularNode, connectableFeature, deletableFeature, DiamondNode, Dimension, EditableLabel,
-	fadeFeature, ForeignObjectElement, hoverFeedbackFeature, isBoundsAware, isEditableLabel,
-	layoutableChildFeature,
+	Args,
+	CircularNode,
+	DiamondNode,
+	Dimension,
+	EditableLabel,
+	ForeignObjectElement,
 	LayoutContainer,
-	layoutContainerFeature,
-	moveFeature,
 	Nameable,
-	nameFeature,
-	popupFeature,
 	RectangularNode, SArgumentable, SChildElement,
 	SEdge,
-	selectFeature,
 	SModelElement,
 	SShapeElement,
 	WithEditableLabel,
+	boundsFeature,
+	connectableFeature, deletableFeature,
+	fadeFeature,
+	hoverFeedbackFeature,
+	isEditableLabel,
+	layoutContainerFeature,
+	layoutableChildFeature,
+	moveFeature,
+	nameFeature,
+	popupFeature,
+	selectFeature,
 	withEditLabelFeature
 } from '@eclipse-glsp/client';
 
@@ -151,21 +160,22 @@ export class MultiLineTextNode extends ForeignObjectElement implements SArgument
   readonly args: Args;
   text = '';
 
-  override set bounds(bounds: Bounds) {
-    /* ignore set bounds, always use the parent's bounds */
-  }
+//   override set bounds(bounds: Bounds) {
+//     /* ignore set bounds, always use the parent's bounds */
+//   }
 
-  override get bounds(): Bounds {
-    if (isBoundsAware(this.parent)) {
-      return {
-        x: this.position.x,
-        y: this.position.y,
-        width: this.parent.bounds.width,
-        height: this.parent.bounds.height
-      };
-    }
-    return Bounds.EMPTY;
-  }
+//   override get bounds(): Bounds {
+//     if (isBoundsAware(this.parent)) {
+//       return {
+//         x: this.position.x,
+//         y: this.position.y,
+//         width: this.parent.bounds.width,
+//         height: this.parent.bounds.height
+//       };
+
+//     }
+//     return Bounds.EMPTY;
+//   }
 
   // @ts-expect-error Arguments are set in the element
   override get code(): string {
@@ -182,8 +192,8 @@ export class MultiLineTextNode extends ForeignObjectElement implements SArgument
 
   get editControlDimension(): Dimension {
     return {
-      width: this.bounds.width - 4,
-      height: this.bounds.height - 4
+      width: this.bounds.width - 2,
+      height: this.bounds.height - 2
     };
   }
 }

@@ -17,8 +17,13 @@ package org.openbpmn.glsp.elements.task;
 
 import java.util.logging.Logger;
 
+import org.eclipse.glsp.graph.DefaultTypes;
+import org.eclipse.glsp.graph.GCompartment;
+import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
+import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
+import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -82,27 +87,38 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.VBOX); // .VBOX
-        // Set min width/height
+        node.setLayout(GConstants.Layout.FREEFORM);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_GAP, 1);
 
-        GLayoutOptions iconLayoutOptions = new GLayoutOptions().hAlign(GConstants.HAlign.LEFT);
-        // icon can grab the vertical space, so that the extension label will be aligned
-        // to the bottom
-        iconLayoutOptions.put(V_GRAB, true);
-        IconGCompartment taskIcon = new IconGCompartmentBuilder(). //
-                id(node.getId() + "_icon"). //
-                layoutOptions(iconLayoutOptions). //
-                build();
-
+        // add Icon
+        GPoint iconPosition = GraphUtil.point(3, 3);
+        IconGCompartment taskIcon = new IconGCompartmentBuilder() //
+                .id(node.getId() + "_icon") //
+                .position(iconPosition) //
+                .build();
         node.getChildren().add(taskIcon);
-        node.getChildren().add(BPMNGModelUtil.createExtensionLabel(node));
+
+        // add Text Input
         node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id + "_name", name));
 
+        // add extension label
+        String extensionLabelString = (String) node.getArgs().get("extensionLabel");
+        GPoint extensionPosition = GraphUtil.point(3, size.getHeight() - 12);
+        GCompartment extensionLabel = new GCompartmentBuilder()
+                .type(DefaultTypes.COMPARTMENT)
+                .position(extensionPosition) //
+                // .layoutOptions(extensionLabelLayoutOptions) //
+                .add(new GLabelBuilder()
+                        .text(extensionLabelString)
+                        .build())
+                .addCssClass("extension")
+                .build();
+        node.getChildren().add(extensionLabel);
+
     }
+
 
 }

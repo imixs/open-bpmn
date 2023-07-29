@@ -21,7 +21,6 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GLabel;
@@ -29,7 +28,6 @@ import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -42,7 +40,6 @@ import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.LabelGNode;
-import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -58,6 +55,7 @@ public class BPMNGModelUtil {
     private static Logger logger = LogManager.getLogger(BPMNGModelUtil.class);
 
     private static final String V_GRAB = "vGrab";
+    private static final String H_GRAB = "hGrab";
 
     public static IconGCompartment createCompartmentIcon(final BPMNGNode node) {
         return new IconGCompartmentBuilder(). //
@@ -71,13 +69,13 @@ public class BPMNGModelUtil {
      * @param node
      * @return GPort
      */
-    @Deprecated
-    public static GLabel createCompartmentHeader(final BPMNGNode node) {
-        return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-                .id(node.getId() + "_header") //
-                .text(node.getName()) //
-                .build();
-    }
+    // @Deprecated
+    // public static GLabel createCompartmentHeader(final BPMNGNode node) {
+    // return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
+    // .id(node.getId() + "_header") //
+    // .text(node.getName()) //
+    // .build();
+    // }
 
     /**
      * Creates a Multiline GLable node
@@ -112,28 +110,6 @@ public class BPMNGModelUtil {
 
 
 
-    /**
-     * Builds the optional label on the bottom for extension information
-     * 
-     * @return
-     */
-    public static GCompartment createExtensionLabel(final TaskGNode node) {
-
-        // test if we have a label
-
-        String extensionLabel = (String) node.getArgs().get("extensionLabel");
-
-        GLayoutOptions extensionLabelLayoutOptions = new GLayoutOptions().hAlign(GConstants.HAlign.RIGHT);
-        GCompartment footer = new GCompartmentBuilder()
-                .type(DefaultTypes.COMPARTMENT)
-                .layoutOptions(extensionLabelLayoutOptions) //
-                .add(new GLabelBuilder()
-                        .text(extensionLabel)
-                        .build())
-                .addCssClass("extension")
-                .build();
-        return footer;
-    }
 
     /**
      * This method tests if the given element has a BPMN extension label.
@@ -155,6 +131,28 @@ public class BPMNGModelUtil {
             }
         }
         // we did not found a extension GLabel
+        return null;
+    }
+
+    /**
+     * This method returns a BPMN extension GCompartment.
+     * An Extension is used by Tasks to display additional information
+     * 
+     * @return GLabel of an element or null if no GLabel was found
+     */
+    public static GCompartment findExtensionCompartment(final BPMNGNode element) {
+
+        EList<GModelElement> childs = element.getChildren();
+        for (GModelElement child : childs) {
+            if (child instanceof GCompartment) {
+                // test css class
+                if (child.getCssClasses().contains("extension")) {
+                    // return first label of this compartment
+                    return (GCompartment) child;
+                }
+            }
+        }
+        // we did not found a extension GCompartment
         return null;
     }
 
