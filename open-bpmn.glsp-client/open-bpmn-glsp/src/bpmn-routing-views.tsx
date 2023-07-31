@@ -160,22 +160,22 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
         // verify last point
         let xDif = Math.abs(pCurrent.x - pLast.x);
         let yDif = Math.abs(pCurrent.y - pLast.y);
-        if (xDif > 0 && xDif < 10) {
+        if (xDif > 0 && xDif <= 20) {
             radius = xDif * dRef;
             return radius;
         }
-        if (yDif > 0 && yDif < 10) {
+        if (yDif > 0 && yDif <= 20) {
             radius = yDif * dRef;
             return radius;
         }
         // verify next point
         xDif = Math.abs(pCurrent.x - pNext.x);
         yDif = Math.abs(pCurrent.y - pNext.y);
-        if (xDif > 0 && xDif < 10) {
+        if (xDif > 0 && xDif <= 20) {
             radius = xDif * dRef;
             return radius;
         }
-        if (yDif > 0 && yDif < 10) {
+        if (yDif > 0 && yDif <=20) {
             radius = yDif * dRef;
             return radius;
         }
