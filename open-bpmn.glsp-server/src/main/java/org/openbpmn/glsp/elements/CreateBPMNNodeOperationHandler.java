@@ -59,14 +59,6 @@ public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperati
     }
 
     /**
-     * Snap default position to gird 10x10px
-     */
-    // @Override
-    // public Optional<GPoint> getLocation(final CreateNodeOperation operation) {
-    // return GridSnapper.snap(operation.getLocation());
-    // }
-
-    /**
      * Helper method resolves the containing BPMNProcess for a CreateNodeOperation.
      * This can be either the default process or the process of a Participant
      * (Pool).
