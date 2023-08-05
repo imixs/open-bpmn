@@ -31,6 +31,7 @@ import javax.json.JsonValue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
@@ -45,6 +46,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 
 import com.google.inject.Inject;
 
@@ -58,6 +60,9 @@ import com.google.inject.Inject;
 public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtension {
 
     private static Logger logger = LogManager.getLogger(DefaultBPMNParticipantExtension.class);
+
+    @Inject
+    protected ActionDispatcher actionDispatcher;
 
     @Inject
     protected BPMNGModelState modelState;
@@ -156,6 +161,9 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                     Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
                     laneDataIDs.add(bpmnLane.getId());
                     modelState.reset();
+                    // send an update for the property panel to the client...
+                    actionDispatcher
+                            .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
                 }
             }
             // now we need to delete all lanes no longer part of the laneSetValues
