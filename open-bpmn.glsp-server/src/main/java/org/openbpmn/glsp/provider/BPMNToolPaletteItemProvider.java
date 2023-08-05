@@ -335,27 +335,4 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
         return result;
     }
 
-    // /**
-    // * Create a default palette group for a given CreateOperation type
-    // *
-    // * @param handlers
-    // * @param operationClass
-    // * @return
-    // */
-    // protected List<PaletteItem> createPaletteItems(final
-    // List<CreateOperationHandler> handlers,
-    // final Class<? extends CreateOperation> operationClass) {
-    // return handlers.stream().filter(h ->
-    // operationClass.isAssignableFrom(h.getHandledOperationType()))
-    // .flatMap(
-    // handler -> handler.getTriggerActions().stream()
-    // .map(action -> create(action, handler.getLabel())))
-    // .sorted(Comparator.comparing(PaletteItem::getLabel)).collect(Collectors.toList());
-    // }
-
-// protected PaletteItem create(final TriggerElementCreationAction action, final
-// String label) {
-// return new PaletteItem("palette-item" + counter++, label, action);
-// }
-
 }
