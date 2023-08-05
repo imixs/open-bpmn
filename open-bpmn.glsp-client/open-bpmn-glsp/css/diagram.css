@@ -223,16 +223,6 @@
     fill: var(--theia-titleBar-activeForeground);
 }
 
-/* sequence flow */
-.sprotty-edge.sequenceFlow:not(.selected) .line,
-.sprotty-edge.sequenceFlow:not(.selected) .arrow {
-}
-
-/* selected sequence flow */
-.sprotty-edge.bpmnedge.selected .line,
-.sprotty-edge.bpmnedge.selected .arrow {
- 
-}
 
 .sequenceFlow .default-symbol {
     stroke-width: 3;
