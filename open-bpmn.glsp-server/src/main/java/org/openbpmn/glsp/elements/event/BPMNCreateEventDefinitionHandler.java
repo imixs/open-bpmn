@@ -32,11 +32,16 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 
 import com.google.inject.Inject;
 
 /**
  * OperationHandler to add a new EventDefinition to a BPMN Event node.
+ * 
+ * The handler updates the model element and sends two events to the client. One
+ * to select the updated event and one to update the property panel which may
+ * show additional content.
  *
  * @author rsoika
  *
@@ -66,12 +71,15 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
     }
     
     /**
-     * We expect that the EventDefintion was dropped on a Event. See
+     * We expect that the EventDefinition was dropped on a Event. See
      * {@link BPMNDiagramConfiguration} method getShapeTypeHints
      */
     public void executeOperation(final CreateNodeOperation operation) {
         String eventID = null;
         String elementTypeId = operation.getElementTypeId();
+        // update signal properties...
+        boolean updateClient = false;
+
         // now we add this definition directly into the BPMN Event element of the source
         // model
         Optional<GModelElement> container = this.getContainer(operation);
@@ -86,6 +94,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
                     if (bpmnEvent != null && bpmnEvent instanceof Event) {
                         // add the new definition
                         ((Event) bpmnEvent).addEventDefinition(elementTypeId);
+                        updateClient = true;
                     } else {
                         logger.warn("Event " + eventID + " does not exist in current source model!");
                     }
@@ -95,9 +104,12 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
             }
         }
         modelState.reset();
-        if (eventID != null) {
+        if (updateClient) {
             // select event
             actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(eventID)));
+            // send an update for the property panel...
+            actionDispatcher
+                    .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
         }
     }
 
