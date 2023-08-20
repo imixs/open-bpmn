@@ -15,11 +15,14 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.edge;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateEdgeOperation;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
@@ -66,7 +69,7 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
-
+        String edgeId = null;
         String edgeType = operation.getElementTypeId();
         try {
             Optional<BPMNGNode> element = null;
@@ -97,8 +100,9 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                             "Target and Source Element are not members of the same process!");
                 }
                 // open the process and create the sequence flow...
+                edgeId = BPMNModel.generateShortID("sequenceFlow");
                 BPMNProcess bpmnProcess = modelState.getBpmnModel().openProcess(targetProcessId);
-                bpmnProcess.addSequenceFlow(BPMNModel.generateShortID("sequenceFlow"), sourceId, targetId);
+                bpmnProcess.addSequenceFlow(edgeId, sourceId, targetId);
             }
 
             if (BPMNTypes.ASSOCIATION.equals(edgeType)) {
@@ -110,19 +114,29 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                         .findElementById(targetId);
                 BPMNProcess sourceProcess = sourceElementNode.getBpmnProcess();
                 BPMNProcess targetProcess = targetElementNode.getBpmnProcess();
+                edgeId = BPMNModel.generateShortID("association");
                 if (sourceProcess.isPublicProcess()) {
-                    sourceProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
+                    sourceProcess.addAssociation(edgeId, sourceId, targetId);
                 } else {
                     // in any case this is the best match now
-                    targetProcess.addAssociation(BPMNModel.generateShortID("association"), sourceId, targetId);
+                    targetProcess.addAssociation(edgeId, sourceId, targetId);
                 }
             }
 
             if (BPMNTypes.MESSAGE_FLOW.equals(edgeType)) {
-                modelState.getBpmnModel().addMessageFlow(BPMNModel.generateShortID("messageFlow"), sourceId, targetId);
+                edgeId = BPMNModel.generateShortID("messageFlow");
+                modelState.getBpmnModel().addMessageFlow(edgeId, sourceId, targetId);
             }
 
             modelState.reset();
+
+            // finally deselect the initial elements and select the new edge instead.
+            ArrayList<String> deselectedElementsIDs = new ArrayList<String>();
+            deselectedElementsIDs.add(sourceId);
+            deselectedElementsIDs.add(targetId);
+            actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(edgeId),
+                    deselectedElementsIDs));
+
         } catch (BPMNModelException e) {
             logger.severe(e.getMessage());
         }

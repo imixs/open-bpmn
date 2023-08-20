@@ -116,22 +116,9 @@ public class BPMNDiagramModule extends DiagramModule {
         // Clipboard
         binding.add(BPMNClipboardDataActionHandler.class);
 
-        // Edit lable actions..
+        // Compute Routing Points.
         binding.add(BPMNComputedBoundsActionHandler.class);
-
-        // configure panelupdate action which is send from the server to the client
-        // binding.add(BPMNPropertyPanelUpdateAction.class);
-
     }
-
-    // @Override
-    // protected void configureClientActions(final MultiBinding<Action> binding) {
-    // //super.configureClientAction(binding);
-    // binding.add(BPMNPropertyPanelUpdateAction.class);
-    // }
-    // protected void configureClientActions(final MultiBinding<Action> binding) {
-    // }
-
 
     @Override
     protected void configureOperationHandlers(final MultiBinding<OperationHandler<?>> binding) {
