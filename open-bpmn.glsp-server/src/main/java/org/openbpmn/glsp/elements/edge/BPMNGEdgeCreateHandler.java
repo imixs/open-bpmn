@@ -70,6 +70,8 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
         String edgeId = null;
+        BPMNGNode sourceNode = null;
+        BPMNGNode targetNode = null;
         String edgeType = operation.getElementTypeId();
         try {
             Optional<BPMNGNode> element = null;
@@ -77,14 +79,16 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             // find GNode
             element = modelState.getIndex().findElementByClass(targetId, BPMNGNode.class);
             if (element.isPresent()) {
-                targetId = element.get().getId();
+                targetNode = element.get();
+                targetId = targetNode.getId();
             }
 
             String sourceId = operation.getSourceElementId();
             // find GNode
             element = modelState.getIndex().findElementByClass(sourceId, BPMNGNode.class);
             if (element.isPresent()) {
-                sourceId = element.get().getId();
+                sourceNode = element.get();
+                sourceId = sourceNode.getId();
             }
 
             // Depending on the edgeType we use here different method to create the BPMN
@@ -128,14 +132,9 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                 modelState.getBpmnModel().addMessageFlow(edgeId, sourceId, targetId);
             }
 
+            // finally update he current selection
+            updateSelection(sourceNode, targetNode, edgeId);
             modelState.reset();
-
-            // finally deselect the initial elements and select the new edge instead.
-            ArrayList<String> deselectedElementsIDs = new ArrayList<String>();
-            deselectedElementsIDs.add(sourceId);
-            deselectedElementsIDs.add(targetId);
-            actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(edgeId),
-                    deselectedElementsIDs));
 
         } catch (BPMNModelException e) {
             logger.severe(e.getMessage());
@@ -146,5 +145,32 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
     @Override
     public String getLabel() {
         return label;
+    }
+
+    /*
+     * This helper method updates the current selection by sending a new
+     * SelectAction. The source and target element are deselected and the new enge
+     * is selected.
+     * 
+     */
+    private void updateSelection(BPMNGNode sourceNode, BPMNGNode targetNode, String edgeId) {
+        // finally deselect the initial elements and select the new edge instead.
+        ArrayList<String> deselectedElementsIDs = new ArrayList<String>();
+        deselectedElementsIDs.add(sourceNode.getId());
+        // if the source element is has bpmn label , than we need to deselect the label
+        // too
+        if (BPMNTypes.BPMN_EVENTS.contains(sourceNode.getType())
+                || BPMNTypes.BPMN_GATEWAYS.contains(sourceNode.getType())) {
+            deselectedElementsIDs.add(sourceNode.getId() + "_bpmnlabel");
+        }
+        deselectedElementsIDs.add(targetNode.getId());
+        // if the target element is has bpmn label , than we need to deselect the label
+        // too
+        if (BPMNTypes.BPMN_EVENTS.contains(targetNode.getType())
+                || BPMNTypes.BPMN_GATEWAYS.contains(targetNode.getType())) {
+            deselectedElementsIDs.add(targetNode.getId() + "_bpmnlabel");
+        }
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(edgeId),
+                deselectedElementsIDs));
     }
 }

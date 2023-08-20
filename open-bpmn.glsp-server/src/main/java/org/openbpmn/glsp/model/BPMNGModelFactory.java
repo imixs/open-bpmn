@@ -467,26 +467,6 @@ public class BPMNGModelFactory implements GModelFactory {
         return null;
     }
 
-    private GModelElement xxxfindGElementById(final List<GModelElement> entityNodes, final String id) {
-        if (entityNodes != null) {
-            for (GModelElement element : entityNodes) {
-                if (element.getId().equals(id)) {
-                    return element;
-                }
-                // do we have a pool
-                if (element instanceof PoolGNode) {
-                    // recursive call!
-                    PoolGNode gPool = (PoolGNode) element;
-                    GModelElement child = findGElementById(gPool.getChildren(), id);
-                    if (child != null) {
-                        return child;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
     /**
      * This helper method returns a GModelElement list from all BPMNLanes and
      * BPMNFlowElements contained in a given BPMNProcess.
