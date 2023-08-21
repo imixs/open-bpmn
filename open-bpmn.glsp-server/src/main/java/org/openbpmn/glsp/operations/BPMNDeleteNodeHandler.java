@@ -68,7 +68,9 @@ public class BPMNDeleteNodeHandler extends GModelOperationHandler<DeleteOperatio
             // find the bpmnBaseElement
             BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
             if (bpmnElement == null) {
-                logger.warning("...no BPMN element with id: " + id + " found!");
+                // This situation can happen with BPMN Labels of Events and Gateways when the
+                // main element was already removed
+                logger.fine("...no BPMN element with id: " + id + " found!");
                 continue;
             }
 

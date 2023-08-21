@@ -133,6 +133,7 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Clipboard
         binding.add(BPMNPasteOperationHandler.class);
+        binding.add(BPMNDeleteNodeHandler.class);
 
         // Bounds & Routing Points
         binding.add(BPMNChangeBoundsOperationHandler.class);
@@ -166,8 +167,7 @@ public class BPMNDiagramModule extends DiagramModule {
         // register apply operations send from the client
         binding.add(BPMNApplyPropertiesUpdateOperationHandler.class);
 
-        // GLSP Operation handlers for ModelUpdates
-        binding.add(BPMNDeleteNodeHandler.class);
+
 
         // Extension handler
         binding.add(BPMNCreateExtensionHandler.class);
