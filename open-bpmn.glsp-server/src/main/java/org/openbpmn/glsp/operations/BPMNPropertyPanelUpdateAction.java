@@ -18,19 +18,9 @@ public class BPMNPropertyPanelUpdateAction extends Action {
 
     public static final String KIND = "propertyPanelUpdate";
 
-    // private String selectedElementID;
-    // private String category;
-
     public BPMNPropertyPanelUpdateAction() {
         super(KIND);
 
     }
 
-    // public BPMNPropertyPanelUpdateAction(final String selectedElementID, final
-    // String category) {
-    // super(KIND);
-    // this.selectedElementID = selectedElementID;
-    // this.category = category;
-
-    // }
 }

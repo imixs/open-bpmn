@@ -27,6 +27,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Lane;
@@ -1037,6 +1038,23 @@ public class BPMNModel {
         Set<BPMNProcess> processList = this.getProcesses();
         for (BPMNProcess process : processList) {
             result.addAll(process.getEvents());
+        }
+        return result;
+    }
+
+    /**
+     * Returns all Activities within this model
+     * <p>
+     * If no Activities exists, the method returns an empty list.
+     * 
+     * @return the list of Activities or an empty is if no Activities exist.
+     */
+    public Set<Activity> findAllActivities() {
+        LinkedHashSet<Activity> result = new LinkedHashSet<Activity>();
+        // iterate over all processes
+        Set<BPMNProcess> processList = this.getProcesses();
+        for (BPMNProcess process : processList) {
+            result.addAll(process.getActivities());
         }
         return result;
     }
