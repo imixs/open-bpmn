@@ -1037,6 +1037,11 @@ public class BPMNModel {
         // iterate over all processes
         Set<BPMNProcess> processList = this.getProcesses();
         for (BPMNProcess process : processList) {
+            try {
+                process.init();
+            } catch (BPMNModelException e) {
+                e.printStackTrace();
+            }
             result.addAll(process.getEvents());
         }
         return result;
@@ -1054,6 +1059,11 @@ public class BPMNModel {
         // iterate over all processes
         Set<BPMNProcess> processList = this.getProcesses();
         for (BPMNProcess process : processList) {
+            try {
+                process.init();
+            } catch (BPMNModelException e) {
+                e.printStackTrace();
+            }
             result.addAll(process.getActivities());
         }
         return result;
