@@ -111,6 +111,7 @@ public class BPMNGModelState extends DefaultGModelState {
         doc = undoStack.pop(); // previous version
         try {
             bpmnModel = new BPMNModel(doc);
+            // Update revision number
             this.getRoot().setRevision(getRoot().getRevision() - 2);
         } catch (BPMNModelException e) {
             logger.warn("unable to undo model changes: " + e.getMessage());
