@@ -144,7 +144,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 revision = modelState.getRoot().getRevision();
             }
 
-            logger.info("===>  Build new GModel - revision=" + revision);
+            logger.debug("===>  Build new GModel - revision=" + revision);
 
             GGraph newGModel = buildGGraph(modelState.getBpmnModel());
 
@@ -163,10 +163,10 @@ public class BPMNGModelFactory implements GModelFactory {
             modelState.setInitialized(true);
             modelState.storeRevision();
 
-            logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms - revision="
+            logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms - revision="
                     + modelState.getRoot().getRevision());
         } else {
-            logger.info("===> createGModel skipped!");
+            logger.debug("===> createGModel skipped!");
         }
     }
 

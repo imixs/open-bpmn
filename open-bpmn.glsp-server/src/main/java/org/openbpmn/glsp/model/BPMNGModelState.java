@@ -69,21 +69,16 @@ public class BPMNGModelState extends DefaultGModelState {
      * 
      */
     public void storeRevision() {
-        logger.info("...store revision " + this.getRoot().getRevision());
+        logger.debug("...store revision " + this.getRoot().getRevision());
         long l = System.currentTimeMillis();
         Document doc = bpmnModel.getDoc();
-
-        Document doc2 = (Document) doc.cloneNode(true);
-
+        Document docClone = (Document) doc.cloneNode(true);
         logger.debug("...clone took " + (System.currentTimeMillis() - l) + "ms");
-
-        undoStack.push(doc2);
-
+        undoStack.push(docClone);
         // check max size of undoStack!
         while (undoStack.size() > MAX_UNDOSTACK_SIZE) {
             undoStack.remove(0);
         }
-
     }
 
     @Override
