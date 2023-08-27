@@ -76,8 +76,8 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
 
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
-        String taskID = BPMNModel.generateShortID("task");// "task-" + BPMNModel.generateShortID();
-        logger.debug("createNode tasknodeID=" + taskID);
+        String taskID = BPMNModel.generateShortID("task");
+        logger.debug("createNode taskNodeID=" + taskID);
         try {
             // find the process - either the default process for Root container or the
             // corresponding participant process
@@ -91,15 +91,13 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
                     // compute relative center position...
                     elementX = GridSnapper.snap(elementX - (Activity.DEFAULT_WIDTH / 2));
                     elementY = GridSnapper.snap(elementY - (Activity.DEFAULT_HEIGHT / 2));
-
                     task.setPosition(elementX, elementY);
                     task.setDimension(Activity.DEFAULT_WIDTH, Activity.DEFAULT_HEIGHT);
-
                     logger.debug("new BPMNActivity Position = " + elementX + "," + elementY);
                 }
             } else {
                 // should not happen
-                logger.fatal("Unable to find a vaild BPMNElement to place the new node: " + elementTypeId);
+                logger.fatal("Unable to find a valid BPMNElement to place the new node: " + elementTypeId);
             }
         } catch (BPMNModelException e) {
             e.printStackTrace();
