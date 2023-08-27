@@ -100,15 +100,17 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
             schemaBuilder.addProperty("name", "string", null, null);
             schemaBuilder.addProperty("target", "string", null, null);
             schemaBuilder.closeArray();
+
             /*
-             * Now we can create the data structure - each conditionalEventDefinition is
+             * Now we can create the data structure - each linkEventDefinition is
              * represented as a separate object
              */
             dataBuilder.addArray("links");
-            logger.warn(" addLinkEventDefinitions - no full support!");
+            logger.debug(" addLinkEventDefinitions - no full support!");
             for (Element definition : linkEventDefinitions) {
                 dataBuilder.addObject();
                 dataBuilder.addData("name", definition.getAttribute("name"));
+                // the target should be a select box - see issue #286
                 dataBuilder.addData("target", definition.getAttribute("target"));
             }
 
