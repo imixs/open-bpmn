@@ -43,6 +43,7 @@ public class BPMNGModelState extends DefaultGModelState {
 
     private Stack<Document> undoStack = null;
     private Stack<Document> redoStack = null;
+    private int MAX_UNDOSTACK_SIZE = 20;
 
     private boolean initialized = false;
     private String rootID = "undefined_root_id";
@@ -63,11 +64,6 @@ public class BPMNGModelState extends DefaultGModelState {
         this.setRoot(null);
     }
 
-    // @Override
-    // public void updateRoot(GModelRoot newRoot) {
-    // super.updateRoot(newRoot);
-    // }
-
     /**
      * Helper method to store the current model revision on the revisions stack.
      * 
@@ -82,6 +78,11 @@ public class BPMNGModelState extends DefaultGModelState {
         logger.debug("...clone took " + (System.currentTimeMillis() - l) + "ms");
 
         undoStack.push(doc2);
+
+        // check max size of undoStack!
+        while (undoStack.size() > MAX_UNDOSTACK_SIZE) {
+            undoStack.remove(0);
+        }
 
     }
 
@@ -108,10 +109,14 @@ public class BPMNGModelState extends DefaultGModelState {
         Document doc = undoStack.pop(); // current version
         // push current version to redoStack
         redoStack.push(doc);
+        // check max size of undoStack!
+        while (redoStack.size() > MAX_UNDOSTACK_SIZE) {
+            redoStack.remove(0);
+        }
         doc = undoStack.pop(); // previous version
         try {
             bpmnModel = new BPMNModel(doc);
-            this.getRoot().setRevision(getRoot().getRevision() - 2);
+            // this.getRoot().setRevision(getRoot().getRevision() - 2);
         } catch (BPMNModelException e) {
             logger.warn("unable to undo model changes: " + e.getMessage());
             e.printStackTrace();
@@ -129,10 +134,9 @@ public class BPMNGModelState extends DefaultGModelState {
         // we need to take 2 revisions from the stack!
         logger.debug("start redo - current stack size=" + redoStack.size());
         Document doc = redoStack.pop();
-
         try {
             bpmnModel = new BPMNModel(doc);
-            this.getRoot().setRevision(getRoot().getRevision() - 1);
+            // this.getRoot().setRevision(getRoot().getRevision() - 1);
         } catch (BPMNModelException e) {
             logger.warn("unable to undo model changes: " + e.getMessage());
             e.printStackTrace();
