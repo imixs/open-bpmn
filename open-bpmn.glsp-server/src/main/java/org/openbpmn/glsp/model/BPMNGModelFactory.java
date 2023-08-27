@@ -122,7 +122,7 @@ public class BPMNGModelFactory implements GModelFactory {
     @Inject
     protected Set<BPMNElementExtension> extensions;
 
-    private BPMNModel bpmnModel;
+    // private BPMNModel bpmnModel;
 
     /**
      * Create a GModelRoot from a BPMNModel specified in the modelState. This method
@@ -131,6 +131,7 @@ public class BPMNGModelFactory implements GModelFactory {
      */
     @Override
     public void createGModel() {
+        long l = System.currentTimeMillis();
         // verify extensions....
         if (extensions == null || extensions.size() == 0) {
             logger.warn("no BPMNExtension found! Check DiagramModule->configureBPMNExtensions");
@@ -138,39 +139,35 @@ public class BPMNGModelFactory implements GModelFactory {
 
         if (!modelState.isInitialized()) {
 
-            long l = System.currentTimeMillis();
-            GGraph newGModel = buildGGraph(getBpmnModel());
+            int revision = 0;
+            if (modelState.getRoot() != null) {
+                revision = modelState.getRoot().getRevision();
+            }
+
+            logger.info("===>  Build new GModel - revision=" + revision);
+
+            GGraph newGModel = buildGGraph(modelState.getBpmnModel());
 
             modelState.updateRoot(newGModel);
-            // modelState.getRoot().setRevision(-1); // do not reset revision!
-            // see https://github.com/eclipse-glsp/glsp/discussions/949
 
-            if (newGModel == null) {
-                logger.warn("Unable to create model - no processes found - creating an empty model");
-                createNewEmptyRoot("process_0");
+            if (newGModel != null) {
+                // restore revision
+                newGModel.setRevision(revision);
+                // do not reset revision!
+                // see https://github.com/eclipse-glsp/glsp/discussions/949
+            } else {
+                logger.warn("Unable to create model - no processes found - creating an empty  model");
+                newGModel = (GGraph) createNewEmptyRoot("process_0");
             }
 
             modelState.setInitialized(true);
-            logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms");
+            modelState.storeRevision();
+
+            logger.info("===> createGModel took " + (System.currentTimeMillis() - l) + "ms - revision="
+                    + modelState.getRoot().getRevision());
         } else {
-            logger.debug("===> createGModel skipped!");
+            logger.info("===> createGModel skipped!");
         }
-    }
-
-    /**
-     * Getter method also used by jUnit tests
-     *
-     * @return BPMNModel
-     */
-    public BPMNModel getBpmnModel() {
-        if (bpmnModel == null) {
-            bpmnModel = modelState.getBpmnModel();
-        }
-        return bpmnModel;
-    }
-
-    public void setBpmnModel(final BPMNModel bpmnModel) {
-        this.bpmnModel = bpmnModel;
     }
 
     /**

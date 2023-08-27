@@ -116,8 +116,9 @@ public class BPMNDiagramModule extends DiagramModule {
         // Clipboard
         binding.add(BPMNClipboardDataActionHandler.class);
 
-        // Compute Routing Points.
+        // Compute Routing Points
         binding.add(BPMNComputedBoundsActionHandler.class);
+
     }
 
     @Override
