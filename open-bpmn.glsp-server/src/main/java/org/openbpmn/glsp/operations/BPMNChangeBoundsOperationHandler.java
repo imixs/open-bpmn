@@ -120,6 +120,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             // part of this selection (see method updateFlowElement)
             List<ElementAndBounds> filteredElementBounds = filterElements(elementBounds);
 
+            boolean allowReset = filteredElementBounds.size() == 1;
+
             for (ElementAndBounds elementBound : filteredElementBounds) {
                 String id = elementBound.getElementId();
                 GPoint newPoint = elementBound.getNewPosition();
@@ -146,7 +148,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                         updatePool(gNode, bpmnElementNode, id, newPoint, newSize);
                     } else {
                         // it is a normal bpmn flow element...
-                        updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize);
+                        updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize, allowReset);
                     }
                 } else {
                     // test if we have a BPMNLabel element was selected?
@@ -192,11 +194,17 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
      * @throws BPMNInvalidReferenceException
      */
     private void updateFlowElement(final GNode gNode, final BPMNElementNode bpmnElementNode,
-            final ElementAndBounds elementBound, final GPoint newPoint, final GDimension newSize)
+            final ElementAndBounds elementBound, final GPoint newPoint, final GDimension newSize, boolean allowReset)
             throws BPMNInvalidTypeException, BPMNMissingElementException, BPMNInvalidReferenceException {
 
+        boolean clearRoutingPoints = false;
         double offsetX = newPoint.getX() - gNode.getPosition().getX();
         double offsetY = newPoint.getY() - gNode.getPosition().getY();
+
+        if (offsetX != 0 && offsetY != 0 && allowReset) {
+            clearRoutingPoints = true;
+        }
+
         BPMNPoint oldBpmnPoint = bpmnElementNode.getBounds().getPosition();
         BPMNPoint newBpmnPoint = new BPMNPoint(oldBpmnPoint.getX() + offsetX, oldBpmnPoint.getY() + offsetY);
 
@@ -205,36 +213,38 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         String oldProcessID = bpmnElementNode.getProcessId();
         bpmnElementNode.setBounds(newBpmnPoint.getX(), newBpmnPoint.getY(), newSize.getWidth(),
                 newSize.getHeight());
-        // boolean gNodeUpdate = true;
         if (!oldProcessID.equals(bpmnElementNode.getProcessId())) {
-            // gNodeUpdate = false;
+            // Update the model as the relation ship may have changed
             modelState.reset();
         }
 
-        // lets see if the offset is to large so that we should remove the waypoints
-        // from edges..
-        if (Math.abs(offsetX) > gNode.getSize().getWidth() * 0.5
-                || Math.abs(offsetY) > gNode.getSize().getHeight() * 0.5) {
-
-            Set<SequenceFlow> sequenceFlows = bpmnElementNode.getIngoingSequenceFlows();
-            for (SequenceFlow sf : sequenceFlows) {
-                sf.clearWayPoints();
+        // reset sequence flows?
+        Set<SequenceFlow> sequenceFlows = bpmnElementNode.getIngoingSequenceFlows();
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            if (clearRoutingPoints) {
+                sequenceFlow.clearWayPoints();
+                modelState.reset();
             }
-            sequenceFlows = bpmnElementNode.getOutgoingSequenceFlows();
-            for (SequenceFlow sf : sequenceFlows) {
-                sf.clearWayPoints();
+        }
+        sequenceFlows = bpmnElementNode.getOutgoingSequenceFlows();
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            if (clearRoutingPoints) {
+                sequenceFlow.clearWayPoints();
+                modelState.reset();
             }
-            // reset associations
-            Set<Association> associations = bpmnElementNode.getAssociations();
-            for (Association a : associations) {
-                a.clearWayPoints();
+        }
+        // reset associations?
+        Set<Association> associations = bpmnElementNode.getAssociations();
+        for (Association association : associations) {
+            if (clearRoutingPoints) {
+                association.clearWayPoints();
+                modelState.reset();
             }
-            // gNodeUpdate = false;
-            modelState.reset();
         }
 
-        /* */
-        // Finally Update GNode dimension (if the model was not already reset)...
+        /*
+         * Finally Update GNode dimension (if the model was not already reset)...
+         */
         if (modelState.isInitialized()) {
             gNode.setPosition(newPoint);
 

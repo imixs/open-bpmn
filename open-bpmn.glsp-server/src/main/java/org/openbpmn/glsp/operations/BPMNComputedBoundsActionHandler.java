@@ -59,7 +59,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
             for (ElementAndRoutingPoints routingInfo : routings) {
                 String id = routingInfo.getElementId();
                 BPMNElement element = modelState.getBpmnModel().findElementById(id);
-                // do we have a BPMNSequenceFlow ?
+                // do we have a BPMNEdge ?
                 if (element != null && element instanceof BPMNElementEdge) {
                     BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;
                     // update the BPMN WayPoints.
@@ -67,37 +67,33 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     logger.fine("...updating " + newGLSPRoutingPoints.size() + " BPMN WayPoints for element " + id
                             + "....");
                     bpmnElementEdge.clearWayPoints();
+
+                    // find the process
+                    Participant participant = null;
+                    BPMNProcess process = null;
+                    if (bpmnElementEdge instanceof SequenceFlow) {
+                        process = ((SequenceFlow) bpmnElementEdge).getProcess();
+                    }
+                    if (bpmnElementEdge instanceof Association) {
+                        process = ((Association) bpmnElementEdge).getProcess();
+                    }
+                    if (process != null && !process.isPublicProcess()) {
+                        participant = process.findParticipant();
+                    }
+
                     // add the new routing points
                     for (GPoint point : newGLSPRoutingPoints) {
                         BPMNPoint bpmnPoint = null;
-                        Participant participant = null;
-                        BPMNProcess process = null;
                         double xOffset = 0;
                         double yOffset = 0;
-
                         // in case we are within a Pool we need to compute the x/y offsets first
                         if (!BPMNTypes.MESSAGE_FLOW.equals(bpmnElementEdge.getType())) {
-                            // find the process
-                            if (bpmnElementEdge instanceof SequenceFlow) {
-                                process = ((SequenceFlow) bpmnElementEdge).getProcess();
-
-                            }
-                            if (bpmnElementEdge instanceof Association) {
-                                process = ((Association) bpmnElementEdge).getProcess();
-
-                            }
-
-                            if (process != null && !process.isPublicProcess()) {
-                                participant = process.findParticipant();
-                            }
-
                             if (participant != null) {
                                 // if we have a participant/pool we can compute the relative position...
                                 xOffset = participant.getBounds().getPosition().getX();
                                 yOffset = participant.getBounds().getPosition().getY();
                             }
                         }
-
                         bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
                         logger.fine("...add new waypoint: " + point.getX() + "," + point.getY());
                         bpmnElementEdge.addWayPoint(bpmnPoint);
@@ -112,9 +108,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
-        return
-
-        none();
+        return none();
     }
 
 }
