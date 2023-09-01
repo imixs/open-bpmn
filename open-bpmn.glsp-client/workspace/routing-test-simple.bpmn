@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org">
+  <bpmn2:process id="process_1" name="Default Process" processType="Public">
+    <bpmn2:documentation id="documentation_7eE1iA"/>
+    <bpmn2:startEvent id="event_KgayIw" name="Event-1">
+      <bpmn2:documentation id="documentation_cDvRsw"/>
+      <bpmn2:outgoing>sequenceFlow_tgdRAQ</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="sequenceFlow_tgdRAQ" sourceRef="event_KgayIw" targetRef="event_fNPy6w">
+      <bpmn2:documentation id="documentation_Y8FTMg"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:intermediateCatchEvent id="event_pMr57Q" name="Event-3">
+      <bpmn2:documentation id="documentation_ziv9Aw"/>
+      <bpmn2:incoming>sequenceFlow_MNq0RQ</bpmn2:incoming>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:intermediateCatchEvent id="event_fNPy6w" name="Event-5">
+      <bpmn2:documentation id="documentation_aczRqA"/>
+      <bpmn2:incoming>sequenceFlow_tgdRAQ</bpmn2:incoming>
+      <bpmn2:outgoing>sequenceFlow_MNq0RQ</bpmn2:outgoing>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="sequenceFlow_MNq0RQ" sourceRef="event_fNPy6w" targetRef="event_pMr57Q">
+      <bpmn2:documentation id="documentation_3BCqGA"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:manualTask id="task_tpQ70w" name="Task-1">
+      <bpmn2:documentation id="documentation_ey97RQ"/>
+    </bpmn2:manualTask>
+    <bpmn2:userTask id="task_OHBvrg" name="Task-2">
+      <bpmn2:documentation id="documentation_K5NdVA"/>
+    </bpmn2:userTask>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+    <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="event_KgayIw" id="BPMNShape_CWtA0w">
+        <dc:Bounds height="36.0" width="36.0" x="110.0" y="350.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_Rit9RQ">
+          <dc:Bounds height="16.0" width="100.0" x="78.0" y="389.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_tgdRAQ" id="BPMNEdge_XAV6wg" sourceElement="BPMNShape_CWtA0w" targetElement="BPMNShape_bWWOqA">
+        <di:waypoint x="142.96662954709578" y="378.0"/>
+        <di:waypoint x="203.0" y="378.0"/>
+        <di:waypoint x="203.0" y="388.0"/>
+        <di:waypoint x="260.0" y="388.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="event_pMr57Q" id="BPMNShape_VpZNSA">
+        <dc:Bounds height="36.0" width="36.0" x="550.0" y="370.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_dzF40w">
+          <dc:Bounds height="16.0" width="100.0" x="518.0" y="409.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="event_fNPy6w" id="BPMNShape_bWWOqA">
+        <dc:Bounds height="36.0" width="36.0" x="260.0" y="370.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_fNgGPw">
+          <dc:Bounds height="16.0" width="100.0" x="228.0" y="409.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_MNq0RQ" id="BPMNEdge_uPz7rA" sourceElement="BPMNShape_bWWOqA" targetElement="BPMNShape_VpZNSA">
+        <di:waypoint x="296.0" y="388.0"/>
+        <di:waypoint x="328.0" y="388.0"/>
+        <di:waypoint x="328.0" y="530.0"/>
+        <di:waypoint x="568.0" y="530.0"/>
+        <di:waypoint x="568.0" y="406.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="task_tpQ70w" id="BPMNShape_bQhaKw">
+        <dc:Bounds height="50.0" width="110.0" x="390.0" y="363.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_OHBvrg" id="BPMNShape_GloawA">
+        <dc:Bounds height="50.0" width="110.0" x="73.0" y="200.0"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
