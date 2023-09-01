@@ -89,6 +89,7 @@ terms of the Eclipse Public License v. 2.0
 		<elk.version>[0.8.1,)</elk.version>
 		-->
 		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
+		<elk.version>[0.8.1,)</elk.version>
 	</properties>
 
 	<build>

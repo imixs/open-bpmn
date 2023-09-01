@@ -13,28 +13,45 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { getPort, GLSPSocketServerContribution, GLSPSocketServerContributionOptions } from '@eclipse-glsp/theia-integration/lib/node';
+import {
+    getPort,
+    getWebSocketPath,
+    GLSPSocketServerContribution,
+    GLSPSocketServerContributionOptions
+} from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from '@theia/core/shared/inversify';
 import { join, resolve } from 'path';
 import { BPMNLanguage } from '../common/bpmn-language';
 
 export const DEFAULT_PORT = 5007;
 export const PORT_ARG_KEY = 'GLSP_PORT';
+export const WEBSOCKET_PATH_ARG_KEY = 'PATH_PATH';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
     join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-1.0.3-SNAPSHOT-glsp.jar')
 );
 
 @injectable()
-export class BPMNGLSPServerContribution extends GLSPSocketServerContribution {
+export class BPMNGLSPSocketServerContribution extends GLSPSocketServerContribution {
     readonly id = BPMNLanguage.contributionId;
+
+    // createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
+    //     return {
+    //         executable: JAR_FILE,
+    //         additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],
+    //         socketConnectionOptions: {
+    //             port: getPort(PORT_ARG_KEY, DEFAULT_PORT)
+    //         }
+    //     };
+    // }
 
     createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
         return {
             executable: JAR_FILE,
-            additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],
+            additionalArgs: ['--no-consoleLog', '--fileLog', 'true', '--logDir', LOG_DIR],
             socketConnectionOptions: {
-                port: getPort(PORT_ARG_KEY, DEFAULT_PORT)
+                port: getPort(PORT_ARG_KEY, DEFAULT_PORT),
+                path: getWebSocketPath(WEBSOCKET_PATH_ARG_KEY)
             }
         };
     }

@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
-import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;
 import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
@@ -29,6 +28,7 @@ import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
+import org.eclipse.glsp.server.gmodel.GModelDiagramModule;
 import org.eclipse.glsp.server.model.GModelState;
 import org.eclipse.glsp.server.operations.OperationHandler;
 import org.openbpmn.extensions.BPMNCreateExtensionHandler;
@@ -87,7 +87,7 @@ import com.google.inject.multibindings.Multibinder;
  * @author rsoika
  *
  */
-public class BPMNDiagramModule extends DiagramModule {
+public class BPMNDiagramModule extends GModelDiagramModule {
     @SuppressWarnings("unused")
     private static Logger logger = Logger.getLogger(BPMNDiagramModule.class.getName());
 

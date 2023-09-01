@@ -8,7 +8,7 @@
       "type": "java",
       "name": "Open-BPMN Server (Debug Mode)",
       "request": "launch",
-      "mainClass": "org.openbpmn.glsp.BPMNServerLauncher",
+      "mainClass": "org.openbpmn.glsp.launch.BPMNServerLauncher",
       "projectName": "open-bpmn.server",
       "args": [
         "--port",

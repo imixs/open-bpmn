@@ -76,7 +76,7 @@ fi
 if [ "$buildBackend" == "true" ]; then
   mvn clean install
   cd open-bpmn.glsp-server/target
-  java -jar open-bpmn.server*-glsp.jar org.openbpmn.glsp.BPMNServerLauncher
+  java -jar open-bpmn.server*-glsp.jar org.openbpmn.glsp.launch.BPMNServerLauncher
   cd ../
 fi
 
