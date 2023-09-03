@@ -14,18 +14,22 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    findParentByFeature,
-    getSubType,
     Hoverable,
     IViewArgs,
     RenderingContext,
-    Selectable, setAttr,
-    ShapeView, SNode, SPort,
+    SNode, SPort,
     SShapeElement,
+    Selectable,
+    ShapeView,
+    findParentByFeature,
+    getSubType,
+    isBoundsAware,
+    setAttr,
     svg
 } from '@eclipse-glsp/client';
 import {
     Icon,
+    MultiLineTextNode,
     isContainerNode,
     isEventNode,
     isGatewayNode,
@@ -315,4 +319,66 @@ export class TextAnnotationNodeView extends ShapeView {
             {context.renderChildren(node)}
         </g>;
     }
+}
+
+@injectable()
+export class MultiLineTextNodeView extends ShapeView {
+
+    masterTspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
+    render(label: Readonly<MultiLineTextNode>, context: RenderingContext): VNode | undefined {
+        if (!this.isVisible(label, context)) {
+            return undefined;
+        }
+        let maxWidth=100;
+        let maxHeight=50;
+        const yOffset=5;
+
+        const parent=label.parent;
+        if (isBoundsAware(parent)) {
+            maxWidth=parent.bounds.width;
+            maxHeight=parent.bounds.height;
+            console.log('element width = '+maxWidth);
+        }
+
+        // eslint-disable-next-line no-null/no-null
+
+        // Aufteilen des Texts in Wörter
+        let line='';
+        const lines: string[] = [];
+        const words=splitti(label.args.text);
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            line+=word+ ' ';
+
+            if (line.length>(maxWidth/10)) {
+
+                line=line.substring(0,line.length-word.length-2);
+
+                console.log('line = '+line);
+                lines.push(line);
+                line=word +' ';
+            }
+        }
+        lines.push(line); // last line
+
+        // const vnode = <text class-sprotty-label={true}><tspan x="10" dy="15">{lines[0]}</tspan></text>;
+
+        const vnode = <g class-sprotty-node={label instanceof SNode}>
+            <text class-sprotty-label={true} transform={'translate(' + maxWidth*0.5 + ',0)'}>
+                {lines!.map(_line => (
+                    <tspan x="0" dy="15">{_line}</tspan>
+                ))}
+            </text>
+        </g>;
+
+        const subType = getSubType(label);
+        if (subType) {
+            setAttr(vnode, 'class', subType);
+        }
+        return vnode;
+    }
+}
+
+function splitti(text: any): string {
+    return text.split(' ');
 }

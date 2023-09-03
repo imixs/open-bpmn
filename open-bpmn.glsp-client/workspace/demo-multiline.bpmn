@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org">
+  <bpmn2:process id="process_1" name="Default Process" processType="Public">
+    <bpmn2:documentation id="documentation_k8nW7Q"/>
+    <bpmn2:task id="task_1sDCWg" name="Task-1">
+      <bpmn2:documentation id="documentation_GwCjBw"/>
+      <bpmn2:outgoing>sequenceFlow_J48Qhg</bpmn2:outgoing>
+    </bpmn2:task>
+    <bpmn2:manualTask id="task_FcfSuA" name="Task-2 as s fasdf asdf">
+      <bpmn2:documentation id="documentation_oylWag"/>
+      <bpmn2:incoming>sequenceFlow_J48Qhg</bpmn2:incoming>
+    </bpmn2:manualTask>
+    <bpmn2:sequenceFlow id="sequenceFlow_J48Qhg" sourceRef="task_1sDCWg" targetRef="task_FcfSuA">
+      <bpmn2:documentation id="documentation_9H9qOA"/>
+    </bpmn2:sequenceFlow>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+    <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="task_1sDCWg" id="BPMNShape_c9qsdg">
+        <dc:Bounds height="50.0" width="205.0" x="145.0" y="73.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_FcfSuA" id="BPMNShape_yyxLGg">
+        <dc:Bounds height="50.0" width="110.0" x="450.0" y="73.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_J48Qhg" id="BPMNEdge_Eyf9jQ" sourceElement="BPMNShape_c9qsdg" targetElement="BPMNShape_yyxLGg">
+        <di:waypoint x="350.0" y="98.5"/>
+        <di:waypoint x="450.0" y="98.5"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

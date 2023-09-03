@@ -91,6 +91,17 @@ public class BPMNGModelUtil {
                 build();
     }
 
+    public static GCompartment createMultiLineTextNodex(final BPMNGNode node, final String text) {
+        Map<String, Object> layoutOptions = new HashMap<>();
+        layoutOptions.put(V_GRAB, true);
+        layoutOptions.put(GLayoutOptions.KEY_V_ALIGN, "center");
+        return new GCompartmentBuilder(ModelTypes.BPMN_TEXT_NODE) //
+                .id(node.getId() + "_multiline") //
+                .layout(GConstants.Layout.FREEFORM) //
+                .layoutOptions(layoutOptions) //
+                .addArgument("text", text) //
+                .build();
+    }
     /**
      * Creates the Header for a BPMNPool or BPMNLane
      *

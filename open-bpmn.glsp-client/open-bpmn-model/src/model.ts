@@ -17,9 +17,7 @@ import {
 	Args,
 	CircularNode,
 	DiamondNode,
-	Dimension,
 	EditableLabel,
-	ForeignObjectElement,
 	LayoutContainer,
 	Nameable,
 	RectangularNode, SArgumentable, SChildElement,
@@ -151,51 +149,14 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
 /*
  * This class provides a new Node displaying a multiline text block.
  * The node also allows editing the text.
- * We are using this model object for BPMN TextAnnotations.
  *
- * See: https://www.eclipse.org/glsp/documentation/rendering/#default-views
  */
-export class MultiLineTextNode extends ForeignObjectElement implements SArgumentable, EditableLabel {
-  readonly isMultiLine = true;
-  readonly args: Args;
-  text = '';
-
-//   override set bounds(bounds: Bounds) {
-//     /* ignore set bounds, always use the parent's bounds */
-//   }
-
-//   override get bounds(): Bounds {
-//     if (isBoundsAware(this.parent)) {
-//       return {
-//         x: this.position.x,
-//         y: this.position.y,
-//         width: this.parent.bounds.width,
-//         height: this.parent.bounds.height
-//       };
-
-//     }
-//     return Bounds.EMPTY;
-//   }
-
-  // @ts-expect-error Arguments are set in the element
-  override get code(): string {
-    if (this.text === '') {
-      const textArg = this.args['text'];
-      if (typeof textArg === 'string') {
-        this.text = textArg;
-      }
-    }
-    return `<pre>${this.text}</pre>`;
-  }
-
-  override namespace = 'http://www.w3.org/1999/xhtml';
-
-  get editControlDimension(): Dimension {
-    return {
-      width: this.bounds.width - 2,
-      height: this.bounds.height - 2
-    };
-  }
+export class MultiLineTextNode extends SShapeElement implements SArgumentable {
+	static readonly DEFAULT_FEATURES = [
+		boundsFeature];
+	layout: string;
+	readonly args: Args;
+    text = '';
 }
 
 /*
