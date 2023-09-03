@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.DefaultTypes;
@@ -35,6 +37,7 @@ import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
+import org.openbpmn.glsp.utils.ModelTypes;
 
 /**
  * BPMN 2.0 Task Element.
@@ -87,22 +90,36 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.FREEFORM);
+        Map<String, Object> superLayoutOptions = new HashMap<>();
+        superLayoutOptions.put(V_GRAB, true);
+        superLayoutOptions.put(GLayoutOptions.KEY_RESIZE_CONTAINER, false);
+
+        // node.setLayout(GConstants.Layout.FREEFORM);
+        node.setLayout(GConstants.Layout.VBOX);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+
+        GCompartment freeformContainer = createContainerCompartment(node);
+
+        node.getChildren().add(freeformContainer);
 
         // add Icon
         GPoint iconPosition = GraphUtil.point(3, 3);
         IconGCompartment taskIcon = new IconGCompartmentBuilder() //
                 .id(node.getId() + "_icon") //
                 .position(iconPosition) //
+                .layoutOptions(superLayoutOptions) //
                 .build();
-        node.getChildren().add(taskIcon);
+        freeformContainer.getChildren().add(taskIcon);
 
-        // add Text Input
-        node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id + "_name", name));
+        // Multiline Label
+        GPoint textPosition = GraphUtil.point(0, 0);
+        GCompartment multilabel = BPMNGModelUtil.createMultiLineTextNode(node, name);
+        multilabel.setPosition(textPosition);
+        multilabel.getLayoutOptions().put(GLayoutOptions.KEY_RESIZE_CONTAINER, false);
+        freeformContainer.getChildren().add(multilabel);
 
         // add extension label
         String extensionLabelString = (String) node.getArgs().get("extensionLabel");
@@ -110,15 +127,36 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         GCompartment extensionLabel = new GCompartmentBuilder()
                 .type(DefaultTypes.COMPARTMENT)
                 .position(extensionPosition) //
-                // .layoutOptions(extensionLabelLayoutOptions) //
+                .layoutOptions(superLayoutOptions) //
                 .add(new GLabelBuilder()
-                        .text(extensionLabelString)
+                        .text(extensionLabelString) //
                         .build())
                 .addCssClass("extension")
                 .build();
-        node.getChildren().add(extensionLabel);
+        freeformContainer.getChildren().add(extensionLabel);
 
     }
 
+    /**
+     * Creates the Container compartment
+     *
+     * @param node
+     * @return
+     */
+    private GCompartment createContainerCompartment(final TaskGNode node) {
+        logger.info("size.width=" + size.getWidth());
+        // DefaultTypes.NODE ModelTypes.CONTAINER
 
+        Map<String, Object> superLayoutOptions = new HashMap<>();
+        superLayoutOptions.put(V_GRAB, true);
+        superLayoutOptions.put(H_GRAB, true);
+        superLayoutOptions.put(GLayoutOptions.KEY_RESIZE_CONTAINER, false);
+
+        return new GCompartmentBuilder(ModelTypes.CONTAINER) //
+                .id(node.getId() + "_container") //
+                .layout(GConstants.Layout.FREEFORM) //
+                .layoutOptions(superLayoutOptions) //
+                .size(node.getSize()) //
+                .build();
+    }
 }

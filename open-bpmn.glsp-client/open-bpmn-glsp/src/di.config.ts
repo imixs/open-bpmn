@@ -19,18 +19,16 @@ import {
     ContainerConfiguration,
     DeleteElementContextMenuItemProvider,
     DiamondNodeView,
-    ForeignObjectView, LogLevel,
+    LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView, SCompartment,
     SCompartmentView,
     SLabel, SLabelView, TYPES,
-    boundsFeature,
     configureCommand,
     configureDefaultModelElements, configureModelElement, configureView,
     editLabelFeature,
     initializeDiagramContainer,
-    moveFeature, overrideViewerOptions,
-    selectFeature
+    moveFeature, overrideViewerOptions
 } from '@eclipse-glsp/client';
 import {
     BPMNEdge,
@@ -47,6 +45,7 @@ import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
     ContainerHeaderView, DataObjectNodeView, IconView, MessageNodeView,
+    MultiLineTextNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
 import {
@@ -121,10 +120,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'BPMNLabel', LabelNode, RectangularNodeView);
 
     // textNode of BPMNLabel, TextAnnotation...
-    configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, ForeignObjectView, {
-         disable: [moveFeature, selectFeature,boundsFeature],
-         enable: [editLabelFeature]}
-    );
+    // configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, ForeignObjectView, {
+    //      disable: [moveFeature, selectFeature,boundsFeature],
+    //      enable: [editLabelFeature]}
+    // );
+    configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, MultiLineTextNodeView);
 
     configureModelElement(context, 'container', SCompartment, SCompartmentView);
 

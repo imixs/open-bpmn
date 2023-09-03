@@ -258,10 +258,15 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             gNode.setSize(newSize);
 
             // If we have a Task, than we need to reposition the extension label too!
+            logger.info("..wir machen keine extension compartment berechnung mehr");
             if (bpmnElementNode instanceof Activity && gNode instanceof BPMNGNode) {
-                GCompartment extensionCompartment = BPMNGModelUtil.findExtensionCompartment((BPMNGNode) gNode);
+                // sonderlogik weil task genau einen sub container hat wegen layout
+                GModelElement ding = gNode.getChildren().get(0);
+                GCompartment extensionCompartment = BPMNGModelUtil
+                        .findExtensionCompartment(ding);
                 if (extensionCompartment != null) {
-                    extensionCompartment.setPosition(GraphUtil.point(3, newSize.getHeight() - 12));
+                    extensionCompartment.setPosition(GraphUtil.point(3, newSize.getHeight() -
+                            12));
                 }
             }
 

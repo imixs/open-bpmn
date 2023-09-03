@@ -22,16 +22,14 @@ import {
 	ForeignObjectElement,
 	LayoutContainer,
 	Nameable,
-	RectangularNode, SArgumentable, SChildElement,
+	RectangularNode, SArgumentable,
 	SEdge,
 	SModelElement,
 	SShapeElement,
-	WithEditableLabel,
 	boundsFeature,
 	connectableFeature, deletableFeature,
 	fadeFeature,
 	hoverFeedbackFeature,
-	isEditableLabel,
 	layoutContainerFeature,
 	layoutableChildFeature,
 	moveFeature,
@@ -148,6 +146,58 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
 	documentation: string;
 }
 
+export class BPMNEdge extends SEdge {
+	kind?: string;
+	documentation: string;
+}
+
+export class Icon extends SShapeElement implements LayoutContainer {
+	static readonly DEFAULT_FEATURES = [
+		boundsFeature,
+		layoutContainerFeature,
+		layoutableChildFeature,
+		fadeFeature];
+	layout: string;
+	override layoutOptions?: { [key: string]: string | number | boolean };
+	override size = {
+		width: 16,
+		height: 16
+	};
+}
+
+export class PoolNode extends RectangularNode implements Nameable {
+	static override readonly DEFAULT_FEATURES = [
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+
+	name = '';
+}
+
+export class LaneNode extends RectangularNode implements Nameable {
+	static override readonly DEFAULT_FEATURES = [
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature,
+		withEditLabelFeature
+	];
+
+	name = '';
+}
+
 /*
  * This class provides a new Node displaying a multiline text block.
  * The node also allows editing the text.
@@ -155,27 +205,39 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
  *
  * See: https://www.eclipse.org/glsp/documentation/rendering/#default-views
  */
-export class MultiLineTextNode extends ForeignObjectElement implements SArgumentable, EditableLabel {
+
+export class MultiLineTextNode extends SShapeElement implements SArgumentable {
+	static readonly DEFAULT_FEATURES = [
+		boundsFeature];
+	layout: string;
+	readonly args: Args;
+    text = '';
+
+	// override set bounds(bounds: Bounds) {
+	// 	/* ignore set bounds, always use the parent's bounds */
+	// }
+	// we center the text node inside its parent node
+	// override get bounds(): Bounds {
+	// 	if (isBoundsAware(this.parent)) {
+	// 		return { x: 5, y: 5,
+	// 			width: this.parent.bounds.width-10,
+	// 			height: this.parent.bounds.height-10
+	// 		};
+	// 	}
+	// 	return Bounds.EMPTY;
+	// }
+	// override layoutOptions?: { [key: string]: string | number | boolean };
+	// override position = {x:1, y:1};
+	// override size = {
+	// 	width: 110,
+	// 	height: 50
+	// };
+}
+
+export class XXXXMultiLineTextNode extends ForeignObjectElement implements SArgumentable, EditableLabel {
   readonly isMultiLine = true;
   readonly args: Args;
   text = '';
-
-//   override set bounds(bounds: Bounds) {
-//     /* ignore set bounds, always use the parent's bounds */
-//   }
-
-//   override get bounds(): Bounds {
-//     if (isBoundsAware(this.parent)) {
-//       return {
-//         x: this.position.x,
-//         y: this.position.y,
-//         width: this.parent.bounds.width,
-//         height: this.parent.bounds.height
-//       };
-
-//     }
-//     return Bounds.EMPTY;
-//   }
 
   // @ts-expect-error Arguments are set in the element
   override get code(): string {
@@ -252,70 +314,3 @@ export function isBoundaryEvent(element: SModelElement): element is EventNode {
     return element instanceof EventNode && element.type === 'boundaryEvent';
 }
 
-export class BPMNEdge extends SEdge {
-	kind?: string;
-	documentation: string;
-}
-
-export class Icon extends SShapeElement implements LayoutContainer {
-	static readonly DEFAULT_FEATURES = [
-		boundsFeature,
-		layoutContainerFeature,
-		layoutableChildFeature,
-		fadeFeature];
-	layout: string;
-	override layoutOptions?: { [key: string]: string | number | boolean };
-	override size = {
-		width: 16,
-		height: 16
-	};
-}
-
-export class PoolNode extends RectangularNode implements Nameable, WithEditableLabel {
-	static override readonly DEFAULT_FEATURES = [
-		deletableFeature,
-		selectFeature,
-		boundsFeature,
-		layoutContainerFeature,
-		fadeFeature,
-		hoverFeedbackFeature,
-		popupFeature,
-		nameFeature,
-		withEditLabelFeature
-	];
-
-	name = '';
-
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
-		const label = this.children.find(element => element.type === 'label:heading');
-		if (label && isEditableLabel(label)) {
-			return label;
-		}
-		return undefined;
-	}
-}
-
-export class LaneNode extends RectangularNode implements Nameable, WithEditableLabel {
-	static override readonly DEFAULT_FEATURES = [
-		deletableFeature,
-		selectFeature,
-		boundsFeature,
-		moveFeature,
-		layoutContainerFeature,
-		fadeFeature,
-		hoverFeedbackFeature,
-		popupFeature,
-		nameFeature,
-		withEditLabelFeature
-	];
-
-	name = '';
-
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
-		const label = this.children.find(element => element.type === 'label:heading');
-		if (label && isEditableLabel(label)) {
-			return label;
-		}
-		return undefined;
-	}
-}

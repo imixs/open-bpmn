@@ -84,7 +84,7 @@ public class BPMNGModelUtil {
      * @param text
      * @return - GNode element containing the text
      */
-    public static GNode createMultiLineTextNode(final String id, final String text) {
+    public static GNode createMultiLineTextNode2(final String id, final String text) {
         return new GNodeBuilder(ModelTypes.BPMN_TEXT_NODE). //
                 id(id). //
                 addArgument("text", text). //
@@ -109,6 +109,17 @@ public class BPMNGModelUtil {
     }
 
 
+    public static GCompartment createMultiLineTextNode(final BPMNGNode node, final String text) {
+        Map<String, Object> layoutOptions = new HashMap<>();
+        layoutOptions.put(V_GRAB, true);
+        layoutOptions.put(GLayoutOptions.KEY_V_ALIGN, "center");
+        return new GCompartmentBuilder(ModelTypes.BPMN_TEXT_NODE) //
+                .id(node.getId() + "_multiline") //
+                .layout(GConstants.Layout.FREEFORM) //
+                .layoutOptions(layoutOptions) //
+                .addArgument("text", text) //
+                .build();
+    }
 
 
     /**
@@ -140,7 +151,7 @@ public class BPMNGModelUtil {
      * 
      * @return GLabel of an element or null if no GLabel was found
      */
-    public static GCompartment findExtensionCompartment(final BPMNGNode element) {
+    public static GCompartment findExtensionCompartment(final GModelElement element) {
 
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {
@@ -165,13 +176,26 @@ public class BPMNGModelUtil {
      */
     public static GNode findMultiLineTextNode(final GModelElement element) {
 
+        // GModelElement baseElement = element;
+        // if (baseElement instanceof TaskGNode) {
+        // // grab the inner container
+        // baseElement = element.getChildren().get(0);
+        // }
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {
+
             if (child instanceof GNode) {
                 if (ModelTypes.BPMN_TEXT_NODE.equals(child.getType())) {
                     return (GNode) child;
                 }
 
+            }
+
+            if (child.getChildren().size() > 0) {
+                GNode subResult = findMultiLineTextNode(child);
+                if (subResult != null) {
+                    return subResult;
+                }
             }
         }
         // we did not found a GLabel

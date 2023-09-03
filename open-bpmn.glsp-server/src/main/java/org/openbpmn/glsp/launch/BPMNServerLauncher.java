@@ -16,8 +16,6 @@
 package org.openbpmn.glsp.launch;
 
 import org.apache.commons.cli.ParseException;
-import org.eclipse.elk.alg.layered.options.LayeredMetaDataProvider;
-import org.eclipse.glsp.layout.ElkLayoutEngine;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
@@ -34,7 +32,7 @@ public final class BPMNServerLauncher {
       String processName = "open-bpmn.server-X.X.X-glsp.jar";
       try {
          BPMNCLIParser parser = new BPMNCLIParser(args, processName);
-         ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
+         // ElkLayoutEngine.initialize(new LayeredMetaDataProvider());
 
          int port = parser.parsePort();
          ServerModule bpmnServerModule = new BPMNServerModule()

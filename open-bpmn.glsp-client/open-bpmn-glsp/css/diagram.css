@@ -147,13 +147,10 @@
 	white-space: pre-wrap;
 }
 
-.task > .bpmn-text-node pre {
-	color: #f0f3f8;
-	text-align: center;
-	font-size: 0.6em;
-	font-family: sans-serif;
-	white-space: pre-wrap;
-	margin: 7px 20px 0px 20px;
+.task .bpmn-text-node text {
+    fill: #f0f3f8;
+    text-anchor: middle;
+    font-size: 0.6em;
 }
 
 .task > .extension .label {

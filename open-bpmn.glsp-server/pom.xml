@@ -32,6 +32,8 @@
 			<artifactId>org.eclipse.glsp.server.websocket</artifactId>
 			<version>${glsp-server-version}</version>
 		</dependency>
+
+		<!-- 
 		<dependency>
 			<groupId>org.eclipse.glsp</groupId>
 			<artifactId>org.eclipse.glsp.layout</artifactId>
@@ -42,14 +44,14 @@
 			<artifactId>org.eclipse.elk.alg.layered</artifactId>
 			<version>${elk.version}</version>
 				<exclusions>
-				<!--ELK still has a log4J 1.2 dependency. So we exclude it -->
+				
 					<exclusion>
 						<groupId>log4j</groupId>
 						<artifactId>log4j</artifactId>
 					</exclusion>
 			</exclusions>
 		</dependency>
-
+-->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
