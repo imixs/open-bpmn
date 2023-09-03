@@ -323,8 +323,6 @@ export class TextAnnotationNodeView extends ShapeView {
 
 @injectable()
 export class MultiLineTextNodeView extends ShapeView {
-
-    masterTspan = document.createElementNS('http://www.w3.org/2000/svg', 'tspan');
     render(label: Readonly<MultiLineTextNode>, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(label, context)) {
             return undefined;
@@ -333,7 +331,7 @@ export class MultiLineTextNodeView extends ShapeView {
         const parent=label.parent;
         if (isBoundsAware(parent)) {
             nodeWidth=parent.bounds.width;
-            console.log('element width = '+nodeWidth);
+            console.log('computed element width = '+nodeWidth);
         }
 
         // split text into words and lines...
@@ -343,22 +341,23 @@ export class MultiLineTextNodeView extends ShapeView {
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
             line+=word+ ' ';
-
-            if (line.length>(nodeWidth/10)) {
-
+            if (line.length>(nodeWidth/6)) {
                 line=line.substring(0,line.length-word.length-2);
-
-                console.log('line = '+line);
+                // console.log('line = '+line);
                 lines.push(line);
                 line=word +' ';
             }
         }
         lines.push(line); // last line
 
-        // const vnode = <text class-sprotty-label={true}><tspan x="10" dy="15">{lines[0]}</tspan></text>;
+        // depending on the attribute 'align' we move the text element into the center
+        let xOffset=5;
+        if (label.args.align==='middle') {
+            xOffset= nodeWidth*0.5;
+        }
 
         const vnode = <g class-sprotty-node={label instanceof SNode}>
-            <text class-sprotty-label={true} transform={'translate(' + nodeWidth*0.5 + ',0)'}>
+            <text class-sprotty-label={true} transform={'translate(' + xOffset + ',0)'}>
                 {lines!.map(_line => (
                     <tspan x="0" dy="15">{_line}</tspan>
                 ))}

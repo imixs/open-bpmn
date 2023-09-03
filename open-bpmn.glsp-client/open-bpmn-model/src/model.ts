@@ -148,7 +148,7 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
 
 /*
  * This class provides a new Node displaying a multiline text block.
- * The node also allows editing the text.
+ * The text can be aligned 'left', 'middle' or 'right'.
  *
  */
 export class MultiLineTextNode extends SShapeElement implements SArgumentable {
@@ -157,6 +157,7 @@ export class MultiLineTextNode extends SShapeElement implements SArgumentable {
 	layout: string;
 	readonly args: Args;
     text = '';
+	align = '';
 }
 
 /*

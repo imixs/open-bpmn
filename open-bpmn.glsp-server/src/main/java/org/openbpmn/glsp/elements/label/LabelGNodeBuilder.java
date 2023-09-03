@@ -106,7 +106,8 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
 
         // add a multiLine text block to show and edit long text blocks
         this.id = node.getId() + "_bpmntext";
-        node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id, name));
+        node.getChildren()
+                .add(BPMNGModelUtil.createMultiLineTextNode(node, name, BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE));
     }
 
 }

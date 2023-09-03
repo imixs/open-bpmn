@@ -139,12 +139,10 @@
     stroke-width: 2;
     fill: none;
 }
-.textAnnotation > .bpmn-text-node pre {
-	color: #447c3c;
+.textAnnotation .bpmn-text-node text {
+    fill: #447c3c;
 	font-size: 0.6em;
-	font-family: sans-serif;
-	margin: 0.3em;
-	white-space: pre-wrap;
+    text-anchor: start;
 }
 
 .task .bpmn-text-node text {

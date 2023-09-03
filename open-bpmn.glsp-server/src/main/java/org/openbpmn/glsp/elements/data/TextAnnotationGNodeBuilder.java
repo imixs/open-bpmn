@@ -72,19 +72,16 @@ public class TextAnnotationGNodeBuilder extends AbstractGNodeBuilder<TextAnnotat
     @Override
     public void setProperties(final TextAnnotationGNode node) {
         super.setProperties(node);
-        node.setLayout(GConstants.Layout.FREEFORM);
-
-        // Set min width/height
+        node.setLayout(GConstants.Layout.HBOX);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, TextAnnotation.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, TextAnnotation.DEFAULT_HEIGHT);
-
         if (size != null) {
             node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
             node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
         }
         // add a mulitLine text block to show and edit long text blocks
-        this.id = node.getId() + "_bpmntext";
-        node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id, text));
+        node.getChildren()
+                .add(BPMNGModelUtil.createMultiLineTextNode(node, text, BPMNGModelUtil.MULTILINETEXT_ALIGN_LEFT));
     }
 
 }

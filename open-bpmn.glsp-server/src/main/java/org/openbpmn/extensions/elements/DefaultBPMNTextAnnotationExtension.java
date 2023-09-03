@@ -105,7 +105,7 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
         String text = json.getString("text", "");
         ((TextAnnotation) bpmnElement).setText(text);
         // Update GModelElement Text Node...
-        Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_bpmntext");
+        Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_multiline");
         if (!textNode.isEmpty()) {
             textNode.get().getArgs().put("text", text);
         }

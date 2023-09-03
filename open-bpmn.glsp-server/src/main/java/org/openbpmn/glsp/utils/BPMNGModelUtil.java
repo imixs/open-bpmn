@@ -56,6 +56,9 @@ public class BPMNGModelUtil {
 
     private static final String V_GRAB = "vGrab";
     private static final String H_GRAB = "hGrab";
+    public static final String MULTILINETEXT_ALIGN_LEFT = "left";
+    public static final String MULTILINETEXT_ALIGN_RIGHT = "right";
+    public static final String MULTILINETEXT_ALIGN_MIDDLE = "middle";
 
     public static IconGCompartment createCompartmentIcon(final BPMNGNode node) {
         return new IconGCompartmentBuilder(). //
@@ -64,30 +67,17 @@ public class BPMNGModelUtil {
     }
 
     /**
-     * Creates a GLabel for the name of a BaseElement
-     *
-     * @param node
-     * @return GPort
-     */
-    // @Deprecated
-    // public static GLabel createCompartmentHeader(final BPMNGNode node) {
-    // return new GLabelBuilder(ModelTypes.LABEL_HEADING) //
-    // .id(node.getId() + "_header") //
-    // .text(node.getName()) //
-    // .build();
-    // }
-
-    /**
      * Creates a Multiline GLable node
      *
      * @param id
      * @param text
      * @return - GNode element containing the text
      */
-    public static GNode createMultiLineTextNode(final String id, final String text) {
+    public static GNode createMultiLineTextNode(final BPMNGNode node, final String text, final String align) {
         return new GNodeBuilder(ModelTypes.BPMN_TEXT_NODE). //
-                id(id). //
+                id(node.getId() + "_multiline"). //
                 addArgument("text", text). //
+                addArgument("align", align). //
                 build();
     }
 
@@ -118,8 +108,6 @@ public class BPMNGModelUtil {
                 .layoutOptions(layoutOptions) //
                 .build();
     }
-
-
 
 
     /**
@@ -169,7 +157,7 @@ public class BPMNGModelUtil {
 
     /**
      * This method tests if the given element has a Child of type bpmn-text-node.
-     * This is the case for BPMN Flow Elements. In this case the method returns the
+     * In this case the method returns the
      * GNode. Otherwise the method returns null.
      *
      * @return GNode of an element or null if no bpmn-text-node was found
@@ -178,11 +166,17 @@ public class BPMNGModelUtil {
 
         EList<GModelElement> childs = element.getChildren();
         for (GModelElement child : childs) {
+
             if (child instanceof GNode) {
                 if (ModelTypes.BPMN_TEXT_NODE.equals(child.getType())) {
                     return (GNode) child;
                 }
-
+            }
+            if (child.getChildren().size() > 0) {
+                GNode subResult = findMultiLineTextNode(child);
+                if (subResult != null) {
+                    return subResult;
+                }
             }
         }
         // we did not found a GLabel

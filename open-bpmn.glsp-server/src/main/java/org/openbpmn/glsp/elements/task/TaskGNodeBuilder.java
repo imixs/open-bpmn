@@ -99,7 +99,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         node.getChildren().add(freeformContainer);
 
         // add Icon
-        GPoint iconPosition = GraphUtil.point(3, 3);
+        GPoint iconPosition = GraphUtil.point(1, 1);
         IconGCompartment taskIcon = new IconGCompartmentBuilder() //
                 .id(node.getId() + "_icon") //
                 .position(iconPosition) //
@@ -107,7 +107,9 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         freeformContainer.getChildren().add(taskIcon);
 
         // add Text Input
-        freeformContainer.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id + "_name", name));
+        freeformContainer.getChildren().add(
+                BPMNGModelUtil.createMultiLineTextNode(node, name,
+                        BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE));
 
         // add extension label
         String extensionLabelString = (String) node.getArgs().get("extensionLabel");
