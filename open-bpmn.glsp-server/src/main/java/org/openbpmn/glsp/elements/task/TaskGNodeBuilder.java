@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.DefaultTypes;
@@ -87,11 +89,14 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super.setProperties(node);
         node.setName(name);
 
-        node.setLayout(GConstants.Layout.FREEFORM);
+        node.setLayout(GConstants.Layout.HBOX);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+
+        GCompartment freeformContainer = createContainerCompartment(node);
+        node.getChildren().add(freeformContainer);
 
         // add Icon
         GPoint iconPosition = GraphUtil.point(3, 3);
@@ -99,10 +104,10 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                 .id(node.getId() + "_icon") //
                 .position(iconPosition) //
                 .build();
-        node.getChildren().add(taskIcon);
+        freeformContainer.getChildren().add(taskIcon);
 
         // add Text Input
-        node.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id + "_name", name));
+        freeformContainer.getChildren().add(BPMNGModelUtil.createMultiLineTextNode(id + "_name", name));
 
         // add extension label
         String extensionLabelString = (String) node.getArgs().get("extensionLabel");
@@ -116,8 +121,26 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                         .build())
                 .addCssClass("extension")
                 .build();
-        node.getChildren().add(extensionLabel);
+        freeformContainer.getChildren().add(extensionLabel);
 
+    }
+
+    private GCompartment createContainerCompartment(final TaskGNode node) {
+
+        Map<String, Object> superLayoutOptions = new HashMap<>();
+        superLayoutOptions.put(V_GRAB, true);
+        superLayoutOptions.put(H_GRAB, true);
+        superLayoutOptions.put(GLayoutOptions.KEY_H_GAP, 0);
+        superLayoutOptions.put(GLayoutOptions.KEY_V_GAP, 0);
+        superLayoutOptions.put(GLayoutOptions.KEY_RESIZE_CONTAINER, false);
+
+        return new GCompartmentBuilder()
+                .type(DefaultTypes.COMPARTMENT)
+                .position(1, 1) //
+                .size(node.getSize().getWidth() - 2, node.getSize().getHeight() - 2)
+                .layoutOptions(superLayoutOptions)
+                .addCssClass("label-container")
+                .build();
     }
 
 

@@ -329,28 +329,22 @@ export class MultiLineTextNodeView extends ShapeView {
         if (!this.isVisible(label, context)) {
             return undefined;
         }
-        let maxWidth=100;
-        let maxHeight=50;
-        const yOffset=5;
-
+        let nodeWidth=100;
         const parent=label.parent;
         if (isBoundsAware(parent)) {
-            maxWidth=parent.bounds.width;
-            maxHeight=parent.bounds.height;
-            console.log('element width = '+maxWidth);
+            nodeWidth=parent.bounds.width;
+            console.log('element width = '+nodeWidth);
         }
 
-        // eslint-disable-next-line no-null/no-null
-
-        // Aufteilen des Texts in Wörter
+        // split text into words and lines...
         let line='';
         const lines: string[] = [];
-        const words=splitti(label.args.text);
+        const words=splitWords(label.args.text);
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
             line+=word+ ' ';
 
-            if (line.length>(maxWidth/10)) {
+            if (line.length>(nodeWidth/10)) {
 
                 line=line.substring(0,line.length-word.length-2);
 
@@ -364,7 +358,7 @@ export class MultiLineTextNodeView extends ShapeView {
         // const vnode = <text class-sprotty-label={true}><tspan x="10" dy="15">{lines[0]}</tspan></text>;
 
         const vnode = <g class-sprotty-node={label instanceof SNode}>
-            <text class-sprotty-label={true} transform={'translate(' + maxWidth*0.5 + ',0)'}>
+            <text class-sprotty-label={true} transform={'translate(' + nodeWidth*0.5 + ',0)'}>
                 {lines!.map(_line => (
                     <tspan x="0" dy="15">{_line}</tspan>
                 ))}
@@ -379,6 +373,6 @@ export class MultiLineTextNodeView extends ShapeView {
     }
 }
 
-function splitti(text: any): string {
+function splitWords(text: any): string {
     return text.split(' ');
 }
