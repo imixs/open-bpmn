@@ -270,10 +270,10 @@ export class TaskNodeView extends ShapeView {
         }
         const cornerRadius = new CornerRadius(5);
         // extract attribute info
-        const infoTextYOffset=node.bounds.height-5;
+        const infoTextYOffset=node.bounds.height-4;
         let infoText='';
-        if (node.args.info) {
-            infoText=''+node.args.info;
+        if (node.args.bpmnExtensionInfo) {
+            infoText=''+node.args.bpmnExtensionInfo;
         }
         const wrapper = new RoundedCornerWrapper(node, cornerRadius);
         return (

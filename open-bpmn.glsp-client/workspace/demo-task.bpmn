@@ -8,6 +8,14 @@
     <bpmn2:task id="task_pOkOJw" name="Task-5">
       <bpmn2:documentation id="documentation_dD2YoA"/>
     </bpmn2:task>
+    <bpmn2:scriptTask id="task_LVVcBQ" name="Task-3">
+      <bpmn2:documentation id="documentation_Q8FkNg"/>
+      <bpmn2:script id="script_I3kqog"/>
+    </bpmn2:scriptTask>
+    <bpmn2:scriptTask id="task_p0uoVw" name="Task-4">
+      <bpmn2:documentation id="documentation_TA48yg"/>
+      <bpmn2:script id="script_8M0GcA"/>
+    </bpmn2:scriptTask>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
     <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
@@ -16,6 +24,12 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="task_pOkOJw" id="BPMNShape_s44hgg">
         <dc:Bounds height="50.0" width="110.0" x="-300.0" y="60.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_LVVcBQ" id="BPMNShape_oCuYog">
+        <dc:Bounds height="50.0" width="110.0" x="-550.0" y="-150.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_p0uoVw" id="BPMNShape_gb0r7Q">
+        <dc:Bounds height="50.0" width="110.0" x="-360.0" y="-150.0"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
