@@ -73,17 +73,19 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="task_Ce3H1g" id="BPMNShape_SzCizg">
-        <dc:Bounds height="50.0" width="155.0" x="20.0" y="13.0"/>
+        <dc:Bounds height="50.0" width="155.0" x="0.0" y="60.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="task_Uv0f5w" id="BPMNShape_hrAFRA">
         <dc:Bounds height="50.0" width="110.0" x="410.0" y="13.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_tgdRAQ" id="BPMNEdge_XAV6wg" sourceElement="BPMNShape_CWtA0w" targetElement="BPMNShape_bWWOqA">
         <di:waypoint x="-264.0" y="38.0"/>
-        <di:waypoint x="-220.0" y="38.0"/>
+        <di:waypoint x="-190.0" y="38.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_ZI50jQ" id="BPMNEdge_wzdP0A" sourceElement="BPMNShape_SzCizg" targetElement="BPMNShape_SV0OYw">
-        <di:waypoint x="175.0" y="38.0"/>
+        <di:waypoint x="155.0" y="85.0"/>
+        <di:waypoint x="202.5" y="85.0"/>
+        <di:waypoint x="202.5" y="38.0"/>
         <di:waypoint x="250.0" y="38.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="event_2BUPgQ" id="BPMNShape_SV0OYw">
@@ -100,7 +102,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_NupBeA" id="BPMNEdge_1LNXWw" sourceElement="BPMNShape_VpZNSA" targetElement="BPMNShape_SzCizg">
         <di:waypoint x="-44.0" y="38.0"/>
-        <di:waypoint x="20.0" y="38.0"/>
+        <di:waypoint x="-22.0" y="38.0"/>
+        <di:waypoint x="-22.0" y="85.0"/>
+        <di:waypoint x="0.0" y="85.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_DnBfoQ" id="BPMNEdge_OCMpqA" sourceElement="BPMNShape_SV0OYw" targetElement="BPMNShape_hrAFRA">
         <di:waypoint x="286.0" y="38.0"/>
@@ -123,22 +127,20 @@
         <di:waypoint x="270.0" y="55.88854381999832"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_2WatlQ" id="BPMNEdge_zq20eQ" sourceElement="BPMNShape_SzCizg" targetElement="BPMNShape_hrAFRA">
-        <di:waypoint x="97.5" y="13.0"/>
-        <di:waypoint x="97.5" y="-50.0"/>
-        <di:waypoint x="465.0" y="-50.0"/>
-        <di:waypoint x="465.0" y="13.0"/>
+        <di:waypoint x="155.0" y="85.0"/>
+        <di:waypoint x="282.5" y="85.0"/>
+        <di:waypoint x="282.5" y="38.0"/>
+        <di:waypoint x="410.0" y="38.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="event_fNPy6w" id="BPMNShape_bWWOqA">
-        <dc:Bounds height="36.0" width="36.0" x="-220.0" y="20.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="-190.0" y="20.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_fNgGPw">
-          <dc:Bounds height="16.0" width="100.0" x="-252.0" y="59.0"/>
+          <dc:Bounds height="16.0" width="100.0" x="-222.0" y="59.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_MNq0RQ" id="BPMNEdge_uPz7rA" sourceElement="BPMNShape_bWWOqA" targetElement="BPMNShape_VpZNSA">
-        <di:waypoint x="-202.0" y="20.0"/>
-        <di:waypoint x="-202.0" y="-20.0"/>
-        <di:waypoint x="-62.0" y="-20.0"/>
-        <di:waypoint x="-62.0" y="20.0"/>
+        <di:waypoint x="-154.0" y="38.0"/>
+        <di:waypoint x="-80.0" y="38.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
