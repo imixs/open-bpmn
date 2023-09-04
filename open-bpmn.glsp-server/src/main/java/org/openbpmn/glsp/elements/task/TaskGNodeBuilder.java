@@ -47,7 +47,6 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         super(activity.getType());
         this.name = activity.getName();
         this.id = activity.getId();
-
         try {
             BPMNBounds bpmnBounds = activity.getBounds();
             this.size = GraphUtil.dimension(bpmnBounds.getDimension().getWidth(),
@@ -59,8 +58,8 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         // set Layout options
         this.addCssClass(type);
         this.addCssClass("task");
-
         this.addArguments(GArguments.cornerRadius(5));
+        this.addArgument("info", "");
     }
 
 

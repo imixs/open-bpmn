@@ -52,7 +52,7 @@ export class LabelNode extends RectangularNode {
 }
 
 /* Task Node */
-export class TaskNode extends RectangularNode implements BPMNFlowElement {
+export class TaskNode extends RectangularNode implements BPMNFlowElement, SArgumentable {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -65,6 +65,7 @@ export class TaskNode extends RectangularNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
+	readonly args: Args;
 	kind?: string;
 	documentation: string;
 }

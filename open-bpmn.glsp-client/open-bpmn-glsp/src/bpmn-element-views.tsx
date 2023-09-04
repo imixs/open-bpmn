@@ -32,7 +32,7 @@ import {
 } from '@eclipse-glsp/client';
 import {
     Icon,
-    MultiLineTextNode,
+    MultiLineTextNode, TaskNode,
     isContainerNode,
     isEventNode,
     isGatewayNode
@@ -259,15 +259,22 @@ export class MessageNodeView extends ShapeView {
  * A ActivityNodeView contains an optional icon and an extension text
  *
  * The implementation is a variant form the RoundedCornerNodeView but customizes the content.
+ *
+ * SShapeElement
  */
 @injectable()
 export class TaskNodeView extends ShapeView {
-    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+    render(node: Readonly<TaskNode & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
-       // const cornerRadius = CornerRadius.from(node);
         const cornerRadius = new CornerRadius(5);
+        // extract attribute info
+        const infoTextYOffset=node.bounds.height-5;
+        let infoText='';
+        if (node.args.info) {
+            infoText=''+node.args.info;
+        }
         const wrapper = new RoundedCornerWrapper(node, cornerRadius);
         return (
             <g class-node={true}>
@@ -278,10 +285,12 @@ export class TaskNodeView extends ShapeView {
                 </defs>
                 {this.renderPathNode(wrapper, context)}
                 {this.computeIconPath(node)}
+                <g class-extension={true}>
+                    <text transform={'translate(3,'+infoTextYOffset+')'}>{infoText}</text>
+                </g>
                 {context.renderChildren(node)}
             </g>
         );
-
     }
 
     // Helper method to render a rounded border

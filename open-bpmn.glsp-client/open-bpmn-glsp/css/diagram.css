@@ -151,9 +151,10 @@
     font-size: 0.6em;
 }
 
-.task > .extension .label {
+.task .extension text {
 	fill: #f0f3f8;
     font-size: 7pt;
+    text-anchor: start;
 }
 
 

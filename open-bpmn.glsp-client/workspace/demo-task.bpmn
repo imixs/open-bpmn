@@ -2,7 +2,7 @@
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org">
   <bpmn2:process id="process_1" name="Default Process" processType="Public">
     <bpmn2:documentation id="documentation_LEzJgA"/>
-    <bpmn2:manualTask id="task_iq8C2A" name="Task-1 asdf jölajk sdfök asdfölk asödfjk aösdfaölsdkfj öasdjkf asdöf jaösdfj aösdfj akölsdjfö">
+    <bpmn2:manualTask id="task_iq8C2A" name="Task-1 asdf jölajk sdfök asdfölk asödfjk aösdfaölsd">
       <bpmn2:documentation id="documentation_YhtZcA"/>
     </bpmn2:manualTask>
     <bpmn2:task id="task_pOkOJw" name="Task-5">
@@ -12,10 +12,10 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
     <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
       <bpmndi:BPMNShape bpmnElement="task_iq8C2A" id="BPMNShape_VMumAA">
-        <dc:Bounds height="100.0" width="190.0" x="-220.0" y="-100.0"/>
+        <dc:Bounds height="50.0" width="165.0" x="-180.0" y="-60.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="task_pOkOJw" id="BPMNShape_s44hgg">
-        <dc:Bounds height="50.0" width="110.0" x="-180.0" y="110.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="-300.0" y="60.0"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
