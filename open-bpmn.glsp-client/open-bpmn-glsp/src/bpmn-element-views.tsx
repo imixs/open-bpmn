@@ -14,9 +14,11 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+    CornerRadius,
     Hoverable,
     IViewArgs,
     RenderingContext,
+    RoundedCornerWrapper,
     SNode, SPort,
     SShapeElement,
     Selectable,
@@ -25,31 +27,33 @@ import {
     getSubType,
     isBoundsAware,
     setAttr,
-    svg
+    svg,
+    toClipPathId
 } from '@eclipse-glsp/client';
 import {
     Icon,
     MultiLineTextNode,
     isContainerNode,
     isEventNode,
-    isGatewayNode,
-    isTaskNode
+    isGatewayNode
 } from '@open-bpmn/open-bpmn-model';
 import { injectable } from 'inversify';
-import { VNode } from 'snabbdom';
+import { Classes, VNode } from 'snabbdom';
 
 /****************************************************************************
- * This module provides BPMN element views like Gateways, or Events
+ * This module provides BPMN element views like Tasks, Gateways, or Events
  *
  ****************************************************************************/
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
 
 /*
- * The IconView shows a icon within a BPMN Node
+ * The IconView is used to show a icon within a BPMN Event or Gateway Node
  *
- * The SVG icons have a fixed dimension. Dependign on the BPMN Node type a scale factor is used to size the symbol to the
- * BPMN element type. E.g. a symbol in a gateway node is larger than in a task node
+ * The SVG icons have a fixed dimension. Depending on the BPMN Node type a scale factor is used to size the symbol to the
+ * BPMN element type. E.g. a symbol in a gateway node is larger than in a Event node.
+ *
+ * Note: The taskView provides a custom implementation to display icons.
  */
 @injectable()
 export class IconView extends ShapeView {
@@ -61,61 +65,13 @@ export class IconView extends ShapeView {
             return undefined;
         }
 
-        const taskNode = findParentByFeature(element, isTaskNode);
         const eventNode = findParentByFeature(element, isEventNode);
         const gatewayNode = findParentByFeature(element, isGatewayNode);
-        if (!(eventNode || taskNode || gatewayNode)) {
+        if (!(eventNode || gatewayNode)) {
             return undefined;
         }
 
         let icon;
-        if (taskNode) {
-            translateX = 0.0;
-            translateY = 0.0;
-            if (taskNode.type === 'manualTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
-                icon =
-                    // eslint-disable-next-line max-len
-                    'M10.54 2c.289.001.57.088.81.25a1.38 1.38 0 0 1 .45 1.69l-.97 2.17h2.79a1.36 1.36 0 0 1 1.16.61 1.35 1.35 0 0 1 .09 1.32c-.67 1.45-1.87 4.07-2.27 5.17a1.38 1.38 0 0 1-1.29.9H2.38A1.4 1.4 0 0 1 1 12.71V9.2a1.38 1.38 0 0 1 1.38-1.38h1.38L9.6 2.36a1.41 1.41 0 0 1 .94-.36zm.77 11.11a.39.39 0 0 0 .36-.25c.4-1.09 1.47-3.45 2.33-5.24a.39.39 0 0 0 0-.36.37.37 0 0 0-.38-.15h-3.3l-.52-.68v-.46l1.09-2.44a.37.37 0 0 0-.13-.46.38.38 0 0 0-.48 0L4.22 8.66l-.47.13H2.38A.38.38 0 0 0 2 9.2v3.51a.4.4 0 0 0 .38.4h8.93z';
-
-            } else if (taskNode.type === 'userTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
-                icon =
-                    // eslint-disable-next-line max-len
-                    'M16 7.992C16 3.58 12.416 0 8 0S0 3.58 0 7.992c0 2.43 1.104 4.62 2.832 6.09.016.016.032.016.032.032.144.112.288.224.448.336.08.048.144.111.224.175A7.98 7.98 0 0 0 8.016 16a7.98 7.98 0 0 0 4.48-1.375c.08-.048.144-.111.224-.16.144-.111.304-.223.448-.335.016-.016.032-.016.032-.032 1.696-1.487 2.8-3.676 2.8-6.106zm-8 7.001c-1.504 0-2.88-.48-4.016-1.279.016-.128.048-.255.08-.383a4.17 4.17 0 0 1 .416-.991c.176-.304.384-.576.64-.816.24-.24.528-.463.816-.639.304-.176.624-.304.976-.4A4.15 4.15 0 0 1 8 10.342a4.185 4.185 0 0 1 2.928 1.166c.368.368.656.8.864 1.295.112.288.192.592.24.911A7.03 7.03 0 0 1 8 14.993zm-2.448-7.4a2.49 2.49 0 0 1-.208-1.024c0-.351.064-.703.208-1.023.144-.32.336-.607.576-.847.24-.24.528-.431.848-.575.32-.144.672-.208 1.024-.208.368 0 .704.064 1.024.208.32.144.608.336.848.575.24.24.432.528.576.847.144.32.208.672.208 1.023 0 .368-.064.704-.208 1.023a2.84 2.84 0 0 1-.576.848 2.84 2.84 0 0 1-.848.575 2.715 2.715 0 0 1-2.064 0 2.84 2.84 0 0 1-.848-.575 2.526 2.526 0 0 1-.56-.848zm7.424 5.306c0-.032-.016-.048-.016-.08a5.22 5.22 0 0 0-.688-1.406 4.883 4.883 0 0 0-1.088-1.135 5.207 5.207 0 0 0-1.04-.608 2.82 2.82 0 0 0 .464-.383 4.2 4.2 0 0 0 .624-.784 3.624 3.624 0 0 0 .528-1.934 3.71 3.71 0 0 0-.288-1.47 3.799 3.799 0 0 0-.816-1.199 3.845 3.845 0 0 0-1.2-.8 3.72 3.72 0 0 0-1.472-.287 3.72 3.72 0 0 0-1.472.288 3.631 3.631 0 0 0-1.2.815 3.84 3.84 0 0 0-.8 1.199 3.71 3.71 0 0 0-.288 1.47c0 .352.048.688.144 1.007.096.336.224.64.4.927.16.288.384.544.624.784.144.144.304.271.48.383a5.12 5.12 0 0 0-1.04.624c-.416.32-.784.703-1.088 1.119a4.999 4.999 0 0 0-.688 1.406c-.016.032-.016.064-.016.08C1.776 11.636.992 9.91.992 7.992.992 4.14 4.144.991 8 .991s7.008 3.149 7.008 7.001a6.96 6.96 0 0 1-2.032 4.907z';
-
-            } else if (taskNode.type === 'scriptTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
-                icon =
-                    // eslint-disable-next-line max-len
-                    'M6 10V9h9v1H6zm4-4h5v1h-5V6zm5-3v1H6V3h9zm-9 9v1h9v-1H6z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M1 2.795l.783-.419 5.371 3.581v.838l-5.371 3.581L1 9.957V2.795zm1.007.94v5.281l3.96-2.64-3.96-2.64z';
-
-            } else if (taskNode.type === 'businessRuleTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/table.svg?short_path=8f21e22
-                // eslint-disable-next-line max-len
-                icon = 'M13.5 2h-12l-.5.5v11l.5.5h12l.5-.5v-11l-.5-.5zM2 3h11v1H2V3zm7 4H6V5h3v2zm0 1v2H6V8h3zM2 5h3v2H2V5zm0 3h3v2H2V8zm0 5v-2h3v2H2zm4 0v-2h3v2H6zm7 0h-3v-2h3v2zm0-3h-3V8h3v2zm-3-3V5h3v2h-3z';
-
-            } else if (taskNode.type === 'serviceTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
-                icon = 'M2.5 2H4v12H2.5V2zm4.936.39L6.25 3v10l1.186.61 7-5V7.39l-7-5zM12.71 8l-4.96 3.543V4.457L12.71 8z';
-
-            } else if (taskNode.type === 'sendTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/mail.svg?short_path=d02764e
-                icon =
-                    // eslint-disable-next-line max-len
-                    'M1 3.5l.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5v-9zm1 1.035V12h12V4.536L8.31 8.9H7.7L2 4.535zM13.03 4H2.97L8 7.869 13.03 4z';
-
-            } else if (taskNode.type === 'receiveTask') {
-                // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/mail-read.svg?short_path=f74817b
-                icon =
-                    // eslint-disable-next-line max-len
-                    'M8.25 1.57h-.51L1 5.56v7.94l.5.5h13l.5-.5V5.56L8.25 1.57zM8 2.58l5.63 3.32-1.37 1.59H3.74L2.43 5.9 8 2.58zM14 13H2V6.92L3.11 8.3l.39.19h9l.39-.19L14 6.92V13z';
-
-            } else {
-                // no icon defined at all - See Issue #215
-            }
-        }
-
         if (gatewayNode) {
             scaleFactor = 1.5;
             translateX = 9.0;
@@ -295,6 +251,145 @@ export class MessageNodeView extends ShapeView {
             <polyline points={messageIcon} />
             {context.renderChildren(node)}
         </g>;
+    }
+}
+
+/*
+ * Render a BPMN Task element
+ * A ActivityNodeView contains an optional icon and an extension text
+ *
+ * The implementation is a variant form the RoundedCornerNodeView but customizes the content.
+ */
+@injectable()
+export class TaskNodeView extends ShapeView {
+    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+       // const cornerRadius = CornerRadius.from(node);
+        const cornerRadius = new CornerRadius(5);
+        const wrapper = new RoundedCornerWrapper(node, cornerRadius);
+        return (
+            <g class-node={true}>
+                <defs>
+                    <clipPath id={toClipPathId(node)}>
+                        <path d={this.renderPath(wrapper, context,2)}></path>
+                    </clipPath>
+                </defs>
+                {this.renderPathNode(wrapper, context)}
+                {this.computeIconPath(node)}
+                {context.renderChildren(node)}
+            </g>
+        );
+
+    }
+
+    // Helper method to render a rounded border
+    protected renderPathNode(wrapper: Readonly<RoundedCornerWrapper>, context: RenderingContext): VNode {
+        return (
+            <path
+                d={this.renderPath(wrapper, context, 0)}
+                class-sprotty-node={wrapper.element instanceof SNode}
+                class-sprotty-port={wrapper.element instanceof SPort}
+                class-mouseover={wrapper.element.hoverFeedback}
+                class-selected={wrapper.element.selected}
+                {...this.additionalClasses(wrapper.element, context)}
+            />
+        );
+    }
+
+    // Helper method to ..?
+    protected additionalClasses(_node: Readonly<SShapeElement & Hoverable & Selectable>, _context: RenderingContext): Classes {
+        return {};
+    }
+
+    // Helper method to render a rounded border path
+    protected renderPath(wrapper: Readonly<RoundedCornerWrapper>, _context: RenderingContext, inset: number): string {
+        // Calculate length of straight line segments
+        const topLineLength = Math.max(0, wrapper.size.width - wrapper.cornerRadius.topLeft - wrapper.cornerRadius.topRight);
+        const rightLineLength = Math.max(0, wrapper.size.height - wrapper.cornerRadius.topRight - wrapper.cornerRadius.bottomRight);
+        const bottomLineLength = Math.max(0, wrapper.size.width - wrapper.cornerRadius.bottomLeft - wrapper.cornerRadius.bottomRight);
+
+        const path =
+            `M${0 + inset},${0 + wrapper.topLeftCorner.radiusY}` +
+            `q${0},${-(wrapper.topLeftCorner.radiusY - inset)} ${wrapper.topLeftCorner.radiusX - inset},${-(
+                wrapper.topLeftCorner.radiusY - inset
+            )}` +
+            `h${topLineLength}` +
+            `q${wrapper.topRightCorner.radiusX - inset},0 ${wrapper.topRightCorner.radiusX - inset},${
+                wrapper.topRightCorner.radiusY - inset
+            }` +
+            `v${rightLineLength}` +
+            `q0,${wrapper.bottomRightCorner.radiusY - inset} ${-(wrapper.bottomRightCorner.radiusX - inset)},${
+                wrapper.bottomRightCorner.radiusY - inset
+            }` +
+            `h${-bottomLineLength}` +
+            `q${-(wrapper.bottomLeftCorner.radiusX - inset)},0 ${-(wrapper.bottomLeftCorner.radiusX - inset)},${-(
+                wrapper.bottomLeftCorner.radiusY - inset
+            )}` +
+            'z ';
+        return path;
+    }
+
+    // This helper method computes the icon path for TaskNodes depending on its type.
+    protected computeIconPath(taskNode: Readonly<SShapeElement>) {
+
+        let icon;
+
+        if (taskNode.type === 'manualTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
+            icon =
+                // eslint-disable-next-line max-len
+                'M10.54 2c.289.001.57.088.81.25a1.38 1.38 0 0 1 .45 1.69l-.97 2.17h2.79a1.36 1.36 0 0 1 1.16.61 1.35 1.35 0 0 1 .09 1.32c-.67 1.45-1.87 4.07-2.27 5.17a1.38 1.38 0 0 1-1.29.9H2.38A1.4 1.4 0 0 1 1 12.71V9.2a1.38 1.38 0 0 1 1.38-1.38h1.38L9.6 2.36a1.41 1.41 0 0 1 .94-.36zm.77 11.11a.39.39 0 0 0 .36-.25c.4-1.09 1.47-3.45 2.33-5.24a.39.39 0 0 0 0-.36.37.37 0 0 0-.38-.15h-3.3l-.52-.68v-.46l1.09-2.44a.37.37 0 0 0-.13-.46.38.38 0 0 0-.48 0L4.22 8.66l-.47.13H2.38A.38.38 0 0 0 2 9.2v3.51a.4.4 0 0 0 .38.4h8.93z';
+
+        } else if (taskNode.type === 'userTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
+            icon =
+                // eslint-disable-next-line max-len
+                'M16 7.992C16 3.58 12.416 0 8 0S0 3.58 0 7.992c0 2.43 1.104 4.62 2.832 6.09.016.016.032.016.032.032.144.112.288.224.448.336.08.048.144.111.224.175A7.98 7.98 0 0 0 8.016 16a7.98 7.98 0 0 0 4.48-1.375c.08-.048.144-.111.224-.16.144-.111.304-.223.448-.335.016-.016.032-.016.032-.032 1.696-1.487 2.8-3.676 2.8-6.106zm-8 7.001c-1.504 0-2.88-.48-4.016-1.279.016-.128.048-.255.08-.383a4.17 4.17 0 0 1 .416-.991c.176-.304.384-.576.64-.816.24-.24.528-.463.816-.639.304-.176.624-.304.976-.4A4.15 4.15 0 0 1 8 10.342a4.185 4.185 0 0 1 2.928 1.166c.368.368.656.8.864 1.295.112.288.192.592.24.911A7.03 7.03 0 0 1 8 14.993zm-2.448-7.4a2.49 2.49 0 0 1-.208-1.024c0-.351.064-.703.208-1.023.144-.32.336-.607.576-.847.24-.24.528-.431.848-.575.32-.144.672-.208 1.024-.208.368 0 .704.064 1.024.208.32.144.608.336.848.575.24.24.432.528.576.847.144.32.208.672.208 1.023 0 .368-.064.704-.208 1.023a2.84 2.84 0 0 1-.576.848 2.84 2.84 0 0 1-.848.575 2.715 2.715 0 0 1-2.064 0 2.84 2.84 0 0 1-.848-.575 2.526 2.526 0 0 1-.56-.848zm7.424 5.306c0-.032-.016-.048-.016-.08a5.22 5.22 0 0 0-.688-1.406 4.883 4.883 0 0 0-1.088-1.135 5.207 5.207 0 0 0-1.04-.608 2.82 2.82 0 0 0 .464-.383 4.2 4.2 0 0 0 .624-.784 3.624 3.624 0 0 0 .528-1.934 3.71 3.71 0 0 0-.288-1.47 3.799 3.799 0 0 0-.816-1.199 3.845 3.845 0 0 0-1.2-.8 3.72 3.72 0 0 0-1.472-.287 3.72 3.72 0 0 0-1.472.288 3.631 3.631 0 0 0-1.2.815 3.84 3.84 0 0 0-.8 1.199 3.71 3.71 0 0 0-.288 1.47c0 .352.048.688.144 1.007.096.336.224.64.4.927.16.288.384.544.624.784.144.144.304.271.48.383a5.12 5.12 0 0 0-1.04.624c-.416.32-.784.703-1.088 1.119a4.999 4.999 0 0 0-.688 1.406c-.016.032-.016.064-.016.08C1.776 11.636.992 9.91.992 7.992.992 4.14 4.144.991 8 .991s7.008 3.149 7.008 7.001a6.96 6.96 0 0 1-2.032 4.907z';
+
+        } else if (taskNode.type === 'scriptTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
+            icon =
+                // eslint-disable-next-line max-len
+                'M6 10V9h9v1H6zm4-4h5v1h-5V6zm5-3v1H6V3h9zm-9 9v1h9v-1H6z"/><path fill-rule="evenodd" clip-rule="evenodd" d="M1 2.795l.783-.419 5.371 3.581v.838l-5.371 3.581L1 9.957V2.795zm1.007.94v5.281l3.96-2.64-3.96-2.64z';
+
+        } else if (taskNode.type === 'businessRuleTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/table.svg?short_path=8f21e22
+            // eslint-disable-next-line max-len
+            icon = 'M13.5 2h-12l-.5.5v11l.5.5h12l.5-.5v-11l-.5-.5zM2 3h11v1H2V3zm7 4H6V5h3v2zm0 1v2H6V8h3zM2 5h3v2H2V5zm0 3h3v2H2V8zm0 5v-2h3v2H2zm4 0v-2h3v2H6zm7 0h-3v-2h3v2zm0-3h-3V8h3v2zm-3-3V5h3v2h-3z';
+
+        } else if (taskNode.type === 'serviceTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
+            icon = 'M2.5 2H4v12H2.5V2zm4.936.39L6.25 3v10l1.186.61 7-5V7.39l-7-5zM12.71 8l-4.96 3.543V4.457L12.71 8z';
+
+        } else if (taskNode.type === 'sendTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/mail.svg?short_path=d02764e
+            icon =
+                // eslint-disable-next-line max-len
+                'M1 3.5l.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5v-9zm1 1.035V12h12V4.536L8.31 8.9H7.7L2 4.535zM13.03 4H2.97L8 7.869 13.03 4z';
+
+        } else if (taskNode.type === 'receiveTask') {
+            // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/mail-read.svg?short_path=f74817b
+            icon =
+                // eslint-disable-next-line max-len
+                'M8.25 1.57h-.51L1 5.56v7.94l.5.5h13l.5-.5V5.56L8.25 1.57zM8 2.58l5.63 3.32-1.37 1.59H3.74L2.43 5.9 8 2.58zM14 13H2V6.92L3.11 8.3l.39.19h9l.39-.19L14 6.92V13z';
+
+        } else {
+            // no icon defined at all - See Issue #215
+        }
+
+        let vnode: any;
+        if (!icon) {
+            return undefined;
+        } else {
+            vnode = (
+              <g class-icon={true}>
+                  <path transform={'scale(1),translate(5,5)'} d={icon} />
+              </g>
+          );
+        }
+        return vnode;
     }
 }
 

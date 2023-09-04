@@ -15,17 +15,10 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.task;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.graph.DefaultTypes;
-import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GArguments;
-import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
-import org.eclipse.glsp.graph.builder.impl.GLabelBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
@@ -33,9 +26,7 @@ import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
-import org.openbpmn.glsp.bpmn.IconGCompartment;
 import org.openbpmn.glsp.bpmn.TaskGNode;
-import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
 
 /**
@@ -50,8 +41,6 @@ import org.openbpmn.glsp.utils.BPMNGModelUtil;
 public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeBuilder> {
 
     private static Logger logger = Logger.getLogger(TaskGNodeBuilder.class.getName());
-    private static final String V_GRAB = "vGrab";
-    private static final String H_GRAB = "hGrab";
     private final String name;
 
     public TaskGNodeBuilder(final Activity activity) {
@@ -74,6 +63,7 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         this.addArguments(GArguments.cornerRadius(5));
     }
 
+
     @Override
     protected TaskGNode instantiate() {
         return BpmnFactory.eINSTANCE.createTaskGNode();
@@ -85,71 +75,25 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
     }
 
     /**
-     * The taskGNode element uses a HBOX layout with an embedded detail container
-     * holding an icon, multilabel and extension label.
-     * This layout ensures that the task element can be resized and grows
-     * automatically with the size of the multiLineNode.
+     * The taskGNode element uses a HBOX layout with an multiLabel element.
+     * The client implements a custom micro-view component to display the
+     * Icon and the Extension text.
+     * 
+     * @see bpmn-element-views.tsx
      */
     @Override
     public void setProperties(final TaskGNode node) {
         super.setProperties(node);
-        node.setName(name);
-
         node.setLayout(GConstants.Layout.HBOX);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, Activity.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, Activity.DEFAULT_HEIGHT);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
-
-        GCompartment detailsContainer = BPMNGModelUtil.createMultiLineContainer(node);
-        node.getChildren().add(detailsContainer);
-
-        // add Icon
-        GPoint iconPosition = GraphUtil.point(1, 1);
-        IconGCompartment taskIcon = new IconGCompartmentBuilder() //
-                .id(node.getId() + "_icon") //
-                .position(iconPosition) //
-                .build();
-        detailsContainer.getChildren().add(taskIcon);
-
-        // add Text Input
-        detailsContainer.getChildren().add(
-                BPMNGModelUtil.createMultiLineTextNode(node, name,
-                        BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE, 5));
-
-        // add extension label
-        String extensionLabelString = (String) node.getArgs().get("extensionLabel");
-        GPoint extensionPosition = GraphUtil.point(3, size.getHeight() - 12);
-        GCompartment extensionLabel = new GCompartmentBuilder()
-                .type(DefaultTypes.COMPARTMENT)
-                .position(extensionPosition) //
-                // .layoutOptions(extensionLabelLayoutOptions) //
-                .add(new GLabelBuilder()
-                        .text(extensionLabelString)
-                        .build())
-                .addCssClass("extension")
-                .build();
-        detailsContainer.getChildren().add(extensionLabel);
-
+        if (size != null) {
+            node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+            node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+        }
+        // add a multiLine text block to show long text blocks
+        node.getChildren()
+                .add(BPMNGModelUtil.createMultiLineTextNode(node, name, BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE, 15));
     }
-
-    private GCompartment xxxcreateContainerCompartment(final TaskGNode node) {
-
-        Map<String, Object> superLayoutOptions = new HashMap<>();
-        superLayoutOptions.put(V_GRAB, true);
-        superLayoutOptions.put(H_GRAB, true);
-        superLayoutOptions.put(GLayoutOptions.KEY_H_GAP, 0);
-        superLayoutOptions.put(GLayoutOptions.KEY_V_GAP, 0);
-        superLayoutOptions.put(GLayoutOptions.KEY_RESIZE_CONTAINER, false);
-
-        return new GCompartmentBuilder()
-                .type(DefaultTypes.COMPARTMENT)
-                .position(1, 1) //
-                .size(node.getSize().getWidth() - 2, node.getSize().getHeight() - 2)
-                .layoutOptions(superLayoutOptions)
-                .addCssClass("label-container")
-                .build();
-    }
-
 
 }

@@ -51,6 +51,7 @@ export class LabelNode extends RectangularNode {
 	];
 }
 
+/* Task Node */
 export class TaskNode extends RectangularNode implements BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
@@ -60,8 +61,12 @@ export class TaskNode extends RectangularNode implements BPMNFlowElement {
 		moveFeature,
 		layoutContainerFeature,
 		fadeFeature,
-		hoverFeedbackFeature
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature
 	];
+	kind?: string;
+	documentation: string;
 }
 
 /* CircularNode RectangularNode */

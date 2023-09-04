@@ -46,6 +46,7 @@ import '../css/diagram.css';
 import {
     ContainerHeaderView, DataObjectNodeView, IconView, MessageNodeView,
     MultiLineTextNodeView,
+    TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
 import {
@@ -83,14 +84,14 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureView({ bind, isBound }, 'helpline', HelperLineView);
     configureDefaultModelElements(context);
 
-    configureModelElement(context, 'task', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'manualTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'userTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'scriptTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'businessRuleTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'serviceTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'sendTask', TaskNode, RoundedCornerNodeView);
-    configureModelElement(context, 'receiveTask', TaskNode, RoundedCornerNodeView);
+    configureModelElement(context, 'task', TaskNode, TaskNodeView);
+    configureModelElement(context, 'manualTask', TaskNode, TaskNodeView);
+    configureModelElement(context, 'userTask', TaskNode, TaskNodeView);
+    configureModelElement(context, 'scriptTask', TaskNode, TaskNodeView);
+    configureModelElement(context, 'businessRuleTask', TaskNode, TaskNodeView);
+    configureModelElement(context, 'serviceTask', TaskNode, TaskNodeView);
+    configureModelElement(context, 'sendTask', TaskNode, TaskNodeView);
+    configureModelElement(context, 'receiveTask', TaskNode, TaskNodeView);
 
     configureModelElement(context, 'startEvent', EventNode, CircularNodeView);
     configureModelElement(context, 'endEvent', EventNode, CircularNodeView);
