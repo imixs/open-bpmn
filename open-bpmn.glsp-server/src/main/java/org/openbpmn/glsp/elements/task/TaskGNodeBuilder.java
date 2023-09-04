@@ -84,6 +84,12 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         return this;
     }
 
+    /**
+     * The taskGNode element uses a HBOX layout with an embedded detail container
+     * holding an icon, multilabel and extension label.
+     * This layout ensures that the task element can be resized and grows
+     * automatically with the size of the multiLineNode.
+     */
     @Override
     public void setProperties(final TaskGNode node) {
         super.setProperties(node);
@@ -95,8 +101,8 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
         node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
 
-        GCompartment freeformContainer = createContainerCompartment(node);
-        node.getChildren().add(freeformContainer);
+        GCompartment detailsContainer = BPMNGModelUtil.createMultiLineContainer(node);
+        node.getChildren().add(detailsContainer);
 
         // add Icon
         GPoint iconPosition = GraphUtil.point(1, 1);
@@ -104,12 +110,12 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                 .id(node.getId() + "_icon") //
                 .position(iconPosition) //
                 .build();
-        freeformContainer.getChildren().add(taskIcon);
+        detailsContainer.getChildren().add(taskIcon);
 
         // add Text Input
-        freeformContainer.getChildren().add(
+        detailsContainer.getChildren().add(
                 BPMNGModelUtil.createMultiLineTextNode(node, name,
-                        BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE));
+                        BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE, 5));
 
         // add extension label
         String extensionLabelString = (String) node.getArgs().get("extensionLabel");
@@ -123,11 +129,11 @@ public class TaskGNodeBuilder extends AbstractGNodeBuilder<TaskGNode, TaskGNodeB
                         .build())
                 .addCssClass("extension")
                 .build();
-        freeformContainer.getChildren().add(extensionLabel);
+        detailsContainer.getChildren().add(extensionLabel);
 
     }
 
-    private GCompartment createContainerCompartment(final TaskGNode node) {
+    private GCompartment xxxcreateContainerCompartment(final TaskGNode node) {
 
         Map<String, Object> superLayoutOptions = new HashMap<>();
         superLayoutOptions.put(V_GRAB, true);

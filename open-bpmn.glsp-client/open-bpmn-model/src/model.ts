@@ -160,60 +160,6 @@ export class MultiLineTextNode extends SShapeElement implements SArgumentable {
 	align = '';
 }
 
-/*
- * Helper Methods to determine if a ModelElement is of a specific type
- * The methods return the corresponding node
- */
-export function isTaskNode(element: SModelElement): element is TaskNode {
-	return element instanceof TaskNode || false;
-}
-
-export function isPoolNode(element: SModelElement): element is PoolNode {
-	return element instanceof PoolNode || false;
-}
-
-export function isContainerNode(element: SModelElement): element is LaneNode | PoolNode {
-	return (element instanceof LaneNode || element instanceof PoolNode) || false;
-}
-
-export function isLaneNode(element: SModelElement): element is LaneNode {
-	return element instanceof LaneNode || false;
-}
-
-export function isEventNode(element: SModelElement): element is EventNode {
-	return element instanceof EventNode || false;
-}
-
-export function isGatewayNode(element: SModelElement): element is GatewayNode {
-	return element instanceof GatewayNode || false;
-}
-
-/*
- * Indicates that the ModelElement has a independent BPMNLabel
- */
-export function isBPMNLabelNode(element: SModelElement): element is SModelElement {
-	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode
-            || element instanceof MessageNode) || false;
-}
-
-/*
-* This method returns the BPMN Node Element of a given SModelElement.
-* The method detects if the given ModelElement is for example a SPort
-* or label:heading. In this case the method returns the parent element
-* which is a Task, Event or Gateway node
-*/
-export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
-    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
-           element instanceof DataObjectNode || element instanceof MessageNode || element instanceof PoolNode;
-}
-
-/*
- * Returns true if the BPMN Node Element is a BoundaryEvent
- */
-export function isBoundaryEvent(element: SModelElement): element is EventNode {
-    return element instanceof EventNode && element.type === 'boundaryEvent';
-}
-
 export class BPMNEdge extends SEdge {
 	kind?: string;
 	documentation: string;
@@ -280,4 +226,58 @@ export class LaneNode extends RectangularNode implements Nameable, WithEditableL
 		}
 		return undefined;
 	}
+}
+
+/*
+ * Helper Methods to determine if a ModelElement is of a specific type
+ * The methods return the corresponding node
+ */
+export function isTaskNode(element: SModelElement): element is TaskNode {
+	return element instanceof TaskNode || false;
+}
+
+export function isPoolNode(element: SModelElement): element is PoolNode {
+	return element instanceof PoolNode || false;
+}
+
+export function isContainerNode(element: SModelElement): element is LaneNode | PoolNode {
+	return (element instanceof LaneNode || element instanceof PoolNode) || false;
+}
+
+export function isLaneNode(element: SModelElement): element is LaneNode {
+	return element instanceof LaneNode || false;
+}
+
+export function isEventNode(element: SModelElement): element is EventNode {
+	return element instanceof EventNode || false;
+}
+
+export function isGatewayNode(element: SModelElement): element is GatewayNode {
+	return element instanceof GatewayNode || false;
+}
+
+/*
+ * Indicates that the ModelElement has a independent BPMNLabel
+ */
+export function isBPMNLabelNode(element: SModelElement): element is SModelElement {
+	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode
+            || element instanceof MessageNode) || false;
+}
+
+/*
+* This method returns the BPMN Node Element of a given SModelElement.
+* The method detects if the given ModelElement is for example a SPort
+* or label:heading. In this case the method returns the parent element
+* which is a Task, Event or Gateway node
+*/
+export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
+    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
+           element instanceof DataObjectNode || element instanceof MessageNode || element instanceof PoolNode;
+}
+
+/*
+ * Returns true if the BPMN Node Element is a BoundaryEvent
+ */
+export function isBoundaryEvent(element: SModelElement): element is EventNode {
+    return element instanceof EventNode && element.type === 'boundaryEvent';
 }

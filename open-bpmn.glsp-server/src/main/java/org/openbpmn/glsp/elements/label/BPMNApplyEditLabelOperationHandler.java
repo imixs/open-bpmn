@@ -100,7 +100,8 @@ public class BPMNApplyEditLabelOperationHandler extends AbstractOperationHandler
                         LabelGNode label = (LabelGNode) parent;
                         try {
                             BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
-                            BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel, operation.getText());
+                            // BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel,
+                            // operation.getText());
                         } catch (BPMNMissingElementException e) {
                             e.printStackTrace();
                         }

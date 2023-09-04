@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.label;
 
+import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.builder.AbstractGNodeBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
@@ -45,6 +46,8 @@ import org.openbpmn.glsp.utils.BPMNGModelUtil;
 public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNodeBuilder> {
 
     private final String name;
+    private static final String V_GRAB = "vGrab";
+    private static final String H_GRAB = "hGrab";
 
     public LabelGNodeBuilder(final BPMNElementNode flowElement) {
         super(BPMNTypes.BPMNLABEL);
@@ -89,25 +92,32 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
         return name;
     }
 
+    /**
+     * The labelGNode element uses a HBOX layout with an embedded detail container
+     * holding the multilabel.
+     * This layout ensures that the element grows automatically with the size of the
+     * multiLineNode.
+     */
     @Override
     public void setProperties(final LabelGNode node) {
         super.setProperties(node);
         node.setName(name);
-        node.setLayout(GConstants.Layout.FREEFORM);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_H_ALIGN, GConstants.HAlign.CENTER);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_V_ALIGN, GConstants.VAlign.CENTER);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_RESIZE_CONTAINER, true);
+        node.setLayout(GConstants.Layout.HBOX);
 
         // Set absolute and min width/height for the Pool element
-        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNLabel.MIN_WIDTH);
+        node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_WIDTH, BPMNLabel.DEFAULT_WIDTH);
         node.getLayoutOptions().put(GLayoutOptions.KEY_MIN_HEIGHT, BPMNLabel.DEFAULT_HEIGHT);
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
-        node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+        if (size != null) {
+            node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, size.getWidth());
+            node.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, size.getHeight());
+        }
+        GCompartment detailsContainer = BPMNGModelUtil.createMultiLineContainer(node);
+        node.getChildren().add(detailsContainer);
 
-        // add a multiLine text block to show and edit long text blocks
-        this.id = node.getId() + "_bpmntext";
-        node.getChildren()
-                .add(BPMNGModelUtil.createMultiLineTextNode(node, name, BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE));
+        // add a multiLine text block
+        detailsContainer.getChildren()
+                .add(BPMNGModelUtil.createMultiLineTextNode(node, name, BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE, 0));
     }
+
 
 }

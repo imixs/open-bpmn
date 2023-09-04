@@ -331,7 +331,7 @@ export class MultiLineTextNodeView extends ShapeView {
         const parent=label.parent;
         if (isBoundsAware(parent)) {
             nodeWidth=parent.bounds.width;
-            console.log('computed element width = '+nodeWidth);
+            // console.log('computed element width = '+nodeWidth);
         }
 
         // split text into words and lines...
@@ -355,11 +355,10 @@ export class MultiLineTextNodeView extends ShapeView {
         if (label.args.align==='middle') {
             xOffset= nodeWidth*0.5;
         }
-
         const vnode = <g class-sprotty-node={label instanceof SNode}>
             <text class-sprotty-label={true} transform={'translate(' + xOffset + ',0)'}>
-                {lines!.map(_line => (
-                    <tspan x="0" dy="15">{_line}</tspan>
+                {lines!.map((_line , _index)  => (
+                   <tspan x="0" dy={_index===0?10:15}>{_line}</tspan>
                 ))}
             </text>
         </g>;

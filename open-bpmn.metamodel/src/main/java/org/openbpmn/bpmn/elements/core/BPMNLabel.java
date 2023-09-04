@@ -16,9 +16,8 @@ import org.w3c.dom.NodeList;
  */
 public class BPMNLabel {
 
-    public final static double MIN_WIDTH = 16.0;
+    public final static double DEFAULT_HEIGHT = 20.0;
     public final static double DEFAULT_WIDTH = 100.0;
-    public final static double DEFAULT_HEIGHT = 16.0;
 
     protected BPMNBounds bounds = null;
     private Element label = null;

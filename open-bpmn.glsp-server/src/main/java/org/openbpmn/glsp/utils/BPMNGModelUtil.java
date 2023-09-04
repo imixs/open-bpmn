@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
 import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GLabel;
@@ -73,25 +74,40 @@ public class BPMNGModelUtil {
      * @param text
      * @return - GNode element containing the text
      */
-    public static GNode createMultiLineTextNode(final BPMNGNode node, final String text, final String align) {
+    public static GNode createMultiLineTextNode(final BPMNGNode node, final String text, final String align,
+            int yOffset) {
         return new GNodeBuilder(ModelTypes.BPMN_TEXT_NODE). //
                 id(node.getId() + "_multiline"). //
+                position(0, yOffset). //
                 addArgument("text", text). //
                 addArgument("align", align). //
                 build();
     }
 
-    public static GCompartment createMultiLineTextNodex(final BPMNGNode node, final String text) {
+    /**
+     * Creates a container for a MultiLineTextNode. This method is called by the
+     * builder classes
+     * 
+     * @param node
+     * @return
+     */
+    public static GCompartment createMultiLineContainer(final BPMNGNode node) {
         Map<String, Object> layoutOptions = new HashMap<>();
         layoutOptions.put(V_GRAB, true);
-        layoutOptions.put(GLayoutOptions.KEY_V_ALIGN, "center");
-        return new GCompartmentBuilder(ModelTypes.BPMN_TEXT_NODE) //
-                .id(node.getId() + "_multiline") //
-                .layout(GConstants.Layout.FREEFORM) //
-                .layoutOptions(layoutOptions) //
-                .addArgument("text", text) //
+        layoutOptions.put(H_GRAB, true);
+        // layoutOptions.put(GLayoutOptions.KEY_H_GAP, 0);
+        // layoutOptions.put(GLayoutOptions.KEY_V_GAP, 0);
+        layoutOptions.put(GLayoutOptions.KEY_RESIZE_CONTAINER, false);
+
+        return new GCompartmentBuilder()
+                .type(DefaultTypes.COMPARTMENT)
+                .position(1, 1) //
+                .size(node.getSize().getWidth() - 2, node.getSize().getHeight() - 2)
+                .layoutOptions(layoutOptions)
+                .addCssClass("label-container")
                 .build();
     }
+
     /**
      * Creates the Header for a BPMNPool or BPMNLane
      *
@@ -261,8 +277,9 @@ public class BPMNGModelUtil {
      * @param bpmnLabel
      * @param text
      */
+    @Deprecated
     public static void optimizeBPMNLabelHeight(LabelGNode label, BPMNLabel bpmnLabel, String text) {
-        int FONT_SIZE = 14;
+        int FONT_SIZE = 20;
 
         // resize based on the lines....
         int estimatedLines = estimateLineCount(text, FONT_SIZE, 100);

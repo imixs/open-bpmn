@@ -81,7 +81,7 @@ public class TextAnnotationGNodeBuilder extends AbstractGNodeBuilder<TextAnnotat
         }
         // add a mulitLine text block to show and edit long text blocks
         node.getChildren()
-                .add(BPMNGModelUtil.createMultiLineTextNode(node, text, BPMNGModelUtil.MULTILINETEXT_ALIGN_LEFT));
+                .add(BPMNGModelUtil.createMultiLineTextNode(node, text, BPMNGModelUtil.MULTILINETEXT_ALIGN_LEFT, 5));
     }
 
 }

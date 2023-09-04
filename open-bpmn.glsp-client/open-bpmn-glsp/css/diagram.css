@@ -168,13 +168,10 @@
 	fill: var(--theia-sideBar-background);
 }
 
-.BPMNLabel > .bpmn-text-node pre {
-	color: var(--theia-titleBar-activeForeground);
-	text-align: center;
+.BPMNLabel .bpmn-text-node text {
+    fill: var(--theia-titleBar-activeForeground);
 	font-size: 0.6em;
-	font-family: sans-serif;
-	white-space: pre-wrap;
-	margin: 0;
+    text-anchor: middle;
 }
 
 .label-edit textarea {

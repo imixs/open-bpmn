@@ -142,7 +142,7 @@ public abstract class AbstractBPMNElementExtension implements BPMNElementExtensi
                                 LabelGNode label = (LabelGNode) gModelElement;
                                 try {
                                     BPMNLabel bpmnLabel = ((BPMNElementNode) bpmnElement).getLabel();
-                                    BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel, name);
+                                    // BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel, name);
                                 } catch (BPMNMissingElementException e) {
                                     e.printStackTrace();
                                 }
