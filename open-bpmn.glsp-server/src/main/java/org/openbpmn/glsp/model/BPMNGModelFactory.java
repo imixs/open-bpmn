@@ -848,18 +848,13 @@ public class BPMNGModelFactory implements GModelFactory {
             final Participant participant) throws BPMNMissingElementException {
         logger.debug("BPMNLabel: x=" + bpmnLabel.getBounds().getPosition().getX() + " y="
                 + bpmnLabel.getBounds().getPosition().getY());
-        GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
-        // compute relative point...
-        labelPoint = computeRelativeGPoint(labelPoint, participant);
-        labelPoint.setX(labelPoint.getX() - 0);
-        // now we build the LabelGNode
-        logger.debug("label GPoint: x=" + labelPoint.getX() + " y=" + labelPoint.getY());
-        LabelGNode labelNode = new LabelGNodeBuilder(flowElement) //
-                .position(labelPoint) //
-                // .size(bpmnLabel.getBounds().getDimension().getWidth(),
-                // bpmnLabel.getBounds().getDimension().getHeight()) //
-                .build();
 
+        LabelGNode labelNode = new LabelGNodeBuilder(flowElement).build();
+        GPoint labelPoint = GraphUtil.point(bpmnLabel.getPosition().getX(), bpmnLabel.getPosition().getY());
+        labelPoint = computeRelativeGPoint(labelPoint, participant);
+        // update postion
+        logger.debug("label GPoint: x=" + labelPoint.getX() + " y=" + labelPoint.getY());
+        labelNode.setPosition(labelPoint);
         return labelNode;
     }
 }
