@@ -28,5 +28,10 @@ export const BPMNPropertyModule = new ContainerModule((bind, _unbind, isBound, r
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
 });
-export { BPMNPropertyPanel, BPMNPropertyPanelToggleAction, BPMNPropertyPanelUpdateAction } from './bpmn-property-panel';
+export {
+    BPMNPropertiesMouseListener,
+    BPMNPropertyPanel,
+    BPMNPropertyPanelToggleAction,
+    BPMNPropertyPanelUpdateAction
+} from './bpmn-property-panel';
 

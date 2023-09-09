@@ -50,7 +50,9 @@ import {
     TextAnnotationNodeView
 } from './bpmn-element-views';
 import {
-    BPMNElementSnapper, DrawHelperLinesCommand, HelperLineListener, HelperLineView, RemoveHelperLinesCommand
+    BPMNElementSnapper,
+    DrawHelperLinesCommand, HelperLineListener, HelperLineView,
+    RemoveHelperLinesCommand
 } from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
@@ -58,6 +60,7 @@ import {
 } from './bpmn-select-listeners';
 
 import {
+    BPMNPropertiesMouseListener,
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
 
@@ -76,6 +79,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 	// bind new SelectionListener for BPMNLabels and BoundaryEvents
 	bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
 	bind(TYPES.SelectionListener).to(BPMNMultiNodeSelectionListener);
+    bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
 
 	// bpmn helper lines
     bind(TYPES.MouseListener).to(HelperLineListener);

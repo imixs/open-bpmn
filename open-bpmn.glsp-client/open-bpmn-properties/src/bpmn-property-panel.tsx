@@ -15,9 +15,11 @@
  ********************************************************************************/
 import {
     EditorContextService, EnableToolPaletteAction,
-    GLSPActionDispatcher, hasArguments,
+    GLSPActionDispatcher,
+    MouseListener,
     SModelElement,
-    SModelRoot
+    SModelRoot,
+    hasArguments
 } from '@eclipse-glsp/client';
 import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
 import {
@@ -47,7 +49,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 
     static readonly ID = 'bpmn-property-panel';
 
-    @inject(TYPES.IActionDispatcher) protected readonly actionDispatcher: GLSPActionDispatcher;
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: GLSPActionDispatcher;
 
     @inject(EditorContextService)
     protected readonly editorContext: EditorContextService;
@@ -57,6 +60,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 
     protected bodyDiv: HTMLElement;
     protected headerDiv: HTMLElement;
+    protected panelContainer: any;
     modelRootId: string;
     modelRoot: Readonly<SModelRoot>;
     selectedElementId: string;
@@ -66,7 +70,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     panelToggle: boolean;
     currentY: number;
     headerTitle: HTMLElement;
-    protected panelContainer: any;
 
     @postConstruct()
     postConstruct(): void {
@@ -485,8 +488,6 @@ export namespace BPMNPropertyPanelToggleAction {
 
 export interface BPMNPropertyPanelUpdateAction extends Action {
     kind: typeof BPMNPropertyPanelUpdateAction.KIND;
-    // selectedElementID: string;
-    // category: string;
 }
 
 export namespace BPMNPropertyPanelUpdateAction {
@@ -496,5 +497,17 @@ export namespace BPMNPropertyPanelUpdateAction {
     }
     export function create(): BPMNPropertyPanelUpdateAction {
         return { kind: KIND };
+    }
+}
+
+/*
+ * This mouse listener reacts on double click events and opens/closes
+ * the properties panel by creating a BPMNPropertyPanelToggleAction
+ */
+@injectable()
+export class BPMNPropertiesMouseListener extends MouseListener {
+    override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
+        // return a BPMNPropertyPanelToggleAction...
+        return [BPMNPropertyPanelToggleAction.create()];
     }
 }
