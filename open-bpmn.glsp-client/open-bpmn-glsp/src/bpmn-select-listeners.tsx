@@ -14,12 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-  ActionDispatcher, filter, getElements, hasArguments, SelectAction,
-  SModelRoot, TYPES
+  ActionDispatcher,
+  SModelRoot,
+  SelectAction,
+  TYPES,
+  filter, getElements, hasArguments
 } from '@eclipse-glsp/client';
 import { SelectionListener } from '@eclipse-glsp/client/lib/features/select/selection-service';
 import {
-  isBoundaryEvent, isBPMNLabelNode, isLaneNode, isPoolNode, isTaskNode
+  isBPMNLabelNode,
+  isBoundaryEvent,
+  isLaneNode, isPoolNode, isTaskNode
 } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 
