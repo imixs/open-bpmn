@@ -40,11 +40,9 @@ public class BPMNGModelState extends DefaultGModelState {
     private static Logger logger = LogManager.getLogger(BPMNGModelState.class);
 
     private BPMNModel bpmnModel;
-
     private Stack<Document> undoStack = null;
     private Stack<Document> redoStack = null;
     private int MAX_UNDOSTACK_SIZE = 20;
-
     private boolean initialized = false;
     private String rootID = "undefined_root_id";
 
@@ -67,6 +65,10 @@ public class BPMNGModelState extends DefaultGModelState {
     /**
      * Helper method to store the current model revision on the revisions stack.
      * 
+     * We use the <code>cloneNode</code> method here as this method is much faster
+     * than transforming the doc into a string using the
+     * <code>TransformerFactory</code>.
+     * 
      */
     public void storeRevision() {
         logger.debug("...store revision " + this.getRoot().getRevision());
@@ -80,6 +82,7 @@ public class BPMNGModelState extends DefaultGModelState {
             undoStack.remove(0);
         }
     }
+
 
     @Override
     public boolean canUndo() {
