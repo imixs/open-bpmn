@@ -186,19 +186,24 @@
 .pool > .sprotty-node {
     fill: var(--theia-sideBar-background);
     pointer-events: none;
-    xopacity: 70%;
+    fill-opacity: 70%;
     stroke: var(--theia-focusBorder);
     stroke-width: 2;
 }
 .pool > .sprotty-node.mouseover {
-	 opacity: 60%;
+    stroke: var(--theia-focusBorder);
+        opacity: 100%;
 }
 .pool>.pool_header {
     fill: var(--theia-titleBar-activeBackground);
     stroke: var(--theia-focusBorder);
-        stroke-width: 2;
+    stroke-width: 2;
 }
 
+.pool>.pool_header:hover,
+.lane>.lane_header:hover {
+    opacity: 70%;
+}
 .pool .pool_header text {
     font-weight: normal;
     font-size: 0.7em;

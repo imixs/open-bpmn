@@ -188,7 +188,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         Participant participant = null;
         String upperLaneID = gNode.getArgs().get("upperlaneid").toString();
         String lowerLaneID = gNode.getArgs().get("lowerlaneid").toString();
-        logger.info("upper lane id = " + upperLaneID);
 
         // Upper Lane
         GNode upperGLane = modelState.getIndex().findElementByClass(upperLaneID, GNode.class)
@@ -198,7 +197,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                     "Lane " + upperLaneID + " not found in model!");
         }
         String poolID = upperGLane.getParent().getId();
-        logger.info(" pool = " + poolID);
         participant = modelState.getBpmnModel().findParticipantById(poolID);
         upperBpmnLane = participant.openProcess().findLaneById(upperLaneID);
         upperBpmnLane.setDimension(upperBpmnLane.getBounds().getDimension().getWidth(),
@@ -412,9 +410,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 bpmnBounds.getPosition().getY() + offsetY, newSize.getWidth(),
                 newSize.getHeight());
 
-        // if we have a Participant element selected than we also need to update
-        // all embedded FlowElements and also the LaneSet if available.
-
         logger.debug("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
         updateLaneSet(participant, offsetWidth, offsetHeight);
         updateEmbeddedElements(participant, offsetX, offsetY);
@@ -498,16 +493,10 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         }
 
         // first we update the position of all Lanes if available
-        int laneCount = process.getLanes().size();
-        int offsetHeightRatio = (int) (offsetHeight / laneCount);
         BPMNBounds poolBounds = participant.getBounds();
-
-        logger.debug("  ===> Pool Height = " + poolBounds.getDimension().getHeight());
-
         int bpmnLaneX = (int) (poolBounds.getPosition().getX() + Participant.POOL_OFFSET);
         int bpmnLaneY = (int) poolBounds.getPosition().getY();
         int bpmnLaneWidth = (int) (poolBounds.getDimension().getWidth() - Participant.POOL_OFFSET);
-
         double poolHeight = (int) poolBounds.getDimension().getHeight();
         double lanesTotalHeight = 0;
 
@@ -523,7 +512,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 // In case we process the last lane, we always maximize the height to the rest
                 // of the pool height.
                 laneHeight = poolHeight - lanesTotalHeight;
-                logger.info("new lane height : " + laneHeight);
             }
             bpmnLaneBounds.setDimension(bpmnLaneWidth, laneHeight);
             lanesTotalHeight = lanesTotalHeight + laneHeight;
@@ -532,109 +520,11 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             lane.setPosition(bpmnLaneX, bpmnLaneY);
             // adjust laneY for the next iteration
             bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
-
-            // lanesTotalHeight = lanesTotalHeight +
-            // bpmnLaneBounds.getDimension().getHeight();
-
         }
-
-        // update the height of the last lane with the new height offset
-
-        // double restHoehe=
-        // lane.setDimension(lane.getBounds().getDimension().getWidth() + offsetWidth,
-        // poolBounds.getDimension().getHeight() - bpmnLaneY);
-
         // resize the model
         modelState.reset();
 
     }
-
-    @Deprecated
-    private void oldupdateLaneSet(final Participant participant, final double offsetWidth, final double offsetHeight)
-            throws BPMNMissingElementException {
-        BPMNProcess process = participant.openProcess();
-        Set<Lane> bpmnLaneSet = process.getLanes();
-
-        String processID = process.getId();
-        logger.debug("update laneSet for Process : " + processID);
-        if (bpmnLaneSet.size() == 0) {
-            return; // no op
-        }
-
-        // first we update the position of all Lanes if available
-        int laneCount = process.getLanes().size();
-        int offsetHeightRatio = (int) (offsetHeight / laneCount);
-        BPMNBounds poolBounds = participant.getBounds();
-
-        logger.debug("  ===> Pool Height = " + poolBounds.getDimension().getHeight());
-
-        int bpmnLaneX = (int) (poolBounds.getPosition().getX() + Participant.POOL_OFFSET);
-        int bpmnLaneY = (int) poolBounds.getPosition().getY();
-        int bpmnLaneWidth = (int) (poolBounds.getDimension().getWidth() - Participant.POOL_OFFSET);
-        int gLaneX = (int) Participant.POOL_OFFSET;
-        int gLaneY = 0;
-        int maxLaneHeight = (int) poolBounds.getDimension().getHeight();
-
-        Iterator<Lane> laneSetIterator = bpmnLaneSet.iterator();
-        while (laneSetIterator.hasNext()) {
-            // get BPMNBounds and GNode for this lane...
-            Lane lane = laneSetIterator.next();
-            BPMNBounds bpmnLaneBounds = lane.getBounds();
-            GNode gNode = null;
-            Optional<GNode> _node = modelState.getIndex().findElementByClass(lane.getId(), GNode.class);
-            if (_node.isPresent()) {
-                gNode = _node.get();
-            }
-            if (gNode == null) {
-                logger.warn("invalid LaneSet - model can not be synchronized!");
-                continue;
-            }
-
-            if (offsetWidth == 0 && offsetHeight == 0) {
-                // Update absolute BPMN position
-                lane.setPosition(bpmnLaneX, bpmnLaneY);
-                // adjust laneY for the next iteration
-                bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
-                // no further update needed
-                continue;
-            }
-
-            // Update absolute BPMN position & dimension
-            int laneHeight = (int) (bpmnLaneBounds.getDimension().getHeight() + offsetHeightRatio);
-
-            // it can happen, that the height it to large for the current pool height. We
-            // check this and adjust the height if needed.
-            if ((!laneSetIterator.hasNext() && laneHeight != maxLaneHeight) || (laneHeight > maxLaneHeight)) {
-                logger.warn("BPMNlane height mismatch : current=" + laneHeight + "  max available=" + maxLaneHeight);
-                laneHeight = maxLaneHeight;
-                logger.info("new lane height : " + laneHeight);
-            }
-
-            bpmnLaneBounds.setDimension(bpmnLaneWidth, laneHeight);
-
-            logger.debug("  ===> Lane " + lane.getId() + " new Height = " + bpmnLaneBounds.getDimension().getHeight());
-
-            lane.setPosition(bpmnLaneX, bpmnLaneY);
-            // adjust laneY for the next iteration
-            bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
-
-            GDimension newLaneSize = GraphUtil.dimension(bpmnLaneWidth, laneHeight);
-            gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newLaneSize.getWidth());
-            gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newLaneSize.getHeight());
-            // calling the size method does not have an effect.
-            // see:
-            // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-            gNode.setSize(newLaneSize);
-
-            gNode.setPosition(GraphUtil.point(gLaneX, gLaneY));
-            // adjust gLaneY
-            gLaneY = gLaneY + laneHeight;
-            maxLaneHeight = maxLaneHeight - laneHeight;
-
-        }
-
-    }
-
     /**
      * This method updates the position for all BPMNElementNodes contained in a pool
      * given a x and y offset. This method is needed because in BPMN all positions

@@ -193,7 +193,7 @@ export class IconView extends ShapeView {
  */
 @injectable()
 export class PoolHeaderView extends ShapeView {
-    render(element: SShapeElement, context: RenderingContext): VNode | undefined {
+    render(element: Readonly<SShapeElement  & Hoverable>, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }
@@ -208,8 +208,8 @@ export class PoolHeaderView extends ShapeView {
             labelYOffset=containerNode.bounds.height*0.5;
         }
         const vnode: any = (
-            <g class-sprotty-node={element instanceof SNode}>
-                <rect class-sprotty-node={element instanceof SNode}
+            <g>
+                <rect
                   x="0" y="0" width="30" height={headerHeight}></rect>
                 <text class-sprotty-label={true} transform={'scale(1),translate(20,'+labelYOffset+'),rotate(-90)'}>{containerLabel}</text>
             </g>

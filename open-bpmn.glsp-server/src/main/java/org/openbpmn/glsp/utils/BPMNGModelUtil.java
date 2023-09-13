@@ -161,6 +161,7 @@ public class BPMNGModelUtil {
                 .id(node.getId() + "_header") //
                 .layout(GConstants.Layout.FREEFORM) //
                 .layoutOptions(layoutOptions) //
+                .addCssClass(node.getType() + "_header") //
                 .build();
     }
 
@@ -317,7 +318,7 @@ public class BPMNGModelUtil {
      * @param text
      */
     @Deprecated
-    public static void optimizeBPMNLabelHeight(LabelGNode label, BPMNLabel bpmnLabel, String text) {
+    private static void xxxoptimizeBPMNLabelHeight(LabelGNode label, BPMNLabel bpmnLabel, String text) {
         int FONT_SIZE = 20;
 
         // resize based on the lines....

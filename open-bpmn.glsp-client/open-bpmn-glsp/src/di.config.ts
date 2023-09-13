@@ -34,7 +34,8 @@ import {
     editLabelFeature,
     initializeDiagramContainer,
     moveFeature,
-    overrideViewerOptions
+    overrideViewerOptions,
+    selectFeature
 } from '@eclipse-glsp/client';
 import {
     BPMNEdge,
@@ -137,7 +138,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'lane_header', SCompartment, LaneHeaderView);
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] } );
-    configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
+    configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView, {
+              disable: [moveFeature, selectFeature]}
+    );
+
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
     configureModelElement(context, 'message', MessageNode, MessageNodeView);
     configureModelElement(context, 'textAnnotation', TextAnnotationNode, TextAnnotationNodeView);
