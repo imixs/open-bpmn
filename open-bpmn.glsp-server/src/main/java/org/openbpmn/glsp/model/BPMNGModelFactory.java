@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -226,6 +227,38 @@ public class BPMNGModelFactory implements GModelFactory {
                                 .build();
                         // apply BPMN Extensions
                         applyBPMNElementExtensions(pool, participant);
+
+                        // apply lane-divider
+                        if (participant.getBpmnProcess().getLanes().size() > 1) {
+                            // add a divider between each lane
+
+                            double poolYPos = participant.getBounds().getPosition().getY();
+
+                            Iterator<Lane> laneIterator = participant.getBpmnProcess().getLanes().iterator();
+                            Lane currentLane = laneIterator.next();
+                            while (currentLane != null) {
+                                Lane nextLane = null;
+                                if (!laneIterator.hasNext()) {
+                                    break; // skip last lane
+                                }
+                                nextLane = laneIterator.next();
+                                double laneYPos = currentLane.getBounds().getPosition().getY() - poolYPos;
+                                double laneHeight = currentLane.getBounds().getDimension().getHeight();
+                                double laneDividerYPos = laneYPos + laneHeight - 1;
+                                double laneMinYPos = laneDividerYPos - laneHeight + Lane.MIN_HEIGHT;
+                                double laneMaxYPos = laneDividerYPos + nextLane.getBounds().getDimension().getHeight()
+                                        - Lane.MIN_HEIGHT;
+                                pool.getChildren()
+                                        .add(BPMNGModelUtil.createLaneDivider(participant, laneDividerYPos,
+                                                laneMinYPos,
+                                                laneMaxYPos,
+                                                currentLane.getId(),
+                                                nextLane.getId()));
+
+                                currentLane = nextLane;
+                            }
+
+                        }
                         gRootNodeList.add(pool);
                         poolGNodeList.put(participant.getId(), pool);
                     } else {

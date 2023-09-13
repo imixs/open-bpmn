@@ -183,39 +183,55 @@
 
 /*** Pool and Lances **/
 
-/* --theia-titleBar-activeBackground */
 .pool > .sprotty-node {
     fill: var(--theia-sideBar-background);
     pointer-events: none;
-    opacity: 70%;
+    xopacity: 70%;
     stroke: var(--theia-focusBorder);
-    outline-color: var(--theia-focusBorder);
-    outline-style: solid;
-    outline-width: 1px;
-    outline-offset: -1px;    
+    stroke-width: 2;
 }
 .pool > .sprotty-node.mouseover {
 	 opacity: 60%;
 }
-.pool .header {
-	fill: var(--theia-titleBar-activeBackground);
-}
- 
-.lane > .sprotty-node {
-    fill: none;
+.pool>.pool_header {
+    fill: var(--theia-titleBar-activeBackground);
     stroke: var(--theia-focusBorder);
-    outline-color: var(--theia-focusBorder);
-    outline-style: solid;
-    outline-width: 1px;
-    outline-offset: -1px;
+        stroke-width: 2;
 }
 
-.pool .header text {
-	font-weight: normal;
+.pool .pool_header text {
+    font-weight: normal;
     font-size: 0.7em;
     fill: var(--theia-titleBar-activeForeground);
 }
 
+.lane>.lane_header {
+    fill: var(--theia-titleBar-activeBackground);
+}
+
+.lane .lane_header text {
+    font-weight: normal;
+    font-size: 0.7em;
+    fill: var(--theia-titleBar-activeForeground);
+}
+
+.lane>.sprotty-node {
+    fill: none;
+}
+
+.lane-divider {
+    cursor: row-resize;
+}
+
+.lane-divider>polyline {
+    stroke: var(--theia-focusBorder);
+    stroke-width: 2;
+    fill: none;
+}
+
+.lane-divider rect {
+    fill: transparent;
+}
 
 .sequenceFlow .default-symbol {
     stroke-width: 3;

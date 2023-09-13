@@ -235,6 +235,21 @@ export class LaneNode extends RectangularNode implements Nameable, WithEditableL
 }
 
 /*
+ * The model element for the lane divider. The model holds arguments
+ * with the ymin and ymax values
+ */
+export class LaneDivider extends SShapeElement implements SArgumentable {
+	static readonly DEFAULT_FEATURES = [
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		hoverFeedbackFeature
+	];
+	readonly args: Args;
+}
+
+/*
  * Helper Methods to determine if a ModelElement is of a specific type
  * The methods return the corresponding node
  */
@@ -278,7 +293,8 @@ export function isBPMNLabelNode(element: SModelElement): element is SModelElemen
 */
 export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
     return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
-           element instanceof DataObjectNode || element instanceof MessageNode || element instanceof PoolNode;
+           element instanceof DataObjectNode || element instanceof TextAnnotationNode ||
+		element instanceof MessageNode || element instanceof PoolNode;
 }
 
 /*
@@ -286,4 +302,11 @@ export function isBPMNNode(element: SModelElement): element is TaskNode | EventN
  */
 export function isBoundaryEvent(element: SModelElement): element is EventNode {
     return element instanceof EventNode && element.type === 'boundaryEvent';
+}
+
+/*
+ * Returns true if the model Element is a LaneDivider
+ */
+export function isLaneDivider(element: SModelElement): element is EventNode {
+    return element.type === 'lane-divider';
 }

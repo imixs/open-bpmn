@@ -33,8 +33,10 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
@@ -85,6 +87,42 @@ public class BPMNGModelUtil {
     }
 
     /**
+     * Creates a Lane-Divider GNode. The parameters ymin and ymax are stored as
+     * attributes in the gnode
+     *
+     * @param participant - containing Pool element
+     * @param y           - y position of the divider
+     * @param yMin        - minimum y position for resizing
+     * @param yMax        - maximum y position for resizing
+     * @param upperLaneId - upper lane id
+     * @param lowerLaneId - lower lane id
+     * 
+     */
+    public static GNode createLaneDivider(final Participant participant, final double y, final double yMin,
+            final double yMax, String upperLaneId, String lowerLaneId) {
+        double width = 100;
+        BPMNBounds bounds;
+        try {
+            bounds = participant.getBounds();
+            width = bounds.getDimension().getWidth();
+        } catch (BPMNMissingElementException e) {
+            e.printStackTrace();
+        }
+        // create a random id
+        String dividerID = BPMNModel.generateShortID("divider");
+        return new GNodeBuilder(ModelTypes.LANE_DIVIDER). //
+                id(dividerID). //
+                position(30, y). //
+                size(width, 5). //
+                addArgument("ymin", yMin). //
+                addArgument("ymax", yMax). //
+                addArgument("upperlaneid", upperLaneId). //
+                addArgument("lowerlaneid", lowerLaneId). //
+                addCssClass("lane-divider"). //
+                build();
+    }
+
+    /**
      * Creates a container for a MultiLineTextNode. This method is called by the
      * builder classes
      * 
@@ -109,7 +147,8 @@ public class BPMNGModelUtil {
     }
 
     /**
-     * Creates the Header for a BPMNPool or BPMNLane
+     * Creates the Header for a BPMNPool or BPMNLane. The layout is defined by
+     * custom element-views on the client side.
      *
      * @param node
      * @return GCompartment
@@ -118,7 +157,7 @@ public class BPMNGModelUtil {
         Map<String, Object> layoutOptions = new HashMap<>();
         layoutOptions.put(V_GRAB, true);
         layoutOptions.put(GLayoutOptions.KEY_V_ALIGN, "center");
-        return new GCompartmentBuilder(ModelTypes.COMP_HEADER) //
+        return new GCompartmentBuilder(node.getType() + "_header") //
                 .id(node.getId() + "_header") //
                 .layout(GConstants.Layout.FREEFORM) //
                 .layoutOptions(layoutOptions) //

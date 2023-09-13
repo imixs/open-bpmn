@@ -187,12 +187,12 @@ export class IconView extends ShapeView {
 }
 
 /*
- * The ContainerHeaderView is used to show the label in a BPMNPool or BPMNLane element
+ * The PoolHeaderView is used to show the label in a BPMNPool element
  *
  * The label is displayed vertical on the left side of the container
  */
 @injectable()
-export class ContainerHeaderView extends ShapeView {
+export class PoolHeaderView extends ShapeView {
     render(element: SShapeElement, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
@@ -204,13 +204,50 @@ export class ContainerHeaderView extends ShapeView {
         // we center the label vertical to the height of the container
         if (containerNode) {
             containerLabel=containerNode.name;
-            headerHeight= containerNode.bounds.height-2;
+            headerHeight= containerNode.bounds.height-0;
             labelYOffset=containerNode.bounds.height*0.5;
         }
         const vnode: any = (
             <g class-sprotty-node={element instanceof SNode}>
                 <rect class-sprotty-node={element instanceof SNode}
-                  x="1" y="1" width="28" height={headerHeight}></rect>
+                  x="0" y="0" width="30" height={headerHeight}></rect>
+                <text class-sprotty-label={true} transform={'scale(1),translate(20,'+labelYOffset+'),rotate(-90)'}>{containerLabel}</text>
+            </g>
+        );
+        const subType = getSubType(element);
+        if (subType) {
+            setAttr(vnode, 'class', subType);
+        }
+        return vnode;
+    }
+}
+
+/*
+ * The LaneHeaderView is used to show the label in a BPMNLane element
+ *
+ * The label is displayed vertical on the left side of the container.
+ * The y-offset is 1 point!.
+ */
+@injectable()
+export class LaneHeaderView extends ShapeView {
+    render(element: SShapeElement, context: RenderingContext): VNode | undefined {
+        if (!this.isVisible(element, context)) {
+            return undefined;
+        }
+        const containerNode = findParentByFeature(element,isContainerNode);
+        let headerHeight=0;
+        let labelYOffset=0;
+        let containerLabel='undefined';
+        // we center the label vertical to the height of the container
+        if (containerNode) {
+            containerLabel=containerNode.name;
+            headerHeight= containerNode.bounds.height-0;
+            labelYOffset=containerNode.bounds.height*0.5;
+        }
+        const vnode: any = (
+            <g class-sprotty-node={element instanceof SNode}>
+                <rect class-sprotty-node={element instanceof SNode}
+                  x="0" y="1" width="30" height={headerHeight-2}></rect>
                 <text class-sprotty-label={true} transform={'scale(1),translate(20,'+labelYOffset+'),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
@@ -425,6 +462,33 @@ export class TextAnnotationNodeView extends ShapeView {
     }
 }
 
+/*
+ * Render a Divider to change the height of a BPMN Lane
+ * The divider shows a line that marks the border of a two lanes.
+ */
+@injectable()
+export class LaneDividerView extends ShapeView {
+    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+        let laneWidth=200;
+        const parent=node.parent;
+        if (isBoundsAware(parent)) {
+            laneWidth=parent.bounds.width;
+        }
+        const dividerBorder='0,1 ' + (laneWidth-30) + ' 1';
+        return <g>
+            <rect x="1" y="-10" width={laneWidth-32} height="20"></rect>
+            <polyline points={dividerBorder} />
+            {context.renderChildren(node)}
+        </g>;
+    }
+}
+
+/*
+ * Render a Multi-Line BPN Label
+ */
 @injectable()
 export class MultiLineTextNodeView extends ShapeView {
     render(label: Readonly<MultiLineTextNode>, context: RenderingContext): VNode | undefined {

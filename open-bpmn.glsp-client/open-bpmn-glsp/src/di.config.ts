@@ -21,14 +21,20 @@ import {
     DiamondNodeView,
     LogLevel,
     RectangularNodeView,
-    RoundedCornerNodeView, SCompartment,
+    RoundedCornerNodeView,
+    SCompartment,
     SCompartmentView,
-    SLabel, SLabelView, TYPES,
+    SLabel,
+    SLabelView,
+    TYPES,
     configureCommand,
-    configureDefaultModelElements, configureModelElement, configureView,
+    configureDefaultModelElements,
+    configureModelElement,
+    configureView,
     editLabelFeature,
     initializeDiagramContainer,
-    moveFeature, overrideViewerOptions
+    moveFeature,
+    overrideViewerOptions
 } from '@eclipse-glsp/client';
 import {
     BPMNEdge,
@@ -36,27 +42,39 @@ import {
     EventNode,
     GatewayNode,
     Icon, LabelNode,
+    LaneDivider,
     LaneNode,
-    MessageNode, MultiLineTextNode, PoolNode, TaskNode, TextAnnotationNode
+    MessageNode,
+    MultiLineTextNode,
+    PoolNode, TaskNode,
+    TextAnnotationNode
 } from '@open-bpmn/open-bpmn-model';
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
-    ContainerHeaderView, DataObjectNodeView, IconView, MessageNodeView,
+    DataObjectNodeView,
+    IconView,
+    LaneDividerView,
+    LaneHeaderView,
+    MessageNodeView,
     MultiLineTextNodeView,
+    PoolHeaderView,
     TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
 import {
     BPMNElementSnapper,
-    DrawHelperLinesCommand, HelperLineListener, HelperLineView,
+    DrawHelperLinesCommand,
+    HelperLineListener,
+    HelperLineView,
     RemoveHelperLinesCommand
 } from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
-    BPMNLabelNodeSelectionListener, BPMNMultiNodeSelectionListener
+    BPMNLabelNodeSelectionListener,
+    BPMNMultiNodeSelectionListener
 } from './bpmn-select-listeners';
 
 import {
@@ -114,7 +132,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
-    configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
+    // configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
+    configureModelElement(context, 'pool_header', SCompartment, PoolHeaderView);
+    configureModelElement(context, 'lane_header', SCompartment, LaneHeaderView);
 
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] } );
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView);
@@ -123,14 +143,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'textAnnotation', TextAnnotationNode, TextAnnotationNodeView);
 
     configureModelElement(context, 'BPMNLabel', LabelNode, RectangularNodeView);
-
-    // textNode of BPMNLabel, TextAnnotation...
-    // configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, ForeignObjectView, {
-    //      disable: [moveFeature, selectFeature,boundsFeature],
-    //      enable: [editLabelFeature]}
-    // );
     configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, MultiLineTextNodeView);
-
+    configureModelElement(context, 'lane-divider', LaneDivider, LaneDividerView);
     configureModelElement(context, 'container', SCompartment, SCompartmentView);
 
     // Sequence flows

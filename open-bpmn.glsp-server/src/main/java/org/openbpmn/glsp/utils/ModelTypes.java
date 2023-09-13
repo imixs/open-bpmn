@@ -20,10 +20,11 @@ public final class ModelTypes {
     }
 
     public static final String LABEL_HEADING = "label:heading";
-    public static final String COMP_HEADER = "comp:header";
+    // public static final String COMP_HEADER = "comp:header";
     public static final String ICON = "icon";
     public static final String CONTAINER = "container"; // used within Pools
     public static final String BPMN_ROUTER_KIND = "bpmn"; // custom BPMN Routing
     public static final String BPMN_TEXT_NODE = "bpmn-text-node";
+    public static final String LANE_DIVIDER = "lane-divider";
 
 }

@@ -61,7 +61,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // Layout Model types
         mappings.put(ModelTypes.LABEL_HEADING, GraphPackage.Literals.GLABEL);
-        mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
+        // mappings.put(ModelTypes.COMP_HEADER, GraphPackage.Literals.GCOMPARTMENT);
         mappings.put(ModelTypes.ICON, BpmnPackage.Literals.ICON_GCOMPARTMENT);
         mappings.put(ModelTypes.CONTAINER, GraphPackage.Literals.GCOMPARTMENT);
 

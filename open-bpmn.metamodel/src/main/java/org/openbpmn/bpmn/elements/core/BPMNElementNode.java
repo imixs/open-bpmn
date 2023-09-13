@@ -1,6 +1,7 @@
 package org.openbpmn.bpmn.elements.core;
 
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import org.openbpmn.bpmn.BPMNModel;
@@ -33,6 +34,9 @@ import org.w3c.dom.NodeList;
  * @author rsoika
  */
 public abstract class BPMNElementNode extends BPMNElement {
+
+    protected static Logger logger = Logger.getLogger(BPMNElementNode.class.getName());
+
     protected String type = null;
     protected BPMNProcess bpmnProcess = null;
     protected BPMNLabel label = null;
@@ -158,6 +162,18 @@ public abstract class BPMNElementNode extends BPMNElement {
         }
     }
 
+    /**
+     * This method update the containment regarding the
+     * participant and/or lane
+     * 
+     */
+    public void updateContainment() {
+        try {
+            updateContainment(this.getBounds().getPosition().getX(), this.getBounds().getPosition().getY());
+        } catch (BPMNMissingElementException e) {
+            logger.warning("Failed to recompute containment of elemnet " + this.getId());
+        }
+    }
     /**
      * This helper method verifies the current containment and updates the
      * participant and/or lane in case the containment has changed.

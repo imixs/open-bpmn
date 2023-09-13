@@ -15,14 +15,38 @@
  ********************************************************************************/
 import {
 	Action,
-	FeedbackCommand, findParentByFeature, hasArguments, hasObjectProp,
-	isBoundsAware, ISnapper, MouseListener,
-	SModelElement, SModelRoot, SParentElement
+	FeedbackCommand,
+	findParentByFeature,
+	hasArguments,
+	hasObjectProp,
+	isBoundsAware,
+	ISnapper,
+	MouseListener,
+	SModelElement,
+	SModelRoot,
+	SParentElement
 } from '@eclipse-glsp/client';
-import { EventNode, isBoundaryEvent, isBPMNLabelNode, isBPMNNode, isTaskNode, LabelNode, TaskNode } from '@open-bpmn/open-bpmn-model';
+import {
+	EventNode,
+	isBoundaryEvent,
+	isBPMNLabelNode,
+	isBPMNNode,
+	isLaneDivider,
+	isTaskNode,
+	LabelNode,
+	TaskNode
+} from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
-import { CommandExecutionContext, CommandReturn, IView, RenderingContext, SChildElementImpl, svg, TYPES } from 'sprotty';
+import {
+	CommandExecutionContext,
+	CommandReturn,
+	IView,
+	RenderingContext,
+	SChildElementImpl,
+	svg,
+	TYPES
+} from 'sprotty';
 import { Bounds, Point } from 'sprotty-protocol';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
@@ -84,6 +108,10 @@ export class BPMNElementSnapper implements ISnapper {
 	 */
 	snap(position: Point, element: SModelElement): Point {
 		let snapPoint: Point;
+		if (isLaneDivider(element)) {
+			snapPoint=this.findLaneDividerSnapPoint(element,position);
+			return snapPoint;
+		}
 		// Is it a Element node?
 		if (isBPMNNode(element)) {
 			if (isBoundaryEvent(element)) {
@@ -163,6 +191,29 @@ export class BPMNElementSnapper implements ISnapper {
 					x = element.bounds.x;
 					y = element.bounds.y;
 				}
+			}
+		}
+		// return the new position;
+		return { x: x, y: y };
+	}
+
+	/*
+	 * This helper method computes the snap Position of a Lane-Divider.
+	 * The position is based on the Bounds of the containing Pool.
+	 * The final position is always on the x position of the Pool.
+	 */
+	private findLaneDividerSnapPoint(element: SModelElement, position: Point): Point {
+		const x = 30;
+		let y = position.y;
+		// test min / max position
+		if (hasArguments(element)) {
+			const yMin=Number(element.args.ymin);
+			const yMax=Number(element.args.ymax);
+			if (y<yMin) {
+				y=yMin;
+			}
+			if (y>yMax) {
+				y=yMax;
 			}
 		}
 		// return the new position;
