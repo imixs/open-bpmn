@@ -286,15 +286,20 @@ export function isBPMNLabelNode(element: SModelElement): element is SModelElemen
 }
 
 /*
-* This method returns the BPMN Node Element of a given SModelElement.
-* The method detects if the given ModelElement is for example a SPort
-* or label:heading. In this case the method returns the parent element
-* which is a Task, Event or Gateway node
+* This method returns true if the element is a BPMN Node Element.
 */
-export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode {
+export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode |
+ DataObjectNode | TextAnnotationNode | MessageNode | PoolNode {
     return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
            element instanceof DataObjectNode || element instanceof TextAnnotationNode ||
 		element instanceof MessageNode || element instanceof PoolNode;
+}
+
+/*
+* This method returns true if the element is a BPMN Edge Element.
+*/
+export function isBPMNEdge(element: SModelElement): element is BPMNEdge {
+    return element instanceof BPMNEdge;
 }
 
 /*
@@ -307,6 +312,6 @@ export function isBoundaryEvent(element: SModelElement): element is EventNode {
 /*
  * Returns true if the model Element is a LaneDivider
  */
-export function isLaneDivider(element: SModelElement): element is EventNode {
+export function isLaneDivider(element: SModelElement): boolean {
     return element.type === 'lane-divider';
 }

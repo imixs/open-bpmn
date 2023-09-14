@@ -35,7 +35,7 @@ import {
 import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
-import { isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
+import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable, postConstruct } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -312,7 +312,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             return;
         }
 
-        // now if we have an element we show teh panel..
+        // now if we have an element we show the panel..
         if (_id) {
             // did we have a change?
             // set new selectionId
@@ -360,7 +360,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             // load element from index
             element=this.modelRoot.index.getById(_elementID);
              // skip undefined elements or laneDivider
-            if (!element || !isBPMNNode(element)) {
+            if (!element || (!isBPMNNode(element) && !isBPMNEdge(element))) {
                 element=this.modelRoot;
                 this.headerTitle.textContent = 'Default Process';
             } else {
