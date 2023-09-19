@@ -70,6 +70,9 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         String jsonData = operation.getJsonData();
         String category = operation.getCategory();
 
+        // reset undo/redo stack!
+        modelState.resetRevisions();
+
         // validate GModel id
         String elementID = operation.getId();
         GModelElement gModelElement = null;

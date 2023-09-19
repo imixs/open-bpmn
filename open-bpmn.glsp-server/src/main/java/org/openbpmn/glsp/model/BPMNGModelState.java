@@ -47,8 +47,7 @@ public class BPMNGModelState extends DefaultGModelState {
     private String rootID = "undefined_root_id";
 
     public BPMNGModelState() {
-        undoStack = new Stack<Document>();
-        redoStack = new Stack<Document>();
+        resetRevisions();
     }
 
     public BPMNModel getBpmnModel() {
@@ -83,6 +82,17 @@ public class BPMNGModelState extends DefaultGModelState {
         }
     }
 
+    /**
+     * This method resets the revisionStore. The method is called in cases a undo
+     * operation does not make any more sense. For example this is the case if the
+     * user updates the properties of an element. This will change the underlying
+     * model but we do not store all these changes as revisions. So we need to reset
+     * the Revision store in such a case.
+     */
+    public void resetRevisions() {
+        undoStack = new Stack<Document>();
+        redoStack = new Stack<Document>();
+    }
 
     @Override
     public boolean canUndo() {
