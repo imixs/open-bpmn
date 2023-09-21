@@ -86,8 +86,10 @@ public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperati
 
         if (participant != null) {
             return participant.getBpmnProcess();
+        } else {
+            // default to the default process
+            return modelState.getBpmnModel().openDefaultProces();
         }
-        return null;
     }
 
     /**
