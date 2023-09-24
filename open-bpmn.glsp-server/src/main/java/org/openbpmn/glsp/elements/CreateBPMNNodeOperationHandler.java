@@ -24,7 +24,6 @@ import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.gmodel.GModelCreateOperationHandler;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.elements.BPMNProcess;
-import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -81,16 +80,9 @@ public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperati
         }
         GPoint dropPoint = operation.getLocation().orElse(null);
 
-        Participant participant = modelState.getBpmnModel()
-                .findParticipantByPoint(BPMNGModelUtil.createBPMNPoint(dropPoint));
-
-        if (participant != null) {
-            return participant.getBpmnProcess();
-        } else {
-            // default to the default process
-            return modelState.getBpmnModel().openDefaultProces();
-        }
+        return BPMNGModelUtil.findProcessByPoint(modelState, dropPoint);
     }
+
 
     /**
      * This method is a helper method to compute the container element. E.g. when a

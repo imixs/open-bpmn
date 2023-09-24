@@ -1303,6 +1303,22 @@ public class BPMNModel {
     }
 
     /**
+     * Find a BPMNProcess by its ID.
+     * The method returns null if no process with this ID exists.
+     * 
+     * @param processid
+     * @return
+     */
+    public BPMNProcess findProcessById(String processid) {
+        for (BPMNProcess _process : processes) {
+            if (_process.getId().equals(processid)) {
+                return _process;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Writes the current instance to the file system.
      *
      * The method also resolves all open-bpmn:file-link elements and updates the

@@ -7,6 +7,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
@@ -26,6 +27,26 @@ public class SequenceFlow extends BPMNElementEdge {
      */
     public BPMNProcess getProcess() {
         return bpmnProcess;
+    }
+
+    /**
+     * This method updates the process assignment of the SequenceFlow. The element
+     * will be removed form the current process and added to the new process.
+     * 
+     * @param newProcess
+     * @throws BPMNInvalidTypeException
+     */
+    public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
+
+        // ...remove the element from the corresponding element list
+        // and add it to the new process
+        this.bpmnProcess.getSequenceFlows().remove(this);
+        newProcess.getSequenceFlows().add(this);
+
+        // remove element from old process and assign it ot the new
+        this.bpmnProcess.getElementNode().removeChild(this.elementNode);
+        this.bpmnProcess = newProcess;
+        this.bpmnProcess.getElementNode().appendChild(this.elementNode);
     }
 
     /**

@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -107,15 +108,14 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
             if (bpmnElementNode != null) {
                 try {
                     // clone BPMNElementNodes....
-                    // BPMNProcess process =
-                    // modelState.getBpmnModel().openProcess(bpmnElementNode.getProcessId());
                     BPMNProcess process = bpmnElementNode.getBpmnProcess();
                     BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
                     if (newElementNode != null) {
                         clonedIDs.put(bpmnElementNode.getId(), newElementNode.getId());
                         newElementIDList.add(newElementNode.getId());
 
-                        // adjust position...
+                        // adjust position. This operation will automatically also update the
+                        // containment!
                         newElementNode.setPosition(bpmnElementNode.getBounds().getPosition().getX() + xOffset,
                                 bpmnElementNode.getBounds().getPosition().getY() + yOffset);
                         // adjust label position?
@@ -136,7 +136,7 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
             BPMNElementEdge bpmnElementEdge = modelState.getBpmnModel().findElementEdgeById(id);
             if (bpmnElementEdge != null && bpmnElementEdge instanceof SequenceFlow) {
                 try {
-                    logger.info("...copy SequenceFlow - " + bpmnElementEdge.getId());
+                    logger.debug("...copy SequenceFlow - " + bpmnElementEdge.getId());
 
                     // do we have the corresponding source and target element?
                     String newSourceID = clonedIDs.get(bpmnElementEdge.getSourceRef());
@@ -148,6 +148,19 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                         if (newElementEdge != null) {
                             newElementEdge.setSourceRef(newSourceID);
                             newElementEdge.setTargetRef(newTargetID);
+                            // and finally we need to move the new sequenceFlow into the target process...
+                            BPMNElement sourceElement = modelState.getBpmnModel().findElementById(newSourceID);
+                            String processID = sourceElement.getProcessId();
+                            BPMNProcess targetProcess = modelState.getBpmnModel().findProcessById(processID);
+                            ((SequenceFlow) newElementEdge).updateBPMNProcess(targetProcess);
+
+                            // update waypoints
+                            Set<BPMNPoint> sourceWayPoints = bpmnElementEdge.getWayPoints();
+                            newElementEdge.clearWayPoints();
+                            for (BPMNPoint _point : sourceWayPoints) {
+                                BPMNPoint newPoint = new BPMNPoint(_point.getX() + xOffset, _point.getY() + yOffset);
+                                newElementEdge.addWayPoint(newPoint);
+                            }
                         }
                     }
                 } catch (BPMNModelException e) {

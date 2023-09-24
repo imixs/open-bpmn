@@ -39,6 +39,7 @@ import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
@@ -269,6 +270,32 @@ public class BPMNGModelUtil {
             }
         }
         return bpmnProcess;
+    }
+
+    /**
+     * Helper method resolves the containing BPMNProcess by a given Drop Point.
+     * This can be either the default process or the process of a Participant
+     * (Pool).
+     * <p>
+     * The method computes the matching process by testing the DropPoint with the
+     * dimensions of the existing BPMN Pools (Participants). In case the model is
+     * not a collaboration diagram, the method always returns the default process.
+     * <p>
+     */
+    public static BPMNProcess findProcessByPoint(final BPMNGModelState modelState, final GPoint dropPoint)
+            throws BPMNInvalidTypeException {
+        if (!modelState.getBpmnModel().isCollaborationDiagram() || dropPoint == null) {
+            return modelState.getBpmnModel().openDefaultProces();
+        }
+        Participant participant = modelState.getBpmnModel()
+                .findParticipantByPoint(BPMNGModelUtil.createBPMNPoint(dropPoint));
+
+        if (participant != null) {
+            return participant.getBpmnProcess();
+        } else {
+            // default to the default process
+            return modelState.getBpmnModel().openDefaultProces();
+        }
     }
 
     /**

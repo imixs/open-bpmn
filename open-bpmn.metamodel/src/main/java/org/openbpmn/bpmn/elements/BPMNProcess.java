@@ -1284,6 +1284,19 @@ public class BPMNProcess extends BPMNElement {
             Element element = (Element) this.getElementNode().appendChild(newElement);
             result = this.createBPMNSequenceFlowByNode(element);
         }
+
+        // update alls id of bpmn2: childs
+        NodeList childList = result.getElementNode().getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Element child = (Element) childList.item(i);
+            // test if we have an id...
+            if (child.hasAttribute("id")) {
+                String tag = child.getLocalName();
+                // update id....
+                child.setAttribute("id", BPMNModel.generateShortID(tag));
+            }
+        }
+
         return result;
     }
 
