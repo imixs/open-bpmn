@@ -3,6 +3,7 @@ package org.openbpmn.bpmn;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -140,6 +141,16 @@ public class BPMNTypes {
     public static boolean isFlowElementNode(BPMNElement element) {
         if (element instanceof BPMNElementNode) {
             return BPMN_FLOWELEMENT_NODES.contains(((BPMNElementNode) element).getType());
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given element is a DataObject
+     */
+    public static boolean isDataObjectNode(BPMNElement element) {
+        if (element instanceof DataObject) {
+            return true;
         }
         return false;
     }

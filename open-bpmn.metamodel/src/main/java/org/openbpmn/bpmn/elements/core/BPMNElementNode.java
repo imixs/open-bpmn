@@ -10,6 +10,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
@@ -184,10 +185,15 @@ public abstract class BPMNElementNode extends BPMNElement {
      * 
      */
     private void updateContainment(double x, double y) {
-        // update is only needed for collaboration diagrams and FlowElement Nodes
-        if (!this.model.isCollaborationDiagram() || !BPMNTypes.isFlowElementNode(this)) {
+        // update is only needed for collaboration diagrams
+        if (!this.model.isCollaborationDiagram()) {
             return;
         }
+        // update is only possible for process elements
+        if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)) {
+            return;
+        }
+
         try {
             // first test if the participant need to be updated...
             Set<Participant> participants = this.model.getParticipants();
@@ -240,9 +246,10 @@ public abstract class BPMNElementNode extends BPMNElement {
      */
     public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
 
-        if (!BPMNTypes.isFlowElementNode(this)) {
-            throw new BPMNInvalidTypeException(
-                    "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity)");
+        if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)) {
+            logger.finest(
+                    "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity, DataObjects)");
+            return;
         }
 
         // remove element from an optional laneSet
@@ -267,6 +274,10 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (this instanceof Event) {
             this.bpmnProcess.getEvents().remove(this);
             newProcess.getEvents().add((Event) this);
+        }
+        if (this instanceof DataObject) {
+            this.bpmnProcess.getDataObjects().remove(this);
+            newProcess.getDataObjects().add((DataObject) this);
         }
 
         // remove element from old process and assign it ot the new

@@ -23,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.DefaultTypes;
 import org.eclipse.glsp.graph.GCompartment;
-import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GLabel;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GNode;
@@ -32,18 +31,15 @@ import org.eclipse.glsp.graph.builder.impl.GCompartmentBuilder;
 import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.builder.impl.GNodeBuilder;
 import org.eclipse.glsp.graph.util.GConstants;
-import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
-import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.IconGCompartment;
-import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -334,37 +330,6 @@ public class BPMNGModelUtil {
             return id.substring(0, id.lastIndexOf("_bpmnlabel"));
         }
         return null;
-    }
-
-    /**
-     * This helper method optimizes the height of a BPMNLabel element based on the
-     * length of the text. The method splits the text with New-Lines between words.
-     * 
-     * @param label
-     * @param bpmnLabel
-     * @param text
-     */
-    @Deprecated
-    private static void xxxoptimizeBPMNLabelHeight(LabelGNode label, BPMNLabel bpmnLabel, String text) {
-        int FONT_SIZE = 20;
-
-        // resize based on the lines....
-        int estimatedLines = estimateLineCount(text, FONT_SIZE, 100);
-        GDimension newLabelSize = GraphUtil.dimension(100, FONT_SIZE * estimatedLines);
-        label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newLabelSize.getWidth());
-        label.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newLabelSize.getHeight());
-        // calling the size method does not have an effect.
-        // see:
-        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
-        label.setSize(newLabelSize);
-        // Update the BPMNLabel bounds...
-        try {
-            if (bpmnLabel != null) {
-                bpmnLabel.getBounds().setDimension(newLabelSize.getWidth(), newLabelSize.getHeight());
-            }
-        } catch (BPMNMissingElementException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
