@@ -1711,6 +1711,28 @@ public class BPMNModel {
                 Participant participant = bpmnProcess.findParticipant();
                 if (participant != null) {
                     participant.setBpmnProcess(bpmnProcess);
+                } else {
+                    // verify if we have a participant for this process. If not we create one. Issue
+                    // # #297
+                    // <bpmn2:participant id="participant_1" name="Default Process"
+                    // processRef="process_1"/>
+                    if (isCollaborationDiagram()) {
+                        logger.warning("Process " + bpmnProcess.getId()
+                                + " has no participant reference! Missing element will be added...");
+
+                        // create a new Dom node...
+                        Element participantNode = createElement(BPMNNS.BPMN2, "participant");
+                        String participantID = BPMNModel.generateShortID("participant");
+                        participantNode.setAttribute("id", participantID);
+                        participantNode.setAttribute("name", bpmnProcess.getName());
+                        participantNode.setAttribute("processRef", bpmnProcess.getId());
+                        this.collaborationElement.appendChild(participantNode);
+                        // update model
+                        Participant _new_participant = new Participant(this, participantNode);
+                        _new_participant.setBpmnProcess(bpmnProcess);
+                        participants.add(_new_participant);
+                    }
+
                 }
 
             }

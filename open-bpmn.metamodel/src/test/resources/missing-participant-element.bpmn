@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+  <bpmn2:collaboration id="collaboration_1" name="Default Collaboration">
+    <bpmn2:participant id="participant_oOrWmw" name="Pool-1" processRef="process_Ia6Vgg">
+      <bpmn2:documentation id="documentation_60v7lw"/>
+    </bpmn2:participant>
+  </bpmn2:collaboration>
+  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="Default Process" processType="Public">
+    <bpmn2:documentation id="documentation_dT7vHg"/>
+  </bpmn2:process>
+  <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_Ia6Vgg" name="Pool-1" processType="Private">
+    <bpmn2:laneSet id="laneset_0p5jNA" name="Lane Set">
+      <bpmn2:lane id="lane_UWDmHw" name="Lane 1">
+        <bpmn2:documentation id="documentation_ONfnaA"/>
+        <bpmn2:flowNodeRef>event_JKJElA</bpmn2:flowNodeRef>
+      </bpmn2:lane>
+    </bpmn2:laneSet>
+    <bpmn2:startEvent id="event_JKJElA" name="Event-1">
+      <bpmn2:documentation id="documentation_Qf796g"/>
+    </bpmn2:startEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+    <bpmndi:BPMNPlane bpmnElement="collaboration_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="participant_oOrWmw" id="BPMNShape_6HoaZQ">
+        <dc:Bounds height="200.0" width="800.0" x="80.0" y="170.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="lane_UWDmHw" id="BPMNShape_Lane_91xdsw">
+        <dc:Bounds height="200.0" width="770.0" x="110.0" y="170.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="event_JKJElA" id="BPMNShape_KbwQCQ">
+        <dc:Bounds height="36.0" width="36.0" x="240.0" y="230.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_tjpfXA">
+          <dc:Bounds height="20.0" width="100.0" x="208.0" y="269.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

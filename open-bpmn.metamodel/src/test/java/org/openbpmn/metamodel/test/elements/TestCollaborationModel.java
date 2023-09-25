@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.File;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -12,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -211,6 +213,46 @@ public class TestCollaborationModel {
         assertNotNull(model);
         model.save(out);
         logger.info("...model created sucessful: " + out);
+    }
+
+    /**
+     * This test loads a collaboration model with a missing bpmn2:participant entry
+     * for the default process.
+     * The Metamodel should create the missing element on the fly
+     * 
+     */
+    @SuppressWarnings("unused")
+    @Test
+    public void testMissingParticipant() {
+        logger.info("...read corrupted collaboration model...");
+        String out = "src/test/resources/output/missing-participant-element.bpmn";
+
+        try {
+            model = BPMNModelFactory.read("/missing-participant-element.bpmn");
+            // we expect the existence of 2 participant elements even if the model file has
+            // only one!
+
+            Set<Participant> participants = model.getParticipants();
+            assertNotNull(participants);
+            assertEquals(2, participants.size());
+
+            Iterator<Participant> partIter = model.getParticipants().iterator();
+            while (partIter.hasNext()) {
+                assertTrue(partIter.next().getBpmnProcess() != null);
+            }
+            // get first participant and load the process context
+            Participant bpmnParticipant = participants.iterator().next();
+            BPMNProcess process = model.openProcess("process_Ia6Vgg");
+            // we expect 1 Task element in this process
+            assertEquals(1, process.getEvents().size());
+
+            model.save(new File(out));
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        logger.info("...model read sucessful: ");
     }
 
 }
