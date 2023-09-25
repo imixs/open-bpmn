@@ -67,7 +67,6 @@ import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
-import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
@@ -274,33 +273,11 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             // Next add all Message objects.
-            // A message object is not assigned to any process. But in case the message is
-            // placed on a Pool it should become a child of this parent GNode.
-            // See issue #244
+            // A message object is not assigned to any process!
             for (Message message : modelState.getBpmnModel().getMessages()) {
                 logger.debug("message: " + message.getName());
                 GPoint point = computeRelativeGPoint(message.getBounds(), null);
                 List<GModelElement> containerNodeList = gRootNodeList; // default add message to root
-
-                // If the message contained by a Pool we add the message to the poolGNode
-                Participant participant = null;
-                if (modelState.getBpmnModel().isCollaborationDiagram()) {
-                    participant = modelState.getBpmnModel()
-                            .findParticipantByPoint(message.getBounds().getPosition());
-                    if (participant != null) {
-                        BPMNGNode poolGNode = null;
-                        try {
-                            point = computeRelativeGPoint(message.getBounds(), participant);
-                            // find PoolGNode
-                            poolGNode = (BPMNGNode) findPoolGNode(participant.getId(), gRootNodeList);
-                        } catch (BPMNMissingElementException e) {
-                            // no match - add the message to the root...
-                        }
-                        if (poolGNode != null) {
-                            containerNodeList = poolGNode.getChildren();
-                        }
-                    }
-                }
 
                 // Build the GLSP Node....
                 MessageGNode messageNode = new MessageGNodeBuilder(message) //
@@ -309,12 +286,11 @@ public class BPMNGModelFactory implements GModelFactory {
                 containerNodeList.add(messageNode);
                 // now add a GLabel
                 BPMNLabel bpmnLabel = message.getLabel();
-                LabelGNode labelNode = createLabelNode(bpmnLabel, message, participant);
+                LabelGNode labelNode = createLabelNode(bpmnLabel, message, null);
                 containerNodeList.add(labelNode);
 
                 // finally apply BPMN Extensions
                 applyBPMNElementExtensions(messageNode, message);
-
             }
 
             // Add all MessageFlow elements...
