@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 
@@ -150,6 +151,16 @@ public class BPMNTypes {
      */
     public static boolean isDataObjectNode(BPMNElement element) {
         if (element instanceof DataObject) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given element is a DataObject
+     */
+    public static boolean isTextAnnotationNode(BPMNElement element) {
+        if (element instanceof TextAnnotation) {
             return true;
         }
         return false;

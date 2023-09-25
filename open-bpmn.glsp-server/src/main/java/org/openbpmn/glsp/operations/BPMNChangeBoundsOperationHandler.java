@@ -38,7 +38,6 @@ import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
-import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
@@ -413,7 +412,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         logger.debug("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
         updateLaneSet(participant, offsetWidth, offsetHeight);
         updateEmbeddedElements(participant, offsetX, offsetY);
-        updateMessageElements(oldPosition, oldDimensions, offsetX, offsetY);
+        // updateMessageElements(oldPosition, oldDimensions, offsetX, offsetY);
 
     }
 
@@ -576,35 +575,37 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
      * @param offsetY - new Y offset
      * @throws BPMNMissingElementException
      */
-    void updateMessageElements(final BPMNPoint oldPosition, final BPMNDimension oldDimension, final double offsetX,
-            final double offsetY)
-            throws BPMNMissingElementException {
+    // void xxxupdateMessageElements(final BPMNPoint oldPosition, final
+    // BPMNDimension oldDimension, final double offsetX,
+    // final double offsetY)
+    // throws BPMNMissingElementException {
 
-        // Update all Message Elements contained in the given bounds
-        Set<Message> messageElements = modelState.getBpmnModel().getMessages();
-        for (Message _message : messageElements) {
-            BPMNBounds bounds = _message.getBounds();
-            BPMNPoint point = bounds.getCenter();
+    // // Update all Message Elements contained in the given bounds
+    // Set<Message> messageElements = modelState.getBpmnModel().getMessages();
+    // for (Message _message : messageElements) {
+    // BPMNBounds bounds = _message.getBounds();
+    // BPMNPoint point = bounds.getCenter();
 
-            double x = oldPosition.getX();
-            double y = oldPosition.getY();
-            double w = oldDimension.getWidth();
-            double h = oldDimension.getHeight();
-            // is the point within this dimensions?
-            if (point.getX() >= x && point.getX() <= x + w
-                    && point.getY() >= y && point.getY() <= y + h) {
-                _message.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
-                // adjust position of the label
+    // double x = oldPosition.getX();
+    // double y = oldPosition.getY();
+    // double w = oldDimension.getWidth();
+    // double h = oldDimension.getHeight();
+    // // is the point within this dimensions?
+    // if (point.getX() >= x && point.getX() <= x + w
+    // && point.getY() >= y && point.getY() <= y + h) {
+    // _message.setPosition(bounds.getPosition().getX() + offsetX,
+    // bounds.getPosition().getY() + offsetY);
+    // // adjust position of the label
 
-                BPMNLabel bpmnLabel = _message.getLabel();
-                if (bpmnLabel != null) {
-                    bpmnLabel.updateLocation(bpmnLabel.getPosition().getX() + offsetX,
-                            bpmnLabel.getPosition().getY() + offsetY);
-                }
-            }
-        }
+    // BPMNLabel bpmnLabel = _message.getLabel();
+    // if (bpmnLabel != null) {
+    // bpmnLabel.updateLocation(bpmnLabel.getPosition().getX() + offsetX,
+    // bpmnLabel.getPosition().getY() + offsetY);
+    // }
+    // }
+    // }
 
-    }
+    // }
 
     /**
      * 

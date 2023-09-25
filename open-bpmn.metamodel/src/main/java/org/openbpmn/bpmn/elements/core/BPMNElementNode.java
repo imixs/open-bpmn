@@ -16,6 +16,7 @@ import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
@@ -189,8 +190,9 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (!this.model.isCollaborationDiagram()) {
             return;
         }
-        // update is only possible for process elements
-        if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)) {
+        // update is only possible for flow elements and data objects.
+        if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)
+                && !BPMNTypes.isTextAnnotationNode(this)) {
             return;
         }
 
@@ -246,7 +248,8 @@ public abstract class BPMNElementNode extends BPMNElement {
      */
     public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
 
-        if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)) {
+        if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)
+                && !BPMNTypes.isTextAnnotationNode(this)) {
             logger.finest(
                     "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity, DataObjects)");
             return;
@@ -278,6 +281,10 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (this instanceof DataObject) {
             this.bpmnProcess.getDataObjects().remove(this);
             newProcess.getDataObjects().add((DataObject) this);
+        }
+        if (this instanceof TextAnnotation) {
+            this.bpmnProcess.getTextAnnotations().remove(this);
+            newProcess.getTextAnnotations().add((TextAnnotation) this);
         }
 
         // remove element from old process and assign it ot the new
