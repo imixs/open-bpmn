@@ -520,10 +520,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             // adjust laneY for the next iteration
             bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
         }
-        // resize the model
-        modelState.reset();
-
     }
+
     /**
      * This method updates the position for all BPMNElementNodes contained in a pool
      * given a x and y offset. This method is needed because in BPMN all positions
