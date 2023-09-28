@@ -182,8 +182,13 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
      * position according to the mouse position.
      */
     private BPMNPoint computeRefPoint(List<String> ids) {
-        double x = 0;
-        double y = 0;
+
+        if (ids == null || ids.size() == 0) {
+            // no list provided
+            return new BPMNPoint(0, 0);
+        }
+        BPMNPoint result = null;
+
         for (String id : ids) {
             // find the BPMNNode
             BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
@@ -192,22 +197,24 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                     BPMNElementNode bpmnElementNode = (BPMNElementNode) bpmnElement;
                     // compute most upper left ref position...
                     BPMNPoint _point = bpmnElementNode.getBounds().getPosition();
-                    if (_point.getX() > 0) {
-                        if ((x > 0 && _point.getX() < x) || x == 0) {
-                            x = _point.getX();
+                    // The first element in the list is the default result
+                    if (result == null) {
+                        result = new BPMNPoint(_point.getX(), _point.getY());
+                    } else {
+                        // test if the current point is outside of our best guest....
+                        if (_point.getX() < result.getX()) {
+                            result.setX(_point.getX());
                         }
-                    }
-                    if (_point.getY() > 0) {
-                        if ((y > 0 && _point.getY() < y) || y == 0) {
-                            y = _point.getY();
+                        if (_point.getY() < result.getY()) {
+                            result.setY(_point.getY());
                         }
+                        logger.debug("...  x=" + result.getX() + " y=" + result.getY());
                     }
-                    logger.debug("...  x=" + x + " y=" + y);
                 } catch (BPMNModelException e) {
                     e.printStackTrace();
                 }
             }
         }
-        return new BPMNPoint(x, y);
+        return result;
     }
 }

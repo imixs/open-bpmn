@@ -214,6 +214,10 @@ public class BPMNGModelFactory implements GModelFactory {
             if (model.isCollaborationDiagram()) {
                 Set<Participant> participants = model.getParticipants();
                 for (Participant participant : participants) {
+                    if (participant.getProcessRef().isEmpty() && !"Public".equals(participant.getType())) {
+                        // in case the participant does not refer to a process then we skip this element
+                        continue;
+                    }
                     logger.debug(
                             "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
                     BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
@@ -262,6 +266,7 @@ public class BPMNGModelFactory implements GModelFactory {
                         poolGNodeList.put(participant.getId(), pool);
                     } else {
                         // add default process without a pool
+                        // here it is important to verify if the participant refers this process!
                         gRootNodeList.addAll(computeGModelElements(bpmnProcess, null, gRootNodeList));
                     }
                 }
