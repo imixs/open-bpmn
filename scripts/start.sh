@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "***************************************"
-echo "* Starting - Open BPMN.....     test      *"
+echo "* Starting - Open BPMN.....           *"
 echo "***************************************"
 
 # Test server jar...
@@ -12,7 +12,7 @@ fi
 echo "Server jar="$GLSP_SERVER_JAR
 
 # Start server in background...
-java -jar $GLSP_SERVER_JAR org.openbpmn.glsp.BPMNServerLauncher &
+java -jar $GLSP_SERVER_JAR org.openbpmn.glsp.BPMNServerLauncher --port=5007 &
 
 # start client
 cd open-bpmn.glsp-client/
