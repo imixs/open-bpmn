@@ -1624,12 +1624,15 @@ public class BPMNModel {
      * This helper method loads the participant elements from a collaboration
      * diagram located in the 'bpmn2:collaboration' section. This section is
      * optional.
+     * <p>
+     * The method also removes deprecated participant elements automatically. See
+     * Issue #299
      * 
      * @throws BPMNModelException
-     * 
      */
     private void loadParticipantList() throws BPMNModelException {
         participants = new LinkedHashSet<Participant>();
+        List<Element> invalidParticipantElementList = new ArrayList<Element>();
         NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
 
@@ -1642,11 +1645,24 @@ public class BPMNModel {
             for (int i = 0; i < participantList.getLength(); i++) {
                 Element item = (Element) participantList.item(i);
                 Participant participant;
+                String processRef = item.getAttribute("processRef");
+                if (processRef == null || processRef.isEmpty()) {
+                    // See issue #299
+                    logger.warning("Participant " + item.getAttribute("id")
+                            + " has no processRef! Element will be removed...");
+                    invalidParticipantElementList.add(item);
+                    continue;
+                }
                 participant = new Participant(this, item);
                 // set processRef
                 participant.setProcessRef(item.getAttribute("processRef"));
                 // update process...
                 participants.add(participant);
+            }
+
+            // remove deprecated participant elements form model
+            for (Element _participant : invalidParticipantElementList) {
+                collaborationElement.removeChild(_participant);
             }
         }
     }

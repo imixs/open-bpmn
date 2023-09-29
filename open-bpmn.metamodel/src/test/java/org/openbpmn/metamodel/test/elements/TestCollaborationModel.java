@@ -255,4 +255,34 @@ public class TestCollaborationModel {
         logger.info("...model read sucessful: ");
     }
 
+    /**
+     * This test loads a collaboration model with a bpmn2:participant entry
+     * missing a process.
+     * The Metamodel should remove this participant node on the fly
+     * The situation can be produced by Eclipse-BPMN2 and results in a inconsistent
+     * bpmn model. See issue #299
+     * 
+     */
+    @Test
+    public void testMissingProcessForParticipant() {
+        logger.info("...read corrupted collaboration model...");
+        String out = "src/test/resources/output/missing-process-participant.bpmn";
+
+        try {
+            model = BPMNModelFactory.read("/missing-process-participant.bpmn");
+            // we expect the existence of only 2 participant elements
+            // Participant_2 should be removed
+            Set<Participant> participants = model.getParticipants();
+            assertNotNull(participants);
+            assertEquals(2, participants.size());
+            assertEquals(2, model.getProcesses().size());
+            model.save(new File(out));
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        logger.info("...model read sucessful: ");
+    }
+
 }
