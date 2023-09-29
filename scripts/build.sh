@@ -108,8 +108,8 @@ fi
 
 if [ "$buildDocker" == "true" ]; then
   mvn clean install -DskipTests
-  docker build . -t imixs/open-bpmn:latest
-  docker push imixs/open-bpmn:latest
+  docker build . -t imixs/open-bpmn
+  docker push imixs/open-bpmn
 fi
 
 
