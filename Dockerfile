@@ -12,7 +12,7 @@ COPY open-bpmn.glsp-server/target/open-bpmn.server-*-glsp.jar ./open-bpmn.glsp-s
 # Build GLSP Client part
 COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 WORKDIR /usr/src/app/open-bpmn.glsp-client
-RUN yarn
+RUN yarn install
 
 # Copy Start script
 WORKDIR /usr/src/app
