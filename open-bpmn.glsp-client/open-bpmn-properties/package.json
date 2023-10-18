@@ -1,11 +1,11 @@
 {
   "name": "@open-bpmn/open-bpmn-properties",
-  "version": "1.0.3",
+  "version": "1.2.0",
   "description": "GLSP property panel for BPMN 2.0",
   "license": "(GPL-3.0)",
   "dependencies": {
     "@eclipse-glsp/client": "1.1.0-RC10",
-    "@open-bpmn/open-bpmn-model": "1.0.3",
+    "@open-bpmn/open-bpmn-model": "1.2.0",
     "@jsonforms/core": "3.0.0",
     "@jsonforms/react": "3.0.0",
     "@jsonforms/vanilla-renderers": "3.0.0",
