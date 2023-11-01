@@ -1,49 +1,49 @@
 {
-  "private": true,
   "name": "parent",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "private": true,
   "description": "Open BPMN 2.0",
-  "license": "EPL-2.0",
-  "engines": {
-    "yarn": ">=1.7.0 <2.x.x",
-    "node": ">=14.18.0"
-  },
-  "author": {
-    "name": "Imixs Workflow"
-  },
   "homepage": "https://www.imixs.org/",
+  "bugs": "https://github.com/imixs/open-bpmn/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/imixs/open-bpmn.git"
   },
-  "bugs": "https://github.com/imixs/open-bpmn/issues",
+  "license": "EPL-2.0",
+  "author": {
+    "name": "Imixs Workflow"
+  },
   "contributors": [
     {
       "name": "Ralph Soika",
       "email": "ralph.soika@imixs.com"
     }
   ],
-  "scripts": {
-    "prepare": "lerna run prepare",
-    "watch": "lerna run --parallel watch",
-    "build": "yarn install:only && lerna run build",
-    "lint": "yarn install:only && lerna run lint --",
-    "install:only": "yarn install --ignore-scripts",
-    "rebuild:browser": "theia rebuild:browser",
-    "start": "yarn rebuild:browser && yarn --cwd open-bpmn-app start",
-    "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external"
-  },
-  "devDependencies": {
-    "@eclipse-glsp/config": "1.1.0-next.d03ad9f.112",
-    "rimraf": "^2.6.1",
-    "lerna": "^6.1.0",
-    "typescript": "^4.9.3"
-  },
   "workspaces": [
     "open-bpmn-model",
     "open-bpmn-properties",
     "open-bpmn-glsp",
     "open-bpmn-theia",
     "open-bpmn-app"
-  ]
+  ],
+  "scripts": {
+    "build": "yarn install:only && lerna run build",
+    "install:only": "yarn install --ignore-scripts",
+    "lint": "yarn install:only && lerna run lint --",
+    "prepare": "lerna run prepare",
+    "rebuild:browser": "theia rebuild:browser",
+    "start": "yarn rebuild:browser && yarn --cwd open-bpmn-app start",
+    "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external",
+    "watch": "lerna run --parallel watch"
+  },
+  "devDependencies": {
+    "@eclipse-glsp/config": "1.1.0-next.d03ad9f.112",
+    "lerna": "^6.1.0",
+    "rimraf": "^2.6.1",
+    "typescript": "^4.9.3"
+  },
+  "engines": {
+    "node": ">=14.18.0",
+    "yarn": ">=1.7.0 <2.x.x"
+  }
 }

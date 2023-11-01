@@ -1,46 +1,46 @@
 {
   "name": "@open-bpmn/open-bpmn-glsp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "GLSP diagrams for BPMN 2.0",
-  "license": "(GPL-3.0)",
   "keywords": [
     "glsp",
     "bpmn",
     "diagram"
   ],
-  "author": {
-    "name": "Imixs Workflow"
-  },
   "homepage": "https://www.imixs.org/",
+  "bugs": "https://github.com/imixs/open-bpmn/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/imixs/open-bpmn.git"
   },
-  "bugs": "https://github.com/imixs/open-bpmn/issues",
+  "license": "(GPL-3.0)",
+  "author": {
+    "name": "Imixs Workflow"
+  },
   "contributors": [
     {
       "name": "Ralph Soika",
       "email": "ralph.soika@imixs.com"
     }
   ],
-  "dependencies": {
-    "@eclipse-glsp/client": "1.1.0-RC10",
-    "@open-bpmn/open-bpmn-model": "1.0.3",
-    "@open-bpmn/open-bpmn-properties": "1.0.3",
-    "balloon-css": "^0.5.0"
-  },
-  "scripts": {
-    "prepare": "yarn clean && yarn build && yarn lint",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
-    "build": "tsc",
-    "lint": "eslint --ext .ts,.tsx ./src",
-    "watch": "tsc -w"
-  },
+  "main": "lib/index",
+  "types": "lib/index",
   "files": [
     "lib",
     "src",
     "css"
   ],
-  "main": "lib/index",
-  "types": "lib/index"
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "lint": "eslint --ext .ts,.tsx ./src",
+    "prepare": "yarn clean && yarn build && yarn lint",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "@eclipse-glsp/client": "1.1.0-RC10",
+    "@open-bpmn/open-bpmn-model": "1.0.4",
+    "@open-bpmn/open-bpmn-properties": "1.0.4",
+    "balloon-css": "^0.5.0"
+  }
 }

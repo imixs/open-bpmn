@@ -28,7 +28,7 @@ export const PORT_ARG_KEY = 'GLSP_PORT';
 export const WEBSOCKET_PATH_ARG_KEY = 'PATH_PATH';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
-    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-1.0.3-SNAPSHOT-glsp.jar')
+    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-1.0.4-SNAPSHOT-glsp.jar')
 );
 
 @injectable()

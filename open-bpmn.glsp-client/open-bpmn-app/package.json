@@ -1,11 +1,18 @@
 {
-  "private": true,
   "name": "open-bpmn-app",
-  "version": "1.0.3",
+  "version": "1.0.4",
+  "private": true,
   "description": "Web App for Open BPMN",
   "license": "(GPL-3.0)",
+  "scripts": {
+    "build": "theia build --mode development",
+    "prepare": "yarn build",
+    "start": "theia start --GLSP_PORT=5007 --root-dir=../workspace",
+    "start:external": "theia start --GLSP_PORT=5007 --root-dir=../workspace --debug",
+    "watch": "theia build --watch --mode development"
+  },
   "dependencies": {
-    "@open-bpmn/open-bpmn-theia": "1.0.3",
+    "@open-bpmn/open-bpmn-theia": "1.0.4",
     "@theia/core": "1.39.0-next.20",
     "@theia/editor": "1.39.0-next.20",
     "@theia/filesystem": "1.39.0-next.20",
@@ -21,13 +28,6 @@
   },
   "devDependencies": {
     "@theia/cli": "1.39.0-next.20"
-  },
-  "scripts": {
-    "build": "theia build --mode development",
-    "prepare": "yarn build",
-    "start": "theia start --GLSP_PORT=5007 --root-dir=../workspace",
-    "start:external": "theia start --GLSP_PORT=5007 --root-dir=../workspace --debug",
-    "watch": "theia build --watch --mode development"
   },
   "theia": {
     "target": "browser"
