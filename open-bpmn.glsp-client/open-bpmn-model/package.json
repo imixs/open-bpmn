@@ -3,11 +3,17 @@
   "version": "1.2.0",
   "description": "GLSP model for BPMN 2.0",
   "license": "(GPL-3.0)",
+  "main": "lib/index",
+  "types": "lib/index",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "prepare": "yarn clean && yarn build && yarn lint",
-    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "build": "tsc",
+    "clean": "rimraf lib tsconfig.tsbuildinfo",
     "lint": "eslint -c ../.eslintrc.js --ext .ts,.tsx ./src",
+    "prepare": "yarn clean && yarn build && yarn lint",
     "watch": "tsc -w"
   },
   "dependencies": {
