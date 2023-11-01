@@ -232,36 +232,8 @@ public class BPMNGModelFactory implements GModelFactory {
                         applyBPMNElementExtensions(pool, participant);
 
                         // apply lane-divider
-                        if (participant.getBpmnProcess().getLanes().size() > 1) {
-                            // add a divider between each lane
+                        addLaneDividers(participant, pool);
 
-                            double poolYPos = participant.getBounds().getPosition().getY();
-
-                            Iterator<Lane> laneIterator = participant.getBpmnProcess().getLanes().iterator();
-                            Lane currentLane = laneIterator.next();
-                            while (currentLane != null) {
-                                Lane nextLane = null;
-                                if (!laneIterator.hasNext()) {
-                                    break; // skip last lane
-                                }
-                                nextLane = laneIterator.next();
-                                double laneYPos = currentLane.getBounds().getPosition().getY() - poolYPos;
-                                double laneHeight = currentLane.getBounds().getDimension().getHeight();
-                                double laneDividerYPos = laneYPos + laneHeight - 1;
-                                double laneMinYPos = laneDividerYPos - laneHeight + Lane.MIN_HEIGHT;
-                                double laneMaxYPos = laneDividerYPos + nextLane.getBounds().getDimension().getHeight()
-                                        - Lane.MIN_HEIGHT;
-                                pool.getChildren()
-                                        .add(BPMNGModelUtil.createLaneDivider(participant, laneDividerYPos,
-                                                laneMinYPos,
-                                                laneMaxYPos,
-                                                currentLane.getId(),
-                                                nextLane.getId()));
-
-                                currentLane = nextLane;
-                            }
-
-                        }
                         gRootNodeList.add(pool);
                         poolGNodeList.put(participant.getId(), pool);
                     } else {
@@ -328,6 +300,68 @@ public class BPMNGModelFactory implements GModelFactory {
         applyBPMNElementExtensions(newGModel, model.openDefaultProces());
 
         return newGModel;
+    }
+
+    /**
+     * This helper method adds the gLaneDividers to a pool.
+     * The method takes care about the issue #304, that the order of a LaneSet must
+     * not necessarily be the same as the visual position. For this reason the
+     * method first sorts the lanes by its y-position and later computes the correct
+     * divider position. This is just a GNode Display problem and has nothing to do
+     * with the BPMN meta model
+     * 
+     * @param participant
+     * @param pool
+     * @throws BPMNMissingElementException
+     */
+    private void addLaneDividers(Participant participant, PoolGNode pool) throws BPMNMissingElementException {
+        if (participant.getBpmnProcess().getLanes().size() > 1) {
+            // add a divider between each lane
+            double poolYPos = participant.getBounds().getPosition().getY();
+            // Issue #304:
+            // The lane order must not necessarily be the same as the visual position
+            // For this reason we first sort the lanes by its y-position to compute
+            // the laneDivider positions correctly.
+            List<Lane> orderLaneList = new ArrayList<>();
+            orderLaneList.addAll(participant.getBpmnProcess().getLanes());
+            // Sort the list based on the 'y' attribute
+            Collections.sort(orderLaneList, new Comparator<Lane>() {
+                @Override
+                public int compare(Lane obj1, Lane obj2) {
+                    try {
+                        double y1 = obj1.getBounds().getPosition().getY();
+                        double y2 = obj2.getBounds().getPosition().getY();
+                        return Double.compare(y1, y2);
+                    } catch (BPMNMissingElementException e) {
+                        return 0;
+                    }
+                }
+            });
+
+            // now we can iterate the ordered list of lanes to compute the divider positions
+            Iterator<Lane> laneIterator = orderLaneList.iterator();
+            Lane currentLane = laneIterator.next();
+            while (currentLane != null) {
+                Lane nextLane = null;
+                if (!laneIterator.hasNext()) {
+                    break; // skip last lane
+                }
+                nextLane = laneIterator.next();
+                double laneYPos = currentLane.getBounds().getPosition().getY() - poolYPos;
+                double laneHeight = currentLane.getBounds().getDimension().getHeight();
+                double laneDividerYPos = laneYPos + laneHeight - 1;
+                double laneMinYPos = laneDividerYPos - laneHeight + Lane.MIN_HEIGHT;
+                double laneMaxYPos = laneDividerYPos + nextLane.getBounds().getDimension().getHeight()
+                        - Lane.MIN_HEIGHT;
+                pool.getChildren()
+                        .add(BPMNGModelUtil.createLaneDivider(participant, laneDividerYPos,
+                                laneMinYPos,
+                                laneMaxYPos,
+                                currentLane.getId(),
+                                nextLane.getId()));
+                currentLane = nextLane;
+            }
+        }
     }
 
     /**
