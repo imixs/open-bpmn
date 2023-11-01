@@ -17,7 +17,6 @@ package org.openbpmn.glsp;
 
 import java.util.logging.Logger;
 
-import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.actions.ActionHandler;
 import org.eclipse.glsp.server.di.DiagramModule;
 import org.eclipse.glsp.server.di.MultiBinding;

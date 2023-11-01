@@ -29,8 +29,8 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.actions.CenterAction;
 import org.eclipse.glsp.server.actions.FitToScreenAction;
+import org.eclipse.glsp.server.actions.MessageAction;
 import org.eclipse.glsp.server.actions.SaveModelAction;
-import org.eclipse.glsp.server.actions.ServerMessageAction;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
 import org.eclipse.glsp.server.features.core.model.RequestModelAction;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
@@ -117,7 +117,7 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                 }
                 // dispatch all model notifications...
                 while (!model.getNotifications().isEmpty()) {
-                    ServerMessageAction serverMessage = BPMNActionUtil
+                    MessageAction serverMessage = BPMNActionUtil
                             .convertModelNotification(model.getNotifications().remove(0));
                     actionDispatcher.dispatchAfterNextUpdate(serverMessage);
                 }
@@ -165,7 +165,7 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
 
         // process all model notifications...
         while (!model.getNotifications().isEmpty()) {
-            ServerMessageAction serverMessage = BPMNActionUtil
+            MessageAction serverMessage = BPMNActionUtil
                     .convertModelNotification(model.getNotifications().remove(0));
             actionDispatcher.dispatchAfterNextUpdate(serverMessage);
         }

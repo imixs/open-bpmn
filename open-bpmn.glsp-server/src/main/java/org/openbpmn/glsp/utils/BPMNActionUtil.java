@@ -15,7 +15,7 @@
  ********************************************************************************/
 package org.openbpmn.glsp.utils;
 
-import org.eclipse.glsp.server.actions.ServerMessageAction;
+import org.eclipse.glsp.server.actions.MessageAction;
 import org.eclipse.glsp.server.types.Severity;
 import org.openbpmn.bpmn.ModelNotification;
 
@@ -34,18 +34,18 @@ public class BPMNActionUtil {
      * @param notification
      * @return
      */
-    public static ServerMessageAction convertModelNotification(ModelNotification notification) {
-        ServerMessageAction serverMessage = null;
+    public static MessageAction convertModelNotification(ModelNotification notification) {
+        MessageAction serverMessage = null;
 
         if (notification.getSeverity() == ModelNotification.Severity.ERROR) {
-            serverMessage = new ServerMessageAction(Severity.ERROR,
-                    notification.getMessage(), notification.getDetails(), 10);
+            serverMessage = new MessageAction(Severity.ERROR,
+                    notification.getMessage(), notification.getDetails());
         } else if (notification.getSeverity() == ModelNotification.Severity.WARNING) {
-            serverMessage = new ServerMessageAction(Severity.WARNING,
-                    notification.getMessage(), notification.getDetails(), 10);
+            serverMessage = new MessageAction(Severity.WARNING,
+                    notification.getMessage(), notification.getDetails());
         } else {
-            serverMessage = new ServerMessageAction(Severity.INFO,
-                    notification.getMessage(), notification.getDetails(), 10);
+            serverMessage = new MessageAction(Severity.INFO,
+                    notification.getMessage(), notification.getDetails());
         }
 
         return serverMessage;
