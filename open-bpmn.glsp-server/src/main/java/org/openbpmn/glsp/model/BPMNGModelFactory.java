@@ -214,7 +214,8 @@ public class BPMNGModelFactory implements GModelFactory {
             if (model.isCollaborationDiagram()) {
                 Set<Participant> participants = model.getParticipants();
                 for (Participant participant : participants) {
-                    if (participant.getProcessRef().isEmpty() && !"Public".equals(participant.getType())) {
+                    if ((participant.getProcessRef() == null || participant.getProcessRef().isEmpty())
+                            && !"Public".equals(participant.getType())) {
                         // in case the participant does not refer to a process then we skip this element
                         continue;
                     }
