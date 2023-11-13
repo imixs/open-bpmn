@@ -69,7 +69,6 @@ import org.openbpmn.glsp.operations.BPMNClipboardDataActionHandler;
 import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
-import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
@@ -167,8 +166,6 @@ public class BPMNDiagramModule extends DiagramModule {
         // register apply operations send from the client
         binding.add(BPMNApplyPropertiesUpdateOperationHandler.class);
 
-
-
         // Extension handler
         binding.add(BPMNCreateExtensionHandler.class);
 
@@ -182,11 +179,12 @@ public class BPMNDiagramModule extends DiagramModule {
      * The BPMNPropertyPanelUpdateAction is used by Extensions to signal the
      * propertyPanel that we have an update of the current selected element
      */
-    @Override
-    protected void configureClientActions(MultiBinding<Action> binding) {
-        super.configureClientActions(binding);
-        binding.add(BPMNPropertyPanelUpdateAction.class);
-    }
+    // issue #308
+    // @Override
+    // protected void configureClientActions(MultiBinding<Action> binding) {
+    // super.configureClientActions(binding);
+    // binding.add(BPMNPropertyPanelUpdateAction.class);
+    // }
 
     /**
      * This method creates a new Multibinder to bind BPMNExension
