@@ -40,6 +40,7 @@ public class TestCreateElements {
             BPMNProcess process = model.openDefaultProces();
             // Create a DataObject
             process.addDataObject("dataobject_1", "DataObject-1");
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();

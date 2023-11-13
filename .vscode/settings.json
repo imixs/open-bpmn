@@ -4,12 +4,11 @@
 // - Linux: $HOME/.config/Code/User/settings.json
 // - Mac: $HOME/Library/Application Support/Code/User/settings.json
 {
-  "editor.formatOnSave": true,
+  // Organize Java Imports
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": true,
   },
-  "java.checkstyle.version": "8.44",
-  "java.checkstyle.autocheck": true,
-  "java.checkstyle.configuration": "https://raw.githubusercontent.com/eclipse-emfcloud/emfcloud/master/codestyle/org.eclipse.emfcloud.checkstyle/src/main/resources/emfcloud-checkstyle-8.44.xml",
-  "java.configuration.updateBuildConfiguration": "automatic"
+  // Format with Checkstyle
+  "java.checkstyle.configuration": "https://raw.githubusercontent.com/imixs/imixs-workflow/master/imixs-checkstyle-8.44.xml",
+  "editor.formatOnSave": true
 }

@@ -10,15 +10,15 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Participant;
-import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
- * This test class tests the creation of specific BPMN Edge types
+ * This test class tests the creation of specific BPMN Edge types.
  * 
  * @author rsoika
  *

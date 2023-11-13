@@ -15,7 +15,7 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
 /**
- * This test class tests the deletion of BPMN Model elements
+ * This test class tests the deletion of BPMN Model elements.
  * 
  * @author rsoika
  *
@@ -25,7 +25,7 @@ public class TestDeleteModel {
     private static Logger logger = Logger.getLogger(TestDeleteModel.class.getName());
 
     /**
-     * This test creates a bpmn file
+     * This test creates a bpmn file.
      */
     @Test
     public void testDeleteTask() {
