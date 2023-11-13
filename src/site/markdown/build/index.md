@@ -35,16 +35,28 @@ For a full clean & reinstall of the GLSP Client (after upgrades), run:
 
 You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
 
-### NodeJS
+### NodeJS and NPM
 
-We use nodejs on Linux Debian during development. To manage version of nodejs in debian see: https://phoenixnap.com/kb/update-node-js-version
+We use nodejs on Linux Debian 12 during development. NodeJS and NPM can be installed directly from the Debian package manager:
 
-For development with Eclipse Theia the expected version is ">=10.11.0 <17". For that reason we tested with following version 16.11.0. You can list all current versions [here](https://nodejs.org/en/download/releases/).
+    $ sudo apt install nodejs npm
 
-In case you have install npm you can install a specific nodejs version with:
+After installation you can check the version:
 
-    $ sudo n 16.11.0
+    $ npm --version
+    $ nodejs --version
 
-To install typescript run:
 
-    $ sudo npm install -g typescript
+After you installed npm you can install `yarn`:
+
+    $ npm install --global yarn
+
+Check the version with
+
+    $ yarn --version
+
+The following optional packages may be needed to be installed on your Debian system for building with yarn: 
+
+ - libsecret-1-dev
+ - node-gyp
+

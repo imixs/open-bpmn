@@ -18,11 +18,5 @@
   },
   "dependencies": {
     "@eclipse-glsp/client": "2.0.0"
-  },
-  "files": [
-    "lib",
-    "src"
-  ],
-  "main": "lib/index",
-  "types": "lib/index"
+  }
 }

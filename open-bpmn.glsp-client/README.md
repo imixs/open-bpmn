@@ -4,7 +4,7 @@ This module contains the Imixs BPMN GLSP client module and the Theia integration
 
 ## Build the Client Module with yarn
 
-To build the client modules run
+To build the client modules you need to install `npm`, `nodejs` and `yarn`. Next run:
 
 	$ yarn
 

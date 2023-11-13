@@ -37,10 +37,6 @@
     "prepare": "yarn run clean && yarn run build",
     "watch": "tsc -w"
   },
-  "dependencies": {
-    "@eclipse-glsp/theia-integration": "1.1.0-RC10",
-    "@open-bpmn/open-bpmn-glsp": "1.0.4"
-  },
   "theiaExtensions": [
     {
       "frontend": "lib/browser/bpmn-frontend-module",
