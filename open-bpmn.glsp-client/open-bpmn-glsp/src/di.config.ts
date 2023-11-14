@@ -19,13 +19,13 @@ import {
     ContainerConfiguration,
     DeleteElementContextMenuItemProvider,
     DiamondNodeView,
+    GCompartment,
+    GCompartmentView,
+    GLabel,
+    GLabelView,
     LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView,
-    SCompartment,
-    SCompartmentView,
-    SLabel,
-    SLabelView,
     TYPES,
     configureCommand,
     configureDefaultModelElements,
@@ -95,12 +95,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
-	// bind new SelectionListener for BPMNLabels and BoundaryEvents
-	bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
-	bind(TYPES.SelectionListener).to(BPMNMultiNodeSelectionListener);
+    // bind new SelectionListener for BPMNLabels and BoundaryEvents
+    bind(TYPES.ISelectionListener).to(BPMNLabelNodeSelectionListener);
+    bind(TYPES.ISelectionListener).to(BPMNMultiNodeSelectionListener);
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
 
-	// bpmn helper lines
+    // bpmn helper lines
     bind(TYPES.MouseListener).to(HelperLineListener);
     configureCommand({ bind, isBound }, DrawHelperLinesCommand);
     configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
@@ -128,18 +128,19 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'eventBasedGateway', GatewayNode, DiamondNodeView);
     configureModelElement(context, 'complexGateway', GatewayNode, DiamondNodeView);
 
-    configureModelElement(context, 'label:heading', SLabel, SLabelView, { enable: [editLabelFeature] });
+    configureModelElement(context, 'label:heading', GLabel, GLabelView, { enable: [editLabelFeature] });
 
-    configureModelElement(context, 'comp:comp', SCompartment, SCompartmentView);
+    configureModelElement(context, 'comp:comp', GCompartment, GCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
 
     // configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
-    configureModelElement(context, 'pool_header', SCompartment, PoolHeaderView);
-    configureModelElement(context, 'lane_header', SCompartment, LaneHeaderView);
+    configureModelElement(context, 'pool_header', GCompartment, PoolHeaderView);
+    configureModelElement(context, 'lane_header', GCompartment, LaneHeaderView);
 
-    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] } );
+    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] });
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView, {
-              disable: [moveFeature, selectFeature]}
+        disable: [moveFeature, selectFeature]
+    }
     );
 
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
@@ -149,7 +150,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'BPMNLabel', LabelNode, RectangularNodeView);
     configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, MultiLineTextNodeView);
     configureModelElement(context, 'lane-divider', LaneDivider, LaneDividerView);
-    configureModelElement(context, 'container', SCompartment, SCompartmentView);
+    configureModelElement(context, 'container', GCompartment, GCompartmentView);
 
     // Sequence flows
     configureModelElement(context, 'sequenceFlow', BPMNEdge, BPMNEdgeView);

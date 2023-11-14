@@ -18,12 +18,13 @@ import {
 	CircularNode,
 	DiamondNode,
 	EditableLabel,
+	GChildElement,
+	GEdge,
+	GModelElement,
+	GShapeElement,
 	LayoutContainer,
 	Nameable,
-	RectangularNode, SArgumentable, SChildElement,
-	SEdge,
-	SModelElement,
-	SShapeElement,
+	RectangularNode,
 	WithEditableLabel,
 	boundsFeature,
 	connectableFeature, deletableFeature,
@@ -52,7 +53,7 @@ export class LabelNode extends RectangularNode {
 }
 
 /* Task Node */
-export class TaskNode extends RectangularNode implements BPMNFlowElement, SArgumentable {
+export class TaskNode extends RectangularNode implements BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
 		deletableFeature,
@@ -157,21 +158,21 @@ export class TextAnnotationNode extends RectangularNode implements BPMNFlowEleme
  * The text can be aligned 'left', 'middle' or 'right'.
  *
  */
-export class MultiLineTextNode extends SShapeElement implements SArgumentable {
+export class MultiLineTextNode extends GShapeElement { // implements SArgumentable
 	static readonly DEFAULT_FEATURES = [
 		boundsFeature];
 	layout: string;
 	readonly args: Args;
-    text = '';
+	text = '';
 	align = '';
 }
 
-export class BPMNEdge extends SEdge {
+export class BPMNEdge extends GEdge {
 	kind?: string;
 	documentation: string;
 }
 
-export class Icon extends SShapeElement implements LayoutContainer {
+export class Icon extends GShapeElement implements LayoutContainer {
 	static readonly DEFAULT_FEATURES = [
 		boundsFeature,
 		layoutContainerFeature,
@@ -200,7 +201,7 @@ export class PoolNode extends RectangularNode implements Nameable, WithEditableL
 
 	name = '';
 
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+	get editableLabel(): (GChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
 		if (label && isEditableLabel(label)) {
 			return label;
@@ -225,7 +226,7 @@ export class LaneNode extends RectangularNode implements Nameable, WithEditableL
 
 	name = '';
 
-	get editableLabel(): (SChildElement & EditableLabel) | undefined {
+	get editableLabel(): (GChildElement & EditableLabel) | undefined {
 		const label = this.children.find(element => element.type === 'label:heading');
 		if (label && isEditableLabel(label)) {
 			return label;
@@ -238,7 +239,7 @@ export class LaneNode extends RectangularNode implements Nameable, WithEditableL
  * The model element for the lane divider. The model holds arguments
  * with the ymin and ymax values
  */
-export class LaneDivider extends SShapeElement implements SArgumentable {
+export class LaneDivider extends GShapeElement { // implements SArgumentable
 	static readonly DEFAULT_FEATURES = [
 		selectFeature,
 		boundsFeature,
@@ -253,65 +254,65 @@ export class LaneDivider extends SShapeElement implements SArgumentable {
  * Helper Methods to determine if a ModelElement is of a specific type
  * The methods return the corresponding node
  */
-export function isTaskNode(element: SModelElement): element is TaskNode {
+export function isTaskNode(element: GModelElement): element is TaskNode {
 	return element instanceof TaskNode || false;
 }
 
-export function isPoolNode(element: SModelElement): element is PoolNode {
+export function isPoolNode(element: GModelElement): element is PoolNode {
 	return element instanceof PoolNode || false;
 }
 
-export function isContainerNode(element: SModelElement): element is LaneNode | PoolNode {
+export function isContainerNode(element: GModelElement): element is LaneNode | PoolNode {
 	return (element instanceof LaneNode || element instanceof PoolNode) || false;
 }
 
-export function isLaneNode(element: SModelElement): element is LaneNode {
+export function isLaneNode(element: GModelElement): element is LaneNode {
 	return element instanceof LaneNode || false;
 }
 
-export function isEventNode(element: SModelElement): element is EventNode {
+export function isEventNode(element: GModelElement): element is EventNode {
 	return element instanceof EventNode || false;
 }
 
-export function isGatewayNode(element: SModelElement): element is GatewayNode {
+export function isGatewayNode(element: GModelElement): element is GatewayNode {
 	return element instanceof GatewayNode || false;
 }
 
 /*
  * Indicates that the ModelElement has a independent BPMNLabel
  */
-export function isBPMNLabelNode(element: SModelElement): element is SModelElement {
+export function isBPMNLabelNode(element: GModelElement): element is GModelElement {
 	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode
-            || element instanceof MessageNode) || false;
+		|| element instanceof MessageNode) || false;
 }
 
 /*
 * This method returns true if the element is a BPMN Node Element.
 */
-export function isBPMNNode(element: SModelElement): element is TaskNode | EventNode | GatewayNode |
- DataObjectNode | TextAnnotationNode | MessageNode | PoolNode {
-    return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
-           element instanceof DataObjectNode || element instanceof TextAnnotationNode ||
+export function isBPMNNode(element: GModelElement): element is TaskNode | EventNode | GatewayNode |
+	DataObjectNode | TextAnnotationNode | MessageNode | PoolNode {
+	return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
+		element instanceof DataObjectNode || element instanceof TextAnnotationNode ||
 		element instanceof MessageNode || element instanceof PoolNode;
 }
 
 /*
 * This method returns true if the element is a BPMN Edge Element.
 */
-export function isBPMNEdge(element: SModelElement): element is BPMNEdge {
-    return element instanceof BPMNEdge;
+export function isBPMNEdge(element: GModelElement): element is BPMNEdge {
+	return element instanceof BPMNEdge;
 }
 
 /*
  * Returns true if the BPMN Node Element is a BoundaryEvent
  */
-export function isBoundaryEvent(element: SModelElement): element is EventNode {
-    return element instanceof EventNode && element.type === 'boundaryEvent';
+export function isBoundaryEvent(element: GModelElement): element is EventNode {
+	return element instanceof EventNode && element.type === 'boundaryEvent';
 }
 
 /*
  * Returns true if the model Element is a LaneDivider
  */
-export function isLaneDivider(element: SModelElement): boolean {
-    return element.type === 'lane-divider';
+export function isLaneDivider(element: GModelElement): boolean {
+	return element.type === 'lane-divider';
 }

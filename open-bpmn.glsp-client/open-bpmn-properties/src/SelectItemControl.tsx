@@ -46,7 +46,7 @@ import React, { useState } from 'react';
  */
 const getLabelPart = (value: string): string => {
   const parts = value.split('|');
-  if (parts.length===2) {
+  if (parts.length === 2) {
     return parts[0].trim();
   }
   else {
@@ -61,7 +61,7 @@ const getLabelPart = (value: string): string => {
  */
 const getValuePart = (value: string): string => {
   const parts = value.split('|');
-  if (parts.length===2) {
+  if (parts.length === 2) {
     return parts[1].trim();
   }
   else {
@@ -71,13 +71,10 @@ const getValuePart = (value: string): string => {
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const SelectItemGroup = ({
-  classNames,
   id,
   label,
   options,
-  required,
   description,
-  errors,
   data,
   uischema,
   visible,
@@ -114,31 +111,31 @@ export const SelectItemGroup = ({
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const handleSelectionChange = (target: any, value: any) => {
-      // In React props should not be directly modified and handleChange
-      // should receive a new data array. Otherwise an update bypasses
-      // the React conventions, that changed props should have a different identity.
-      // As a result React thinks data did not change and optimizes the update process
-      // by not rerendering teh control. For this reason we copy the data object here!
-      // see: https://jsonforms.discourse.group/t/checkbox-did-not-update-during-onchange-event-vanilla-react/1366/2
-      let newData;
-      // test if we have an array
-      if (Array.isArray(data)) {
-        // add value only if not yed done
-        if (!data.includes(value)) {
-          newData = [...data, value];
-        } else {
-          newData = data.slice();
-          const iPos: number = data.indexOf(value);
-          if (iPos !== -1) {
-            newData.splice(iPos, 1);
-          }
-        }
+    // In React props should not be directly modified and handleChange
+    // should receive a new data array. Otherwise an update bypasses
+    // the React conventions, that changed props should have a different identity.
+    // As a result React thinks data did not change and optimizes the update process
+    // by not rerendering teh control. For this reason we copy the data object here!
+    // see: https://jsonforms.discourse.group/t/checkbox-did-not-update-during-onchange-event-vanilla-react/1366/2
+    let newData;
+    // test if we have an array
+    if (Array.isArray(data)) {
+      // add value only if not yed done
+      if (!data.includes(value)) {
+        newData = [...data, value];
       } else {
-        // data = value;
-        newData=value;
+        newData = data.slice();
+        const iPos: number = data.indexOf(value);
+        if (iPos !== -1) {
+          newData.splice(iPos, 1);
+        }
       }
-      // finally we call the default change event handler...
-      handleChange(path, newData);
+    } else {
+      // data = value;
+      newData = value;
+    }
+    // finally we call the default change event handler...
+    handleChange(path, newData);
   };
 
   /**
@@ -148,7 +145,7 @@ export const SelectItemGroup = ({
    */
   const isSelected = (value: string): boolean => {
     // test if we have an array
-    const _valuePart=getValuePart(value);
+    const _valuePart = getValuePart(value);
     if (Array.isArray(data)) {
       return data.includes(_valuePart);
     } else {
@@ -277,11 +274,11 @@ export const SelectItemComboControl = (props: ControlProps & VanillaRendererProp
  * Export the Custom Renderer and  Tester for SelectItemGroupControl
  */
 export const SelectItemRendererEntry: JsonFormsRendererRegistryEntry = {
-  tester: rankWith(3,  and(isEnumControl, optionIs('format', 'selectitem'))),
+  tester: rankWith(3, and(isEnumControl, optionIs('format', 'selectitem'))),
   renderer: withVanillaControlProps(withJsonFormsEnumProps(SelectItemGroupControl))
 };
 
 export const SelectItemComboRendererEntry: JsonFormsRendererRegistryEntry = {
-  tester: rankWith(3,  and(isEnumControl, optionIs('format', 'selectitemcombo'))),
+  tester: rankWith(3, and(isEnumControl, optionIs('format', 'selectitemcombo'))),
   renderer: withVanillaControlProps(withJsonFormsEnumProps(SelectItemCombo))
 };

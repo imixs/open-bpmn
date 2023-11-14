@@ -15,12 +15,12 @@
  ********************************************************************************/
 import {
     CornerRadius,
+    GNode, GPort,
+    GShapeElement,
     Hoverable,
     IViewArgs,
     RenderingContext,
     RoundedCornerWrapper,
-    SNode, SPort,
-    SShapeElement,
     Selectable,
     ShapeView,
     findParentByFeature,
@@ -144,7 +144,7 @@ export class IconView extends ShapeView {
                 icon =
                     // eslint-disable-next-line max-len
                     'M2.78 2L2 2.41v12l.78.42 9-6V8l-9-6zM3 13.48V3.35l7.6 5.07L3 13.48z';
-                translateX=6;
+                translateX = 6;
             } else if (eventNode.kind === 'errorEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/github-action.svg?short_path=987d495
                 icon =
@@ -155,9 +155,9 @@ export class IconView extends ShapeView {
                 icon =
                     // eslint-disable-next-line max-len
                     'M9.588 2.215A5.808 5.808 0 0 0 8 2c-.554 0-1.082.073-1.588.215l-.006.002c-.514.141-.99.342-1.432.601A6.156 6.156 0 0 0 2.82 4.98l-.002.004A5.967 5.967 0 0 0 2.21 6.41 5.986 5.986 0 0 0 2 8c0 .555.07 1.085.21 1.591a6.05 6.05 0 0 0 1.548 2.651c.37.365.774.677 1.216.94a6.1 6.1 0 0 0 1.435.609A6.02 6.02 0 0 0 8 14c.555 0 1.085-.07 1.591-.21.515-.145.99-.348 1.426-.607l.004-.002a6.16 6.16 0 0 0 2.161-2.155 5.85 5.85 0 0 0 .6-1.432l.003-.006A5.807 5.807 0 0 0 14 8c0-.554-.072-1.082-.215-1.588l-.002-.006a5.772 5.772 0 0 0-.6-1.423l-.002-.004a5.9 5.9 0 0 0-.942-1.21l-.008-.008a5.902 5.902 0 0 0-1.21-.942l-.004-.002a5.772 5.772 0 0 0-1.423-.6l-.006-.002zm4.455 9.32a7.157 7.157 0 0 1-2.516 2.508 6.966 6.966 0 0 1-1.668.71A6.984 6.984 0 0 1 8 15a6.984 6.984 0 0 1-1.86-.246 7.098 7.098 0 0 1-1.674-.711 7.3 7.3 0 0 1-1.415-1.094 7.295 7.295 0 0 1-1.094-1.415 7.098 7.098 0 0 1-.71-1.675A6.985 6.985 0 0 1 1 8c0-.643.082-1.262.246-1.86a6.968 6.968 0 0 1 .711-1.667 7.156 7.156 0 0 1 2.509-2.516 6.895 6.895 0 0 1 1.675-.704A6.808 6.808 0 0 1 8 1a6.8 6.8 0 0 1 1.86.253 6.899 6.899 0 0 1 3.083 1.805 6.903 6.903 0 0 1 1.804 3.083C14.916 6.738 15 7.357 15 8s-.084 1.262-.253 1.86a6.9 6.9 0 0 1-.704 1.674z';
-                translateX=2;
-                translateY=2;
-                scaleFactor=1.8;
+                translateX = 2;
+                translateY = 2;
+                scaleFactor = 1.8;
             } else if (eventNode.kind === 'multipleEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/layers.svg?short_path=f67ac65
                 icon =
@@ -172,10 +172,10 @@ export class IconView extends ShapeView {
             return undefined;
         } else {
             vnode = (
-              <g>
-                  <path transform={'scale(' + scaleFactor + '),translate(' + translateX + ',' + translateY + ')'} d={icon} />
-              </g>
-          );
+                <g>
+                    <path transform={'scale(' + scaleFactor + '),translate(' + translateX + ',' + translateY + ')'} d={icon} />
+                </g>
+            );
         }
 
         const subType = getSubType(element);
@@ -193,25 +193,25 @@ export class IconView extends ShapeView {
  */
 @injectable()
 export class PoolHeaderView extends ShapeView {
-    render(element: Readonly<SShapeElement  & Hoverable>, context: RenderingContext): VNode | undefined {
+    render(element: Readonly<GShapeElement & Hoverable>, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }
-        const containerNode = findParentByFeature(element,isContainerNode);
-        let headerHeight=0;
-        let labelYOffset=0;
-        let containerLabel='undefined';
+        const containerNode = findParentByFeature(element, isContainerNode);
+        let headerHeight = 0;
+        let labelYOffset = 0;
+        let containerLabel = 'undefined';
         // we center the label vertical to the height of the container
         if (containerNode) {
-            containerLabel=containerNode.name;
-            headerHeight= containerNode.bounds.height-0;
-            labelYOffset=containerNode.bounds.height*0.5;
+            containerLabel = containerNode.name;
+            headerHeight = containerNode.bounds.height - 0;
+            labelYOffset = containerNode.bounds.height * 0.5;
         }
         const vnode: any = (
             <g>
                 <rect
-                  x="0" y="0" width="30" height={headerHeight}></rect>
-                <text class-sprotty-label={true} transform={'scale(1),translate(20,'+labelYOffset+'),rotate(-90)'}>{containerLabel}</text>
+                    x="0" y="0" width="30" height={headerHeight}></rect>
+                <text class-sprotty-label={true} transform={'scale(1),translate(20,' + labelYOffset + '),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
         const subType = getSubType(element);
@@ -230,25 +230,25 @@ export class PoolHeaderView extends ShapeView {
  */
 @injectable()
 export class LaneHeaderView extends ShapeView {
-    render(element: SShapeElement, context: RenderingContext): VNode | undefined {
+    render(element: GShapeElement, context: RenderingContext): VNode | undefined {
         if (!this.isVisible(element, context)) {
             return undefined;
         }
-        const containerNode = findParentByFeature(element,isContainerNode);
-        let headerHeight=0;
-        let labelYOffset=0;
-        let containerLabel='undefined';
+        const containerNode = findParentByFeature(element, isContainerNode);
+        let headerHeight = 0;
+        let labelYOffset = 0;
+        let containerLabel = 'undefined';
         // we center the label vertical to the height of the container
         if (containerNode) {
-            containerLabel=containerNode.name;
-            headerHeight= containerNode.bounds.height-0;
-            labelYOffset=containerNode.bounds.height*0.5;
+            containerLabel = containerNode.name;
+            headerHeight = containerNode.bounds.height - 0;
+            labelYOffset = containerNode.bounds.height * 0.5;
         }
         const vnode: any = (
-            <g class-sprotty-node={element instanceof SNode}>
-                <rect class-sprotty-node={element instanceof SNode}
-                  x="0" y="1" width="30" height={headerHeight-2}></rect>
-                <text class-sprotty-label={true} transform={'scale(1),translate(20,'+labelYOffset+'),rotate(-90)'}>{containerLabel}</text>
+            <g class-sprotty-node={element instanceof GNode}>
+                <rect class-sprotty-node={element instanceof GNode}
+                    x="0" y="1" width="30" height={headerHeight - 2}></rect>
+                <text class-sprotty-label={true} transform={'scale(1),translate(20,' + labelYOffset + '),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
         const subType = getSubType(element);
@@ -261,14 +261,14 @@ export class LaneHeaderView extends ShapeView {
 
 @injectable()
 export class DataObjectNodeView extends ShapeView {
-    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+    render(node: Readonly<GShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
         return <g>
-            <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
-                  class-mouseover={node.hoverFeedback} class-selected={node.selected}
-                  x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            <rect class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
+                class-mouseover={node.hoverFeedback} class-selected={node.selected}
+                x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
             {context.renderChildren(node)}
         </g>;
     }
@@ -276,15 +276,15 @@ export class DataObjectNodeView extends ShapeView {
 
 @injectable()
 export class MessageNodeView extends ShapeView {
-    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+    render(node: Readonly<GShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
-        const messageIcon='0,0 15,10 30,0';
+        const messageIcon = '0,0 15,10 30,0';
         return <g>
-            <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
-                  class-mouseover={node.hoverFeedback} class-selected={node.selected}
-                  x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            <rect class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
+                class-mouseover={node.hoverFeedback} class-selected={node.selected}
+                x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
             <polyline points={messageIcon} />
             {context.renderChildren(node)}
         </g>;
@@ -307,23 +307,23 @@ export class TaskNodeView extends ShapeView {
         }
         const cornerRadius = new CornerRadius(5);
         // extract attribute info
-        const infoTextYOffset=node.bounds.height-4;
-        let infoText='';
+        const infoTextYOffset = node.bounds.height - 4;
+        let infoText = '';
         if (node.args.bpmnExtensionInfo) {
-            infoText=''+node.args.bpmnExtensionInfo;
+            infoText = '' + node.args.bpmnExtensionInfo;
         }
         const wrapper = new RoundedCornerWrapper(node, cornerRadius);
         return (
             <g class-node={true}>
                 <defs>
                     <clipPath id={toClipPathId(node)}>
-                        <path d={this.renderPath(wrapper, context,2)}></path>
+                        <path d={this.renderPath(wrapper, context, 2)}></path>
                     </clipPath>
                 </defs>
                 {this.renderPathNode(wrapper, context)}
                 {this.computeIconPath(node)}
                 <g class-extension={true}>
-                    <text transform={'translate(3,'+infoTextYOffset+')'}>{infoText}</text>
+                    <text transform={'translate(3,' + infoTextYOffset + ')'}>{infoText}</text>
                 </g>
                 {context.renderChildren(node)}
             </g>
@@ -335,8 +335,8 @@ export class TaskNodeView extends ShapeView {
         return (
             <path
                 d={this.renderPath(wrapper, context, 0)}
-                class-sprotty-node={wrapper.element instanceof SNode}
-                class-sprotty-port={wrapper.element instanceof SPort}
+                class-sprotty-node={wrapper.element instanceof GNode}
+                class-sprotty-port={wrapper.element instanceof GPort}
                 class-mouseover={wrapper.element.hoverFeedback}
                 class-selected={wrapper.element.selected}
                 {...this.additionalClasses(wrapper.element, context)}
@@ -345,7 +345,7 @@ export class TaskNodeView extends ShapeView {
     }
 
     // Helper method to ..?
-    protected additionalClasses(_node: Readonly<SShapeElement & Hoverable & Selectable>, _context: RenderingContext): Classes {
+    protected additionalClasses(_node: Readonly<GShapeElement & Hoverable & Selectable>, _context: RenderingContext): Classes {
         return {};
     }
 
@@ -362,12 +362,10 @@ export class TaskNodeView extends ShapeView {
                 wrapper.topLeftCorner.radiusY - inset
             )}` +
             `h${topLineLength}` +
-            `q${wrapper.topRightCorner.radiusX - inset},0 ${wrapper.topRightCorner.radiusX - inset},${
-                wrapper.topRightCorner.radiusY - inset
+            `q${wrapper.topRightCorner.radiusX - inset},0 ${wrapper.topRightCorner.radiusX - inset},${wrapper.topRightCorner.radiusY - inset
             }` +
             `v${rightLineLength}` +
-            `q0,${wrapper.bottomRightCorner.radiusY - inset} ${-(wrapper.bottomRightCorner.radiusX - inset)},${
-                wrapper.bottomRightCorner.radiusY - inset
+            `q0,${wrapper.bottomRightCorner.radiusY - inset} ${-(wrapper.bottomRightCorner.radiusX - inset)},${wrapper.bottomRightCorner.radiusY - inset
             }` +
             `h${-bottomLineLength}` +
             `q${-(wrapper.bottomLeftCorner.radiusX - inset)},0 ${-(wrapper.bottomLeftCorner.radiusX - inset)},${-(
@@ -378,7 +376,7 @@ export class TaskNodeView extends ShapeView {
     }
 
     // This helper method computes the icon path for TaskNodes depending on its type.
-    protected computeIconPath(taskNode: Readonly<SShapeElement>) {
+    protected computeIconPath(taskNode: Readonly<GShapeElement>) {
 
         let icon;
 
@@ -430,10 +428,10 @@ export class TaskNodeView extends ShapeView {
             return undefined;
         } else {
             vnode = (
-              <g class-icon={true}>
-                  <path transform={'scale(1),translate(5,5)'} d={icon} />
-              </g>
-          );
+                <g class-icon={true}>
+                    <path transform={'scale(1),translate(5,5)'} d={icon} />
+                </g>
+            );
         }
         return vnode;
     }
@@ -447,15 +445,15 @@ export class TaskNodeView extends ShapeView {
  */
 @injectable()
 export class TextAnnotationNodeView extends ShapeView {
-    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+    render(node: Readonly<GShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
-        const textBorder='20,0 0,0 0,' + node.size.height + ' 20,' + node.size.height;
+        const textBorder = '20,0 0,0 0,' + node.size.height + ' 20,' + node.size.height;
         return <g>
-             <rect class-sprotty-node={node instanceof SNode} class-sprotty-port={node instanceof SPort}
-             class-mouseover={node.hoverFeedback} class-selected={node.selected}
-                  x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            <rect class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
+                class-mouseover={node.hoverFeedback} class-selected={node.selected}
+                x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
             <polyline points={textBorder} />
             {context.renderChildren(node)}
         </g>;
@@ -468,18 +466,18 @@ export class TextAnnotationNodeView extends ShapeView {
  */
 @injectable()
 export class LaneDividerView extends ShapeView {
-    render(node: Readonly<SShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+    render(node: Readonly<GShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
-        let laneWidth=200;
-        const parent=node.parent;
+        let laneWidth = 200;
+        const parent = node.parent;
         if (isBoundsAware(parent)) {
-            laneWidth=parent.bounds.width;
+            laneWidth = parent.bounds.width;
         }
-        const dividerBorder='0,1 ' + (laneWidth-30) + ' 1';
+        const dividerBorder = '0,1 ' + (laneWidth - 30) + ' 1';
         return <g>
-            <rect x="1" y="-10" width={laneWidth-32} height="20"></rect>
+            <rect x="1" y="-10" width={laneWidth - 32} height="20"></rect>
             <polyline points={dividerBorder} />
             {context.renderChildren(node)}
         </g>;
@@ -495,38 +493,38 @@ export class MultiLineTextNodeView extends ShapeView {
         if (!this.isVisible(label, context)) {
             return undefined;
         }
-        let nodeWidth=100;
-        const parent=label.parent;
+        let nodeWidth = 100;
+        const parent = label.parent;
         if (isBoundsAware(parent)) {
-            nodeWidth=parent.bounds.width;
+            nodeWidth = parent.bounds.width;
             // console.log('computed element width = '+nodeWidth);
         }
 
         // split text into words and lines...
-        let line='';
+        let line = '';
         const lines: string[] = [];
-        const words=splitWords(label.args.text);
+        const words = splitWords(label.args.text);
         for (let i = 0; i < words.length; i++) {
             const word = words[i];
-            line+=word+ ' ';
-            if (line.length>(nodeWidth/6)) {
-                line=line.substring(0,line.length-word.length-2);
+            line += word + ' ';
+            if (line.length > (nodeWidth / 6)) {
+                line = line.substring(0, line.length - word.length - 2);
                 // console.log('line = '+line);
                 lines.push(line);
-                line=word +' ';
+                line = word + ' ';
             }
         }
         lines.push(line); // last line
 
         // depending on the attribute 'align' we move the text element into the center
-        let xOffset=5;
-        if (label.args.align==='middle') {
-            xOffset= nodeWidth*0.5;
+        let xOffset = 5;
+        if (label.args.align === 'middle') {
+            xOffset = nodeWidth * 0.5;
         }
-        const vnode = <g class-sprotty-node={label instanceof SNode}>
+        const vnode = <g class-sprotty-node={label instanceof GNode}>
             <text class-sprotty-label={true} transform={'translate(' + xOffset + ',0)'}>
-                {lines!.map((_line , _index)  => (
-                   <tspan x="0" dy={_index===0?10:15}>{_line}</tspan>
+                {lines!.map((_line, _index) => (
+                    <tspan x="0" dy={_index === 0 ? 10 : 15}>{_line}</tspan>
                 ))}
             </text>
         </g>;

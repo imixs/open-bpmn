@@ -16,25 +16,25 @@
 import {
 	Action,
 	FeedbackCommand,
-	findParentByFeature,
-	hasArguments,
-	hasObjectProp,
-	isBoundsAware,
+	GModelElement,
+	GModelRoot,
+	GParentElement,
 	ISnapper,
 	MouseListener,
-	SModelElement,
-	SModelRoot,
-	SParentElement
+	findParentByFeature,
+	hasArgs,
+	hasObjectProp,
+	isBoundsAware
 } from '@eclipse-glsp/client';
 import {
 	EventNode,
-	isBoundaryEvent,
+	LabelNode,
+	TaskNode,
 	isBPMNLabelNode,
 	isBPMNNode,
+	isBoundaryEvent,
 	isLaneDivider,
-	isTaskNode,
-	LabelNode,
-	TaskNode
+	isTaskNode
 } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import { VNode } from 'snabbdom';
@@ -44,8 +44,8 @@ import {
 	IView,
 	RenderingContext,
 	SChildElementImpl,
-	svg,
-	TYPES
+	TYPES,
+	svg
 } from 'sprotty';
 import { Bounds, Point } from 'sprotty-protocol';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -100,16 +100,16 @@ export class BPMNElementSnapper implements ISnapper {
 	}
 
 	/*
-     * Find a possible snapPoint.
+	 * Find a possible snapPoint.
 	 * A SnapPoint is found if the x or y coordinates matching the position
 	 * of another element Node. This behavior is applied for all BPMNNode elements.
 	 *
 	 * For all other element we return general Snapper with 5px.
 	 */
-	snap(position: Point, element: SModelElement): Point {
+	snap(position: Point, element: GModelElement): Point {
 		let snapPoint: Point;
 		if (isLaneDivider(element)) {
-			snapPoint=this.findLaneDividerSnapPoint(element,position);
+			snapPoint = this.findLaneDividerSnapPoint(element, position);
 			return snapPoint;
 		}
 		// Is it a Element node?
@@ -121,13 +121,13 @@ export class BPMNElementSnapper implements ISnapper {
 				snapPoint = this.findSnapPoint(element);
 				// if a snapPoint was found and this snapPoint is still in the snapRange,
 				// then we adjust the current mouse Postion. Otherwise we return the current position
-				let snapX =Math.round(position.x / this.minSnapRange) * this.minSnapRange;
+				let snapX = Math.round(position.x / this.minSnapRange) * this.minSnapRange;
 				if (snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.minSnapRange) {
-					snapX= snapPoint.x ;
+					snapX = snapPoint.x;
 				}
-				let snapY=Math.round(position.y / this.minSnapRange) * this.minSnapRange;
-				if ( snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange ) {
-					snapY= snapPoint.y ;
+				let snapY = Math.round(position.y / this.minSnapRange) * this.minSnapRange;
+				if (snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange) {
+					snapY = snapPoint.y;
 				}
 				snapPoint = { x: snapX, y: snapY };
 			}
@@ -165,7 +165,7 @@ export class BPMNElementSnapper implements ISnapper {
 		const offset = 18;
 		let x = position.x;
 		let y = position.y;
-		if (hasArguments(element)) {
+		if (hasArgs(element)) {
 			// now we compute the x/y on the edge of the task bounds
 			const taskRef = element.args.attachedToRef + '';
 			// find the task...
@@ -202,18 +202,18 @@ export class BPMNElementSnapper implements ISnapper {
 	 * The position is based on the Bounds of the containing Pool.
 	 * The final position is always on the x position of the Pool.
 	 */
-	private findLaneDividerSnapPoint(element: SModelElement, position: Point): Point {
+	private findLaneDividerSnapPoint(element: GModelElement, position: Point): Point {
 		const x = 30;
 		let y = position.y;
 		// test min / max position
-		if (hasArguments(element)) {
-			const yMin=Number(element.args.ymin);
-			const yMax=Number(element.args.ymax);
-			if (y<yMin) {
-				y=yMin;
+		if (hasArgs(element)) {
+			const yMin = Number(element.args.ymin);
+			const yMax = Number(element.args.ymax);
+			if (y < yMin) {
+				y = yMin;
 			}
-			if (y>yMax) {
-				y=yMax;
+			if (y > yMax) {
+				y = yMax;
 			}
 		}
 		// return the new position;
@@ -230,7 +230,7 @@ export class BPMNElementSnapper implements ISnapper {
 	 * The method takes into account an approximation of 10. (See method 'isNear')
 	 *
 	 */
-	private findSnapPoint(modelElement: SModelElement): Point {
+	private findSnapPoint(modelElement: GModelElement): Point {
 		let x = -1;
 		let y = -1;
 		let childs: any;
@@ -238,7 +238,7 @@ export class BPMNElementSnapper implements ISnapper {
 		if (isBoundsAware(modelElement)) {
 			// we need to find out if we are in a container....
 			if (modelElement instanceof SChildElementImpl) {
-				childs=modelElement.parent.children;
+				childs = modelElement.parent.children;
 			}
 
 			const modelElementCenter = Bounds.center(modelElement.bounds);
@@ -292,7 +292,7 @@ export class BPMNElementSnapper implements ISnapper {
 export class HelperLineListener extends MouseListener {
 	protected isActive = false;
 
-	override mouseDown(target: SModelElement, event: MouseEvent): Action[] {
+	override mouseDown(target: GModelElement, event: MouseEvent): Action[] {
 		// check if target is relevant....
 		if (isBPMNNode(target) || target.type === 'icon' || target.type === 'bpmn-text-node') {
 			// switch into active mode
@@ -309,13 +309,13 @@ export class HelperLineListener extends MouseListener {
 	 * If helper lines where found, the method fires the corresponding
 	 * command to draw the helper lines.
 	 */
-	override mouseMove(target: SModelElement, event: MouseEvent): Action[] {
+	override mouseMove(target: GModelElement, event: MouseEvent): Action[] {
 		if (this.isActive) {
 			// if  we have a bpmn-text-node we need ot find the corresponding Task node...
 			if (target.type === 'bpmn-text-node') {
 				const task = findParentByFeature(target, isTaskNode);
 				if (task) {
-					target=task;
+					target = task;
 				}
 			}
 			// first test if we have a mouseMove on a BPMNNode
@@ -337,7 +337,7 @@ export class HelperLineListener extends MouseListener {
 	 * On the mouseUp event we end the active mode and
 	 * remove the HelperLines from the model
 	 */
-	override mouseUp(target: SModelElement, event: MouseEvent): Action[] {
+	override mouseUp(target: GModelElement, event: MouseEvent): Action[] {
 		this.isActive = false;
 		return [RemoveHelperLinesAction.create()]; //  EnableDefaultToolsAction.create()
 	}
@@ -346,10 +346,10 @@ export class HelperLineListener extends MouseListener {
 	 * Helper Method to find an optional parent pool of a given element.
 	 * If the element is not part of a Pool the method returns undefined.
 	 */
-	private findPool(element: SModelElement): SModelElement | undefined {
+	private findPool(element: GModelElement): GModelElement | undefined {
 		const boundsAware = findParentByFeature(element, isBoundsAware);
 		if (boundsAware !== undefined) {
-			let current: SModelElement = boundsAware;
+			let current: GModelElement = boundsAware;
 			while (current instanceof SChildElementImpl) {
 				const parent = current.parent;
 				if ('pool' === parent.type) {
@@ -372,22 +372,22 @@ export class HelperLineListener extends MouseListener {
 	 *
 	 * The method can be extended to find  more helper lines with a different algorithm.
 	 */
-	private findHelperLines(modelElement: SModelElement): HelperLine[] | undefined {
-		const root: SModelRoot = modelElement.root;
+	private findHelperLines(modelElement: GModelElement): HelperLine[] | undefined {
+		const root: GModelRoot = modelElement.root;
 		const helperLines: HelperLine[] = [];
-		let xOffset=0;
-		let yOffset=0;
+		let xOffset = 0;
+		let yOffset = 0;
 		if (root && isBoundsAware(modelElement)) {
-			let childs=root.children;
+			let childs = root.children;
 			let canvasBounds = root.canvasBounds;
 			// test if we are in a pool...
-			const pool=this.findPool(modelElement);
+			const pool = this.findPool(modelElement);
 			if (pool) {
-				if (pool instanceof SParentElement) {
-					childs=pool.children;
+				if (pool instanceof GParentElement) {
+					childs = pool.children;
 				}
 				if (isBoundsAware(pool)) {
-					canvasBounds=pool.bounds;
+					canvasBounds = pool.bounds;
 				}
 			}
 			const modelElementCenter = Bounds.center(modelElement.bounds);
@@ -402,16 +402,16 @@ export class HelperLineListener extends MouseListener {
 						// test vertical alignment...
 						if (!foundHorizontal && elementCenter.y === modelElementCenter.y) {
 							if (pool && isBoundsAware(pool)) {
-								yOffset=canvasBounds.y;
-								xOffset=0;
+								yOffset = canvasBounds.y;
+								xOffset = 0;
 							} else {
-								xOffset=canvasBounds.x;
-								yOffset=0;
+								xOffset = canvasBounds.x;
+								yOffset = 0;
 							}
 							const horizontalLine: HelperLine = {
 								x1: canvasBounds.x - xOffset,
 								y1: elementCenter.y + yOffset,
-								x2: canvasBounds.x +canvasBounds.width -xOffset,
+								x2: canvasBounds.x + canvasBounds.width - xOffset,
 								y2: elementCenter.y + yOffset
 							};
 							foundHorizontal = true;
@@ -420,11 +420,11 @@ export class HelperLineListener extends MouseListener {
 						// test horizontal alignment...
 						if (!foundVertical && elementCenter.x === modelElementCenter.x) {
 							if (pool && isBoundsAware(pool)) {
-								xOffset=canvasBounds.x;
-								yOffset=0;
+								xOffset = canvasBounds.x;
+								yOffset = 0;
 							} else {
-								yOffset=canvasBounds.y;
-								xOffset=0;
+								yOffset = canvasBounds.y;
+								xOffset = 0;
 							}
 							const verticalLine: HelperLine = {
 								x1: elementCenter.x + xOffset,
@@ -452,7 +452,7 @@ export class HelperLineListener extends MouseListener {
 
 export const HELPLINE = 'helpline';
 
-export function helpLineId(root: SModelRoot): string {
+export function helpLineId(root: GModelRoot): string {
 	return root.id + '_' + HELPLINE;
 }
 
@@ -528,7 +528,7 @@ export class RemoveHelperLinesCommand extends FeedbackCommand {
  * Helper method to remove the HelperLine element
  * from the model.
  */
-export function removeHelperLines(root: SModelRoot): void {
+export function removeHelperLines(root: GModelRoot): void {
 	const helperLines = root.index.getById(helpLineId(root));
 	if (helperLines instanceof SChildElementImpl) {
 		root.remove(helperLines);
@@ -543,7 +543,7 @@ export function removeHelperLines(root: SModelRoot): void {
  */
 @injectable()
 export class HelperLineView implements IView {
-	render(model: Readonly<SModelElement>, context: RenderingContext): VNode {
+	render(model: Readonly<GModelElement>, context: RenderingContext): VNode {
 		const helperLines: ReadonlyArray<HelperLine> = (model as HelperLinesElement).helperLines;
 		let vnode: any;
 		// draw only one helper line?

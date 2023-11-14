@@ -14,11 +14,13 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    angleOfPoint, hasArguments, isIntersectingRoutedPoint,
+    GEdge,
     IViewArgs,
     Point,
     PolylineEdgeViewWithGapsOnIntersections,
-    RenderingContext, SEdge, svg, toDegrees
+    RenderingContext,
+    angleOfPoint, hasArgs, isIntersectingRoutedPoint,
+    svg, toDegrees
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 import { VNode } from 'snabbdom';
@@ -42,46 +44,46 @@ const JSX = { createElement: svg };
 
 @injectable()
 export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
-    protected override renderAdditionals(edge: SEdge, segments: Point[], context: RenderingContext): VNode[] {
+    protected override renderAdditionals(edge: GEdge, segments: Point[], context: RenderingContext): VNode[] {
         const additionals = super.renderAdditionals(edge, segments, context);
         const endP1 = segments[segments.length - 2];
         const endP2 = segments[segments.length - 1];
-        const startP1=segments[0];
-        const startP2=segments[1];
+        const startP1 = segments[0];
+        const startP2 = segments[1];
 
         // arrow depends on the type of the BPMNEdge
-        if ('sequenceFlow'===edge.type || 'messageFlow'===edge.type) {
-          const arrow: any = (
-            <path
-                class-sprotty-edge={true}
-                class-arrow={true}
-                d='M 1,0 L 14,-4 L 14,4 Z'
-                transform={`rotate(${toDegrees(angleOfPoint({ x: endP1.x - endP2.x, y: endP1.y - endP2.y }))}
+        if ('sequenceFlow' === edge.type || 'messageFlow' === edge.type) {
+            const arrow: any = (
+                <path
+                    class-sprotty-edge={true}
+                    class-arrow={true}
+                    d='M 1,0 L 14,-4 L 14,4 Z'
+                    transform={`rotate(${toDegrees(angleOfPoint({ x: endP1.x - endP2.x, y: endP1.y - endP2.y }))}
                     ${endP2.x} ${endP2.y}) translate(${endP2.x} ${endP2.y}
                 )`}
-            />
-          );
+                />
+            );
 
-        // Conditional default Sequence flow?
-        const defaultSymbol: any = (
-            <path
-                class-sprotty-edge={true}
-                class-default-symbol={true}
-                d='M 5,-4 L 10,4 Z'
-                transform={`rotate(${toDegrees(angleOfPoint({ x: startP2.x - startP1.x, y: startP2.y - startP1.y }))} 
+            // Conditional default Sequence flow?
+            const defaultSymbol: any = (
+                <path
+                    class-sprotty-edge={true}
+                    class-default-symbol={true}
+                    d='M 5,-4 L 10,4 Z'
+                    transform={`rotate(${toDegrees(angleOfPoint({ x: startP2.x - startP1.x, y: startP2.y - startP1.y }))} 
                     ${startP1.x} ${startP1.y}) translate(${startP1.x} ${startP1.y}
                 )`}
-            />
-          );
+                />
+            );
 
-          // if the edge is a sequence flow with the default property than add the default symbol
-          if (hasArguments(edge)) {
-            if (edge.args.default && 'true'===edge.args.default) {
-                additionals.push(defaultSymbol);
-             }
-          }
+            // if the edge is a sequence flow with the default property than add the default symbol
+            if (hasArgs(edge)) {
+                if (edge.args.default && 'true' === edge.args.default) {
+                    additionals.push(defaultSymbol);
+                }
+            }
 
-          additionals.push(arrow);
+            additionals.push(arrow);
         }
         return additionals;
     }
@@ -90,7 +92,7 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
      * The goal of this method is to render rounded corners. Therefore we compute always the next segment to decide
      * the corner angle.
      */
-    protected override renderLine(edge: SEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
+    protected override renderLine(edge: GEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
         let path = '';
         // let radius = 10;
         let radius = 10;
@@ -175,7 +177,7 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
             radius = xDif * dRef;
             return radius;
         }
-        if (yDif > 0 && yDif <=20) {
+        if (yDif > 0 && yDif <= 20) {
             radius = yDif * dRef;
             return radius;
         }

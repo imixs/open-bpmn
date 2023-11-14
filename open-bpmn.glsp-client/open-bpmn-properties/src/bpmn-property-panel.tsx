@@ -14,38 +14,37 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    EditorContextService, EnableToolPaletteAction,
-    GLSPActionDispatcher,
-    MouseListener,
-    SModelElement,
-    SModelRoot,
-    hasArguments
-} from '@eclipse-glsp/client';
-import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
-import {
     AbstractUIExtension,
+    EditorContextService,
     EnableDefaultToolsAction,
+    EnableToolPaletteAction,
     EnableToolsAction,
+    GLSPActionDispatcher,
+    GModelElement,
+    GModelRoot,
     IActionHandler,
     ICommand,
+    ISelectionListener,
+    MouseListener,
+    SelectionService,
     SetUIExtensionVisibilityAction,
-    TYPES
-} from 'sprotty';
-
-import { SelectionListener, SelectionService } from '@eclipse-glsp/client/lib/features/select/selection-service';
+    TYPES,
+    hasArgs
+} from '@eclipse-glsp/client';
+import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
-import { inject, injectable, postConstruct } from 'inversify';
+import { inject, injectable } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 
 import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
 import { TextFileEditorRendererEntry } from './TextFileEditorControl';
- // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionListener, IActionHandler {
+export class BPMNPropertyPanel extends AbstractUIExtension implements ISelectionListener, IActionHandler {
 
     static readonly ID = 'bpmn-property-panel';
 
@@ -62,7 +61,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     protected headerDiv: HTMLElement;
     protected panelContainer: any;
     modelRootId: string;
-    modelRoot: Readonly<SModelRoot>;
+    modelRoot: Readonly<GModelRoot>;
     selectedElementId: string;
     initForm: boolean;
     lastCategory: string;
@@ -71,10 +70,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     currentY: number;
     headerTitle: HTMLElement;
 
-    @postConstruct()
-    postConstruct(): void {
-        this.selectionService.register(this);
-    }
+    // @postConstruct()
+    // postConstruct(): void {
+    //     this.selectionService.register(this);
+    // }
 
     id(): string {
         return BPMNPropertyPanel.ID;
@@ -98,10 +97,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * @param _containerElement
      * @param root
      */
-    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<SModelRoot>): void {
+    protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
         this.modelRootId = root.id;
         // preselect the root element showing the diagram properties
-        this.selectionChanged(root,[]);
+        this.selectionChanged(root, []);
     }
 
     /*
@@ -118,37 +117,37 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 
         // eslint-disable-next-line arrow-parens
         this.headerDiv.addEventListener('mousedown', (e) => {
-          this.isResizing = true;
-          this.currentY = e.clientY;
+            this.isResizing = true;
+            this.currentY = e.clientY;
         });
         // eslint-disable-next-line arrow-parens
         this.headerDiv.addEventListener('mouseup', (e) => {
-          this.isResizing = false;
+            this.isResizing = false;
         });
         // eslint-disable-next-line arrow-parens
         window.addEventListener('mousemove', (e) => {
-          if (!this.isResizing) {
-            return;
-          }
-          const parent=this.containerElement.parentElement;
-          let _newheight=this.containerElement.offsetHeight - (e.clientY - this.currentY);
-          // fix minheigt
-          if (_newheight<28) {
-              _newheight=28;
-              this.isResizing = false;
-          }
-          // fix maxheight
-          if (parent && _newheight>parent.offsetHeight-28) {
-                _newheight=parent.offsetHeight-28;
+            if (!this.isResizing) {
+                return;
+            }
+            const parent = this.containerElement.parentElement;
+            let _newheight = this.containerElement.offsetHeight - (e.clientY - this.currentY);
+            // fix minheigt
+            if (_newheight < 28) {
+                _newheight = 28;
                 this.isResizing = false;
-          }
-          this.containerElement.style.height = `${_newheight}px`;
-          this.currentY = e.clientY;
+            }
+            // fix maxheight
+            if (parent && _newheight > parent.offsetHeight - 28) {
+                _newheight = parent.offsetHeight - 28;
+                this.isResizing = false;
+            }
+            this.containerElement.style.height = `${_newheight}px`;
+            this.currentY = e.clientY;
 
-          // if the mouse is no longer within the diagram plane, we stop the resizing
-          if (parent && !parent.matches(':hover')) {
-            this.isResizing = false;
-          }
+            // if the mouse is no longer within the diagram plane, we stop the resizing
+            if (parent && !parent.matches(':hover')) {
+                this.isResizing = false;
+            }
         });
     }
 
@@ -257,7 +256,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             } else {
                 this.containerElement.style.height = '28px';
             }
-            this.panelToggle=!this.panelToggle;
+            this.panelToggle = !this.panelToggle;
         }
 
         // Update content of the property panel. Action is triggered by the server
@@ -273,13 +272,13 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
      * The method also computes the last selected category. This is used in the setState method
      * to restore the last category if the element type has not changed.
      */
-    selectionChanged(root: Readonly<SModelRoot>, selectedElements: string[]): void {
-        this.modelRoot=root;
+    selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
+        this.modelRoot = root;
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
-           return;
+            return;
         }
-        if (selectedElements && selectedElements.length>0) {
+        if (selectedElements && selectedElements.length > 0) {
             // first we need to verify if a Symbol/BPMNLabel combination was selected.
             // In this case we are only interested in the BPMNFlowElement and not in the label
             if (selectedElements.length > 1) {
@@ -289,7 +288,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             // Next verify if we have task/Boundary selection
             // In this case we are only interested in the Task  and not in the Event
             if (selectedElements.length === 2) {
-                const element_test=root.index.getById(selectedElements[1]);
+                const element_test = root.index.getById(selectedElements[1]);
                 if (element_test && isBoundaryEvent(element_test)) {
                     // remove Boundary event from selection list
                     selectedElements.pop();
@@ -299,14 +298,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 
         // if no element is selected we default to the root element (diagram plane)
         let _id;
-        if (!selectedElements || selectedElements.length===0) {
-            _id=root.id;
-        } else if (selectedElements.length === 1 ) {
+        if (!selectedElements || selectedElements.length === 0) {
+            _id = root.id;
+        } else if (selectedElements.length === 1) {
             // we  have exactly one element selected.
-            _id=selectedElements[0];
+            _id = selectedElements[0];
         }
 
-         // avoid message loop...
+        // avoid message loop...
         if (!_id || _id === this.selectedElementId || _id === 'EMPTY') {
             // skip this event!
             return;
@@ -351,17 +350,17 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
         // compute the current category....
         this.updateLastCategory();
 
-        let element: SModelElement | undefined;
+        let element: GModelElement | undefined;
         // first we load the element from the model root
-        if (this.modelRoot.id===_elementID) {
-            element=this.modelRoot;
+        if (this.modelRoot.id === _elementID) {
+            element = this.modelRoot;
             this.headerTitle.textContent = 'Default Process';
         } else {
             // load element from index
-            element=this.modelRoot.index.getById(_elementID);
-             // skip undefined elements or laneDivider
+            element = this.modelRoot.index.getById(_elementID);
+            // skip undefined elements or laneDivider
             if (!element || (!isBPMNNode(element) && !isBPMNEdge(element))) {
-                element=this.modelRoot;
+                element = this.modelRoot;
                 this.headerTitle.textContent = 'Default Process';
             } else {
                 this.headerTitle.textContent = element.type;
@@ -374,7 +373,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
             let bpmnPropertiesData;
             let bpmnPropertiesSchema;
             let bpmnPropertiesUISchema;
-            if (hasArguments(element)) {
+            if (hasArgs(element)) {
                 // parse the jsonForms schema details
                 bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
                 bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
@@ -394,15 +393,15 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
                 // render JSONForm // vanillaRenderers
                 // we also set the key to the current elementID to reinitialize the form panel
                 this.panelContainer.render(<JsonForms
-                        data={bpmnPropertiesData}
-                        schema={bpmnPropertiesSchema}
-                        uischema={bpmnPropertiesUISchema}
-                        cells={vanillaCells}
-                        renderers={bpmnRenderers}
-                        onChange={({ errors, data }) => this.setState({ data })}
-                        key={this.selectedElementId}
-                    />);
-            }  else {
+                    data={bpmnPropertiesData}
+                    schema={bpmnPropertiesSchema}
+                    uischema={bpmnPropertiesUISchema}
+                    cells={vanillaCells}
+                    renderers={bpmnRenderers}
+                    onChange={({ errors, data }) => this.setState({ data })}
+                    key={this.selectedElementId}
+                />);
+            } else {
                 // we have no UISchema!
                 this.selectedElementId = '';
                 this.headerTitle.textContent = 'BPMN Properties';
@@ -454,7 +453,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
     protected updateLastCategory(): void {
         const selectedListItem = this.bodyDiv.querySelector('ul.category-subcategories li.selected');
         if (selectedListItem && selectedListItem.textContent) {
-            this.lastCategory=selectedListItem.textContent;
+            this.lastCategory = selectedListItem.textContent;
         }
     }
 }
@@ -465,7 +464,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements SelectionL
 export class BPMNApplyPropertiesUpdateOperation implements Action {
     static readonly KIND = 'applyBPMNPropertiesUpdate';
     readonly kind = BPMNApplyPropertiesUpdateOperation.KIND;
-    constructor(readonly id: string, readonly jsonData: string, readonly category: string) {}
+    constructor(readonly id: string, readonly jsonData: string, readonly category: string) { }
 }
 
 export function createIcon(codiconId: string): HTMLElement {
@@ -476,7 +475,7 @@ export function createIcon(codiconId: string): HTMLElement {
 
 export interface BPMNPropertyPanelToggleAction extends Action {
     kind: typeof BPMNPropertyPanelToggleAction.KIND;
-  }
+}
 
 export namespace BPMNPropertyPanelToggleAction {
     export const KIND = 'propertyPanelToggle';
@@ -497,7 +496,7 @@ export interface BPMNPropertyPanelUpdateAction extends Action {
 export namespace BPMNPropertyPanelUpdateAction {
     export const KIND = 'propertyPanelUpdate';
     export function is(object: any): object is BPMNPropertyPanelUpdateAction {
-      return Action.hasKind(object, KIND);
+        return Action.hasKind(object, KIND);
     }
     export function create(): BPMNPropertyPanelUpdateAction {
         return { kind: KIND };
@@ -510,7 +509,7 @@ export namespace BPMNPropertyPanelUpdateAction {
  */
 @injectable()
 export class BPMNPropertiesMouseListener extends MouseListener {
-    override doubleClick(target: SModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
+    override doubleClick(target: GModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
         // return a BPMNPropertyPanelToggleAction...
         return [BPMNPropertyPanelToggleAction.create()];
     }
