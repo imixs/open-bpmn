@@ -211,7 +211,9 @@ export class PoolHeaderView extends ShapeView {
             <g>
                 <rect
                     x="0" y="0" width="30" height={headerHeight}></rect>
-                <text class-sprotty-label={true} transform={'scale(1),translate(20,' + labelYOffset + '),rotate(-90)'}>{containerLabel}</text>
+
+                <text class-sprotty-label={true}
+                    transform={'scale(1),translate(20,' + labelYOffset + '),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
         const subType = getSubType(element);
@@ -248,7 +250,8 @@ export class LaneHeaderView extends ShapeView {
             <g class-sprotty-node={element instanceof GNode}>
                 <rect class-sprotty-node={element instanceof GNode}
                     x="0" y="1" width="30" height={headerHeight - 2}></rect>
-                <text class-sprotty-label={true} transform={'scale(1),translate(20,' + labelYOffset + '),rotate(-90)'}>{containerLabel}</text>
+                <text class-sprotty-label={true}
+                    transform={'scale(1),translate(20,' + labelYOffset + '),rotate(-90)'}>{containerLabel}</text>
             </g>
         );
         const subType = getSubType(element);
@@ -365,7 +368,8 @@ export class TaskNodeView extends ShapeView {
             `q${wrapper.topRightCorner.radiusX - inset},0 ${wrapper.topRightCorner.radiusX - inset},${wrapper.topRightCorner.radiusY - inset
             }` +
             `v${rightLineLength}` +
-            `q0,${wrapper.bottomRightCorner.radiusY - inset} ${-(wrapper.bottomRightCorner.radiusX - inset)},${wrapper.bottomRightCorner.radiusY - inset
+            `q0,${wrapper.bottomRightCorner.radiusY - inset} 
+                ${-(wrapper.bottomRightCorner.radiusX - inset)},${wrapper.bottomRightCorner.radiusY - inset
             }` +
             `h${-bottomLineLength}` +
             `q${-(wrapper.bottomLeftCorner.radiusX - inset)},0 ${-(wrapper.bottomLeftCorner.radiusX - inset)},${-(
@@ -376,10 +380,8 @@ export class TaskNodeView extends ShapeView {
     }
 
     // This helper method computes the icon path for TaskNodes depending on its type.
-    protected computeIconPath(taskNode: Readonly<GShapeElement>) {
-
+    protected computeIconPath(taskNode: Readonly<GShapeElement>): any {
         let icon;
-
         if (taskNode.type === 'manualTask') {
             // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/account.svg?short_path=8135b2d
             icon =

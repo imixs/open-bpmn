@@ -82,7 +82,7 @@ export const SelectItemGroup = ({
   enabled,
   path,
   handleChange
-}: ControlProps & VanillaRendererProps & OwnPropsOfEnum) => {
+}: ControlProps & VanillaRendererProps & OwnPropsOfEnum): React.JSX.Element => {
   const [isFocused, setFocus] = useState(false);
   // const isValid = errors.length === 0;
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
@@ -110,7 +110,7 @@ export const SelectItemGroup = ({
    * @param value
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const handleSelectionChange = (target: any, value: any) => {
+  const handleSelectionChange = (target: any, value: any): void => {
     // In React props should not be directly modified and handleChange
     // should receive a new data array. Otherwise an update bypasses
     // the React conventions, that changed props should have a different identity.
@@ -213,7 +213,7 @@ export const SelectItemCombo = ({
   enabled,
   path,
   handleChange
-}: ControlProps & VanillaRendererProps & OwnPropsOfEnum) => {
+}: ControlProps & VanillaRendererProps & OwnPropsOfEnum): React.JSX.Element => {
   const [isFocused, setFocus] = useState(false);
   // const isValid = errors.length === 0;
   const appliedUiSchemaOptions = merge({}, config, uischema.options);

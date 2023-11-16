@@ -54,7 +54,7 @@ export const TextFileEditor = ({
   enabled,
   path,
   handleChange
-}: ControlProps & VanillaRendererProps & OwnPropsOfEnum) => {
+}: ControlProps & VanillaRendererProps & OwnPropsOfEnum): React.JSX.Element => {
   const [isFocused, setFocus] = useState(false);
   const appliedUiSchemaOptions = merge({}, config, uischema.options);
   const showDescription = !isDescriptionHidden(
@@ -72,41 +72,41 @@ export const TextFileEditor = ({
       onBlur={() => setFocus(false)}
     >
       <label htmlFor={id}>
-          <span className={'file-selector-label'}>{computeLabel(
-            label,
-            false,
-            appliedUiSchemaOptions.hideRequiredAsterisk
-          )}
-          </span>
-          <span className={'file-selector'}>
-            <label
-              title='Link the content to a filename starting with file://'
-            >File Link: {(data.startsWith('file://'))?'ACTIVE':'NONE'}</label>
-          </span>
-        </label>
+        <span className={'file-selector-label'}>{computeLabel(
+          label,
+          false,
+          appliedUiSchemaOptions.hideRequiredAsterisk
+        )}
+        </span>
+        <span className={'file-selector'}>
+          <label
+            title='Link the content to a filename starting with file://'
+          >File Link: {(data.startsWith('file://')) ? 'ACTIVE' : 'NONE'}</label>
+        </span>
+      </label>
 
       <textarea
         id={id}
         disabled={!enabled}
         autoFocus={uischema.options && uischema.options.focus}
         value={data}
-        className={(data.startsWith('file://'))?'fileInputMode':''}
+        className={(data.startsWith('file://')) ? 'fileInputMode' : ''}
         onChange={ev => {
-            // change layout depending on input mode
-            const fileSelector = ev.target.closest('div')?.querySelector('span.file-selector');
-            if (ev.target.value.startsWith('file://')) {
-              ev.target.classList.add('fileInputMode');
-              if (fileSelector) {
-                fileSelector.textContent='File Link: ACTIVE';
-              }
-            } else {
-              ev.target.classList.remove('fileInputMode');
-              if (fileSelector) {
-                fileSelector.textContent='File Link: NONE';
-              }
+          // change layout depending on input mode
+          const fileSelector = ev.target.closest('div')?.querySelector('span.file-selector');
+          if (ev.target.value.startsWith('file://')) {
+            ev.target.classList.add('fileInputMode');
+            if (fileSelector) {
+              fileSelector.textContent = 'File Link: ACTIVE';
             }
-            handleChange(path, ev.target.value);
+          } else {
+            ev.target.classList.remove('fileInputMode');
+            if (fileSelector) {
+              fileSelector.textContent = 'File Link: NONE';
+            }
           }
+          handleChange(path, ev.target.value);
+        }
         }
       >{data}</textarea>
       <div className={'input-description'}>
@@ -124,7 +124,7 @@ export const TextFileEditorControl = (props: ControlProps & VanillaRendererProps
  */
 
 export const TextFileEditorRendererEntry: JsonFormsRendererRegistryEntry = {
-  tester: rankWith(3,  and( optionIs('format', 'textFileEditor'))),
+  tester: rankWith(3, and(optionIs('format', 'textFileEditor'))),
   renderer: withVanillaControlProps(withJsonFormsEnumProps(TextFileEditor))
 };
 
