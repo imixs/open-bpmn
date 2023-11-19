@@ -116,7 +116,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             }
 
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId) && activity != null) {
-                event = activity.createBoundaryEvent(eventID, getLabel());
+                event = activity.addBoundaryEvent(eventID, getLabel());
             } else {
                 // normal event
                 event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
