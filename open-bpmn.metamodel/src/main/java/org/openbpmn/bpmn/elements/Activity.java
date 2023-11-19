@@ -1,7 +1,11 @@
 package org.openbpmn.bpmn.elements;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
@@ -55,6 +59,41 @@ public class Activity extends BPMNElementNode {
         if (bpmnLabel != null) {
             this.bpmnShape.removeChild(bpmnLabel);
         }
+    }
+
+    /**
+     * This method adds a new Boundary Event this activity.
+     * 
+     * The element has not position assigned yet!
+     * 
+     * @return
+     * @throws BPMNModelException
+     */
+    public Event createBoundaryEvent(String eventID, String name) throws BPMNModelException {
+        Event boundaryEvent;
+        boundaryEvent = bpmnProcess.addEvent(eventID, name, BPMNTypes.BOUNDARY_EVENT);
+        boundaryEvent.setAttribute("attachedToRef", this.getId());
+        return boundaryEvent;
+    }
+
+    /**
+     * This method returns a list of all boundaray Events attached to this activity.
+     * 
+     * @return
+     */
+    public List<Event> getAllBoundaryEvents() {
+        List<Event> result = new ArrayList<>();
+        for (Event e : bpmnProcess.getEvents()) {
+            if (BPMNTypes.BOUNDARY_EVENT.equals(e.getType())) {
+
+                // test ref....
+                if (this.getId().equals(e.getAttribute("attachedToRef"))) {
+                    result.add(e);
+                }
+
+            }
+        }
+        return result;
     }
 
 }
