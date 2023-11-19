@@ -42,4 +42,3 @@ export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
 }
 
 export default new BPMNTheiaFrontendModule();
-

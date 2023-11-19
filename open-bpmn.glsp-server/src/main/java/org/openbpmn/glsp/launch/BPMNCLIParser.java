@@ -24,7 +24,7 @@ public class BPMNCLIParser extends DefaultCLIParser {
    public static final String OPTION_WEBSOCKET = "websocket";
    public static final String OPTION_JETTY_LOG_LEVEL = "jettyLogLevel";
 
-   public static final class WorkflowOptions {
+   public static final class BPMNLaunchOptions {
       public static final Level WEBSOCKET_LOG_LEVEL = Level.INFO;
    }
 
@@ -38,8 +38,8 @@ public class BPMNCLIParser extends DefaultCLIParser {
    }
 
    public Level parseWebsocketLogLevel() {
-      String levelArg = parseOption(OPTION_JETTY_LOG_LEVEL, WorkflowOptions.WEBSOCKET_LOG_LEVEL.toString());
-      return Level.toLevel(levelArg, WorkflowOptions.WEBSOCKET_LOG_LEVEL);
+      String levelArg = parseOption(OPTION_JETTY_LOG_LEVEL, BPMNLaunchOptions.WEBSOCKET_LOG_LEVEL.toString());
+      return Level.toLevel(levelArg, BPMNLaunchOptions.WEBSOCKET_LOG_LEVEL);
    }
 
    public static Options getDefaultOptions() {

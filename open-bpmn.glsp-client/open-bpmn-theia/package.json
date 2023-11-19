@@ -31,10 +31,11 @@
     "@eclipse-glsp/theia-integration": "2.0.0"
   },
   "scripts": {
-    "build": "tsc && yarn run lint",
+    "build": "tsc -b",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
     "lint": "eslint --ext .ts,.tsx ./src",
-    "prepare": "yarn run clean && yarn run build",
+    "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
+    "prepare": "yarn clean && yarn build",
     "watch": "tsc -w"
   },
   "theiaExtensions": [

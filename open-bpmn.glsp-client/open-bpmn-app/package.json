@@ -12,21 +12,20 @@
   },
   "dependencies": {
     "@open-bpmn/open-bpmn-theia": "1.2.0",
-    "@theia/core": "1.39.0-next.20",
-    "@theia/editor": "1.39.0-next.20",
-    "@theia/filesystem": "1.39.0-next.20",
-    "@theia/markers": "1.39.0-next.20",
-    "@theia/messages": "1.39.0-next.20",
-    "@theia/monaco": "1.39.0-next.20",
-    "@theia/navigator": "1.39.0-next.20",
-    "@theia/preferences": "1.39.0-next.20",
-    "@theia/process": "1.39.0-next.20",
-    "@theia/terminal": "1.39.0-next.20",
-    "@theia/workspace": "1.39.0-next.20",
-    "sprotty-theia": "0.13.0-next.9cbedec"
+    "@theia/core": "1.40.1",
+    "@theia/editor": "1.40.1",
+    "@theia/filesystem": "1.40.1",
+    "@theia/markers": "1.40.1",
+    "@theia/messages": "1.40.1",
+    "@theia/monaco": "1.40.1",
+    "@theia/navigator": "1.40.1",
+    "@theia/preferences": "1.40.1",
+    "@theia/process": "1.40.1",
+    "@theia/terminal": "1.40.1",
+    "@theia/workspace": "1.40.1"
   },
   "devDependencies": {
-    "@theia/cli": "1.39.0-next.20"
+    "@theia/cli": "1.40.1"
   },
   "theia": {
     "target": "browser"

@@ -34,7 +34,6 @@ import {
     editLabelFeature,
     initializeDiagramContainer,
     moveFeature,
-    overrideViewerOptions,
     selectFeature
 } from '@eclipse-glsp/client';
 import {
@@ -79,8 +78,7 @@ import {
 } from './bpmn-select-listeners';
 
 import {
-    BPMNPropertiesMouseListener,
-    BPMNPropertyModule
+    BPMNPropertiesMouseListener, BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -172,19 +170,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 //     return container;
 // }
 
-export function createBPMNDiagramContainer(widgetId: string, ...containerConfiguration: ContainerConfiguration): Container {
-    return initializeBPMNDiagramContainer(new Container(), widgetId, ...containerConfiguration);
+export function createBPMNDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
+    return initializeBPMNDiagramContainer(new Container(), ...containerConfiguration);
 }
 
-export function initializeBPMNDiagramContainer(
-    container: Container,
-    widgetId: string,
-    ...containerConfiguration: ContainerConfiguration
-): Container {
-    initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
-    overrideViewerOptions(container, {
-        baseDiv: widgetId,
-        hiddenDiv: widgetId + '_hidden'
-    });
-    return container;
+export function initializeBPMNDiagramContainer(container: Container,
+    ...containerConfiguration: ContainerConfiguration): Container {
+    return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
+    //return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
 }

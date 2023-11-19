@@ -32,6 +32,7 @@ public final class BPMNServerLauncher {
       try {
          BPMNCLIParser parser = new BPMNCLIParser(args, processName);
          int port = parser.parsePort();
+         String host = parser.parseHostname();
          ServerModule bpmnServerModule = new BPMNServerModule()
                .configureDiagramModule(new BPMNDiagramModule());
 
@@ -39,7 +40,7 @@ public final class BPMNServerLauncher {
                ? new WebsocketServerLauncher(bpmnServerModule, "/bpmn", parser.parseWebsocketLogLevel())
                : new SocketGLSPServerLauncher(bpmnServerModule);
 
-         launcher.start("localhost", port, parser);
+         launcher.start(host, port, parser);
       } catch (ParseException ex) {
          ex.printStackTrace();
          System.out.println();

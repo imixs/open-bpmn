@@ -14,20 +14,18 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import { ContainerConfiguration } from '@eclipse-glsp/client';
-import { GLSPDiagramConfiguration, GLSPTheiaDiagramServer, configureDiagramServer } from '@eclipse-glsp/theia-integration';
+import { GLSPDiagramConfiguration } from '@eclipse-glsp/theia-integration';
 import { initializeBPMNDiagramContainer } from '@open-bpmn/open-bpmn-glsp/lib';
 import { Container, injectable } from '@theia/core/shared/inversify';
 
 import { BPMNLanguage } from '../../common/bpmn-language';
-// import { BPMNDiagramServer } from './bpmn-diagram-server';
 
 @injectable()
 export class BPMNDiagramConfiguration extends GLSPDiagramConfiguration {
     diagramType: string = BPMNLanguage.diagramType;
 
-    configureContainer(container: Container, widgetId: string, ...containerConfiguration: ContainerConfiguration): Container {
-        initializeBPMNDiagramContainer(container, widgetId, ...containerConfiguration);
-        configureDiagramServer(container, GLSPTheiaDiagramServer);
+    configureContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
+        initializeBPMNDiagramContainer(container, ...containerConfiguration);
         return container;
     }
 }

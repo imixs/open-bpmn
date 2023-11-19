@@ -63,7 +63,6 @@ module.exports = preloader.preload().then(() => {
     .then(function () { return import('@theia/preferences/lib/browser/preference-frontend-module').then(load) })
     .then(function () { return import('@theia/process/lib/common/process-common-module').then(load) })
     .then(function () { return import('@theia/terminal/lib/browser/terminal-frontend-module').then(load) })
-    .then(function () { return import('sprotty-theia/lib/theia/diagram-module').then(load) })
         .then(start).catch(reason => {
             console.error('Failed to start the frontend application.');
             if (reason) {

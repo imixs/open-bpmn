@@ -34,32 +34,10 @@ import { ContainerModule } from '@theia/core/shared/inversify';
 import { BPMNGLSPSocketServerContribution } from './bpmn-glsp-server-contribution';
 
 export default new ContainerModule(bind => {
-    if (isDirectWebSocketConnection()) {
-        return;
-    }
     bindAsService(bind, GLSPServerContribution, BPMNGLSPSocketServerContribution);
 });
 
-const directWebSocketArg = '--directWebSocket';
-/**
- * Utility function to parse if the frontend should connect directly to a running GLSP WebSocket Server instance
- * and skip the binding of the backend contribution.
- * i.e. if the {@link directWebSocketArg `--directWebSocket`} argument has been passed.
- * @returns `true` if the {@link directWebSocketArg `--directWebSocket`} argument has been set.
- */
-function isDirectWebSocketConnection(): boolean {
-    const args = process.argv.filter(a => a.toLowerCase().startsWith(directWebSocketArg.toLowerCase()));
-    return args.length > 0;
-}
-
-export const integratedArg = '--integratedNode';
-
-/**
- * Utility function to parse if the frontend should connect to a GLSP server running directly in the backend
- * i.e. if the {@link integratedArg `--integratedNode`} argument has been passed.
- * @returns `true` if the {@link integratedArg `--integratedNode`} argument has been set.
- */
-export function isIntegratedNodeServer(): boolean {
-    const args = process.argv.filter(a => a.toLowerCase().startsWith(integratedArg.toLowerCase()));
-    return args.length > 0;
-}
+// export default new ContainerModule(bind => {
+//     bind(BPMNGLSPSocketServerContribution).toSelf().inSingletonScope();
+//     bind(GLSPServerContribution).toService(BPMNGLSPSocketServerContribution);
+// });
