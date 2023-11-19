@@ -47,7 +47,7 @@ public class TestCreateEvents {
             Activity task = process.addTask("task-1", "Task", BPMNTypes.TASK);
 
             // add a boundary event
-            Event boundaryEvent = task.createBoundaryEvent("boundary-event-1", "Boundary Event");
+            Event boundaryEvent = task.addBoundaryEvent("boundary-event-1", "Boundary Event");
             assertEquals(task.getId(), boundaryEvent.getAttribute("attachedToRef"));
 
             // we expect one boundary event
@@ -87,12 +87,12 @@ public class TestCreateEvents {
             Activity task2 = process.addTask("task-2", "Task", BPMNTypes.TASK);
 
             // add a boundary event
-            Event boundaryEvent = task1.createBoundaryEvent("boundary-event-1", "Boundary Event");
+            Event boundaryEvent = task1.addBoundaryEvent("boundary-event-1", "Boundary Event");
             assertEquals(task1.getId(), boundaryEvent.getAttribute("attachedToRef"));
 
-            boundaryEvent = task2.createBoundaryEvent("boundary-event-2", "Boundary Event");
+            boundaryEvent = task2.addBoundaryEvent("boundary-event-2", "Boundary Event");
 
-            boundaryEvent = task2.createBoundaryEvent("boundary-event-3", "Boundary Event");
+            boundaryEvent = task2.addBoundaryEvent("boundary-event-3", "Boundary Event");
 
             // we expect one boundary event
             List<Event> boundaryEventList = task1.getAllBoundaryEvents();

@@ -78,7 +78,6 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         super(BPMNTypes.BPMN_EVENTS);
     }
 
-
     @Override
     public Optional<Command> createCommand(final CreateNodeOperation operation) {
         return commandOf(() -> executeOperation(operation));
@@ -86,6 +85,8 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
 
     public void executeOperation(final CreateNodeOperation operation) {
         BPMNElementNode containerElement = null;
+        Event event = null;
+        Activity activity = null;
         elementTypeId = operation.getElementTypeId();
         // now we add this task into the source model
         String eventID = BPMNModel.generateShortID("event"); // "event-" + BPMNModel.generateShortID();
@@ -93,36 +94,34 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
         try {
 
             BPMNProcess bpmnProcess = null;
-            String attachedToRef = null;
-            // Do we have a BoundaryEvent? Than we need to compute the Tasks Process
+            // Do we have a BoundaryEvent? Than we need to compute the Activities Process
             if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)) {
                 // find the container element
                 GModelElement container = getContainer(operation).orElseGet(modelState::getRoot);
                 String containerId = container.getId();
                 logger.debug("containerId = " + container.getId());
-
                 // we assume that the containerId is the Task Element...
                 containerElement = modelState.getBpmnModel().findElementNodeById(containerId);
                 if (containerElement != null && containerElement instanceof Activity) {
+                    activity = (Activity) containerElement;
                     // it is a BPMNActivity
-                    bpmnProcess = ((Activity) containerElement).getBpmnProcess();
-                    attachedToRef = containerElement.getId();
+                    bpmnProcess = activity.getBpmnProcess();
                 } else {
                     logger.warn("BounderyEvent can only be dropped on a Activity!");
                 }
-            }
-            // did we have yet a process ?
-            if (bpmnProcess == null) {
+            } else {
                 // find the process - either the default process for Root container or the
                 // corresponding participant process
                 bpmnProcess = findProcessByCreateNodeOperation(operation);
             }
 
-            Event event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
-            // do we have a attachedToRef?
-            if (attachedToRef != null && !attachedToRef.isEmpty()) {
-                event.setAttribute("attachedToRef", attachedToRef);
+            if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId) && activity != null) {
+                event = activity.createBoundaryEvent(eventID, getLabel());
+            } else {
+                // normal event
+                event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
             }
+
             Optional<GPoint> point = operation.getLocation();
 
             if (point.isPresent()) {

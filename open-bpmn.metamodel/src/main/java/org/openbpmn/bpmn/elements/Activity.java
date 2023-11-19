@@ -69,7 +69,7 @@ public class Activity extends BPMNElementNode {
      * @return
      * @throws BPMNModelException
      */
-    public Event createBoundaryEvent(String eventID, String name) throws BPMNModelException {
+    public Event addBoundaryEvent(String eventID, String name) throws BPMNModelException {
         Event boundaryEvent;
         boundaryEvent = bpmnProcess.addEvent(eventID, name, BPMNTypes.BOUNDARY_EVENT);
         boundaryEvent.setAttribute("attachedToRef", this.getId());
