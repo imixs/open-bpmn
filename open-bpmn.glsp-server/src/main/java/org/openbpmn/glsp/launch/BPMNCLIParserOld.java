@@ -20,7 +20,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.logging.log4j.Level;
 import org.eclipse.glsp.server.launch.DefaultCLIParser;
 
-public class BPMNCLIParser extends DefaultCLIParser {
+public class BPMNCLIParserOld extends DefaultCLIParser {
    public static final String OPTION_WEBSOCKET = "websocket";
    public static final String OPTION_JETTY_LOG_LEVEL = "jettyLogLevel";
 
@@ -28,9 +28,9 @@ public class BPMNCLIParser extends DefaultCLIParser {
       public static final Level WEBSOCKET_LOG_LEVEL = Level.INFO;
    }
 
-   public BPMNCLIParser(final String[] args, final String processName)
+   public BPMNCLIParserOld(final String[] args, final String processName)
          throws ParseException {
-      super(args, BPMNCLIParser.getDefaultOptions(), processName);
+      super(args, BPMNCLIParserOld.getDefaultOptions(), processName);
    }
 
    public boolean isWebsocket() {

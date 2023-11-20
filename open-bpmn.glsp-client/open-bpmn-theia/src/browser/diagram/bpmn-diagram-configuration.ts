@@ -24,8 +24,8 @@ import { BPMNLanguage } from '../../common/bpmn-language';
 export class BPMNDiagramConfiguration extends GLSPDiagramConfiguration {
     diagramType: string = BPMNLanguage.diagramType;
 
-    configureContainer(container: Container, ...containerConfiguration: ContainerConfiguration): Container {
+    configureContainer(container: Container, ...containerConfiguration: ContainerConfiguration): void {
         initializeBPMNDiagramContainer(container, ...containerConfiguration);
-        return container;
+        //return container;
     }
 }

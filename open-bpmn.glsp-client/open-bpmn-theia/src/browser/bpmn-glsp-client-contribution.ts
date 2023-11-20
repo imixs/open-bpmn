@@ -15,10 +15,12 @@
  ********************************************************************************/
 import { Args, MaybePromise } from '@eclipse-glsp/client';
 
-import { BaseGLSPClientContribution, WebSocketConnectionOptions } from '@eclipse-glsp/theia-integration/lib/browser';
+import { BaseGLSPClientContribution } from '@eclipse-glsp/theia-integration/lib/browser';
 import { EnvVariablesServer } from '@theia/core/lib/common/env-variables';
 import { inject, injectable } from '@theia/core/shared/inversify';
 import { BPMNLanguage } from '../common/bpmn-language';
+
+
 
 export interface BPMNInitializeOptions {
     timestamp: Date;
@@ -39,27 +41,5 @@ export class BPMNGLSPClientContribution extends BaseGLSPClientContribution {
             ['message']: 'Custom Options Available'
         };
     }
-
-    protected override async getWebSocketConnectionOptions(): Promise<WebSocketConnectionOptions | undefined> {
-        const webSocketPort = await this.getWebSocketPortFromEnv();
-        if (webSocketPort) {
-            return {
-                path: this.id,
-                port: webSocketPort
-            };
-        }
-        return undefined;
-    }
-
-    protected async getWebSocketPortFromEnv(): Promise<number | undefined> {
-        const envVar = await this.envVariablesServer.getValue('WEBSOCKET_PORT');
-        if (envVar && envVar.value) {
-            const webSocketPort = Number.parseInt(envVar.value, 10);
-            if (isNaN(webSocketPort) || webSocketPort < 0 || webSocketPort > 65535) {
-                throw new Error('Value of environment variable WEBSOCKET_PORT is not a valid port');
-            }
-            return webSocketPort;
-        }
-        return undefined;
-    }
 }
+

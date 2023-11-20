@@ -19,7 +19,7 @@ import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.protocol.GLSPServer;
 import org.openbpmn.glsp.BPMNGLSPServer;
 
-public class BPMNServerModule extends ServerModule {
+public class BPMNServerModuleOld extends ServerModule {
 
    @Override
    protected Class<? extends GLSPServer> bindGLSPServer() {
