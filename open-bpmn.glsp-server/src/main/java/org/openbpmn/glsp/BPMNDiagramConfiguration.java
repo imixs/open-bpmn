@@ -452,19 +452,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         return ServerLayoutKind.MANUAL;
     }
 
-    /**
-     * Boolean flag to specific whether the diagram implementation expects the
-     * client to provide layout information for certain diagram element. Default is
-     * 'true'.
-     *
-     * @return Boolean flag to indicate whether the client needs to be involved in
-     *         the layout process.
-     */
-    @Override
-    public boolean needsClientLayout() {
-        return true;
-    }
-
     @Override
     public boolean animatedUpdate() {
         return false;

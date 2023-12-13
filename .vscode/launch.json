@@ -13,27 +13,23 @@
       "args": [
         "--port",
         "5007"
-      ],
-      "vmArgs": [
-        "--add-opens",
-        "java.base/java.util=ALL-UNNAMED",
-      ],
-      "console": "internalConsole",
-      "internalConsoleOptions": "openOnSessionStart"
+      ]
     },
     {
       "type": "node",
+      "runtimeVersion": "18.11.0",
       "request": "launch",
-      "name": "Launch Workflow Theia Backend (External GLSP Server)",
+      "name": "Launch Theia Frontentd (External GLSP Server)",
       "program": "${workspaceRoot}/open-bpmn.glsp-client/open-bpmn-app/src-gen/backend/main.js",
       "args": [
-        "--loglevel=debug",
+        "--hostname=localhost",
+        "--GLSP_PORT=5007",
         "--port=3000",
         "--no-cluster",
-        "--WF_GLSP=5007",
+        "--loglevel=debug",
         "--debug",
-        "--app-project-path=${workspaceRoot}/open-bpmn.glsp-client/open-bpmn-app",
-        "--root-dir=${workspaceRoot}/open-bpmn.glsp-client/workspace"
+        "--root-dir=${workspaceRoot}/open-bpmn.glsp-client/workspace",
+        "--app-project-path=${workspaceRoot}/open-bpmn.glsp-client/open-bpmn-app"
       ],
       "env": {
         "NODE_ENV": "development"
@@ -41,7 +37,6 @@
       "sourceMaps": true,
       "outFiles": [
         "${workspaceRoot}/open-bpmn.glsp-client/node_modules/@theia/*/lib/**/*.js",
-        "${workspaceRoot}/open-bpmn.glsp-client/node_modules/@eclipse-glsp/*/lib/**/*.js",
         "${workspaceRoot}/open-bpmn.glsp-client/open-bpmn-app/lib/**/*.js",
         "${workspaceRoot}/open-bpmn.glsp-client/open-bpmn-theia/lib/**/*.js",
         "${workspaceRoot}/open-bpmn.glsp-client/open-bpmn-glsp/lib/**/*.js",

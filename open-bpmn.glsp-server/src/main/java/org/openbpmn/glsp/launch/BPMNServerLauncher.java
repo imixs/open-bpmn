@@ -21,7 +21,6 @@ import org.eclipse.glsp.server.launch.DefaultCLIParser;
 import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
-//import org.openbpmn.glsp.BPMNDiagramModule;
 import org.openbpmn.glsp.BPMNDiagramModule;
 
 public final class BPMNServerLauncher {
@@ -29,7 +28,7 @@ public final class BPMNServerLauncher {
    }
 
    public static void main(final String[] args) {
-      String processName = "open-bpmn.server-X.X.X-glsp.jar";
+      String processName = "OpenBPMNServer";
       try {
          DefaultCLIParser parser = new DefaultCLIParser(args, processName);
          LaunchUtil.configure(parser);
@@ -40,22 +39,9 @@ public final class BPMNServerLauncher {
 
          GLSPServerLauncher launcher = new SocketGLSPServerLauncher(bpmnServerModule);
          launcher.start("localhost", port);
-         // BPMNCLIParserOld parser = new BPMNCLIParserOld(args, processName);
-         // int port = parser.parsePort();
-         // String host = parser.parseHostname();
-         // ServerModule bpmnServerModule = new BPMNServerModule()
-         // .configureDiagramModule(new BPMNDiagramModule());
-
-         // GLSPServerLauncher launcher = parser.isWebsocket()
-         // ? new WebsocketServerLauncher(bpmnServerModule, "/bpmn",
-         // parser.parseWebsocketLogLevel())
-         // : new SocketGLSPServerLauncher(bpmnServerModule);
-
-         // launcher.start(host, port, parser);
       } catch (ParseException ex) {
          ex.printStackTrace();
-         System.out.println();
-         LaunchUtil.printHelp(processName, BPMNCLIParserOld.getDefaultOptions());
+         LaunchUtil.printHelp(processName, DefaultCLIParser.getDefaultOptions());
       }
    }
 }

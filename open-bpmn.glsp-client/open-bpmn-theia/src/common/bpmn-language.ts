@@ -16,9 +16,9 @@
 import { GLSPDiagramLanguage } from '@eclipse-glsp/theia-integration/lib/common';
 
 export const BPMNLanguage: GLSPDiagramLanguage = {
-    contributionId: 'Bpmn',
+    contributionId: 'OpenBPMN',
     label: 'BPMN 2.0 diagram',
     diagramType: 'bpmn-diagram',
-    fileExtensions: ['.bpmn','.bpmn2'],
-    iconClass: 'codicon codicon-type-hierarchy-sub'
+    fileExtensions: ['.bpmn', '.bpmn2'],
+    iconClass: 'codicon codicon-split-vertical'
 };

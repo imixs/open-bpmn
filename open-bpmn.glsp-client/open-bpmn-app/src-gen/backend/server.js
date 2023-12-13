@@ -24,35 +24,37 @@ function defaultServeStatic(app) {
 }
 
 function load(raw) {
-    return Promise.resolve(raw.default).then(
-        module => container.load(module)
+    return Promise.resolve(raw).then(
+        module => container.load(module.default)
     );
 }
 
-function start(port, host, argv = process.argv) {
+async function start(port, host, argv = process.argv) {
     if (!container.isBound(BackendApplicationServer)) {
         container.bind(BackendApplicationServer).toConstantValue({ configure: defaultServeStatic });
     }
-    return container.get(CliManager).initializeCli(argv).then(() => {
-        return container.get(BackendApplication).start(port, host);
-    });
+    await container.get(CliManager).initializeCli(argv);
+    return container.get(BackendApplication).start(port, host);
 }
 
-module.exports = (port, host, argv) => Promise.resolve()
-    .then(function () { return Promise.resolve(require('@theia/core/lib/node/i18n/i18n-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/core/lib/node/hosting/backend-hosting-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/core/lib/node/request/backend-request-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/filesystem/lib/node/filesystem-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/filesystem/lib/node/download/file-download-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/workspace/lib/node/workspace-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@eclipse-glsp/theia-integration/lib/node/theia-integration-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@open-bpmn/open-bpmn-theia/lib/node/bpmn-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/process/lib/common/process-common-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/process/lib/node/process-backend-module')).then(load) })
-    .then(function () { return Promise.resolve(require('@theia/terminal/lib/node/terminal-backend-module')).then(load) })
-    .then(() => start(port, host, argv)).catch(error => {
+module.exports = async (port, host, argv) => {
+    try {
+        await load(require('@theia/core/lib/node/i18n/i18n-backend-module'));
+        await load(require('@theia/core/lib/node/hosting/backend-hosting-module'));
+        await load(require('@theia/core/lib/node/request/backend-request-module'));
+        await load(require('@theia/filesystem/lib/node/filesystem-backend-module'));
+        await load(require('@theia/filesystem/lib/node/download/file-download-backend-module'));
+        await load(require('@theia/workspace/lib/node/workspace-backend-module'));
+        await load(require('@eclipse-glsp/theia-integration/lib/node/theia-integration-backend-module'));
+        await load(require('@open-bpmn/open-bpmn-theia/lib/node/bpmn-backend-module'));
+        await load(require('@theia/process/lib/common/process-common-module'));
+        await load(require('@theia/process/lib/node/process-backend-module'));
+        await load(require('@theia/terminal/lib/node/terminal-backend-module'));
+        return await start(port, host, argv);
+    } catch (error) {
         console.error('Failed to start the backend application:');
         console.error(error);
         process.exitCode = 1;
         throw error;
-    });
+    }
+}

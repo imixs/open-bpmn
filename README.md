@@ -99,14 +99,20 @@ You will find more details in the [Client Section](./open-bpmn.glsp-client/READM
 
 ### NodeJS
 
-We use nodejs on Linux Debian during development. To manage version of nodejs in debian see: https://phoenixnap.com/kb/update-node-js-version
+For development the JavaScript tools [Node.js](https://nodejs.org/en/about) and [yarn](https://yarnpkg.com/) need to be installed in the correct version. 
+Using the Node Version Manager (NVM) you can easily manage multiple versions of Node.js on a single machine. It’s an essential tool for development with Node.js as it allows you to switch between different versions of Node.js without having to go through the hassle of installing or uninstalling Node.js manually each time.
+To use nvm in Debian 12 run:
 
-For development with Eclipse Theia the expected version is ">=10.11.0 <17". For that reason we tested with following version 16.11.0. You can list all current versions [here](https://nodejs.org/en/download/releases/).
+    $ sudo apt install build-essential libssl-dev
+    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash 
 
-In case you have install npm you can install a specific nodejs version with:
+Now you can install a specific version of Node.js using the nvm install command, followed by the version number. For example, to install Node.js 18, you would type:
 
-    $ sudo n 16.11.0
+    $ nvm install 18 
 
-To install typescript run:
+You can list all available version with:
 
-    $ sudo npm install -g typescript
+    $ nvm ls-remote
+
+We currently are using 18.17.1 for development.
+

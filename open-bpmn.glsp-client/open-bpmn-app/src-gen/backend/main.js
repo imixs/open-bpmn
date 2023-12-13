@@ -9,9 +9,9 @@ BackendApplicationConfigProvider.set({
 const serverModule = require('./server');
 const serverAddress = main.start(serverModule());
 
-serverAddress.then(({ port, address }) => {
+serverAddress.then(({ port, address, family }) => {
     if (process && process.send) {
-        process.send({ port, address });
+        process.send({ port, address, family });
     }
 });
 

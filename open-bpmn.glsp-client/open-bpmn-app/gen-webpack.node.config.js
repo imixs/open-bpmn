@@ -36,6 +36,7 @@ const ignoredResources = new Set();
 
 if (process.platform !== 'win32') {
     ignoredResources.add('@vscode/windows-ca-certs');
+    ignoredResources.add('@vscode/windows-ca-certs/build/Release/crypt32.node');
 }
 
 const nativePlugin = new NativeWebpackPlugin({
@@ -98,7 +99,7 @@ const config = {
         ]
     },
     plugins: [
-        // Some native dependencies (bindings, @vscode/ripgrep) need special code replacements
+        // Some native dependencies need special handling
         nativePlugin,
         // Optional node dependencies can be safely ignored
         new webpack.IgnorePlugin({
@@ -118,6 +119,24 @@ const config = {
             })
         ]
     },
+    ignoreWarnings: [
+        // Some packages do not have source maps, that's ok
+        /Failed to parse source map/,
+        // Some packages use dynamic requires, we can safely ignore them (they are handled by the native webpack plugin)
+        /require function is used in a way in which dependencies cannot be statically extracted/, {
+            module: /yargs/
+        }, {
+            module: /node-pty/
+        }, {
+            module: /require-main-filename/
+        }, {
+            module: /ws/
+        }, {
+            module: /express/
+        }, {
+            module: /cross-spawn/
+        }
+    ]
 };
 
 module.exports = {

@@ -121,7 +121,7 @@
       <bpmndi:BPMNShape bpmnElement="event-Lf0tC291FgQtlKAA" id="BPMNShape_fVG2vg">
         <dc:Bounds height="36.0" width="36.0" x="670.0" y="140.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_FVC5xQ">
-          <dc:Bounds height="20.0" width="100.0" x="710.0" y="145.0"/>
+          <dc:Bounds height="20.0" width="100.0" x="640.0" y="180.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="task-o6w2XYdMAEFdPoz6" id="BPMNShape_AoYLLA">
@@ -156,8 +156,9 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_WQB6iw" id="BPMNEdge_Qw1KFw">
         <di:waypoint x="531.0" y="234.0"/>
-        <di:waypoint x="690.0" y="234.0"/>
-        <di:waypoint x="690.0" y="175.88854381999832"/>
+        <di:waypoint x="625.0" y="234.0"/>
+        <di:waypoint x="625.0" y="158.0"/>
+        <di:waypoint x="670.0" y="158.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="task-y6CwOlM3ErBatGcC" id="BPMNShape_YtngBQ">
         <dc:Bounds height="50.0" width="110.0" x="490.0" y="65.0"/>

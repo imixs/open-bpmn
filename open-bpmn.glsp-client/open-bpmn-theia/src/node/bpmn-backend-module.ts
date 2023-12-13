@@ -28,15 +28,29 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
+import { bindAsService } from '@eclipse-glsp/protocol';
 import { GLSPServerContribution } from '@eclipse-glsp/theia-integration/lib/node';
 import { ContainerModule } from '@theia/core/shared/inversify';
 import { BPMNGLSPSocketServerContribution } from './bpmn-glsp-server-contribution';
 
-// export default new ContainerModule(bind => {
-//     bindAsService(bind, GLSPServerContribution, BPMNGLSPSocketServerContribution);
-// });
-
 export default new ContainerModule(bind => {
-    bind(BPMNGLSPSocketServerContribution).toSelf().inSingletonScope();
-    bind(GLSPServerContribution).toService(BPMNGLSPSocketServerContribution);
+    if (isDirectWebSocketConnection()) {
+        return;
+    }
+    bindAsService(bind, GLSPServerContribution, BPMNGLSPSocketServerContribution);
+    // bind(BPMNGLSPSocketServerContribution).toSelf().inSingletonScope();
+    // bind(GLSPServerContribution).toService(BPMNGLSPSocketServerContribution);
 });
+
+
+const directWebSocketArg = '--directWebSocket';
+/**
+ * Utility function to parse if the frontend should connect directly to a running GLSP WebSocket Server instance
+ * and skip the binding of the backend contribution.
+ * i.e. if the {@link directWebSocketArg `--directWebSocket`} argument has been passed.
+ * @returns `true` if the {@link directWebSocketArg `--directWebSocket`} argument has been set.
+ */
+function isDirectWebSocketConnection(): boolean {
+    const args = process.argv.filter(a => a.toLowerCase().startsWith(directWebSocketArg.toLowerCase()));
+    return args.length > 0;
+}

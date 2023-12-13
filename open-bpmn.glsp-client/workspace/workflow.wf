@@ -1,0 +1,730 @@
+{
+  "id": "sprotty",
+  "children": [
+    {
+      "name": "Push",
+      "taskType": "manual",
+      "id": "task0",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "task0_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "task0_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 31.921875,
+            "height": 16.0
+          },
+          "text": "Push",
+          "alignment": {
+            "x": 15.9609375,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:manual",
+      "position": {
+        "x": 70.0,
+        "y": 140.0
+      },
+      "size": {
+        "width": 72.921875,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "paddingRight": 10.0,
+        "prefWidth": 72.921875,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "ChkWt",
+      "taskType": "automated",
+      "id": "task0_automated",
+      "cssClasses": [
+        "task",
+        "automated"
+      ],
+      "children": [
+        {
+          "id": "task0_automated_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "task0_automated_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 42.1103515625,
+            "height": 16.0
+          },
+          "text": "ChkWt",
+          "alignment": {
+            "x": 21.0,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:automated",
+      "position": {
+        "x": 220.0,
+        "y": 90.0
+      },
+      "size": {
+        "width": 83.1103515625,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 75.6103515625,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "nodeType": "mergeNode",
+      "id": "activityNode1",
+      "type": "activityNode:merge",
+      "position": {
+        "x": 500.0,
+        "y": 90.0
+      },
+      "size": {
+        "width": 32.0,
+        "height": 32.0
+      },
+      "layoutOptions": {
+        "minHeight": 32.0,
+        "resizeContainer": false
+      }
+    },
+    {
+      "nodeType": "decisionNode",
+      "id": "activityNode2",
+      "type": "activityNode:decision",
+      "position": {
+        "x": 330.0,
+        "y": 190.0
+      },
+      "size": {
+        "width": 32.0,
+        "height": 32.0
+      },
+      "layoutOptions": {
+        "minWidth": 32.0,
+        "minHeight": 32.0
+      }
+    },
+    {
+      "nodeType": "mergeNode",
+      "id": "activityNode4",
+      "type": "activityNode:merge",
+      "position": {
+        "x": 500.0,
+        "y": 190.0
+      },
+      "size": {
+        "width": 32.0,
+        "height": 32.0
+      },
+      "layoutOptions": {
+        "minHeight": 32.0,
+        "resizeContainer": false
+      }
+    },
+    {
+      "nodeType": "decisionNode",
+      "id": "b00fc494-0fa4-4448-8bf9-162c2c0865e4",
+      "type": "activityNode:decision",
+      "position": {
+        "x": 330.0,
+        "y": 90.0
+      },
+      "size": {
+        "width": 32.0,
+        "height": 32.0
+      },
+      "layoutOptions": {
+        "minWidth": 32.0,
+        "minHeight": 32.0
+      }
+    },
+    {
+      "nodeType": "forkNode",
+      "id": "bb2709f5-0ff0-4438-8853-b7e934b506d7",
+      "cssClasses": [
+        "forkOrJoin"
+      ],
+      "type": "activityNode:fork",
+      "position": {
+        "x": 170.0,
+        "y": 130.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 50.0
+      }
+    },
+    {
+      "id": "d34c37e0-e45e-4cfe-a76f-0e9274ed8e60",
+      "type": "edge",
+      "sourceId": "task0",
+      "targetId": "bb2709f5-0ff0-4438-8853-b7e934b506d7"
+    },
+    {
+      "nodeType": "joinNode",
+      "id": "bd94e44e-19f9-446e-89d4-97ca1a63c17b",
+      "cssClasses": [
+        "forkOrJoin"
+      ],
+      "type": "activityNode:join",
+      "position": {
+        "x": 560.0,
+        "y": 130.0
+      },
+      "size": {
+        "width": 10.0,
+        "height": 50.0
+      }
+    },
+    {
+      "id": "7296b4a8-55c6-4c61-bddb-deacae77efa6",
+      "type": "edge",
+      "sourceId": "activityNode1",
+      "targetId": "bd94e44e-19f9-446e-89d4-97ca1a63c17b"
+    },
+    {
+      "id": "0471cae4-c754-4e89-8337-96ed1546dd02",
+      "type": "edge",
+      "sourceId": "activityNode4",
+      "targetId": "bd94e44e-19f9-446e-89d4-97ca1a63c17b"
+    },
+    {
+      "name": "WtOK",
+      "taskType": "automated",
+      "id": "e47d5eba-612d-4c43-9aba-2c5502ff4f04",
+      "cssClasses": [
+        "task",
+        "automated"
+      ],
+      "children": [
+        {
+          "id": "e47d5eba-612d-4c43-9aba-2c5502ff4f04_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "e47d5eba-612d-4c43-9aba-2c5502ff4f04_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 37.9931640625,
+            "height": 16.0
+          },
+          "text": "WtOK",
+          "alignment": {
+            "x": 18.671875,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:automated",
+      "position": {
+        "x": 390.0,
+        "y": 120.0
+      },
+      "size": {
+        "width": 78.9931640625,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 71.4931640625,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "2317f24a-034e-4352-8857-d361dc8f5ed7",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:weighted",
+      "sourceId": "b00fc494-0fa4-4448-8bf9-162c2c0865e4",
+      "targetId": "e47d5eba-612d-4c43-9aba-2c5502ff4f04"
+    },
+    {
+      "id": "0a57ab51-c0b6-4a51-b42e-0192bf3767dc",
+      "type": "edge",
+      "sourceId": "bb2709f5-0ff0-4438-8853-b7e934b506d7",
+      "targetId": "task0_automated",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "7a5d6bc3-c61e-4baa-8556-6015f33269c7",
+      "type": "edge",
+      "sourceId": "task0_automated",
+      "targetId": "b00fc494-0fa4-4448-8bf9-162c2c0865e4",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "name": "RflWt",
+      "taskType": "manual",
+      "id": "a63cfd87-da7c-4846-912b-29040b776bfb",
+      "cssClasses": [
+        "task",
+        "manual"
+      ],
+      "children": [
+        {
+          "id": "54f08126-6041-44ce-9d8b-e7a549e48f91",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "6e007d62-d441-4b08-8815-ad59de3b2ca8",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 34.32421875,
+            "height": 16.0
+          },
+          "text": "RflWt",
+          "alignment": {
+            "x": 17.109375,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:manual",
+      "position": {
+        "x": 390.0,
+        "y": 70.0
+      },
+      "size": {
+        "width": 75.32421875,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 67.82421875,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "9bb443d7-44f3-4192-8dd8-1a2782593373",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:weighted",
+      "sourceId": "b00fc494-0fa4-4448-8bf9-162c2c0865e4",
+      "targetId": "a63cfd87-da7c-4846-912b-29040b776bfb"
+    },
+    {
+      "id": "a36985a7-3e61-499c-9bdb-5be2b00cb75c",
+      "type": "edge",
+      "sourceId": "a63cfd87-da7c-4846-912b-29040b776bfb",
+      "targetId": "activityNode1",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "8880cd08-8d90-4408-acd4-6eae218b1650",
+      "type": "edge",
+      "sourceId": "e47d5eba-612d-4c43-9aba-2c5502ff4f04",
+      "targetId": "activityNode1",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "name": "Brew",
+      "taskType": "automated",
+      "id": "7afd430b-5031-4082-8190-7e755c57cde9",
+      "cssClasses": [
+        "task",
+        "automated"
+      ],
+      "children": [
+        {
+          "id": "7afd430b-5031-4082-8190-7e755c57cde9_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "7afd430b-5031-4082-8190-7e755c57cde9_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 31.90625,
+            "height": 16.0
+          },
+          "text": "Brew",
+          "alignment": {
+            "x": 15.953125,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:automated",
+      "position": {
+        "x": 600.0,
+        "y": 140.0
+      },
+      "size": {
+        "width": 72.90625,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 72.90625,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "81efd1ef-ae19-4ea6-a20b-20857b1c6552",
+      "type": "edge",
+      "sourceId": "bd94e44e-19f9-446e-89d4-97ca1a63c17b",
+      "targetId": "7afd430b-5031-4082-8190-7e755c57cde9",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "name": "ChkTp",
+      "taskType": "automated",
+      "id": "6c26f0a4-4354-45fa-9d9f-bc2b48adee17",
+      "cssClasses": [
+        "task",
+        "automated"
+      ],
+      "children": [
+        {
+          "id": "6c26f0a4-4354-45fa-9d9f-bc2b48adee17_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "6c26f0a4-4354-45fa-9d9f-bc2b48adee17_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 41.4482421875,
+            "height": 16.0
+          },
+          "text": "ChkTp",
+          "alignment": {
+            "x": 20.6171875,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:automated",
+      "position": {
+        "x": 220.0,
+        "y": 190.0
+      },
+      "size": {
+        "width": 82.4482421875,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 74.9482421875,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "189aecf6-6043-4915-9f3e-7b2da8fd0d9c",
+      "type": "edge",
+      "sourceId": "bb2709f5-0ff0-4438-8853-b7e934b506d7",
+      "targetId": "6c26f0a4-4354-45fa-9d9f-bc2b48adee17",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "69e45ef0-9c74-41da-a3ab-0a5669f83f96",
+      "type": "edge",
+      "sourceId": "6c26f0a4-4354-45fa-9d9f-bc2b48adee17",
+      "targetId": "activityNode2",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "name": "KeepTp",
+      "taskType": "automated",
+      "id": "4b06ed95-c9be-47df-9941-98099259be4a",
+      "cssClasses": [
+        "task",
+        "automated"
+      ],
+      "children": [
+        {
+          "id": "4b06ed95-c9be-47df-9941-98099259be4a_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "4b06ed95-c9be-47df-9941-98099259be4a_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 49.248046875,
+            "height": 16.0
+          },
+          "text": "KeepTp",
+          "alignment": {
+            "x": 24.5234375,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:automated",
+      "position": {
+        "x": 390.0,
+        "y": 170.0
+      },
+      "size": {
+        "width": 90.248046875,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 82.748046875,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "name": "PreHeat",
+      "taskType": "automated",
+      "id": "80d1792f-9c7e-41c0-8eca-eeb0509397b6",
+      "cssClasses": [
+        "task",
+        "automated"
+      ],
+      "children": [
+        {
+          "id": "80d1792f-9c7e-41c0-8eca-eeb0509397b6_icon",
+          "type": "icon",
+          "position": {
+            "x": 5.0,
+            "y": 5.0
+          },
+          "size": {
+            "width": 25.0,
+            "height": 20.0
+          }
+        },
+        {
+          "id": "80d1792f-9c7e-41c0-8eca-eeb0509397b6_classname",
+          "type": "label:heading",
+          "position": {
+            "x": 31.0,
+            "y": 7.0
+          },
+          "size": {
+            "width": 51.46875,
+            "height": 16.0
+          },
+          "text": "PreHeat",
+          "alignment": {
+            "x": 25.6796875,
+            "y": 13.0
+          }
+        }
+      ],
+      "type": "task:automated",
+      "position": {
+        "x": 390.0,
+        "y": 220.0
+      },
+      "size": {
+        "width": 92.46875,
+        "height": 30.0
+      },
+      "layout": "hbox",
+      "layoutOptions": {
+        "prefWidth": 84.96875,
+        "paddingRight": 10.0,
+        "prefHeight": 30.0
+      },
+      "args": {
+        "radiusBottomLeft": 5.0,
+        "radiusTopLeft": 5.0,
+        "radiusTopRight": 5.0,
+        "radiusBottomRight": 5.0
+      }
+    },
+    {
+      "id": "d04afaf8-0894-4284-b844-22b255893107",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:weighted",
+      "sourceId": "activityNode2",
+      "targetId": "4b06ed95-c9be-47df-9941-98099259be4a"
+    },
+    {
+      "id": "b9ef468f-2aaf-41b9-b408-29e2d08e490e",
+      "cssClasses": [
+        "medium"
+      ],
+      "type": "edge:weighted",
+      "sourceId": "activityNode2",
+      "targetId": "80d1792f-9c7e-41c0-8eca-eeb0509397b6"
+    },
+    {
+      "id": "58657bcf-6d32-4e7d-b73a-f84fd8d7158b",
+      "type": "edge",
+      "sourceId": "4b06ed95-c9be-47df-9941-98099259be4a",
+      "targetId": "activityNode4",
+      "args": {
+        "edgePadding": 10.0
+      }
+    },
+    {
+      "id": "39a75477-facf-4960-b0bb-1989be7fb57f",
+      "type": "edge",
+      "sourceId": "80d1792f-9c7e-41c0-8eca-eeb0509397b6",
+      "targetId": "activityNode4",
+      "args": {
+        "edgePadding": 10.0
+      }
+    }
+  ],
+  "type": "graph",
+  "revision": 10
+}

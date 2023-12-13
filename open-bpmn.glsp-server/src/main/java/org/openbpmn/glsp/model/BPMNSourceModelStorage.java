@@ -74,12 +74,11 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
     public void loadSourceModel(final RequestModelAction action) {
 
         Map<String, String> options = action.getOptions();
-        boolean bNeedsClientLayout = Boolean.parseBoolean(options.get("needsClientLayout"));
         final File file = getSourceFile(modelState);
 
         logger.debug("loadSourceModel from : " + file);
         String diagramType = options.get("diagramType");
-        if (bNeedsClientLayout && file != null && BPMNDiagramConfiguration.DIAGRAM_TYPE.equals(diagramType)) {
+        if (file != null && BPMNDiagramConfiguration.DIAGRAM_TYPE.equals(diagramType)) {
             BPMNModel model;
             try {
                 model = BPMNModelFactory.read(file);

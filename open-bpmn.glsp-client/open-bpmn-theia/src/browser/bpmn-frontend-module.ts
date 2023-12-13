@@ -20,14 +20,14 @@ import { BPMNLanguage } from '../common/bpmn-language';
 import { BPMNGLSPClientContribution } from './bpmn-glsp-client-contribution';
 import { BPMNPropertiesCommandContribution, BPMNPropertiesMenuContribution } from './bpmn-property-commands';
 import { BPMNDiagramConfiguration } from './diagram/bpmn-diagram-configuration';
-
 export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
     protected override enableCopyPaste = true;
+    readonly diagramLanguage = BPMNLanguage;
 
     bindDiagramConfiguration(context: ContainerContext): void {
         context.bind(DiagramConfiguration).to(BPMNDiagramConfiguration);
     }
-    readonly diagramLanguage = BPMNLanguage;
+
 
     override configure(context: ContainerContext): void {
         // Custom workflow commands and menus

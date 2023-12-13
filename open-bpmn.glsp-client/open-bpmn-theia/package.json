@@ -23,19 +23,18 @@
   ],
   "files": [
     "lib",
-    "src",
-    "server"
+    "src"
   ],
   "dependencies": {
     "@open-bpmn/open-bpmn-glsp": "1.2.0",
     "@eclipse-glsp/theia-integration": "2.0.0"
   },
   "scripts": {
-    "build": "tsc -b",
+    "prepare": "yarn  clean && yarn build",
     "clean": "rimraf lib tsconfig.tsbuildinfo",
+    "build": "tsc",
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:ci": "yarn lint -o eslint.xml -f checkstyle",
-    "prepare": "yarn clean && yarn build",
     "watch": "tsc -w"
   },
   "theiaExtensions": [
