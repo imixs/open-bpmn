@@ -114,5 +114,5 @@ You can list all available version with:
 
     $ nvm ls-remote
 
-We currently are using 18.17.1 for development.
+In the current code base we are using 18.17.1 for development. Before version 1.2.x we used 14.21.3. 
 
