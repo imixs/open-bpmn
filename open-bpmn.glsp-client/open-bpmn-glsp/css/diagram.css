@@ -14,17 +14,23 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
- .tool-palette .palette-body .group-header {
+.tool-palette .palette-body .group-header {
     background: var(--theia-editorHoverWidget-statusBarBackground);
- }
+}
+
 .sprotty-graph {
     font-size: 15pt;
     border: none;
     height: 100%;
-    background-size: 10px 10px;
+    xxbackground-size: 10px 10px;
+    xxbackground-image: linear-gradient(to right, var(--theia-titleBar-activeBackground) 1px, transparent 1px), linear-gradient(to bottom, var(--theia-titleBar-activeBackground) 1px, transparent 1px);
 
-	background-image: linear-gradient(to right, var(--theia-titleBar-activeBackground) 1px, transparent 1px), linear-gradient(to bottom, var(--theia-titleBar-activeBackground) 1px, transparent 1px);
-    
+}
+
+.bpmn-grid-line {
+    stroke-width: 0.5;
+    xxxfill: var(--theia-titleBar-activeBackground);
+    stroke: var(--theia-titleBar-activeBackground);
 }
 
 .sprotty-text {
@@ -65,83 +71,89 @@
     fill: transparent;
 }
 
-.task > .sprotty-node {
+.task>.sprotty-node {
     fill: #425C81;
 }
 
 /*** Events ***/
 
-.event.startEvent > circle {
-	fill: #57A14C;
+.event.startEvent>circle {
+    fill: #57A14C;
 }
-.event.endEvent > circle {
-	fill: #BE5961;
+
+.event.endEvent>circle {
+    fill: #BE5961;
     stroke-width: 3px;
     stroke: #922828;
 }
 
-.event.intermediateCatchEvent > circle {
-	fill: #6f8dab;
+.event.intermediateCatchEvent>circle {
+    fill: #6f8dab;
     stroke-width: 0px;
-    stroke: var(--theia-editor-foreground);;
-}
-.event.intermediateThrowEvent > circle {
-	fill: #6f8dab;
-    stroke-width: 0px;
-    stroke: var(--theia-editor-foreground);;
+    stroke: var(--theia-editor-foreground);
+    ;
 }
 
-.event.boundaryEvent > circle {
-	fill: #627ea5;
+.event.intermediateThrowEvent>circle {
+    fill: #6f8dab;
+    stroke-width: 0px;
+    stroke: var(--theia-editor-foreground);
+    ;
+}
+
+.event.boundaryEvent>circle {
+    fill: #627ea5;
     opacity: 80%;
-	stroke-width: 1;
-	stroke: #354152a8
+    stroke-width: 1;
+    stroke: #354152a8
 }
 
 /*** Gateways ***/
 
-.gateway > polygon {
+.gateway>polygon {
     fill: #C39D5C;
 }
 
 
-.dataObject > .sprotty-node {
-	opacity: 80%;
-	stroke: var(--theia-focusBorder);
+.dataObject>.sprotty-node {
+    opacity: 80%;
+    stroke: var(--theia-focusBorder);
     outline-color: var(--theia-editor-foreground);
     outline-style: solid;
     outline-width: 2px;
     fill: #82848a;
 }
 
-.message > .sprotty-node {
-	opacity: 80%;
-	stroke: var(--theia-focusBorder);
+.message>.sprotty-node {
+    opacity: 80%;
+    stroke: var(--theia-focusBorder);
     outline-color: var(--theia-editor-foreground);
     outline-style: solid;
     outline-width: 2px;
     fill: #6083a6;
 }
-.message > polyline {
+
+.message>polyline {
     stroke: var(--theia-editor-foreground);
     stroke-width: 2;
     fill: none;
 }
 
 
-.textAnnotation > .sprotty-node {
-	opacity: 20%;
+.textAnnotation>.sprotty-node {
+    opacity: 20%;
     fill: #82848a;
 }
 
-.textAnnotation > polyline {
+.textAnnotation>polyline {
     stroke: #57A14C;
     stroke-width: 2;
     fill: none;
 }
+
 .textAnnotation .bpmn-text-node text {
     fill: #447c3c;
-	font-size: 0.6em;
+    font-size: 0.6em;
     text-anchor: start;
 }
 
@@ -152,48 +164,51 @@
 }
 
 .task .extension text {
-	fill: #f0f3f8;
+    fill: #f0f3f8;
     font-size: 7pt;
     text-anchor: start;
 }
 
 
-.BPMNLabel > .sprotty-node {
-	fill: transparent;
+.BPMNLabel>.sprotty-node {
+    fill: transparent;
 }
 
-.BPMNLabel > .sprotty-label.heading {
-	fill: var(--theia-titleBar-activeForeground);
+.BPMNLabel>.sprotty-label.heading {
+    fill: var(--theia-titleBar-activeForeground);
 }
-.BPMNLabel > .sprotty-node.mouseover {
-	fill: var(--theia-sideBar-background);
+
+.BPMNLabel>.sprotty-node.mouseover {
+    fill: var(--theia-sideBar-background);
 }
 
 .BPMNLabel .bpmn-text-node text {
     fill: var(--theia-titleBar-activeForeground);
-	font-size: 0.6em;
+    font-size: 0.6em;
     text-anchor: middle;
 }
 
 .label-edit textarea {
     font-size: 1em !important;
-        text-align: center;
-            margin: 1px;
+    text-align: center;
+    margin: 1px;
 }
 
 /*** Pool and Lances **/
 
-.pool > .sprotty-node {
+.pool>.sprotty-node {
     fill: var(--theia-sideBar-background);
     pointer-events: none;
     fill-opacity: 70%;
     stroke: var(--theia-focusBorder);
     stroke-width: 2;
 }
-.pool > .sprotty-node.mouseover {
+
+.pool>.sprotty-node.mouseover {
     stroke: var(--theia-focusBorder);
-        opacity: 100%;
+    opacity: 100%;
 }
+
 .pool>.pool_header {
     fill: var(--theia-titleBar-activeBackground);
     stroke: var(--theia-focusBorder);
@@ -204,6 +219,7 @@
 .lane>.lane_header:hover {
     opacity: 70%;
 }
+
 .pool .pool_header text {
     font-weight: normal;
     font-size: 0.7em;
@@ -243,23 +259,24 @@
 }
 
 /* SequenceFlow */
-.bpmnedge > .sprotty-label {
+.bpmnedge>.sprotty-label {
     fill: var(--theia-titleBar-activeForeground);
     text-align: center;
 }
 
 /* MessageFlow */
 .sprotty-edge.messageFlow .line {
-   stroke-dasharray: 6,4;
+    stroke-dasharray: 6, 4;
 }
+
 /* Association */
 .sprotty-edge.association .line {
-   stroke-dasharray: 4,4;
+    stroke-dasharray: 4, 4;
 }
 
 .helper-line {
     stroke: var(--theia-focusBorder);
-	stroke-width:0.5;
+    stroke-width: 0.5;
 }
 
 .sprotty-comp {
@@ -269,13 +286,12 @@
 
 
 /* Extension Draft */
-.intermediateCatchEvent.bpmnextension-imixs > circle {
+.intermediateCatchEvent.bpmnextension-imixs>circle {
     stroke-width: 2px;
     stroke: #d48729;
 }
 
-.task.bpmnextension-imixs > .sprotty-node {
+.task.bpmnextension-imixs>.sprotty-node {
     stroke-width: 2px;
-    stroke: #d48729;  
+    stroke: #d48729;
 }
-

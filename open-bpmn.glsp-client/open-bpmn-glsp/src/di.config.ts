@@ -17,8 +17,10 @@ import {
     CircularNodeView,
     ConsoleLogger,
     ContainerConfiguration,
+    DefaultTypes,
     DeleteElementContextMenuItemProvider,
     DiamondNodeView,
+    GLSPGraph,
     LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView,
@@ -55,6 +57,7 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
+    BPMNGraphView,
     DataObjectNodeView,
     IconView,
     LaneDividerView,
@@ -83,6 +86,7 @@ import {
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
 
+
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
@@ -95,17 +99,19 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
-	// bind new SelectionListener for BPMNLabels and BoundaryEvents
-	bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
-	bind(TYPES.SelectionListener).to(BPMNMultiNodeSelectionListener);
+    // bind new SelectionListener for BPMNLabels and BoundaryEvents
+    bind(TYPES.SelectionListener).to(BPMNLabelNodeSelectionListener);
+    bind(TYPES.SelectionListener).to(BPMNMultiNodeSelectionListener);
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
 
-	// bpmn helper lines
+    // bpmn helper lines
     bind(TYPES.MouseListener).to(HelperLineListener);
     configureCommand({ bind, isBound }, DrawHelperLinesCommand);
     configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
     configureView({ bind, isBound }, 'helpline', HelperLineView);
     configureDefaultModelElements(context);
+
+    configureModelElement(context, DefaultTypes.GRAPH, GLSPGraph, BPMNGraphView);
 
     configureModelElement(context, 'task', TaskNode, TaskNodeView);
     configureModelElement(context, 'manualTask', TaskNode, TaskNodeView);
@@ -137,9 +143,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool_header', SCompartment, PoolHeaderView);
     configureModelElement(context, 'lane_header', SCompartment, LaneHeaderView);
 
-    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] } );
+    configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] });
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView, {
-              disable: [moveFeature, selectFeature]}
+        disable: [moveFeature, selectFeature]
+    }
     );
 
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
