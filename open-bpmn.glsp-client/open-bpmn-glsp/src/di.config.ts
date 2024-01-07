@@ -21,7 +21,6 @@ import {
     DiamondNodeView,
     GCompartment,
     GCompartmentView,
-    GLSPActionDispatcher,
     GLabel,
     GLabelView,
     LogLevel,
@@ -74,7 +73,6 @@ import {
 } from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
-    ActionDispatcherFactory,
     BPMNLabelNodeSelectionListener,
     BPMNMultiNodeSelectionListener
 } from './bpmn-select-listeners';
@@ -84,27 +82,8 @@ import {
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
 
-
-
-
-
-
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-
-    /**
-     * WORKAROUND START
-     * 
-     * This is a workarround for 
-     * 
-     * https://github.com/eclipse-glsp/glsp/discussions/1169#discussioncomment-7704089
-     * https://github.com/eclipse-glsp/glsp/discussions/1160#discussioncomment-7701447
-     * 
-     */
-    bind(ActionDispatcherFactory).toFactory<GLSPActionDispatcher>(
-        ctx => () => ctx.container.get<GLSPActionDispatcher>(TYPES.IActionDispatcher)
-    );
-    /* WORKARROUND END */
 
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
@@ -116,7 +95,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
     // bind new SelectionListener for BPMNLabels and BoundaryEvents
-    // PROBLEMBEREICH
     bind(TYPES.ISelectionListener).to(BPMNLabelNodeSelectionListener);
     bind(TYPES.ISelectionListener).to(BPMNMultiNodeSelectionListener);
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
@@ -199,6 +177,7 @@ export function createBPMNDiagramContainer(...containerConfiguration: ContainerC
 
 export function initializeBPMNDiagramContainer(container: Container,
     ...containerConfiguration: ContainerConfiguration): Container {
-    return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
     //return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
+    return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
+    //return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModuleTest, ...containerConfiguration);
 }

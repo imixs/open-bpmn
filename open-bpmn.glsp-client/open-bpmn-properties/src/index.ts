@@ -13,49 +13,49 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { EnableToolPaletteAction, FeatureModule, GLSPActionDispatcher, TYPES } from '@eclipse-glsp/client';
-//import { ContainerModule } from 'inversify';
-import { configureActionHandler } from 'sprotty';
-import { ActionDispatcherFactory, BPMNPropertyPanel, BPMNPropertyPanelToggleAction, BPMNPropertyPanelUpdateAction } from './bpmn-property-panel';
+import {
+    FeatureModule,
+    SetModelAction,
+    TYPES,
+    configureActionHandler
+} from '@eclipse-glsp/client';
+import {
+    BPMNPropertyPanel,
+    BPMNPropertyPanelToggleAction,
+    BPMNPropertyPanelUpdateAction
+} from './bpmn-property-panel';
 
 
 // css styles
 import '../css/bpmn-properties.css';
 import '../css/jsonforms-theia.css';
 
-// export const BPMNPropertyModule = new ContainerModule((bind, _unbind, isBound, rebind) => {
-//     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
-//     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
-//     configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
-//     configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
-//     configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
-// });
-export const BPMNPropertyModule = new FeatureModule((bind, _unbind, isBound, _isBound) => {
+
+export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebind) => {
+
+    console.log('.---- in construct BPMNPropertyModule');
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     bind(TYPES.IDiagramStartup).toService(BPMNPropertyPanel);
-    bind(TYPES.ISelectionListener).to(BPMNPropertyPanel);
+    bind(TYPES.ISelectionListener).toService(BPMNPropertyPanel);
 
 
-    /**
-    * WORKAROUND START
-    * 
-    * This is a workarround for 
-    * 
-    * https://github.com/eclipse-glsp/glsp/discussions/1169#discussioncomment-7704089
-    * https://github.com/eclipse-glsp/glsp/discussions/1160#discussioncomment-7701447
-    * 
-    */
-    bind(ActionDispatcherFactory).toFactory<GLSPActionDispatcher>(
-        ctx => () => ctx.container.get<GLSPActionDispatcher>(TYPES.IActionDispatcher)
-    );
-    /* WORKARROUND END */
-
-
-    configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
+    // EnableToolPaletteAction should no longer be neccessary - see: https://github.com/eclipse-glsp/glsp/discussions/1184
+    // but we have a problem with the inital selection...
+    //configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
+
+
+    configureActionHandler({ bind, isBound }, SetModelAction.KIND, BPMNPropertyPanel);
+
+    // TEST
+    // const context = { bind, unbind, isBound, rebind };
+    // bindAsService(context, TYPES.ISelectionListener, BPMNPropertyPanel);
 });
+
+
+
 export {
     BPMNPropertiesMouseListener,
     BPMNPropertyPanel,

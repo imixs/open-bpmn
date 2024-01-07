@@ -15,10 +15,10 @@
  ********************************************************************************/
 import {
   ActionDispatcher,
-  GLSPActionDispatcher,
   GModelRoot,
   ISelectionListener,
   SelectAction,
+  TYPES,
   filter,
   getElements,
   hasArgs
@@ -39,38 +39,12 @@ import { inject, injectable } from 'inversify';
  * This selectionListener selects additional associated BoundaryEvents and BPMNLabels.
  * This allows to move both independent Nodes (TaskNode and BoundaryEvent, GNode and GLabel)
  */
-
-/**
- * This is a workarround for 
- * 
- * https://github.com/eclipse-glsp/glsp/discussions/1169#discussioncomment-7704089
- * https://github.com/eclipse-glsp/glsp/discussions/1160#discussioncomment-7701447
- * 
- */
-export const ActionDispatcherFactory = Symbol("ActionDispatcherFactory");
-
-
-
 @injectable()
 export class BPMNLabelNodeSelectionListener implements ISelectionListener {
+  @inject(TYPES.IActionDispatcher)
+  protected actionDispatcher: ActionDispatcher;
 
-  /* 
-   * WORKAROUND START
-   */
-  @inject(ActionDispatcherFactory)
-  protected actionDispatcherFactory: () => GLSPActionDispatcher;
-  private _actionDispatcher: GLSPActionDispatcher | undefined;
-  get actionDispatcher(): ActionDispatcher {
-    if (!this._actionDispatcher) {
-      this._actionDispatcher = this.actionDispatcherFactory();
-    }
-    return this._actionDispatcher;
-  }
-  /* 
-   * WORKAROUND END
-   */
-
-  selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]) {
+  selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
     const additionalSelection: string[] = [''];
     // We are interested in Tasks with BoundaryEvents ...
     const selectedTaskNodes = getElements(root.index, selectedElements, isTaskNode);
@@ -98,22 +72,10 @@ export class BPMNLabelNodeSelectionListener implements ISelectionListener {
         additionalSelection.push(l);
       });
     }
-
-
     // finally dispatch the additional elementIDs...
-    //this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: additionalSelection }));
-    this.updateSelectionData(additionalSelection);
-  }
-
-
-  async updateSelectionData(additionalSelection: string[]): Promise<string[]> {
-    // do something
     this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: additionalSelection }));
-    return additionalSelection;
   }
 }
-
-
 
 /**
  * This selectionListener reacts on multiple selection. In case the selection list contains
@@ -123,25 +85,8 @@ export class BPMNLabelNodeSelectionListener implements ISelectionListener {
  */
 @injectable()
 export class BPMNMultiNodeSelectionListener implements ISelectionListener {
-  // @inject(TYPES.IActionDispatcher)
-  // protected actionDispatcher: ActionDispatcher;
-
-  /* 
-   * WORKAROUND START
-   */
-  @inject(ActionDispatcherFactory)
-  protected actionDispatcherFactory: () => GLSPActionDispatcher;
-  private _actionDispatcher: GLSPActionDispatcher | undefined;
-  get actionDispatcher(): ActionDispatcher {
-    if (!this._actionDispatcher) {
-      this._actionDispatcher = this.actionDispatcherFactory();
-    }
-    return this._actionDispatcher;
-  }
-  /* 
-   * WORKAROUND END
-   */
-
+  @inject(TYPES.IActionDispatcher)
+  protected actionDispatcher: ActionDispatcher;
 
   selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
     // react only if more than one element is selected
@@ -170,15 +115,6 @@ export class BPMNMultiNodeSelectionListener implements ISelectionListener {
       return !containerIDs.includes(element);
     });
     // finally dispatch the updated selected and unselected IDs...
-    // this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: selectedElements, deselectedElementsIDs: containerIDs }));
-    this.updateSelectionData(selectedElements, containerIDs);
-  }
-
-
-
-  async updateSelectionData(addSelectIDs: string[], deselectIDs: string[]): Promise<string[]> {
-    // do something
-    this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: addSelectIDs, deselectedElementsIDs: deselectIDs }));
-    return addSelectIDs;
+    this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: selectedElements, deselectedElementsIDs: containerIDs }));
   }
 }

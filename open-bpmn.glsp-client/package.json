@@ -42,7 +42,7 @@
     "string-width": "4.2.3"
   },
   "devDependencies": {
-    "@eclipse-glsp/config": "2.0.0",
+    "@eclipse-glsp/config": "2.1.0-next.de11704.146",
     "rimraf": "^2.6.1",
     "lerna": "^6.6.1",
     "typescript": "^5.2.2"
