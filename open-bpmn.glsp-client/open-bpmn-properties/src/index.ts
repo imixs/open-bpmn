@@ -15,14 +15,12 @@
  ********************************************************************************/
 import {
     FeatureModule,
-    SetModelAction,
     TYPES,
     configureActionHandler
 } from '@eclipse-glsp/client';
 import {
     BPMNPropertyPanel,
-    BPMNPropertyPanelToggleAction,
-    BPMNPropertyPanelUpdateAction
+    BPMNPropertyPanelToggleAction
 } from './bpmn-property-panel';
 
 
@@ -39,19 +37,13 @@ export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebi
     bind(TYPES.IDiagramStartup).toService(BPMNPropertyPanel);
     bind(TYPES.ISelectionListener).toService(BPMNPropertyPanel);
 
-
     // EnableToolPaletteAction should no longer be neccessary - see: https://github.com/eclipse-glsp/glsp/discussions/1184
     // but we have a problem with the inital selection...
     //configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
-    configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
+    // configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
+    // configureActionHandler({ bind, isBound }, SetModelAction.KIND, BPMNPropertyPanel);
 
-
-    configureActionHandler({ bind, isBound }, SetModelAction.KIND, BPMNPropertyPanel);
-
-    // TEST
-    // const context = { bind, unbind, isBound, rebind };
-    // bindAsService(context, TYPES.ISelectionListener, BPMNPropertyPanel);
 });
 
 

@@ -16,7 +16,6 @@
 import {
     AbstractUIExtension,
     EnableDefaultToolsAction,
-    EnableToolPaletteAction,
     EnableToolsAction,
     GLSPActionDispatcher,
     GModelElement,
@@ -27,11 +26,10 @@ import {
     ISelectionListener,
     MaybePromise,
     MouseListener,
-    SetUIExtensionVisibilityAction,
     TYPES,
     hasArgs
 } from '@eclipse-glsp/client';
-import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
+import { Action } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
@@ -39,41 +37,28 @@ import { inject, injectable } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
-
 import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
 import { TextFileEditorRendererEntry } from './TextFileEditorControl';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements ISelectionListener, IActionHandler, IDiagramStartup {
-
+export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramStartup, ISelectionListener, IActionHandler {
     static readonly ID = 'bpmn-property-panel';
 
-    @inject(TYPES.IActionDispatcher)
-    protected readonly actionDispatcher: GLSPActionDispatcher;
-
-
-
-    // @inject(EditorContextService)
-    // protected readonly editorContext: EditorContextService;
-
-    // @inject(SelectionService)
-    // protected selectionService: SelectionService;
-
-    protected bodyDiv: HTMLElement;
     protected headerDiv: HTMLElement;
-    protected panelContainer: any;
-    modelRootId: string;
     modelRoot: Readonly<GModelRoot>;
+    headerTitle: HTMLElement;
+    protected bodyDiv: HTMLElement;
+    protected panelContainer: any;
     selectedElementId: string;
     initForm: boolean;
     lastCategory: string;
     isResizing: boolean;
     panelToggle: boolean;
     currentY: number;
-    headerTitle: HTMLElement;
 
-
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: GLSPActionDispatcher;
 
     override id(): string {
         return BPMNPropertyPanel.ID;
@@ -82,25 +67,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements ISelection
         return BPMNPropertyPanel.ID;
     }
 
-    preInitialize?(): MaybePromise<void>;
-
     /**
-     * This method is called during the {@link DiagramLoader.load} process.
-     * We use this hook to activate UI extensions on startup.
-     * Execution order is derived by the `rank` property of the service. If not present, the {@link Ranked.DEFAULT_RANK} will be assumed.
-     *
+     * This mehtod is called after the diagram model is fully initialized. This is the moment to render the HTML element
      */
-    // postModelInitialization(): MaybePromise<void> {
-    //     this.show(this.editorContext.modelRoot);
-    // }
-
-    /*
-     * Initialize the elements of property panel
-     */
-    protected override initializeContents(_containerElement: HTMLElement): void {
-        console.log('.------- initializeContents');
-        this.createHeader();
-        this.createBody();
+    postModelInitialization(): MaybePromise<void> {
+        //this.show(this.editorContext.modelRoot);
+        this.show(this.modelRoot);
     }
 
     /**
@@ -111,10 +83,19 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements ISelection
      * @param root
      */
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
-        this.modelRootId = root.id;
+        this.modelRoot = root;
         console.log('.------- onBeforeShow');
         // preselect the root element showing the diagram properties
         this.selectionChanged(root, []);
+    }
+
+    /*
+     * Initialize the elements of property panel
+     */
+    protected override initializeContents(_containerElement: HTMLElement): void {
+        console.log('.------- initializeContents - create header/body');
+        this.createHeader();
+        this.createBody();
     }
 
     /*
@@ -245,26 +226,26 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements ISelection
     handle(action: Action): ICommand | Action | void {
         console.log('.----- handleAction....');
         // check enable state
-        if (!this.bodyDiv && action.kind === EnableToolPaletteAction.KIND) {
-            const requestAction = RequestContextActions.create({
-                // contextId: ToolPalette.ID,
-                contextId: BPMNPropertyPanel.ID,
-                editorContext: {
-                    selectedElementIds: []
-                }
-            });
-            this.actionDispatcher.requestUntil(requestAction).then(response => {
-                if (SetContextActions.is(response)) {
-                    this.actionDispatcher.dispatch(
-                        SetUIExtensionVisibilityAction.create({
-                            extensionId: BPMNPropertyPanel.ID,
-                            //visible: !this.editorContext.isReadonly
-                            visible: true
-                        })
-                    );
-                }
-            });
-        }
+        // if (!this.bodyDiv && action.kind === EnableToolPaletteAction.KIND) {
+        //     const requestAction = RequestContextActions.create({
+        //         // contextId: ToolPalette.ID,
+        //         contextId: BPMNPropertyPanel.ID,
+        //         editorContext: {
+        //             selectedElementIds: []
+        //         }
+        //     });
+        //     this.actionDispatcher.requestUntil(requestAction).then(response => {
+        //         if (SetContextActions.is(response)) {
+        //             this.actionDispatcher.dispatch(
+        //                 SetUIExtensionVisibilityAction.create({
+        //                     extensionId: BPMNPropertyPanel.ID,
+        //                     //visible: !this.editorContext.isReadonly
+        //                     visible: true
+        //                 })
+        //             );
+        //         }
+        //     });
+        // }
 
         // Toggle the property panel. Action is triggered by context menu
         if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
