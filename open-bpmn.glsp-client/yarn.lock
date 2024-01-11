@@ -965,7 +965,17 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.7.tgz#1d572bfbbe14b7704e0ba0f39b74815b84870d70"
   integrity sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==
 
-"@eclipse-glsp/client@2.1.0-next.303", "@eclipse-glsp/client@next":
+"@eclipse-glsp/client@2.1.0-next":
+  version "2.1.0-next.12ca798.289"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/client/-/client-2.1.0-next.12ca798.289.tgz#d76f973bbfb8ca385a0971cf6af6d2842feaa2d9"
+  integrity sha512-FU0nmhkNjbVzhI06/V5LP20b6h/oWEMkp3scPREpJRwQORMWotz6hWuvg4xxjoTAcbsa0Yelg9KFC2ONrfUuIQ==
+  dependencies:
+    "@eclipse-glsp/sprotty" "2.1.0-next.12ca798.289+12ca798"
+    autocompleter "^9.1.0"
+    file-saver "^2.0.5"
+    lodash "4.17.21"
+
+"@eclipse-glsp/client@next":
   version "2.1.0-next.303"
   resolved "https://registry.yarnpkg.com/@eclipse-glsp/client/-/client-2.1.0-next.303.tgz#33360768c94c7507e0a282af5d2429d801481416"
   integrity sha512-za3rHLgPu+oS0PbURFQp65NebZn3crcCC51RYS+uVCOAmC3B5ChZwTopnnDWp7WKRHsA/pGo8XsOVuUBdFW3AA==
@@ -1008,6 +1018,15 @@
   dependencies:
     prettier-plugin-packagejson "~2.4.6"
 
+"@eclipse-glsp/protocol@2.1.0-next.12ca798.289+12ca798":
+  version "2.1.0-next.12ca798.289"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/protocol/-/protocol-2.1.0-next.12ca798.289.tgz#53f8b3026a1896f287e175d447b24a2b5c8991f8"
+  integrity sha512-ZgiC7067re9jGi0pVtbQ1lVxSTZzm9kw+LWzvXCu4AFSvVWQ5xKgvVyqdhFxCiRgtU7/oM6HVXeitFA09LEIag==
+  dependencies:
+    sprotty-protocol "0.15.0-next.044bba2.13"
+    uuid "7.0.3"
+    vscode-jsonrpc "^8.0.2"
+
 "@eclipse-glsp/protocol@2.1.0-next.303+f286b9d":
   version "2.1.0-next.303"
   resolved "https://registry.yarnpkg.com/@eclipse-glsp/protocol/-/protocol-2.1.0-next.303.tgz#8254b0456d6fe8f4d2a51c53e6fab78b2fd04cb1"
@@ -1016,6 +1035,17 @@
     sprotty-protocol "0.15.0-next.044bba2.13"
     uuid "7.0.3"
     vscode-jsonrpc "^8.0.2"
+
+"@eclipse-glsp/sprotty@2.1.0-next.12ca798.289+12ca798":
+  version "2.1.0-next.12ca798.289"
+  resolved "https://registry.yarnpkg.com/@eclipse-glsp/sprotty/-/sprotty-2.1.0-next.12ca798.289.tgz#a462d167cd9c5f40e13536b9a3204d1ca3ebf815"
+  integrity sha512-PLoUIVXI4XFANTpt0kw2vzbyiJYoObXYESgQWlrUjP9rmfVdNl6KMtitaLKJXSGn8qQKvVOKuCbbowK4Jbndrg==
+  dependencies:
+    "@eclipse-glsp/protocol" "2.1.0-next.12ca798.289+12ca798"
+    autocompleter "^9.1.0"
+    snabbdom "^3.5.1"
+    sprotty "1.0.0"
+    sprotty-protocol "1.0.0"
 
 "@eclipse-glsp/sprotty@2.1.0-next.303+f286b9d":
   version "2.1.0-next.303"
@@ -10814,6 +10844,7 @@ workerpool@6.2.1:
   integrity sha512-ILEIE97kDZvF9Wb9f6h5aXK4swSlKGUcOEGiIYb2OOu/IrDU9iwj0fD//SsA6E5ibwJxpEvhullJY4Sl4GcpAw==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==

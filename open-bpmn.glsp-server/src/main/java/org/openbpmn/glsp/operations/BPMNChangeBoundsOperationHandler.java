@@ -157,7 +157,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                         String flowElementID = BPMNGModelUtil.resolveFlowElementIDfromLabelID(id);
                         BPMNElementNode _bpmnElement = modelState.getBpmnModel().findElementNodeById(flowElementID);
                         BPMNLabel bpmnLabel = _bpmnElement.getLabel();
-
                         updateLabel(gNode, bpmnLabel, offsetX, offsetY);
                     }
 
@@ -436,30 +435,29 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             // now we can update the absolute position of the label
             BPMNPoint labelPoint = bpmnLabel.getBounds().getPosition();
             bpmnLabel.updateLocation(labelPoint.getX() + offsetX, labelPoint.getY() + offsetY);
-        }
 
-        // next update the GLabel position
-        // if the label is in a container (Pool) we need to compute the relative
-        // position
-        GModelElement parent = gLabel.getParent();
-        GPoint newLabelGPoint = null;
-        double absoluteX = bpmnLabel.getPosition().getX();
-        double absoluteY = bpmnLabel.getPosition().getY();
+            // next update the GLabel position
+            // if the label is in a container (Pool) we need to compute the relative
+            // position
+            GModelElement parent = gLabel.getParent();
+            GPoint newLabelGPoint = null;
+            double absoluteX = bpmnLabel.getPosition().getX();
+            double absoluteY = bpmnLabel.getPosition().getY();
 
-        // is it a pool?
-        if (parent instanceof PoolGNode) {
-            GPoint poolPosition = ((GNode) parent).getPosition();
-            double relativeX = absoluteX - poolPosition.getX();
-            double relativeY = absoluteY - poolPosition.getY();
-            newLabelGPoint = GraphUtil.point(relativeX, relativeY);
-        } else {
-            // parent is the root plane
-            newLabelGPoint = GraphUtil.point(absoluteX, absoluteY);
+            // is it a pool?
+            if (parent instanceof PoolGNode) {
+                GPoint poolPosition = ((GNode) parent).getPosition();
+                double relativeX = absoluteX - poolPosition.getX();
+                double relativeY = absoluteY - poolPosition.getY();
+                newLabelGPoint = GraphUtil.point(relativeX, relativeY);
+            } else {
+                // parent is the root plane
+                newLabelGPoint = GraphUtil.point(absoluteX, absoluteY);
+            }
+            if (newLabelGPoint != null) {
+                gLabel.setPosition(newLabelGPoint);
+            }
         }
-        if (newLabelGPoint != null) {
-            gLabel.setPosition(newLabelGPoint);
-        }
-
     }
 
     /**

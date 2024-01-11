@@ -23,14 +23,13 @@ import {
     GCompartmentView,
     GLabel,
     GLabelView,
+    GridSnapper,
     LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView,
     TYPES,
-    configureCommand,
     configureDefaultModelElements,
     configureModelElement,
-    configureView,
     editLabelFeature,
     initializeDiagramContainer,
     moveFeature,
@@ -64,30 +63,34 @@ import {
     TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
-import {
-    BPMNElementSnapper,
-    DrawHelperLinesCommand,
-    HelperLineListener,
-    HelperLineView,
-    RemoveHelperLinesCommand
-} from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
-import {
-    BPMNLabelNodeSelectionListener,
-    BPMNMultiNodeSelectionListener
-} from './bpmn-select-listeners';
 
 import {
     BPMNPropertiesMouseListener,
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
+import {
+    bpmnHelperLineModule,
+} from './bpmn-helper-lines/bpmn-helper-line-module';
+import {
+    BPMNLabelNodeSelectionListener,
+    BPMNMultiNodeSelectionListener
+} from './bpmn-select-listeners';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
-    bind(TYPES.ISnapper).to(BPMNElementSnapper);
+    //bind(TYPES.ISnapper).to(BPMNElementSnapper);
+
+
+    //bind(TYPES.ISnapper).to(GridSnapper);
+    bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 1, y: 1 }));
+    //bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper({ x: 10, y: 10 }));
+
+
+    //bind(TYPES.ISnapper).toConstantValue(new CenterGridSnapper());
 
     // We do not whant a reveal action in BPMN
     // ???? bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
@@ -100,10 +103,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
 
     // bpmn helper lines
-    bind(TYPES.MouseListener).to(HelperLineListener);
-    configureCommand({ bind, isBound }, DrawHelperLinesCommand);
-    configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
-    configureView({ bind, isBound }, 'helpline', HelperLineView);
+    // bind(TYPES.MouseListener).to(HelperLineListener);
+    // configureCommand({ bind, isBound }, DrawHelperLinesCommand);
+    // configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
+    // configureView({ bind, isBound }, 'helpline', HelperLineView);
     configureDefaultModelElements(context);
 
     configureModelElement(context, 'task', TaskNode, TaskNodeView);
@@ -177,7 +180,9 @@ export function createBPMNDiagramContainer(...containerConfiguration: ContainerC
 
 export function initializeBPMNDiagramContainer(container: Container,
     ...containerConfiguration: ContainerConfiguration): Container {
-    //return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
-    return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
-    //return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModuleTest, ...containerConfiguration);
+    // return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
+    // return initializeDiagramContainer(container, bpmnDiagramModule, helperLineModule, BPMNPropertyModule, ...containerConfiguration);
+    return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
+
+
 }

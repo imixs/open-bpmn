@@ -15,7 +15,9 @@
  ********************************************************************************/
 import {
     AbstractUIExtension,
+    EditorContextService,
     EnableDefaultToolsAction,
+    EnableToolPaletteAction,
     EnableToolsAction,
     GLSPActionDispatcher,
     GModelElement,
@@ -24,12 +26,12 @@ import {
     ICommand,
     IDiagramStartup,
     ISelectionListener,
-    MaybePromise,
     MouseListener,
+    SetUIExtensionVisibilityAction,
     TYPES,
     hasArgs
 } from '@eclipse-glsp/client';
-import { Action } from '@eclipse-glsp/protocol';
+import { Action, RequestContextActions, SetContextActions } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
@@ -37,28 +39,250 @@ import { inject, injectable } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
+
 import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
 import { TextFileEditorRendererEntry } from './TextFileEditorControl';
 
+
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
-export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramStartup, ISelectionListener, IActionHandler {
-    static readonly ID = 'bpmn-property-panel';
+export class BPMNDummyPanel extends AbstractUIExtension implements IDiagramStartup {
+    static readonly ID = 'bpmn-dummy-panel';
 
-    protected headerDiv: HTMLElement;
-    modelRoot: Readonly<GModelRoot>;
+
     headerTitle: HTMLElement;
     protected bodyDiv: HTMLElement;
+    protected headerDiv: HTMLElement;
+    isResizing: boolean;
+    panelToggle: boolean;
+    currentY: number;
+    selectedElementId: string;
+
+    @inject(GLSPActionDispatcher)
+    protected actionDispatcher: GLSPActionDispatcher;
+
+    @inject(EditorContextService)
+    protected editorContext: EditorContextService;
+
+    override id(): string {
+        return BPMNDummyPanel.ID;
+    }
+    override containerClass(): string {
+        return BPMNDummyPanel.ID;
+    }
+
+    // preInitialize?(): MaybePromise<void>;
+
+    preInitialize(): void {
+        this.show(this.editorContext.modelRoot);
+    }
+
+    protected override initializeContents(_containerElement: HTMLElement): void {
+        console.log('.------- initializeContents - create header/body');
+        this.createHeader();
+        this.createBody();
+
+    }
+    /*
+        * This method creates a header bar that can be grabbed with the mouse
+        * to resize the height of the property panel.
+        */
+    protected createHeader(): void {
+        const headerCompartment = document.createElement('div');
+        headerCompartment.classList.add('bpmn-property-header');
+        headerCompartment.append(this.createHeaderTitle());
+        headerCompartment.appendChild(this.createHeaderTools());
+        this.containerElement.appendChild(headerCompartment);
+        this.headerDiv = headerCompartment;
+
+        // eslint-disable-next-line arrow-parens
+        this.headerDiv.addEventListener('mousedown', (e) => {
+            this.isResizing = true;
+            this.currentY = e.clientY;
+        });
+        // eslint-disable-next-line arrow-parens
+        this.headerDiv.addEventListener('mouseup', (e) => {
+            this.isResizing = false;
+        });
+        // eslint-disable-next-line arrow-parens
+        window.addEventListener('mousemove', (e) => {
+            if (!this.isResizing) {
+                return;
+            }
+            const parent = this.containerElement.parentElement;
+            let _newheight = this.containerElement.offsetHeight - (e.clientY - this.currentY);
+            // fix minheigt
+            if (_newheight < 28) {
+                _newheight = 28;
+                this.isResizing = false;
+            }
+            // fix maxheight
+            if (parent && _newheight > parent.offsetHeight - 28) {
+                _newheight = parent.offsetHeight - 28;
+                this.isResizing = false;
+            }
+            this.containerElement.style.height = `${_newheight}px`;
+            this.currentY = e.clientY;
+
+            // if the mouse is no longer within the diagram plane, we stop the resizing
+            if (parent && !parent.matches(':hover')) {
+                this.isResizing = false;
+            }
+        });
+    }
+
+    protected createBody(): void {
+        const bodyDiv = document.createElement('div');
+        bodyDiv.classList.add('bpmn-properties-body');
+        this.containerElement.appendChild(bodyDiv);
+        this.bodyDiv = bodyDiv;
+    }
+
+    protected createHeaderTitle(): HTMLElement {
+        const header = document.createElement('div');
+        header.classList.add('header-icon');
+        header.appendChild(createIcon('extensions'));
+        this.headerTitle = document.createElement('span');
+        header.appendChild(this.headerTitle);
+        this.headerTitle.textContent = 'BPMN Properties';
+        return header;
+    }
+
+    /*
+     * This method creates the header tool buttons to control the size of the panel
+     * Icons can be found here:
+     * https://microsoft.github.io/vscode-codicons/dist/codicon.html
+     */
+    private createHeaderTools(): HTMLElement {
+        const headerTools = document.createElement('div');
+        headerTools.classList.add('header-tools');
+
+        const hideToolButton = createIcon('chrome-minimize');
+        hideToolButton.title = 'Hide Property Panel';
+        hideToolButton.onclick = this.onClickResizePanel(hideToolButton, 'TOOL_COMMAND_HIDE');
+        headerTools.appendChild(hideToolButton);
+
+        const maximizeToolButton = createIcon('chevron-up');
+        maximizeToolButton.title = 'Maximize Property Panel';
+        maximizeToolButton.onclick = this.onClickResizePanel(maximizeToolButton, 'TOOL_COMMAND_MAXIMIZE');
+        headerTools.appendChild(maximizeToolButton);
+
+        return headerTools;
+    }
+
+    /**
+    * Helper method to resize the property panel
+    *
+    * @param button
+    * @param toolId
+    * @returns
+    */
+    protected onClickResizePanel(button: HTMLElement, toolId?: string) {
+        return (_ev: MouseEvent) => {
+            // if (!this.editorContext.isReadonly) {
+            //if (true) {
+            const action = toolId ? EnableToolsAction.create([toolId]) : EnableDefaultToolsAction.create();
+            this.actionDispatcher.dispatch(action);
+            if (toolId === 'TOOL_COMMAND_MAXIMIZE') {
+                this.containerElement.style.height = '50%';
+            }
+            if (toolId === 'TOOL_COMMAND_HIDE') {
+                this.containerElement.style.height = '28px';
+            }
+            // restore the default actions in the diagram panel (like move elements)
+            this.actionDispatcher.dispatch(EnableDefaultToolsAction.create());
+            //}
+        };
+    }
+
+
+    /*
+   * We react on different event actions.
+   *
+   * The EnableToolPaletteAction is used to make the property panel visible
+   * If we already have the bodyDiv defined, than we skip this event.
+   * See Discussion: https://github.com/eclipse-glsp/glsp/discussions/910
+   *
+   * The BPMNPropertyPanelToggleAction is used to show/hide the
+   * propertyPanel. This action is called by context menus.
+   *
+   * The BPMNPropertyPanelUpdateAction is send by the server during an update
+   * of the data state and indicates that the property panel need to be refreshed.
+   */
+    handle(action: Action): ICommand | Action | void {
+        console.log('.----- handleAction....');
+
+
+        // Toggle the property panel. Action is triggered by context menu
+        if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
+            if (!this.panelToggle) {
+                this.containerElement.style.height = '50%';
+            } else {
+                this.containerElement.style.height = '28px';
+            }
+            this.panelToggle = !this.panelToggle;
+        }
+
+        // Update content of the property panel. Action is triggered by the server
+        if (action.kind === BPMNPropertyPanelUpdateAction.KIND) {
+            this.updatePropertyPanel(this.selectedElementId);
+        }
+    }
+
+
+
+
+    /**
+     * This helper method is responsible to refresh teh property panel.
+     * The method loads the element from the root model context and updates
+     * the JsonForms schemata.
+     *
+     * @param _elementID
+     */
+    updatePropertyPanel(_elementID: string): void {
+        console.log('...bin in updatePropertyPanel');
+        // return if we do not yet have a body DIV.
+        if (!this.bodyDiv) {
+            return;
+        }
+
+
+    }
+
+}
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+@injectable()
+export class BPMNPropertyPanel extends AbstractUIExtension implements ISelectionListener, IActionHandler, IDiagramStartup {
+
+    static readonly ID = 'bpmn-property-panel';
+
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: GLSPActionDispatcher;
+
+    @inject(EditorContextService)
+    protected editorContext: EditorContextService;
+
+
+    // @inject(EditorContextService)
+    // protected readonly editorContext: EditorContextService;
+
+    // @inject(SelectionService)
+    // protected selectionService: SelectionService;
+
+    protected bodyDiv: HTMLElement;
+    protected headerDiv: HTMLElement;
     protected panelContainer: any;
+    modelRootId: string;
+    modelRoot: Readonly<GModelRoot>;
     selectedElementId: string;
     initForm: boolean;
     lastCategory: string;
     isResizing: boolean;
     panelToggle: boolean;
     currentY: number;
+    headerTitle: HTMLElement;
 
-    @inject(TYPES.IActionDispatcher)
-    protected readonly actionDispatcher: GLSPActionDispatcher;
+
 
     override id(): string {
         return BPMNPropertyPanel.ID;
@@ -67,12 +291,30 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
         return BPMNPropertyPanel.ID;
     }
 
+    // preInitialize?(): MaybePromise<void>;
+
+    preInitialize(): void {
+        this.show(this.editorContext.modelRoot);
+    }
+
+
     /**
-     * This mehtod is called after the diagram model is fully initialized. This is the moment to render the HTML element
+     * This method is called during the {@link DiagramLoader.load} process.
+     * We use this hook to activate UI extensions on startup.
+     * Execution order is derived by the `rank` property of the service. If not present, the {@link Ranked.DEFAULT_RANK} will be assumed.
+     *
      */
-    postModelInitialization(): MaybePromise<void> {
-        //this.show(this.editorContext.modelRoot);
-        this.show(this.modelRoot);
+    // postModelInitialization(): MaybePromise<void> {
+    //     this.show(this.editorContext.modelRoot);
+    // }
+
+    /*
+     * Initialize the elements of property panel
+     */
+    protected override initializeContents(_containerElement: HTMLElement): void {
+        console.log('.------- initializeContents - create header/body');
+        this.createHeader();
+        this.createBody();
     }
 
     /**
@@ -83,19 +325,10 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * @param root
      */
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
-        this.modelRoot = root;
+        this.modelRootId = root.id;
         console.log('.------- onBeforeShow');
         // preselect the root element showing the diagram properties
         this.selectionChanged(root, []);
-    }
-
-    /*
-     * Initialize the elements of property panel
-     */
-    protected override initializeContents(_containerElement: HTMLElement): void {
-        console.log('.------- initializeContents - create header/body');
-        this.createHeader();
-        this.createBody();
     }
 
     /*
@@ -226,26 +459,26 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     handle(action: Action): ICommand | Action | void {
         console.log('.----- handleAction....');
         // check enable state
-        // if (!this.bodyDiv && action.kind === EnableToolPaletteAction.KIND) {
-        //     const requestAction = RequestContextActions.create({
-        //         // contextId: ToolPalette.ID,
-        //         contextId: BPMNPropertyPanel.ID,
-        //         editorContext: {
-        //             selectedElementIds: []
-        //         }
-        //     });
-        //     this.actionDispatcher.requestUntil(requestAction).then(response => {
-        //         if (SetContextActions.is(response)) {
-        //             this.actionDispatcher.dispatch(
-        //                 SetUIExtensionVisibilityAction.create({
-        //                     extensionId: BPMNPropertyPanel.ID,
-        //                     //visible: !this.editorContext.isReadonly
-        //                     visible: true
-        //                 })
-        //             );
-        //         }
-        //     });
-        // }
+        if (!this.bodyDiv && action.kind === EnableToolPaletteAction.KIND) {
+            const requestAction = RequestContextActions.create({
+                // contextId: ToolPalette.ID,
+                contextId: BPMNPropertyPanel.ID,
+                editorContext: {
+                    selectedElementIds: []
+                }
+            });
+            this.actionDispatcher.requestUntil(requestAction).then(response => {
+                if (SetContextActions.is(response)) {
+                    this.actionDispatcher.dispatch(
+                        SetUIExtensionVisibilityAction.create({
+                            extensionId: BPMNPropertyPanel.ID,
+                            //visible: !this.editorContext.isReadonly
+                            visible: true
+                        })
+                    );
+                }
+            });
+        }
 
         // Toggle the property panel. Action is triggered by context menu
         if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
@@ -272,6 +505,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
         this.modelRoot = root;
+        console.log('bin in selection changed');
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
             return;
