@@ -28,9 +28,11 @@ import {
     RectangularNodeView,
     RoundedCornerNodeView,
     TYPES,
+    alignmentElementFilter,
     configureDefaultModelElements,
     configureModelElement,
     editLabelFeature,
+    helperLineModule,
     initializeDiagramContainer,
     moveFeature,
     selectFeature
@@ -69,9 +71,6 @@ import {
     BPMNPropertiesMouseListener,
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
-import {
-    bpmnHelperLineModule,
-} from './bpmn-helper-lines/bpmn-helper-line-module';
 import {
     BPMNLabelNodeSelectionListener,
     BPMNMultiNodeSelectionListener
@@ -180,9 +179,19 @@ export function createBPMNDiagramContainer(...containerConfiguration: ContainerC
 
 export function initializeBPMNDiagramContainer(container: Container,
     ...containerConfiguration: ContainerConfiguration): Container {
+
+
+    const filteredElements = alignmentElementFilter.filter(element =>
+        element.type !== 'BPMNLabel' &&
+        element.type !== 'sequenceFlow' &&
+        element.type !== 'messageFlow' &&
+        element.type !== 'association' &&
+        element.type !== 'lane-divider'
+    );
+
     // return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
-    // return initializeDiagramContainer(container, bpmnDiagramModule, helperLineModule, BPMNPropertyModule, ...containerConfiguration);
-    return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
+    return initializeDiagramContainer(container, bpmnDiagramModule, helperLineModule, BPMNPropertyModule, ...containerConfiguration);
+    // return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
 
 
 }
