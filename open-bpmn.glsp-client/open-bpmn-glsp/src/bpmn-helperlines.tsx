@@ -28,11 +28,11 @@ import {
 } from '@eclipse-glsp/client';
 import {
 	EventNode,
-	LabelNode,
 	TaskNode,
-	isBPMNLabelNode,
 	isBPMNNode,
 	isBoundaryEvent,
+	isEventNode,
+	isGatewayNode,
 	isLaneDivider,
 	isTaskNode
 } from '@open-bpmn/open-bpmn-model';
@@ -117,6 +117,40 @@ export class BPMNElementSnapper implements ISnapper {
 			if (isBoundaryEvent(element)) {
 				snapPoint = this.findBoundarySnapPoint(element, position);
 			} else {
+
+
+				if (isTaskNode(element)) {
+
+					snapPoint = {
+						x: Math.round(position.x / 10) * 10,
+						y: Math.round(position.y / 10) * 10
+					};
+					console.log('.. snap task: position= ' + position.x + ',' + position.y + '  snap= ' + snapPoint.x + ',' + snapPoint.y);
+					return snapPoint;
+				}
+				if (isGatewayNode(element)) {
+					// center snap...
+					return {
+						x: Math.round((position.x + 0.5 * element.bounds.width) / 5) * 5 - 0.5 * element.bounds.width,
+						y: Math.round((position.y + 0.5 * element.bounds.height) / 5) * 5 - 0.5 * element.bounds.height
+					};
+
+				}
+
+				if (isEventNode(element)) {
+					// center snap...
+					snapPoint = {
+						x: Math.round((position.x + 0.5 * element.bounds.width) / 5) * 5 - 0.5 * element.bounds.width,
+						y: Math.round((position.y + 0.5 * element.bounds.height) / 5) * 5 - 0.5 * element.bounds.height
+					};
+					console.log('.. snap event: position= ' + position.x + ',' + position.y + '  snap= ' + snapPoint.x + ',' + snapPoint.y);
+					return snapPoint;
+
+				}
+
+
+
+
 				// find default snap position
 				snapPoint = this.findSnapPoint(element);
 				// if a snapPoint was found and this snapPoint is still in the snapRange,
@@ -133,17 +167,17 @@ export class BPMNElementSnapper implements ISnapper {
 			}
 
 			// fix BPMNLabel offset (only needed or Elements with a separate label)?
-			if (isBPMNLabelNode(element)) {
-				const xOffset = snapPoint.x - position.x;
-				const yOffset = snapPoint.y - position.y;
-				const label: any = element.root.index.getById(element.id + '_bpmnlabel');
-				if (label instanceof LabelNode) {
-					// fix offset of the lable position....
-					const ly = label.position.y + yOffset;
-					const lx = label.position.x + xOffset;
-					label.position = { x: lx, y: ly };
-				}
-			}
+			// if (isBPMNLabelNode(element)) {
+			// 	const xOffset = snapPoint.x - position.x;
+			// 	const yOffset = snapPoint.y - position.y;
+			// 	const label: any = element.root.index.getById(element.id + '_bpmnlabel');
+			// 	if (label instanceof LabelNode) {
+			// 		// fix offset of the lable position....
+			// 		const ly = label.position.y + yOffset;
+			// 		const lx = label.position.x + xOffset;
+			// 		label.position = { x: lx, y: ly };
+			// 	}
+			// }
 			return snapPoint;
 		}
 

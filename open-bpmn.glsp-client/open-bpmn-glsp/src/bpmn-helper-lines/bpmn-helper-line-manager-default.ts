@@ -14,56 +14,99 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    GridSnapper,
-    IFeedbackActionDispatcher,
-    ISelectionListener,
-    MoveFinishedEventAction, MoveInitializedEventAction,
-    SelectionService,
-    SetBoundsFeedbackAction
-} from '@eclipse-glsp/client';
-import {
     Action,
     DisposableCollection,
     GModelElement,
     GModelRoot,
     IActionHandler,
-    ISnapper,
+    IFeedbackActionDispatcher,
+    ISelectionListener,
     MoveAction,
+    MoveFinishedEventAction, MoveInitializedEventAction,
+    Point,
+    SelectionService,
     SetBoundsAction,
+    SetBoundsFeedbackAction,
     TYPES
-} from '@eclipse-glsp/sprotty';
+} from '@eclipse-glsp/client';
+
+
 import { inject, injectable, optional, postConstruct } from 'inversify';
-// import { IFeedbackActionDispatcher } from '../../base/feedback/feedback-action-dispatcher';
-// import { ISelectionListener, SelectionService } from '../../base/selection-service';
-// import { SetBoundsFeedbackAction } from '../bounds/set-bounds-feedback-command';
-// import { GridSnapper } from '../change-bounds/snap';
-// import { MoveFinishedEventAction, MoveInitializedEventAction } from '../tools/change-bounds/change-bounds-tool-feedback';
-import { DrawHelperLinesFeedbackAction, RemoveHelperLinesFeedbackAction, ViewportLineType } from './bpmn-helper-line-feedback';
+
+import {
+    AlignmentElementFilter,
+    DEFAULT_ALIGNABLE_ELEMENT_FILTER,
+    DEFAULT_DEBUG,
+    DEFAULT_ELEMENT_LINES,
+    DEFAULT_EPSILON,
+    DEFAULT_VIEWPORT_LINES,
+    DrawHelperLinesFeedbackAction,
+    RemoveHelperLinesFeedbackAction,
+    ViewportLineType
+} from './bpmn-helper-line-feedback';
 import { IHelperLineManager } from './bpmn-helper-line-manager';
 import { Direction, HelperLineType } from './model';
+
+export interface IHelperLineOptions {
+    /**
+     * A list of helper line types that should be rendered when elements are aligned.
+     * Defaults to all possible alignments.
+     */
+    elementLines?: HelperLineType[];
+    /**
+     * A list of helper line types that should be rendered when an element is aligned with the viewport.
+     * Defaults to middle and center alignment.
+     */
+    viewportLines?: ViewportLineType[];
+    /**
+     * The minimum difference between two coordinates
+     * Defaults to 1.
+     */
+    alignmentEpsilon?: number;
+    /**
+     * A filter that is applied to determine on which elements the alignment calculation is performed.
+     * By default all top-level bounds-aware, non-routable elements that are visible on the canvas are considered.
+     */
+    alignmentElementFilter?: AlignmentElementFilter;
+    /**
+     * The minimum move delta that is necessary for an element to break through a helper line.
+     * Defaults to { x: 1, y: 1 } whereas the x represents the horizontal distance and y represents the vertical distance.
+     */
+    minimumMoveDelta?: Point;
+
+    /**
+     * Produces debug output.
+     * Defaults to false.
+     */
+    debug?: boolean;
+}
+
+export const DEFAULT_MOVE_DELTA = { x: 1, y: 1 };
+
+export const DEFAULT_HELPER_LINE_OPTIONS: Required<IHelperLineOptions> = {
+    elementLines: DEFAULT_ELEMENT_LINES,
+    viewportLines: DEFAULT_VIEWPORT_LINES,
+    alignmentEpsilon: DEFAULT_EPSILON,
+    alignmentElementFilter: DEFAULT_ALIGNABLE_ELEMENT_FILTER,
+    minimumMoveDelta: DEFAULT_MOVE_DELTA,
+    debug: DEFAULT_DEBUG
+};
 
 @injectable()
 export class HelperLineManager implements IActionHandler, ISelectionListener, IHelperLineManager {
     @inject(TYPES.IFeedbackActionDispatcher) protected feedbackDispatcher: IFeedbackActionDispatcher;
     @inject(SelectionService) protected selectionService: SelectionService;
-    @optional() @inject(TYPES.ISnapper) protected snapper?: ISnapper;
+    @optional() @inject(TYPES.IHelperLineOptions) protected userOptions?: IHelperLineOptions;
 
-    protected snapSize = { x: 10, y: 10 };
+    protected options: Required<IHelperLineOptions>;
     protected feedback: DisposableCollection = new DisposableCollection();
-
-    protected elementLines?: HelperLineType[];
-    protected viewportLines?: ViewportLineType[];
-    protected alignmentEpsilon?: number;
 
     @postConstruct()
     protected init(): void {
+        this.options = { ...DEFAULT_HELPER_LINE_OPTIONS, ...this.userOptions };
         this.selectionService.onSelectionChanged(change =>
             this.selectionChanged(change.root, change.selectedElements, change.deselectedElements)
         );
-        if (this.snapper instanceof GridSnapper) {
-            console.log('--------__> NOT helloe ich setzte irgendwas mit snap');
-            //this.snapSize = { x: this.snapper.grid.x * 2, y: this.snapper.grid.y * 2 };
-        }
     }
 
     handle(action: Action): void {
@@ -99,16 +142,10 @@ export class HelperLineManager implements IActionHandler, ISelectionListener, IH
     }
 
     protected createHelperLineFeedback(elementIds: string[]): DrawHelperLinesFeedbackAction {
-        return DrawHelperLinesFeedbackAction.create({
-            elementIds,
-            elementLines: this.elementLines,
-            viewportLines: this.viewportLines,
-            alignmentEpsilon: this.alignmentEpsilon
-        });
+        return DrawHelperLinesFeedbackAction.create({ elementIds, ...this.options });
     }
 
     protected handleSetBoundsAction(action: SetBoundsAction | SetBoundsFeedbackAction): void {
-        console.log('set bounds action');
         const elementIds = action.bounds.map(bound => bound.elementId);
         const feedback = this.createHelperLineFeedback(elementIds);
         this.feedback.push(this.feedbackDispatcher.registerFeedback(this, [feedback], [RemoveHelperLinesFeedbackAction.create()]));
@@ -118,7 +155,12 @@ export class HelperLineManager implements IActionHandler, ISelectionListener, IH
         this.feedback.dispose();
     }
 
-    getHelperLineSnapping(target: GModelElement, isSnap: boolean, direction: Direction): number {
-        return direction === Direction.Left || direction === Direction.Right ? this.snapSize.x : this.snapSize.y;
+    getMinimumMoveDelta(element: GModelElement, isSnap: boolean, direction: Direction): number {
+        if (!isSnap) {
+            return 0;
+        }
+        return direction === Direction.Left || direction === Direction.Right
+            ? this.options.minimumMoveDelta.x
+            : this.options.minimumMoveDelta.y;
     }
 }

@@ -13,24 +13,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-
-import {
-    MoveFinishedEventAction, MoveInitializedEventAction,
-    SetBoundsFeedbackAction
-} from '@eclipse-glsp/client';
 import {
     FeatureModule,
     MoveAction,
+    MoveFinishedEventAction, MoveInitializedEventAction,
     SetBoundsAction,
+    SetBoundsFeedbackAction,
     TYPES,
     bindAsService,
     configureActionHandler,
     configureCommand,
     configureModelElement
-} from '@eclipse-glsp/sprotty';
+} from '@eclipse-glsp/client';
 
-// import { SetBoundsFeedbackAction } from '../bounds/set-bounds-feedback-command';
-// import { MoveFinishedEventAction, MoveInitializedEventAction } from '../tools/change-bounds/change-bounds-tool-feedback';
+
 import { DrawHelperLinesFeedbackCommand, RemoveHelperLinesFeedbackCommand } from './bpmn-helper-line-feedback';
 import { HelperLineManager } from './bpmn-helper-line-manager-default';
 import { HELPER_LINE, HelperLine, SELECTION_BOUNDS, SelectionBounds } from './model';

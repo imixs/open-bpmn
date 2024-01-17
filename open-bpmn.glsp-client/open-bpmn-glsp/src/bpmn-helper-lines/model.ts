@@ -14,15 +14,16 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 
-import { Args, Bounds, GChildElement, GModelElement, GShapeElement, Point } from '@eclipse-glsp/sprotty';
-import { v4 as uuid } from 'uuid';
-// import { ArgsAware } from '../../base/args-feature';
-// import { ResizeHandleLocation } from '../change-bounds/model';
 import {
+    Args,
     ArgsAware,
+    Bounds, GChildElement, GModelElement, GShapeElement, Point,
     ResizeHandleLocation
 } from '@eclipse-glsp/client';
 
+
+
+import { v4 as uuid } from 'uuid';
 export const HelperLineType = {
     Left: 'left',
     Right: 'right',

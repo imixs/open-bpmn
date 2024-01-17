@@ -23,16 +23,13 @@ import {
     GCompartmentView,
     GLabel,
     GLabelView,
-    GridSnapper,
     LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView,
     TYPES,
-    alignmentElementFilter,
     configureDefaultModelElements,
     configureModelElement,
     editLabelFeature,
-    helperLineModule,
     initializeDiagramContainer,
     moveFeature,
     selectFeature
@@ -65,12 +62,22 @@ import {
     TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
+import { IHelperLineOptions } from './bpmn-helper-lines/bpmn-helper-line-manager-default';
+import {
+    BPMNElementSnapper
+} from './bpmn-helperlines';
 import { BPMNEdgeView } from './bpmn-routing-views';
 
+import {
+    isBPMNNode
+} from '@open-bpmn/open-bpmn-model';
 import {
     BPMNPropertiesMouseListener,
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
+import {
+    bpmnHelperLineModule
+} from './bpmn-helper-lines/bpmn-helper-line-module';
 import {
     BPMNLabelNodeSelectionListener,
     BPMNMultiNodeSelectionListener
@@ -81,15 +88,21 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
-    //bind(TYPES.ISnapper).to(BPMNElementSnapper);
+
 
 
     //bind(TYPES.ISnapper).to(GridSnapper);
-    bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 1, y: 1 }));
-    //bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper({ x: 10, y: 10 }));
+    //bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 10, y: 10 }));
+    bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper());
+    bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
+        alignmentElementFilter: element =>
+            isBPMNNode(element),
+        minimumMoveDelta: { x: 10, y: 10 }
+    });
 
 
-    //bind(TYPES.ISnapper).toConstantValue(new CenterGridSnapper());
+
+
 
     // We do not whant a reveal action in BPMN
     // ???? bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
@@ -181,16 +194,9 @@ export function initializeBPMNDiagramContainer(container: Container,
     ...containerConfiguration: ContainerConfiguration): Container {
 
 
-    const filteredElements = alignmentElementFilter.filter(element =>
-        element.type !== 'BPMNLabel' &&
-        element.type !== 'sequenceFlow' &&
-        element.type !== 'messageFlow' &&
-        element.type !== 'association' &&
-        element.type !== 'lane-divider'
-    );
 
     // return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
-    return initializeDiagramContainer(container, bpmnDiagramModule, helperLineModule, BPMNPropertyModule, ...containerConfiguration);
+    return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
     // return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
 
 
