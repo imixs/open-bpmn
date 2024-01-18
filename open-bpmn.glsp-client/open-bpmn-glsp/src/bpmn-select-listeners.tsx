@@ -15,8 +15,11 @@
  ********************************************************************************/
 import {
   ActionDispatcher,
+  GModelElement,
   GModelRoot,
   ISelectionListener,
+  ISnapper,
+  Point,
   SelectAction,
   TYPES,
   filter,
@@ -26,7 +29,11 @@ import {
 import {
   isBPMNLabelNode,
   isBoundaryEvent,
-  isLaneNode, isPoolNode, isTaskNode
+  isEventNode,
+  isGatewayNode,
+  isLaneNode,
+  isPoolNode,
+  isTaskNode
 } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 
@@ -34,6 +41,49 @@ import { inject, injectable } from 'inversify';
  * This module provides BPMN select listeners for custom behavior.
  *
  ****************************************************************************/
+
+
+
+/**
+ * A {@link ISnapper} implementation that snaps BPMN elements onto a fixed gride size.
+ * This snapper calulates the grid size based on the selected element to allign tasks, gateways and events.
+ *
+ */
+@injectable()
+export class BPMNElementSnapper implements ISnapper {
+  constructor(public grid: { x: number; y: number } = { x: 10, y: 10 }) { }
+
+  snap(position: Point, _element: GModelElement): Point {
+
+    if (isTaskNode(_element)) {
+      return {
+        x: Math.round(position.x / 10) * 10,
+        y: Math.round(position.y / 10) * 10
+      };
+    }
+
+    if (isGatewayNode(_element)) {
+      return {
+        x: Math.round(position.x / 5) * 5,
+        y: Math.round(position.y / 5) * 5
+      };
+    }
+
+    if (isEventNode(_element)) {
+      return {
+        x: Math.round(position.x / 1) * 1,
+        y: Math.round(position.y / 1) * 1
+      };
+    }
+
+    // default...
+    return {
+      x: Math.round(position.x / this.grid.x) * this.grid.x,
+      y: Math.round(position.y / this.grid.y) * this.grid.y
+    };
+  }
+}
+
 
 /**
  * This selectionListener selects additional associated BoundaryEvents and BPMNLabels.

@@ -23,17 +23,15 @@ import {
     GCompartmentView,
     GLabel,
     GLabelView,
+    IHelperLineOptions,
     LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView,
-    SetBoundsAction,
     TYPES,
-    configureActionHandler,
-    configureCommand,
     configureDefaultModelElements,
     configureModelElement,
-    configureView,
     editLabelFeature,
+    helperLineModule,
     initializeDiagramContainer,
     moveFeature,
     selectFeature
@@ -49,7 +47,8 @@ import {
     MessageNode,
     MultiLineTextNode,
     PoolNode, TaskNode,
-    TextAnnotationNode
+    TextAnnotationNode,
+    isBPMNNode
 } from '@open-bpmn/open-bpmn-model';
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
@@ -68,12 +67,6 @@ import {
 } from './bpmn-element-views';
 
 
-import {
-    DrawHelperLinesCommand,
-    HelperLineListener,
-    HelperLineView,
-    RemoveHelperLinesCommand
-} from './bpmn-helperlines';
 
 
 import { BPMNEdgeView } from './bpmn-routing-views';
@@ -82,11 +75,12 @@ import {
     BPMNPropertiesMouseListener,
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
+// import {
+//     BPMNElementSnapper,
+//     BPMNHelperLineManager,
+// } from './bpmn-helperlines';
 import {
     BPMNElementSnapper,
-    BPMNHelperLineManager,
-} from './bpmn-helperlines';
-import {
     BPMNMultiNodeSelectionListener,
     BPMNSelectionHelper
 } from './bpmn-select-listeners';
@@ -99,23 +93,19 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 
 
-    //bind(TYPES.ISnapper).to(GridSnapper);
-    //bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 5, y: 5 }));
-
 
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
 
     // bpmn helper lines
     bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper());
-    bind(TYPES.MouseListener).to(HelperLineListener);
-    configureCommand({ bind, isBound }, DrawHelperLinesCommand);
-    configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
-    configureView({ bind, isBound }, 'helpline', HelperLineView);
+    //bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 5, y: 5 }));
+    bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
+        alignmentElementFilter: element =>
+            isBPMNNode(element),
+        minimumMoveDelta: { x: 10, y: 10 }
+    });
 
-
-    //bind(TYPES.Action).toConstantValue(new BPMNHelperLineManager());
-    configureActionHandler(context, SetBoundsAction.KIND, BPMNHelperLineManager);
 
 
     // bind new SelectionListener for BPMNLabels and BoundaryEvents
@@ -205,7 +195,7 @@ export function initializeBPMNDiagramContainer(container: Container,
 
 
     // return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
-    return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
+    return initializeDiagramContainer(container, bpmnDiagramModule, helperLineModule, BPMNPropertyModule, ...containerConfiguration);
 
 
 }
