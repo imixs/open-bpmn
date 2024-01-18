@@ -2,81 +2,48 @@
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org">
   <bpmn2:process id="process_1" name="Default Process" processType="Public">
     <bpmn2:documentation id="documentation_3r0TMg"/>
-    <bpmn2:manualTask id="task_W240tg" name="Task-1">
-      <bpmn2:documentation id="documentation_U6w6IA"/>
-      <bpmn2:incoming>sequenceFlow_2laaXw</bpmn2:incoming>
-    </bpmn2:manualTask>
-    <bpmn2:startEvent id="event_0kiouw" name="Event-1">
-      <bpmn2:documentation id="documentation_TY8oTQ"/>
-      <bpmn2:outgoing>sequenceFlow_2laaXw</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:sendTask id="task_IJw9ng" name="Task-2">
-      <bpmn2:documentation id="documentation_f9MXLQ"/>
-      <bpmn2:incoming>sequenceFlow_lYXBSw</bpmn2:incoming>
-    </bpmn2:sendTask>
-    <bpmn2:intermediateThrowEvent id="event_wq9ZLA" name="Event-2">
-      <bpmn2:documentation id="documentation_kocMgw"/>
-      <bpmn2:outgoing>sequenceFlow_lYXBSw</bpmn2:outgoing>
-    </bpmn2:intermediateThrowEvent>
-    <bpmn2:sequenceFlow id="sequenceFlow_lYXBSw" sourceRef="event_wq9ZLA" targetRef="task_IJw9ng">
-      <bpmn2:documentation id="documentation_mocdGg"/>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="sequenceFlow_2laaXw" sourceRef="event_0kiouw" targetRef="task_W240tg">
-      <bpmn2:documentation id="documentation_UPsgtQ"/>
-    </bpmn2:sequenceFlow>
-    <bpmn2:scriptTask id="task_BwBkCA" name="Task-3">
-      <bpmn2:documentation id="documentation_kV2iDA"/>
-      <bpmn2:script id="script_ZGME0g"/>
-    </bpmn2:scriptTask>
-    <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway_m3SFYA" name="Gateway-1">
-      <bpmn2:documentation id="documentation_QcITQA"/>
-    </bpmn2:exclusiveGateway>
     <bpmn2:intermediateThrowEvent id="event_F9GhtQ" name="Event-3">
       <bpmn2:documentation id="documentation_VhgZIA"/>
     </bpmn2:intermediateThrowEvent>
+    <bpmn2:receiveTask id="task_W90AnA" name="Task-2">
+      <bpmn2:documentation id="documentation_eZXh4A"/>
+    </bpmn2:receiveTask>
+    <bpmn2:exclusiveGateway gatewayDirection="Diverging" id="gateway_CzqA8A" name="Gateway-1">
+      <bpmn2:documentation id="documentation_l6LYTg"/>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:parallelGateway gatewayDirection="Diverging" id="gateway_S2g1sQ" name="Gateway-2">
+      <bpmn2:documentation id="documentation_9PxfiA"/>
+    </bpmn2:parallelGateway>
+    <bpmn2:scriptTask id="task_giL9ig" name="Task-2">
+      <bpmn2:documentation id="documentation_Gm0BGg"/>
+      <bpmn2:script id="script_h3lpyw"/>
+    </bpmn2:scriptTask>
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
     <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
-      <bpmndi:BPMNShape bpmnElement="task_W240tg" id="BPMNShape_j0x9rQ">
-        <dc:Bounds height="50.0" width="110.0" x="400.0" y="195.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="event_0kiouw" id="BPMNShape_EaIUKA">
-        <dc:Bounds height="36.0" width="36.0" x="249.25595092773438" y="202.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_5Xifmw">
-          <dc:Bounds height="20.0" width="100.0" x="217.25595092773438" y="241.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="task_IJw9ng" id="BPMNShape_tO7ZnA">
-        <dc:Bounds height="50.0" width="110.0" x="400.0" y="285.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="event_wq9ZLA" id="BPMNShape_w1Gnnw">
-        <dc:Bounds height="36.0" width="36.0" x="249.25595092773438" y="292.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_E5n7iQ">
-          <dc:Bounds height="20.0" width="100.0" x="217.25595092773438" y="331.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_lYXBSw" id="BPMNEdge_WIGWnQ" sourceElement="BPMNShape_w1Gnnw" targetElement="BPMNShape_tO7ZnA">
-        <di:waypoint x="285.2559509277344" y="310.0"/>
-        <di:waypoint x="400.0" y="310.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_2laaXw" id="BPMNEdge_od10eg" sourceElement="BPMNShape_EaIUKA" targetElement="BPMNShape_j0x9rQ">
-        <di:waypoint x="285.2559509277344" y="220.0"/>
-        <di:waypoint x="400.0" y="220.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="task_BwBkCA" id="BPMNShape_VzFyWQ">
-        <dc:Bounds height="50.0" width="110.0" x="560.0" y="285.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="gateway_m3SFYA" id="BPMNShape_S199vA">
-        <dc:Bounds height="50.0" width="50.0" x="590.0" y="195.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_5f04QQ">
-          <dc:Bounds height="20.0" width="100.0" x="565.0" y="248.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="event_F9GhtQ" id="BPMNShape_a1XxoQ">
-        <dc:Bounds height="36.0" width="36.0" x="750.0" y="202.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="352.0" y="300.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_Vt1hZw">
-          <dc:Bounds height="20.0" width="100.0" x="718.0" y="241.0"/>
+          <dc:Bounds height="20.0" width="100.0" x="320.0" y="339.0"/>
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_W90AnA" id="BPMNShape_BCrFLQ">
+        <dc:Bounds height="50.0" width="110.0" x="315.0" y="214.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gateway_CzqA8A" id="BPMNShape_6vfUtA">
+        <dc:Bounds height="50.0" width="50.0" x="345.0" y="97.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_GkzhdQ">
+          <dc:Bounds height="20.0" width="100.0" x="320.0" y="150.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="gateway_S2g1sQ" id="BPMNShape_bf0xCA">
+        <dc:Bounds height="50.0" width="50.0" x="540.0" y="214.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_UViPhQ">
+          <dc:Bounds height="20.0" width="100.0" x="515.0" y="267.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="task_giL9ig" id="BPMNShape_n1J2KA">
+        <dc:Bounds height="50.0" width="112.83954620361328" x="508.5802001953125" y="56.798744201660156"/>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

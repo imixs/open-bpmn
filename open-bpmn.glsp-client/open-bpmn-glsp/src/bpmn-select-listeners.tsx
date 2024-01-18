@@ -37,22 +37,23 @@ import { inject, injectable } from 'inversify';
 
 /**
  * This selectionListener selects additional associated BoundaryEvents and BPMNLabels.
- * This allows to move both independent Nodes (TaskNode and BoundaryEvent, GNode and GLabel)
+ * This allows to move both independent Nodes (TaskNode and BoundaryEvent, Event|Gateway and BPMNLabel)
  */
 @injectable()
-export class BPMNLabelNodeSelectionListener implements ISelectionListener {
+export class BPMNSelectionHelper implements ISelectionListener {
   @inject(TYPES.IActionDispatcher)
   protected actionDispatcher: ActionDispatcher;
 
   selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
     const additionalSelection: string[] = [''];
-    // We are interested in Tasks with BoundaryEvents ...
+
+    // First look for BoundaryEvents ...
     const selectedTaskNodes = getElements(root.index, selectedElements, isTaskNode);
-    // - first get a list of all selected TaskIDs
-    const taskIds = selectedTaskNodes.map(task => task.id);
-    // - next iterate over all BoundaryEvents
-    const boundaryEvents = filter(root.index, isBoundaryEvent);
     if (selectedTaskNodes.length > 0) {
+      // get a list of all selected TaskIDs
+      const taskIds = selectedTaskNodes.map(task => task.id);
+      // - next iterate over all BoundaryEvents
+      const boundaryEvents = filter(root.index, isBoundaryEvent);
       // do we have a boundaryEvent that matches this taskID?
       boundaryEvents.forEach(b => {
         if (hasArgs(b)) {
@@ -63,7 +64,8 @@ export class BPMNLabelNodeSelectionListener implements ISelectionListener {
         }
       });
     }
-    // ... and we are interested in BPMNLabelNodes
+
+    // And next we are interested in BPMNLabelNodes
     const eventNodes = getElements(root.index, selectedElements, isBPMNLabelNode);
     if (eventNodes.length > 0) {
       // find the associated BPMNLabels

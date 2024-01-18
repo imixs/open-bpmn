@@ -26,9 +26,13 @@ import {
     LogLevel,
     RectangularNodeView,
     RoundedCornerNodeView,
+    SetBoundsAction,
     TYPES,
+    configureActionHandler,
+    configureCommand,
     configureDefaultModelElements,
     configureModelElement,
+    configureView,
     editLabelFeature,
     initializeDiagramContainer,
     moveFeature,
@@ -62,25 +66,29 @@ import {
     TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
-import { IHelperLineOptions } from './bpmn-helper-lines/bpmn-helper-line-manager-default';
-import {
-    BPMNElementSnapper
-} from './bpmn-helperlines';
-import { BPMNEdgeView } from './bpmn-routing-views';
+
 
 import {
-    isBPMNNode
-} from '@open-bpmn/open-bpmn-model';
+    DrawHelperLinesCommand,
+    HelperLineListener,
+    HelperLineView,
+    RemoveHelperLinesCommand
+} from './bpmn-helperlines';
+
+
+import { BPMNEdgeView } from './bpmn-routing-views';
+
 import {
     BPMNPropertiesMouseListener,
     BPMNPropertyModule
 } from '@open-bpmn/open-bpmn-properties';
 import {
-    bpmnHelperLineModule
-} from './bpmn-helper-lines/bpmn-helper-line-module';
+    BPMNElementSnapper,
+    BPMNHelperLineManager,
+} from './bpmn-helperlines';
 import {
-    BPMNLabelNodeSelectionListener,
-    BPMNMultiNodeSelectionListener
+    BPMNMultiNodeSelectionListener,
+    BPMNSelectionHelper
 } from './bpmn-select-listeners';
 
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
@@ -92,33 +100,34 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 
     //bind(TYPES.ISnapper).to(GridSnapper);
-    //bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 10, y: 10 }));
-    bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper());
-    bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
-        alignmentElementFilter: element =>
-            isBPMNNode(element),
-        minimumMoveDelta: { x: 10, y: 10 }
-    });
+    //bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 5, y: 5 }));
 
-
-
-
-
-    // We do not whant a reveal action in BPMN
-    // ???? bind(TYPES.ICommandPaletteActionProvider).to(RevealNamedElementActionProvider);
 
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
+
+    // bpmn helper lines
+    bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper());
+    bind(TYPES.MouseListener).to(HelperLineListener);
+    configureCommand({ bind, isBound }, DrawHelperLinesCommand);
+    configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
+    configureView({ bind, isBound }, 'helpline', HelperLineView);
+
+
+    //bind(TYPES.Action).toConstantValue(new BPMNHelperLineManager());
+    configureActionHandler(context, SetBoundsAction.KIND, BPMNHelperLineManager);
+
+
     // bind new SelectionListener for BPMNLabels and BoundaryEvents
-    bind(TYPES.ISelectionListener).to(BPMNLabelNodeSelectionListener);
+    bind(TYPES.ISelectionListener).to(BPMNSelectionHelper);
     bind(TYPES.ISelectionListener).to(BPMNMultiNodeSelectionListener);
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
 
-    // bpmn helper lines
-    // bind(TYPES.MouseListener).to(HelperLineListener);
-    // configureCommand({ bind, isBound }, DrawHelperLinesCommand);
-    // configureCommand({ bind, isBound }, RemoveHelperLinesCommand);
-    // configureView({ bind, isBound }, 'helpline', HelperLineView);
+
+
+
+
+
     configureDefaultModelElements(context);
 
     configureModelElement(context, 'task', TaskNode, TaskNodeView);
@@ -196,8 +205,7 @@ export function initializeBPMNDiagramContainer(container: Container,
 
 
     // return initializeDiagramContainer(container, bpmnDiagramModule, ...containerConfiguration);
-    return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
-    // return initializeDiagramContainer(container, bpmnDiagramModule, bpmnHelperLineModule, BPMNPropertyModule, ...containerConfiguration);
+    return initializeDiagramContainer(container, bpmnDiagramModule, BPMNPropertyModule, ...containerConfiguration);
 
 
 }

@@ -19,8 +19,11 @@ import {
 	GModelElement,
 	GModelRoot,
 	GParentElement,
+	IActionHandler,
 	ISnapper,
 	MouseListener,
+	SetBoundsAction,
+	SetBoundsFeedbackAction,
 	findParentByFeature,
 	hasArgs,
 	hasObjectProp,
@@ -31,8 +34,6 @@ import {
 	TaskNode,
 	isBPMNNode,
 	isBoundaryEvent,
-	isEventNode,
-	isGatewayNode,
 	isLaneDivider,
 	isTaskNode
 } from '@open-bpmn/open-bpmn-model';
@@ -85,6 +86,32 @@ export interface HelperLine {
 	readonly y2: number;
 }
 
+
+@injectable()
+export class BPMNHelperLineManager implements IActionHandler {
+
+	//@inject(TYPES.IFeedbackActionDispatcher) protected feedbackDispatcher: IFeedbackActionDispatcher;
+
+
+	handle(action: Action): void {
+		console.log('...-- im handler **************');
+		if (SetBoundsAction.is(action) || SetBoundsFeedbackAction.is(action)) {
+			this.handleSetBoundsAction(action);
+		}
+	}
+	protected handleSetBoundsAction(action: SetBoundsAction | SetBoundsFeedbackAction): void {
+		const elementIds = action.bounds.map(bound => bound.elementId);
+
+		console.log('...-- im handler setBoundsAction' + elementIds);
+
+
+	}
+
+
+}
+
+
+
 /**
  * Snapper implementation to align elements.
  * The snapper finds surrounding elements and snaps the
@@ -113,56 +140,34 @@ export class BPMNElementSnapper implements ISnapper {
 			return snapPoint;
 		}
 		// Is it a Element node?
-		if (isBPMNNode(element)) {
+		if (isBPMNNode(element) && isBoundsAware(element)) {
 			if (isBoundaryEvent(element)) {
 				snapPoint = this.findBoundarySnapPoint(element, position);
 			} else {
-
-
-				if (isTaskNode(element)) {
-
-					snapPoint = {
-						x: Math.round(position.x / 10) * 10,
-						y: Math.round(position.y / 10) * 10
-					};
-					console.log('.. snap task: position= ' + position.x + ',' + position.y + '  snap= ' + snapPoint.x + ',' + snapPoint.y);
-					return snapPoint;
-				}
-				if (isGatewayNode(element)) {
-					// center snap...
-					return {
-						x: Math.round((position.x + 0.5 * element.bounds.width) / 5) * 5 - 0.5 * element.bounds.width,
-						y: Math.round((position.y + 0.5 * element.bounds.height) / 5) * 5 - 0.5 * element.bounds.height
-					};
-
-				}
-
-				if (isEventNode(element)) {
-					// center snap...
-					snapPoint = {
-						x: Math.round((position.x + 0.5 * element.bounds.width) / 5) * 5 - 0.5 * element.bounds.width,
-						y: Math.round((position.y + 0.5 * element.bounds.height) / 5) * 5 - 0.5 * element.bounds.height
-					};
-					console.log('.. snap event: position= ' + position.x + ',' + position.y + '  snap= ' + snapPoint.x + ',' + snapPoint.y);
-					return snapPoint;
-
-				}
-
-
-
-
+				console.log('===============================');
+				console.log('---- wir suchen einen Snap Point for ' + element.id + '  position=' + position.x + ',' + position.y);
 				// find default snap position
 				snapPoint = this.findSnapPoint(element);
 				// if a snapPoint was found and this snapPoint is still in the snapRange,
 				// then we adjust the current mouse Postion. Otherwise we return the current position
-				let snapX = Math.round(position.x / this.minSnapRange) * this.minSnapRange;
-				if (snapPoint.x > -1 && Math.abs(position.x - snapPoint.x) <= this.minSnapRange) {
-					snapX = snapPoint.x;
+
+				//let snapX = (Math.round(position.x / this.minSnapRange) * this.minSnapRange);
+				let snapX = (Math.round(position.x));
+				if (snapPoint.x > -1) {
+					// we have a hit
+					snapX = Math.round(element.bounds.x - snapPoint.x);
+					console.log(' - hurrar snapx=' + snapX);
 				}
-				let snapY = Math.round(position.y / this.minSnapRange) * this.minSnapRange;
-				if (snapPoint.y > -1 && Math.abs(position.y - snapPoint.y) <= this.minSnapRange) {
-					snapY = snapPoint.y;
+
+				//let snapY = (Math.round(position.y / this.minSnapRange) * this.minSnapRange);
+				let snapY = (Math.round(position.y));
+				if (snapPoint.y > -1) {
+					// we have a hit
+					snapY = Math.round(element.bounds.y - snapPoint.y);
+					console.log(' - hurrar snapy=' + snapY);
 				}
+
+
 				snapPoint = { x: snapX, y: snapY };
 			}
 
@@ -178,6 +183,10 @@ export class BPMNElementSnapper implements ISnapper {
 			// 		label.position = { x: lx, y: ly };
 			// 	}
 			// }
+
+
+			console.log('---- FINAL SnapPoint = ' + snapPoint.x + ',' + snapPoint.y);
+
 			return snapPoint;
 		}
 
@@ -199,8 +208,11 @@ export class BPMNElementSnapper implements ISnapper {
 		const offset = 18;
 		let x = position.x;
 		let y = position.y;
+
 		if (hasArgs(element)) {
+
 			// now we compute the x/y on the edge of the task bounds
+
 			const taskRef = element.args.attachedToRef + '';
 			// find the task...
 			const task = element.root.index.getById(taskRef);
@@ -276,11 +288,12 @@ export class BPMNElementSnapper implements ISnapper {
 			}
 
 			const modelElementCenter = Bounds.center(modelElement.bounds);
-			// console.log(' ... snap model element ' + modelElement.id + ' pos=' + modelElement.bounds.x + ','+modelElement.bounds.y);
+			console.log(' ... snap model element ' + modelElement.id + ' pos=' + modelElement.bounds.x + ',' + modelElement.bounds.y);
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			for (const element of childs) {
 				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
+					console.log('----- test snap for element ' + element.id);
 					const elementCenter = Bounds.center(element.bounds);
 					// console.log(' ... found element ' + element.id + ' pos=' + elementCenter.x + ','+elementCenter.y);
 					if (elementCenter && modelElementCenter) {
@@ -288,11 +301,13 @@ export class BPMNElementSnapper implements ISnapper {
 						if (y === -1 && this.isNear(elementCenter.y, modelElementCenter.y)) {
 							// fount horizontal snap point
 							y = elementCenter.y - modelElement.bounds.height * 0.5;
+							console.log('------ Y is near = ' + y);
 						}
 						// test vertical alligment...
 						if (x === -1 && this.isNear(elementCenter.x, modelElementCenter.x)) {
 							// found vertical snap point!
 							x = elementCenter.x - modelElement.bounds.width * 0.5;
+							console.log('------ X is near = ' + x);
 						}
 					}
 				}
@@ -303,6 +318,9 @@ export class BPMNElementSnapper implements ISnapper {
 			}
 		}
 		// return snapPoint (-1,-1 if not match was found)
+
+		console.log('---- Ergebnis von findSnapPoint = ' + x + ',' + y);
+
 		return { x: x, y: y };
 	}
 
@@ -318,12 +336,16 @@ export class BPMNElementSnapper implements ISnapper {
 	}
 }
 
+
 /*
  * The HelperLineListener reacts on mouseDown and mouseMove and searches for
- * matching elements according to the current  position of the dragged element.
+ * matching elements according to the current  position of the dragged element. 
+ * 
+ * The listener just draws the lines, but does not snap the elements. This is the task of 
+ * the BPMNElementSnapper.
  */
 @injectable()
-export class HelperLineListener extends MouseListener {
+export class HelperLineListener extends MouseListener, IActionHandler {
 	protected isActive = false;
 
 	override mouseDown(target: GModelElement, event: MouseEvent): Action[] {
@@ -357,6 +379,8 @@ export class HelperLineListener extends MouseListener {
 			if (isBPMNNode(target)) {
 				const helperLines: HelperLine[] | undefined = this.findHelperLines(target);
 				if (helperLines) {
+
+					// console.log('------- we found helper lines!');
 					return [DrawHelperLinesAction.create({ helperLines: helperLines })];
 				} else {
 					// now match! remove helper lines...
@@ -424,15 +448,23 @@ export class HelperLineListener extends MouseListener {
 					canvasBounds = pool.bounds;
 				}
 			}
-			const modelElementCenter = Bounds.center(modelElement.bounds);
+			const _modelElementCenter = Bounds.center(modelElement.bounds);
+			const modelElementCenter = { x: Math.round(_modelElementCenter.x), y: Math.round(_modelElementCenter.y) };
+
 			// In the following we iterate over all model elements
 			// and compare the x and y axis of the center points
 			let foundHorizontal = false;
 			let foundVertical = false;
 			for (const element of childs) {
 				if (element.id !== modelElement.id && isBPMNNode(element) && isBoundsAware(element)) {
-					const elementCenter = Bounds.center(element.bounds);
+					const _elementCenter = Bounds.center(element.bounds);
+					const elementCenter = { x: Math.round(_elementCenter.x), y: Math.round(_elementCenter.y) };
+
 					if (elementCenter && modelElementCenter) {
+						// console.log('--------- Model element : ' + modelElement.id + '  pos=' + modelElementCenter.x + ',' + modelElementCenter.y);
+						// console.log('--------- Refer element : ' + element.id + '  pos=' + elementCenter.x + ',' + elementCenter.y);
+
+
 						// test vertical alignment...
 						if (!foundHorizontal && elementCenter.y === modelElementCenter.y) {
 							if (pool && isBoundsAware(pool)) {
