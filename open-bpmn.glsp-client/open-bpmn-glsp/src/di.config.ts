@@ -17,10 +17,12 @@ import {
     CircularNodeView,
     ConsoleLogger,
     ContainerConfiguration,
+    DefaultTypes,
     DeleteElementContextMenuItemProvider,
     DiamondNodeView,
     GCompartment,
     GCompartmentView,
+    GGraph,
     GLabel,
     GLabelView,
     IHelperLineOptions,
@@ -55,6 +57,7 @@ import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
+    BPMNGridView,
     DataObjectNodeView,
     IconView,
     LaneDividerView,
@@ -117,9 +120,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
 
 
-
     configureDefaultModelElements(context);
 
+    // BPMN Grid View
+    configureModelElement(context, DefaultTypes.GRAPH, GGraph, BPMNGridView);
+
+    // BPMN Element Views
     configureModelElement(context, 'task', TaskNode, TaskNodeView);
     configureModelElement(context, 'manualTask', TaskNode, TaskNodeView);
     configureModelElement(context, 'userTask', TaskNode, TaskNodeView);
@@ -142,14 +148,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'complexGateway', GatewayNode, DiamondNodeView);
 
     configureModelElement(context, 'label:heading', GLabel, GLabelView, { enable: [editLabelFeature] });
-
     configureModelElement(context, 'comp:comp', GCompartment, GCompartmentView);
     configureModelElement(context, 'icon', Icon, IconView);
-
-    // configureModelElement(context, 'comp:header', SCompartment, ContainerHeaderView);
     configureModelElement(context, 'pool_header', GCompartment, PoolHeaderView);
     configureModelElement(context, 'lane_header', GCompartment, LaneHeaderView);
-
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] });
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView, {
         disable: [moveFeature, selectFeature]

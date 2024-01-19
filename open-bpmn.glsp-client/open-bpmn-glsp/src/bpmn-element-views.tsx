@@ -14,13 +14,17 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+    Bounds,
     CornerRadius,
+    EdgeRouterRegistry,
     GNode, GPort,
     GShapeElement,
     Hoverable,
+    IView,
     IViewArgs,
     RenderingContext,
     RoundedCornerWrapper,
+    SGraphImpl,
     Selectable,
     ShapeView,
     findParentByFeature,
@@ -37,7 +41,7 @@ import {
     isEventNode,
     isGatewayNode
 } from '@open-bpmn/open-bpmn-model';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import { Classes, VNode } from 'snabbdom';
 
 /****************************************************************************
@@ -46,6 +50,49 @@ import { Classes, VNode } from 'snabbdom';
  ****************************************************************************/
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const JSX = { createElement: svg };
+
+/**
+ * Grid View shows a zoomable grid
+ */
+@injectable()
+export class BPMNGridView implements IView {
+    @inject(EdgeRouterRegistry) edgeRouterRegistry: EdgeRouterRegistry;
+
+    render(model: Readonly<SGraphImpl>, context: RenderingContext): VNode {
+        const edgeRouting = this.edgeRouterRegistry.routeAllChildren(model);
+
+        const gridBounds: Bounds = {
+            x: model.scroll.x,
+            y: model.scroll.y,
+            width: Math.max(10, model.canvasBounds.width / model.zoom),
+            height: Math.max(10, model.canvasBounds.height / model.zoom)
+        };
+
+        const transform = `scale(${model.zoom}) translate(${-model.scroll.x},${-model.scroll.y})`;
+        return (
+            <svg class-sprotty-graph={true}>
+                <defs>
+                    <pattern id={'bpmn-grid-' + model.id} x='-5' y='-5' width='10' height='10' patternUnits='userSpaceOnUse'>
+                        <line x1="0" y1="5" x2="10" y2="5" class-bpmn-grid-line={true} />
+                        <line x1="5" y1="0" x2="5" y2="10" class-bpmn-grid-line={true} />
+                    </pattern>
+                </defs>
+                <g transform={transform}>
+                    <rect
+                        x={gridBounds.x}
+                        y={gridBounds.y}
+                        width={gridBounds.width}
+                        height={gridBounds.height}
+                        fill={'url(#bpmn-grid-' + model.id + ')'}
+                    />
+                    <g class-graph-content={true}>{context.renderChildren(model, { edgeRouting })}</g>
+                </g>
+            </svg>
+        );
+    }
+
+
+}
 
 /*
  * The IconView is used to show a icon within a BPMN Event or Gateway Node
