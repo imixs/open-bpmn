@@ -311,7 +311,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
 
         // now if we have an element we show the panel..
         if (_id) {
-            console.log('we are in and update the proeprt ypanel');
             // did we have a change?
             // set new selectionId
             this.selectedElementId = _id;
@@ -342,7 +341,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * @param _elementID
      */
     updatePropertyPanel(_elementID: string): void {
-        console.log('...bin in updatePropertyPanel');
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
             return;
