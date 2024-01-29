@@ -23,33 +23,16 @@
     stroke: var(--theia-titleBar-activeBackground);
 }
 
-.sprotty-text {
-    font-size: 12pt;
-    text-anchor: middle;
-}
 
-.sprotty-node {
-    stroke-width: 0;
-    font-weight: bold;
-}
-
-.sprotty-label {
-    stroke-width: 0;
-    fill: #000;
-    font-weight: inherit;
-    text-align: inherit;
-    font-size: 100%;
-}
 
 .sprotty-label.heading {
-    font-weight: normal;
-    font-size: 0.6em;
-    fill: #f0f3f8;
+
+    xxfill: #f0f3f8;
 }
 
 
 .sprotty-resize-handle.selected {
-    fill: #47699B;
+    xfill: #47699B;
 }
 
 .icon path {
@@ -143,14 +126,12 @@
 
 .textAnnotation .bpmn-text-node text {
     fill: #447c3c;
-    font-size: 0.6em;
     text-anchor: start;
 }
 
 .task .bpmn-text-node text {
     fill: #f0f3f8;
     text-anchor: middle;
-    font-size: 0.6em;
 }
 
 .task .extension text {
@@ -174,7 +155,6 @@
 
 .BPMNLabel .bpmn-text-node text {
     fill: var(--theia-titleBar-activeForeground);
-    font-size: 0.6em;
     text-anchor: middle;
 }
 
