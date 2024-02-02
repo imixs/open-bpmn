@@ -15,3 +15,5 @@ config.module.rules.push({
 }); */
 
 module.exports = config;
+
+config.ignoreWarnings = [/Failed to parse source map/];
