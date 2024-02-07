@@ -505,6 +505,24 @@ export namespace BPMNPropertyPanelUpdateAction {
     }
 }
 
+/**
+ * Open-BPMN Auto Align to Grid Acton
+ */
+export interface BPMNAutoAlignAction extends Action {
+    kind: typeof BPMNAutoAlignAction.KIND;
+}
+
+export namespace BPMNAutoAlignAction {
+    export const KIND = 'autoAlign';
+
+    export function is(object: any): object is BPMNAutoAlignAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): BPMNAutoAlignAction {
+        return { kind: KIND };
+    }
+}
 
 /*
  * This mouse listener reacts on double click events and opens/closes

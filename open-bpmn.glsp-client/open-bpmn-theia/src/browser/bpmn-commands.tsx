@@ -15,8 +15,7 @@
  ********************************************************************************/
 
 import { GLSPCommandHandler, GLSPContextMenu } from '@eclipse-glsp/theia-integration';
-import { BPMNAutoAlignAction } from '@open-bpmn/open-bpmn-glsp';
-import { BPMNPropertyPanelToggleAction } from '@open-bpmn/open-bpmn-properties';
+import { BPMNAutoAlignAction, BPMNPropertyPanelToggleAction } from '@open-bpmn/open-bpmn-properties';
 import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry } from '@theia/core';
 import { ApplicationShell } from '@theia/core/lib/browser';
 import { inject, injectable } from '@theia/core/shared/inversify';
@@ -53,8 +52,6 @@ export class BPMNPropertiesCommandContribution implements CommandContribution {
                 isEnabled: context => context.selectedElements.length === 1
             })
         );
-
-
     }
 }
 

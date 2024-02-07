@@ -52,6 +52,7 @@ export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebi
 
 
 export {
+    BPMNAutoAlignAction,
     BPMNPropertiesMouseListener,
     BPMNPropertyPanel,
     BPMNPropertyPanelToggleAction,
