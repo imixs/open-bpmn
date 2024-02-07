@@ -29,7 +29,6 @@ import {
 import {
   isBPMNLabelNode,
   isBoundaryEvent,
-  isEventNode,
   isLaneNode,
   isPoolNode,
   isTaskNode
@@ -41,8 +40,6 @@ import { inject, injectable } from 'inversify';
  *
  ****************************************************************************/
 
-
-
 /**
  * A {@link ISnapper} implementation that snaps BPMN elements onto a fixed gride size.
  * This snapper calulates the grid size based on the selected element to allign tasks, gateways and events.
@@ -53,11 +50,13 @@ export class BPMNElementSnapper implements ISnapper {
   constructor(public grid: { x: number; y: number } = { x: 10, y: 10 }) { }
 
   snap(position: Point, _element: GModelElement): Point {
-    // events are moved by 1x1
-    if (isEventNode(_element)) {
+
+    // move routing-points by 5x5 
+    if ('volatile-routing-point' === _element.type) {
+      //console.log(' --bin drin im routingpoint');
       return {
-        x: Math.round(position.x / 1) * 1,
-        y: Math.round(position.y / 1) * 1
+        x: Math.round(position.x / 5) * 5,
+        y: Math.round(position.y / 5) * 5
       };
     }
 
@@ -68,7 +67,6 @@ export class BPMNElementSnapper implements ISnapper {
     };
   }
 }
-
 
 /**
  * This selectionListener selects additional associated BoundaryEvents and BPMNLabels.

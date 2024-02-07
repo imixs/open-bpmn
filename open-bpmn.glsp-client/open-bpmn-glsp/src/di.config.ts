@@ -50,7 +50,8 @@ import {
     MultiLineTextNode,
     PoolNode, TaskNode,
     TextAnnotationNode,
-    isBPMNNode
+    isBPMNNode,
+    isBoundaryEvent
 } from '@open-bpmn/open-bpmn-model';
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
@@ -105,7 +106,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     //bind(TYPES.ISnapper).toConstantValue(new GridSnapper({ x: 5, y: 5 }));
     bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
         alignmentElementFilter: element =>
-            isBPMNNode(element),
+            isBPMNNode(element) && !isBoundaryEvent(element),
         minimumMoveDelta: { x: 10, y: 10 }
     });
 
