@@ -32,7 +32,7 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.GridSnapper;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -57,9 +57,9 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
     }
 
     @Override
-     public Optional<Command> createCommand(final CreateNodeOperation operation) {
-         return commandOf(() -> executeOperation(operation));
-     }
+    public Optional<Command> createCommand(final CreateNodeOperation operation) {
+        return commandOf(() -> executeOperation(operation));
+    }
 
     public void executeOperation(final CreateNodeOperation operation) {
         elementTypeId = operation.getElementTypeId();
@@ -73,7 +73,7 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
             if (point.isPresent()) {
                 // set the bounds
                 // participant.setPosition(point.get().getX(), point.get().getY());
-                participant.setPosition(GridSnapper.snap(point.get().getX(), point.get().getY()));
+                participant.setPosition(BPMNGridSnapper.snap(point.get().getX(), point.get().getY()));
                 participant.setDimension(Participant.DEFAULT_WIDTH, Participant.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {

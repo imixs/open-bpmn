@@ -30,7 +30,6 @@ import {
   isBPMNLabelNode,
   isBoundaryEvent,
   isEventNode,
-  isGatewayNode,
   isLaneNode,
   isPoolNode,
   isTaskNode
@@ -54,21 +53,7 @@ export class BPMNElementSnapper implements ISnapper {
   constructor(public grid: { x: number; y: number } = { x: 10, y: 10 }) { }
 
   snap(position: Point, _element: GModelElement): Point {
-
-    if (isTaskNode(_element)) {
-      return {
-        x: Math.round(position.x / 10) * 10,
-        y: Math.round(position.y / 10) * 10
-      };
-    }
-
-    if (isGatewayNode(_element)) {
-      return {
-        x: Math.round(position.x / 5) * 5,
-        y: Math.round(position.y / 5) * 5
-      };
-    }
-
+    // events are moved by 1x1
     if (isEventNode(_element)) {
       return {
         x: Math.round(position.x / 1) * 1,
@@ -76,7 +61,7 @@ export class BPMNElementSnapper implements ISnapper {
       };
     }
 
-    // default...
+    // default move 10x10...
     return {
       x: Math.round(position.x / this.grid.x) * this.grid.x,
       y: Math.round(position.y / this.grid.y) * this.grid.y

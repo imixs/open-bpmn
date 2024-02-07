@@ -39,7 +39,7 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.GridSnapper;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -125,33 +125,29 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
             Optional<GPoint> point = operation.getLocation();
 
             if (point.isPresent()) {
-                double elementX = point.get().getX();
-                double elementY = point.get().getY();
                 // compute relative center position...
-                elementX = GridSnapper.snap(elementX - (Event.DEFAULT_WIDTH / 2));
-                elementY = GridSnapper.snap(elementY - (Event.DEFAULT_HEIGHT / 2));
+                BPMNPoint targetPosition = BPMNGridSnapper.snap(event, point.get());
                 // compute default label position
-                double labelX = elementX + (Event.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
-                double labelY = elementY + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
-
+                double labelX = targetPosition.getX() + (Event.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);
+                double labelY = targetPosition.getY() + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
                 // in case of a BoundaryEvent we adjust the position to the TaskEdge...
                 if (BPMNTypes.BOUNDARY_EVENT.equals(elementTypeId)
                         && (containerElement != null && containerElement instanceof Activity)) {
                     double taskY = containerElement.getBounds().getPosition().getY();
                     BPMNPoint taskCenterPoint = containerElement.getBounds().getCenter();
                     // Upper bounds?
-                    if (elementY + (Event.DEFAULT_HEIGHT / 2) < taskCenterPoint.getY()) {
-                        elementY = taskY - (Event.DEFAULT_HEIGHT / 2);
-                        labelY = elementY - BPMNLabel.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
+                    if (targetPosition.getY() + (Event.DEFAULT_HEIGHT / 2) < taskCenterPoint.getY()) {
+                        targetPosition.setY(taskY - (Event.DEFAULT_HEIGHT / 2));
+                        labelY = targetPosition.getY() - BPMNLabel.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
                     } else {
                         // lower bounds
-                        elementY = taskY + (containerElement.getBounds().getDimension().getHeight()
-                                - (Event.DEFAULT_HEIGHT / 2));
-                        labelY = elementY + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
+                        targetPosition.setY(taskY + (containerElement.getBounds().getDimension().getHeight()
+                                - (Event.DEFAULT_HEIGHT / 2)));
+                        labelY = targetPosition.getY() + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
                     }
                 }
                 // set event bounds
-                event.setPosition(elementX, elementY);
+                event.setPosition(targetPosition);
                 event.setDimension(Event.DEFAULT_WIDTH, Event.DEFAULT_HEIGHT);
                 // set label bounds
                 event.getLabel().updateLocation(labelX, labelY);

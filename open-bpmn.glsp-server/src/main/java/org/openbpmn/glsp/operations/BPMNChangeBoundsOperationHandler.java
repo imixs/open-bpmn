@@ -144,6 +144,19 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 BPMNElementNode bpmnElementNode = (BPMNElementNode) modelState.getBpmnModel().findElementById(id);
                 if (bpmnElementNode != null) {
 
+                    // Special snap mechanism to snap Tasks and Pools to a 10x10 gird
+                    if (bpmnElementNode instanceof Participant || bpmnElementNode instanceof Activity) {
+                        // long _x = Math.round(newPoint.getX() / 10.0) * 10;
+                        newPoint.setX(Math.round(newPoint.getX() / 10.0) * 10);
+                        newPoint.setY(Math.round(newPoint.getY() / 10.0) * 10);
+                    } else {
+                        // Defautl: We round x and y
+                        // The reason why we roudn here is that the HelperLine Feature somtimes
+                        // returns float values with decimal places (e.g. 170.3534577345)
+                        newPoint.setX(Math.round(newPoint.getX()));
+                        newPoint.setY(Math.round(newPoint.getY()));
+                    }
+
                     if (bpmnElementNode instanceof Participant) {
                         updatePool(gNode, bpmnElementNode, id, newPoint, newSize);
                     } else {

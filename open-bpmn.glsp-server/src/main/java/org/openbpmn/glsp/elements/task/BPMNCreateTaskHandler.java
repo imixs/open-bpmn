@@ -30,11 +30,12 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.GridSnapper;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -86,14 +87,10 @@ public class BPMNCreateTaskHandler extends CreateBPMNNodeOperationHandler {
                 Activity task = bpmnProcess.addTask(taskID, getLabel(), operation.getElementTypeId());
                 Optional<GPoint> point = operation.getLocation();
                 if (point.isPresent()) {
-                    double elementX = point.get().getX();
-                    double elementY = point.get().getY();
-                    // compute relative center position...
-                    elementX = GridSnapper.snap(elementX - (Activity.DEFAULT_WIDTH / 2));
-                    elementY = GridSnapper.snap(elementY - (Activity.DEFAULT_HEIGHT / 2));
-                    task.setPosition(elementX, elementY);
+                    BPMNPoint targetPosition = BPMNGridSnapper.snap(task, point.get());
+                    task.setPosition(targetPosition);
                     task.setDimension(Activity.DEFAULT_WIDTH, Activity.DEFAULT_HEIGHT);
-                    logger.debug("new BPMNActivity Position = " + elementX + "," + elementY);
+                    logger.debug("new BPMNActivity Position = " + targetPosition.getX() + "," + targetPosition.getY());
                 }
             } else {
                 // should not happen
