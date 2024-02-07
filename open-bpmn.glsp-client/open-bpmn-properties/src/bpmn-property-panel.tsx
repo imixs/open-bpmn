@@ -84,7 +84,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
         this.modelRoot = root;
-        console.log('.------- onBeforeShow');
         // preselect the root element showing the diagram properties
         this.selectionChanged(root, []);
     }
@@ -93,7 +92,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * Initialize the elements of property panel
      */
     protected override initializeContents(_containerElement: HTMLElement): void {
-        console.log('.------- initializeContents - create header/body');
         this.createHeader();
         this.createBody();
     }
@@ -471,6 +469,9 @@ export function createIcon(codiconId: string): HTMLElement {
     return icon;
 }
 
+/**
+ * Open-BPMN Toggle Property Panel Action
+ */
 export interface BPMNPropertyPanelToggleAction extends Action {
     kind: typeof BPMNPropertyPanelToggleAction.KIND;
 }
@@ -487,6 +488,9 @@ export namespace BPMNPropertyPanelToggleAction {
     }
 }
 
+/**
+ * Open-BPMN Update Property Panel Action
+ */
 export interface BPMNPropertyPanelUpdateAction extends Action {
     kind: typeof BPMNPropertyPanelUpdateAction.KIND;
 }
@@ -500,6 +504,7 @@ export namespace BPMNPropertyPanelUpdateAction {
         return { kind: KIND };
     }
 }
+
 
 /*
  * This mouse listener reacts on double click events and opens/closes

@@ -63,6 +63,7 @@ import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.model.BPMNSourceModelStorage;
 import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
+import org.openbpmn.glsp.operations.BPMNAutoAlignActionHandler;
 import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNClipboardDataActionHandler;
@@ -116,6 +117,9 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Compute Routing Points
         binding.add(BPMNComputedBoundsActionHandler.class);
+
+        // Compute Routing Points
+        binding.add(BPMNAutoAlignActionHandler.class);
 
     }
 

@@ -15,20 +15,22 @@
  ********************************************************************************/
 
 import { GLSPCommandHandler, GLSPContextMenu } from '@eclipse-glsp/theia-integration';
+import { BPMNAutoAlignAction } from '@open-bpmn/open-bpmn-glsp';
 import { BPMNPropertyPanelToggleAction } from '@open-bpmn/open-bpmn-properties';
 import { CommandContribution, CommandRegistry, MenuContribution, MenuModelRegistry } from '@theia/core';
 import { ApplicationShell } from '@theia/core/lib/browser';
 import { inject, injectable } from '@theia/core/shared/inversify';
 
 /**
- * This module defines different commands and menu actions that fire a specific action.
+ * This module defines different Open-BPMN commands and menu actions that fire a specific action.
  * These actions can be handled by the server or client part.
  *
  * Note! the command contributions must be registered in the BPMNTheiaFrontendModule
  *
  */
-export namespace PropertyPanelCommands {
+export namespace OpenBPMNCommands {
     export const PROPERTIES_TOGGLE = 'glsp-bpmn-properties-toggle';
+    export const AUTO_ALIGN = 'glsp-bpmn-auto-align';
 }
 
 @injectable()
@@ -36,26 +38,39 @@ export class BPMNPropertiesCommandContribution implements CommandContribution {
     @inject(ApplicationShell) protected readonly shell: ApplicationShell;
     registerCommands(commands: CommandRegistry): void {
         // register commands...
+
         commands.registerCommand(
-            { id: PropertyPanelCommands.PROPERTIES_TOGGLE, label: 'BPMN Properties' },
+            { id: OpenBPMNCommands.AUTO_ALIGN, label: 'Auto Align...' },
+            new GLSPCommandHandler(this.shell, {
+                actions: () => [BPMNAutoAlignAction.create()]
+            })
+        );
+
+        commands.registerCommand(
+            { id: OpenBPMNCommands.PROPERTIES_TOGGLE, label: 'BPMN Properties' },
             new GLSPCommandHandler(this.shell, {
                 actions: () => [BPMNPropertyPanelToggleAction.create()],
                 isEnabled: context => context.selectedElements.length === 1
             })
         );
+
+
     }
 }
 
 @injectable()
 export class BPMNPropertiesMenuContribution implements MenuContribution {
-    // static readonly NAVIGATION = GLSPContextMenu.MENU_PATH.concat('navigate');
-    // static readonly NIX = GLSPContextMenu.MENU_PATH;
     registerMenus(menus: MenuModelRegistry): void {
 
         menus.registerMenuAction(GLSPContextMenu.MENU_PATH.concat('z'), {
-            commandId: PropertyPanelCommands.PROPERTIES_TOGGLE,
+            commandId: OpenBPMNCommands.PROPERTIES_TOGGLE,
             label: 'BPMN Properties'
         });
 
+        // Command to a allign all elements to the grid. Usefull for a misarragend layout.
+        menus.registerMenuAction(GLSPContextMenu.MENU_PATH.concat('z'), {
+            commandId: OpenBPMNCommands.AUTO_ALIGN,
+            label: 'Auto align all elements...'
+        });
     }
 }

@@ -13,11 +13,23 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-// import createBPMNDiagramContainer from './di.config';
+import { Action } from '@eclipse-glsp/protocol';
 
-export * from './bpmn-actions';
-export * from './bpmn-element-views';
-export * from './bpmn-routing-views';
-// export { createBPMNDiagramContainer };
-export * from './di.config';
+/**
+ * Open-BPMN Auto Align to Grid Acton
+ */
+export interface BPMNAutoAlignAction extends Action {
+    kind: typeof BPMNAutoAlignAction.KIND;
+}
 
+export namespace BPMNAutoAlignAction {
+    export const KIND = 'autoAlign';
+
+    export function is(object: any): object is BPMNAutoAlignAction {
+        return Action.hasKind(object, KIND);
+    }
+
+    export function create(): BPMNAutoAlignAction {
+        return { kind: KIND };
+    }
+}

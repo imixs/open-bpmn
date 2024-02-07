@@ -31,7 +31,7 @@ import '../css/jsonforms-theia.css';
 
 export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebind) => {
 
-    console.log('.---- in construct BPMNPropertyModule');
+
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     bind(TYPES.IDiagramStartup).toService(BPMNPropertyPanel);
@@ -41,6 +41,9 @@ export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebi
     // but we have a problem with the inital selection...
     //configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
+
+    //configureActionHandler({ bind, isBound }, BPMNAutoAlignAction.KIND, BPMNPropertyPanel);
+
     // configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
     // configureActionHandler({ bind, isBound }, SetModelAction.KIND, BPMNPropertyPanel);
 
@@ -54,4 +57,5 @@ export {
     BPMNPropertyPanelToggleAction,
     BPMNPropertyPanelUpdateAction
 } from './bpmn-property-panel';
+
 
