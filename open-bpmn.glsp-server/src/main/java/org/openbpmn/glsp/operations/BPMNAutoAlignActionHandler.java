@@ -15,12 +15,23 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.server.actions.AbstractActionHandler;
 import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
+import org.eclipse.glsp.server.actions.SetDirtyStateAction;
+import org.eclipse.glsp.server.features.core.model.UpdateModelAction;
+import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -37,13 +48,44 @@ public class BPMNAutoAlignActionHandler extends AbstractActionHandler<BPMNAutoAl
     @Inject
     protected BPMNGModelState modelState;
 
+    @Inject
+    protected ActionDispatcher actionDispatcher;
+
+    @Inject
+    protected BPMNGModelFactory bpmnGModelFactory;
+
     @Override
     protected List<Action> executeAction(final BPMNAutoAlignAction actualAction) {
+        logger.finest("Auto align all elements....");
+        Set<Participant> participants = modelState.getBpmnModel().getParticipants();
+        for (Participant participant : participants) {
+            try {
+                BPMNGridSnapper.snap(participant);
+            } catch (BPMNMissingElementException e) {
+                logger.severe("Unable to update bounds for " + participant.getId() + " : " + e.getMessage());
+            }
+        }
 
-        logger.info("----------> Auto Align Action received!");
+        Set<BPMNProcess> processList = modelState.getBpmnModel().getProcesses();
+        for (BPMNProcess process : processList) {
+            try {
+                // snap all elements
+                Set<BPMNElementNode> allNodes = process.getAllFlowElementNodes();
+                for (BPMNElementNode _node : allNodes) {
+                    BPMNGridSnapper.snap(_node);
+                }
+            } catch (BPMNMissingElementException e) {
+                logger.severe("Unable to update bounds for " + process.getId() + " : " + e.getMessage());
+            }
+        }
 
-        // no more action - the GModel is now up to date
-        return none();
+        // Force a complete refresh of the GModel state....
+        modelState.refreshGModelState();
+        List<Action> resultAction = new ArrayList<>();
+        resultAction.add(new SetDirtyStateAction(true,
+                SetDirtyStateAction.Reason.OPERATION));
+        resultAction.add(new UpdateModelAction(modelState.getRoot()));
+        return resultAction;
     }
 
 }

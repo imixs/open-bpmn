@@ -19,10 +19,13 @@ import java.util.Stack;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
+
+import com.google.inject.Inject;
 
 /**
  * The BPMNGModelState extends the DefaultGModelState and provides the property
@@ -45,6 +48,9 @@ public class BPMNGModelState extends DefaultGModelState {
     private int MAX_UNDOSTACK_SIZE = 20;
     private boolean initialized = false;
     private String rootID = "undefined_root_id";
+
+    @Inject
+    protected BPMNGModelFactory bpmnGModelFactory;
 
     public BPMNGModelState() {
         resetRevisions();
@@ -172,6 +178,20 @@ public class BPMNGModelState extends DefaultGModelState {
      */
     public void reset() {
         this.initialized = false;
+    }
+
+    /**
+     * This method can be used to rebuild the GModel which results in a new Model
+     * Root ID.
+     * This method is for example called by the BPMNAutoAlignActionHandler to
+     * refresh the Client side
+     * 
+     */
+    public void refreshGModelState() {
+        this.setBpmnModel(bpmnModel);
+        GGraph newGModel = bpmnGModelFactory.buildGGraph(bpmnModel);
+        this.updateRoot(newGModel);
+        this.execute(new SetDirtyCommand());
     }
 
 }

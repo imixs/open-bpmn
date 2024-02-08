@@ -149,6 +149,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                         // long _x = Math.round(newPoint.getX() / 10.0) * 10;
                         newPoint.setX(Math.round(newPoint.getX() / 10.0) * 10);
                         newPoint.setY(Math.round(newPoint.getY() / 10.0) * 10);
+                        newSize.setHeight(Math.round(newSize.getHeight() / 10.0) * 10);
+                        newSize.setWidth(Math.round(newSize.getWidth() / 10.0) * 10);
                     } else {
                         // Defautl: We round x and y
                         // The reason why we roudn here is that the HelperLine Feature somtimes

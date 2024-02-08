@@ -47,7 +47,7 @@ import { inject, injectable } from 'inversify';
  */
 @injectable()
 export class BPMNElementSnapper implements ISnapper {
-  constructor(public grid: { x: number; y: number } = { x: 10, y: 10 }) { }
+  constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
 
   snap(position: Point, _element: GModelElement): Point {
 
