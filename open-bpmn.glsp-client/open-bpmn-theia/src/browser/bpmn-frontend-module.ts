@@ -15,12 +15,7 @@
  ********************************************************************************/
 
 import { ContainerContext, DiagramConfiguration, GLSPClientContribution, GLSPTheiaFrontendModule } from '@eclipse-glsp/theia-integration';
-import { CommandContribution, MenuContribution } from '@theia/core';
 import { BPMNLanguage } from '../common/bpmn-language';
-import {
-    BPMNPropertiesCommandContribution,
-    BPMNPropertiesMenuContribution
-} from './bpmn-commands';
 import { BPMNGLSPClientContribution } from './bpmn-glsp-client-contribution';
 import { BPMNDiagramConfiguration } from './diagram/bpmn-diagram-configuration';
 export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
@@ -32,14 +27,14 @@ export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
     }
 
 
-    override configure(context: ContainerContext): void {
-        // Custom workflow commands and menus
-        context.bind(CommandContribution).to(BPMNPropertiesCommandContribution);
-        context.bind(MenuContribution).to(BPMNPropertiesMenuContribution);
-        //  context.bind(MenuContribution).to(BPMNAlignToGridMenuContribution);
+    // override configure(context: ContainerContext): void {
+    //     // Custom workflow commands and menus
+    //     //   context.bind(CommandContribution).to(BPMNPropertiesCommandContribution);
+    //     //   context.bind(MenuContribution).to(BPMNPropertiesMenuContribution);
+    //     //  context.bind(MenuContribution).to(BPMNAlignToGridMenuContribution);
 
 
-    }
+    // }
 
     override bindGLSPClientContribution(context: ContainerContext): void {
         context.bind(GLSPClientContribution).to(BPMNGLSPClientContribution);

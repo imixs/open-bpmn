@@ -41,11 +41,21 @@ import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
+import org.openbpmn.glsp.operations.BPMNAutoAlignAction;
+import org.openbpmn.glsp.operations.BPMNPropertyPanelToggleAction;
+import org.openbpmn.glsp.operations.BPMNResetRoutingAction;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
+/**
+ * Creates the command actions for a diagram (ctrl+space).
+ * 
+ * The used icons can be found here:
+ * https://microsoft.github.io/vscode-codicons/dist/codicon.html
+ * 
+ */
 public class BPMNCommandPaletteActionProvider implements CommandPaletteActionProvider {
 
     @Inject
@@ -86,67 +96,67 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                             lastMousePosition.orElse(point(0, 0)))),
                     "inspect"));
             actions.add(new LabeledAction("Create Manual Task",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.MANUAL_TASK,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "inspect"));
-                actions.add(new LabeledAction("Create User Task",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.USER_TASK,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "inspect"));
-                actions.add(new LabeledAction("Create Send Task",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SEND_TASK,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "inspect"));
-                actions.add(new LabeledAction("Create Service Task",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SERVICE_TASK,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "inspect"));
-                actions.add(new LabeledAction("Create Script Task",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SCRIPT_TASK,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "inspect"));
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.MANUAL_TASK,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "inspect"));
+            actions.add(new LabeledAction("Create User Task",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.USER_TASK,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "inspect"));
+            actions.add(new LabeledAction("Create Send Task",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SEND_TASK,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "inspect"));
+            actions.add(new LabeledAction("Create Service Task",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SERVICE_TASK,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "inspect"));
+            actions.add(new LabeledAction("Create Script Task",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SCRIPT_TASK,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "inspect"));
 
-                // Events
-                actions.add(new LabeledAction("Create Start Event",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.START_EVENT,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "circle-filled"));
+            // Events
+            actions.add(new LabeledAction("Create Start Event",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.START_EVENT,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "circle-filled"));
 
-                actions.add(new LabeledAction("Create End Event",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.END_EVENT,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "circle-filled"));
-                actions.add(new LabeledAction("Create Catch Event",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.CATCH_EVENT,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "circle-filled"));
-                actions.add(new LabeledAction("Create Throw Event",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.THROW_EVENT,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "circle-filled"));
+            actions.add(new LabeledAction("Create End Event",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.END_EVENT,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "circle-filled"));
+            actions.add(new LabeledAction("Create Catch Event",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.CATCH_EVENT,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "circle-filled"));
+            actions.add(new LabeledAction("Create Throw Event",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.THROW_EVENT,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "circle-filled"));
 
-                // Gateways
-                actions.add(new LabeledAction("Create Exclusive Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EXCLUSIVE_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "debug-breakpoint-log-unverified"));
+            // Gateways
+            actions.add(new LabeledAction("Create Exclusive Gateway",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EXCLUSIVE_GATEWAY,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "debug-breakpoint-log-unverified"));
 
-                actions.add(new LabeledAction("Create Parallel Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.PARALLEL_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "debug-breakpoint-log-unverified"));
+            actions.add(new LabeledAction("Create Parallel Gateway",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.PARALLEL_GATEWAY,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "debug-breakpoint-log-unverified"));
 
-                actions.add(new LabeledAction("Create Inclusive Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.INCLUSIVE_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "debug-breakpoint-log-unverified"));
+            actions.add(new LabeledAction("Create Inclusive Gateway",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.INCLUSIVE_GATEWAY,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "debug-breakpoint-log-unverified"));
 
-                actions.add(new LabeledAction("Create Event Gateway",
-                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EVENTBASED_GATEWAY,
-                                lastMousePosition.orElse(point(0, 0)))),
-                        "debug-breakpoint-log-unverified"));
+            actions.add(new LabeledAction("Create Event Gateway",
+                    Lists.newArrayList(new CreateNodeOperation(BPMNTypes.EVENTBASED_GATEWAY,
+                            lastMousePosition.orElse(point(0, 0)))),
+                    "debug-breakpoint-log-unverified"));
 
-            }
+        }
 
         // Create edge actions between two nodes only if to BPMN nodes are selected
         if (selectedBPMNNodeElements.size() == 2) {
@@ -161,11 +171,28 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
             }
         }
 
-        // Delete action - symbol-property
-        if (selectedBPMNNodeElements.size() == 1) {
+        // Delete action
+        if (selectedBPMNNodeElements.size() >= 1) {
             actions.add(new LabeledAction("Delete", Lists.newArrayList(new DeleteOperation(selectedIds)),
                     "trash"));
         }
+
+        // Auto Align Action
+        actions.add(new LabeledAction("Auto align all elements...",
+                Lists.newArrayList(new BPMNAutoAlignAction(selectedIds)),
+                "layout"));
+
+        // Reset Routing Points Action
+        if (selectedBPMNNodeElements.size() >= 1) {
+            actions.add(new LabeledAction("Reset routing...",
+                    Lists.newArrayList(new BPMNResetRoutingAction(selectedIds)),
+                    "indent"));
+        }
+
+        // Property Toggle Action
+        actions.add(new LabeledAction("Properties...",
+                Lists.newArrayList(new BPMNPropertyPanelToggleAction()),
+                "browser"));
 
         return actions;
     }

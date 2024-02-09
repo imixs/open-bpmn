@@ -22,41 +22,22 @@ import {
     BPMNPropertyPanel,
     BPMNPropertyPanelToggleAction
 } from './bpmn-property-panel';
-
-
 // css styles
 import '../css/bpmn-properties.css';
 import '../css/jsonforms-theia.css';
 
-
 export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebind) => {
-
-
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     bind(TYPES.IDiagramStartup).toService(BPMNPropertyPanel);
     bind(TYPES.ISelectionListener).toService(BPMNPropertyPanel);
-
-    // EnableToolPaletteAction should no longer be neccessary - see: https://github.com/eclipse-glsp/glsp/discussions/1184
-    // but we have a problem with the inital selection...
-    //configureActionHandler({ bind, isBound }, EnableToolPaletteAction.KIND, BPMNPropertyPanel);
     configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
-
-    //configureActionHandler({ bind, isBound }, BPMNAutoAlignAction.KIND, BPMNPropertyPanel);
-
-    // configureActionHandler({ bind, isBound }, BPMNPropertyPanelUpdateAction.KIND, BPMNPropertyPanel);
-    // configureActionHandler({ bind, isBound }, SetModelAction.KIND, BPMNPropertyPanel);
-
 });
 
-
-
 export {
-    BPMNAutoAlignAction,
     BPMNPropertiesMouseListener,
     BPMNPropertyPanel,
     BPMNPropertyPanelToggleAction,
     BPMNPropertyPanelUpdateAction
 } from './bpmn-property-panel';
-
 

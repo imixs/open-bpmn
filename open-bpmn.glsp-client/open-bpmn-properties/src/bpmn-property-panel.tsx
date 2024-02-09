@@ -71,7 +71,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * This mehtod is called after the diagram model is fully initialized. This is the moment to render the HTML element
      */
     postModelInitialization(): MaybePromise<void> {
-        //this.show(this.editorContext.modelRoot);
         this.show(this.modelRoot);
     }
 
@@ -192,8 +191,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     protected onClickResizePanel(button: HTMLElement, toolId?: string) {
         return (_ev: MouseEvent) => {
-            // if (!this.editorContext.isReadonly) {
-            //if (true) {
             const action = toolId ? EnableToolsAction.create([toolId]) : EnableDefaultToolsAction.create();
             this.actionDispatcher.dispatch(action);
             if (toolId === 'TOOL_COMMAND_MAXIMIZE') {
@@ -204,7 +201,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             }
             // restore the default actions in the diagram panel (like move elements)
             this.actionDispatcher.dispatch(EnableDefaultToolsAction.create());
-            //}
         };
     }
 
@@ -222,29 +218,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * of the data state and indicates that the property panel need to be refreshed.
      */
     handle(action: Action): ICommand | Action | void {
-        console.log('.----- handleAction....');
-        // check enable state
-        // if (!this.bodyDiv && action.kind === EnableToolPaletteAction.KIND) {
-        //     const requestAction = RequestContextActions.create({
-        //         // contextId: ToolPalette.ID,
-        //         contextId: BPMNPropertyPanel.ID,
-        //         editorContext: {
-        //             selectedElementIds: []
-        //         }
-        //     });
-        //     this.actionDispatcher.requestUntil(requestAction).then(response => {
-        //         if (SetContextActions.is(response)) {
-        //             this.actionDispatcher.dispatch(
-        //                 SetUIExtensionVisibilityAction.create({
-        //                     extensionId: BPMNPropertyPanel.ID,
-        //                     //visible: !this.editorContext.isReadonly
-        //                     visible: true
-        //                 })
-        //             );
-        //         }
-        //     });
-        // }
-
         // Toggle the property panel. Action is triggered by context menu
         if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
             if (!this.panelToggle) {
@@ -508,21 +481,39 @@ export namespace BPMNPropertyPanelUpdateAction {
 /**
  * Open-BPMN Auto Align to Grid Acton
  */
-export interface BPMNAutoAlignAction extends Action {
-    kind: typeof BPMNAutoAlignAction.KIND;
-}
+// export interface BPMNAutoAlignAction extends Action {
+//     kind: typeof BPMNAutoAlignAction.KIND;
+// }
 
-export namespace BPMNAutoAlignAction {
-    export const KIND = 'autoAlign';
+// export namespace BPMNAutoAlignAction {
+//     export const KIND = 'autoAlign';
 
-    export function is(object: any): object is BPMNAutoAlignAction {
-        return Action.hasKind(object, KIND);
-    }
+//     export function is(object: any): object is BPMNAutoAlignAction {
+//         return Action.hasKind(object, KIND);
+//     }
 
-    export function create(): BPMNAutoAlignAction {
-        return { kind: KIND };
-    }
-}
+//     export function create(): BPMNAutoAlignAction {
+//         return { kind: KIND };
+//     }
+// }
+
+/**
+ * Open-BPMN Action to clear all routing points of an edge
+ */
+// export interface BPMNResetRoutingAction extends Action {
+//     kind: typeof BPMNResetRoutingAction.KIND;
+// }
+
+// export namespace BPMNResetRoutingAction {
+//     export const KIND = 'resetRoutingPoints';
+//     export function is(object: any): object is BPMNResetRoutingAction {
+//         return Action.hasKind(object, KIND);
+//     }
+
+//     export function create(): BPMNResetRoutingAction {
+//         return { kind: KIND };
+//     }
+// }
 
 /*
  * This mouse listener reacts on double click events and opens/closes
