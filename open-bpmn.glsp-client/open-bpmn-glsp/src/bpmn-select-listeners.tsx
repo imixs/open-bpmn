@@ -50,10 +50,8 @@ export class BPMNElementSnapper implements ISnapper {
   constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
 
   snap(position: Point, _element: GModelElement): Point {
-
-    // move routing-points by 5x5 
+    // move routing-points by 5x5
     if ('volatile-routing-point' === _element.type) {
-      //console.log(' --bin drin im routingpoint');
       return {
         x: Math.round(position.x / 5) * 5,
         y: Math.round(position.y / 5) * 5

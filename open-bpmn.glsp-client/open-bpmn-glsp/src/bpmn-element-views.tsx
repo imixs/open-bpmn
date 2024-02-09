@@ -90,8 +90,6 @@ export class BPMNGridView implements IView {
             </svg>
         );
     }
-
-
 }
 
 /*
