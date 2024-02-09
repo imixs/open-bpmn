@@ -7,6 +7,7 @@ import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 
 /**
@@ -191,6 +192,16 @@ public class BPMNTypes {
      */
     public static boolean isSequenceFlow(BPMNElement element) {
         if (element instanceof SequenceFlow) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given element is a SequenceFlow
+     */
+    public static boolean isEdge(BPMNElement element) {
+        if (element instanceof BPMNElementEdge) {
             return true;
         }
         return false;

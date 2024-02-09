@@ -1413,7 +1413,7 @@ public class BPMNProcess extends BPMNElement {
      * @param id of a flowElement
      * @return list of Associations
      */
-    private Set<Association> findAssociationsByElementId(String id) {
+    public Set<Association> findAssociationsByElementId(String id) {
         Set<Association> result = new LinkedHashSet<Association>();
         if (id == null || id.isEmpty()) {
             return result;
@@ -1433,7 +1433,7 @@ public class BPMNProcess extends BPMNElement {
      * @param id of a flowElement
      * @return list of MessageFlows
      */
-    private Set<MessageFlow> findMessageFlowsByElementId(String id) {
+    public Set<MessageFlow> findMessageFlowsByElementId(String id) {
         Set<MessageFlow> result = new LinkedHashSet<MessageFlow>();
         if (id == null || id.isEmpty()) {
             return result;
@@ -1444,6 +1444,20 @@ public class BPMNProcess extends BPMNElement {
                 result.add(flow);
             }
         }
+        return result;
+    }
+
+    /**
+     * Returns all BPMN Edges associated with a geiven FlowElement.
+     * 
+     * @param id
+     * @return
+     */
+    public Set<BPMNElementEdge> findAllBPMNEdgesByElementId(String id) {
+        Set<BPMNElementEdge> result = new LinkedHashSet<BPMNElementEdge>();
+        result.addAll(findSequenceFlowsByElementId(id));
+        result.addAll(findMessageFlowsByElementId(id));
+        result.addAll(findSequenceFlowsByElementId(id));
         return result;
     }
 
