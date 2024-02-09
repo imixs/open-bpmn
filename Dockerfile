@@ -8,6 +8,7 @@ WORKDIR /usr/src/app
 COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 # Build GLSP Client part
 WORKDIR /usr/src/app/open-bpmn.glsp-client
+RUN yarn clean
 RUN yarn install
 
 # Copy GLSP Server part
