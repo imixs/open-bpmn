@@ -71,6 +71,7 @@ import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
 import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
+import org.openbpmn.glsp.operations.BPMNResetRoutingActionHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNGLSPValidator;
@@ -118,7 +119,10 @@ public class BPMNDiagramModule extends DiagramModule {
         // Compute Routing Points
         binding.add(BPMNComputedBoundsActionHandler.class);
 
-        // Compute Routing Points
+        // Clar Routing Points
+        binding.add(BPMNResetRoutingActionHandler.class);
+
+        // Auto Align all elements
         binding.add(BPMNAutoAlignActionHandler.class);
 
     }
