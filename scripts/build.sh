@@ -102,7 +102,7 @@ fi
 
 if [ "$start" == "true" ]; then
   cd open-bpmn.glsp-client/
-  yarn start:external
+  yarn start:external --root-dir=/usr/src/app/open-bpmn.glsp-client/workspace
   cd ..
 fi
 

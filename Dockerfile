@@ -1,7 +1,7 @@
-FROM node:16-buster
+FROM node:18.19.0-bookworm
 
 # Install app dependencies
-RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-11-jre
+RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-17-jre
 
 WORKDIR /usr/src/app
 # Create app directory

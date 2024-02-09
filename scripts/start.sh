@@ -16,5 +16,6 @@ java -jar $GLSP_SERVER_JAR org.openbpmn.glsp.BPMNServerLauncher --port=5007 &
 
 # start client
 cd open-bpmn.glsp-client/
-yarn start:external --hostname=0.0.0.0
-cd ..
+yarn start:external --hostname=0.0.0.0 --root-dir=/usr/src/app/open-bpmn.glsp-client/workspace/demo
+#cd ..
+

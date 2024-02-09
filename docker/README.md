@@ -1,8 +1,6 @@
 # Docker
 
-Open-BPMN provides a Docker image to run the BPMN modeler as a Container in Docker or Kubernetes.
-
-The Open-BPMN Docker image is based on the [official NodeJS image (node:16-buster)](https://hub.docker.com/_/node). The container image contains a pre-build application and exposes the port 3000
+Open-BPMN provides a Docker image to run the BPMN modeler as a Container in Docker or Kubernetes. The Open-BPMN Docker image is based on the [official NodeJS image (node:16-buster)](https://hub.docker.com/_/node). The container image contains a pre-build application and exposes the port 3000
 
 In the Dockerfile we are using start script as the entrypoint:
 
