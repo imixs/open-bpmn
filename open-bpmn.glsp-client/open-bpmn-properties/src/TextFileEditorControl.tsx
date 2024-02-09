@@ -122,12 +122,7 @@ export const TextFileEditorControl = (props: ControlProps & VanillaRendererProps
 /**
  * Export the Custom Renderer and  Tester for TextFIleEditorGroupControl
  */
-
 export const TextFileEditorRendererEntry: JsonFormsRendererRegistryEntry = {
   tester: rankWith(3, and(optionIs('format', 'textFileEditor'))),
   renderer: withVanillaControlProps(withJsonFormsEnumProps(TextFileEditor))
 };
-
-// export const textAreaCellTester: RankedTester = rankWith(2, isMultiLineControl);
-
-// export default withJsonFormsCellProps(withVanillaCellProps(TextAreaCell));
