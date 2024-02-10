@@ -4,11 +4,11 @@ echo "* Open BPMN - Release Process.....    *"
 echo "***************************************"
 
 # Check java_home
-if [[ "$JAVA_HOME" == *"11"* ]]; then
+if [[ "$JAVA_HOME" == *"17"* ]]; then
     echo $JAVA_HOME
 else
-    echo "JAVA_HOME is not set to JDK 11!"
-    exit 0
+    echo "JAVA_HOME is possible not set to JDK 17!"
+ #   exit 0
 fi
 
 # First compute the current version number from the pom.xml
