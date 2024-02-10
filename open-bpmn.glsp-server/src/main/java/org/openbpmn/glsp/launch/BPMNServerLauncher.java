@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.glsp.launch;
 
+import java.util.logging.Logger;
+
 import org.apache.commons.cli.ParseException;
 import org.eclipse.glsp.server.di.ServerModule;
 import org.eclipse.glsp.server.launch.DefaultCLIParser;
@@ -24,12 +26,17 @@ import org.eclipse.glsp.server.utils.LaunchUtil;
 import org.openbpmn.glsp.BPMNDiagramModule;
 
 public final class BPMNServerLauncher {
+   private static Logger logger = Logger.getLogger(BPMNServerLauncher.class.getName());
+
    private BPMNServerLauncher() {
    }
 
    public static void main(final String[] args) {
       String processName = "OpenBPMNServer";
       try {
+         logger.info("***************************");
+         logger.info("* Launch " + processName);
+         logger.info("***************************");
          DefaultCLIParser parser = new DefaultCLIParser(args, processName);
          LaunchUtil.configure(parser);
 

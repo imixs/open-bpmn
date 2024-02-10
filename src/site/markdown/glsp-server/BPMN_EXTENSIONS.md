@@ -155,42 +155,51 @@ Returns the priority of this action handler. The priority is used to derive the 
 
 ## Register a BPMNExtension
 
-To register a custom BPMNExtension you need to extend class `BPMNDiagramModule` and overwrite the method `configureBPMNExtensions`. In this method the new custom Extension Points can be registered:
+To register a custom BPMNExtension you need to extend class `BPMNDiagramModule` and overwrite the methods `configureBPMNExtensions` and `configureBPMNModelExtensions`. In this methods your new custom Extension Points can be registered:
 
 ```java
 public class MyBPMNDiagramModule extends BPMNDiagramModule {
 
- public void configureBPMNExtensions(final Multibinder<BPMNElementExtension> binding) {
+    @Override
+    public void configureBPMNExtensions(final Multibinder<BPMNElementExtension> binding) {
         // bind BPMN default extensions
         super.configureBPMNExtensions(binding);
-
-        // Bind custom BPMNExtensions
+        // Bind your custom BPMNExtensions
         binding.addBinding().to(MyBPMNTaskExtension.class);
     }
+    @Override
+    public void configureBPMNModelExtensions(final Multibinder<BPMNModelExtension> binding) {
+        super.configureBPMNModelExtensions(binding);
+        // bind your optional model extensions....
+    }    
 }
 ```
 
 Finally you implement a custom GLSP ServerLauncher to configure a new ServerModule:
 
 ```java
-public final class ImixsBPMNServerLauncher {
+public final class MyBPMNServerLauncher {
     private MyBPMNServerLauncher() {
     }
     public static void main(final String[] args) {
+        String processName = "MyCustomOpenBPMNServer";
         try {
-            DefaultCLIParser cliParser = new DefaultCLIParser(args, "bpmn server");
-            LaunchUtil.configure(cliParser);
-            int port = cliParser.parsePort();
-            ServerModule serverModule = new ServerModule().configureDiagramModule(new MyBPMNDiagramModule());
-            GLSPServerLauncher launcher = new SocketGLSPServerLauncher(serverModule);
+            DefaultCLIParser parser = new DefaultCLIParser(args, processName);
+            LaunchUtil.configure(parser);
+            int port = parser.parsePort();
+            ServerModule bpmnServerModule = new ServerModule()
+                    .configureDiagramModule(new MyBPMNDiagramModule());
+
+            GLSPServerLauncher launcher = new SocketGLSPServerLauncher(bpmnServerModule);
             launcher.start("localhost", port);
-        } catch (ParseException | IOException e) {
-            e.printStackTrace();
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+            LaunchUtil.printHelp(processName, DefaultCLIParser.getDefaultOptions());
         }
     }
 }
 ```
 
-After the new ServerModule is started Open-BPMN will add the Extension to the Tool-Palette to add the Extension to a BPMN Element. After an Element was extended, the Open-BPMN Property Section will automatically show a new Section to edit the extension attributes.
+After the new ServerModule is started Open-BPMN will add the Extension to the Tool-Palette to add the Extension to a BPMN Element. After an Element was extended, the Open-BPMN Property Section will automatically show the new sections to edit your extension attributes.
 
 <img src="../images/open-bpmn-extension-01.png" />
