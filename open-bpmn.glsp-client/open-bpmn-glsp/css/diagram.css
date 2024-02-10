@@ -23,16 +23,9 @@
     stroke: var(--theia-titleBar-activeBackground);
 }
 
-
-
-.sprotty-label.heading {
-
-    xxfill: #f0f3f8;
-}
-
-
-.sprotty-resize-handle.selected {
-    xfill: #47699B;
+.helper-line {
+    stroke: var(--theia-focusBorder);
+    stroke-width: 0.5;
 }
 
 .icon path {
@@ -44,11 +37,10 @@
     fill: transparent;
 }
 
+/* BPMN Elements */
 .task>.sprotty-node {
     fill: #425C81;
 }
-
-/*** Events ***/
 
 .event.startEvent>circle {
     fill: #57A14C;
@@ -81,12 +73,9 @@
     stroke: #354152a8
 }
 
-/*** Gateways ***/
-
 .gateway>polygon {
     fill: #C39D5C;
 }
-
 
 .dataObject>.sprotty-node {
     opacity: 80%;
@@ -111,7 +100,6 @@
     stroke-width: 2;
     fill: none;
 }
-
 
 .textAnnotation>.sprotty-node {
     opacity: 20%;
@@ -140,7 +128,6 @@
     text-anchor: start;
 }
 
-
 .BPMNLabel>.sprotty-node {
     fill: transparent;
 }
@@ -164,8 +151,7 @@
     margin: 1px;
 }
 
-/*** Pool and Lances **/
-
+/*** Pool and Lanes **/
 .pool>.sprotty-node {
     fill: var(--theia-sideBar-background);
     pointer-events: none;
@@ -228,25 +214,18 @@
     stroke-width: 3;
 }
 
-/* SequenceFlow */
+/* BPMN Edges */
 .bpmnedge>.sprotty-label {
     fill: var(--theia-titleBar-activeForeground);
     text-align: center;
 }
 
-/* MessageFlow */
 .sprotty-edge.messageFlow .line {
     stroke-dasharray: 6, 4;
 }
 
-/* Association */
 .sprotty-edge.association .line {
     stroke-dasharray: 4, 4;
-}
-
-.helper-line {
-    stroke: var(--theia-focusBorder);
-    stroke-width: 0.5;
 }
 
 .sprotty-comp {
