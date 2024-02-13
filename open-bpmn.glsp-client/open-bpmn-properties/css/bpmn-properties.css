@@ -159,8 +159,8 @@
 }
 
 .bpmn-properties-body .control.text-file-editor>textarea.fileInputMode {
-    min-height: 1em;
-    line-height: 1.7rem;
+    min-height: 1em !important;
+    line-height: 1.5rem;
 }
 
 .input-description {
