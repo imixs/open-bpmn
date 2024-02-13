@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.imixs.bpmn</groupId>
 	<artifactId>open-bpmn</artifactId>
@@ -7,12 +9,12 @@
 	<packaging>pom</packaging>
 	<name>Open BPMN</name>
 	<description>The Open BPMN Modeling Platform</description>
-	
+
 	<modules>
 		<module>open-bpmn.metamodel</module>
 		<module>open-bpmn.glsp-server</module>
 	</modules>
-	
+
 	<organization>
 		<name>Imixs Software Solutions GmbH</name>
 		<url>http://www.imixs.com</url>
@@ -59,7 +61,7 @@ terms of the Eclipse Public License v. 2.0
 		</license>
 	</licenses>
 	<url>https://github.com/imixs/open-bpmn</url>
-	
+
 	<scm>
 		<connection>scm:git:git@github.com:imixs/open-bpmn.git</connection>
 		<developerConnection>scm:git:git@github.com:imixs/open-bpmn.git</developerConnection>
@@ -74,20 +76,18 @@ terms of the Eclipse Public License v. 2.0
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>17</java.source>
-		<java.target>17</java.target>
-		<project.build.java.target>17</project.build.java.target>
-		<maven.compiler.release>17</maven.compiler.release>
+		<java.source>11</java.source>
+		<java.target>11</java.target>
+		<project.build.java.target>11</project.build.java.target>
+		<maven.compiler.release>11</maven.compiler.release>
 		<package-type>jar</package-type>
 		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
 		<glsp-server-version>2.0.0</glsp-server-version>
-		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
-		<elk.version>[0.8.1,)</elk.version>
 	</properties>
 
 	<build>
 		<plugins>
-			
+
 			<!-- release management -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -147,22 +147,22 @@ terms of the Eclipse Public License v. 2.0
 
 
 	<reporting>
-		
-	     <plugins>
-	         <plugin>
-	             <groupId>org.apache.maven.plugins</groupId>
-	             <artifactId>maven-project-info-reports-plugin</artifactId>
-	             <version>3.4.0</version>
-	             <reportSets>
-	                 <reportSet>
-	                     <configuration>
-	                         <!-- Just disable the generation of default files like index.html -->
-	                         <skip>true</skip>
-	                     </configuration>
-	                 </reportSet>
-	             </reportSets>
-	         </plugin>
-		
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.4.0</version>
+				<reportSets>
+					<reportSet>
+						<configuration>
+							<!-- Just disable the generation of default files like index.html -->
+							<skip>true</skip>
+						</configuration>
+					</reportSet>
+				</reportSets>
+			</plugin>
+
 			<!-- java doc -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -179,8 +179,8 @@ terms of the Eclipse Public License v. 2.0
 			</plugin>
 		</plugins>
 
-	 </reporting>
-	
+	</reporting>
+
 	<profiles>
 		<!-- Activate using the release property -->
 		<profile>
@@ -237,7 +237,7 @@ terms of the Eclipse Public License v. 2.0
 			</build>
 		</profile>
 	</profiles>
-	
+
 	<!-- Distributen Management oss.sonatype.org -->
 	<distributionManagement>
 		<snapshotRepository>
@@ -249,6 +249,5 @@ terms of the Eclipse Public License v. 2.0
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-		
-</project>
 
+</project>
