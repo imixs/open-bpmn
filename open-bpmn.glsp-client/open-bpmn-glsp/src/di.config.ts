@@ -94,7 +94,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
         viewportLines: [], // do not show alignment lines for viewport
         alignmentElementFilter: element =>
             isBPMNNode(element) && !isBoundaryEvent(element),
-        minimumMoveDelta: { x: 10, y: 10 }
+        minimumMoveDelta: { x: 15, y: 15 }
     });
 
     // bind new SelectionListener for BPMNLabels and BoundaryEvents
