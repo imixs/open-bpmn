@@ -133,7 +133,7 @@ public abstract class BPMNElementNode extends BPMNElement {
             this.getBounds().setPosition(x, y);
             // update containment only if position is not 0,0
             if (x != 0 && y != 0) {
-                updateContainment(x, y);
+                updateContainment();
             }
         } catch (BPMNMissingElementException e) {
             BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
@@ -157,7 +157,8 @@ public abstract class BPMNElementNode extends BPMNElement {
             this.getBounds().setPosition(point);
             // update containment only if position is not 0,0
             if (point.getX() != 0 && point.getY() != 0) {
-                updateContainment(point.getX(), point.getY());
+                // updateContainment(point.getX(), point.getY());
+                updateContainment();
             }
         } catch (BPMNMissingElementException e) {
             BPMNModel.error("Failed to update bounds position for element '" + this.getId() + "'");
@@ -169,13 +170,19 @@ public abstract class BPMNElementNode extends BPMNElement {
      * participant and/or lane
      * 
      */
-    public void updateContainment() {
-        try {
-            updateContainment(this.getBounds().getPosition().getX(), this.getBounds().getPosition().getY());
-        } catch (BPMNMissingElementException e) {
-            logger.warning("Failed to recompute containment of elemnet " + this.getId());
-        }
-    }
+    // public void updateContainment() {
+    // try {
+
+    // // compute center of element
+    // BPMNPoint centerPoint = this.getBounds().getCenter();
+
+    // updateContainment(this.getBounds().getPosition().getX(),
+    // this.getBounds().getPosition().getY());
+    // } catch (BPMNMissingElementException e) {
+    // logger.warning("Failed to recompute containment of elemnet " + this.getId());
+    // }
+    // }
+
     /**
      * This helper method verifies the current containment and updates the
      * participant and/or lane in case the containment has changed.
@@ -185,7 +192,7 @@ public abstract class BPMNElementNode extends BPMNElement {
      * cases the method updates the process ref of the element.
      * 
      */
-    private void updateContainment(double x, double y) {
+    public void updateContainment() {
         // update is only needed for collaboration diagrams
         if (!this.model.isCollaborationDiagram()) {
             return;
@@ -197,6 +204,9 @@ public abstract class BPMNElementNode extends BPMNElement {
         }
 
         try {
+            // compute the center of element
+            BPMNPoint centerPoint = this.getBounds().getCenter();
+
             // first test if the participant need to be updated...
             Set<Participant> participants = this.model.getParticipants();
             BPMNProcess newProcess = this.model.openDefaultProces(); // default process
@@ -205,7 +215,7 @@ public abstract class BPMNElementNode extends BPMNElement {
                     continue; // no bounds!
                 }
                 BPMNBounds participantBounds = participant.getBounds();
-                if (participantBounds.containsPoint(new BPMNPoint(x, y))) {
+                if (participantBounds.containsPoint(new BPMNPoint(centerPoint.getX(), centerPoint.getY()))) {
                     newProcess = participant.bpmnProcess;
                     break;
                 }
@@ -222,7 +232,7 @@ public abstract class BPMNElementNode extends BPMNElement {
             Set<Lane> lanes = this.getBpmnProcess().getLanes();
             for (Lane lane : lanes) {
                 BPMNBounds laneBounds = lane.getBounds();
-                if (laneBounds.containsPoint(new BPMNPoint(x, y))) {
+                if (laneBounds.containsPoint(new BPMNPoint(centerPoint.getX(), centerPoint.getY()))) {
                     // found containing lane!
                     lane.insert(this);
                 } else {

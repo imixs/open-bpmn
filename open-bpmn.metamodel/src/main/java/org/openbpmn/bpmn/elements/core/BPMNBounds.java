@@ -10,8 +10,9 @@ import org.w3c.dom.NodeList;
 /**
  * The BPMNBounds object represents bounds of a Shape
  * <p>
- * e.g.: 
- * <p>{@code  
+ * e.g.:
+ * <p>
+ * {@code  
  * <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
  * }
  * </p>
@@ -87,6 +88,7 @@ public class BPMNBounds {
         elementNode.setAttribute("x", "" + x);
         elementNode.setAttribute("y", "" + y);
     }
+
     public void setPosition(BPMNPoint point) {
         elementNode.setAttribute("x", "" + point.getX());
         elementNode.setAttribute("y", "" + point.getY());
@@ -117,18 +119,19 @@ public class BPMNBounds {
 
     /**
      * This method returns true, if a given BPMN Point is within this BPMNBounds
+     * 
      * @param point
      * @return
      */
     public boolean containsPoint(BPMNPoint point) {
-        
+
         double x = this.getPosition().getX();
         double y = this.getPosition().getY();
         double w = this.getDimension().getWidth();
         double h = this.getDimension().getHeight();
         // is the point within this dimensions?
-        if (point.getX()>=x && point.getX()<=x+w 
-                && point.getY()>=y && point.getY()<=y+h) {
+        if (point.getX() >= x && point.getX() < x + w
+                && point.getY() >= y && point.getY() < y + h) {
             return true;
         }
         return false;

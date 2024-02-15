@@ -103,6 +103,28 @@ public class TestPoolAndLaneRef {
             assertEquals(1, flowElementList.size());
             assertEquals("task_1", flowElementList.iterator().next());
 
+            // next lets move the task a little bit higher so it is overlapping but the
+            // center is still in the second lane
+            task.setPosition(160, 200);
+            flowElementList = laneA.getFlowElementIDs();
+            // in laneA no more nodeRefs are expected....
+            assertEquals(0, flowElementList.size());
+            // ...but in laneB....
+            flowElementList = laneB.getFlowElementIDs();
+            assertEquals(1, flowElementList.size());
+            assertEquals("task_1", flowElementList.iterator().next());
+
+            // finally lets move the task a little bit higher so it is overlapping but the
+            // cente is agian in the first lane
+            task.setPosition(160, 190);
+            flowElementList = laneA.getFlowElementIDs();
+            // again in laneA
+            assertEquals(1, flowElementList.size());
+            assertEquals("task_1", flowElementList.iterator().next());
+            // ...but no longer in laneB....
+            flowElementList = laneB.getFlowElementIDs();
+            assertEquals(0, flowElementList.size());
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
             fail();
