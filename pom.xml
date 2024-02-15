@@ -75,19 +75,10 @@ terms of the Eclipse Public License v. 2.0
 	</issueManagement>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>17</java.source>
-		<java.target>17</java.target>
-		<project.build.java.target>17</project.build.java.target>
-		<maven.compiler.release>17</maven.compiler.release>
-		<package-type>jar</package-type>
-		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
-		<glsp-server-version>2.0.0</glsp-server-version>
 	</properties>
 
 	<build>
 		<plugins>
-
 			<!-- release management -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -112,20 +103,16 @@ terms of the Eclipse Public License v. 2.0
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.9.0</version>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>3.1.0</version>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -134,14 +121,11 @@ terms of the Eclipse Public License v. 2.0
 					<additionalOptions>-Xdoclint:none</additionalOptions>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>3.0.0</version>
 			</plugin>
-
-
 		</plugins>
 	</build>
 
