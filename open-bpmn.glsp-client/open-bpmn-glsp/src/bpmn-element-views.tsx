@@ -532,7 +532,7 @@ export class LaneDividerView extends ShapeView {
 }
 
 /*
- * Render a Multi-Line BPN Label
+ * Render a Multi-Line BPMN Label
  */
 @injectable()
 export class MultiLineTextNodeView extends ShapeView {

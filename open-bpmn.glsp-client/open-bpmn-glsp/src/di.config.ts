@@ -25,6 +25,7 @@ import {
     GGraph,
     GLabel,
     GLabelView,
+    HelperLineType,
     IHelperLineOptions,
     LogLevel,
     RectangularNodeView,
@@ -89,9 +90,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // bpmn helper lines
     bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper());
     bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
+        elementLines: [HelperLineType.Center, HelperLineType.Middle], // only show center and middle lines
+        viewportLines: [], // do not show alignment lines for viewport
         alignmentElementFilter: element =>
             isBPMNNode(element) && !isBoundaryEvent(element),
-        minimumMoveDelta: { x: 15, y: 15 }
+        minimumMoveDelta: { x: 10, y: 10 }
     });
 
     // bind new SelectionListener for BPMNLabels and BoundaryEvents

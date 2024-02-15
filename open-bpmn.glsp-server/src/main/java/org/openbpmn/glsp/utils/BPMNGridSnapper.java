@@ -1,6 +1,5 @@
 package org.openbpmn.glsp.utils;
 
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GPoint;
@@ -13,8 +12,9 @@ import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 
 /**
- * Helper Class to be used when a new Element is added to the diagram panel. It
- * snaps the initial coordinates to 10x10 px, depending on the element type
+ * The BPMNGridSnapper is a Helper Class be used when a new Element is added to
+ * the diagram panel or a BoundOperation is send. It snaps the an BPMN Element
+ * to the Grid Size of 10x10 pixel.
  */
 public class BPMNGridSnapper {
     private static Logger logger = Logger.getLogger(BPMNGridSnapper.class.getName());
@@ -25,78 +25,80 @@ public class BPMNGridSnapper {
     private BPMNGridSnapper() {
     }
 
-    public static GPoint snap(final GPoint originalpoint) {
-        double snappedX = Math.round(originalpoint.getX() / GRID_X) * GRID_X;
-        double snappedY = Math.round(originalpoint.getY() / GRID_Y) * GRID_Y;
-        return GraphUtil.point(snappedX, snappedY);
-    }
-
-    public static Optional<GPoint> snap(final Optional<GPoint> originalPoint) {
-        return originalPoint.map(BPMNGridSnapper::snap);
-    }
-
-    public static BPMNPoint snap(final double elementX, double elementY) {
-        double snappedX = Math.round(elementX / GRID_X) * GRID_X;
-        double snappedY = Math.round(elementY / GRID_Y) * GRID_Y;
-        return new BPMNPoint(snappedX, snappedY);
-    }
-
     /**
-     * Snaps a BPMN element based on a given point to the center of the element.
+     * This method snaps, based on a given GPoint, a BPMN element to the Grid Size.
+     * This method is called by the center method and the BoundsOperations.
      * 
      * @param pos
      * @return
      */
-    public static BPMNPoint snap(final BPMNElementNode elementNode, final GPoint point) {
-        // center
-        double x = point.getX() - (elementNode.getDefaultWidth() / 2);
-        double y = point.getY() - (elementNode.getDefaultHeight() / 2);
-        // snap
+    public static GPoint snap(final BPMNElementNode elementNode, final GPoint point) {
+        double x = point.getX();
+        double y = point.getY();
         x = Math.round(x / GRID_X) * GRID_X;
         y = Math.round(y / GRID_Y) * GRID_Y;
-
-        // compute offset
+        // In casse of an event we need to adjust the offset!
         if (elementNode instanceof Event) {
-            // In casse of an event we need to adjust the offset!
             x = x - 3;
             y = y - 3;
         }
-
-        return new BPMNPoint(x, y);
+        return GraphUtil.point(x, y);
     }
 
     /**
-     * Snaps a BPMN element based on a given point to the center of the element.
+     * This method snaps, based on a given GPoint, a BPMNElement to its center and
+     * the Grid Size. This method is called by CreationHandlers
+     * 
+     * @param elementNode
+     * @param point
+     * @return
+     */
+    public static BPMNPoint center(final BPMNElementNode elementNode, final GPoint point) {
+        // center
+        point.setX(point.getX() - (elementNode.getDefaultWidth() / 2));
+        point.setY(point.getY() - (elementNode.getDefaultHeight() / 2));
+        GPoint snapPoint = snap(elementNode, point);
+        return new BPMNPoint(snapPoint.getX(), snapPoint.getY());
+    }
+
+    /**
+     * Snaps a BPMN element based on its current position.
+     * This method is used by the AutoAlinOperation which snaps all elements
+     * automatically to the grid.
      * 
      * @param pos
      * @return
      * @throws BPMNMissingElementException
      */
-    public static void snap(final BPMNElementNode elementNode) throws BPMNMissingElementException {
-
-        logger.finest("...snap " + elementNode.getId() + "  Pos: " + elementNode.getBounds().getPosition());
-        double x = elementNode.getBounds().getPosition().getX();
-        double y = elementNode.getBounds().getPosition().getY();
-        // snap
-        x = Math.round(x / GRID_X) * GRID_X;
-        y = Math.round(y / GRID_Y) * GRID_Y;
-
-        // compute offset
-        if (elementNode instanceof Event) {
+    public static void snap(final BPMNElementNode elementNode) {
+        try {
+            logger.finest("...snap " + elementNode.getId() + "  Pos: " + elementNode.getBounds().getPosition());
+            double x = elementNode.getBounds().getPosition().getX();
+            double y = elementNode.getBounds().getPosition().getY();
+            // default snaping to current gridsize
+            x = Math.round(x / GRID_X) * GRID_X;
+            y = Math.round(y / GRID_Y) * GRID_Y;
             // In casse of an event we need to adjust the offset!
-            x = x - 3;
-            y = y - 3;
-        }
-        // update pos
-        elementNode.setPosition(x, y);
-        logger.finest("...after snap " + elementNode.getId() + "  Pos: " + elementNode.getBounds().getPosition());
+            if (elementNode instanceof Event) {
+                x = x - 3;
+                y = y - 3;
+            }
+            // set new position.....
+            elementNode.setPosition(x, y);
+            logger.finest("...after snap " + elementNode.getId() + "  Pos: " + elementNode.getBounds().getPosition());
 
-        // snap bounds for tasks and pools
-        if (elementNode instanceof Participant || elementNode instanceof Activity) {
-            double w = elementNode.getBounds().getDimension().getWidth();
-            double h = elementNode.getBounds().getDimension().getHeight();
-            elementNode.setDimension(w, h);
+            // snap bounds for tasks and pools to the current gridsize
+            if (elementNode instanceof Participant || elementNode instanceof Activity) {
+                double w = elementNode.getBounds().getDimension().getWidth();
+                double h = elementNode.getBounds().getDimension().getHeight();
+                elementNode.setDimension(w, h);
+            }
+        } catch (BPMNMissingElementException e) {
+            // It may happen that an element (e.g. an default particpant) does not have a
+            // BPMNBounds object. In this case we ignore the snap call
+            logger.fine(
+                    "Skipping snap for " + elementNode.getId() + " : "
+                            + e.getMessage());
         }
     }
-
 }

@@ -2,22 +2,22 @@ package org.openbpmn.glsp.operations;
 
 import java.util.List;
 
-import org.eclipse.glsp.server.actions.Action;
+import org.eclipse.glsp.server.operations.Operation;
 
 /**
  * Action defintion to auto align all elements to the grid
  * 
  */
-public class BPMNResetRoutingAction extends Action {
+public class BPMNResetRoutingOperation extends Operation {
 
     public static final String KIND = "resetRoutingPoints";
     private List<String> elementIds;
 
-    public BPMNResetRoutingAction() {
+    public BPMNResetRoutingOperation() {
         super(KIND);
     }
 
-    public BPMNResetRoutingAction(final List<String> elementIds) {
+    public BPMNResetRoutingOperation(final List<String> elementIds) {
         super(KIND);
         this.elementIds = elementIds;
     }

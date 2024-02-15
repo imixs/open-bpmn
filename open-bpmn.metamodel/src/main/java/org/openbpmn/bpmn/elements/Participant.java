@@ -21,7 +21,7 @@ public class Participant extends BPMNElementNode {
     public final static double MIN_WIDTH = 300.0;
     public final static double MIN_HEIGHT = 100.0;
     public final static double DEFAULT_WIDTH = 800.0;
-    public final static double DEFAULT_HEIGHT = 200.0;
+    public final static double DEFAULT_HEIGHT = 210.0;
     public final static double POOL_OFFSET = 30.0;
 
     protected BPMNLabel label = null;

@@ -63,7 +63,7 @@ import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.model.BPMNSourceModelStorage;
 import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
-import org.openbpmn.glsp.operations.BPMNAutoAlignActionHandler;
+import org.openbpmn.glsp.operations.BPMNAutoAlignOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNClipboardDataActionHandler;
@@ -71,7 +71,7 @@ import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
 import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
-import org.openbpmn.glsp.operations.BPMNResetRoutingActionHandler;
+import org.openbpmn.glsp.operations.BPMNResetRoutingOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNGLSPValidator;
@@ -112,19 +112,11 @@ public class BPMNDiagramModule extends DiagramModule {
     @Override
     protected void configureActionHandlers(final MultiBinding<ActionHandler> binding) {
         super.configureActionHandlers(binding);
-
         // Clipboard
         binding.add(BPMNClipboardDataActionHandler.class);
 
         // Compute Routing Points
         binding.add(BPMNComputedBoundsActionHandler.class);
-
-        // Clar Routing Points
-        binding.add(BPMNResetRoutingActionHandler.class);
-
-        // Auto Align all elements
-        binding.add(BPMNAutoAlignActionHandler.class);
-
     }
 
     @Override
@@ -177,6 +169,10 @@ public class BPMNDiagramModule extends DiagramModule {
         // Extension handler
         binding.add(BPMNCreateExtensionHandler.class);
 
+        // Clar Routing Points
+        binding.add(BPMNResetRoutingOperationHandler.class);
+        // Reset Alignment
+        binding.add(BPMNAutoAlignOperationHandler.class);
     }
 
     /**

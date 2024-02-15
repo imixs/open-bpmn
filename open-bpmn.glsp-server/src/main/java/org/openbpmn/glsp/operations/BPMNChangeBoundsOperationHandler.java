@@ -52,6 +52,7 @@ import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
@@ -143,20 +144,11 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 // find the BPMNElementNode
                 BPMNElementNode bpmnElementNode = (BPMNElementNode) modelState.getBpmnModel().findElementById(id);
                 if (bpmnElementNode != null) {
-
-                    // Special snap mechanism to snap Tasks and Pools to a 10x10 gird
+                    newPoint = BPMNGridSnapper.snap(bpmnElementNode, newPoint);
+                    // Special snap mechanism to snap the dimentions of a Task or Pool to the Grid
                     if (bpmnElementNode instanceof Participant || bpmnElementNode instanceof Activity) {
-                        // long _x = Math.round(newPoint.getX() / 10.0) * 10;
-                        newPoint.setX(Math.round(newPoint.getX() / 10.0) * 10);
-                        newPoint.setY(Math.round(newPoint.getY() / 10.0) * 10);
                         newSize.setHeight(Math.round(newSize.getHeight() / 10.0) * 10);
                         newSize.setWidth(Math.round(newSize.getWidth() / 10.0) * 10);
-                    } else {
-                        // Defautl: We round x and y
-                        // The reason why we roudn here is that the HelperLine Feature somtimes
-                        // returns float values with decimal places (e.g. 170.3534577345)
-                        newPoint.setX(Math.round(newPoint.getX()));
-                        newPoint.setY(Math.round(newPoint.getY()));
                     }
 
                     if (bpmnElementNode instanceof Participant) {
@@ -530,6 +522,20 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
 
             // Next update absolute BPMN position
             lane.setPosition(bpmnLaneX, bpmnLaneY);
+
+            // update Gnode
+            Optional<GNode> _lanenode = modelState.getIndex().findElementByClass(lane.getId(), GNode.class);
+            if (_lanenode.isPresent()) {
+
+                GNode gLaneNode = _lanenode.get();
+                gLaneNode.setSize(GraphUtil.dimension(bpmnLaneWidth, laneHeight));
+                gLaneNode.setPosition(GraphUtil.point(bpmnLaneX - poolBounds.getPosition().getX(),
+                        bpmnLaneY - poolBounds.getPosition().getY()));
+
+                gLaneNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, bpmnLaneWidth);
+                gLaneNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, laneHeight);
+            }
+
             // adjust laneY for the next iteration
             bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
         }

@@ -50,6 +50,11 @@ export class BPMNElementSnapper implements ISnapper {
   constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
 
   snap(position: Point, _element: GModelElement): Point {
+
+    // if (isLaneDivider(_element)) {
+    //   return this.findLaneDividerSnapPoint(_element, position);
+    // }
+
     // move routing-points by 5x5
     if ('volatile-routing-point' === _element.type) {
       return {
@@ -64,6 +69,33 @@ export class BPMNElementSnapper implements ISnapper {
       y: Math.round(position.y / this.grid.y) * this.grid.y
     };
   }
+
+  /*
+   * This helper method computes the snap Position of a Lane-Divider.
+   * The position is based on the Bounds of the containing Pool.
+   * The final position is always on the x position of the Pool.
+   */
+  /*
+  private findLaneDividerSnapPoint(element: GModelElement, position: Point): Point {
+    const x = 0;
+    let y = position.y;
+
+    console.log(' snap lane devider current pos = ' + x + ',' + y)
+    // test min / max position
+    if (hasArgs(element)) {
+      const yMin = Number(element.args.ymin);
+      const yMax = Number(element.args.ymax);
+      if (y < yMin) {
+        y = yMin;
+      }
+      if (y > yMax) {
+        y = yMax;
+      }
+    }
+    // return the new position;
+    return { x: x, y: y };
+  }
+  */
 }
 
 /**

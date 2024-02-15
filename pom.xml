@@ -76,10 +76,10 @@ terms of the Eclipse Public License v. 2.0
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.source>11</java.source>
-		<java.target>11</java.target>
-		<project.build.java.target>11</project.build.java.target>
-		<maven.compiler.release>11</maven.compiler.release>
+		<java.source>17</java.source>
+		<java.target>17</java.target>
+		<project.build.java.target>17</project.build.java.target>
+		<maven.compiler.release>17</maven.compiler.release>
 		<package-type>jar</package-type>
 		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
 		<glsp-server-version>2.0.0</glsp-server-version>
