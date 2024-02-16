@@ -41,7 +41,6 @@ import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
-import org.openbpmn.bpmn.elements.core.BPMNDimension;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -402,10 +401,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         gNode.setSize(newSize);
 
         BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
-        BPMNDimension oldDimensions = new BPMNDimension(bpmnElementNode.getBounds().getDimension().getWidth(),
-                bpmnElementNode.getBounds().getDimension().getHeight());
-        BPMNPoint oldPosition = new BPMNPoint(bpmnElementNode.getBounds().getPosition().getX(),
-                bpmnElementNode.getBounds().getPosition().getY());
 
         // update BPMNElement bounds....
         // The BPMN Position is always absolute so we can simply update the element

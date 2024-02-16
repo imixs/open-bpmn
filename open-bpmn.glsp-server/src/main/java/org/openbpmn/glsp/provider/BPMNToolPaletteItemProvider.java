@@ -53,35 +53,32 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
     @Inject
     protected OperationHandlerRegistry operationHandlerRegistry;
 
-    private int counter;
-
     @Override
     public List<PaletteItem> getItems(final Map<String, String> args) {
-        counter = 0;
         // Create custom Palette Groups
         return Lists.newArrayList(
                 PaletteItem.createPaletteGroup("pool-group", "Pools", createPalettePools(),
-                                        "circuit-board", "A"),
+                        "circuit-board", "A"),
                 PaletteItem.createPaletteGroup("task-group", "Tasks", createPaletteTaskItems(),
-                                        "inspect", "B"),
+                        "inspect", "B"),
                 PaletteItem.createPaletteGroup("event-group", "Events", createPaletteEventItems(),
-                                        "circle-filled",
+                        "circle-filled",
                         "C"),
                 PaletteItem.createPaletteGroup("event-group", "Event Definitions",
                         createPaletteEventDefinitions(),
-                                        "layers", "D"),
+                        "layers", "D"),
                 PaletteItem.createPaletteGroup("gateway-group", "Gateways", createPaletteGatewayItems(),
-                                        "debug-breakpoint-log-unverified", "E"),
+                        "debug-breakpoint-log-unverified", "E"),
 
                 PaletteItem.createPaletteGroup("gateway-group", "Data Items", createPaletteDataItems(),
-                                        "notebook-template", "F"),
+                        "notebook-template", "F"),
 
                 PaletteItem.createPaletteGroup("edge-group", "Edges", createPaletteSequenceFlowItems(),
-                                        "export", "G"),
+                        "export", "G"),
 
                 PaletteItem.createPaletteGroup("extension-group", "Extensions",
                         createPaletteExtensions(),
-                                        "extensions", "H")
+                        "extensions", "H")
 
         );
 

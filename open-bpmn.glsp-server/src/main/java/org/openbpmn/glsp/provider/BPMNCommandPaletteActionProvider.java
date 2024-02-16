@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GModelIndex;
@@ -46,7 +45,6 @@ import org.openbpmn.glsp.operations.BPMNPropertyPanelToggleAction;
 import org.openbpmn.glsp.operations.BPMNResetRoutingOperation;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 /**
@@ -217,30 +215,11 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                 || element instanceof MessageGNode || element instanceof DataObjectGNode);
     }
 
-    // private LabeledAction createEdgeAction(final String label, final GNode
-    // source, final GNode node) {
-    // return new LabeledAction(label,
-    // Lists.newArrayList(new CreateEdgeOperation(EDGE, source.getId(),
-    // node.getId())),
-    // "fa-plus-square");
-    // }
-
     private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {
         return new LabeledAction(label,
                 Lists.newArrayList(new CreateEdgeOperation(BPMNTypes.SEQUENCE_FLOW, source.getId(),
                         node.getId())),
                 "export");
-    }
-
-    private Set<LabeledAction> createEdgeActions(final GNode source, final Set<? extends GNode> targets) {
-        Set<LabeledAction> actions = Sets.newLinkedHashSet();
-        // add first all edge, then all weighted edge actions to keep a nice order
-        // targets.forEach(node -> actions
-        // .add(createEdgeAction("Create Edge to " + getLabel(node), source, node)));
-        targets.forEach(node -> actions
-                .add(createSequenceFlowAction("Create Sequence Flow to " + getLabel(node), source,
-                        node)));
-        return actions;
     }
 
     private String getLabel(final GNode node) {
