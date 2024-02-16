@@ -119,12 +119,14 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                 event = activity.addBoundaryEvent(eventID, getLabel());
             } else {
                 // normal event
-                event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
+                if (bpmnProcess != null) {
+                    event = bpmnProcess.addEvent(eventID, getLabel(), operation.getElementTypeId());
+                }
             }
 
             Optional<GPoint> point = operation.getLocation();
 
-            if (point.isPresent()) {
+            if (event != null && point.isPresent()) {
                 // compute relative center position...
                 BPMNPoint targetPosition = BPMNGridSnapper.center(event, point.get());
                 // compute default label position

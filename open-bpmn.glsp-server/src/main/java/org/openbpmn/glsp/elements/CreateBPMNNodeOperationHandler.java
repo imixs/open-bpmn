@@ -49,6 +49,7 @@ public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperati
         super(elementTypeId);
     }
 
+    @SuppressWarnings("null")
     public CreateBPMNNodeOperationHandler(final String... elementTypeIds) {
         super(Lists.newArrayList(elementTypeIds));
     }
@@ -82,7 +83,6 @@ public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperati
 
         return BPMNGModelUtil.findProcessByPoint(modelState, dropPoint);
     }
-
 
     /**
      * This method is a helper method to compute the container element. E.g. when a

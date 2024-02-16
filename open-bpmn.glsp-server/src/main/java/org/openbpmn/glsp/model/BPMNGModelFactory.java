@@ -366,26 +366,6 @@ public class BPMNGModelFactory implements GModelFactory {
     }
 
     /**
-     * Helper method that findes a specific GNode in a GNodeList
-     * 
-     * @param id
-     * @param gNodeList
-     * @return
-     */
-    private GModelElement findPoolGNode(String id, List<GModelElement> gNodeList) {
-        if (id == null) {
-            return null;
-        }
-        for (GModelElement element : gNodeList) {
-            if (id.equals(element.getId())) {
-                return element;
-            }
-        }
-        // no match
-        return null;
-    }
-
-    /**
      * This method apply all possible BPMNElementExtension to the GNode. This is to
      * build
      * the JSONForms Sections and add additional classes for non-default Extensions.

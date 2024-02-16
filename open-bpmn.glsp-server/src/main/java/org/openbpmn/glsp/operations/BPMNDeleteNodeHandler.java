@@ -54,7 +54,8 @@ public class BPMNDeleteNodeHandler extends GModelOperationHandler<DeleteOperatio
 
         List<String> elementIds = operation.getElementIds();
         if (elementIds == null || elementIds.size() == 0) {
-            System.out.println("Elements to delete are not specified");
+            logger.fine("Elements to delete are not specified");
+            return;
         }
         for (String id : elementIds) {
             // test if the element is a participant

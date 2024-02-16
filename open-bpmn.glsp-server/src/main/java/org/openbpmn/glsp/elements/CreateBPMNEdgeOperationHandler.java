@@ -40,8 +40,10 @@ public abstract class CreateBPMNEdgeOperationHandler extends GModelCreateOperati
         super(elementTypeId);
     }
 
+    @SuppressWarnings("null")
     public CreateBPMNEdgeOperationHandler(final String... elementTypeIds) {
         super(Lists.newArrayList(elementTypeIds));
+
     }
 
     public CreateBPMNEdgeOperationHandler(final List<String> handledElementTypeIds) {
