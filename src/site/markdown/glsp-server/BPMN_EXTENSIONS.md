@@ -3,9 +3,38 @@
 BPMN 2.0 introduces an extensibility mechanism that allows extending standard BPMN elements with additional properties and behavior. It can be used by modeling tools to add non-standard elements or Artifacts to satisfy a specific need, such as the unique requirements of a vertical domain, and still have a valid BPMN Core.
 A BPMN 2.0 Extension defines a `ExtensionDefinition` and a `ExtensionAttributeDefinition`. The latter defines a list of attributes that can be attached to any BPMN element. The attribute list defines the name and type of the new attribute. This allows BPMN adopters to integrate any meta model into the BPMN meta model and reuse already existing model elements.
 
-**Open-BPMN** supports the extensibility mechanism of BPMN 2.0 by so called "BPMNExtension Points". An extension point allows adopters to add custom properties to any BPMN Element managed within the Open BPMN modeling tool. This extension mechanism is also used by Open-BPMN to support the BPMN Process Modeling Conformance level. In the following section you will learn how to implement custom BPMN Extensions and to extend the Open-BPMN modelling tool.
+# The Open-BPMN Meta model
 
-# Development
+The [Open-BPMN meta model](https://github.com/imixs/open-bpmn/tree/master/open-bpmn.metamodel) provides convenience methods to operate on the BPMN 2.0 extension. To access the `bpmn2:extensionElements` node of a BPMN element you can call the  the method `findExtensionsElement`. In the following example we access the extensions for a bpmn task element 'myTask':
+
+
+```java
+  Element extensionElement = myModel.findBPMN2Extensions(myTask);
+
+```
+
+To access an extension element directly you can call  the method `findExtensionsElement`. This method expects the root BPMN element and a namespace and extension name. The following example returns the Open-BPMN auto-align extension element from the `bpmn2: definitions` : 
+
+```java
+ Element extensionElement = myModel.findExtensionElement(myModel.getDefinitions(), BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
+
+```
+Here you can see the corresponding BPMN file: 
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions ...>
+  <bpmn2:extensionElements>
+    <open-bpmn:auto-align>true</open-bpmn:auto-align>
+  </bpmn2:extensionElements>
+  ....
+</bpmn2:definitions>
+```
+
+
+# Open-BPMN Extension Points
+
+**Open-BPMN** supports the extensibility mechanism of BPMN 2.0 by so called "BPMNExtension Points". An extension point allows adopters to add custom properties to any BPMN Element managed within the Open BPMN modeling tool. This extension mechanism is also used by Open-BPMN to support the BPMN Process Modeling Conformance level. In the following section you will learn how to implement custom BPMN Extensions and to extend the Open-BPMN modelling tool.
 
 To implement a new extension point within Open-BPMN an adaptor has to implement a BPMNExtension and define a new Server Module to register the new Extension. Open-BPMN will automatically integrate tne BPMNExtension into the modeling life-cycle and manage to store the new attributes into the .bpmn model file.
 

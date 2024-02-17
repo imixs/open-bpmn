@@ -34,6 +34,8 @@ public class BPMNModelFactory {
     public static final String DEFAULT_EXPORTER = "org.openbpmn";
     public static final String DEFAULT_VERSION = "1.0.0";
     public static final String DEFAULT_TARGETNAMESPACE = "http://open-bpmn.org";
+    public static final String OPEN_BPMN_NAMESPACE = "open-bpmn";
+    public static final String OPEN_BPMN_SCHEMA = "http://open-bpmn.org/XMLSchema";
 
     /**
      * This method creates a new empty BPMNModel instance. The BPMNModel is
@@ -124,10 +126,14 @@ public class BPMNModelFactory {
     }
 
     /**
-     * Reads a BPMNModel instance from an InputStream
+     * Reads a BPMNModel instance from an InputStream.
      * <p>
      * The method cleans whitespace after reading the file for a better handling and
      * later output format.
+     * <p>
+     * If the file is empty, the mmethod creates automatically a default process. In
+     * addition the Open-BPMN extension 'allign-to-grid' is set to true. This option
+     * can be deactivated in the model properties.
      * 
      * @param modelFile
      * @return a BPMNModel instance
@@ -147,6 +153,7 @@ public class BPMNModelFactory {
                 // create a default model
                 BPMNModel defaultModel = BPMNModelFactory
                         .createInstance(DEFAULT_EXPORTER, DEFAULT_VERSION, DEFAULT_TARGETNAMESPACE);
+
                 return defaultModel;
             }
 
@@ -192,8 +199,8 @@ public class BPMNModelFactory {
      * @param definitions
      */
     private static void setOpenBPMNNameSpace(Element definitions) {
-        if (!definitions.hasAttribute("xmlns:open-bpmn")) {
-            definitions.setAttribute("xmlns:open-bpmn", "http://open-bpmn.org/XMLSchema");
+        if (!definitions.hasAttribute("xmlns:" + OPEN_BPMN_NAMESPACE)) {
+            definitions.setAttribute("xmlns:" + OPEN_BPMN_NAMESPACE, OPEN_BPMN_SCHEMA);
         }
     }
 

@@ -1026,6 +1026,73 @@ public class BPMNModel {
     }
 
     /**
+     * This method returns the bpmn2:extensionElements node for a given BPMN
+     * Element. If not yet defined, the
+     * method creates an new emtpy bpmn2:extensionElements node.
+     * 
+     * The bpmn2:extensionElements node can be used to read or create custom
+     * extension elements.
+     * 
+     * @param defaultModel
+     * @param nameSpace
+     * @param elementName
+     * @return
+     */
+    public Element findBPMN2Extensions(Element element) {
+        // find extension elements
+        Element extensionElement = findChildNodeByName(element, BPMNNS.BPMN2,
+                "extensionElements");
+        if (extensionElement == null) {
+            extensionElement = createElement(BPMNNS.BPMN2, "extensionElements");
+            element.insertBefore(extensionElement, element.getFirstChild());
+
+        }
+        return extensionElement;
+    }
+
+    /**
+     * This method returns an extension element for a given element node defined by
+     * its namespace and tag name. If the extension element is not yet defined, the
+     * method creates an empty one.
+     * 
+     * @param defaultModel
+     * @param nameSpace
+     * @param elementName
+     * @return
+     * @throws BPMNInvalidReferenceException
+     */
+    public Element findExtensionElement(Element element, String namespace, String elementName)
+            throws BPMNInvalidReferenceException {
+        Element extensionElement = findBPMN2Extensions(element);
+        Element autoAlignElement = null;
+        // resolve the tag name
+        String tagName = namespace + ":" + elementName;
+        NodeList childs = extensionElement.getChildNodes();
+        for (int i = 0; i < childs.getLength(); i++) {
+            Node childNode = childs.item(i);
+            if (childNode.getNodeType() == Node.ELEMENT_NODE && tagName.equals(childNode.getNodeName())) {
+                autoAlignElement = (Element) childNode;
+                break;
+            }
+        }
+
+        // If extension element is not yet defined, we create a new empty one....
+        if (autoAlignElement == null) {
+
+            if (definitions.hasAttribute("xmlns:" + namespace)) {
+                // find schema uri
+                String nameSpaceUri = definitions.getAttribute("xmlns:" + namespace);
+                autoAlignElement = getDoc().createElementNS(nameSpaceUri,
+                        namespace + ":" + elementName);
+                extensionElement.appendChild(autoAlignElement);
+            } else {
+                throw new BPMNInvalidReferenceException("Namespace '" + namespace + "' not defined!");
+            }
+        }
+        return autoAlignElement;
+    }
+
+    /**
      * Returns all Events within this model
      * <p>
      * If no event exists, the method returns an empty list.
