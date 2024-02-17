@@ -2,6 +2,7 @@ package org.openbpmn.glsp.utils;
 
 import java.util.logging.Logger;
 
+import org.eclipse.glsp.graph.GDimension;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.elements.Activity;
@@ -43,6 +44,30 @@ public class BPMNGridSnapper {
             y = y - 3;
         }
         return GraphUtil.point(x, y);
+    }
+
+    /**
+     * Helper method that rounds the x/y coordinates of a GPoint
+     * 
+     * @param point
+     * @return
+     */
+    public static GPoint round(final GPoint point) {
+        double x = Math.round(point.getX());
+        double y = Math.round(point.getY());
+        return GraphUtil.point(x, y);
+    }
+
+    /**
+     * Helper method that rounds the width/height of a GDimension
+     * 
+     * @param point
+     * @return
+     */
+    public static GDimension round(final GDimension dimension) {
+        double w = Math.round(dimension.getWidth());
+        double h = Math.round(dimension.getHeight());
+        return GraphUtil.dimension(w, h);
     }
 
     /**

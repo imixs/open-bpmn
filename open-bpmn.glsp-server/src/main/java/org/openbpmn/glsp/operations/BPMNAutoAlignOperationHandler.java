@@ -61,6 +61,7 @@ public class BPMNAutoAlignOperationHandler extends GModelOperationHandler<BPMNAu
                     BPMNGridSnapper.snap(_node);
                 }
             }
+            modelState.setAutoAlign(true);
             modelState.reset();
         });
     }

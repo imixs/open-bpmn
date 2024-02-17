@@ -136,6 +136,15 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
+     * Returns true if the process contains no BPMNElementNodes.
+     * 
+     * @return
+     */
+    public boolean isEmpty() {
+        return getAllElementNodes().size() == 0;
+    }
+
+    /**
      * Returns all BPMNElementNodes contained in this process
      * 
      * @return

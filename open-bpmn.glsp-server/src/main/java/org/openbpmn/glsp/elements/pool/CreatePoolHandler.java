@@ -28,6 +28,7 @@ import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
@@ -72,8 +73,11 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
             Optional<GPoint> point = operation.getLocation();
             if (point.isPresent()) {
                 // set the bounds
-                // participant.setPosition(point.get().getX(), point.get().getY());
-                participant.setPosition(BPMNGridSnapper.center(participant, point.get()));
+                BPMNPoint targetPosition = new BPMNPoint(point.get().getX(), point.get().getY());
+                if (modelState.getAutoAlign() == true) {
+                    targetPosition = BPMNGridSnapper.center(participant, point.get());
+                }
+                participant.setPosition(targetPosition);
                 participant.setDimension(Participant.DEFAULT_WIDTH, Participant.DEFAULT_HEIGHT);
             }
         } catch (BPMNModelException e) {

@@ -124,8 +124,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
 
             for (ElementAndBounds elementBound : filteredElementBounds) {
                 String id = elementBound.getElementId();
-                GPoint newPoint = elementBound.getNewPosition();
-                GDimension newSize = elementBound.getNewSize();
+                GPoint newPoint = BPMNGridSnapper.round(elementBound.getNewPosition());
+                GDimension newSize = BPMNGridSnapper.round(elementBound.getNewSize());
                 // find the corresponding GNode Element
                 Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
                 if (!_node.isPresent()) {
@@ -136,14 +136,16 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
 
                 GNode gNode = _node.get();
                 // compute the new offset x/y
-                double offsetX = newPoint.getX() - gNode.getPosition().getX();
-                double offsetY = newPoint.getY() - gNode.getPosition().getY();
+                double offsetX = Math.round(newPoint.getX() - gNode.getPosition().getX());
+                double offsetY = Math.round(newPoint.getY() - gNode.getPosition().getY());
                 logger.debug("...bounds update for: " + id);
 
                 // find the BPMNElementNode
                 BPMNElementNode bpmnElementNode = (BPMNElementNode) modelState.getBpmnModel().findElementById(id);
                 if (bpmnElementNode != null) {
-                    newPoint = BPMNGridSnapper.snap(bpmnElementNode, newPoint);
+                    if (modelState.getAutoAlign() == true) {
+                        newPoint = BPMNGridSnapper.snap(bpmnElementNode, newPoint);
+                    }
                     // Special snap mechanism to snap the dimentions of a Task or Pool to the Grid
                     if (bpmnElementNode instanceof Participant || bpmnElementNode instanceof Activity) {
                         newSize.setHeight(Math.round(newSize.getHeight() / 10.0) * 10);

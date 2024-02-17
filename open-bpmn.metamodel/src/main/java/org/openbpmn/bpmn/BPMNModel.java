@@ -267,6 +267,18 @@ public class BPMNModel {
     }
 
     /**
+     * Returns true if the model contains no processes with elements
+     * 
+     * @return
+     */
+    public boolean isEmpty() {
+        if (processes.size() == 0 || (processes.size() == 1 && processes.iterator().next().isEmpty())) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Returns a list of all available ModelNotifications. A client can process the
      * notifications.
      * 

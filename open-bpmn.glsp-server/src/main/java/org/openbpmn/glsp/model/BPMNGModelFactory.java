@@ -122,8 +122,6 @@ public class BPMNGModelFactory implements GModelFactory {
     @Inject
     protected Set<BPMNElementExtension> extensions;
 
-    // private BPMNModel bpmnModel;
-
     /**
      * Create a GModelRoot from a BPMNModel specified in the modelState. This method
      * also produces and sets a GModelIndex in the model state that allows mapping
@@ -162,6 +160,11 @@ public class BPMNGModelFactory implements GModelFactory {
 
             modelState.setInitialized(true);
             modelState.storeRevision();
+
+            // If the model is empty we set the auto-align feature = true
+            if (modelState.getBpmnModel().isEmpty()) {
+                modelState.setAutoAlign(true);
+            }
 
             logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms - revision="
                     + modelState.getRoot().getRevision());

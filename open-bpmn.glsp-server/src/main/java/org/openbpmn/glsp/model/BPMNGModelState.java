@@ -22,8 +22,11 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GGraph;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
 
@@ -65,6 +68,40 @@ public class BPMNGModelState extends DefaultGModelState {
         // create a new unique id
         rootID = "root_" + BPMNModel.generateShortID();
         this.setRoot(null);
+    }
+
+    /**
+     * This method sets / updates the auto align option
+     * 
+     * <open-bpmn:auto-align>true</open-bpmn:auto-align>
+     */
+    public void setAutoAlign(boolean autoAlign) {
+        Element autoAlignElement;
+        try {
+            autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefinitions(),
+                    BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
+            autoAlignElement.setTextContent("" + autoAlign);
+        } catch (BPMNInvalidReferenceException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method returns the current auto align option
+     * 
+     * <open-bpmn:auto-align>true</open-bpmn:auto-align>
+     */
+    public boolean getAutoAlign() {
+        Element autoAlignElement;
+        try {
+            autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefinitions(),
+                    BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
+            return Boolean.parseBoolean(autoAlignElement.getTextContent());
+        } catch (BPMNInvalidReferenceException e) {
+            // extension is not defined
+        }
+        return false;
     }
 
     /**

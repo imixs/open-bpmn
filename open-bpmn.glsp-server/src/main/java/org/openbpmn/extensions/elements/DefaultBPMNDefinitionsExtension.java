@@ -106,21 +106,27 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
+        String[] autoAlignOptions = { "Yes|true", "No|false" };
         Element definitions = modelState.getBpmnModel().getDefinitions();
         dataBuilder //
                 .addData("name", bpmnElement.getName()) //
                 .addData("documentation", bpmnElement.getDocumentation()) //
                 .addData("targetNamespace", definitions.getAttribute("targetNamespace")) //
                 .addData("exporter", definitions.getAttribute("exporter")) //
-                .addData("exporterVersion", definitions.getAttribute("exporterVersion"));
+                .addData("exporterVersion", definitions.getAttribute("exporterVersion")) //
+                .addData("auto-align", "" + modelState.getAutoAlign());
 
         schemaBuilder. //
                 addProperty("name", "string", null). //
                 addProperty("targetNamespace", "string", null). //
                 addProperty("exporter", "string", null). //
                 addProperty("exporterVersion", "string", null). //
-                addProperty("documentation", "string", "Model description.");
+                addProperty("documentation", "string", "Model description."). //
+                addProperty("auto-align", "string", "Automatically aligns all BPMN elements to the grid.",
+                        autoAlignOptions);
 
+        Map<String, String> selectItemOption = new HashMap<>();
+        selectItemOption.put("format", "selectitem");
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
         uiSchemaBuilder. //
@@ -132,7 +138,11 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                 // Category Definitions...
                 addCategory("Definitions"). //
                 addLayout(Layout.VERTICAL). //
-                addElements("targetNamespace", "exporter", "exporterVersion"); //
+                addElements("targetNamespace", "exporter", "exporterVersion"). //
+                // Category Layout...
+                addCategory("Layout"). //
+                addLayout(Layout.VERTICAL). //
+                addElement("auto-align", "Auto Align Elements", selectItemOption);
 
         // Signal List
         buildSignalProperties(modelState.getBpmnModel(), dataBuilder, schemaBuilder, uiSchemaBuilder);
@@ -213,6 +223,11 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             definitions.setAttribute("targetNamespace", json.getString("targetNamespace", ""));
             definitions.setAttribute("exporter", json.getString("exporter", ""));
             definitions.setAttribute("exporterVersion", json.getString("exporterVersion", ""));
+        }
+
+        if ("Layout".equals(category)) {
+            String autoAlignOption = json.getString("auto-align", "true");
+            modelState.setAutoAlign(Boolean.parseBoolean(autoAlignOption));
         }
 
         if ("Signals".equals(category)) {
