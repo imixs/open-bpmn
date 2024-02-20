@@ -229,16 +229,16 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
     private ShapeTypeHint createTaskHint(final String taskType) {
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(taskType, true, true, true, true);
 
-        List<String> containables = new ArrayList<>();
+        List<String> containable = new ArrayList<>();
         // add Boundary Event as the only containable for a Task Element
-        containables.addAll(Arrays.asList(new String[] { //
+        containable.addAll(Arrays.asList(new String[] { //
                 BPMNTypes.BOUNDARY_EVENT //
         }));
 
         // Add optional Extension Hints...
-        addExtensionHints(taskType, containables);
+        addExtensionHints(taskType, containable);
 
-        shapeTypeHint.setContainableElementTypeIds(containables);
+        shapeTypeHint.setContainableElementTypeIds(containable);
         return shapeTypeHint;
     }
 

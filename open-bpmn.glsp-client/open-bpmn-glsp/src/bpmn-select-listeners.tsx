@@ -17,17 +17,14 @@ import {
   ActionDispatcher,
   GModelElement,
   GModelRoot,
-  GridSnapper,
   ISelectionListener,
+  ISnapper,
   Point,
   SelectAction,
   TYPES,
   filter,
   getElements,
-  getMatchingElements,
-  hasArgs,
-  isBoundsAware,
-  isSelected
+  hasArgs
 } from '@eclipse-glsp/client';
 import {
   isBPMNLabelNode,
@@ -44,91 +41,29 @@ import { inject, injectable } from 'inversify';
  ****************************************************************************/
 
 /**
- * A {@link GridSnapper} extension that snaps BPMN elements onto a fixed gride size.
+ * A extension that snaps BPMN elements onto a fixed gride size.
  * This snapper calculates the grid size based on the selected element to align tasks, gateways and events.
  *
  * See also discussion here: https://github.com/eclipse-glsp/glsp/discussions/1255
  */
 @injectable()
-export class BPMNElementSnapper extends GridSnapper {
-  // constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
-  constructor() {
-    super({ x: 1, y: 1 });
-  }
+export class BPMNElementSnapper implements ISnapper {
+  constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
+  snap(position: Point, element: GModelElement): Point {
 
-  override snap(position: Point, element: GModelElement): Point {
-
-    if ('graph' === element.type) {
-      console.log('Bullshit!');
-      return { x: 0, y: 0 };
+    // move routing-points by 5x5
+    if ('volatile-routing-point' === element.type) {
+      return {
+        x: Math.round(position.x / 5) * 5,
+        y: Math.round(position.y / 5) * 5
+      };
     }
-
-    if (this.isElementOrSelected(element, elem => 'lane-divider' === elem.type)) {
-      console.log('  ---+> element (' + element.type + ')');
-      //return { ...position, x: 0 };
-      return this.findLaneDividerSnapPoint(element, position);
-    }
-
-    // move routing-points by given grid
-    // if (this.isElementOrSelected(_element, elem => 'volatile-routing-point' === elem.type)) {
-    //   return super.snap(position, _element);
-    // }
 
     // default move 1x1...
     return {
       x: Math.round(position.x),
       y: Math.round(position.y)
     };
-  }
-
-
-  /**
-   * Returns true if the given element or any of the selected elements in the indexed graph matches the given predicate.
-   * 
-   * See also discussion here: https://github.com/eclipse-glsp/glsp/discussions/1255
-   */
-  public isElementOrSelected(element: GModelElement, predicate: (modelElement: GModelElement) => boolean): boolean {
-    try {
-      return predicate(element) || getMatchingElements(element.index, isSelected).some(predicate);
-    } catch (error) {
-      return false;
-    }
-  }
-  public isElementOrSelectedxx(element: GModelElement, predicate: (modelElement: GModelElement) => boolean): boolean {
-    try {
-      return (predicate(element) && isSelected(element)) || (getMatchingElements(element.index, isSelected).some(predicate));
-    } catch (error) {
-      return false;
-    }
-  }
-
-
-  /*
-   * This helper method computes the snap Position of a Lane-Divider.
-   * The position is based on the Bounds of the containing Pool.
-   * The final position is always on the x position of the Pool.
-   */
-  public findLaneDividerSnapPoint(element: GModelElement, position: Point): Point {
-    let x = 0;
-    let y = position.y;
-    // test min / max position
-    if (hasArgs(element) && isBoundsAware(element)) {
-      x = 0;
-      const yMin = Number(element.args.ymin);
-      const yMax = Number(element.args.ymax);
-
-      console.log('  ---> element (' + element.type + ') position: ' + element.bounds.x + ',' + element.bounds.y + '   yMin/yMax=' + yMin + '/' + yMax
-        + '  Point--> ' + position.x + ',' + position.y);
-
-      if (element.bounds.y + position.y < yMin) {
-        y = 0;
-      }
-      if (element.bounds.y + position.y > yMax) {
-        y = 0;
-      }
-    }
-    // return the new position;
-    return { x: x, y: y };
   }
 }
 

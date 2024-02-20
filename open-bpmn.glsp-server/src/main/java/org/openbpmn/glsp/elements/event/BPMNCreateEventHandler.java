@@ -107,7 +107,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                     // it is a BPMNActivity
                     bpmnProcess = activity.getBpmnProcess();
                 } else {
-                    logger.warn("BounderyEvent can only be dropped on a Activity!");
+                    logger.warn("BoundaryEvent can only be dropped on a Activity!");
                 }
             } else {
                 // find the process - either the default process for Root container or the

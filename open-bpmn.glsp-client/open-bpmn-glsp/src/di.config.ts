@@ -87,8 +87,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
 
-    // bpmn helper lines
-    bind(TYPES.ISnapper).toConstantValue(new BPMNElementSnapper());
+    bind(TYPES.ISnapper).to(BPMNElementSnapper);
     bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
         elementLines: [HelperLineType.Center, HelperLineType.Middle], // only show center and middle lines
         viewportLines: [], // do not show alignment lines for viewport
