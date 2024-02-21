@@ -19,19 +19,21 @@ import {
     EnableToolsAction,
     GModelElement,
     GModelRoot,
+    IActionDispatcher,
     IActionHandler,
     ICommand,
     IDiagramStartup,
     ISelectionListener,
     MaybePromise,
     MouseListener,
+    TYPES,
     hasArgs
 } from '@eclipse-glsp/client';
 import { Action } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
@@ -42,7 +44,6 @@ import { TextFileEditorRendererEntry } from './TextFileEditorControl';
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramStartup, ISelectionListener, IActionHandler {
     static readonly ID = 'bpmn-property-panel';
-
     protected headerDiv: HTMLElement;
     modelRoot: Readonly<GModelRoot>;
     headerTitle: HTMLElement;
@@ -55,6 +56,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     panelToggle: boolean;
     currentY: number;
 
+    @inject(TYPES.IActionDispatcher)
+    protected readonly actionDispatcher: IActionDispatcher;
+
     override id(): string {
         return BPMNPropertyPanel.ID;
     }
@@ -66,20 +70,20 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     enableOnStartup: boolean = true;
 
     /**
-     * This mehtod is called after the diagram model is fully initialized. This is the moment to render the HTML element
+     * This method is called after the diagram model is fully initialized. This is the moment to render the HTML element
      */
     postModelInitialization(): MaybePromise<void> {
         console.log(' **** bin in postModelInitialization');
         this.show(this.modelRoot);
 
-        console.log(' **** bin in postModelInitialization - phase 2');
+        //     console.log(' **** bin in postModelInitialization - phase 2');
 
-        if (this.modelRoot) {
-            this.selectedElementId = this.modelRoot.id;
+        //     if (this.modelRoot) {
+        //         this.selectedElementId = this.modelRoot.id;
 
-            console.log(' **** bin in postModelInitialization - phase 3');
-            this.selectionChanged(this.modelRoot, [this.modelRoot.id]);
-        }
+        //         console.log(' **** bin in postModelInitialization - phase 3');
+        //         this.selectionChanged(this.modelRoot, [this.modelRoot.id]);
+        //     }
     }
 
     /**
