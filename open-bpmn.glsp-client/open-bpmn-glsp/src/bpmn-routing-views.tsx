@@ -147,8 +147,10 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
                 }
             }
         }
+        // We add a duplicate <path> element with the same d attribute as the original path. 
+        // Applied a transparent stroke to this duplicate path to make it easier to click 
+        const vnode: any = <g><path class-sprotty-edge={true} class-line={true} d={path} /><path class-sprotty-edge={true} class-line={true} class-bpmn-edge-border={true} d={path} /></g>
 
-        const vnode: any = <path class-sprotty-edge={true} class-line={true} d={path} />;
         return vnode;
     }
 
