@@ -17,7 +17,6 @@ import {
     AbstractUIExtension,
     EnableDefaultToolsAction,
     EnableToolsAction,
-    GLSPActionDispatcher,
     GModelElement,
     GModelRoot,
     IActionHandler,
@@ -26,14 +25,13 @@ import {
     ISelectionListener,
     MaybePromise,
     MouseListener,
-    TYPES,
     hasArgs
 } from '@eclipse-glsp/client';
 import { Action } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
@@ -57,9 +55,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     panelToggle: boolean;
     currentY: number;
 
-    @inject(TYPES.IActionDispatcher)
-    protected readonly actionDispatcher: GLSPActionDispatcher;
-
     override id(): string {
         return BPMNPropertyPanel.ID;
     }
@@ -67,11 +62,24 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
         return BPMNPropertyPanel.ID;
     }
 
+    // Set enableOnStartup to true
+    enableOnStartup: boolean = true;
+
     /**
      * This mehtod is called after the diagram model is fully initialized. This is the moment to render the HTML element
      */
     postModelInitialization(): MaybePromise<void> {
+        console.log(' **** bin in postModelInitialization');
         this.show(this.modelRoot);
+
+        console.log(' **** bin in postModelInitialization - phase 2');
+
+        if (this.modelRoot) {
+            this.selectedElementId = this.modelRoot.id;
+
+            console.log(' **** bin in postModelInitialization - phase 3');
+            this.selectionChanged(this.modelRoot, [this.modelRoot.id]);
+        }
     }
 
     /**
@@ -83,8 +91,15 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
         this.modelRoot = root;
-        // preselect the root element showing the diagram properties
-        this.selectionChanged(root, []);
+
+        if (!root) {
+            console.log(' **** bin in onBeforeShow - aber ohne root ');
+        } else {
+            console.log(' **** bin in onBeforeShow - root id=' + root.id);
+            // preselect the root element showing the diagram properties
+            this.selectionChanged(root, []);
+        }
+
     }
 
     /*
@@ -218,6 +233,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * of the data state and indicates that the property panel need to be refreshed.
      */
     handle(action: Action): ICommand | Action | void {
+
+        console.log(' === handle action: ' + action.kind);
         // Toggle the property panel. Action is triggered by context menu
         if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
             if (!this.panelToggle) {
@@ -242,11 +259,15 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * to restore the last category if the element type has not changed.
      */
     selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
-        this.modelRoot = root;
+
+        console.log(' ------ selection changed 1');
         // return if we do not yet have a body DIV.
-        if (!this.bodyDiv) {
+        if (!this.bodyDiv || !root) {
             return;
         }
+
+        this.modelRoot = root;
+
         if (selectedElements && selectedElements.length > 0) {
             // first we need to verify if a Symbol/BPMNLabel combination was selected.
             // In this case we are only interested in the BPMNFlowElement and not in the label
@@ -265,6 +286,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             }
         }
 
+        console.log(' ------ selection changed 2');
         // if no element is selected we default to the root element (diagram plane)
         let _id;
         if (!selectedElements || selectedElements.length === 0) {
@@ -279,6 +301,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             // skip this event!
             return;
         }
+
+
+        console.log(' ------ selection changed 3 id=' + _id);
 
         // now if we have an element we show the panel..
         if (_id) {
@@ -312,8 +337,11 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * @param _elementID
      */
     updatePropertyPanel(_elementID: string): void {
+
+        console.log(' ------ updatePropertyPanel id=' + _elementID);
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
+            console.log(' ------ no body div!!');
             return;
         }
         // compute the current category....
@@ -477,43 +505,6 @@ export namespace BPMNPropertyPanelUpdateAction {
         return { kind: KIND };
     }
 }
-
-/**
- * Open-BPMN Auto Align to Grid Acton
- */
-// export interface BPMNAutoAlignAction extends Action {
-//     kind: typeof BPMNAutoAlignAction.KIND;
-// }
-
-// export namespace BPMNAutoAlignAction {
-//     export const KIND = 'autoAlign';
-
-//     export function is(object: any): object is BPMNAutoAlignAction {
-//         return Action.hasKind(object, KIND);
-//     }
-
-//     export function create(): BPMNAutoAlignAction {
-//         return { kind: KIND };
-//     }
-// }
-
-/**
- * Open-BPMN Action to clear all routing points of an edge
- */
-// export interface BPMNResetRoutingAction extends Action {
-//     kind: typeof BPMNResetRoutingAction.KIND;
-// }
-
-// export namespace BPMNResetRoutingAction {
-//     export const KIND = 'resetRoutingPoints';
-//     export function is(object: any): object is BPMNResetRoutingAction {
-//         return Action.hasKind(object, KIND);
-//     }
-
-//     export function create(): BPMNResetRoutingAction {
-//         return { kind: KIND };
-//     }
-// }
 
 /*
  * This mouse listener reacts on double click events and opens/closes
