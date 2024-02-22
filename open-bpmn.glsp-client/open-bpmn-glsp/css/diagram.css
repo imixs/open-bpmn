@@ -228,11 +228,6 @@
     stroke-dasharray: 4, 4;
 }
 
-.bpmn-edge-border {
-    stroke: transparent;
-    stroke-width: 15px;
-}
-
 .sprotty-comp {
     stroke: transparent;
     fill: transparent;

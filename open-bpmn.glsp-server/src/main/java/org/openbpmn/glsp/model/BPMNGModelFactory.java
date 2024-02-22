@@ -39,6 +39,7 @@ import org.eclipse.glsp.graph.GModelRoot;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.graph.GPort;
 import org.eclipse.glsp.graph.GraphFactory;
+import org.eclipse.glsp.graph.builder.impl.GArguments;
 import org.eclipse.glsp.graph.builder.impl.GGraphBuilder;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
@@ -740,6 +741,9 @@ public class BPMNGModelFactory implements GModelFactory {
             BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(sequenceFlow);
             builder.target(computeGPort(target));
             builder.source(computeGPort(source));
+            // We add an edge Padding of 10 pixel.
+            // See the view renderer in bpmn-routing-views.tsx.
+            builder.addArgument(GArguments.edgePadding(10));
             BPMNGEdge bpmnGEdge = builder.build();
             bpmnGEdge.setKind("");
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
