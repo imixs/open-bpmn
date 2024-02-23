@@ -28,5 +28,3 @@ lib
 tsconfig.tsbuildinfo
 gen-webpack.config.js
 
-# ignore dev model files
-workspace/dev
