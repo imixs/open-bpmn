@@ -59,6 +59,16 @@ export class BPMNElementSnapper implements ISnapper {
       };
     }
 
+    // Workaround until we have a solution to snap to the absolute position
+    // if (isLaneDivider(element)) {
+    //   console.log('found lane divider');
+    //   return { ...position, x: 0 };
+    // }
+    // if (isBoundaryEvent(element)) {
+    //   return { ...position, y: 0 };
+    // }
+
+
     // default move 1x1...
     return {
       x: Math.round(position.x),

@@ -73,17 +73,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * This method is called after the diagram model is fully initialized. This is the moment to render the HTML element
      */
     postModelInitialization(): MaybePromise<void> {
-        console.log(' **** bin in postModelInitialization');
         this.show(this.modelRoot);
-
-        //     console.log(' **** bin in postModelInitialization - phase 2');
-
-        //     if (this.modelRoot) {
-        //         this.selectedElementId = this.modelRoot.id;
-
-        //         console.log(' **** bin in postModelInitialization - phase 3');
-        //         this.selectionChanged(this.modelRoot, [this.modelRoot.id]);
-        //     }
     }
 
     /**
@@ -97,9 +87,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
         this.modelRoot = root;
 
         if (!root) {
-            console.log(' **** bin in onBeforeShow - aber ohne root ');
+            // no op
         } else {
-            console.log(' **** bin in onBeforeShow - root id=' + root.id);
             // preselect the root element showing the diagram properties
             this.selectionChanged(root, []);
         }
@@ -264,14 +253,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
 
-        console.log(' ------ selection changed 1');
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv || !root) {
             return;
         }
 
         this.modelRoot = root;
-
         if (selectedElements && selectedElements.length > 0) {
             // first we need to verify if a Symbol/BPMNLabel combination was selected.
             // In this case we are only interested in the BPMNFlowElement and not in the label
@@ -290,7 +277,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             }
         }
 
-        console.log(' ------ selection changed 2');
         // if no element is selected we default to the root element (diagram plane)
         let _id;
         if (!selectedElements || selectedElements.length === 0) {
@@ -305,9 +291,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             // skip this event!
             return;
         }
-
-
-        console.log(' ------ selection changed 3 id=' + _id);
 
         // now if we have an element we show the panel..
         if (_id) {
@@ -342,7 +325,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     updatePropertyPanel(_elementID: string): void {
 
-        console.log(' ------ updatePropertyPanel id=' + _elementID);
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
             console.log(' ------ no body div!!');
