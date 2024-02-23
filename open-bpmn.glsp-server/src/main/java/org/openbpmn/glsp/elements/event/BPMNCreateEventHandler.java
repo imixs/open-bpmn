@@ -130,7 +130,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                 // compute relative center position...
                 BPMNPoint targetPosition = new BPMNPoint(point.get().getX(), point.get().getY());
                 if (modelState.getAutoAlign() == true) {
-                    targetPosition = BPMNGridSnapper.center(event, point.get());
+                    targetPosition = BPMNGridSnapper.centerBPMNPoint(event, point.get());
                 }
                 // compute default label position
                 double labelX = targetPosition.getX() + (Event.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);

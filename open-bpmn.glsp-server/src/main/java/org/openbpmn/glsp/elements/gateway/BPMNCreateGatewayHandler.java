@@ -86,7 +86,7 @@ public class BPMNCreateGatewayHandler extends CreateBPMNNodeOperationHandler {
             if (point.isPresent()) {
                 BPMNPoint targetPosition = new BPMNPoint(point.get().getX(), point.get().getY());
                 if (modelState.getAutoAlign() == true) {
-                    targetPosition = BPMNGridSnapper.center(gateway, point.get());
+                    targetPosition = BPMNGridSnapper.centerBPMNPoint(gateway, point.get());
                 }
                 gateway.setPosition(targetPosition);
                 gateway.setDimension(Gateway.DEFAULT_WIDTH, Gateway.DEFAULT_HEIGHT);

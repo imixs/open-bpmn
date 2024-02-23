@@ -76,14 +76,35 @@ public class BPMNGridSnapper {
      * 
      * @param elementNode
      * @param point
-     * @return
+     * @return a BPMNPoint
      */
-    public static BPMNPoint center(final BPMNElementNode elementNode, final GPoint point) {
+    public static BPMNPoint centerBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
         // center
         point.setX(point.getX() - (elementNode.getDefaultWidth() / 2));
         point.setY(point.getY() - (elementNode.getDefaultHeight() / 2));
         GPoint snapPoint = snap(elementNode, point);
         return new BPMNPoint(snapPoint.getX(), snapPoint.getY());
+    }
+
+    /**
+     * This method snaps, based on a given GPoint, a BPMNElement to
+     * the Grid Size. This method is called by CreationHandlers
+     * 
+     * @param elementNode
+     * @param point
+     * @return a BPMNPoint
+     */
+    public static BPMNPoint snapBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
+        double x = point.getX();
+        double y = point.getY();
+        x = Math.round(x / GRID_X) * GRID_X;
+        y = Math.round(y / GRID_Y) * GRID_Y;
+        // In casse of an event we need to adjust the offset!
+        if (elementNode instanceof Event) {
+            x = x - 3;
+            y = y - 3;
+        }
+        return new BPMNPoint(x, y);
     }
 
     /**

@@ -146,7 +146,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                     if (modelState.getAutoAlign() == true) {
                         newPoint = BPMNGridSnapper.snap(bpmnElementNode, newPoint);
                     }
-                    // Special snap mechanism to snap the dimentions of a Task or Pool to the Grid
+                    // Special snap mechanism to snap the dimensions of a Task or Pool to the Grid
                     if (bpmnElementNode instanceof Participant || bpmnElementNode instanceof Activity) {
                         newSize.setHeight(Math.round(newSize.getHeight() / 10.0) * 10);
                         newSize.setWidth(Math.round(newSize.getWidth() / 10.0) * 10);
@@ -202,12 +202,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
                     "Lane " + upperLaneID + " not found in model!");
         }
-        String poolID = upperGLane.getParent().getId();
-        participant = modelState.getBpmnModel().findParticipantById(poolID);
-        upperBpmnLane = participant.openProcess().findLaneById(upperLaneID);
-        upperBpmnLane.setDimension(upperBpmnLane.getBounds().getDimension().getWidth(),
-                upperBpmnLane.getBounds().getDimension().getHeight() + offsetY);
-
         // Lower Lane
         GNode lowerGLane = modelState.getIndex().findElementByClass(lowerLaneID, GNode.class)
                 .orElse(null);
@@ -215,7 +209,43 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
                     "Lane " + upperLaneID + " not found in model!");
         }
+
+        String poolID = upperGLane.getParent().getId();
+        participant = modelState.getBpmnModel().findParticipantById(poolID);
+
+        // Lane currentLane = participant.openProcess().findLaneById(gNode.getId());
+        // double myY = currentLane.getBounds().getPosition().getY();
+
+        upperBpmnLane = participant.openProcess().findLaneById(upperLaneID);
         lowerBpmnLane = participant.openProcess().findLaneById(lowerLaneID);
+        // test if y-offset between min/max y range?
+        double yMin = Double.parseDouble(gNode.getArgs().get("ymin").toString());
+        double yMax = Double.parseDouble(gNode.getArgs().get("ymax").toString());
+
+        logger.info("-------------------");
+
+        logger.info(" upperLane - y=" + upperBpmnLane.getBounds().getPosition().getY() + "  h="
+                + upperBpmnLane.getBounds().getDimension().getHeight());
+
+        logger.info(" lowerBpmnLane - y=" + lowerBpmnLane.getBounds().getPosition().getY() + "  h="
+                + lowerBpmnLane.getBounds().getDimension().getHeight());
+        logger.info(" yMin = " + yMin + " yMax=" + yMax);
+
+        logger.info(" OffsetY = " + offsetY);
+
+        if (upperBpmnLane.getBounds().getDimension().getHeight()
+                + offsetY < lowerBpmnLane.getBounds().getPosition().getY() + yMin) {
+            logger.info("zu klein ");
+            offsetY = -(upperBpmnLane.getBounds().getDimension().getHeight() - yMin);
+        } else if (lowerBpmnLane.getBounds().getPosition().getY() + offsetY > yMax) {
+            logger.info("zu groß");
+            offsetY = yMax - lowerBpmnLane.getBounds().getPosition().getY();
+        }
+
+        // recompute lane sizes....
+        upperBpmnLane.setDimension(upperBpmnLane.getBounds().getDimension().getWidth(),
+                upperBpmnLane.getBounds().getDimension().getHeight() + offsetY);
+
         lowerBpmnLane.setPosition(lowerBpmnLane.getBounds().getPosition().getX(),
                 lowerBpmnLane.getBounds().getPosition().getY() + offsetY);
         lowerBpmnLane.setDimension(lowerBpmnLane.getBounds().getDimension().getWidth(),

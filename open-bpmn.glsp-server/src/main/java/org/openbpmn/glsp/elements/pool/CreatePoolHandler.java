@@ -75,7 +75,8 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
                 // set the bounds
                 BPMNPoint targetPosition = new BPMNPoint(point.get().getX(), point.get().getY());
                 if (modelState.getAutoAlign() == true) {
-                    targetPosition = BPMNGridSnapper.center(participant, point.get());
+                    targetPosition = BPMNGridSnapper.snapBPMNPoint(participant, point.get());
+
                 }
                 participant.setPosition(targetPosition);
                 participant.setDimension(Participant.DEFAULT_WIDTH, Participant.DEFAULT_HEIGHT);
