@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://org.openbpmn">
+  <bpmn2:extensionElements>
+    <open-bpmn:auto-align/>
+  </bpmn2:extensionElements>
   <bpmn2:process id="process_1" processType="Public">
     <bpmn2:startEvent id="event-qsTs3pwtoD_KuarJ" name="Start Event">
       <bpmn2:messageEventDefinition id="messageEventDefinition_Y3Pkbg"/>
@@ -17,6 +20,7 @@
       <bpmn2:outgoing>SequenceFlow_VcdThQ</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_7QjkDg</bpmn2:outgoing>
       <bpmn2:documentation id="documentation_59KxPQ"/>
+      <bpmn2:outgoing>sequenceFlow_6YSJzA</bpmn2:outgoing>
     </bpmn2:manualTask>
     <bpmn2:intermediateThrowEvent id="event-RWwHnNS7eov3rwZt" name="Event 1">
       <bpmn2:linkEventDefinition id="linkEventDefinition_gcDiNg" name="test" target=""/>
@@ -106,6 +110,13 @@
     <bpmn2:association id="association_olYbcA" sourceRef="dataObject_DrGkHA" targetRef="task-y6CwOlM3ErBatGcC">
       <bpmn2:documentation id="documentation_bhwPSQ"/>
     </bpmn2:association>
+    <bpmn2:sendTask id="task_Vr4xCw" name="Task-5">
+      <bpmn2:documentation id="documentation_5IgFCA"/>
+      <bpmn2:incoming>sequenceFlow_6YSJzA</bpmn2:incoming>
+    </bpmn2:sendTask>
+    <bpmn2:sequenceFlow id="sequenceFlow_6YSJzA" sourceRef="task-o6w2XYdMAEFdPoz6" targetRef="task_Vr4xCw">
+      <bpmn2:documentation id="documentation_lKaUiA"/>
+    </bpmn2:sequenceFlow>
   </bpmn2:process>
   <bpmn2:message id="message_1" name="Message 1">
     <bpmn2:documentation id="documentation_GQJQkA"/>
@@ -233,6 +244,17 @@
         <di:waypoint x="649.5" y="132.0"/>
         <di:waypoint x="645.0" y="132.0"/>
         <di:waypoint x="645.0" y="150.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="task_Vr4xCw" id="BPMNShape_kOU1hQ">
+        <dc:Bounds height="50.0" width="110.0" x="857.0" y="290.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_6YSJzA" id="BPMNEdge_hyskFQ" sourceElement="BPMNShape_AoYLLA" targetElement="BPMNShape_kOU1hQ">
+        <di:waypoint x="395.0" y="200.0"/>
+        <di:waypoint x="395.0" y="216.0"/>
+        <di:waypoint x="440.0" y="216.0"/>
+        <di:waypoint x="440.0" y="364.0"/>
+        <di:waypoint x="912.0" y="364.0"/>
+        <di:waypoint x="912.0" y="340.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

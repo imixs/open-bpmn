@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org">
+  <bpmn2:extensionElements>
+    <open-bpmn:auto-align/>
+  </bpmn2:extensionElements>
   <bpmn2:process id="process_1" name="Default Process" processType="Public">
     <bpmn2:documentation id="documentation_qSnNjQ"/>
     <bpmn2:startEvent id="event_EBWLGw" name="Event-1">
@@ -23,14 +26,14 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="event_Np5zHQ" id="BPMNShape_YF7hNw">
-        <dc:Bounds height="36.0" width="36.0" x="553.0" y="147.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="322.0" y="147.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_aBU7GA">
-          <dc:Bounds height="20.0" width="100.0" x="521.0" y="186.0"/>
+          <dc:Bounds height="20.0" width="100.0" x="290.0" y="186.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_oXkLEg" id="BPMNEdge_6DVPag" sourceElement="BPMNShape_AHKypg" targetElement="BPMNShape_YF7hNw">
         <di:waypoint x="183.0" y="165.0"/>
-        <di:waypoint x="553.0" y="165.0"/>
+        <di:waypoint x="322.0" y="165.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
