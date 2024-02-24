@@ -52,7 +52,7 @@ public class TestSignal {
             fail();
         }
 
-        logger.info("...model read sucessful ");
+        logger.info("...model read successful ");
     }
 
     /**
@@ -87,7 +87,7 @@ public class TestSignal {
         }
 
         model.save(out);
-        logger.info("...model created sucessful: " + out);
+        logger.info("...model created successful: " + out);
 
     }
 
@@ -129,13 +129,13 @@ public class TestSignal {
         }
 
         model.save(out);
-        logger.info("...model created sucessful: " + out);
+        logger.info("...model created successful: " + out);
 
     }
 
     /**
-     * This test parses a bpmn file and removes singnal_1 which is referred by an
-     * event
+     * This test parses a bpmn file and warns if duplicate signal ids are found.
+     * 
      */
     @Test
     public void testDeleteSignal() {
@@ -165,7 +165,32 @@ public class TestSignal {
         }
 
         model.save(out);
-        logger.info("...model update sucessful: " + out);
+        logger.info("...model update successful: " + out);
+
+    }
+
+    /**
+     * This test parses a bpmn file that causes errors by not computing the signal
+     * list correctly
+     */
+    @Test
+    public void testSignalDuplicates() {
+        BPMNModel model = null;
+
+        logger.info("...read model");
+        try {
+            model = BPMNModelFactory.read("/refmodel-17.bpmn");
+            logger.info("...read model");
+            // read tasks....
+            BPMNProcess process = model.openProcess(null);
+            assertNotNull(process);
+            // We expect 2 signals!
+            assertEquals(2, model.getSignals().size());
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
 
     }
 

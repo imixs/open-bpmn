@@ -1873,16 +1873,25 @@ public class BPMNModel {
      * This helper method loads the Signal elements from the diagram -
      * 'bpmn2:signal' .
      * 
+     * The method detects duplicates and prints a warning if found.
+     * 
      * @throws BPMNModelException
      */
     private void loadSignalList() throws BPMNModelException {
         signals = new LinkedHashSet<Signal>();
+        List<String> duplicates = new ArrayList<>();
         NodeList signalNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.SIGNAL);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
                 Signal signal = new Signal(this, item);
-                signals.add(signal);
+                String id = signal.getId();
+                if (duplicates.contains(id)) {
+                    logger.warning("Duplicate bpmn2:signal '" + id + "'' found, signal will be ignored!");
+                } else {
+                    duplicates.add(id);
+                    signals.add(signal);
+                }
             }
         }
     }
