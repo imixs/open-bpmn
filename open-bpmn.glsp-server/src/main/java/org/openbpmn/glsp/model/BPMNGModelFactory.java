@@ -438,7 +438,7 @@ public class BPMNGModelFactory implements GModelFactory {
             String uiSchema = uiSchemaBuilder.build();
             logger.debug(uiSchema);
             elementNode.getArgs().put("JSONFormsUISchema", uiSchema);
-            bpmnElement.getArgs().put("JSONFormsData", uiSchema);
+            bpmnElement.getArgs().put("JSONFormsUISchema", uiSchema);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -448,7 +448,7 @@ public class BPMNGModelFactory implements GModelFactory {
             String schema = schemaBuilder.build();
             logger.debug(schema);
             elementNode.getArgs().put("JSONFormsSchema", schema);
-            bpmnElement.getArgs().put("JSONFormsData", schema);
+            bpmnElement.getArgs().put("JSONFormsSchema", schema);
         } catch (IOException e) {
             e.printStackTrace();
         }

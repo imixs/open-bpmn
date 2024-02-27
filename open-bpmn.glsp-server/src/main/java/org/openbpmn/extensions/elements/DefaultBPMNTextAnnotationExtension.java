@@ -89,26 +89,25 @@ public class DefaultBPMNTextAnnotationExtension extends AbstractBPMNElementExten
      * Updates the textAnnotation properties
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // we are only interested in category general
-        if (!"General".equals(category)) {
-            return;
-        }
+        if ("General".equals(category)) {
+            // update attributes and tags
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
+            bpmnElement.setAttribute("textFormat", json.getString("textFormat", ""));
 
-        // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation", ""));
-        bpmnElement.setAttribute("textFormat", json.getString("textFormat", ""));
-
-        // Update the text property
-        String text = json.getString("text", "");
-        ((TextAnnotation) bpmnElement).setText(text);
-        // Update GModelElement Text Node...
-        Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_multiline");
-        if (!textNode.isEmpty()) {
-            textNode.get().getArgs().put("text", text);
+            // Update the text property
+            String text = json.getString("text", "");
+            ((TextAnnotation) bpmnElement).setText(text);
+            // Update GModelElement Text Node...
+            Optional<GModelElement> textNode = modelState.getIndex().get(gNodeElement.getId() + "_multiline");
+            if (!textNode.isEmpty()) {
+                textNode.get().getArgs().put("text", text);
+            }
         }
+        return false;
     }
 
 }

@@ -32,7 +32,7 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
+import org.openbpmn.glsp.operations.BPMNPropertiesUpdateAction;
 
 import com.google.inject.Inject;
 
@@ -69,7 +69,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
     public Optional<Command> createCommand(final CreateNodeOperation operation) {
         return commandOf(() -> executeOperation(operation));
     }
-    
+
     /**
      * We expect that the EventDefinition was dropped on a Event. See
      * {@link BPMNDiagramConfiguration} method getShapeTypeHints
@@ -109,7 +109,7 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
             actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(eventID)));
             // send an update for the property panel...
             actionDispatcher
-                    .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
+                    .dispatchAfterNextUpdate(new BPMNPropertiesUpdateAction());
         }
     }
 

@@ -185,59 +185,60 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
     * </pre>
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // we are only interested in category 'Timer Definitions'
-        if (!"Timer Definitions".equals(category)) {
-            return;
-        }
+        if ("Timer Definitions".equals(category)) {
 
-        Event bpmnEvent = (Event) bpmnElement;
-        JsonArray dataList = json.getJsonArray("timers");
+            Event bpmnEvent = (Event) bpmnElement;
+            JsonArray dataList = json.getJsonArray("timers");
 
-        // synchronize the definition list of the event element
-        Set<Element> timerEventDefinitions = synchronizeEventDefinitions("timerEventDefinition", bpmnEvent, dataList);
+            // synchronize the definition list of the event element
+            Set<Element> timerEventDefinitions = synchronizeEventDefinitions("timerEventDefinition", bpmnEvent,
+                    dataList);
 
-        // now we can update the values one by one
-        // NOTE: the id can change within the definitionList if an element was deleted
-        // or moved! but we do not care about this issue.
-        Iterator<Element> iter = timerEventDefinitions.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-            Element eventDefinitionElement = iter.next();
-            JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
-            if (jsonData != null) {
-                // remove the old child elements
-                while (eventDefinitionElement.hasChildNodes()) {
-                    eventDefinitionElement.removeChild(eventDefinitionElement.getFirstChild());
+            // now we can update the values one by one
+            // NOTE: the id can change within the definitionList if an element was deleted
+            // or moved! but we do not care about this issue.
+            Iterator<Element> iter = timerEventDefinitions.iterator();
+            int i = 0;
+            while (iter.hasNext()) {
+                Element eventDefinitionElement = iter.next();
+                JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
+                if (jsonData != null) {
+                    // remove the old child elements
+                    while (eventDefinitionElement.hasChildNodes()) {
+                        eventDefinitionElement.removeChild(eventDefinitionElement.getFirstChild());
+                    }
+                    // depending on the type we need to create a new child element
+                    Element timerObject = null;
+                    // { "Time/Date", "Interval", "Duration" };
+                    String timerType = jsonData.getString("type", "Time/Date");
+                    if ("Time/Date".equals(timerType)) {
+                        timerObject = bpmnEvent.getModel().createElement(BPMNNS.BPMN2, "timeDate");
+                    }
+                    if ("Duration".equals(timerType)) {
+                        timerObject = bpmnEvent.getModel().createElement(BPMNNS.BPMN2, "timeDuration");
+                    }
+                    if ("Interval".equals(timerType)) {
+                        timerObject = bpmnEvent.getModel().createElement(BPMNNS.BPMN2, "timeCycle");
+
+                    }
+
+                    // xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1"
+                    timerObject.setAttribute("xsi:type", "bpmn2:tFormalExpression");
+                    timerObject.setAttribute("id", "FormalExpression_" + i);
+                    timerObject.setTextContent(jsonData.getString("value", ""));
+
+                    // finally add the new updated timerObject
+                    eventDefinitionElement.appendChild(timerObject);
+
                 }
-                // depending on the type we need to create a new child element
-                Element timerObject = null;
-                // { "Time/Date", "Interval", "Duration" };
-                String timerType = jsonData.getString("type", "Time/Date");
-                if ("Time/Date".equals(timerType)) {
-                    timerObject = bpmnEvent.getModel().createElement(BPMNNS.BPMN2, "timeDate");
-                }
-                if ("Duration".equals(timerType)) {
-                    timerObject = bpmnEvent.getModel().createElement(BPMNNS.BPMN2, "timeDuration");
-                }
-                if ("Interval".equals(timerType)) {
-                    timerObject = bpmnEvent.getModel().createElement(BPMNNS.BPMN2, "timeCycle");
-
-                }
-
-                // xsi:type="bpmn2:tFormalExpression" id="FormalExpression_1"
-                timerObject.setAttribute("xsi:type", "bpmn2:tFormalExpression");
-                timerObject.setAttribute("id", "FormalExpression_" + i);
-                timerObject.setTextContent(jsonData.getString("value", ""));
-
-                // finally add the new updated timerObject
-                eventDefinitionElement.appendChild(timerObject);
-
+                i++;
+                // update completed
             }
-            i++;
-            // update completed
         }
+        return false;
     }
 }

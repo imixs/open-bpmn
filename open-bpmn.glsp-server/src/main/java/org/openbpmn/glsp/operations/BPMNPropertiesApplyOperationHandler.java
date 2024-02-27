@@ -34,19 +34,24 @@ import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
+import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
 /**
  * The BPMNApplyPropertiesUpdateOperationHandler is responsible for processing
- * the {@link BPMNApplyPropertiesUpdateOperation} send by the client for updates
- * of the element properties
+ * the {@link BPMNPropertiesApplyOperation} send by the client for updates
+ * of the element properties.
+ * 
+ * The method delegates the new values to the registered Extensions to update
+ * the
+ * BPMN model and probably update additional values of the data structure.
  *
  */
-public class BPMNApplyPropertiesUpdateOperationHandler
-        extends GModelOperationHandler<BPMNApplyPropertiesUpdateOperation> {
-    private static Logger logger = LogManager.getLogger(BPMNApplyPropertiesUpdateOperationHandler.class);
+public class BPMNPropertiesApplyOperationHandler
+        extends GModelOperationHandler<BPMNPropertiesApplyOperation> {
+    private static Logger logger = LogManager.getLogger(BPMNPropertiesApplyOperationHandler.class);
 
     @Inject
     protected ActionDispatcher actionDispatcher;
@@ -57,16 +62,27 @@ public class BPMNApplyPropertiesUpdateOperationHandler
     @Inject
     protected Set<BPMNElementExtension> extensions;
 
+    @Inject
+    protected BPMNGModelFactory bpmnGModelFactory;
+
     @Override
-    public Optional<Command> createCommand(BPMNApplyPropertiesUpdateOperation operation) {
+    public Optional<Command> createCommand(BPMNPropertiesApplyOperation operation) {
         return commandOf(() -> executeOperation(operation));
     }
 
     /**
-     *
+     * The BPMNApplyPropertiesUpdateOperation provides the ID of the selected GNode
+     * and the new data value as a json structure.
+     * 
+     * The method delegates the data to the registered BPMNElementExtension to
+     * update the BPMN model.
+     * 
+     * If one extension signals a client update the method will send a
+     * BPMNPropertiesUpdateAction
      */
-    private void executeOperation(final BPMNApplyPropertiesUpdateOperation operation) {
+    private void executeOperation(final BPMNPropertiesApplyOperation operation) {
         long l = System.currentTimeMillis();
+        boolean clientUpdate = false;
         String jsonData = operation.getJsonData();
         String category = operation.getCategory();
 
@@ -79,57 +95,71 @@ public class BPMNApplyPropertiesUpdateOperationHandler
         BPMNElement bpmnElement = null;
         // is the root element selected?
         if (modelState.getRoot().getId().equals(elementID)) {
-
             gModelElement = modelState.getRoot();
             bpmnElement = modelState.getBpmnModel().openDefaultProces();
         } else {
-            // find the corresponding bpmn element....
+            // find the corresponding gModelElement and bpmnElement....
             Optional<BPMNGNode> _baseElement = modelState.getIndex().findElementByClass(elementID, BPMNGNode.class);
-            if (!_baseElement.isEmpty()) {
-                gModelElement = _baseElement.get();
+            gModelElement = _baseElement.orElse(null);
+            if (gModelElement != null) {
                 bpmnElement = modelState.getBpmnModel().findElementNodeById(elementID);
-            }
-            if (bpmnElement == null) {
+            } else {
                 // not yet found - check Edges....
                 Optional<BPMNGEdge> _baseEdge = modelState.getIndex().findElementByClass(elementID, BPMNGEdge.class);
-                if (!_baseEdge.isEmpty()) {
-                    gModelElement = _baseEdge.get();
+                gModelElement = _baseEdge.orElse(null);
+                if (gModelElement != null) {
                     bpmnElement = modelState.getBpmnModel().findElementEdgeById(elementID);
                 }
             }
         }
 
         // validate BPMN element
-        if (bpmnElement == null) {
+        if (bpmnElement == null || gModelElement == null) {
+            // should never happen
             throw new IllegalArgumentException(
                     "BPMN Element with id " + operation.getId() + " is not defined in current model!");
         }
+
         // parse json....
         JsonObject json = null;
         String jsonDataClone = String.valueOf(jsonData);
         try (JsonReader reader = Json.createReader(new StringReader(jsonDataClone))) {
             json = reader.readObject();
+            // update the JSONFormsData property of the selected element
+            // See also issue #164
+            gModelElement.getArgs().put("JSONFormsData", json.toString());
         } catch (JsonException e) {
             throw new RuntimeException("Cannot read json data : " + e.getMessage());
         }
 
-        // Now call the extensions to update the property data according to the BPMN
-        // element. The updatePropertiesData can also update the given JSON object!
+        // Now call the extensions to update the BPMN Model according to the data
+
         if (extensions != null) {
             for (BPMNElementExtension extension : extensions) {
                 // validate if the extension can handle this BPMN element
                 if (extension.handlesBPMNElement(bpmnElement)) {
-                    extension.updatePropertiesData(json, category, bpmnElement, gModelElement);
+                    boolean _update = extension.updatePropertiesData(json, category, bpmnElement, gModelElement);
+                    if (clientUpdate == false && _update == true) {
+                        clientUpdate = true;
+                    }
                 }
             }
         }
 
-        // finally we need to update the JSONFormsData property of the selected element
-        // See also issue #164
-        if (gModelElement != null) {
-            gModelElement.getArgs().put("JSONFormsData", json.toString());
+        // Refresh the Data, Schema and UISchema (this could be changed by an extension)
+        String _data = gModelElement.getArgs().get("JSONFormsData").toString();
+        logger.info(" -> new JSON String=" + _data);
+        String _schema = gModelElement.getArgs().get("JSONFormsSchema").toString();
+        String _uiSchema = gModelElement.getArgs().get("JSONFormsUISchema").toString();
+
+        // Finally dispatch an BPMNPropertiesUpdateAction event to refresh the
+        // property panel. This action is only dispatched in case at least one extension
+        // has signaled an update.
+        if (clientUpdate) {
+            actionDispatcher.dispatch(new BPMNPropertiesUpdateAction(_data, _schema,
+                    _uiSchema));
         }
-        logger.debug("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
+        logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
 
     }
 

@@ -107,7 +107,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
      * Update the default activity properties.
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         if ("General".equals(category)) {
@@ -133,6 +133,7 @@ public class DefaultBPMNTaskExtension extends AbstractBPMNElementExtension {
 
             }
         }
+        return false;
     }
 
 }

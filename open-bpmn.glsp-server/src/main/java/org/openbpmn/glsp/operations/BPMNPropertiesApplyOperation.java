@@ -26,20 +26,20 @@ import org.eclipse.glsp.server.operations.Operation;
  * Each operation is uniquely defined by its KIND
  * <p>
  * The Operations are handled by the
- * {@link BPMNApplyPropertiesUpdateOperationHandler}. The operation handler is
+ * {@link BPMNPropertiesApplyOperationHandler}. The operation handler is
  * responsible of processing the operation and updates the model representation
  * accordingly.
  * <p>
  * The operation provides the Element ID, a JSON data structure with the
  * new/updated data and an optional category. The category can be used by the
- * {@link BPMNApplyPropertiesUpdateOperationHandler} to update only parts on an
+ * {@link BPMNPropertiesApplyOperationHandler} to update only parts on an
  * element. This is to optimize the update performance as the data structure can
  * become very complex or various BPMN elements.
  *
  */
-public class BPMNApplyPropertiesUpdateOperation extends Operation {
+public class BPMNPropertiesApplyOperation extends Operation {
 
-    public static final String OPERATION_KIND = "applyBPMNPropertiesUpdate";
+    public static final String OPERATION_KIND = "BPMNPropertiesApplyOperation";
 
     public static final String DOCUMENTATION_PREFIX = "documentation:";
     public static final String NAME_PREFIX = "name:";
@@ -48,11 +48,11 @@ public class BPMNApplyPropertiesUpdateOperation extends Operation {
     private String jsonData;
     private String category;
 
-    public BPMNApplyPropertiesUpdateOperation() {
+    public BPMNPropertiesApplyOperation() {
         super(OPERATION_KIND);
     }
 
-    public BPMNApplyPropertiesUpdateOperation(final String nodeId, final String jsonData, final String category) {
+    public BPMNPropertiesApplyOperation(final String nodeId, final String jsonData, final String category) {
         this();
         this.id = nodeId;
         this.jsonData = jsonData;

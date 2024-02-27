@@ -161,30 +161,31 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
      * 
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // we are only interested in category signals
-        if (!"Signals".equals(category)) {
-            return;
-        }
+        if ("Signals".equals(category)) {
 
-        Event bpmnEvent = (Event) bpmnElement;
-        JsonArray dataList = json.getJsonArray("signals");
-        // synchronize the definition list of the event element
-        Set<Element> signalEventDefinitions = synchronizeEventDefinitions("signalEventDefinition", bpmnEvent, dataList);
-        // now we can update the values
-        Iterator<Element> iter = signalEventDefinitions.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-            Element eventDefinitionElement = iter.next();
-            JsonObject jsonData = dataList.getJsonObject(i);
-            if (jsonData != null) {
-                eventDefinitionElement.setAttribute("signalRef", jsonData.getString("signal", ""));
+            Event bpmnEvent = (Event) bpmnElement;
+            JsonArray dataList = json.getJsonArray("signals");
+            // synchronize the definition list of the event element
+            Set<Element> signalEventDefinitions = synchronizeEventDefinitions("signalEventDefinition", bpmnEvent,
+                    dataList);
+            // now we can update the values
+            Iterator<Element> iter = signalEventDefinitions.iterator();
+            int i = 0;
+            while (iter.hasNext()) {
+                Element eventDefinitionElement = iter.next();
+                JsonObject jsonData = dataList.getJsonObject(i);
+                if (jsonData != null) {
+                    eventDefinitionElement.setAttribute("signalRef", jsonData.getString("signal", ""));
+                }
+                i++;
+                // update completed
             }
-            i++;
-            // update completed
         }
+        return false;
 
     }
 }

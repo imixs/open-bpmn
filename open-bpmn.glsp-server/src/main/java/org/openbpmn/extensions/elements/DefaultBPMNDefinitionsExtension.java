@@ -32,7 +32,6 @@ import javax.json.JsonValue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GModelElement;
-import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
@@ -48,7 +47,6 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.operations.BPMNPropertyPanelUpdateAction;
 import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
@@ -66,15 +64,10 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
     private static Logger logger = LogManager.getLogger(DefaultBPMNDefinitionsExtension.class);
 
     @Inject
-    protected ActionDispatcher actionDispatcher;
-
-    @Inject
     protected BPMNGModelState modelState;
 
     @Inject
     protected BPMNGModelFactory bpmnGModelFactory;
-
-    private boolean refreshProperties = false;
 
     public DefaultBPMNDefinitionsExtension() {
         super();
@@ -203,15 +196,16 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             }
             dataBuilder.closeArray();
         }
-
     }
 
     /**
      * Updates the BPMN Diagram definition properties
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
+
+        boolean _update = false;
 
         Element definitions = modelState.getBpmnModel().getDefinitions();
 
@@ -232,8 +226,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
 
         if ("Signals".equals(category)) {
             // update signal properties...
-            boolean update = false;
-            logger.debug("...update signals.. ");
+            logger.debug("      updating signals.. ");
             JsonArray signalSetValues = json.getJsonArray("signals");
             List<String> signalIdList = new ArrayList<String>();
             if (signalSetValues != null) {
@@ -262,28 +255,24 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                         } catch (BPMNModelException e) {
                             logger.warn("Unable to add new signal: " + e.getMessage());
                         }
-                        update = true; // reset signal state
+                        _update = true; // reset signal state
                     }
                 }
 
                 // remove signals from definitions which are not longer in the list
                 // collect all affected ids...
                 if (removeDeprecatedSignals(signalIdList)) {
-                    update = true;
+                    _update = true;
                 }
 
             } else {
-                update = true; // reset signal state
+                _update = true; // reset signal state
             }
-            if (update) {
-                modelState.reset();
+            if (_update) {
                 bpmnGModelFactory.applyBPMNElementExtensions(gNodeElement, bpmnElement);
-                // send an update for the property panel to the client...
-                actionDispatcher
-                        .dispatchAfterNextUpdate(new BPMNPropertyPanelUpdateAction());
-
             }
         }
+        return _update;
     }
 
     /**

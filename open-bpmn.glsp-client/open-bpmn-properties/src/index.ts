@@ -19,25 +19,27 @@ import {
     configureActionHandler
 } from '@eclipse-glsp/client';
 import {
-    BPMNPropertyPanel,
-    BPMNPropertyPanelToggleAction
+    BPMNPropertiesToggleAction,
+    BPMNPropertiesUpdateAction,
+    BPMNPropertyPanel
 } from './bpmn-property-panel';
 // css styles
 import '../css/bpmn-properties.css';
 import '../css/jsonforms-theia.css';
 
 export const BPMNPropertyModule = new FeatureModule((bind, unbind, isBound, rebind) => {
+    const context = { bind, unbind, isBound, rebind };
+
     bind(BPMNPropertyPanel).toSelf().inSingletonScope();
     bind(TYPES.IUIExtension).toService(BPMNPropertyPanel);
     bind(TYPES.IDiagramStartup).toService(BPMNPropertyPanel);
     bind(TYPES.ISelectionListener).toService(BPMNPropertyPanel);
-    configureActionHandler({ bind, isBound }, BPMNPropertyPanelToggleAction.KIND, BPMNPropertyPanel);
+
+    configureActionHandler(context, BPMNPropertiesToggleAction.KIND, BPMNPropertyPanel);
+    configureActionHandler(context, BPMNPropertiesUpdateAction.KIND, BPMNPropertyPanel);
 });
 
 export {
-    BPMNPropertiesMouseListener,
-    BPMNPropertyPanel,
-    BPMNPropertyPanelToggleAction,
-    BPMNPropertyPanelUpdateAction
+    BPMNPropertiesMouseListener, BPMNPropertiesToggleAction, BPMNPropertyPanel
 } from './bpmn-property-panel';
 

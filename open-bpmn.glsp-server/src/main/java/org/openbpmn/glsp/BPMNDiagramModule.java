@@ -62,7 +62,6 @@ import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
 import org.openbpmn.glsp.model.BPMNGModelFactory;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.model.BPMNSourceModelStorage;
-import org.openbpmn.glsp.operations.BPMNApplyPropertiesUpdateOperationHandler;
 import org.openbpmn.glsp.operations.BPMNAutoAlignOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeBoundsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
@@ -70,6 +69,7 @@ import org.openbpmn.glsp.operations.BPMNClipboardDataActionHandler;
 import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
 import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
+import org.openbpmn.glsp.operations.BPMNPropertiesApplyOperationHandler;
 import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
 import org.openbpmn.glsp.operations.BPMNResetRoutingOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
@@ -114,7 +114,6 @@ public class BPMNDiagramModule extends DiagramModule {
         super.configureActionHandlers(binding);
         // Clipboard
         binding.add(BPMNClipboardDataActionHandler.class);
-
         // Compute Routing Points
         binding.add(BPMNComputedBoundsActionHandler.class);
     }
@@ -164,7 +163,7 @@ public class BPMNDiagramModule extends DiagramModule {
         // binding.remove(LayoutOperationHandler.class);
 
         // register apply operations send from the client
-        binding.add(BPMNApplyPropertiesUpdateOperationHandler.class);
+        binding.add(BPMNPropertiesApplyOperationHandler.class);
 
         // Extension handler
         binding.add(BPMNCreateExtensionHandler.class);
@@ -174,21 +173,6 @@ public class BPMNDiagramModule extends DiagramModule {
         // Reset Alignment
         binding.add(BPMNAutoAlignOperationHandler.class);
     }
-
-    /**
-     * Each handler that should be handled by the GLSP client has to be
-     * configured as dedicated client action to indicate that it needs to be
-     * dispatched to the client.
-     * 
-     * The BPMNPropertyPanelUpdateAction is used by Extensions to signal the
-     * propertyPanel that we have an update of the current selected element
-     */
-    // issue #308
-    // @Override
-    // protected void configureClientActions(MultiBinding<Action> binding) {
-    // super.configureClientActions(binding);
-    // binding.add(BPMNPropertyPanelUpdateAction.class);
-    // }
 
     /**
      * This method creates a new Multibinder to bind BPMNExension

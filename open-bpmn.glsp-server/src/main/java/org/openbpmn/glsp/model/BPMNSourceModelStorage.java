@@ -118,7 +118,8 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                 while (!model.getNotifications().isEmpty()) {
                     MessageAction serverMessage = BPMNActionUtil
                             .convertModelNotification(model.getNotifications().remove(0));
-                    actionDispatcher.dispatchAfterNextUpdate(serverMessage);
+                    // actionDispatcher.dispatchAfterNextUpdate(serverMessage);
+                    actionDispatcher.dispatch(serverMessage);
                 }
 
                 // finally we send the center-action to center the diagram (Issue #257)

@@ -41,7 +41,7 @@ import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.bpmn.MessageGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.operations.BPMNAutoAlignOperation;
-import org.openbpmn.glsp.operations.BPMNPropertyPanelToggleAction;
+import org.openbpmn.glsp.operations.BPMNPropertiesToggleAction;
 import org.openbpmn.glsp.operations.BPMNResetRoutingOperation;
 
 import com.google.common.collect.Lists;
@@ -187,7 +187,7 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
 
                 // Property Toggle Action
                 actions.add(new LabeledAction("Properties...",
-                                Lists.newArrayList(new BPMNPropertyPanelToggleAction()),
+                                Lists.newArrayList(new BPMNPropertiesToggleAction()),
                                 "browser"));
 
                 return actions;

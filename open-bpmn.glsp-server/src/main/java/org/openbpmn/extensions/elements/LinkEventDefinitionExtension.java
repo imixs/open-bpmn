@@ -127,35 +127,35 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
      * 
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // we are only interested in category link
-        if (!"Link".equals(category)) {
-            return;
-        }
+        if ("Link".equals(category)) {
+            Event bpmnEvent = (Event) bpmnElement;
+            JsonArray dataList = json.getJsonArray("links");
 
-        Event bpmnEvent = (Event) bpmnElement;
-        JsonArray dataList = json.getJsonArray("links");
+            // synchronize the definition list of the event element
+            Set<Element> linkEventDefinitions = synchronizeEventDefinitions("linkEventDefinition", bpmnEvent,
+                    dataList);
 
-        // synchronize the definition list of the event element
-        Set<Element> linkEventDefinitions = synchronizeEventDefinitions("linkEventDefinition", bpmnEvent,
-                dataList);
-
-        // just update the values one by one by referring to the signalRef id by
-        // comparing the name
-        Iterator<Element> iter = linkEventDefinitions.iterator();
-        int i = 0;
-        while (iter.hasNext()) {
-            Element eventDefinitionElement = iter.next();
-            JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
-            if (jsonData != null) {
-                eventDefinitionElement.setAttribute("name", jsonData.getString("name", ""));
-                eventDefinitionElement.setAttribute("target", jsonData.getString("target", ""));
+            // just update the values one by one by referring to the signalRef id by
+            // comparing the name
+            Iterator<Element> iter = linkEventDefinitions.iterator();
+            int i = 0;
+            while (iter.hasNext()) {
+                Element eventDefinitionElement = iter.next();
+                JsonObject jsonData = dataList.getJsonObject(i); // .get(i);
+                if (jsonData != null) {
+                    eventDefinitionElement.setAttribute("name", jsonData.getString("name", ""));
+                    eventDefinitionElement.setAttribute("target", jsonData.getString("target", ""));
+                }
+                i++;
+                // update completed
             }
-            i++;
-            // update completed
         }
+
+        return false;
 
     }
 }

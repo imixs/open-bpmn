@@ -37,25 +37,25 @@ Mainly on the BPMN PropertyPanel reacts on the GLSP SelectionChanged event. If t
 
 In addition the panel also computes the last selected category. This is used in the setState method to restore the last category if the element type has not changed.
 
-## The BPMNPropertyPanelToggleAction
+## The BPMNPropertiesToggleAction
 
-The `BPMNPropertyPanelToggleAction` is a custom action used by Open-BPMN to toggle the display state of the Property Panel. The panel either expands tis height to 50% or minimizes the panel. This is a client side action event triggered by custom menu commands defined for the Theia and VSCode integration.
+The `BPMNPropertiesToggleAction` is a custom action used by Open-BPMN to toggle the display state of the Property Panel. The panel either expands tis height to 50% or minimizes the panel. This is a client side action event triggered by custom menu commands defined for the Theia and VSCode integration.
 
-## The BPMNApplyPropertiesUpdateOperation
+## The BPMNPropertiesApplyOperation
 
-The `BPMNApplyPropertiesUpdateOperation` is a client side custom action, that directly manipulates the BPMN model representation on server side. The action is send from the client property panel to the server each time the data in an input field changed (onchange).
+The `BPMNPropertiesApplyOperation` is a client side custom operation, that is send from the client to the server to apply new values to the BPMN model. The operation is send each time the data in an input field changed (onchange).
 
-The action is handled on the server by the `BPMNApplyPropertiesUpdateOperationHandler` which is responsible for updating the model representation accordingly.
+The operation is handled on the server by the `BPMNPropertiesApplyOperationHandler` which is responsible for updating the model representation accordingly.
 
-The Action is providing the Element ID, a JSON data structure with the new/updated data and an optional category. The category can be used to update only parts on an BPMN element. This is to optimize the update performance as the data structure can become very complex or various BPMN elements.
+The operation is providing the Element ID, a JSON data structure with the new/updated data and an optional category. The category can be used to update only parts on an BPMN element. This is to optimize the update performance as the data structure can become very complex or various BPMN elements.
 
 The update process is handled by the [Extension Mechanism](./BPMN_EXTENSIONS.md) in a transparent way. 
 
-## The BPMNPropertyPanelUpdateAction
+## The BPMNPropertiesUpdateAction
 
-In some cases the `BPMNApplyPropertiesUpdateOperation` causes on the server side a more complex data update that requires an update of the property panel on the client side too. For example adding a new Signal or Diagram Definition is such a situation where the complete panel need to be updated on the client side.
+In some cases the `BPMNPropertiesApplyOperationHandler` causes on the server side a more complex data update that requires an update of the property panel on the client side too. For example adding a new Signal or Diagram Definition is such a situation where the property panel need to be updated on the client side.
 
-In this cases the server sends a `BPMNPropertyPanelUpdateAction` to the client. The BPMN Property Panel reacts on this kind of action and updates the panel content.
+In this cases the server sends a `BPMNPropertiesUpdateAction` to the client. The BPMN Property Panel reacts on this kind of action and updates the panel content.
 
 # Custom Renderer SelectItemControl
 

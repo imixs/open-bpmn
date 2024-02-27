@@ -152,12 +152,12 @@ public class ConditionalEventDefinitionExtension extends AbstractBPMNElementExte
     * </pre>
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // we are only interested in category conditions
         if (!"Conditions".equals(category)) {
-            return;
+            return false;
         }
 
         Event bpmnEvent = (Event) bpmnElement;
@@ -183,6 +183,8 @@ public class ConditionalEventDefinitionExtension extends AbstractBPMNElementExte
             i++;
             // update completed
         }
+
+        return false;
 
     }
 }

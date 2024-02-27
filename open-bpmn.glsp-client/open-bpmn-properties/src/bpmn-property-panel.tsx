@@ -26,10 +26,12 @@ import {
     ISelectionListener,
     MaybePromise,
     MouseListener,
+    Operation,
+    SetUIExtensionVisibilityAction,
     TYPES,
     hasArgs
 } from '@eclipse-glsp/client';
-import { Action } from '@eclipse-glsp/protocol';
+import { Action, Args } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
 import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
@@ -40,6 +42,16 @@ import { codiconCSSClasses } from 'sprotty/lib/utils/codicon';
 import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectItemControl';
 import { TextFileEditorRendererEntry } from './TextFileEditorControl';
 
+/**
+ * The BPMNPropertyPanel allows to edit different properties of a selected BPMN element.
+ *
+ * The property Panel sends an {@link BPMNApplyPropertiesUpdateOperation} in case the user edits data
+ * of an element.
+ *
+ * The Server sends back an optional {@link BPMNPropertiesUpdateAction}  if the structure of the model
+ * has changed. For example this happens in case a list element like a lane or a signal definition was
+ * created on the server side
+ */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
 export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramStartup, ISelectionListener, IActionHandler {
@@ -51,6 +63,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     protected panelContainer: any;
     selectedElementId: string;
     initForm: boolean;
+    noUpdate: boolean;
     lastCategory: string;
     isResizing: boolean;
     panelToggle: boolean;
@@ -70,10 +83,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     enableOnStartup: boolean = true;
 
     /**
-     * This method is called after the diagram model is fully initialized. This is the moment to render the HTML element
+     * This method is called after the diagram model is fully initialized.
+     * This is the moment to render the HTML element.
+     *
+     * See also: https://github.com/eclipse-glsp/glsp/discussions/1273
      */
     postModelInitialization(): MaybePromise<void> {
-        this.show(this.modelRoot);
+        this.actionDispatcher.dispatch(SetUIExtensionVisibilityAction.create(
+            { extensionId: BPMNPropertyPanel.ID, visible: true, contextElementsId: [] }));
     }
 
     /**
@@ -85,14 +102,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      */
     protected override onBeforeShow(_containerElement: HTMLElement, root: Readonly<GModelRoot>): void {
         this.modelRoot = root;
-
         if (!root) {
             // no op
         } else {
             // preselect the root element showing the diagram properties
             this.selectionChanged(root, []);
         }
-
     }
 
     /*
@@ -213,23 +228,22 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     }
 
     /*
-     * We react on different event actions.
+     * We react on different Action events.
      *
      * The EnableToolPaletteAction is used to make the property panel visible
      * If we already have the bodyDiv defined, than we skip this event.
      * See Discussion: https://github.com/eclipse-glsp/glsp/discussions/910
      *
-     * The BPMNPropertyPanelToggleAction is used to show/hide the
+     * The BPMNPropertiesToggleAction is used to show/hide the
      * propertyPanel. This action is called by context menus.
      *
-     * The BPMNPropertyPanelUpdateAction is send by the server during an update
+     * The BPMNPropertiesUpdateAction is send by the server during an update
      * of the data state and indicates that the property panel need to be refreshed.
      */
     handle(action: Action): ICommand | Action | void {
 
-        console.log(' === handle action: ' + action.kind);
         // Toggle the property panel. Action is triggered by context menu
-        if (action.kind === BPMNPropertyPanelToggleAction.KIND) {
+        if (action.kind === BPMNPropertiesToggleAction.KIND) {
             if (!this.panelToggle) {
                 this.containerElement.style.height = '50%';
             } else {
@@ -239,20 +253,19 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
         }
 
         // Update content of the property panel. Action is triggered by the server
-        if (action.kind === BPMNPropertyPanelUpdateAction.KIND) {
-            this.updatePropertyPanel(this.selectedElementId);
+        if (action.kind === BPMNPropertiesUpdateAction.KIND) {
+            if (BPMNPropertiesUpdateAction.is(action)) {
+                // we read the new property data directly form the action event
+                this.updatePropertyPanel(this.selectedElementId, action.data, action.schema, action.uiSchema);
+            }
         }
     }
 
     /*
      * This method reacts on the selection of a BPMN element. It can handel different
      * situations of a selection and updates the property panel input fields.
-     *
-     * The method also computes the last selected category. This is used in the setState method
-     * to restore the last category if the element type has not changed.
      */
     selectionChanged(root: Readonly<GModelRoot>, selectedElements: string[]): void {
-
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv || !root) {
             return;
@@ -321,17 +334,19 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * The method loads the element from the root model context and updates
      * the JsonForms schemata.
      *
+     * The method can be called with only an elementID, in that case the method
+     * evaluates the form schema data form the GNode element.args.
+     * Optional the method can also be called with the data, schema, uiSchema.
+     *
      * @param _elementID
      */
-    updatePropertyPanel(_elementID: string): void {
+    updatePropertyPanel(_elementID: string, _data?: string, _schema?: string, _uiSchema?: string): void {
 
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
             console.log(' ------ no body div!!');
             return;
         }
-        // compute the current category....
-        this.updateLastCategory();
 
         let element: GModelElement | undefined;
         // first we load the element from the model root
@@ -350,7 +365,9 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             }
         }
 
-        // update the property panel if we have a valid element
+        // Update the property panel if we have a valid element.
+        // New data can be provided by optional by the action event.
+        // In that case we use this data, otherwise we take it from the GNode.
         if (element) {
             // BPMN Node selected, collect JSONForms schemata....
             let bpmnPropertiesData;
@@ -358,9 +375,21 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
             let bpmnPropertiesUISchema;
             if (hasArgs(element)) {
                 // parse the jsonForms schema details
-                bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
-                bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
-                bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
+                if (_data) {
+                    bpmnPropertiesData = JSON.parse(_data);
+                } else {
+                    bpmnPropertiesData = JSON.parse(element.args.JSONFormsData + '');
+                }
+                if (_schema) {
+                    bpmnPropertiesSchema = JSON.parse(_schema);
+                } else {
+                    bpmnPropertiesSchema = JSON.parse(element.args.JSONFormsSchema + '');
+                }
+                if (_uiSchema) {
+                    bpmnPropertiesUISchema = JSON.parse(_uiSchema);
+                } else {
+                    bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
+                }
             }
             // Build a generic JSONForms Property panel if we have at least an UISchema
             if (bpmnPropertiesUISchema) {
@@ -372,7 +401,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
                     SelectItemComboRendererEntry,
                     TextFileEditorRendererEntry
                 ];
-
+                this.noUpdate = true;
                 // render JSONForm // vanillaRenderers
                 // we also set the key to the current elementID to reinitialize the form panel
                 this.panelContainer.render(<JsonForms
@@ -417,16 +446,22 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
                     break;
                 }
             }
-
             // we do not dispatch the first onChange event
             // see https://jsonforms.io/docs/integrations/react/#onchange
             this.initForm = false;
+            this.noUpdate = false;
+            return;
+        }
+
+        if (this.noUpdate) {
+            console.log('   no Update!');
+            this.noUpdate = false;
             return;
         }
         // figure out the active category
         this.updateLastCategory();
         const newJsonData = JSON.stringify(_newData.data);
-        const action = new BPMNApplyPropertiesUpdateOperation(this.selectedElementId, newJsonData, this.lastCategory);
+        const action = new BPMNPropertiesApplyOperation(this.selectedElementId, newJsonData, this.lastCategory);
         this.actionDispatcher.dispatch(action);
     }
 
@@ -444,33 +479,26 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
 /**
  * This action is send after a property change to the backend providing the ID and the new value
  */
-export class BPMNApplyPropertiesUpdateOperation implements Action {
-    static readonly KIND = 'applyBPMNPropertiesUpdate';
-    readonly kind = BPMNApplyPropertiesUpdateOperation.KIND;
+export class BPMNPropertiesApplyOperation implements Operation {
+    static readonly KIND = 'BPMNPropertiesApplyOperation';
+    readonly kind = BPMNPropertiesApplyOperation.KIND;
     constructor(readonly id: string, readonly jsonData: string, readonly category: string) { }
-}
-
-export function createIcon(codiconId: string): HTMLElement {
-    const icon = document.createElement('i');
-    icon.classList.add(...codiconCSSClasses(codiconId));
-    return icon;
+    isOperation: true;
+    args?: Args | undefined;
 }
 
 /**
  * Open-BPMN Toggle Property Panel Action
  */
-export interface BPMNPropertyPanelToggleAction extends Action {
-    kind: typeof BPMNPropertyPanelToggleAction.KIND;
+export interface BPMNPropertiesToggleAction extends Action {
+    kind: typeof BPMNPropertiesToggleAction.KIND;
 }
-
-export namespace BPMNPropertyPanelToggleAction {
-    export const KIND = 'propertyPanelToggle';
-
-    export function is(object: any): object is BPMNPropertyPanelToggleAction {
+export namespace BPMNPropertiesToggleAction {
+    export const KIND = 'BPMNPropertiesToggleAction';
+    export function is(object: any): object is BPMNPropertiesToggleAction {
         return Action.hasKind(object, KIND);
     }
-
-    export function create(): BPMNPropertyPanelToggleAction {
+    export function create(): BPMNPropertiesToggleAction {
         return { kind: KIND };
     }
 }
@@ -478,28 +506,39 @@ export namespace BPMNPropertyPanelToggleAction {
 /**
  * Open-BPMN Update Property Panel Action
  */
-export interface BPMNPropertyPanelUpdateAction extends Action {
-    kind: typeof BPMNPropertyPanelUpdateAction.KIND;
+export interface BPMNPropertiesUpdateAction extends Action {
+    kind: typeof BPMNPropertiesUpdateAction.KIND;
+    data?: string;
+    schema?: string;
+    uiSchema?: string;
 }
-
-export namespace BPMNPropertyPanelUpdateAction {
-    export const KIND = 'propertyPanelUpdate';
-    export function is(object: any): object is BPMNPropertyPanelUpdateAction {
+export namespace BPMNPropertiesUpdateAction {
+    export const KIND = 'BPMNPropertiesUpdateAction';
+    export function is(object: any): object is BPMNPropertiesUpdateAction {
         return Action.hasKind(object, KIND);
     }
-    export function create(): BPMNPropertyPanelUpdateAction {
-        return { kind: KIND };
+    export function create(options: { _data?: string, schema?: string, uiSchema?: string }): BPMNPropertiesUpdateAction {
+        return {
+            kind: KIND,
+            ...options
+        };
     }
 }
 
 /*
  * This mouse listener reacts on double click events and opens/closes
- * the properties panel by creating a BPMNPropertyPanelToggleAction
+ * the properties panel by creating a BPMNPropertiesToggleAction
  */
 @injectable()
 export class BPMNPropertiesMouseListener extends MouseListener {
     override doubleClick(target: GModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
-        // return a BPMNPropertyPanelToggleAction...
-        return [BPMNPropertyPanelToggleAction.create()];
+        // return a BPMNPropertiesToggleAction...
+        return [BPMNPropertiesToggleAction.create()];
     }
+}
+
+export function createIcon(codiconId: string): HTMLElement {
+    const icon = document.createElement('i');
+    icon.classList.add(...codiconCSSClasses(codiconId));
+    return icon;
 }

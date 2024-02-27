@@ -98,16 +98,15 @@ public class DefaultBPMNEdgeExtension extends AbstractBPMNElementExtension {
      *
      */
     @Override
-    public void updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
+    public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
         // we are only interested in category general
-        if (!"General".equals(category)) {
-            return;
+        if ("General".equals(category)) {
+            updateNameProperty(json, bpmnElement, gNodeElement);
+            // update attributes and tags
+            bpmnElement.setDocumentation(json.getString("documentation", ""));
         }
-
-        updateNameProperty(json, bpmnElement, gNodeElement);
-        // update attributes and tags
-        bpmnElement.setDocumentation(json.getString("documentation", ""));
+        return false;
     }
 }

@@ -97,6 +97,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
     public Optional<Command> createCommand(final CreateNodeOperation operation) {
         return commandOf(() -> executeOperation(operation));
     }
+
     /**
      * We expect that the EventDefintion was dropped on a Event. See
      * {@link BPMNDiagramConfiguration} method getShapeTypeHints
@@ -129,7 +130,6 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                     }
                 }
             }
-
         }
 
         modelState.reset();
