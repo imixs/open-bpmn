@@ -48,29 +48,31 @@ const JSX = { createElement: svg };
 export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
 
     /*
-     * The goal of this method is to render a BPMN edge supporting rounded corners. 
+     * The goal of this method is to render a BPMN edge supporting rounded corners.
      */
     protected override renderLine(edge: GEdge, segments: Point[], context: RenderingContext, args?: IViewArgs): VNode {
         const path = this.createPathForSegments(edge, segments, args, true);
-        const vnode: any = <path class-sprotty-edge={true} class-line={true} d={path} />
+        const vnode: any = <path class-sprotty-edge={true} class-line={true} d={path} />;
         return vnode;
     }
 
     /**
      * This method adds the additionals for a BPMN Edge.
-     *  
+     *
      * For sequenceFlow and messageFlow edges we render an arrow at the end of the edge.
      * For conditional sequenceFlows we also render the 'default' conditional symbol (/)
-     * 
-     * Finally the method adds a padding that makes it easier to grab the line with the mouse. 
-     * The 'edgePadding' is an optional argument for GEdge and is added by the BPMNGModelFactory 
-     * from the Server. 
-     * (See: https://github.com/eclipse-glsp/glsp-client/blob/e7dec9bd52b9688a7a23005c3f7de652d0e85923/packages/client/src/views/gedge-view.tsx#L52 
-     * 
-     * @param edge 
-     * @param segments 
-     * @param context 
-     * @returns 
+     *
+     * Finally the method adds a padding that makes it easier to grab the line with the mouse.
+     * The 'edgePadding' is an optional argument for GEdge and is added by the BPMNGModelFactory
+     * from the Server.
+     *
+     * (See: https://github.com/eclipse-glsp/glsp-client/blob/e7dec9bd52b9688a7a23005c
+     * 3f7de652d0e85923/packages/client/src/views/gedge-view.tsx#L52
+     *
+     * @param edge
+     * @param segments
+     * @param context
+     * @returns
      */
     protected override renderAdditionals(edge: GEdge, segments: Point[], context: RenderingContext): VNode[] {
         const additionals = super.renderAdditionals(edge, segments, context);
@@ -122,11 +124,11 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
     }
 
     /**
-     * Additional path with transparent border to support edge padding feature. 
-     * 
-     * @param segments 
-     * @param padding 
-     * @returns 
+     * Additional path with transparent border to support edge padding feature.
+     *
+     * @param segments
+     * @param padding
+     * @returns
      */
     protected renderEdgePadding(edge: GEdge, segments: Point[], padding: number, args?: IViewArgs): VNode {
         return (
@@ -144,15 +146,16 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
     /**
      * This helper method renders the SVG path for an BPMN Edge. An edge can have multiple routing points.
      * In addition this method renders 'rounded' corners typical for BPMN.
-     * 
+     *
      * To render rounded corners we compute always the next segment to decide the corner angle.
-     * 
-     * The method also supports the Sprotty Intersection feature. This renders an intersection if the edge crosses another edge.
-     * 
-     * @param edge 
-     * @param segments 
-     * @param args 
-     * @returns 
+     *
+     * The method also supports the Sprotty Intersection feature. This renders an intersection if the edge
+     * crosses another edge.
+     *
+     * @param edge
+     * @param segments
+     * @param args
+     * @returns
      */
     protected createPathForSegments(edge: GEdge, segments: Point[], args?: IViewArgs, addIntersectionPoints?: boolean): string {
         let path = '';
@@ -164,7 +167,7 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
             if (i === 0) {
                 path = `M ${p.x},${p.y}`;
             }
-            // Optional render the Intersection route point 
+            // Optional render the Intersection route point
             if (addIntersectionPoints && isIntersectingRoutedPoint(p)) {
                 path += this.intersectionPath(edge, segments, p, args);
             }
