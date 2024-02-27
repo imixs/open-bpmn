@@ -454,7 +454,6 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
         }
 
         if (this.noUpdate) {
-            console.log('   no Update!');
             this.noUpdate = false;
             return;
         }
