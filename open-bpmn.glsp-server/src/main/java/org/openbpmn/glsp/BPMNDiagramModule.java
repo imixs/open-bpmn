@@ -24,7 +24,6 @@ import org.eclipse.glsp.server.diagram.DiagramConfiguration;
 import org.eclipse.glsp.server.features.commandpalette.CommandPaletteActionProvider;
 import org.eclipse.glsp.server.features.core.model.GModelFactory;
 import org.eclipse.glsp.server.features.core.model.SourceModelStorage;
-import org.eclipse.glsp.server.features.directediting.ContextEditValidator;
 import org.eclipse.glsp.server.features.toolpalette.ToolPaletteItemProvider;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.eclipse.glsp.server.gmodel.GModelCutOperationHandler;
@@ -75,7 +74,6 @@ import org.openbpmn.glsp.operations.BPMNResetRoutingOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNGLSPValidator;
-import org.openbpmn.glsp.validators.LabelEditValidator;
 
 import com.google.inject.multibindings.Multibinder;
 
@@ -204,12 +202,6 @@ public class BPMNDiagramModule extends DiagramModule {
     @Override
     protected Class<? extends ModelValidator> bindModelValidator() {
         return BPMNGLSPValidator.class;
-    }
-
-    @Override
-    protected void configureContextEditValidators(final MultiBinding<ContextEditValidator> binding) {
-        super.configureContextEditValidators(binding);
-        binding.add(LabelEditValidator.class);
     }
 
     /**

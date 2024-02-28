@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.features.validation.Marker;
 import org.eclipse.glsp.server.features.validation.MarkerKind;
+import org.eclipse.glsp.server.features.validation.MarkersReason;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.openbpmn.bpmn.validation.BPMNValidationError;
 import org.openbpmn.glsp.model.BPMNGModelState;
@@ -49,10 +50,51 @@ public class BPMNGLSPValidator implements ModelValidator {
     @Inject
     protected BPMNGModelState modelState;
 
+    private List<Marker> bpmnMarkers = null;;
+
     @Override
-    public List<Marker> validate(final GModelElement... elements) {
-        logger.fine("...starting validating model...");
+    public List<Marker> validate(final List<GModelElement> elements, final String reason) {
+
+        // init bpmn marker list....
+        if (MarkersReason.BATCH.equals(reason)) {
+            createBPMNMarkers();
+        }
+
         List<Marker> markers = new ArrayList<>();
+        for (GModelElement element : elements) {
+            if (MarkersReason.LIVE.equals(reason)) {
+                markers.addAll(doLiveValidation(element));
+            } else if (MarkersReason.BATCH.equals(reason)) {
+                markers.addAll(doBatchValidation(element));
+            } else {
+                markers.addAll(doValidationForCustomReason(element, reason));
+            }
+            if (!element.getChildren().isEmpty()) {
+                markers.addAll(validate(element.getChildren(), reason));
+            }
+        }
+
+        return markers;
+    }
+
+    @Override
+    public List<Marker> doBatchValidation(final GModelElement element) {
+
+        logger.info("...validate " + element.getId());
+
+        List<Marker> result = new ArrayList<>();
+        for (Marker marker : bpmnMarkers) {
+            if (marker.getElementId().equals(element.getId())) {
+                result.add(marker);
+            }
+        }
+
+        return result;
+    }
+
+    private void createBPMNMarkers() {
+        logger.fine("...starting validating model...");
+        bpmnMarkers = new ArrayList<>();
 
         // Meta Model validation...
         List<BPMNValidationError> errorList = modelState.getBpmnModel().validate();
@@ -60,13 +102,12 @@ public class BPMNGLSPValidator implements ModelValidator {
         // Convert ErrorList into a GLSP Marker List
         for (BPMNValidationError _error : errorList) {
             if (BPMNValidationError.ErrorType.ERROR.equals(_error.getErrorType())) {
-                markers.add(new Marker(_error.getLabel(), _error.getDescription(), _error.getElementId(),
+                bpmnMarkers.add(new Marker(_error.getLabel(), _error.getDescription(), _error.getElementId(),
                         MarkerKind.ERROR));
 
             }
         }
 
-        return markers;
     }
 
 }
