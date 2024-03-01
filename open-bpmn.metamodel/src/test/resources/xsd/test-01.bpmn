@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+  xmlns:imixs="http://www.imixs.org/bpmn2"
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org"
+  xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+
+
+  <bpmn2:process id="process_1" name="Default Process" processType="Public">
+
+    <bpmn2:documentation id="documentation_5xZ4jw" />
+    <bpmn2:extensionElements>
+      <open-bpmn:auto-align>true</open-bpmn:auto-align>
+    </bpmn2:extensionElements>
+
+    <bpmn2:startEvent id="event_rrKn9w" name="Event-1">
+      <bpmn2:documentation id="documentation_COguFw" />
+
+    </bpmn2:startEvent>
+
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_5000-20"
+      name="Forward">
+
+      <bpmn2:documentation id="Documentation_105"><![CDATA[Invoice entered, forward to review]]></bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <imixs:item name="keyarchive" type="xs:string">
+          <imixs:value><![CDATA[0]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="txtmailsubject" type="xs:string">
+          <imixs:value><![CDATA[Empfangsbestätigung Rechnungseingang]]></imixs:value>
+        </imixs:item>
+
+        <imixs:item name="keyversion" type="xs:string">
+          <imixs:value><![CDATA[0]]></imixs:value>
+        </imixs:item>
+        <imixs:item name="keyaddwritefields" type="xs:string">
+          <imixs:value><![CDATA[process.manager]]></imixs:value>
+          <imixs:value><![CDATA[process.team]]></imixs:value>
+        </imixs:item>
+
+      </bpmn2:extensionElements>
+
+    </bpmn2:intermediateCatchEvent>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
+    <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="event_rrKn9w" id="BPMNShape_hCA5bg">
+        <dc:Bounds height="36.0" width="36.0" x="137.0" y="157.0" />
+        <bpmndi:BPMNLabel id="BPMNLabel_tIBXjA">
+          <dc:Bounds height="20.0" width="100.0" x="105.0" y="196.0" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
