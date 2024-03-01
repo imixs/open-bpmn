@@ -15,9 +15,9 @@
       <open-bpmn:auto-align>true</open-bpmn:auto-align>
     </bpmn2:extensionElements>
 
+
     <bpmn2:startEvent id="event_rrKn9w" name="Event-1">
       <bpmn2:documentation id="documentation_COguFw" />
-
     </bpmn2:startEvent>
 
     <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_5000-20"
@@ -25,21 +25,9 @@
 
       <bpmn2:documentation id="Documentation_105"><![CDATA[Invoice entered, forward to review]]></bpmn2:documentation>
       <bpmn2:extensionElements>
-        <imixs:item name="keyarchive" type="xs:string">
+        <imixs:item name="testitem" type="xs:string">
           <imixs:value><![CDATA[0]]></imixs:value>
         </imixs:item>
-        <imixs:item name="txtmailsubject" type="xs:string">
-          <imixs:value><![CDATA[Empfangsbestätigung Rechnungseingang]]></imixs:value>
-        </imixs:item>
-
-        <imixs:item name="keyversion" type="xs:string">
-          <imixs:value><![CDATA[0]]></imixs:value>
-        </imixs:item>
-        <imixs:item name="keyaddwritefields" type="xs:string">
-          <imixs:value><![CDATA[process.manager]]></imixs:value>
-          <imixs:value><![CDATA[process.team]]></imixs:value>
-        </imixs:item>
-
       </bpmn2:extensionElements>
 
     </bpmn2:intermediateCatchEvent>

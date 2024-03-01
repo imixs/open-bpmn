@@ -13,41 +13,45 @@ import javax.xml.validation.Validator;
 
 import org.xml.sax.SAXException;
 
+/**
+ * 
+ * The XSDValidator can be used for a strict validation of a BPMN file against
+ * the BPMNF 2.0 XSD files. The XSD files are part of this package.
+ * 
+ * The validation is a strict mode and is not used directly in the Open-BPMN
+ * validation architecture.
+ * 
+ * See also
+ * 
+ * https://stackoverflow.com/questions/2342808/how-to-validate-an-xml-file-using-java-with-an-xsd-having-an-include
+ * 
+ * https://blog.frankel.ch/xml-validation-with-importedincluded-schemas/
+ * 
+ */
 public class XSDValidator {
     private static Logger logger = Logger.getLogger(XSDValidator.class.getName());
 
     public boolean validate(String xmlFilePath) throws SAXException, IOException {
 
-        // Path to the XSD files
+        // Path to the XSD files (located in class path)
         String xsdFilePath1 = "/BPMN20.xsd";
 
         InputStream xmlInputStream = getClass().getResourceAsStream(xmlFilePath);
         InputStream xsdInputStream1 = getClass().getResourceAsStream(xsdFilePath1);
 
-        if (xmlInputStream == null || xsdInputStream1 == null) {
-
-        }
-        logger.info("...validate model...");
+        logger.finest("...validate bpmn 2.0 model...");
 
         // create SchemaFactory
-
         SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         schemaFactory.setResourceResolver(new XSDClasspathResourceResolver());
-
-        // Lade die XSD-Dateien in ein Schema
+        // create the validator from BPMN 2.0 Schema
         Schema schema = schemaFactory.newSchema(new Source[] {
                 new StreamSource(xsdInputStream1)
         });
-
-        // Erstelle einen Validator aus dem Schema
         Validator validator = schema.newValidator();
-
-        // Validiere die XML-Datei
         validator.validate(new StreamSource(xmlInputStream));
 
-        System.out.println("Validation successful.");
-
-        logger.info("...validation completed");
+        logger.finest("...validation completed");
         return true;
     }
 
