@@ -1,28 +1,29 @@
 package org.openbpmn.bpmn.validation;
 
+import java.io.Serializable;
+
 import org.openbpmn.bpmn.BPMNModel;
 
 /**
- * The BPMNValidationError defines the result of a Model validation for a single
- * BPMN Element.
+ * The BPMNValidationMarker defines a single validation result of a BPMNElement.
+ * A BPMNElement can hold a list of BPMNValidationMarkers
  * 
  * @see BPMNModel.validate
  */
-public class BPMNValidationError {
+public class BPMNValidationMarker implements Serializable {
 
     private final String label;
     private final String description;
     private final String elementId;
     private ErrorType errorType;
 
-    public BPMNValidationError(final String label, final String description, final String elementId,
+    public BPMNValidationMarker(final String label, final String description, final String elementId,
             final ErrorType errorType) {
         super();
         this.label = label;
         this.description = description;
         this.elementId = elementId;
         this.errorType = errorType;
-
     }
 
     public static enum ErrorType {
@@ -68,7 +69,7 @@ public class BPMNValidationError {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        BPMNValidationError other = (BPMNValidationError) obj;
+        BPMNValidationMarker other = (BPMNValidationMarker) obj;
         if (elementId == null) {
             if (other.elementId != null)
                 return false;

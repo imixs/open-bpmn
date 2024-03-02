@@ -8,6 +8,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.validation.BPMNValidationMarker;
 import org.w3c.dom.Element;
 
 /**
@@ -94,6 +95,23 @@ public class Activity extends BPMNElementNode {
             }
         }
         return result;
+    }
+
+    /**
+     * Validate Start, End, Catch and Throw event types
+     */
+    @Override
+    public List<BPMNValidationMarker> validate() {
+        resetValidation();
+
+        if (this.getIngoingSequenceFlows().size() == 0
+                || this.getOutgoingSequenceFlows().size() == 0) {
+            this.addValidationMarker(new BPMNValidationMarker("Task",
+                    "A Task must have at least one ingoing and one outgoing Sequence Flow!", this.getId(),
+                    BPMNValidationMarker.ErrorType.ERROR));
+        }
+
+        return this.getValidationMarkers();
     }
 
 }

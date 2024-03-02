@@ -1,6 +1,8 @@
 package org.openbpmn.bpmn.elements.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -8,6 +10,8 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.validation.BPMNValidationMarker;
+import org.openbpmn.bpmn.validation.BPMNValidator;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,12 +27,15 @@ import org.w3c.dom.NodeList;
  * 
  * @author rsoika
  */
-public abstract class BPMNElement {
+public abstract class BPMNElement implements BPMNValidator {
+
     protected NamedNodeMap attributeMap = null;
     protected Element elementNode = null;
     protected BPMNModel model = null;
     protected Map<String, Element> childNodes = null;
     protected Map<String, Object> args = null;
+    protected boolean validated = false;
+    protected List<BPMNValidationMarker> validationMarkers = null;
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -47,7 +54,7 @@ public abstract class BPMNElement {
         }
         childNodes = new HashMap<String, Element>();
         args = new HashMap<String, Object>();
-
+        validationMarkers = new ArrayList<BPMNValidationMarker>();
     }
 
     /**
@@ -503,4 +510,70 @@ public abstract class BPMNElement {
             }
         }
     }
+
+    /**
+     * This method validates the element within the current model and returns a list
+     * of Validation Errors or an empty list if no errors where found.
+     * 
+     * @return - list of validation errors or null if no errors exist.
+     */
+    @Override
+    public List<BPMNValidationMarker> validate() {
+        validationMarkers = new ArrayList<BPMNValidationMarker>();
+        validated = true;
+        return validationMarkers;
+    }
+
+    /**
+     * Returns true if the element was validated. This method can be used by a model
+     * validator to skip already validated elements.
+     * 
+     * @return - true if the element was already validated.
+     */
+    @Override
+    public boolean isValidated() {
+        return validated;
+    }
+
+    /**
+     * Set the current validation status. This method is typical called during the
+     * validate() method.
+     * 
+     * @param validated
+     */
+    public void setValidated(boolean validated) {
+        this.validated = validated;
+    }
+
+    /**
+     * Adds a new BPMNValidationMarker. Used during element validation.
+     * 
+     * @param marker
+     */
+    public void addValidationMarker(BPMNValidationMarker marker) {
+        if (validationMarkers == null) {
+            validationMarkers = new ArrayList<BPMNValidationMarker>();
+        }
+        validationMarkers.add(marker);
+    }
+
+    /**
+     * Returns the list of validation markers. Can be empty if no validation errors
+     * for this element exit.
+     * 
+     * @return - list of validation markers
+     */
+    public List<BPMNValidationMarker> getValidationMarkers() {
+        return validationMarkers;
+    }
+
+    /**
+     * Resets the current validation status of this element.
+     */
+    @Override
+    public void resetValidation() {
+        validationMarkers = new ArrayList<BPMNValidationMarker>();
+        validated = false;
+    }
+
 }

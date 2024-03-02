@@ -1,6 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
@@ -9,6 +10,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.validation.BPMNValidationMarker;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -161,6 +163,66 @@ public class Event extends BPMNElementNode {
         }
         return result;
 
+    }
+
+    /**
+     * Validate Start, End, Catch and Throw event types
+     */
+    @Override
+    public List<BPMNValidationMarker> validate() {
+        resetValidation();
+        // Start event?
+        if (BPMNTypes.START_EVENT.equals(this.getType())) {
+
+            if (this.getIngoingSequenceFlows().size() > 0) {
+                this.addValidationMarker(new BPMNValidationMarker("Start Event",
+                        "A Start Event may not have incoming Sequence Flows!", this.getId(),
+                        BPMNValidationMarker.ErrorType.ERROR));
+
+            }
+            if (this.getOutgoingSequenceFlows().size() != 1) {
+                this.addValidationMarker(new BPMNValidationMarker("Start Event",
+                        "A Start Event must have exactly one outgoing  Sequence Flow!", this.getId(),
+                        BPMNValidationMarker.ErrorType.ERROR));
+            }
+
+        }
+
+        // END event?
+        if (BPMNTypes.END_EVENT.equals(this.getType())) {
+
+            if (this.getIngoingSequenceFlows().size() == 0) {
+                this.addValidationMarker(new BPMNValidationMarker("End Event",
+                        "An End Event must have at least one incoming Sequence Flow!", this.getId(),
+                        BPMNValidationMarker.ErrorType.ERROR));
+            }
+            if (this.getOutgoingSequenceFlows().size() > 0) {
+                this.addValidationMarker(new BPMNValidationMarker("End Event",
+                        "An End Event must NOT have any outgoing  Sequence Flow!", this.getId(),
+                        BPMNValidationMarker.ErrorType.ERROR));
+            }
+        }
+
+        // Catch Event?
+        if (BPMNTypes.CATCH_EVENT.equals(this.getType())) {
+            if (this.getOutgoingSequenceFlows().size() == 0) {
+                this.addValidationMarker(new BPMNValidationMarker("Catch Event",
+                        "A Catch Event must have at least one outgoing  Sequence Flow!", this.getId(),
+                        BPMNValidationMarker.ErrorType.ERROR));
+            }
+        }
+
+        // Throw Event?
+        if (BPMNTypes.THROW_EVENT.equals(this.getType())) {
+            if (this.getIngoingSequenceFlows().size() == 0) {
+                this.addValidationMarker(new BPMNValidationMarker("Throw Event",
+                        "A Throw Event must have at least one ingoing  Sequence Flow!", this.getId(),
+                        BPMNValidationMarker.ErrorType.ERROR));
+            }
+
+        }
+
+        return this.getValidationMarkers();
     }
 
 }

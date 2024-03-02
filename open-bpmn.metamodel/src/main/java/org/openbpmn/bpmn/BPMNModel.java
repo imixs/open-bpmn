@@ -47,8 +47,6 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNXMLUtil;
-import org.openbpmn.bpmn.validation.BPMNValidationError;
-import org.openbpmn.bpmn.validation.BPMNValidationHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -1977,22 +1975,6 @@ public class BPMNModel {
         }
 
         // === BUGFIX END ===
-    }
-
-    /**
-     * This method validates the current model. It returns a list of
-     * validationErrors that contains a lable and a short description pointing to an
-     * element that causes a problem.
-     * <p>
-     * If the list is empty, no errors where detected
-     * 
-     * @return list of BPMNValidationError. Can be empty if no errors where
-     *         detected.
-     */
-    public List<BPMNValidationError> validate() {
-        BPMNValidationHandler validationHandler = new BPMNValidationHandler(this);
-        validationHandler.validate();
-        return validationHandler.getValidationErrors();
     }
 
 }
