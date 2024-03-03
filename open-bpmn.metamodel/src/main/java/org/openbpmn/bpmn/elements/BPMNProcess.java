@@ -938,6 +938,7 @@ public class BPMNProcess extends BPMNElement {
                     }
                 }
             }
+            targetElement.resetValidation();
         }
         BPMNElementNode sourceElement = findElementNodeById(sourceRef);
         if (sourceElement != null) {
@@ -953,6 +954,7 @@ public class BPMNProcess extends BPMNElement {
                     }
                 }
             }
+            sourceElement.resetValidation();
         }
 
         // Finally delete the flow element and the edge

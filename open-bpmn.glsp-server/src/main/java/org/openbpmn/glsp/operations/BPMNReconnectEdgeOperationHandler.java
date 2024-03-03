@@ -82,6 +82,9 @@ public class BPMNReconnectEdgeOperationHandler extends GModelOperationHandler<Re
             bpmnElementEdge.setSourceRef(sourceElementID);
             bpmnElementEdge.setTargetRef(targetElementID);
 
+            // invalidate source/target
+            sourceElement.resetValidation();
+            targetElement.resetValidation();
             // remove routing points
             bpmnElementEdge.clearWayPoints();
             modelState.reset();

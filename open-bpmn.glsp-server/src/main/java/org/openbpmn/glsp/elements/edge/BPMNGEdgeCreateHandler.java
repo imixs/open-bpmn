@@ -72,6 +72,9 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
         String edgeId = null;
         BPMNGNode sourceNode = null;
         BPMNGNode targetNode = null;
+        BPMNElementNode sourceElementNode = null;
+        BPMNElementNode targetElementNode = null;
+
         String edgeType = operation.getElementTypeId();
         try {
             Optional<BPMNGNode> element = null;
@@ -93,6 +96,10 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
 
             // Depending on the edgeType we use here different method to create the BPMN
             // edge
+            sourceElementNode = (BPMNElementNode) modelState.getBpmnModel()
+                    .findElementById(sourceId);
+            targetElementNode = (BPMNElementNode) modelState.getBpmnModel()
+                    .findElementById(targetId);
 
             if (BPMNTypes.SEQUENCE_FLOW.equals(edgeType)) {
 
@@ -112,10 +119,6 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             if (BPMNTypes.ASSOCIATION.equals(edgeType)) {
                 // if one of the element nodes is assigned to the default process, than we
                 // assign the association also to the default process
-                BPMNElementNode sourceElementNode = (BPMNElementNode) modelState.getBpmnModel()
-                        .findElementById(sourceId);
-                BPMNElementNode targetElementNode = (BPMNElementNode) modelState.getBpmnModel()
-                        .findElementById(targetId);
                 BPMNProcess sourceProcess = sourceElementNode.getBpmnProcess();
                 BPMNProcess targetProcess = targetElementNode.getBpmnProcess();
                 edgeId = BPMNModel.generateShortID("association");
@@ -131,6 +134,10 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                 edgeId = BPMNModel.generateShortID("messageFlow");
                 modelState.getBpmnModel().addMessageFlow(edgeId, sourceId, targetId);
             }
+
+            // invalidate source/target elements
+            sourceElementNode.resetValidation();
+            targetElementNode.resetValidation();
 
             // finally update he current selection
             updateSelection(sourceNode, targetNode, edgeId);
@@ -170,7 +177,7 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
                 || BPMNTypes.BPMN_GATEWAYS.contains(targetNode.getType())) {
             deselectedElementsIDs.add(targetNode.getId() + "_bpmnlabel");
         }
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(edgeId),
+        actionDispatcher.dispatch(new SelectAction(List.of(edgeId),
                 deselectedElementsIDs));
     }
 }
