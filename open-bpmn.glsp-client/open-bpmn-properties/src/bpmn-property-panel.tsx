@@ -43,7 +43,8 @@ import { SelectItemComboRendererEntry, SelectItemRendererEntry } from './SelectI
 import { TextFileEditorRendererEntry } from './TextFileEditorControl';
 
 /**
- * The BPMNPropertyPanel allows to edit different properties of a selected BPMN element.
+ * The BPMNPropertyPanel allows to edit different properties of a selected BPMN element. The property
+ * panel implements a SelectionListener to update the property view when the selection has changed.
  *
  * The property Panel sends an {@link BPMNApplyPropertiesUpdateOperation} in case the user edits data
  * of an element.
@@ -51,6 +52,7 @@ import { TextFileEditorRendererEntry } from './TextFileEditorControl';
  * The Server sends back an optional {@link BPMNPropertiesUpdateAction}  if the structure of the model
  * has changed. For example this happens in case a list element like a lane or a signal definition was
  * created on the server side
+ *
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 @injectable()
@@ -338,6 +340,8 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
      * evaluates the form schema data form the GNode element.args.
      * Optional the method can also be called with the data, schema, uiSchema.
      *
+     * The method also updates the last category to restore the new panel with.
+     *
      * @param _elementID
      */
     updatePropertyPanel(_elementID: string, _data?: string, _schema?: string, _uiSchema?: string): void {
@@ -391,8 +395,12 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
                     bpmnPropertiesUISchema = JSON.parse(element.args.JSONFormsUISchema + '');
                 }
             }
+
             // Build a generic JSONForms Property panel if we have at least an UISchema
             if (bpmnPropertiesUISchema) {
+                // update last selected category to restore in the new panel...
+                this.updateLastCategory();
+
                 // list of renderers declared outside the App component
                 const bpmnRenderers = [
                     ...vanillaRenderers,
