@@ -314,8 +314,7 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
             Set<Element> signalEventDefinitions = event.getEventDefinitionsByType("signalEventDefinition");
             if (signalEventDefinitions.size() > 0) {
                 // find the gmodel
-                BPMNGNode _baseElement = modelState.getIndex().findElementByClass(event.getId(),
-                        BPMNGNode.class).orElse(null);
+                BPMNGNode _baseElement = (BPMNGNode) modelState.getIndex().get(event.getId()).orElse(null);
                 if (_baseElement != null) {
                     bpmnGModelFactory.applyBPMNElementExtensions(_baseElement, event);
                 }

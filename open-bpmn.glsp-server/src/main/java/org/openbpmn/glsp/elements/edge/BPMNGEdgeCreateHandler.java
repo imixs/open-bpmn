@@ -35,6 +35,9 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
 
+/**
+ * Handler to create a BPMN SequenceFlow, MessageFlow or Association.
+ */
 public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
 
     protected final String label;
@@ -63,36 +66,27 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
 
     /**
      * Adds a new BPMNEdge to the diagram. Depending on the type a SequenceFlow,
-     * MessageFlow or Association is crated.
+     * MessageFlow or Association is created.
      */
     protected void executeOperation(final CreateEdgeOperation operation) {
         if (operation.getSourceElementId() == null || operation.getTargetElementId() == null) {
             throw new IllegalArgumentException("Incomplete create connection action");
         }
         String edgeId = null;
-        BPMNGNode sourceNode = null;
-        BPMNGNode targetNode = null;
+        BPMNGNode sourceGNode = null;
+        BPMNGNode targetGNode = null;
         BPMNElementNode sourceElementNode = null;
         BPMNElementNode targetElementNode = null;
 
         String edgeType = operation.getElementTypeId();
         try {
-            Optional<BPMNGNode> element = null;
             String targetId = operation.getTargetElementId();
             // find GNode
-            element = modelState.getIndex().findElementByClass(targetId, BPMNGNode.class);
-            if (element.isPresent()) {
-                targetNode = element.get();
-                targetId = targetNode.getId();
-            }
+            targetGNode = (BPMNGNode) modelState.getIndex().get(targetId).orElse(null);
 
             String sourceId = operation.getSourceElementId();
             // find GNode
-            element = modelState.getIndex().findElementByClass(sourceId, BPMNGNode.class);
-            if (element.isPresent()) {
-                sourceNode = element.get();
-                sourceId = sourceNode.getId();
-            }
+            sourceGNode = (BPMNGNode) modelState.getIndex().get(sourceId).orElse(null);
 
             // Depending on the edgeType we use here different method to create the BPMN
             // edge
@@ -140,7 +134,7 @@ public class BPMNGEdgeCreateHandler extends CreateBPMNEdgeOperationHandler {
             targetElementNode.resetValidation();
 
             // finally update he current selection
-            updateSelection(sourceNode, targetNode, edgeId);
+            updateSelection(sourceGNode, targetGNode, edgeId);
             modelState.reset();
 
         } catch (BPMNModelException e) {

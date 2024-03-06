@@ -47,7 +47,6 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
     @Inject
     protected BPMNGModelState modelState;
 
-
     @Override
     public Optional<Command> createCommand(ChangeRoutingPointsOperation operation) {
         return commandOf(() -> executeOperation(operation));
@@ -62,10 +61,9 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                 String id = routingPoint.getElementId();
                 List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
                 // update the GModel.
-                Optional<GEdge> _edge = modelState.getIndex().findElementByClass(id, GEdge.class);
-                if (_edge.isPresent()) {
+                GEdge edge = (GEdge) modelState.getIndex().get(id).orElse(null);
+                if (edge != null) {
                     logger.fine("===== Updating GLSP RoutingPoints =======");
-                    GEdge edge = _edge.get();
                     edge.getRoutingPoints().clear();
                     edge.getRoutingPoints().addAll(newGLSPRoutingPoints);
                 }

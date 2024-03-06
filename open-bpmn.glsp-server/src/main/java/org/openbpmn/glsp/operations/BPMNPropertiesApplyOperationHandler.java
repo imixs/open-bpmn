@@ -99,15 +99,12 @@ public class BPMNPropertiesApplyOperationHandler
             bpmnElement = modelState.getBpmnModel().openDefaultProces();
         } else {
             // find the corresponding gModelElement and bpmnElement....
-            Optional<BPMNGNode> _baseElement = modelState.getIndex().findElementByClass(elementID, BPMNGNode.class);
-            gModelElement = _baseElement.orElse(null);
+            gModelElement = modelState.getIndex().get(elementID).orElse(null);
             if (gModelElement != null) {
-                bpmnElement = modelState.getBpmnModel().findElementNodeById(elementID);
-            } else {
-                // not yet found - check Edges....
-                Optional<BPMNGEdge> _baseEdge = modelState.getIndex().findElementByClass(elementID, BPMNGEdge.class);
-                gModelElement = _baseEdge.orElse(null);
-                if (gModelElement != null) {
+                if (gModelElement instanceof BPMNGNode) {
+                    bpmnElement = modelState.getBpmnModel().findElementNodeById(elementID);
+                }
+                if (gModelElement instanceof BPMNGEdge) {
                     bpmnElement = modelState.getBpmnModel().findElementEdgeById(elementID);
                 }
             }

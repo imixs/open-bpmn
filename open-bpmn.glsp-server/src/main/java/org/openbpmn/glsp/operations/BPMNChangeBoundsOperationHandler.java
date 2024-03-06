@@ -127,14 +127,13 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 GPoint newPoint = BPMNGridSnapper.round(elementBound.getNewPosition());
                 GDimension newSize = BPMNGridSnapper.round(elementBound.getNewSize());
                 // find the corresponding GNode Element
-                Optional<GNode> _node = modelState.getIndex().findElementByClass(id, GNode.class);
-                if (!_node.isPresent()) {
+                GNode gNode = (GNode) modelState.getIndex().get(id).orElse(null);
+                if (gNode == null) {
                     // this case should not happen!
                     logger.error("GNode '" + id + "' not found in current modelState!");
                     continue;
                 }
 
-                GNode gNode = _node.get();
                 // compute the new offset x/y
                 double offsetX = Math.round(newPoint.getX() - gNode.getPosition().getX());
                 double offsetY = Math.round(newPoint.getY() - gNode.getPosition().getY());
@@ -196,15 +195,14 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         String lowerLaneID = gNode.getArgs().get("lowerlaneid").toString();
 
         // Upper Lane
-        GNode upperGLane = modelState.getIndex().findElementByClass(upperLaneID, GNode.class)
+        GNode upperGLane = modelState.getIndex().get(upperLaneID, GNode.class)
                 .orElse(null);
         if (upperGLane == null) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
                     "Lane " + upperLaneID + " not found in model!");
         }
         // Lower Lane
-        GNode lowerGLane = modelState.getIndex().findElementByClass(lowerLaneID, GNode.class)
-                .orElse(null);
+        GNode lowerGLane = (GNode) modelState.getIndex().get(lowerLaneID).orElse(null);
         if (lowerGLane == null) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
                     "Lane " + upperLaneID + " not found in model!");
@@ -368,9 +366,9 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         // position of the label too
         if (bpmnElementNode.hasBPMNLabel()) {
             BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
-            Optional<GNode> _labelnode = modelState.getIndex()
-                    .findElementByClass(bpmnElementNode.getId() + "_bpmnlabel", GNode.class);
-            updateLabel(_labelnode.get(), bpmnLabel, offsetX, offsetY);
+            GNode _labelnode = (GNode) modelState.getIndex()
+                    .get(bpmnElementNode.getId() + "_bpmnlabel").orElse(null);
+            updateLabel(_labelnode, bpmnLabel, offsetX, offsetY);
         }
 
     }
@@ -551,10 +549,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             lane.setPosition(bpmnLaneX, bpmnLaneY);
 
             // update Gnode
-            Optional<GNode> _lanenode = modelState.getIndex().findElementByClass(lane.getId(), GNode.class);
-            if (_lanenode.isPresent()) {
-
-                GNode gLaneNode = _lanenode.get();
+            GNode gLaneNode = (GNode) modelState.getIndex().get(lane.getId()).orElse(null);
+            if (gLaneNode != null) {
                 gLaneNode.setSize(GraphUtil.dimension(bpmnLaneWidth, laneHeight));
                 gLaneNode.setPosition(GraphUtil.point(bpmnLaneX - poolBounds.getPosition().getX(),
                         bpmnLaneY - poolBounds.getPosition().getY()));

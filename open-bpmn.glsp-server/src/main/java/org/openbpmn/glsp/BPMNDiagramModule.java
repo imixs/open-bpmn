@@ -54,7 +54,6 @@ import org.openbpmn.glsp.elements.edge.BPMNGEdgeCreateHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventDefinitionHandler;
 import org.openbpmn.glsp.elements.event.BPMNCreateEventHandler;
 import org.openbpmn.glsp.elements.gateway.BPMNCreateGatewayHandler;
-import org.openbpmn.glsp.elements.label.BPMNApplyEditLabelOperationHandler;
 import org.openbpmn.glsp.elements.pool.CreateLaneHandler;
 import org.openbpmn.glsp.elements.pool.CreatePoolHandler;
 import org.openbpmn.glsp.elements.task.BPMNCreateTaskHandler;
@@ -121,7 +120,7 @@ public class BPMNDiagramModule extends DiagramModule {
         super.configureOperationHandlers(binding);
 
         // Inline Edit
-        binding.add(BPMNApplyEditLabelOperationHandler.class);
+        // binding.add(BPMNApplyEditLabelOperationHandler.class);
 
         binding.add(GModelCutOperationHandler.class);
         // binding.add(DeleteOperationHandler.class);

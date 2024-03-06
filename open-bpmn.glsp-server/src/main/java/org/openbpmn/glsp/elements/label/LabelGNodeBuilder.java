@@ -145,5 +145,4 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
                 .add(BPMNGModelUtil.createMultiLineTextNode(node, name, BPMNGModelUtil.MULTILINETEXT_ALIGN_MIDDLE, 0));
     }
 
-
 }
