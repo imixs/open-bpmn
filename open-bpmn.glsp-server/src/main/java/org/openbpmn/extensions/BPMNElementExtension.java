@@ -15,10 +15,14 @@
  ********************************************************************************/
 package org.openbpmn.extensions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.json.JsonObject;
 
 import org.eclipse.glsp.graph.GModelElement;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.validation.BPMNValidationMarker;
 import org.openbpmn.glsp.jsonforms.DataBuilder;
 import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
@@ -163,5 +167,18 @@ public interface BPMNElementExtension {
      * @return - true to force an update of the client property panel
      */
     boolean updatePropertiesData(JsonObject json, String category, BPMNElement bpmnElement, GModelElement gNodeElement);
+
+    /**
+     * This method validates the single element and returns a list of
+     * BPMNValidationMarker with validationErrors containing a lable and a short
+     * description pointing to an element that causes a problem.
+     * 
+     * @param bpmnElement - the element ot be validated
+     * @return list of BPMNValidationMarker objects.
+     */
+    default List<BPMNValidationMarker> validate(BPMNElement bpmnElement) {
+        List<BPMNValidationMarker> result = new ArrayList<>();
+        return result;
+    }
 
 }

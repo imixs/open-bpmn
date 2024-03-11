@@ -195,7 +195,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         String lowerLaneID = gNode.getArgs().get("lowerlaneid").toString();
 
         // Upper Lane
-        GNode upperGLane = modelState.getIndex().get(upperLaneID, GNode.class)
+        GNode upperGLane = (GNode) modelState.getIndex().get(upperLaneID)
                 .orElse(null);
         if (upperGLane == null) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
