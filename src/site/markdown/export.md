@@ -4,7 +4,7 @@ Depending on the tooling platform you can export Open-BPMN diagrams as a SVG gra
 
 In VSCode you can choose the diagram menu option "Diagram Export as SVG..."
 
-<img src="export-diagram01.png">
+<img src="./images/export-diagram01.png" />
 
 
 ## Convert SVG to PNG Graphics
@@ -17,7 +17,7 @@ Using Gimp provides an easy way to open and export SVG Grpahics.
 
 1. Open the SVG file (change dimension if needed)
 
-<img src="export-diagram02.png">
+<img src="./images/export-diagram02.png" />
 
 2. Save the Image with 'Export as...' and choose the .png file extension
 

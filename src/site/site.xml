@@ -14,6 +14,7 @@
 			<item name="Overview" href="overview.html" collapse="false">
 				<item name="Installation" href="install.html" />
 				<item name="Start modeling..." href="how_to_model.html" />
+				<item name="Export a Diagram" href="export.html" />
 				<item name="Imixs Workflow" href="install-imixs.html" />
 			</item>
 
@@ -41,7 +42,7 @@
 
 			<item name="Build" href="build/index.html" collapse="true">
 				<item name="Docker" href="build/DOCKER.html" />
-				
+
 			</item>
 
 		</menu>
