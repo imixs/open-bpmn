@@ -355,9 +355,9 @@ public class BPMNGModelFactory implements GModelFactory {
                 double laneYPos = currentLane.getBounds().getPosition().getY() - poolYPos;
                 double laneHeight = currentLane.getBounds().getDimension().getHeight();
                 double laneDividerYPos = laneYPos + laneHeight - 1;
-                double laneMinYPos = laneDividerYPos - laneHeight + Lane.MIN_HEIGHT;
+                double laneMinYPos = laneDividerYPos - laneHeight + Lane.MIN_HEIGHT + 1;
                 double laneMaxYPos = laneDividerYPos + nextLane.getBounds().getDimension().getHeight()
-                        - Lane.MIN_HEIGHT;
+                        - Lane.MIN_HEIGHT + 1;
                 pool.getChildren()
                         .add(BPMNGModelUtil.createLaneDivider(participant, laneDividerYPos,
                                 laneMinYPos,
