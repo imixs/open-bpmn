@@ -4,6 +4,10 @@ FROM node:18.19.0-bookworm
 RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-17-jre
 
 WORKDIR /usr/src/app
+
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+
+
 # Create app directory
 COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 # Build GLSP Client part

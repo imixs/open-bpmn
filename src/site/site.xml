@@ -16,6 +16,7 @@
 				<item name="Start modeling..." href="how_to_model.html" />
 				<item name="Export a Diagram" href="export.html" />
 				<item name="Imixs Workflow" href="install-imixs.html" />
+				<item name="VS-Code" href="vs-code.html" />
 			</item>
 
 			<item name="Architecture" href="architecture/index.html" collapse="true">
