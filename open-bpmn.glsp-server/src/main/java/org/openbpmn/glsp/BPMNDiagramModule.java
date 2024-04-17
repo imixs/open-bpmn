@@ -44,6 +44,7 @@ import org.openbpmn.extensions.elements.DefaultBPMNSequenceFlowExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNTaskExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNTextAnnotationExtension;
 import org.openbpmn.extensions.elements.LinkEventDefinitionExtension;
+import org.openbpmn.extensions.elements.MessageEventDefinitionExtension;
 import org.openbpmn.extensions.elements.SignalEventDefinitionExtension;
 import org.openbpmn.extensions.elements.TimerEventDefinitionExtension;
 import org.openbpmn.extensions.model.FileLinkExtension;
@@ -238,6 +239,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNSequenceFlowExtension.class);
         binding.addBinding().to(TimerEventDefinitionExtension.class);
         binding.addBinding().to(SignalEventDefinitionExtension.class);
+        binding.addBinding().to(MessageEventDefinitionExtension.class);
         binding.addBinding().to(ConditionalEventDefinitionExtension.class);
         binding.addBinding().to(LinkEventDefinitionExtension.class);
 

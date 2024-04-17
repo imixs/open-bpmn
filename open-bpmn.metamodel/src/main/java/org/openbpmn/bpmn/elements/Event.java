@@ -50,8 +50,8 @@ public class Event extends BPMNElementNode {
         if (this.getElementNode() == null) {
             throw new BPMNMissingElementException("Missing ElementNode!");
         }
-        Element eventDefintion = model.createElement(BPMNNS.BPMN2, type);
-        eventDefintion.setAttribute("id", BPMNModel.generateShortID(type));
+        Element eventDefinition = model.createElement(BPMNNS.BPMN2, type);
+        eventDefinition.setAttribute("id", BPMNModel.generateShortID(type));
 
         // in case of a Signal Definition we need to add a reference to the first
         // existing Signal.
@@ -63,7 +63,7 @@ public class Event extends BPMNElementNode {
             }
             // take the first one
             Signal signal = model.getSignals().iterator().next();
-            eventDefintion.setAttribute("signalRef", signal.getId());
+            eventDefinition.setAttribute("signalRef", signal.getId());
 
         }
 
@@ -77,10 +77,10 @@ public class Event extends BPMNElementNode {
             }
             // take the first one
             Message message = model.getMessages().iterator().next();
-            eventDefintion.setAttribute("messageRef", message.getId());
+            eventDefinition.setAttribute("messageRef", message.getId());
 
         }
-        this.getElementNode().appendChild(eventDefintion);
+        this.getElementNode().appendChild(eventDefinition);
 
     }
 
