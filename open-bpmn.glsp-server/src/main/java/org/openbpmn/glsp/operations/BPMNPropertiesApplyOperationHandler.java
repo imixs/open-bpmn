@@ -145,7 +145,7 @@ public class BPMNPropertiesApplyOperationHandler
 
         // Refresh the Data, Schema and UISchema (this could be changed by an extension)
         String _data = gModelElement.getArgs().get("JSONFormsData").toString();
-        logger.info(" -> new JSON String=" + _data);
+        logger.debug(" -> new JSON String=" + _data);
         String _schema = gModelElement.getArgs().get("JSONFormsSchema").toString();
         String _uiSchema = gModelElement.getArgs().get("JSONFormsUISchema").toString();
 
@@ -156,7 +156,8 @@ public class BPMNPropertiesApplyOperationHandler
             actionDispatcher.dispatch(new BPMNPropertiesUpdateAction(_data, _schema,
                     _uiSchema));
         }
-        logger.info("....execute Update " + operation.getId() + " in " + (System.currentTimeMillis() - l) + "ms");
+        logger.debug("....execute Update " + operation.getId() + " in " +
+                (System.currentTimeMillis() - l) + "ms");
 
     }
 

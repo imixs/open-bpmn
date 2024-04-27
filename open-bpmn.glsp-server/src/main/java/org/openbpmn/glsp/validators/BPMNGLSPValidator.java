@@ -81,10 +81,6 @@ public class BPMNGLSPValidator implements ModelValidator {
         beforeValidate(elements, reason);
         List<Marker> markers = doValidate(elements, reason);
         afterValidate(elements, reason);
-
-        logger.info("-----------------> validation took   " + (System.currentTimeMillis() - l) + " ms");
-        logger.info("------------------ validation mode = " + (MarkersReason.LIVE.equals(reason) ? "LIVE" : "BATCH"));
-        logger.info("------------------ marker size     = " + markers.size());
         return markers;
     }
 
