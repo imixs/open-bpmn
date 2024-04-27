@@ -544,25 +544,9 @@ export class MultiLineTextNodeView extends ShapeView {
         const parent = label.parent;
         if (isBoundsAware(parent)) {
             nodeWidth = parent.bounds.width;
-            // console.log('computed element width = '+nodeWidth);
         }
-
-        // split text into words and lines...
-        let line = '';
-        const lines: string[] = [];
-        const words = splitWords(label.args.text);
-        for (let i = 0; i < words.length; i++) {
-            const word = words[i];
-            line += word + ' ';
-            if (line.length > (nodeWidth / 6)) {
-                line = line.substring(0, line.length - word.length - 2);
-                // console.log('line = '+line);
-                lines.push(line);
-                line = word + ' ';
-            }
-        }
-        lines.push(line); // last line
-
+        // split text into lines...
+        const lines: string[] = textLineSplitter(label.args.text, nodeWidth);
         // depending on the attribute 'align' we move the text element into the center
         let xOffset = 5;
         if (label.args.align === 'middle') {
@@ -584,6 +568,36 @@ export class MultiLineTextNodeView extends ShapeView {
     }
 }
 
-function splitWords(text: any): string {
-    return text.split(' ');
+/**
+ * This method splits a text into an array of separate lines.
+ * Beside the new-line character also the length of a line is considered.
+ * This is needed to display a long text in multiple SVG tspan elements.
+ *
+ * @param text - The text to be split.
+ * @returns an array of text lines
+ */
+function textLineSplitter(text: any, nodeWidth: number): string[] {
+    const result: string[] = [];
+    // first split only by newlines
+    const lines = text.split('\n');
+    // Next we iterate of each line and verify if the words
+    // in this line fit into the given nodesWidth
+    for (let i = 0; i < lines.length; i++) {
+        // split line into words....
+        // const words = lines[i].split(/\s+/);
+        const words = lines[i].split(' ');
+        // now lets add word by word and verify if we need to add a newline...
+        let line = '';
+        for (let j = 0; j < words.length; j++) {
+            const word = words[j];
+            line += word + ' ';
+            if (line.length > (nodeWidth / 5)) {
+                line = line.substring(0, line.length - word.length - 2);
+                result.push(line);
+                line = word + ' ';
+            }
+        }
+        result.push(line);
+    }
+    return result;
 }

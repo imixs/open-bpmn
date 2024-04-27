@@ -115,6 +115,8 @@
 .textAnnotation .bpmn-text-node text {
     fill: #447c3c;
     text-anchor: start;
+    white-space: pre;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .task .bpmn-text-node text {
