@@ -290,7 +290,7 @@ public abstract class BPMNElementEdge extends BPMNElement {
         // find all di:waypoint
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
-            if ((model.getPrefix(BPMNNS.DI) + ":waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
+            if ((model.getPrefix(BPMNNS.DI) + "waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
                 // collect node....
                 deletionList.add(child);
             }

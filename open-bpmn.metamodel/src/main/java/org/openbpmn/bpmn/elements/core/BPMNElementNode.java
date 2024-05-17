@@ -317,7 +317,7 @@ public abstract class BPMNElementNode extends BPMNElement {
         }
         // remove incoming childs...
         NodeList incomingSequenceFlows = getElementNode()
-                .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) + ":incoming");
+                .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) + "incoming");
         for (int i = 0; i < incomingSequenceFlows.getLength(); i++) {
             Element item = (Element) incomingSequenceFlows.item(i);
             // test if the sequence flow exists...
@@ -332,7 +332,7 @@ public abstract class BPMNElementNode extends BPMNElement {
         }
         // remove outgoing childs...
         NodeList outgoingSequenceFlows = getElementNode()
-                .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) + ":outgoing");
+                .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) + "outgoing");
         for (int i = 0; i < outgoingSequenceFlows.getLength(); i++) {
             Element item = (Element) outgoingSequenceFlows.item(i);
             // test if the sequence flow exists...

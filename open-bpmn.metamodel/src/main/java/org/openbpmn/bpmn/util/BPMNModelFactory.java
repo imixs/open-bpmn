@@ -165,19 +165,10 @@ public class BPMNModelFactory {
 
             // explicit remove whitespace
             removeWhitespaceNodes(root);
+            BPMNModel model = new BPMNModel(doc);
+            setOpenBPMNNameSpace(model.getDefinitions());
 
-            if (!"bpmn2:definitions".equals(root.getNodeName())
-                    &&
-                    !"bpmn:definitions".equals(root.getNodeName())) {
-                logger.severe("Invalid BPMN File: Missing root element 'bpmn2:definitions'!");
-                return null;
-            } else {
-                BPMNModel model = new BPMNModel(doc);
-                setOpenBPMNNameSpace(model.getDefinitions());
-
-                return model;
-            }
-
+            return model;
         } catch (ParserConfigurationException | SAXException | IOException e) {
             logger.severe(e.getMessage());
             // create a runtimeException to show a error message in the client

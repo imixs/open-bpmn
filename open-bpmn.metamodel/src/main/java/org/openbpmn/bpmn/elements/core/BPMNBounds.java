@@ -44,7 +44,7 @@ public class BPMNBounds {
         NodeList childList = bpmndiElement.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
-            if ((model.getPrefix(BPMNNS.DC) + ":Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
+            if ((model.getPrefix(BPMNNS.DC) + "Bounds").equals(child.getNodeName()) && child.hasAttributes()) {
                 elementNode = (Element) child;
                 break;
             }

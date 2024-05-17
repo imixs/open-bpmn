@@ -124,6 +124,14 @@ public class BPMNModel {
 
             definitions = doc.getDocumentElement();
 
+            // test if we have a default namespace without use of the 'bpmn:' prefix
+            // e.g: xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+            String defaultNameSpace = definitions.getAttribute("xmlns");
+            if (defaultNameSpace != null && !defaultNameSpace.isEmpty()) {
+                setPrefix(BPMNNS.BPMN2, "");
+                setUri(BPMNNS.BPMN2, defaultNameSpace);
+            }
+
             // parse the BPMN namespaces
             NamedNodeMap defAttributes = definitions.getAttributes();
             for (int j = 0; j < defAttributes.getLength(); j++) {
@@ -168,33 +176,71 @@ public class BPMNModel {
                 }
             }
 
-            // find bpmndi:BPMNDiagram
-            NodeList diagramList = doc.getElementsByTagName(getPrefix(BPMNNS.BPMNDI) + ":BPMNDiagram");
-            if (diagramList != null && diagramList.getLength() > 0) {
-                bpmnDiagram = diagramList.item(0);
-            } else {
-                // no diagram included - so we create an empty one
-                getLogger().warning("No bpmndi:BPMNDiagram found - created default diagram");
-                // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
-                Element bpmnDiagram = createElement(BPMNNS.BPMNDI, "BPMNDiagram");
-                bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
-                bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
-                definitions.appendChild(bpmnDiagram);
-                setBpmnDiagram(bpmnDiagram);
-            }
+            // Load BPMNDiagram element....
+            loadBpmnDiagram();
 
-            // find BPMNPlane
-            NodeList planeList = doc.getElementsByTagName(getPrefix(BPMNNS.BPMNDI) + ":BPMNPlane");
-            if (planeList != null && planeList.getLength() > 0) {
-                bpmnPlane = (Element) planeList.item(0);
-            }
+            // Load BPMNPlane element....
+            loadBpmnPlane();
 
             // init the participant and process list
             loadParticipantList();
             loadProcessList();
+            // load global elements
             loadMessageList();
             loadMessageFlowList();
             loadSignalList();
+        }
+    }
+
+    /**
+     * This method loads the first BPMNDiagram element. If
+     * no BPMNDiagram yet exists, then the method build one.
+     * 
+     */
+    private void loadBpmnDiagram() {
+        // find bpmndi:BPMNDiagram
+        NodeList diagramList = doc.getElementsByTagName(getPrefix(BPMNNS.BPMNDI) + "BPMNDiagram");
+        if (diagramList != null && diagramList.getLength() > 0) {
+            bpmnDiagram = diagramList.item(0);
+        } else {
+            // no diagram included - so we create an empty one
+            getLogger().warning("No bpmndi:BPMNDiagram found - created default diagram");
+            // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+            Element bpmnDiagram = createElement(BPMNNS.BPMNDI, "BPMNDiagram");
+            bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
+            bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
+            definitions.appendChild(bpmnDiagram);
+            setBpmnDiagram(bpmnDiagram);
+        }
+    }
+
+    /**
+     * This method loads the first BPMNPlane from the BPMNDiagram. If
+     * no BPMN Plane yet exists, then the method build one.
+     * 
+     */
+    private void loadBpmnPlane() {
+        // find the corresponding BPMNPlane
+        NodeList planeList = doc.getElementsByTagName(getPrefix(BPMNNS.BPMNDI) + "BPMNPlane");
+        if (planeList != null && planeList.getLength() > 0) {
+            bpmnPlane = (Element) planeList.item(0);
+        }
+        // if no plane exists yes, we create one
+        if (bpmnPlane == null) {
+            // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
+            getLogger().warning("No bpmndi:BPMNPlane found - created default plane");
+            bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
+            bpmnPlane.setAttribute("id", "BPMNPlane_1");
+            NodeList nodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
+            if (nodeList == null || nodeList.getLength() == 0) {
+                // Take the default process as plane ref...
+                nodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "process");
+            }
+            if (nodeList != null && nodeList.getLength() > 0) {
+                Element refElement = (Element) nodeList.item(0);
+                bpmnPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
+            }
+            getBpmnDiagram().appendChild(bpmnPlane);
         }
     }
 
@@ -230,9 +276,20 @@ public class BPMNModel {
     /**
      * Updates the namespace prefix for a given BPMN namespace - e.g. 'bpmn2' or
      * 'bpmndi'
+     * The method automatically adds the prefix separator ':' if the prefix is not
+     * empty. This is necessary to handle default namespaces without a prefix
+     * correctly
      */
     public void setPrefix(BPMNNS ns, String prefix) {
-        PREFIX_BY_NAMESPACE.put(ns, prefix);
+        if (prefix == null) {
+            prefix = "";
+        }
+        if (prefix.isEmpty()) {
+            PREFIX_BY_NAMESPACE.put(ns, prefix);
+        } else {
+            PREFIX_BY_NAMESPACE.put(ns, prefix + ":");
+        }
+
     }
 
     public Element getDefinitions() {
@@ -664,7 +721,7 @@ public class BPMNModel {
      * Creates an element with a given namespace
      */
     public Element createElement(BPMNNS ns, String type) {
-        Element element = this.getDoc().createElementNS(getUri(ns), getPrefix(ns) + ":" + type);
+        Element element = this.getDoc().createElementNS(getUri(ns), getPrefix(ns) + type);
         return element;
     }
 
@@ -747,8 +804,8 @@ public class BPMNModel {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + ":incoming")
-                                || child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + ":outgoing"))) {
+                        && (child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + "incoming")
+                                || child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + "outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         targetElement.getElementNode().removeChild(child);
                         break;
@@ -762,8 +819,8 @@ public class BPMNModel {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + ":incoming")
-                                || child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + ":outgoing"))) {
+                        && (child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + "incoming")
+                                || child.getNodeName().equals(getPrefix(BPMNNS.BPMN2) + "outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;
@@ -1342,7 +1399,7 @@ public class BPMNModel {
     public Set<Element> findChildNodesByName(Element parent, BPMNNS ns, String nodeName) {
         Set<Element> result = new LinkedHashSet<Element>();
         // resolve the tag name
-        String tagName = getPrefix(ns) + ":" + nodeName;
+        String tagName = getPrefix(ns) + nodeName;
         if (parent != null && nodeName != null) {
             NodeList childs = parent.getChildNodes();
             for (int i = 0; i < childs.getLength(); i++) {
@@ -1650,7 +1707,7 @@ public class BPMNModel {
         if (id == null || id.isEmpty() || bpmnPlane == null || nodeName == null) {
             return null;
         }
-        String fullNodeName = getPrefix(BPMNNS.BPMNDI) + ":" + nodeName;
+        String fullNodeName = getPrefix(BPMNNS.BPMNDI) + nodeName;
         NodeList childList = bpmnPlane.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
@@ -1710,14 +1767,14 @@ public class BPMNModel {
     private void loadParticipantList() throws BPMNModelException {
         participants = new LinkedHashSet<Participant>();
         List<Element> invalidParticipantElementList = new ArrayList<Element>();
-        NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":collaboration");
+        NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
 
             // we only take the first collaboration element (this is what is expected)
             collaborationElement = (Element) collaborationNodeList.item(0);
             // now find all participants...
             NodeList participantList = collaborationElement
-                    .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":participant");
+                    .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "participant");
             logger.fine("..found " + participantList.getLength() + " participants");
             for (int i = 0; i < participantList.getLength(); i++) {
                 Element item = (Element) participantList.item(i);
@@ -1761,7 +1818,7 @@ public class BPMNModel {
         int publicCount = 0;
 
         // find process
-        NodeList processList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":process");
+        NodeList processList = definitions.getElementsByTagNameNS(getUri(BPMNNS.BPMN2), "process");
         if (processList != null && processList.getLength() > 0) {
             for (int i = 0; i < processList.getLength(); i++) {
                 Element item = (Element) processList.item(i);
@@ -1851,13 +1908,13 @@ public class BPMNModel {
      */
     private void loadMessageFlowList() throws BPMNModelException {
         messageFlows = new LinkedHashSet<MessageFlow>();
-        NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":collaboration");
+        NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
             // we only take the first collaboration element (this is what is expected)
             collaborationElement = (Element) collaborationNodeList.item(0);
             // now find all messageFlows...
             NodeList messageFlowList = collaborationElement
-                    .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.MESSAGE_FLOW);
+                    .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.MESSAGE_FLOW);
             logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
             for (int i = 0; i < messageFlowList.getLength(); i++) {
                 Element item = (Element) messageFlowList.item(i);
@@ -1878,7 +1935,7 @@ public class BPMNModel {
     private void loadSignalList() throws BPMNModelException {
         signals = new LinkedHashSet<Signal>();
         List<String> duplicates = new ArrayList<>();
-        NodeList signalNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.SIGNAL);
+        NodeList signalNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.SIGNAL);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
                 Element item = (Element) signalNodeList.item(i);
@@ -1902,7 +1959,7 @@ public class BPMNModel {
      */
     private void loadMessageList() throws BPMNModelException {
         messages = new LinkedHashSet<Message>();
-        NodeList messageNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + ":" + BPMNTypes.MESSAGE);
+        NodeList messageNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.MESSAGE);
         if (messageNodeList != null && messageNodeList.getLength() > 0) {
             for (int i = 0; i < messageNodeList.getLength(); i++) {
                 Element item = (Element) messageNodeList.item(i);

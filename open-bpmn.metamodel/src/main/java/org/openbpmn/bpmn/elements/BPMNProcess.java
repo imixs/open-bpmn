@@ -930,8 +930,8 @@ public class BPMNProcess extends BPMNElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + ":incoming")
-                                || child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + ":outgoing"))) {
+                        && (child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + "incoming")
+                                || child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + "outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         targetElement.getElementNode().removeChild(child);
                         break;
@@ -946,8 +946,8 @@ public class BPMNProcess extends BPMNElement {
             for (int j = 0; j < childs.getLength(); j++) {
                 Node child = childs.item(j);
                 if (child.getNodeType() == Node.ELEMENT_NODE
-                        && (child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + ":incoming")
-                                || child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + ":outgoing"))) {
+                        && (child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + "incoming")
+                                || child.getNodeName().equals(getModel().getPrefix(BPMNNS.BPMN2) + "outgoing"))) {
                     if (id.equals(child.getTextContent())) {
                         sourceElement.getElementNode().removeChild(child);
                         break;

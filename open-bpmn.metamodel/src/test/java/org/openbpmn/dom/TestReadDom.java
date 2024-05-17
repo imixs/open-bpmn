@@ -106,7 +106,28 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
-        logger.info("...model read sucessful");
+        logger.info("...model read successful");
+
+    }
+
+    /**
+     * This Test verifies if a BPMN model with custom namespace URIs can be read if
+     * no bpmn2: exists
+     * 
+     * @throws BPMNModelException
+     * 
+     */
+    @Test
+    public void testReadModelWithoutBPMN2Prefix() throws BPMNModelException {
+
+        logger.info("...read model");
+
+        BPMNModel model = BPMNModelFactory.read("/process_1_custom_namespace-nopaefix.bpmn");
+        System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
+        // next validate the default namespace mapped to bpmn2
+        assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
+
+        logger.info("...model read successful");
 
     }
 
