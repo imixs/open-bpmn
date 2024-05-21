@@ -12,12 +12,9 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
- * This test class reads a BPMN Model instance and prints the node elements
+ * This test class reads a BPMN Models with different namespace declarations
  * 
  * @author rsoika
  *
@@ -49,7 +46,6 @@ public class TestNameSpaces {
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
         logger.info("...model read successful");
-
     }
 
     /**
@@ -70,9 +66,7 @@ public class TestNameSpaces {
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
         // add a new element without a prefix....
-
         logger.info("...model read successful");
-
     }
 
     /**
@@ -104,44 +98,7 @@ public class TestNameSpaces {
         model.openDefaultProces().addTask("task-example-002", "Example Task 002", BPMNTypes.TASK);
 
         model.save(out);
-        logger.info("...model update sucessful: " + out);
+        logger.info("...model update successful: " + out);
     }
 
-    private static void printNode(NodeList nodeList) {
-
-        for (int count = 0; count < nodeList.getLength(); count++) {
-
-            Node tempNode = nodeList.item(count);
-
-            // make sure it's element node.
-            if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
-
-                // get node name and value
-                System.out.println("\nNode Name =" + tempNode.getNodeName() + " [OPEN]");
-                System.out.println("Node Value =" + tempNode.getTextContent());
-
-                if (tempNode.hasAttributes()) {
-
-                    // get attributes names and values
-                    NamedNodeMap nodeMap = tempNode.getAttributes();
-                    for (int i = 0; i < nodeMap.getLength(); i++) {
-                        Node node = nodeMap.item(i);
-                        System.out.println("attr name : " + node.getNodeName());
-                        System.out.println("attr value : " + node.getNodeValue());
-                    }
-
-                }
-
-                if (tempNode.hasChildNodes()) {
-                    // loop again if has child nodes
-                    printNode(tempNode.getChildNodes());
-                }
-
-                System.out.println("Node Name =" + tempNode.getNodeName() + " [CLOSE]");
-
-            }
-
-        }
-
-    }
 }
