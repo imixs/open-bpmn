@@ -572,11 +572,14 @@ export class MultiLineTextNodeView extends ShapeView {
  * This method splits a text into an array of separate lines.
  * Beside the new-line character also the length of a line is considered.
  * This is needed to display a long text in multiple SVG tspan elements.
+ * The CHARACTER_SPACE defines the average with of a single character. 
+ * However, this value is only an approximation.  
  *
  * @param text - The text to be split.
  * @returns an array of text lines
  */
 function textLineSplitter(text: any, nodeWidth: number): string[] {
+    const CHARACTER_SPACE = 6.5;
     const result: string[] = [];
     // first split only by newlines
     const lines = text.split('\n');
@@ -584,14 +587,13 @@ function textLineSplitter(text: any, nodeWidth: number): string[] {
     // in this line fit into the given nodesWidth
     for (let i = 0; i < lines.length; i++) {
         // split line into words....
-        // const words = lines[i].split(/\s+/);
         const words = lines[i].split(' ');
         // now lets add word by word and verify if we need to add a newline...
         let line = '';
         for (let j = 0; j < words.length; j++) {
             const word = words[j];
             line += word + ' ';
-            if (line.length > (nodeWidth / 5)) {
+            if (line.length > (nodeWidth / CHARACTER_SPACE)) {
                 line = line.substring(0, line.length - word.length - 2);
                 result.push(line);
                 line = word + ' ';

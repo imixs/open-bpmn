@@ -115,7 +115,7 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
             additionals.push(arrow);
         }
 
-        // Add the edge padding (added by the )BPMNGModelFactory
+        // Add the edge padding (added by the BPMNGModelFactory)
         const edgePadding = EdgePadding.from(edge);
         if (edgePadding) {
             additionals.push(this.renderEdgePadding(edge, segments, edgePadding));
