@@ -800,6 +800,9 @@ public class BPMNGModelFactory implements GModelFactory {
             BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(association);
             builder.target(computeGPort(target));
             builder.source(computeGPort(source));
+            // We add an edge Padding of 10 pixel.
+            // See the view renderer in bpmn-routing-views.tsx.
+            builder.addArgument(GArguments.edgePadding(10));
             BPMNGEdge bpmnGEdge = builder.build();
             bpmnGEdge.setKind("");
             // add the waypoints to the GLSP model....
@@ -855,6 +858,9 @@ public class BPMNGModelFactory implements GModelFactory {
             BPMNGEdgeBuilder builder = new BPMNGEdgeBuilder(messageFlow);
             builder.target(computeGPort(target));
             builder.source(computeGPort(source));
+            // We add an edge Padding of 10 pixel.
+            // See the view renderer in bpmn-routing-views.tsx.
+            builder.addArgument(GArguments.edgePadding(10));
             BPMNGEdge bpmnGEdge = builder.build();
             bpmnGEdge.setKind("");
             for (BPMNPoint wayPoint : messageFlow.getWayPoints()) {
