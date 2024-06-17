@@ -36,11 +36,10 @@ public class TestBPMNValidationIssue346 {
     private static Logger logger = Logger.getLogger(TestBPMNValidationIssue346.class.getName());
 
     /**
-     * Test simple model with start / end event without a sequence flow.
-     * 
+     * Test a task with a incoming message flow
      */
     @Test
-    public void testContent() {
+    public void testValidationTaskWithMessageFlow() {
         try {
             model = BPMNModelFactory.read("/validation_issue_346.bpmn");
             logger.info("...read model");
