@@ -1336,6 +1336,32 @@ public class BPMNModel {
     }
 
     /**
+     * Finds a Process by its name
+     * 
+     * 
+     * The method returns null if no matching process was found.
+     * 
+     * Note: The method does not open the process by default. So a call
+     * 'model.openProcess' may be needed in addition.
+     * 
+     * @param name
+     * @return
+     */
+    public BPMNProcess findProcessByName(String processName) {
+        if (processName == null || processName.isEmpty()) {
+            return null; // no name provided!
+        }
+        Set<BPMNProcess> processList = getProcesses();
+        for (BPMNProcess _process : processList) {
+            if (processName.equals(_process.getName())) {
+                return _process;
+            }
+        }
+        // no matching process found;
+        return null;
+    }
+
+    /**
      * Finds a BPMNParticipant by its id
      * 
      * @param id

@@ -14,6 +14,7 @@ import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
+import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.TextAnnotation;
@@ -527,6 +528,34 @@ public abstract class BPMNElementNode extends BPMNElement {
                 .collect(Collectors.toSet());
         return result;
 
+    }
+
+    /**
+     * Returns a List of all ingoing MessageFlows associated with this element
+     * 
+     * @return
+     */
+    public Set<MessageFlow> getIngoingMessageFlows() {
+        // filter all messageFlows with a sourceRef to this elementNode
+        Set<MessageFlow> result = this.getModel().getMessageFlows()
+                .stream()
+                .filter(c -> c.targetRef.equals(this.getId()))
+                .collect(Collectors.toSet());
+        return result;
+    }
+
+    /**
+     * Returns a List of all outgoing MessageFlows associated with this element
+     * 
+     * @return
+     */
+    public Set<MessageFlow> getOutgoingMessageFlows() {
+        // filter all messageFlows with a sourceRef to this elementNode
+        Set<MessageFlow> result = this.getModel().getMessageFlows()
+                .stream()
+                .filter(c -> c.sourceRef.equals(this.getId()))
+                .collect(Collectors.toSet());
+        return result;
     }
 
     /**
