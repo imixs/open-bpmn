@@ -49,6 +49,11 @@ public class BPMNReconnectEdgeOperationHandler extends GModelOperationHandler<Re
         return commandOf(() -> executeOperation(operation));
     }
 
+    /**
+     * This helper method re-validates the affected elements
+     * 
+     * @param operation
+     */
     private void executeOperation(final ReconnectEdgeOperation operation) {
 
         String edgeID = operation.getEdgeElementId();
@@ -58,6 +63,16 @@ public class BPMNReconnectEdgeOperationHandler extends GModelOperationHandler<Re
         logger.debug("Reconnect: " + edgeID + "  " + sourceElementID + "<-->" + targetElementID);
 
         BPMNElementEdge bpmnElementEdge = modelState.getBpmnModel().findElementEdgeById(edgeID);
+
+        // We need to identify the old element that lost its connection....
+        String oldSourceElementID = bpmnElementEdge.getSourceRef();
+        String oldTargetElementID = bpmnElementEdge.getTargetRef();
+        BPMNElementNode oldElement = null;
+        if (sourceElementID.equals(oldSourceElementID)) {
+            oldElement = modelState.getBpmnModel().findElementNodeById(oldTargetElementID);
+        } else {
+            oldElement = modelState.getBpmnModel().findElementNodeById(oldSourceElementID);
+        }
 
         BPMNElementNode targetElement = modelState.getBpmnModel().findElementNodeById(targetElementID);
         BPMNElementNode sourceElement = modelState.getBpmnModel().findElementNodeById(sourceElementID);
@@ -82,6 +97,10 @@ public class BPMNReconnectEdgeOperationHandler extends GModelOperationHandler<Re
             bpmnElementEdge.setSourceRef(sourceElementID);
             bpmnElementEdge.setTargetRef(targetElementID);
 
+            // invalidate old oldElement
+            if (oldElement != null) {
+                oldElement.resetValidation();
+            }
             // invalidate source/target
             sourceElement.resetValidation();
             targetElement.resetValidation();
