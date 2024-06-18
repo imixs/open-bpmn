@@ -50,6 +50,7 @@ public class TestBPMNValidationIssue346 {
             // Test default process
             BPMNProcess process = model.openDefaultProces();
             assertNotNull(process);
+            assertEquals(1, process.getActivities().size());
 
             BPMNValidationHandler bpmnValidationHandler = new BPMNValidationHandler();
             List<BPMNValidationMarker> result = bpmnValidationHandler.validate(model, true);
@@ -57,15 +58,11 @@ public class TestBPMNValidationIssue346 {
             // we expect no errors
             assertEquals(0, result.size());
 
-            // Now open the 'Pool-1' containing a receive Task
+            // Now verify the 'Pool-1'. We expect that the process was initialized by the
+            // validate method
             process = model.findProcessByName("Pool-1");
-            process = model.openProcess(process.getId());
             assertNotNull(process);
-            bpmnValidationHandler = new BPMNValidationHandler();
-            result = bpmnValidationHandler.validate(model, true);
-
-            // we expect no errors
-            assertEquals(0, result.size());
+            assertEquals(3, process.getActivities().size());
 
         } catch (BPMNModelException e) {
 

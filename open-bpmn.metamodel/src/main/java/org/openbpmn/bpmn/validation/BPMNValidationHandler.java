@@ -9,6 +9,7 @@ import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 
 /**
  * The BPMNValidationHandler validates a complete BPMNModel for validation
@@ -28,8 +29,9 @@ public class BPMNValidationHandler {
      * 
      * @param forceValidation - if true the full model will be validated.
      * @return
+     * @throws BPMNModelException
      */
-    public List<BPMNValidationMarker> validate(BPMNModel model, boolean forceValidation) {
+    public List<BPMNValidationMarker> validate(BPMNModel model, boolean forceValidation) throws BPMNModelException {
         List<BPMNValidationMarker> result = new ArrayList<>();
         // iterate over all process
         Set<BPMNProcess> processes = model.getProcesses();
@@ -48,9 +50,13 @@ public class BPMNValidationHandler {
      * for only new added or changed element nodes.
      * 
      * @return
+     * @throws BPMNModelException
      */
-    private List<BPMNValidationMarker> validateProcess(BPMNProcess process, boolean forceValidation) {
+    public List<BPMNValidationMarker> validateProcess(BPMNProcess process, boolean forceValidation)
+            throws BPMNModelException {
         List<BPMNValidationMarker> result = new ArrayList<>();
+        // make sure that the process is initialized
+        process.init();
         // validate events....
         Set<Event> events = process.getEvents();
         for (Event event : events) {

@@ -1459,7 +1459,7 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * Returns all BPMN Edges associated with a geiven FlowElement.
+     * Returns all BPMN Edges associated with a given FlowElement.
      * 
      * @param id
      * @return

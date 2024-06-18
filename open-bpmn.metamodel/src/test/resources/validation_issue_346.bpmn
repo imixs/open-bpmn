@@ -69,6 +69,7 @@
     <bpmn2:receiveTask id="task_MPPyxg" instantiate="true" name="Task-3">
       <bpmn2:documentation id="documentation_qc8ghA"/>
       <bpmn2:outgoing>sequenceFlow_kIA1WQ</bpmn2:outgoing>
+      <bpmn2:incoming>messageFlow_oBGang</bpmn2:incoming>
     </bpmn2:receiveTask>
     <bpmn2:sequenceFlow id="sequenceFlow_kIA1WQ" sourceRef="task_MPPyxg" targetRef="task_p9QtJg">
       <bpmn2:documentation id="documentation_LFztyg"/>
@@ -151,9 +152,9 @@
         <di:waypoint x="865.0" y="200.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="messageFlow_oBGang" id="BPMNEdge_3KHv0g" sourceElement="BPMNShape_OKyVyg" targetElement="BPMNShape_CTmfzQ">
-        <di:waypoint x="850.0" y="211.0"/>
-        <di:waypoint x="735.0" y="211.0"/>
-        <di:waypoint x="735.0" y="310.0"/>
+        <di:waypoint x="850.0" y="210.0"/>
+        <di:waypoint x="734.0" y="210.0"/>
+        <di:waypoint x="734.0" y="310.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="sequenceFlow_kIA1WQ" id="BPMNEdge_5NpCgA" sourceElement="BPMNShape_CTmfzQ" targetElement="BPMNShape_pKoMYQ">
         <di:waypoint x="735.0" y="360.0"/>
