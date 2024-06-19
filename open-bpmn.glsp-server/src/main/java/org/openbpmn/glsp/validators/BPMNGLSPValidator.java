@@ -26,6 +26,7 @@ import org.eclipse.glsp.server.features.validation.MarkerKind;
 import org.eclipse.glsp.server.features.validation.MarkersReason;
 import org.eclipse.glsp.server.features.validation.ModelValidator;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.validation.BPMNValidationHandler;
 import org.openbpmn.bpmn.validation.BPMNValidationMarker;
 import org.openbpmn.extensions.BPMNElementExtension;
@@ -78,7 +79,12 @@ public class BPMNGLSPValidator implements ModelValidator {
     @Override
     public List<Marker> validate(final List<GModelElement> elements, final String reason) {
         long l = System.currentTimeMillis();
-        beforeValidate(elements, reason);
+        try {
+            beforeValidate(elements, reason);
+        } catch (BPMNModelException e) {
+            logger.warning("Failed to validate model: " + e.getMessage());
+            e.printStackTrace();
+        }
         List<Marker> markers = doValidate(elements, reason);
         afterValidate(elements, reason);
         return markers;
@@ -93,8 +99,10 @@ public class BPMNGLSPValidator implements ModelValidator {
      * validation mode (LIVE|BATCH).
      * 
      * Finally it converts the Meta Model Error markers into GLSP marker objects.
+     * 
+     * @throws BPMNModelException
      */
-    public void beforeValidate(final List<GModelElement> elements, final String reason) {
+    public void beforeValidate(final List<GModelElement> elements, final String reason) throws BPMNModelException {
 
         if (MarkersReason.LIVE.equals(reason)) {
             // simple case we only call the validate method from the meta model.
