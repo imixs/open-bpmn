@@ -27,5 +27,5 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Building Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag imixs/open-bpmn:$(date +%s)
     
