@@ -5,8 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -104,8 +102,7 @@ public class BPMNModelFactory {
      */
     public static BPMNModel read(File modelFile) throws BPMNModelException {
         try {
-            Path path = modelFile.toPath();
-            return read(new FileInputStream(modelFile), path);
+            return read(new FileInputStream(modelFile));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -121,8 +118,7 @@ public class BPMNModelFactory {
      * @throws IOException
      */
     public static BPMNModel read(String modelFilePath) throws BPMNModelException {
-        Path path = Paths.get(modelFilePath);
-        return read(BPMNModel.class.getResourceAsStream(modelFilePath), path);
+        return read(BPMNModel.class.getResourceAsStream(modelFilePath));
     }
 
     /**
@@ -141,7 +137,7 @@ public class BPMNModelFactory {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public static BPMNModel read(InputStream is, Path path) throws BPMNModelException {
+    public static BPMNModel read(InputStream is) throws BPMNModelException {
         logger.fine("read from inputStream...");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have any effect!
