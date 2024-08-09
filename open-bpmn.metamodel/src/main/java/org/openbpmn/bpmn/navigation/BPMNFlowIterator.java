@@ -47,8 +47,7 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
      * @param filter
      * @throws BPMNValidationException
      */
-    public BPMNFlowIterator(BPMNElementNode bpmnElementNode, Predicate<BPMNElementNode> filter)
-            throws BPMNValidationException {
+    public BPMNFlowIterator(BPMNElementNode bpmnElementNode, Predicate<BPMNElementNode> filter) {
         this.filter = filter;
         this.targetNodes = new ArrayList<>();
         this.index = 0;
