@@ -1499,7 +1499,7 @@ public class BPMNModel {
             }
 
             // finally write the xml to disk
-            writeXml(doc, output);
+            writeToOutputStream(doc, output);
         } catch (TransformerException | IOException e) {
             logger.warning("Failed to save BPMN file: " + e.getMessage());
             e.printStackTrace();
@@ -1539,7 +1539,7 @@ public class BPMNModel {
             }
 
             // finally write the xml to disk
-            writeXml(doc, output);
+            writeToOutputStream(doc, output);
         } catch (TransformerException | IOException e) {
             logger.warning("Failed to save BPMN file: " + e.getMessage());
             e.printStackTrace();
@@ -2004,7 +2004,7 @@ public class BPMNModel {
      * @param output
      * @throws TransformerException
      */
-    private void writeXml(Document doc, OutputStream output) throws TransformerException {
+    public void writeToOutputStream(Document doc, OutputStream output) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
         DOMSource source = new DOMSource(doc);

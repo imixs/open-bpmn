@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -139,8 +140,14 @@ public class BPMNModelFactory {
      */
     public static BPMNModel read(InputStream is) throws BPMNModelException {
         logger.fine("read from inputStream...");
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have any effect!
+        if (is == null) {
+            throw new BPMNInvalidIDException(BPMNModelException.INVALID_MODEL,
+                    "Model can not be parsed: InputStream is null");
+        }
+        DocumentBuilderFactory docFactory = DocumentBuilderFactory
+                .newInstance();
+        docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have
+                                                              // any effect!
         docFactory.setNamespaceAware(true);
 
         try {

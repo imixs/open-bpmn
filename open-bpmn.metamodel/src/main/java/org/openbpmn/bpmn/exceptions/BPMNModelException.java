@@ -29,16 +29,18 @@
 package org.openbpmn.bpmn.exceptions;
 
 /**
- * BPMNModelException is the abstract super class for all BPMN 
- * Exception classes. A BPMNModelException signals an error in the Model 
+ * BPMNModelException is the abstract super class for all BPMN
+ * Exception classes. A BPMNModelException signals an error in the Model
  * logic. BPMNModelException need to be caught.
  * 
  * @author rsoika
  */
 public abstract class BPMNModelException extends Exception {
 
+    public static final String INVALID_MODEL = "INVALID_MODEL";
+
     private static final long serialVersionUID = 1L;
-  
+
     protected String errorContext = "UNDEFINED";
     protected String errorCode = "UNDEFINED";
 
