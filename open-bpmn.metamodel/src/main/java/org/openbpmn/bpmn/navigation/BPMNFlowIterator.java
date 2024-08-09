@@ -15,19 +15,19 @@ import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNValidationException;
 
 /**
- * The BPMNFlowNavigator can be used to navigate through a BPMN model. Based on
- * a Source BPMNElement the navigator routes to the next Flow Element fulfilling
+ * The BPMNFlowIterator can be used to iterate through a BPMN model. Based on
+ * a Source BPMNElement the class routes to the next Flow Element fulfilling
  * a
  * given criteria. For example you can find all Event Nodes followed by an
  * Activity Node. Or you can navigate to the next Activity from an Event.
  * <p>
- * The BPMNFlowNavigator expects a filter argument (Functional Interface
+ * The BPMNFlowIterator expects a filter argument (Functional Interface
  * Predicate) with one BPMNElementNode argument that return a boolean value.
  * <p>
  * In case the filter does not specify a Gateway, Gateway Nodes are ignored.
  * 
  */
-public class BPMNFlowNavigator<T> implements Iterator<BPMNElementNode> {
+public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
 
     protected static Logger logger = Logger.getLogger(BPMNElementNode.class.getName());
 
@@ -39,7 +39,7 @@ public class BPMNFlowNavigator<T> implements Iterator<BPMNElementNode> {
     private List<BPMNElementNode> targetNodes;
 
     /**
-     * Creates a new BPMNFlowNavigator with a given filter criteria.
+     * Creates a new BPMNFlowIterator with a given filter criteria.
      * The method collects all BPMNElements following the given start element and
      * matching the given filter
      * 
@@ -47,7 +47,7 @@ public class BPMNFlowNavigator<T> implements Iterator<BPMNElementNode> {
      * @param filter
      * @throws BPMNValidationException
      */
-    public BPMNFlowNavigator(BPMNElementNode bpmnElementNode, Predicate<BPMNElementNode> filter)
+    public BPMNFlowIterator(BPMNElementNode bpmnElementNode, Predicate<BPMNElementNode> filter)
             throws BPMNValidationException {
         this.filter = filter;
         this.targetNodes = new ArrayList<>();
@@ -57,7 +57,7 @@ public class BPMNFlowNavigator<T> implements Iterator<BPMNElementNode> {
     }
 
     /**
-     * Creates a new BPMNFlowNavigator with a given filter criteria.
+     * Creates a new BPMNFlowIterator with a given filter criteria.
      * The method collects all BPMNElements following the given start element and
      * matching the given filter
      * 
@@ -66,7 +66,7 @@ public class BPMNFlowNavigator<T> implements Iterator<BPMNElementNode> {
      * @param conditionEvaluator optional conditional evaluator
      * @throws BPMNValidationException
      */
-    public BPMNFlowNavigator(BPMNElementNode bpmnElementNode, Predicate<BPMNElementNode> filter,
+    public BPMNFlowIterator(BPMNElementNode bpmnElementNode, Predicate<BPMNElementNode> filter,
             Predicate<String> conditionEvaluator)
             throws BPMNValidationException {
         this.filter = filter;

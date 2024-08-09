@@ -14,7 +14,7 @@ import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.bpmn.navigation.BPMNFlowNavigator;
+import org.openbpmn.bpmn.navigation.BPMNFlowIterator;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.openbpmn.metamodel.examples.TestCreateEdges;
 
@@ -46,7 +46,7 @@ public class TestNavigationCallbacks {
         BPMNElementNode task1 = process.findElementNodeById("task_SBK01w");
         assertNotNull(task1);
 
-        BPMNFlowNavigator<Event> eventNavigator = new BPMNFlowNavigator<Event>(task1,
+        BPMNFlowIterator<Event> eventNavigator = new BPMNFlowIterator<Event>(task1,
                 n -> isSubmitEvent(n));
         assertNotNull(eventNavigator);
 
@@ -102,7 +102,7 @@ public class TestNavigationCallbacks {
         assertNotNull(task1);
 
         // Build a navigator with a callback method to eval the condition
-        BPMNFlowNavigator<BPMNElementNode> eventNavigator = new BPMNFlowNavigator<>(
+        BPMNFlowIterator<BPMNElementNode> eventNavigator = new BPMNFlowIterator<>(
                 task1,
                 node -> node instanceof Event || node instanceof Event,
                 condition -> evalCondition(condition));

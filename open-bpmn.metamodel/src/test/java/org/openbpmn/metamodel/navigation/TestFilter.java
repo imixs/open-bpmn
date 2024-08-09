@@ -68,7 +68,8 @@ public class TestFilter {
         Set<? extends BPMNElementNode> filterResult = process
                 .findElementNodes(
                         n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
-                                && ((Event) n).getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_LINK)
+                                && ((Event) n).getEventDefinitionsByType(
+                                        BPMNTypes.EVENT_DEFINITION_LINK)
                                         .size() == 1 //
                                 && "LINK".equals(n.getName())));
 
@@ -80,7 +81,8 @@ public class TestFilter {
         filterResult = process
                 .findElementNodes(
                         n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
-                                && ((Event) n).getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_CANCEL)
+                                && ((Event) n).getEventDefinitionsByType(
+                                        BPMNTypes.EVENT_DEFINITION_CANCEL)
                                         .size() == 1 //
                                 && "LINK".equals(n.getName())));
 
