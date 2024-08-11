@@ -911,9 +911,7 @@ public class BPMNModel {
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidTypeException
      */
-    public Signal findSignalByName(String name)
-            throws BPMNInvalidReferenceException, BPMNMissingElementException, BPMNInvalidTypeException {
-
+    public Signal findSignalByName(String name) {
         if (name == null || name.isEmpty()) {
             return null;
         }
@@ -926,16 +924,19 @@ public class BPMNModel {
     }
 
     /**
-     * Deletes a Signal element from this diagram.
+     * Finds a Signal element by its ID withing the diagram
      * <p>
+     * <bpmn2:signal id="Signal_1" name="My Signal"/>
      * 
-     * @param id
+     * @param name - name of the signal
+     * @throws BPMNInvalidReferenceException
+     * @throws BPMNMissingElementException
+     * @throws BPMNInvalidTypeException
      */
-    public void deleteSignal(String id) {
+    public Signal findSignal(String id) {
         if (id == null || id.isEmpty()) {
-            return;
+            return null;
         }
-
         Signal signal = null;
         for (Signal _signal : getSignals()) {
             if (id.equals(_signal.getId())) {
@@ -944,7 +945,17 @@ public class BPMNModel {
 
             }
         }
+        return signal;
+    }
 
+    /**
+     * Deletes a Signal element from this diagram.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteSignal(String id) {
+        Signal signal = findSignal(id);
         if (signal == null) {
             // does not exist
             return;
@@ -1346,14 +1357,16 @@ public class BPMNModel {
      * 
      * @param name
      * @return
+     * @throws BPMNModelException
      */
-    public BPMNProcess findProcessByName(String processName) {
+    public BPMNProcess findProcessByName(String processName) throws BPMNModelException {
         if (processName == null || processName.isEmpty()) {
             return null; // no name provided!
         }
         Set<BPMNProcess> processList = getProcesses();
         for (BPMNProcess _process : processList) {
             if (processName.equals(_process.getName())) {
+                _process.init();
                 return _process;
             }
         }

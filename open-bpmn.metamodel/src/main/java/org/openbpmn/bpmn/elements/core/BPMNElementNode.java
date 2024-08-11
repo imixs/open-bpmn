@@ -1,5 +1,6 @@
 package org.openbpmn.bpmn.elements.core;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -572,4 +573,29 @@ public abstract class BPMNElementNode extends BPMNElement {
         return result;
 
     }
+
+    /**
+     * Returns a List of all DataObjects associated with this element
+     * 
+     * @param event
+     * @return
+     */
+    public Set<DataObject> getDataObjects() {
+        Set<DataObject> result = new HashSet<DataObject>();
+        Set<Association> associations = this.getAssociations();
+        // find Data objects...
+        for (Association association : associations) {
+            BPMNElementNode source = association.getSourceElement();
+            BPMNElementNode target = association.getTargetElement();
+            if (source instanceof DataObject) {
+                result.add((DataObject) source);
+            }
+            if (target instanceof DataObject) {
+                result.add((DataObject) target);
+            }
+
+        }
+        return result;
+    }
+
 }
