@@ -130,18 +130,20 @@ public class FileLinkExtension implements BPMNModelExtension {
      * @return
      */
     private String getElementContent(Element element) {
-        // search CDATA node
+        // collect all the node content
+        // This can again include CData sections! (see issue #)
+        String result = "";
         NodeList childNodes = element.getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node node = childNodes.item(i);
             if (node instanceof CDATASection) {
-                return node.getNodeValue();
+                result = result + node.getNodeValue();
             } else {
                 // normal text node
-                return node.getTextContent();
+                result = result + node.getTextContent();
             }
         }
-        return "";
+        return result;
     }
 
     /**
