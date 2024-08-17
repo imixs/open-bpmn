@@ -78,7 +78,7 @@ public class Activity extends BPMNElementNode {
     }
 
     /**
-     * This method returns a list of all boundaray Events attached to this activity.
+     * This method returns a list of all boundary Events attached to this activity.
      * 
      * @return
      */

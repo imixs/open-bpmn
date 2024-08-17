@@ -1,6 +1,7 @@
 package org.openbpmn.metamodel.navigation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -119,22 +120,20 @@ public class TestNavigation {
         BPMNProcess process = model.openDefaultProces();
 
         // get Event2
-        BPMNElementNode event1 = process.findElementNodeById("event_TGi3FA");
-        assertNotNull(event1);
+        BPMNElementNode eventForwardAndSubmit = process.findElementNodeById("event_forwardAndSubmit");
+        assertNotNull(eventForwardAndSubmit);
 
-        BPMNFlowIterator<Event> taskNavigator = new BPMNFlowIterator<Event>(event1,
+        // Find the target Task... (task-2)
+        BPMNFlowIterator<Event> taskNavigator = new BPMNFlowIterator<Event>(eventForwardAndSubmit,
                 n -> n instanceof Activity);
         assertNotNull(taskNavigator);
 
         // we expect 3 Event Nodes
-
-        List<String> elementNames = new ArrayList();
-        while (taskNavigator.hasNext()) {
-            Activity task = (Activity) taskNavigator.next();
-            elementNames.add(task.getName());
-        }
-
-        assertEquals(0, elementNames.size());
+        assertTrue(taskNavigator.hasNext());
+        BPMNElementNode targetTask = taskNavigator.next();
+        assertEquals("Task-2", targetTask.getName());
+        // note more task exprected
+        assertFalse(taskNavigator.hasNext());
 
     }
 

@@ -17,14 +17,14 @@ import org.openbpmn.bpmn.exceptions.BPMNValidationException;
 /**
  * The BPMNFlowIterator can be used to iterate through a BPMN model. Based on
  * a Source BPMNElement the class routes to the next Flow Element fulfilling
- * a
- * given criteria. For example you can find all Event Nodes followed by an
+ * a given criteria. For example you can find all Event Nodes followed by an
  * Activity Node. Or you can navigate to the next Activity from an Event.
  * <p>
  * The BPMNFlowIterator expects a filter argument (Functional Interface
  * Predicate) with one BPMNElementNode argument that return a boolean value.
  * <p>
- * In case the filter does not specify a Gateway, Gateway Nodes are ignored.
+ * In case the filter does not match the current element, the Iterator will
+ * recursive follow the sequence flow until the next matching element was found.
  * 
  */
 public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
@@ -93,9 +93,8 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
      * Iterates tough all outgoing sequence flows and tests if the target element
      * matches the filter criteria.
      * <p>
-     * If a element does not match the filter criteria and is an instance of a
-     * Gateway, the method will recursive call all following elements of the gateway
-     * node.
+     * If an element does not match the filter criteria the method will recursive
+     * call itself and follow the further sequence flow.
      * 
      * @param currentNode
      */
@@ -112,12 +111,9 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
             if (filter.test(node)) {
                 targetNodes.add(node);
             } else {
-                // if the node is a Gateway, recursively search its outgoing flows
-                if (node instanceof Gateway) {
-                    findValidNodes(node);
-                }
+                // if the node does not match the filter go ahead by a recursive call....
+                findValidNodes(node);
             }
-
         }
     }
 
