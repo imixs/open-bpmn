@@ -107,7 +107,7 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
         }
 
         for (SequenceFlow flow : flowSet) {
-            BPMNElementNode node = flow.getTargetElement();
+            BPMNElementNode node = getTargetNode(flow);// flow.getTargetElement();
             if (filter.test(node)) {
                 targetNodes.add(node);
             } else {
@@ -115,6 +115,22 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
                 findValidNodes(node);
             }
         }
+    }
+
+    /**
+     * The method getTargetNode returns the target element of a SequenceFlow. This
+     * method can be overwritten by sub classes to implement more complex routings.
+     * <p>
+     * For example a class can test if the target is a
+     * <code>bpmn:intermediateThrowEvent</code> with a
+     * <code>bpmn2:linkEventDefinition</code> to navigate automatically to the
+     * corresponding <code>bpmn:intermediateCatchEvent</code>
+     * 
+     * @param flow
+     * @return
+     */
+    public BPMNElementNode getTargetNode(SequenceFlow flow) {
+        return flow.getTargetElement();
     }
 
     /**
