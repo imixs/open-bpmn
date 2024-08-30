@@ -993,6 +993,15 @@ public class BPMNProcess extends BPMNElement {
      * 
      */
     public BPMNElement findElementById(String id) {
+        if (!this.initialized) {
+            try {
+                // lazy loading a process...
+                this.init();
+            } catch (BPMNModelException e) {
+                logger.severe("Unable to open Process " + this.getId());
+                return null;
+            }
+        }
         BPMNElement result = null;
         result = findElementNodeById(id);
         if (result != null) {
