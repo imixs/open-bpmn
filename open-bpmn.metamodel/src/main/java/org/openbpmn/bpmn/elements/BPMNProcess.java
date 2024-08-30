@@ -116,15 +116,12 @@ public class BPMNProcess extends BPMNElement {
                     this.createBPMNGatewayByNode((Element) child);
                 } else if (BPMNModel.isDataObject(child)) {
                     this.createBPMNDataObjectByNode((Element) child);
-
                 } else if (BPMNModel.isTextAnnotation(child)) {
                     this.createBPMNTextAnnotationByNode((Element) child);
-
                 } else if (BPMNModel.isSequenceFlow(child)) {
                     this.createBPMNSequenceFlowByNode((Element) child);
                 } else if (BPMNModel.isAssociation(child)) {
                     this.createBPMNAssociationByNode((Element) child);
-
                 } else if (BPMNModel.isLaneSet(child)) {
                     this.createBPMNLanesByNode((Element) child);
                 } else {
@@ -1093,19 +1090,6 @@ public class BPMNProcess extends BPMNElement {
         return result;
 
     }
-    /**
-     * Returns all BPMNFlowElements contained in this process
-     * 
-     * @return
-     */
-    // public Set<BPMNElementNode> getBPMNNodes() {
-    // Set<BPMNElementNode> result = new LinkedHashSet<BPMNElementNode>();
-    //
-    // result.addAll(this.getActivities());
-    // result.addAll(this.getEvents());
-    // result.addAll(this.getGateways());
-    // return result;
-    // }
 
     /**
      * Finds a BPMN Edge Element by given id. An Edge can be a SequenceFlow, a
