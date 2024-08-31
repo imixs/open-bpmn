@@ -1,3 +1,7 @@
+[![Java CI with Maven](https://github.com/imixs/open-bpmn/actions/workflows/maven.yml/badge.svg)](https://github.com/imixs/open-bpmn/actions/workflows/maven.yml)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1694/badge)](https://bestpractices.coreinfrastructure.org/projects/1694)
+[![Join a discussion](https://img.shields.io/badge/discuss-on%20github-4CB697)](https://github.com/imixs/open-bpmn/discussions)
+[![License](https://img.shields.io/badge/license-EPL-blue.svg)](https://github.com/imixs/open-bpmn/blob/master/LICENSE)
 <img width="200" src="./doc/images/logo-openbpmn-no-margin.png" />
 
 **Open BPMN** is a free and open modeling platform to create and maintain business models based on the BPMN 2.0 standard. **Open BPMN** can be used by business analysts to design a top level business process, as also by architects and developers to model the technical details of complex processing logic.
