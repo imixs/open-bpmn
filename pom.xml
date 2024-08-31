@@ -68,12 +68,10 @@ terms of the Eclipse Public License v. 2.0
 		<url>https://github.com/imixs/open-bpmn/</url>
 		<tag>open-bpmn-1.0.4</tag>
 	</scm>
-
 	<issueManagement>
 		<system>GitHub</system>
 		<url>https://github.com/imixs/open-bpmn/issues</url>
 	</issueManagement>
-
 	<properties>
 	</properties>
 
@@ -83,7 +81,7 @@ terms of the Eclipse Public License v. 2.0
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.5.3</version>
+				<version>3.0.1</version>
 				<configuration>
 					<autoVersionSubmodules>true</autoVersionSubmodules>
 					<useReleaseProfile>false</useReleaseProfile>
@@ -95,18 +93,21 @@ terms of the Eclipse Public License v. 2.0
 			<plugin>
 				<groupId>org.sonatype.plugins</groupId>
 				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.8</version>
+				<version>1.6.13</version>
 				<extensions>true</extensions>
 				<configuration>
 					<serverId>ossrh</serverId>
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<stagingProgressTimeoutMinutes>15</stagingProgressTimeoutMinutes>
 				</configuration>
 			</plugin>
+
+			<!--  maven site, doc and reporting -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
-				<version>3.9.0</version>
+				<version>3.12.1</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -126,6 +127,8 @@ terms of the Eclipse Public License v. 2.0
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>3.0.0</version>
 			</plugin>
+
+
 		</plugins>
 	</build>
 
