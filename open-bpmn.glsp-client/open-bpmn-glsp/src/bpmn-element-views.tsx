@@ -572,8 +572,8 @@ export class MultiLineTextNodeView extends ShapeView {
  * This method splits a text into an array of separate lines.
  * Beside the new-line character also the length of a line is considered.
  * This is needed to display a long text in multiple SVG tspan elements.
- * The CHARACTER_SPACE defines the average with of a single character. 
- * However, this value is only an approximation.  
+ * The CHARACTER_SPACE defines the average with of a single character.
+ * However, this value is only an approximation.
  *
  * @param text - The text to be split.
  * @returns an array of text lines
