@@ -25,6 +25,7 @@ import org.openbpmn.bpmn.exceptions.BPMNValidationException;
  * <p>
  * In case the filter does not match the current element, the Iterator will
  * recursive follow the sequence flow until the next matching element was found.
+ * If the start element is null the Iterator will become empty.
  * 
  */
 public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
@@ -41,7 +42,8 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
     /**
      * Creates a new BPMNFlowIterator with a given filter criteria.
      * The method collects all BPMNElements following the given start element and
-     * matching the given filter
+     * matching the given filter. If the start element is null the Iterator is
+     * empty.
      * 
      * @param bpmnElementNode
      * @param filter
@@ -52,13 +54,16 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
         this.targetNodes = new ArrayList<>();
         this.index = 0;
         // find all elements
-        findValidNodes(bpmnElementNode);
+        if (bpmnElementNode != null) {
+            findValidNodes(bpmnElementNode);
+        }
     }
 
     /**
      * Creates a new BPMNFlowIterator with a given filter criteria.
      * The method collects all BPMNElements following the given start element and
-     * matching the given filter
+     * matching the given filter. If the start element is null the Iterator is
+     * empty.
      * 
      * @param bpmnElementNode
      * @param filter
@@ -73,7 +78,9 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
         this.targetNodes = new ArrayList<>();
         this.index = 0;
         // find all elements
-        findValidNodes(bpmnElementNode);
+        if (bpmnElementNode != null) {
+            findValidNodes(bpmnElementNode);
+        }
     }
 
     @Override
@@ -99,6 +106,9 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
      * @param currentNode
      */
     private void findValidNodes(BPMNElementNode currentNode) {
+        if (currentNode == null) {
+            return;
+        }
         Set<SequenceFlow> flowSet = currentNode.getOutgoingSequenceFlows();
         // Check if the sequence flow has a condition and evaluate it if a
         // conditionEvaluator is defined
@@ -107,12 +117,14 @@ public class BPMNFlowIterator<T> implements Iterator<BPMNElementNode> {
         }
 
         for (SequenceFlow flow : flowSet) {
-            BPMNElementNode node = getTargetNode(flow);// flow.getTargetElement();
-            if (filter.test(node)) {
-                targetNodes.add(node);
-            } else {
-                // if the node does not match the filter go ahead by a recursive call....
-                findValidNodes(node);
+            BPMNElementNode node = getTargetNode(flow);
+            if (node != null) {
+                if (filter.test(node)) {
+                    targetNodes.add(node);
+                } else {
+                    // if the node does not match the filter go ahead by a recursive call....
+                    findValidNodes(node);
+                }
             }
         }
     }

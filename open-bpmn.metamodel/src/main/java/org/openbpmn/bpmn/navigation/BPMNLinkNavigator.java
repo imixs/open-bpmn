@@ -16,7 +16,7 @@ public class BPMNLinkNavigator {
     public BPMNElementNode findNext(BPMNElementNode node) {
 
         // is it a throw event?
-        if (BPMNTypes.THROW_EVENT.equals(node.getType())) {
+        if (node != null && BPMNTypes.THROW_EVENT.equals(node.getType())) {
             String linkName = node.getName();
             // now find the corresponding first catch event with the same name
             Set<? extends BPMNElementNode> filteredElementList = node.getBpmnProcess()
