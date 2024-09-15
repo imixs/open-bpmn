@@ -46,7 +46,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.bpmn.util.BPMNXMLUtil;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -2053,7 +2053,7 @@ public class BPMNModel {
         // xmlString =
         // xmlString.replaceAll(">\\s*+(<\\!\\[CDATA\\[(.|\\n|\\r\\n)*?]\\]>)\\s*</",
         // ">$1</");
-        xmlString = BPMNXMLUtil.cleanCDATAWhiteSpace(xmlString);
+        xmlString = BPMNModelUtil.cleanCDATAWhiteSpace(xmlString);
 
         // write output
         try {

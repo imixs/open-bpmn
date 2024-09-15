@@ -23,12 +23,13 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 
 /**
- * The BPMNXMLUtil provides helper methods for xml strings
- *
+ * The BPMNModelUtil provides helper methods for a BPMNModel and the XML
+ * representation of a model.
+ * 
  * @author rsoika
  *
  */
-public class BPMNXMLUtil {
+public class BPMNModelUtil {
 
     /**
      * This method resets the Label Postion and bounds to its default values. The

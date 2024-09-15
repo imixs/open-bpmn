@@ -1,7 +1,7 @@
 package org.openbpmn.output;
 
 import org.junit.jupiter.api.Test;
-import org.openbpmn.bpmn.util.BPMNXMLUtil;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 
 /**
  * Test Class to test clean up of cdata whitespace
@@ -14,7 +14,7 @@ public class TestCleanCDATA {
         String xml = "<imixs:value>\n<![CDATA[ some data ]]>\n</imixs:value>";
 
         System.out.println(xml);
-        String result = BPMNXMLUtil.cleanCDATAWhiteSpace(xml);
+        String result = BPMNModelUtil.cleanCDATAWhiteSpace(xml);
 
         System.out.println(result);
 
@@ -26,7 +26,7 @@ public class TestCleanCDATA {
         String xml = "<imixs:value><![CDATA[ some data ]]></imixs:value>";
 
         System.out.println(xml);
-        String result = BPMNXMLUtil.cleanCDATAWhiteSpace(xml);
+        String result = BPMNModelUtil.cleanCDATAWhiteSpace(xml);
 
         System.out.println(result);
 
@@ -38,7 +38,7 @@ public class TestCleanCDATA {
         String xml = "<imixs:value>   \n                              <![CDATA[ some data ]]>\n     </imixs:value>";
 
         System.out.println(xml);
-        String result = BPMNXMLUtil.cleanCDATAWhiteSpace(xml);
+        String result = BPMNModelUtil.cleanCDATAWhiteSpace(xml);
 
         System.out.println(result);
 

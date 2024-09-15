@@ -66,7 +66,7 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
-import org.openbpmn.bpmn.util.BPMNXMLUtil;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
@@ -594,7 +594,7 @@ public class BPMNGModelFactory implements GModelFactory {
             } else {
                 // we do not draw gLabel because name is empty
                 // reset the position
-                BPMNXMLUtil.resetLabelBounds(event);
+                BPMNModelUtil.resetLabelBounds(event);
             }
         }
 
@@ -622,7 +622,7 @@ public class BPMNGModelFactory implements GModelFactory {
             } else {
                 // we do not draw gLabel because name is empty
                 // reset the position
-                BPMNXMLUtil.resetLabelBounds(gateway);
+                BPMNModelUtil.resetLabelBounds(gateway);
             }
         }
 

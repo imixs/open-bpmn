@@ -24,7 +24,7 @@ import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
-import org.openbpmn.bpmn.util.BPMNXMLUtil;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
@@ -68,7 +68,7 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
                 // If no x/y is set we compute the default position. This will also reflect to
                 // the source model, if the model will be saved later by the user...
                 if (x == 0 || y == 0 || width == 0 || height == 0) {
-                    BPMNXMLUtil.resetLabelBounds(flowElement);
+                    BPMNModelUtil.resetLabelBounds(flowElement);
                 }
             }
         } catch (BPMNMissingElementException e) {

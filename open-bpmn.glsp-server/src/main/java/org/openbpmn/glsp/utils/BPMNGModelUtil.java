@@ -44,7 +44,7 @@ import org.openbpmn.glsp.elements.IconGCompartmentBuilder;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 /**
- * The BPMNGraphUtil provides helper methods to create GNode Elements and
+ * The BPMNGModelUtil provides helper methods to create GNode Elements and
  * resolve GNodes within a bpmn diagram
  *
  * @author rsoika
@@ -161,7 +161,6 @@ public class BPMNGModelUtil {
                 .addCssClass(node.getType() + "_header") //
                 .build();
     }
-
 
     /**
      * This method tests if the given element has a BPMN extension label.
