@@ -367,7 +367,9 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             BPMNLabel bpmnLabel = bpmnElementNode.getLabel();
             GNode _labelnode = (GNode) modelState.getIndex()
                     .get(bpmnElementNode.getId() + "_bpmnlabel").orElse(null);
-            updateLabel(_labelnode, bpmnLabel, offsetX, offsetY);
+            if (_labelnode != null) {
+                updateLabel(_labelnode, bpmnLabel, offsetX, offsetY);
+            }
         }
 
     }

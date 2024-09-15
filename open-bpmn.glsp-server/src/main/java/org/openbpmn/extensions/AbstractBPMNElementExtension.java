@@ -30,9 +30,6 @@ import org.eclipse.glsp.graph.GNode;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
-import org.openbpmn.bpmn.elements.core.BPMNElementNode;
-import org.openbpmn.bpmn.elements.core.BPMNLabel;
-import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.BPMNGNode;
@@ -103,9 +100,13 @@ public abstract class AbstractBPMNElementExtension implements BPMNElementExtensi
      * corresponding GNode Element in the diagram plane.
      * <p>
      * The method distinguish between embedded labels (Task) and BPMNLabes.
-     * 
-     * In case of a LabelGNode elements can support multilineor simple line
+     * <p>
+     * In case of a LabelGNode elements can support multiline or simple line
      * GLabel elements
+     * <p>
+     * Note: If the name is empty an existing gMultiLineTextNode will be removed.
+     * This has the effect that not blank area is shown in the diagram for elements
+     * with out a label. The method automatically recreates the label if missing.
      * 
      * @param json
      * @param bpmnElement
@@ -117,6 +118,7 @@ public abstract class AbstractBPMNElementExtension implements BPMNElementExtensi
         // Update the name feature
         String name = json.getString("name", "");
         if (!name.equals(bpmnElement.getName())) {
+
             bpmnElement.setName(name);
             if (gNodeElement instanceof BPMNGNode
                     || gNodeElement instanceof BPMNGEdge) {
@@ -134,24 +136,23 @@ public abstract class AbstractBPMNElementExtension implements BPMNElementExtensi
                         if (gModelElement instanceof LabelGNode) {
                             LabelGNode lgn = (LabelGNode) gModelElement;
                             // update the bpmn-text-node of the GNodeElement.
-                            // Here we use the recomputeBPMNLabelHeight method to optimize
-                            // the height of the BPMNLabel
                             gMultiLineTextNode = BPMNGModelUtil.findMultiLineTextNode(lgn);
                             if (gMultiLineTextNode != null) {
                                 gMultiLineTextNode.getArgs().put("text", name);
-                                LabelGNode label = (LabelGNode) gModelElement;
-                                try {
-                                    BPMNLabel bpmnLabel = ((BPMNElementNode) bpmnElement).getLabel();
-                                    // BPMNGModelUtil.optimizeBPMNLabelHeight(label, bpmnLabel, name);
-                                } catch (BPMNMissingElementException e) {
-                                    e.printStackTrace();
-                                }
+                            }
+                            // if empty then we remove the lable element
+                            if (name.isEmpty()) {
+                                modelState.reset();
                             }
                         } else {
                             // default to GLabel
                             GLabel gLabel = (GLabel) gModelElement;
                             gLabel.setText(name);
                         }
+                    } else {
+                        // the gLabel was not found. This can be the case if the element had no label
+                        // before. So we reset the model to ensure the correct position of the label.
+                        modelState.reset();
                     }
                 }
             }

@@ -15,6 +15,13 @@
  ********************************************************************************/
 package org.openbpmn.bpmn.util;
 
+import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.Event;
+import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+
 /**
  * The BPMNXMLUtil provides helper methods for xml strings
  *
@@ -22,6 +29,35 @@ package org.openbpmn.bpmn.util;
  *
  */
 public class BPMNXMLUtil {
+
+    /**
+     * This method resets the Label Postion and bounds to its default values. The
+     * method is used in cases where no bounds are set or in case the postion should
+     * be reset to the default position of a label. This will also reflect to the
+     * source model, if the model will be saved later by the user...
+     * 
+     * @throws BPMNMissingElementException
+     */
+    public static void resetLabelBounds(final BPMNElementNode flowElement) throws BPMNMissingElementException {
+        double x = 0;
+        double y = 0;
+        if (BPMNModel.isGateway(flowElement)) {
+            // gateway dimensions...
+            x = flowElement.getBounds().getPosition().getX() + (Gateway.DEFAULT_WIDTH / 2)
+                    - (BPMNLabel.DEFAULT_WIDTH / 2);
+            y = flowElement.getBounds().getPosition().getY() + Gateway.DEFAULT_HEIGHT + Gateway.LABEL_OFFSET;
+        } else {
+            // default (events)
+            x = flowElement.getBounds().getPosition().getX() + (Event.DEFAULT_WIDTH / 2)
+                    - (BPMNLabel.DEFAULT_WIDTH / 2);
+            y = flowElement.getBounds().getPosition().getY() + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
+        }
+
+        // update source model with default width/height!
+        flowElement.getLabel().getBounds().setPosition(x, y);
+        // update source model with default width/height!
+        flowElement.getLabel().getBounds().setDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
+    }
 
     /**
      * This method removes whitespace around CDATA Tags like:

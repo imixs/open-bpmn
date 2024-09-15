@@ -66,6 +66,7 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNXMLUtil;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
@@ -586,8 +587,15 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // now add a GLabel
             BPMNLabel bpmnLabel = event.getLabel();
-            LabelGNode labelNode = createLabelNode(bpmnLabel, event, participant);
-            gNodeList.add(labelNode);
+            // create only if name is defined
+            if (!event.getName().isEmpty()) {
+                LabelGNode labelNode = createLabelNode(bpmnLabel, event, participant);
+                gNodeList.add(labelNode);
+            } else {
+                // we do not draw gLabel because name is empty
+                // reset the position
+                BPMNXMLUtil.resetLabelBounds(event);
+            }
         }
 
         // Add all Gateways...
@@ -607,8 +615,15 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // now add a GLabel
             BPMNLabel bpmnLabel = gateway.getLabel();
-            LabelGNode labelNode = createLabelNode(bpmnLabel, gateway, participant);
-            gNodeList.add(labelNode);
+            // create only if name is defined
+            if (!gateway.getName().isEmpty()) {
+                LabelGNode labelNode = createLabelNode(bpmnLabel, gateway, participant);
+                gNodeList.add(labelNode);
+            } else {
+                // we do not draw gLabel because name is empty
+                // reset the position
+                BPMNXMLUtil.resetLabelBounds(gateway);
+            }
         }
 
         // Add all Dataobjects...

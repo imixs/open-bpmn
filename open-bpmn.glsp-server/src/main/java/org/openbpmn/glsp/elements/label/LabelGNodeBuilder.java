@@ -21,10 +21,10 @@ import org.eclipse.glsp.graph.builder.impl.GLayoutOptions;
 import org.eclipse.glsp.graph.util.GConstants;
 import org.eclipse.glsp.graph.util.GraphUtil;
 import org.openbpmn.bpmn.BPMNTypes;
-import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.openbpmn.bpmn.util.BPMNXMLUtil;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.LabelGNode;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
@@ -65,34 +65,11 @@ public class LabelGNodeBuilder extends AbstractGNodeBuilder<LabelGNode, LabelGNo
                 y = flowElement.getLabel().getBounds().getPosition().getY();
                 width = flowElement.getLabel().getBounds().getDimension().getWidth();
                 height = flowElement.getLabel().getBounds().getDimension().getHeight();
-
                 // If no x/y is set we compute the default position. This will also reflect to
                 // the source model, if the model will be saved later by the user...
-                if (x == 0 || y == 0) {
-                    x = flowElement.getBounds().getPosition().getX() + (Event.DEFAULT_WIDTH / 2)
-                            - (BPMNLabel.DEFAULT_WIDTH / 2);
-                    y = flowElement.getBounds().getPosition().getY() + Event.DEFAULT_HEIGHT + Event.LABEL_OFFSET;
-                    // update source model with default width/height!
-                    flowElement.getLabel().getBounds().setPosition(x, y);
+                if (x == 0 || y == 0 || width == 0 || height == 0) {
+                    BPMNXMLUtil.resetLabelBounds(flowElement);
                 }
-                // If no width/heigh is set or the width/height does not match
-                // the open bpmn DEFAULT_WIDTH/HEIGHT, we adjust the dimensions
-                // to the default settings. This will also reflect to the source model,
-                // if the model will be saved later by the user...
-                if (width != BPMNLabel.DEFAULT_WIDTH || height != BPMNLabel.DEFAULT_HEIGHT) {
-                    if (width > 0) {
-                        // adjust x postion .....
-                        double xOffset = ((BPMNLabel.DEFAULT_WIDTH - width) / 2);
-                        x = x - xOffset;
-                        flowElement.getLabel().getBounds().setPosition(x, y);
-                    }
-
-                    width = BPMNLabel.DEFAULT_WIDTH;
-                    height = BPMNLabel.DEFAULT_HEIGHT;
-                    // update source model with default width/height!
-                    flowElement.getLabel().getBounds().setDimension(width, height);
-                }
-
             }
         } catch (BPMNMissingElementException e) {
             // failed to compute size
