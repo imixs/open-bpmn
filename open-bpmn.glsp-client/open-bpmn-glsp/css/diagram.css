@@ -39,7 +39,11 @@
 
 /* BPMN Elements */
 .task>.sprotty-node {
-    fill: #425C81;
+
+
+    fill: #84a1bd;
+    stroke-width: 1px;
+    stroke: var(--theia-foreground);
 }
 
 .event.startEvent>circle {
@@ -53,17 +57,13 @@
 }
 
 .event.intermediateCatchEvent>circle {
-    fill: #6f8dab;
-    stroke-width: 0px;
-    stroke: var(--theia-editor-foreground);
-    ;
+    fill: #b6c7d9;
+    stroke: var(--theia-foreground);
 }
 
 .event.intermediateThrowEvent>circle {
-    fill: #6f8dab;
-    stroke-width: 0px;
-    stroke: var(--theia-editor-foreground);
-    ;
+    fill: #b6c7d9;
+    stroke: var(--theia-foreground);
 }
 
 .event.boundaryEvent>circle {
@@ -120,14 +120,19 @@
 }
 
 .task .bpmn-text-node text {
-    fill: #f0f3f8;
+    fill: #f5f9ff;
     text-anchor: middle;
 }
 
 .task .extension text {
-    fill: #f0f3f8;
+    fill: #f5f9ff;
     font-size: 7pt;
     text-anchor: start;
+}
+
+.task .icon path {
+    stroke-width: 0;
+    fill: #f5f9ff;
 }
 
 .BPMNLabel>.sprotty-node {
@@ -236,13 +241,31 @@
 }
 
 
-/* Extension Draft */
+/* Extension Imixs-Workflow (draft) */
 .intermediateCatchEvent.bpmnextension-imixs>circle {
+    fill: #2579afc2;
     stroke-width: 2px;
     stroke: #d48729;
 }
 
+.intermediateCatchEvent.bpmnextension-imixs .icon path {
+    stroke-width: 0;
+    fill: #f0f3f8;
+}
+
 .task.bpmnextension-imixs>.sprotty-node {
+    fill: #425C81;
     stroke-width: 2px;
     stroke: #d48729;
+}
+
+.task.bpmnextension-imixs .bpmn-text-node text {
+    fill: #f0f3f8;
+    text-anchor: middle;
+}
+
+.task.bpmnextension-imixs .extension text {
+    fill: #f0f3f8;
+    font-size: 7pt;
+    text-anchor: start;
 }
