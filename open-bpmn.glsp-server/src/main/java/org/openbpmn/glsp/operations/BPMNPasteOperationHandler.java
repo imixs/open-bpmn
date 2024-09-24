@@ -38,6 +38,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -45,7 +46,7 @@ import com.google.inject.Inject;
 /**
  * This ActionHandler reacts on PasteOperation.
  * 
- * The handler expects a data element with the key 'bpmn' and a the value with a
+ * The handler expects a data element with the key 'bpmn' and a value with a
  * list of element ids to be copied. This is how the
  * {@link BPMNClipboardDataActionHandler} stores the ids into memory.
  * 
@@ -121,8 +122,10 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                         // adjust label position?
                         BPMNLabel label = newElementNode.getLabel();
                         if (label != null) {
-                            label.updateLocation(bpmnElementNode.getLabel().getBounds().getPosition().getX() + xOffset,
-                                    bpmnElementNode.getLabel().getBounds().getPosition().getY() + yOffset);
+                            BPMNModelUtil.resetLabelBounds(newElementNode);
+                            // label.updateLocation(bpmnElementNode.getLabel().getBounds().getPosition().getX()
+                            // + xOffset,
+                            // bpmnElementNode.getLabel().getBounds().getPosition().getY() + yOffset);
                         }
                     }
                 } catch (BPMNModelException e) {
