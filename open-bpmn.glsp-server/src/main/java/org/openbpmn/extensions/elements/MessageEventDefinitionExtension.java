@@ -164,14 +164,20 @@ public class MessageEventDefinitionExtension extends AbstractBPMNElementExtensio
     public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
+        boolean updateClient = false;
         // we are only interested in category messages
         if ("Message Objects".equals(category)) {
 
             Event bpmnEvent = (Event) bpmnElement;
+            Set<Element> oldDefinitionList = bpmnEvent.getEventDefinitionsByType("messageEventDefinition");
+
             JsonArray dataList = json.getJsonArray("messageRefs");
             // synchronize the definition list of the event element
             Set<Element> messageEventDefinitions = synchronizeEventDefinitions("messageEventDefinition", bpmnEvent,
                     dataList);
+            if (oldDefinitionList.size() != messageEventDefinitions.size()) {
+                updateClient = true;
+            }
             // now we can update the values
             Iterator<Element> iter = messageEventDefinitions.iterator();
             int i = 0;
@@ -184,8 +190,15 @@ public class MessageEventDefinitionExtension extends AbstractBPMNElementExtensio
                 i++;
                 // update completed
             }
+
         }
-        return false;
+
+        if (updateClient) {
+            // modelState.reset();
+            modelState.refreshGModelState();
+
+        }
+        return updateClient;
 
     }
 }
