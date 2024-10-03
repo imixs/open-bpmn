@@ -188,15 +188,21 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
     public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
+        boolean updateClient = false;
         // we are only interested in category 'Timer Definitions'
         if ("Timer Definitions".equals(category)) {
 
             Event bpmnEvent = (Event) bpmnElement;
+            Set<Element> oldDefinitionList = bpmnEvent.getEventDefinitionsByType("timerEventDefinition");
+
             JsonArray dataList = json.getJsonArray("timers");
 
             // synchronize the definition list of the event element
             Set<Element> timerEventDefinitions = synchronizeEventDefinitions("timerEventDefinition", bpmnEvent,
                     dataList);
+            if (oldDefinitionList.size() != timerEventDefinitions.size()) {
+                updateClient = true;
+            }
 
             // now we can update the values one by one
             // NOTE: the id can change within the definitionList if an element was deleted
@@ -239,6 +245,10 @@ public class TimerEventDefinitionExtension extends AbstractBPMNElementExtension 
                 // update completed
             }
         }
-        return false;
+        if (updateClient) {
+            // modelState.reset();
+            modelState.refreshGModelState();
+        }
+        return updateClient;
     }
 }

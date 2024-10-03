@@ -130,15 +130,20 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
     public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
+        boolean updateClient = false;
         // we are only interested in category link
         if ("Link".equals(category)) {
             Event bpmnEvent = (Event) bpmnElement;
+            Set<Element> oldDefinitionList = bpmnEvent.getEventDefinitionsByType("linkEventDefinition");
+
             JsonArray dataList = json.getJsonArray("links");
 
             // synchronize the definition list of the event element
             Set<Element> linkEventDefinitions = synchronizeEventDefinitions("linkEventDefinition", bpmnEvent,
                     dataList);
-
+            if (oldDefinitionList.size() != linkEventDefinitions.size()) {
+                updateClient = true;
+            }
             // just update the values one by one by referring to the signalRef id by
             // comparing the name
             Iterator<Element> iter = linkEventDefinitions.iterator();
@@ -155,7 +160,11 @@ public class LinkEventDefinitionExtension extends AbstractBPMNElementExtension {
             }
         }
 
-        return false;
+        if (updateClient) {
+            // modelState.reset();
+            modelState.refreshGModelState();
+        }
+        return updateClient;
 
     }
 }

@@ -164,14 +164,20 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
     public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
 
+        boolean updateClient = false;
         // we are only interested in category signals
         if ("Signals".equals(category)) {
 
             Event bpmnEvent = (Event) bpmnElement;
+            Set<Element> oldDefinitionList = bpmnEvent.getEventDefinitionsByType("signalEventDefinition");
+
             JsonArray dataList = json.getJsonArray("signals");
             // synchronize the definition list of the event element
             Set<Element> signalEventDefinitions = synchronizeEventDefinitions("signalEventDefinition", bpmnEvent,
                     dataList);
+            if (oldDefinitionList.size() != signalEventDefinitions.size()) {
+                updateClient = true;
+            }
             // now we can update the values
             Iterator<Element> iter = signalEventDefinitions.iterator();
             int i = 0;
@@ -185,7 +191,11 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
                 // update completed
             }
         }
-        return false;
+        if (updateClient) {
+            // modelState.reset();
+            modelState.refreshGModelState();
+        }
+        return updateClient;
 
     }
 }
