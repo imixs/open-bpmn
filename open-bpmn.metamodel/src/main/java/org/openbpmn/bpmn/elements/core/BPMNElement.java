@@ -212,35 +212,39 @@ public abstract class BPMNElement implements BPMNValidator {
     public String getChildNodeContent(BPMNNS ns, String nodeName) {
         // lazy loading child node
         Element childNode = loadOrCreateChildNode(ns, nodeName);
-
-        Node cdata = findCDATA(childNode);
-        if (cdata != null) {
-            return cdata.getNodeValue();
+        List<Node> cdataNodes = findAllCDATA(childNode);
+        // do we have CDATA nodes?
+        if (!cdataNodes.isEmpty()) {
+            // Concatenate all CDATA sections
+            StringBuilder content = new StringBuilder();
+            for (Node cdata : cdataNodes) {
+                content.append(cdata.getNodeValue());
+            }
+            return content.toString();
         } else {
-            // normal text node
+            // normal text node, just return the content
             return childNode.getTextContent();
         }
-
     }
 
     /**
-     * Helper method that finds an optional CDATA node within the current element
-     * content.
+     * Helper method that finds all CDATA nodes within the current element.
+     * In complex situations there can be nested CDATA sections inside one tag.
      * 
      * @param element
      * @return
      */
-    private Node findCDATA(Element element) {
-        // search CDATA node
+    private List<Node> findAllCDATA(Element element) {
+        List<Node> cdataNodes = new ArrayList<>();
         NodeList childNodes = element.getChildNodes();
+
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node node = childNodes.item(i);
             if (node instanceof CDATASection) {
-                return (CDATASection) node;
-
+                cdataNodes.add(node);
             }
         }
-        return null;
+        return cdataNodes;
     }
 
     /**

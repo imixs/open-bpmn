@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions
+	xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+	xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+	xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="demo"
+	exporterVersion="1.0.0" targetNamespace="http://org.openbpmn"
+	xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+	<bpmn2:process id="process_1">
+		<bpmn2:startEvent id="start_1" name="Start">
+			<bpmn2:documentation id="documentation_TLPRag"><![CDATA[Some text with 
+<markup>code</markup>!]]></bpmn2:documentation>
+		</bpmn2:startEvent>
+		<bpmn2:dataObject id="dataObject_multi" name="Prompt Category">
+			<bpmn2:documentation id="documentation_K0KMVw"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+	  <PromptDefinition>
+		<prompt_options>{"n_predict": 512, "temperature": 0 }</prompt_options>
+		<prompt><![CDATA[[INST] You are an employee at a logistic company. Your job is to check incoming invoice documents and forward them internally to employees. [/INST]
+	  
+	  <FILECONTEXT>^.+\.([pP][dD][fF])$</FILECONTEXT>
+		  
+	  </s>[INST] Assign the invoice to one of the following categories:
+	  
+	  - Cargo-Invoice - in case the invoice is about cargo and logistic services
+	  - Credit - in case of a credit note
+	  - Invoice - in all other cases
+	  
+	  Extract also the company name and the language the invoice is written in. 
+	  
+	  Note: The company name is the name of the company that issued the invoice document, not the recipient. The company name is usually at the beginning or end of the invoice document.
+	  
+	  Output the infromation as one XML object that has the following structure:
+	  
+	  <document>
+		<document.type>Type<document.type>  
+		<document.company>Kraxi GmbH<document.company>
+		<document.language>German<document.language>
+	  </document>
+	  
+	  Note: Do not generate any other information instead of the XML object. Do not generate more than one XML Object.
+	  
+	  [/INST]
+	  ]]]]><![CDATA[>
+	  </prompt>
+	  </PromptDefinition>    ]]></bpmn2:documentation>
+		</bpmn2:dataObject>
+
+	</bpmn2:process>
+	<bpmndi:BPMNDiagram id="BPMNDiagram_1"
+		name="Default Process Diagram">
+		<bpmndi:BPMNPlane bpmnElement="process_1"
+			id="BPMNPlane_process_1">
+			<bpmndi:BPMNShape bpmnElement="start_1"
+				id="BPMNShape_pG-beg">
+				<dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0" />
+				<bpmndi:BPMNLabel id="BPMNLabel_OzBZnw">
+					<dc:Bounds x="0.0" y="0.0" />
+				</bpmndi:BPMNLabel>
+			</bpmndi:BPMNShape>
+		</bpmndi:BPMNPlane>
+	</bpmndi:BPMNDiagram>
+</bpmn2:definitions>
