@@ -129,6 +129,7 @@ public class BPMNProcess extends BPMNElement {
                     this.createBPMNLanesByNode((Element) child);
                 } else {
                     // unsupported node type
+                    // logger.warning("Unsupported node type: " + child.getNodeType());
                 }
             }
             initialized = true;

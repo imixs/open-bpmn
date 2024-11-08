@@ -151,6 +151,12 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'messageFlow', BPMNEdge, BPMNEdgeView);
     configureModelElement(context, 'association', BPMNEdge, BPMNEdgeView);
 
+    // Currently unsupported Task Types
+    configureModelElement(context, 'subProcess', TaskNode, TaskNodeView);
+    configureModelElement(context, 'adHocSubProcess', TaskNode, TaskNodeView);
+    configureModelElement(context, 'transaction', TaskNode, TaskNodeView);
+    configureModelElement(context, 'callActivity', TaskNode, TaskNodeView);
+
 });
 
 export function createBPMNDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {
