@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.MessageGNode;
  */
 public class MessageGNodeImpl extends BPMNGNodeImpl implements MessageGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected MessageGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.MESSAGE_GNODE;
-    }
+		return BpmnPackage.Literals.MESSAGE_GNODE;
+	}
 
 } //MessageGNodeImpl

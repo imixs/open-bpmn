@@ -18,22 +18,22 @@ import org.openbpmn.glsp.bpmn.IconGCompartment;
  */
 public class IconGCompartmentImpl extends GCompartmentImpl implements IconGCompartment {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected IconGCompartmentImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.ICON_GCOMPARTMENT;
-    }
+		return BpmnPackage.Literals.ICON_GCOMPARTMENT;
+	}
 
 } //IconGCompartmentImpl

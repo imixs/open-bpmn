@@ -1685,6 +1685,34 @@ public class BPMNModel {
     }
 
     /**
+     * Returns true if the node is a dataStore node.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isDataStore(Node node) {
+        return (BPMNTypes.DATASTORE.equals(node.getLocalName()));
+    }
+
+    public static boolean isDataStore(BPMNElementNode element) {
+        return isDataStore(element.getElementNode());
+    }
+
+    /**
+     * Returns true if the node is a dataStore node.
+     * 
+     * @param node
+     * @return
+     */
+    public static boolean isDataStoreReference(Node node) {
+        return (BPMNTypes.DATASTOREREFERENCE.equals(node.getLocalName()));
+    }
+
+    public static boolean isDataStoreReference(BPMNElementNode element) {
+        return isDataStoreReference(element.getElementNode());
+    }
+
+    /**
      * Returns true if the node is a textAnnotation node.
      * 
      * @param node

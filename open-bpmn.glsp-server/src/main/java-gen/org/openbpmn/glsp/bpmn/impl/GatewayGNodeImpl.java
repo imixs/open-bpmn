@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.GatewayGNode;
  */
 public class GatewayGNodeImpl extends BPMNGNodeImpl implements GatewayGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected GatewayGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.GATEWAY_GNODE;
-    }
+		return BpmnPackage.Literals.GATEWAY_GNODE;
+	}
 
 } //GatewayGNodeImpl

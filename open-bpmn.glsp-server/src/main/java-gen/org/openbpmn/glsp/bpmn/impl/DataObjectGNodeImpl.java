@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.DataObjectGNode;
  */
 public class DataObjectGNodeImpl extends BPMNGNodeImpl implements DataObjectGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected DataObjectGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.DATA_OBJECT_GNODE;
-    }
+		return BpmnPackage.Literals.DATA_OBJECT_GNODE;
+	}
 
 } //DataObjectGNodeImpl

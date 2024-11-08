@@ -48,6 +48,7 @@ public class BPMNProcess extends BPMNElement {
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected Set<Activity> activities = null;
     protected Set<DataObject> dataObjects = null;
+    protected Set<DataStoreReference> dataStoreReferences = null;
     protected Set<TextAnnotation> textAnnotations = null;
     protected Set<Event> events = null;
     protected Set<Gateway> gateways = null;
@@ -116,6 +117,8 @@ public class BPMNProcess extends BPMNElement {
                     this.createBPMNGatewayByNode((Element) child);
                 } else if (BPMNModel.isDataObject(child)) {
                     this.createBPMNDataObjectByNode((Element) child);
+                } else if (BPMNModel.isDataStoreReference(child)) {
+                    this.createBPMNDataStoreReferenceByNode((Element) child);
                 } else if (BPMNModel.isTextAnnotation(child)) {
                     this.createBPMNTextAnnotationByNode((Element) child);
                 } else if (BPMNModel.isSequenceFlow(child)) {
@@ -227,6 +230,17 @@ public class BPMNProcess extends BPMNElement {
 
     public void setDataObjects(Set<DataObject> dataObjects) {
         this.dataObjects = dataObjects;
+    }
+
+    public Set<DataStoreReference> getDataStoreReferences() {
+        if (dataStoreReferences == null) {
+            dataStoreReferences = new LinkedHashSet<DataStoreReference>();
+        }
+        return dataStoreReferences;
+    }
+
+    public void setDataStoreReferencess(Set<DataStoreReference> dataStoreReferences) {
+        this.dataStoreReferences = dataStoreReferences;
     }
 
     public Set<TextAnnotation> getTextAnnotations() {
@@ -399,7 +413,7 @@ public class BPMNProcess extends BPMNElement {
         }
 
         // create a new Dom node...
-        Element dataObjectElement = model.createElement(BPMNNS.BPMN2, "dataObject");
+        Element dataObjectElement = model.createElement(BPMNNS.BPMN2, BPMNTypes.DATAOBJECT);
         dataObjectElement.setAttribute("id", id);
         dataObjectElement.setAttribute("name", name);
         this.getElementNode().appendChild(dataObjectElement);
@@ -408,6 +422,42 @@ public class BPMNProcess extends BPMNElement {
         DataObject dataObject = this.createBPMNDataObjectByNode(dataObjectElement);
 
         return dataObject;
+    }
+
+    /**
+     * Creates a new BPMNDataStoreReference element.
+     * <p>
+     * <bpmn2:dataStoreReferences id="DataStoreReference_1" name="Data Store
+     * Reference 1"/>
+     * 
+     * @param id
+     * @param name
+     * @throws BPMNModelException
+     */
+    public DataStoreReference addDataStoreReference(String id, String name) throws BPMNModelException {
+
+        // verify id
+        if (id == null || id.isEmpty()) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
+        }
+        // verify id
+        for (DataStoreReference node : getDataStoreReferences()) {
+            if (node.getId().equals(id)) {
+                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                        "id '" + id + "' is already in use!");
+            }
+        }
+
+        // create a new Dom node...
+        Element dataStoreReferenceElement = model.createElement(BPMNNS.BPMN2, BPMNTypes.DATASTOREREFERENCE);
+        dataStoreReferenceElement.setAttribute("id", id);
+        dataStoreReferenceElement.setAttribute("name", name);
+        this.getElementNode().appendChild(dataStoreReferenceElement);
+
+        // add BPMNDataStoreRef instance
+        DataStoreReference dataStore = this.createBPMNDataStoreReferenceByNode(dataStoreReferenceElement);
+
+        return dataStore;
     }
 
     /**
@@ -434,7 +484,7 @@ public class BPMNProcess extends BPMNElement {
         }
 
         // create a new Dom node...
-        Element textAnnotationElement = model.createElement(BPMNNS.BPMN2, "textAnnotation");
+        Element textAnnotationElement = model.createElement(BPMNNS.BPMN2, BPMNTypes.TEXTANNOTATION);
         textAnnotationElement.setAttribute("id", id);
         this.getElementNode().appendChild(textAnnotationElement);
 
@@ -595,13 +645,13 @@ public class BPMNProcess extends BPMNElement {
             BPMNModel.log("create laneset...");
             // create the default collaboration element
             String laneSetID = BPMNModel.generateShortID("laneset");
-            laneSet = model.createElement(BPMNNS.BPMN2, "laneSet");
+            laneSet = model.createElement(BPMNNS.BPMN2, BPMNTypes.LANESET);
             laneSet.setAttribute("id", laneSetID);
             laneSet.setAttribute("name", "Lane Set");
             this.getElementNode().insertBefore(laneSet, this.getElementNode().getFirstChild());
         }
         // add the new Lane
-        Element lane = model.createElement(BPMNNS.BPMN2, "lane");
+        Element lane = model.createElement(BPMNNS.BPMN2, BPMNTypes.LANE);
         String laneId = BPMNModel.generateShortID("lane");
         lane.setAttribute("id", laneId);
         lane.setAttribute("name", name);
@@ -819,6 +869,9 @@ public class BPMNProcess extends BPMNElement {
         if (bpmnElement instanceof DataObject) {
             this.getDataObjects().remove(bpmnElement);
         }
+        if (bpmnElement instanceof DataStoreReference) {
+            this.getDataStoreReferences().remove(bpmnElement);
+        }
         if (bpmnElement instanceof TextAnnotation) {
             this.getTextAnnotations().remove(bpmnElement);
         }
@@ -889,6 +942,16 @@ public class BPMNProcess extends BPMNElement {
      * @param id
      */
     public void deleteDataObject(String id) {
+        deleteElementNode(id);
+    }
+
+    /**
+     * Deletes a BPMN DataStoreReference element from this context.
+     * <p>
+     * 
+     * @param id
+     */
+    public void deleteDataStoreReference(String id) {
         deleteElementNode(id);
     }
 
@@ -1060,6 +1123,13 @@ public class BPMNProcess extends BPMNElement {
 
         Set<DataObject> listD = this.getDataObjects();
         for (DataObject element : listD) {
+            if (id.equals(element.getId())) {
+                return element;
+            }
+        }
+
+        Set<DataStoreReference> listDsr = this.getDataStoreReferences();
+        for (DataStoreReference element : listDsr) {
             if (id.equals(element.getId())) {
                 return element;
             }
@@ -1238,6 +1308,11 @@ public class BPMNProcess extends BPMNElement {
             Element element = (Element) this.getElementNode().appendChild(newElement);
             result = this.createBPMNDataObjectByNode(element);
         }
+        if (_bpmnElementNode instanceof DataStoreReference) {
+            newElement.setAttribute("id", BPMNModel.generateShortID("dataStoreReference"));
+            Element element = (Element) this.getElementNode().appendChild(newElement);
+            result = this.createBPMNDataStoreReferenceByNode(element);
+        }
         if (_bpmnElementNode instanceof TextAnnotation) {
             newElement.setAttribute("id", BPMNModel.generateShortID("textAnnotation"));
             Element element = (Element) this.getElementNode().appendChild(newElement);
@@ -1315,6 +1390,19 @@ public class BPMNProcess extends BPMNElement {
         DataObject dataObject = new DataObject(model, element, element.getLocalName(), this);
         getDataObjects().add(dataObject);
         return dataObject;
+    }
+
+    /**
+     * Creates a new DataStoreReference from a Element node
+     * 
+     * @param element
+     * @return
+     * @throws BPMNModelException
+     */
+    private DataStoreReference createBPMNDataStoreReferenceByNode(Element element) throws BPMNModelException {
+        DataStoreReference dataStoreReference = new DataStoreReference(model, element, this);
+        getDataStoreReferences().add(dataStoreReference);
+        return dataStoreReference;
     }
 
     /**

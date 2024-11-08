@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.TaskGNode;
  */
 public class TaskGNodeImpl extends BPMNGNodeImpl implements TaskGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected TaskGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.TASK_GNODE;
-    }
+		return BpmnPackage.Literals.TASK_GNODE;
+	}
 
 } //TaskGNodeImpl

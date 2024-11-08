@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.LaneGNode;
  */
 public class LaneGNodeImpl extends BPMNGNodeImpl implements LaneGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected LaneGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.LANE_GNODE;
-    }
+		return BpmnPackage.Literals.LANE_GNODE;
+	}
 
 } //LaneGNodeImpl

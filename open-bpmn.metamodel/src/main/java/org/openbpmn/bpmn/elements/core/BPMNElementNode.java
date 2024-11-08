@@ -12,6 +12,7 @@ import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
@@ -201,6 +202,7 @@ public abstract class BPMNElementNode extends BPMNElement {
         }
         // update is only possible for flow elements and data objects.
         if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)
+                && !BPMNTypes.isDataStoreNode(this)
                 && !BPMNTypes.isTextAnnotationNode(this)) {
             return;
         }
@@ -261,6 +263,7 @@ public abstract class BPMNElementNode extends BPMNElement {
     public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
 
         if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)
+                && !BPMNTypes.isDataStoreNode(this)
                 && !BPMNTypes.isTextAnnotationNode(this)) {
             logger.finest(
                     "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity, DataObjects)");
@@ -293,6 +296,10 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (this instanceof DataObject) {
             this.bpmnProcess.getDataObjects().remove(this);
             newProcess.getDataObjects().add((DataObject) this);
+        }
+        if (this instanceof DataStoreReference) {
+            this.bpmnProcess.getDataStoreReferences().remove(this);
+            newProcess.getDataStoreReferences().add((DataStoreReference) this);
         }
         if (this instanceof TextAnnotation) {
             this.bpmnProcess.getTextAnnotations().remove(this);
@@ -486,12 +493,13 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (BPMNTypes.BPMN_GATEWAYS.contains(type)) {
             return true;
         }
-
         if (BPMNTypes.BPMN_EVENTS.contains(type)) {
             return true;
         }
-
         if (BPMNTypes.DATAOBJECT.equals(type)) {
+            return true;
+        }
+        if (BPMNTypes.DATASTOREREFERENCE.equals(type)) {
             return true;
         }
         if (BPMNTypes.MESSAGE.equals(type)) {
@@ -592,6 +600,30 @@ public abstract class BPMNElementNode extends BPMNElement {
             }
             if (target instanceof DataObject) {
                 result.add((DataObject) target);
+            }
+
+        }
+        return result;
+    }
+
+    /**
+     * Returns a List of all DataStoreReferences associated with this element
+     * 
+     * @param event
+     * @return
+     */
+    public Set<DataStoreReference> getDataStores() {
+        Set<DataStoreReference> result = new HashSet<DataStoreReference>();
+        Set<Association> associations = this.getAssociations();
+        // find Data objects...
+        for (Association association : associations) {
+            BPMNElementNode source = association.getSourceElement();
+            BPMNElementNode target = association.getTargetElement();
+            if (source instanceof DataStoreReference) {
+                result.add((DataStoreReference) source);
+            }
+            if (target instanceof DataStoreReference) {
+                result.add((DataStoreReference) target);
             }
 
         }

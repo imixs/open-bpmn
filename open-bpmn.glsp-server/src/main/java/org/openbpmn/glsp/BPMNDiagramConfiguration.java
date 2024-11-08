@@ -118,6 +118,8 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // DataObject
         nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false, false));
+        // DataStore
+        nodeHints.add(new ShapeTypeHint(BPMNTypes.DATASTORE, true, true, false, false));
         // Message
         nodeHints.add(new ShapeTypeHint(BPMNTypes.MESSAGE, true, true, false, false));
         // TextAnnotation
@@ -180,6 +182,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // add special types
         elementList.add(BPMNTypes.DATAOBJECT);
+        elementList.add(BPMNTypes.DATASTORE);
         elementList.add(BPMNTypes.MESSAGE);
         elementList.add(BPMNTypes.TEXTANNOTATION);
         elementList.add(BPMNTypes.POOL);
@@ -270,43 +273,19 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
         // add Event Definitions
         containables.addAll(Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
                 BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
-                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
                 BPMNTypes.EVENT_DEFINITION_ERROR, //
-                BPMNTypes.EVENT_DEFINITION_TIMER, //
-                BPMNTypes.EVENT_DEFINITION_MESSAGE//
+                BPMNTypes.EVENT_DEFINITION_ESCALATION, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_TIMER //
         }));
 
         // Add optional Extension Hints...
         addExtensionHints(BPMNTypes.START_EVENT, containables);
 
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.START_EVENT, true, true, false, true);
-
-        shapeTypeHint.setContainableElementTypeIds(containables);
-        return shapeTypeHint;
-    }
-
-    /**
-     * Creates a EndEvent ShapeTypeHint
-     * <p>
-     * The method defines the containable Event Definitions
-     *
-     * @return
-     */
-    private ShapeTypeHint createEndEventHint() {
-        List<String> containables = Arrays.asList(new String[] { //
-                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
-                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
-                BPMNTypes.EVENT_DEFINITION_ERROR, //
-                BPMNTypes.EVENT_DEFINITION_TIMER, //
-                BPMNTypes.EVENT_DEFINITION_ESCALATION, //
-                BPMNTypes.EVENT_DEFINITION_CANCEL, //
-                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
-                BPMNTypes.EVENT_DEFINITION_TERMINATE });
-        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.END_EVENT, true, true, false, true);
-
-        // Add optional Extension Hints...
-        addExtensionHints(BPMNTypes.END_EVENT, containables);
 
         shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
@@ -323,11 +302,15 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         List<String> containables = new ArrayList<>();
         // add Event Definitions
         containables.addAll(Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_CANCEL, //
+                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
                 BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
+                BPMNTypes.EVENT_DEFINITION_ERROR, //
+                BPMNTypes.EVENT_DEFINITION_ESCALATION, //
                 BPMNTypes.EVENT_DEFINITION_LINK, //
                 BPMNTypes.EVENT_DEFINITION_MESSAGE, //
-                BPMNTypes.EVENT_DEFINITION_TIMER, //
-                BPMNTypes.EVENT_DEFINITION_SIGNAL //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_TIMER //
         }));
 
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.CATCH_EVENT, true, true, false, true);
@@ -351,14 +334,42 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         // add Event Definitions
         containables.addAll(Arrays.asList(new String[] { //
                 BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
+                BPMNTypes.EVENT_DEFINITION_ESCALATION, //
                 BPMNTypes.EVENT_DEFINITION_LINK, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
                 BPMNTypes.EVENT_DEFINITION_SIGNAL //
+
         }));
 
         ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.THROW_EVENT, true, true, false, true);
 
         // Add optional Extension Hints...
         addExtensionHints(BPMNTypes.THROW_EVENT, containables);
+        shapeTypeHint.setContainableElementTypeIds(containables);
+        return shapeTypeHint;
+    }
+
+    /**
+     * Creates a EndEvent ShapeTypeHint
+     * <p>
+     * The method defines the containable Event Definitions
+     *
+     * @return
+     */
+    private ShapeTypeHint createEndEventHint() {
+        List<String> containables = Arrays.asList(new String[] { //
+                BPMNTypes.EVENT_DEFINITION_CANCEL, //
+                BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
+                BPMNTypes.EVENT_DEFINITION_ERROR, //
+                BPMNTypes.EVENT_DEFINITION_ESCALATION, //
+                BPMNTypes.EVENT_DEFINITION_MESSAGE, //
+                BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+                BPMNTypes.EVENT_DEFINITION_TERMINATE });
+        ShapeTypeHint shapeTypeHint = new ShapeTypeHint(BPMNTypes.END_EVENT, true, true, false, true);
+
+        // Add optional Extension Hints...
+        addExtensionHints(BPMNTypes.END_EVENT, containables);
+
         shapeTypeHint.setContainableElementTypeIds(containables);
         return shapeTypeHint;
     }

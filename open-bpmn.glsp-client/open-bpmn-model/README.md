@@ -62,6 +62,10 @@ The model object `TextAnnotation` defines a BPMN TextAnnotation
 
 The model object `DataObjectNode` defines a BPMN DataObject
 
+**DataStoreNode**
+
+The model object `DataStoreNode` defines a BPMN DataStoreReference
+
 **PoolNode**
 
 The model object `PoolNode` defines a BPMN Pool (Participant) and can include BPMN Lanes (LaneNode)

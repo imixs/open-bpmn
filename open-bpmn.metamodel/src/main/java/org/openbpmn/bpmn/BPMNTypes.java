@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
@@ -43,16 +44,16 @@ public class BPMNTypes {
     public static final String BOUNDARY_EVENT = "boundaryEvent";
 
     // Event Definitions
+    public static final String EVENT_DEFINITION_CANCEL = "cancelEventDefinition";
     public static final String EVENT_DEFINITION_CONDITIONAL = "conditionalEventDefinition";
     public static final String EVENT_DEFINITION_COMPENSATION = "compensationEventDefinition";
-    public static final String EVENT_DEFINITION_TIMER = "timerEventDefinition";
-    public static final String EVENT_DEFINITION_SIGNAL = "signalEventDefinition";
-    public static final String EVENT_DEFINITION_ESCALATION = "escalationEventDefinition";
-    public static final String EVENT_DEFINITION_MESSAGE = "messageEventDefinition";
-    public static final String EVENT_DEFINITION_LINK = "linkEventDefinition";
     public static final String EVENT_DEFINITION_ERROR = "errorEventDefinition";
+    public static final String EVENT_DEFINITION_ESCALATION = "escalationEventDefinition";
+    public static final String EVENT_DEFINITION_LINK = "linkEventDefinition";
+    public static final String EVENT_DEFINITION_MESSAGE = "messageEventDefinition";
+    public static final String EVENT_DEFINITION_SIGNAL = "signalEventDefinition";
     public static final String EVENT_DEFINITION_TERMINATE = "terminateEventDefinition";
-    public static final String EVENT_DEFINITION_CANCEL = "cancelEventDefinition";
+    public static final String EVENT_DEFINITION_TIMER = "timerEventDefinition";
 
     // Multiple Event Definitions
     public static final String MULTIPLE_EVENT_DEFINITIONS = "multipleEventDefinition";
@@ -67,6 +68,8 @@ public class BPMNTypes {
 
     // Others
     public static final String DATAOBJECT = "dataObject";
+    public static final String DATASTORE = "dataStore";
+    public static final String DATASTOREREFERENCE = "dataStoreReference";
     public static final String TEXTANNOTATION = "textAnnotation";
     public static final String POOL = "pool";
     public static final String LANE = "lane";
@@ -158,7 +161,17 @@ public class BPMNTypes {
     }
 
     /**
-     * Returns true if the given element is a DataObject
+     * Returns true if the given element is a DataStore
+     */
+    public static boolean isDataStoreNode(BPMNElement element) {
+        if (element instanceof DataStoreReference) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the given element is a TextAnnotation
      */
     public static boolean isTextAnnotationNode(BPMNElement element) {
         if (element instanceof TextAnnotation) {
@@ -230,6 +243,7 @@ public class BPMNTypes {
             BPMNTypes.BOUNDARY_EVENT, //
 
             BPMNTypes.DATAOBJECT, //
+            BPMNTypes.DATASTORE, //
             BPMNTypes.TEXTANNOTATION, //
             BPMNTypes.MESSAGE, //
 
@@ -242,12 +256,15 @@ public class BPMNTypes {
     });
 
     public final static List<String> BPMN_EVENT_DEFINITIONS = Arrays.asList(new String[] { //
+            BPMNTypes.EVENT_DEFINITION_CANCEL, //
             BPMNTypes.EVENT_DEFINITION_CONDITIONAL, //
-            BPMNTypes.EVENT_DEFINITION_TIMER, //
-            BPMNTypes.EVENT_DEFINITION_SIGNAL, //
-            BPMNTypes.EVENT_DEFINITION_MESSAGE, //
-            BPMNTypes.EVENT_DEFINITION_LINK, //
+            BPMNTypes.EVENT_DEFINITION_COMPENSATION, //
             BPMNTypes.EVENT_DEFINITION_ERROR, //
+            BPMNTypes.EVENT_DEFINITION_ESCALATION, //
+            BPMNTypes.EVENT_DEFINITION_LINK, //
+            BPMNTypes.EVENT_DEFINITION_MESSAGE, //
+            BPMNTypes.EVENT_DEFINITION_SIGNAL, //
+            BPMNTypes.EVENT_DEFINITION_TIMER, //
             BPMNTypes.EVENT_DEFINITION_TERMINATE, //
             BPMNTypes.EVENT_DEFINITION_COMPENSATION });
 

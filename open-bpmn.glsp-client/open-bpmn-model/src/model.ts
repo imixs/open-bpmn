@@ -123,6 +123,22 @@ export class DataObjectNode extends RectangularNode implements BPMNFlowElement {
 	documentation: string;
 }
 
+export class DataStoreNode extends RectangularNode implements BPMNFlowElement {
+	static override readonly DEFAULT_FEATURES = [
+		connectableFeature,
+		deletableFeature,
+		selectFeature,
+		boundsFeature,
+		moveFeature,
+		layoutContainerFeature,
+		fadeFeature,
+		hoverFeedbackFeature,
+		popupFeature,
+		nameFeature
+	];
+	documentation: string;
+}
+
 export class MessageNode extends RectangularNode implements BPMNFlowElement {
 	static override readonly DEFAULT_FEATURES = [
 		connectableFeature,
@@ -282,7 +298,8 @@ export function isGatewayNode(element: GModelElement): element is GatewayNode {
  * Indicates that the ModelElement has a independent BPMNLabel
  */
 export function isBPMNLabelNode(element: GModelElement): element is GModelElement {
-	return (element instanceof EventNode || element instanceof GatewayNode || element instanceof DataObjectNode
+	return (element instanceof EventNode || element instanceof GatewayNode
+		|| element instanceof DataObjectNode || element instanceof DataStoreNode
 		|| element instanceof MessageNode) || false;
 }
 
@@ -290,9 +307,9 @@ export function isBPMNLabelNode(element: GModelElement): element is GModelElemen
 * This method returns true if the element is a BPMN Node Element.
 */
 export function isBPMNNode(element: GModelElement): element is TaskNode | EventNode | GatewayNode |
-	DataObjectNode | TextAnnotationNode | MessageNode | PoolNode {
+	DataObjectNode | DataStoreNode | TextAnnotationNode | MessageNode | PoolNode {
 	return element instanceof TaskNode || element instanceof EventNode || element instanceof GatewayNode ||
-		element instanceof DataObjectNode || element instanceof TextAnnotationNode ||
+		element instanceof DataObjectNode || element instanceof DataStoreNode || element instanceof TextAnnotationNode ||
 		element instanceof MessageNode || element instanceof PoolNode;
 }
 

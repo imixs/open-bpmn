@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.PoolGNode;
  */
 public class PoolGNodeImpl extends BPMNGNodeImpl implements PoolGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected PoolGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.POOL_GNODE;
-    }
+		return BpmnPackage.Literals.POOL_GNODE;
+	}
 
 } //PoolGNodeImpl

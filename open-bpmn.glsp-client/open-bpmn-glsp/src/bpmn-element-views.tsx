@@ -163,6 +163,11 @@ export class IconView extends ShapeView {
                 icon =
                     // eslint-disable-next-line max-len
                     'M1 3.5l.5-.5h13l.5.5v9l-.5.5h-13l-.5-.5v-9zm1 1.035V12h12V4.536L8.31 8.9H7.7L2 4.535zM13.03 4H2.97L8 7.869 13.03 4z';
+            } else if (eventNode.kind === 'cancelEventDefinition') {
+                // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/close.svg?short_path=a63b1e0
+                icon =
+                    // eslint-disable-next-line max-len
+                    'M8 8.707l3.646 3.647.708-.707L8.707 8l3.647-3.646-.707-.708L8 7.293 4.354 3.646l-.707.708L7.293 8l-3.646 3.646.707.708L8 8.707z';
             } else if (eventNode.kind === 'conditionalEventDefinition') {
                 // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/checklist.svg?short_path=e850b9d
                 icon =
@@ -174,6 +179,12 @@ export class IconView extends ShapeView {
                 icon =
                     // eslint-disable-next-line max-len
                     'M13.5 2H12v12h1.5V2zm-4.936.39L9.75 3v10l-1.186.61-7-5V7.39l7-5zM3.29 8l4.96 3.543V4.457L3.29 8z';
+            } else if (eventNode.kind === 'escalationEventDefinition') {
+                // From codicons:
+                // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/fold-up.svg?short_path=a63b1e0
+                icon =
+                    // eslint-disable-next-line max-len
+                    'M1 7.4l.7.7 6-6 6 6 .7-.7L8.1 1h-.7L1 7.4zm0 6l.7.7 6-6 6 6 .7-.7L8.1 7h-.7L1 13.4z';
             } else if (eventNode.kind === 'timerEventDefinition') {
                 // From codicons: https://github.com/microsoft/vscode-codicons/blob/main/src/icons/history.svg?short_path=53d41f7
                 icon =
@@ -317,6 +328,41 @@ export class DataObjectNodeView extends ShapeView {
             <rect class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
                 class-mouseover={node.hoverFeedback} class-selected={node.selected}
                 x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
+            {context.renderChildren(node)}
+        </g>;
+    }
+}
+
+/*
+ * Render a BPMN DataStore
+ * A TextAnnotation contains a text attribute which is displayed using the ForeignObjectView
+ *
+ * See: https://www.eclipse.org/glsp/documentation/rendering/#default-views
+ */
+@injectable()
+export class DataStoreNodeView extends ShapeView {
+    render(node: Readonly<GShapeElement & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+        return <g>
+            <rect class-sprotty-node={node instanceof GNode}
+                class-sprotty-port={node instanceof GPort}
+                class-mouseover={node.hoverFeedback}
+                class-selected={node.selected}
+                x="0"
+                y="0"
+                width={Math.max(node.size.width, 0)}
+                height={Math.max(node.size.height, 0)}></rect>
+            {/* Database symbol starting at (5,5) */}
+            <g class-sprotty-icon={'icon'} transform="translate(0,10)">
+                <path d="M0 0 L0 30" stroke="currentColor" stroke-width="1.5" fill="none" />
+                <path d="M50 0 L50 30" stroke="currentColor" stroke-width="1.5" fill="none" />
+                <path d="M0 30 A25 8.5 0 0 0 50 30" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <path d="M0 15 A25 8.5 0 0 0 50 15" fill="none" stroke="currentColor" stroke-width="1.5" />
+                <ellipse cx="25" cy="0" rx="25" ry="8.5" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </g>
+
             {context.renderChildren(node)}
         </g>;
     }

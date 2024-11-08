@@ -17,6 +17,7 @@ import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.BpmnFactory;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
+import org.openbpmn.glsp.bpmn.DataStoreGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.GroupGNode;
@@ -36,453 +37,493 @@ import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
  */
 public class BpmnPackageImpl extends EPackageImpl implements BpmnPackage {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass bpmngNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass bpmngEdgeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass iconGCompartmentEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass taskGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass gatewayGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass eventGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass labelGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass dataObjectGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dataStoreGNodeEClass = null;
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass messageGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass groupGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass textAnnotationGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass poolGNodeEClass = null;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private EClass laneGNodeEClass = null;
 
     /**
-     * Creates an instance of the model <b>Package</b>, registered with
-     * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
-     * package URI value.
-     * <p>Note: the correct way to create the package is via the static
-     * factory method {@link #init init()}, which also performs
-     * initialization of the package, or returns the registered package,
-     * if one already exists.
-     * <!-- begin-user-doc -->
+	 * Creates an instance of the model <b>Package</b>, registered with
+	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
+	 * package URI value.
+	 * <p>Note: the correct way to create the package is via the static
+	 * factory method {@link #init init()}, which also performs
+	 * initialization of the package, or returns the registered package,
+	 * if one already exists.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.ecore.EPackage.Registry
-     * @see org.openbpmn.glsp.bpmn.BpmnPackage#eNS_URI
-     * @see #init()
-     * @generated
-     */
+	 * @see org.eclipse.emf.ecore.EPackage.Registry
+	 * @see org.openbpmn.glsp.bpmn.BpmnPackage#eNS_URI
+	 * @see #init()
+	 * @generated
+	 */
     private BpmnPackageImpl() {
-        super(eNS_URI, BpmnFactory.eINSTANCE);
-    }
+		super(eNS_URI, BpmnFactory.eINSTANCE);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private static boolean isInited = false;
 
     /**
-     * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     *
-     * <p>This method is used to initialize {@link BpmnPackage#eINSTANCE} when that field is accessed.
-     * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
-     * <!-- begin-user-doc -->
+	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
+	 *
+	 * <p>This method is used to initialize {@link BpmnPackage#eINSTANCE} when that field is accessed.
+	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #eNS_URI
-     * @see #createPackageContents()
-     * @see #initializePackageContents()
-     * @generated
-     */
+	 * @see #eNS_URI
+	 * @see #createPackageContents()
+	 * @see #initializePackageContents()
+	 * @generated
+	 */
     public static BpmnPackage init() {
-        if (isInited) return (BpmnPackage)EPackage.Registry.INSTANCE.getEPackage(BpmnPackage.eNS_URI);
+		if (isInited) return (BpmnPackage)EPackage.Registry.INSTANCE.getEPackage(BpmnPackage.eNS_URI);
 
-        // Obtain or create and register package
-        Object registeredBpmnPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
-        BpmnPackageImpl theBpmnPackage = registeredBpmnPackage instanceof BpmnPackageImpl ? (BpmnPackageImpl)registeredBpmnPackage : new BpmnPackageImpl();
+		// Obtain or create and register package
+		Object registeredBpmnPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+		BpmnPackageImpl theBpmnPackage = registeredBpmnPackage instanceof BpmnPackageImpl ? (BpmnPackageImpl)registeredBpmnPackage : new BpmnPackageImpl();
 
-        isInited = true;
+		isInited = true;
 
-        // Obtain or create and register interdependencies
-        Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
-        GraphPackageImpl theGraphPackage = (GraphPackageImpl)(registeredPackage instanceof GraphPackageImpl ? registeredPackage : GraphPackage.eINSTANCE);
+		// Obtain or create and register interdependencies
+		Object registeredPackage = EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
+		GraphPackageImpl theGraphPackage = (GraphPackageImpl)(registeredPackage instanceof GraphPackageImpl ? registeredPackage : GraphPackage.eINSTANCE);
 
-        // Create package meta-data objects
-        theBpmnPackage.createPackageContents();
-        theGraphPackage.createPackageContents();
+		// Create package meta-data objects
+		theBpmnPackage.createPackageContents();
+		theGraphPackage.createPackageContents();
 
-        // Initialize created meta-data
-        theBpmnPackage.initializePackageContents();
-        theGraphPackage.initializePackageContents();
+		// Initialize created meta-data
+		theBpmnPackage.initializePackageContents();
+		theGraphPackage.initializePackageContents();
 
-        // Mark meta-data to indicate it can't be changed
-        theBpmnPackage.freeze();
+		// Mark meta-data to indicate it can't be changed
+		theBpmnPackage.freeze();
 
-        // Update the registry and return the package
-        EPackage.Registry.INSTANCE.put(BpmnPackage.eNS_URI, theBpmnPackage);
-        return theBpmnPackage;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getBPMNGNode() {
-        return bpmngNodeEClass;
-    }
+		// Update the registry and return the package
+		EPackage.Registry.INSTANCE.put(BpmnPackage.eNS_URI, theBpmnPackage);
+		return theBpmnPackage;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getBPMNGNode_Name() {
-        return (EAttribute)bpmngNodeEClass.getEStructuralFeatures().get(0);
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getBPMNGNode() {
+		return bpmngNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getBPMNGNode_Kind() {
-        return (EAttribute)bpmngNodeEClass.getEStructuralFeatures().get(1);
-    }
+	 * @generated
+	 */
+    @Override
+				public EAttribute getBPMNGNode_Name() {
+		return (EAttribute)bpmngNodeEClass.getEStructuralFeatures().get(0);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getBPMNGEdge() {
-        return bpmngEdgeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EAttribute getBPMNGNode_Kind() {
+		return (EAttribute)bpmngNodeEClass.getEStructuralFeatures().get(1);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getBPMNGEdge_Name() {
-        return (EAttribute)bpmngEdgeEClass.getEStructuralFeatures().get(0);
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getBPMNGEdge() {
+		return bpmngEdgeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getBPMNGEdge_Kind() {
-        return (EAttribute)bpmngEdgeEClass.getEStructuralFeatures().get(1);
-    }
+	 * @generated
+	 */
+    @Override
+				public EAttribute getBPMNGEdge_Name() {
+		return (EAttribute)bpmngEdgeEClass.getEStructuralFeatures().get(0);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getIconGCompartment() {
-        return iconGCompartmentEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EAttribute getBPMNGEdge_Kind() {
+		return (EAttribute)bpmngEdgeEClass.getEStructuralFeatures().get(1);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getTaskGNode() {
-        return taskGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getIconGCompartment() {
+		return iconGCompartmentEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getGatewayGNode() {
-        return gatewayGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getTaskGNode() {
+		return taskGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getEventGNode() {
-        return eventGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getGatewayGNode() {
+		return gatewayGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getLabelGNode() {
-        return labelGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getEventGNode() {
+		return eventGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getDataObjectGNode() {
-        return dataObjectGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getLabelGNode() {
+		return labelGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getMessageGNode() {
-        return messageGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getDataObjectGNode() {
+		return dataObjectGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EClass getDataStoreGNode() {
+		return dataStoreGNodeEClass;
+	}
+
+				/**
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getGroupGNode() {
-        return groupGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getMessageGNode() {
+		return messageGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getTextAnnotationGNode() {
-        return textAnnotationGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getGroupGNode() {
+		return groupGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getPoolGNode() {
-        return poolGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getTextAnnotationGNode() {
+		return textAnnotationGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getLaneGNode() {
-        return laneGNodeEClass;
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getPoolGNode() {
+		return poolGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
-    public BpmnFactory getBpmnFactory() {
-        return (BpmnFactory)getEFactoryInstance();
-    }
+	 * @generated
+	 */
+    @Override
+				public EClass getLaneGNode() {
+		return laneGNodeEClass;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
+    @Override
+				public BpmnFactory getBpmnFactory() {
+		return (BpmnFactory)getEFactoryInstance();
+	}
+
+    /**
+	 * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+	 * @generated
+	 */
     private boolean isCreated = false;
 
     /**
-     * Creates the meta-model objects for the package.  This method is
-     * guarded to have no affect on any invocation but its first.
-     * <!-- begin-user-doc -->
+	 * Creates the meta-model objects for the package.  This method is
+	 * guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void createPackageContents() {
-        if (isCreated) return;
-        isCreated = true;
+		if (isCreated) return;
+		isCreated = true;
 
-        // Create classes and their features
-        bpmngNodeEClass = createEClass(BPMNG_NODE);
-        createEAttribute(bpmngNodeEClass, BPMNG_NODE__NAME);
-        createEAttribute(bpmngNodeEClass, BPMNG_NODE__KIND);
+		// Create classes and their features
+		bpmngNodeEClass = createEClass(BPMNG_NODE);
+		createEAttribute(bpmngNodeEClass, BPMNG_NODE__NAME);
+		createEAttribute(bpmngNodeEClass, BPMNG_NODE__KIND);
 
-        bpmngEdgeEClass = createEClass(BPMNG_EDGE);
-        createEAttribute(bpmngEdgeEClass, BPMNG_EDGE__NAME);
-        createEAttribute(bpmngEdgeEClass, BPMNG_EDGE__KIND);
+		bpmngEdgeEClass = createEClass(BPMNG_EDGE);
+		createEAttribute(bpmngEdgeEClass, BPMNG_EDGE__NAME);
+		createEAttribute(bpmngEdgeEClass, BPMNG_EDGE__KIND);
 
-        iconGCompartmentEClass = createEClass(ICON_GCOMPARTMENT);
+		iconGCompartmentEClass = createEClass(ICON_GCOMPARTMENT);
 
-        taskGNodeEClass = createEClass(TASK_GNODE);
+		taskGNodeEClass = createEClass(TASK_GNODE);
 
-        gatewayGNodeEClass = createEClass(GATEWAY_GNODE);
+		gatewayGNodeEClass = createEClass(GATEWAY_GNODE);
 
-        eventGNodeEClass = createEClass(EVENT_GNODE);
+		eventGNodeEClass = createEClass(EVENT_GNODE);
 
-        labelGNodeEClass = createEClass(LABEL_GNODE);
+		labelGNodeEClass = createEClass(LABEL_GNODE);
 
-        dataObjectGNodeEClass = createEClass(DATA_OBJECT_GNODE);
+		dataObjectGNodeEClass = createEClass(DATA_OBJECT_GNODE);
 
-        messageGNodeEClass = createEClass(MESSAGE_GNODE);
+		dataStoreGNodeEClass = createEClass(DATA_STORE_GNODE);
 
-        groupGNodeEClass = createEClass(GROUP_GNODE);
+		messageGNodeEClass = createEClass(MESSAGE_GNODE);
 
-        textAnnotationGNodeEClass = createEClass(TEXT_ANNOTATION_GNODE);
+		groupGNodeEClass = createEClass(GROUP_GNODE);
 
-        poolGNodeEClass = createEClass(POOL_GNODE);
+		textAnnotationGNodeEClass = createEClass(TEXT_ANNOTATION_GNODE);
 
-        laneGNodeEClass = createEClass(LANE_GNODE);
-    }
+		poolGNodeEClass = createEClass(POOL_GNODE);
+
+		laneGNodeEClass = createEClass(LANE_GNODE);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     private boolean isInitialized = false;
 
     /**
-     * Complete the initialization of the package and its meta-model.  This
-     * method is guarded to have no affect on any invocation but its first.
-     * <!-- begin-user-doc -->
+	 * Complete the initialization of the package and its meta-model.  This
+	 * method is guarded to have no affect on any invocation but its first.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void initializePackageContents() {
-        if (isInitialized) return;
-        isInitialized = true;
+		if (isInitialized) return;
+		isInitialized = true;
 
-        // Initialize package
-        setName(eNAME);
-        setNsPrefix(eNS_PREFIX);
-        setNsURI(eNS_URI);
+		// Initialize package
+		setName(eNAME);
+		setNsPrefix(eNS_PREFIX);
+		setNsURI(eNS_URI);
 
-        // Obtain other dependent packages
-        GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
+		// Obtain other dependent packages
+		GraphPackage theGraphPackage = (GraphPackage)EPackage.Registry.INSTANCE.getEPackage(GraphPackage.eNS_URI);
 
-        // Create type parameters
+		// Create type parameters
 
-        // Set bounds for type parameters
+		// Set bounds for type parameters
 
-        // Add supertypes to classes
-        bpmngNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
-        bpmngEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
-        iconGCompartmentEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
-        taskGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        gatewayGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        eventGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        labelGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        dataObjectGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        messageGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        groupGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        textAnnotationGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        poolGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
-        laneGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		// Add supertypes to classes
+		bpmngNodeEClass.getESuperTypes().add(theGraphPackage.getGNode());
+		bpmngEdgeEClass.getESuperTypes().add(theGraphPackage.getGEdge());
+		iconGCompartmentEClass.getESuperTypes().add(theGraphPackage.getGCompartment());
+		taskGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		gatewayGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		eventGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		labelGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		dataObjectGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		dataStoreGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		messageGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		groupGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		textAnnotationGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		poolGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
+		laneGNodeEClass.getESuperTypes().add(this.getBPMNGNode());
 
-        // Initialize classes, features, and operations; add parameters
-        initEClass(bpmngNodeEClass, BPMNGNode.class, "BPMNGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBPMNGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBPMNGNode_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		// Initialize classes, features, and operations; add parameters
+		initEClass(bpmngNodeEClass, BPMNGNode.class, "BPMNGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBPMNGNode_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBPMNGNode_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNGNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(bpmngEdgeEClass, BPMNGEdge.class, "BPMNGEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getBPMNGEdge_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNGEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getBPMNGEdge_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNGEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(bpmngEdgeEClass, BPMNGEdge.class, "BPMNGEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getBPMNGEdge_Name(), ecorePackage.getEString(), "name", null, 0, 1, BPMNGEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getBPMNGEdge_Kind(), ecorePackage.getEString(), "kind", null, 0, 1, BPMNGEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(iconGCompartmentEClass, IconGCompartment.class, "IconGCompartment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(iconGCompartmentEClass, IconGCompartment.class, "IconGCompartment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(taskGNodeEClass, TaskGNode.class, "TaskGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(taskGNodeEClass, TaskGNode.class, "TaskGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(gatewayGNodeEClass, GatewayGNode.class, "GatewayGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(gatewayGNodeEClass, GatewayGNode.class, "GatewayGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(eventGNodeEClass, EventGNode.class, "EventGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(eventGNodeEClass, EventGNode.class, "EventGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(labelGNodeEClass, LabelGNode.class, "LabelGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(labelGNodeEClass, LabelGNode.class, "LabelGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(dataObjectGNodeEClass, DataObjectGNode.class, "DataObjectGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(dataObjectGNodeEClass, DataObjectGNode.class, "DataObjectGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(messageGNodeEClass, MessageGNode.class, "MessageGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(dataStoreGNodeEClass, DataStoreGNode.class, "DataStoreGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(groupGNodeEClass, GroupGNode.class, "GroupGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(messageGNodeEClass, MessageGNode.class, "MessageGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(textAnnotationGNodeEClass, TextAnnotationGNode.class, "TextAnnotationGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(groupGNodeEClass, GroupGNode.class, "GroupGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(poolGNodeEClass, PoolGNode.class, "PoolGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(textAnnotationGNodeEClass, TextAnnotationGNode.class, "TextAnnotationGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(laneGNodeEClass, LaneGNode.class, "LaneGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(poolGNodeEClass, PoolGNode.class, "PoolGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        // Create resource
-        createResource(eNS_URI);
-    }
+		initEClass(laneGNodeEClass, LaneGNode.class, "LaneGNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		// Create resource
+		createResource(eNS_URI);
+	}
 
 } //BpmnPackageImpl

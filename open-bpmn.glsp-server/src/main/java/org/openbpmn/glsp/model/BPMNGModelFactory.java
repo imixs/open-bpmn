@@ -51,6 +51,7 @@ import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Lane;
@@ -70,6 +71,7 @@ import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
+import org.openbpmn.glsp.bpmn.DataStoreGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
@@ -79,6 +81,7 @@ import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.bpmn.TaskGNode;
 import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
 import org.openbpmn.glsp.elements.data.DataObjectGNodeBuilder;
+import org.openbpmn.glsp.elements.data.DataStoreGNodeBuilder;
 import org.openbpmn.glsp.elements.data.MessageGNodeBuilder;
 import org.openbpmn.glsp.elements.data.TextAnnotationGNodeBuilder;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeBuilder;
@@ -645,6 +648,25 @@ public class BPMNGModelFactory implements GModelFactory {
             gNodeList.add(labelNode);
         }
 
+        // Add all DataStores...
+        for (DataStoreReference dataStoreReference : process.getDataStoreReferences()) {
+            logger.debug("dataStoreReference: " + dataStoreReference.getName());
+            GPoint point = computeRelativeGPoint(dataStoreReference.getBounds(), participant);
+
+            // Build the GLSP Node....
+            DataStoreGNode dataStoreNode = new DataStoreGNodeBuilder(dataStoreReference) //
+                    .position(point) //
+                    .build();
+            gNodeList.add(dataStoreNode);
+            // apply BPMN Extensions
+            applyBPMNElementExtensions(dataStoreNode, dataStoreReference);
+
+            // now add a GLabel
+            BPMNLabel bpmnLabel = dataStoreReference.getLabel();
+            LabelGNode labelNode = createLabelNode(bpmnLabel, dataStoreReference, participant);
+            gNodeList.add(labelNode);
+        }
+
         // Add all Text Annotations
         for (TextAnnotation textAnnotation : process.getTextAnnotations()) {
             logger.debug("textAnnotation: " + textAnnotation.getId());
@@ -893,7 +915,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
     /**
      * This helper method creates a GLSP LableGNode element to a corresponding
-     * BPMNFlowElement (Event|Gateway|DataObject)
+     * BPMNFlowElement (Event|Gateway|DataObject|DataStore)
      *
      * @param bpmnLabel
      * @param flowElement

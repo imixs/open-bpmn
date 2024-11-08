@@ -35,6 +35,7 @@ import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.types.EditorContext;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
+import org.openbpmn.glsp.bpmn.DataStoreGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
 import org.openbpmn.glsp.bpmn.GatewayGNode;
 import org.openbpmn.glsp.bpmn.LabelGNode;
@@ -210,7 +211,8 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
          */
         public boolean isBPMNElementNode(GModelElement element) {
                 return (isBPMNFlowElementNode(element)
-                                || element instanceof MessageGNode || element instanceof DataObjectGNode);
+                                || element instanceof MessageGNode || element instanceof DataObjectGNode
+                                || element instanceof DataStoreGNode);
         }
 
         private LabeledAction createSequenceFlowAction(final String label, final GNode source, final GNode node) {

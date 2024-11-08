@@ -34,6 +34,7 @@ import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.extensions.BPMNModelExtension;
 import org.openbpmn.extensions.elements.ConditionalEventDefinitionExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNDataObjectExtension;
+import org.openbpmn.extensions.elements.DefaultBPMNDataStoreReferenceExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNDefinitionsExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNEdgeExtension;
 import org.openbpmn.extensions.elements.DefaultBPMNEventExtension;
@@ -49,6 +50,7 @@ import org.openbpmn.extensions.elements.SignalEventDefinitionExtension;
 import org.openbpmn.extensions.elements.TimerEventDefinitionExtension;
 import org.openbpmn.extensions.model.FileLinkExtension;
 import org.openbpmn.glsp.elements.data.BPMNCreateDataObjectHandler;
+import org.openbpmn.glsp.elements.data.BPMNCreateDataStoreHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateMessageHandler;
 import org.openbpmn.glsp.elements.data.BPMNCreateTextAnnotationHandler;
 import org.openbpmn.glsp.elements.edge.BPMNGEdgeCreateHandler;
@@ -151,6 +153,7 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Data Elements
         binding.add(BPMNCreateDataObjectHandler.class);
+        binding.add(BPMNCreateDataStoreHandler.class);
         binding.add(BPMNCreateMessageHandler.class);
         binding.add(BPMNCreateTextAnnotationHandler.class);
 
@@ -233,6 +236,7 @@ public class BPMNDiagramModule extends DiagramModule {
         binding.addBinding().to(DefaultBPMNGatewayExtension.class);
         binding.addBinding().to(DefaultBPMNParticipantExtension.class);
         binding.addBinding().to(DefaultBPMNDataObjectExtension.class);
+        binding.addBinding().to(DefaultBPMNDataStoreReferenceExtension.class);
         binding.addBinding().to(DefaultBPMNMessageExtension.class);
         binding.addBinding().to(DefaultBPMNTextAnnotationExtension.class);
         binding.addBinding().to(DefaultBPMNEdgeExtension.class);

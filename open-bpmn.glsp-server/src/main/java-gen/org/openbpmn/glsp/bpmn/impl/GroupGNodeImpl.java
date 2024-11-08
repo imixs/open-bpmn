@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.GroupGNode;
  */
 public class GroupGNodeImpl extends BPMNGNodeImpl implements GroupGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected GroupGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.GROUP_GNODE;
-    }
+		return BpmnPackage.Literals.GROUP_GNODE;
+	}
 
 } //GroupGNodeImpl

@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.TextAnnotationGNode;
  */
 public class TextAnnotationGNodeImpl extends BPMNGNodeImpl implements TextAnnotationGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected TextAnnotationGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.TEXT_ANNOTATION_GNODE;
-    }
+		return BpmnPackage.Literals.TEXT_ANNOTATION_GNODE;
+	}
 
 } //TextAnnotationGNodeImpl

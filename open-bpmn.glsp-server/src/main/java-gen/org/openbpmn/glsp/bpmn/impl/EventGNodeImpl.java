@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.EventGNode;
  */
 public class EventGNodeImpl extends BPMNGNodeImpl implements EventGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected EventGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.EVENT_GNODE;
-    }
+		return BpmnPackage.Literals.EVENT_GNODE;
+	}
 
 } //EventGNodeImpl

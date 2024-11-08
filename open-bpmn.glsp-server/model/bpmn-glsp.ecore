@@ -15,6 +15,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="EventGNode" eSuperTypes="#//BPMNGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="LabelGNode" eSuperTypes="#//BPMNGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="DataObjectGNode" eSuperTypes="#//BPMNGNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DataStoreGNode" eSuperTypes="#//BPMNGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="MessageGNode" eSuperTypes="#//BPMNGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="GroupGNode" eSuperTypes="#//BPMNGNode"/>
   <eClassifiers xsi:type="ecore:EClass" name="TextAnnotationGNode" eSuperTypes="#//BPMNGNode"/>

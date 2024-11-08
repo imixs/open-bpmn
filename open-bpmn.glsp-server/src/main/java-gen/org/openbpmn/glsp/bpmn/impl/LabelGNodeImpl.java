@@ -16,22 +16,22 @@ import org.openbpmn.glsp.bpmn.LabelGNode;
  */
 public class LabelGNodeImpl extends BPMNGNodeImpl implements LabelGNode {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected LabelGNodeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return BpmnPackage.Literals.LABEL_GNODE;
-    }
+		return BpmnPackage.Literals.LABEL_GNODE;
+	}
 
 } //LabelGNodeImpl

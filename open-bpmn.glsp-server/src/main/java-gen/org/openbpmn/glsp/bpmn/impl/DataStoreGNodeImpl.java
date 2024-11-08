@@ -1,0 +1,37 @@
+/**
+ */
+package org.openbpmn.glsp.bpmn.impl;
+
+import org.eclipse.emf.ecore.EClass;
+
+import org.openbpmn.glsp.bpmn.BpmnPackage;
+import org.openbpmn.glsp.bpmn.DataStoreGNode;
+
+/**
+ * <!-- begin-user-doc -->
+ * An implementation of the model object '<em><b>Data Store GNode</b></em>'.
+ * <!-- end-user-doc -->
+ *
+ * @generated
+ */
+public class DataStoreGNodeImpl extends BPMNGNodeImpl implements DataStoreGNode {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected DataStoreGNodeImpl() {
+		super();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass() {
+		return BpmnPackage.Literals.DATA_STORE_GNODE;
+	}
+
+} //DataStoreGNodeImpl

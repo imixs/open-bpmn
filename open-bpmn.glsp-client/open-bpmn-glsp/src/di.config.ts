@@ -42,6 +42,7 @@ import {
 import {
     BPMNEdge,
     DataObjectNode,
+    DataStoreNode,
     EventNode,
     GatewayNode,
     Icon, LabelNode,
@@ -65,6 +66,7 @@ import '../css/diagram.css';
 import {
     BPMNGridView,
     DataObjectNodeView,
+    DataStoreNodeView,
     IconView,
     LaneDividerView,
     LaneHeaderView,
@@ -135,6 +137,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     }
     );
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
+    configureModelElement(context, 'dataStore', DataStoreNode, DataStoreNodeView);
+    configureModelElement(context, 'dataStoreReference', DataStoreNode, DataStoreNodeView);
     configureModelElement(context, 'message', MessageNode, MessageNodeView);
     configureModelElement(context, 'textAnnotation', TextAnnotationNode, TextAnnotationNodeView);
     configureModelElement(context, 'BPMNLabel', LabelNode, RectangularNodeView);
