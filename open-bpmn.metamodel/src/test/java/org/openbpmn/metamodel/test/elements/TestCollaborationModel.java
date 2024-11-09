@@ -34,6 +34,8 @@ public class TestCollaborationModel {
 
     /**
      * This test reads a collaboration model
+     * The model does not have a default process. This process is automatically
+     * added by the BPMNModel.
      */
     @SuppressWarnings("unused")
     @Test
@@ -45,7 +47,7 @@ public class TestCollaborationModel {
 
             Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
-            assertEquals(2, participants.size());
+            assertEquals(3, participants.size());
 
             // get first participant and load the process context
             Participant bpmnParticipant = participants.iterator().next();

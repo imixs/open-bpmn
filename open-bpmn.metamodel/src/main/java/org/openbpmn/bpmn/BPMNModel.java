@@ -178,10 +178,8 @@ public class BPMNModel {
 
             // Load BPMNDiagram element....
             loadBpmnDiagram();
-
             // Load BPMNPlane element....
             loadBpmnPlane();
-
             // init the participant and process list
             loadParticipantList();
             loadProcessList();
@@ -190,6 +188,7 @@ public class BPMNModel {
             loadMessageFlowList();
             loadSignalList();
         }
+
     }
 
     /**
@@ -353,6 +352,10 @@ public class BPMNModel {
         this.isDirty = isDirty;
     }
 
+    public Element getCollaborationElement() {
+        return collaborationElement;
+    }
+
     public Set<Participant> getParticipants() {
         if (participants == null) {
             participants = new LinkedHashSet<Participant>();
@@ -453,7 +456,7 @@ public class BPMNModel {
      * @return the BPMNParticipant
      * @throws BPMNModelException
      */
-    public Participant addParticipant(String name) throws BPMNModelException {
+    public Participant addParticipant(String name, String processType) throws BPMNModelException {
 
         // first verify if the model already is a Collaboration model. If not we create
         // a bpmn2:collaboration
@@ -500,7 +503,7 @@ public class BPMNModel {
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
         int processNumber = this.getProcesses().size() + 1;
         BPMNProcess process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
-                BPMNTypes.PROCESS_TYPE_PRIVATE);
+                processType);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
         process.setName(name);
 
@@ -510,6 +513,22 @@ public class BPMNModel {
         createPool(bpmnParticipant);
 
         return bpmnParticipant;
+    }
+
+    /**
+     * Adds a new BPMNParticipant element and the corresponding BPMNProcess to
+     * collaboration diagram.
+     * <p>
+     * The method creates a process of the type 'Private' and updates the
+     * collaboration diagram structure.
+     * 
+     * @param name
+     * @param processType
+     * @return
+     * @throws BPMNModelException
+     */
+    public Participant addParticipant(String name) throws BPMNModelException {
+        return this.addParticipant(name, BPMNTypes.PROCESS_TYPE_PRIVATE);
     }
 
     /**
@@ -1949,7 +1968,6 @@ public class BPMNModel {
                         _new_participant.setBpmnProcess(bpmnProcess);
                         participants.add(_new_participant);
                     }
-
                 }
 
             }
@@ -1958,7 +1976,26 @@ public class BPMNModel {
         // if we do not have a process at all or a public default process is missing in
         // the participant list, we create a default process now
         if (processes.size() == 0 || (participants.size() > 0 && publicCount == 0)) {
-            buildProcess("process_" + (processes.size() + 1), "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+            logger.warning(
+                    "Invalid model structure: No public process node found - missing default process will be added...");
+            // Do we have a normal process diagram?
+            if (!isCollaborationDiagram()) {
+                // just create the missing public default process
+                BPMNProcess publicProcess = buildProcess("process_" + (processes.size() + 1), "Default Process",
+                        BPMNTypes.PROCESS_TYPE_PUBLIC);
+                processes.add(publicProcess);
+            } else {
+                // we have collaboration diagram with a missing default process
+                // create a new default participant
+                addParticipant("Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+            }
+
+            // send a notification
+            this.setDirty(true);
+            this.getNotifications().add(new ModelNotification(ModelNotification.Severity.WARNING,
+                    "Fixed missing default process!",
+                    "Invalid model structure: No public process node was found. Missing default process was created automatically to fix this problem."));
+
         } else if (publicCount > 1) {
             getLogger().warning("Invalid model structure! The model contains more than one public process instance!");
         }

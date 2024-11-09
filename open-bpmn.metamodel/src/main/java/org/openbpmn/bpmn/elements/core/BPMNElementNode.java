@@ -24,6 +24,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -307,7 +308,12 @@ public abstract class BPMNElementNode extends BPMNElement {
         }
 
         // remove element from old process and assign it ot the new
-        this.bpmnProcess.elementNode.removeChild(this.elementNode);
+        try {
+            this.bpmnProcess.elementNode.removeChild(this.elementNode);
+        } catch (DOMException e) {
+            // remove was not possible
+            logger.warning("Invalid dom structure: " + e.getMessage());
+        }
         this.bpmnProcess = newProcess;
         this.bpmnProcess.elementNode.appendChild(this.elementNode);
     }

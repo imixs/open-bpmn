@@ -51,7 +51,7 @@ You can easily extend a simple model to become a collaboration model by creating
 
 ```java
 BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-BPMNProcess processContext = model.addParticipant("participant_1", "Sales Team");
+BPMNProcess processContext = model.addParticipant("Sales Team");
 model.save("src/test/resources/create-process_1.bpmn");
 ```
 

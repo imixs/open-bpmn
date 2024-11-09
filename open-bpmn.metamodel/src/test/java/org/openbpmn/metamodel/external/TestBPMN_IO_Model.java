@@ -2,6 +2,7 @@ package org.openbpmn.metamodel.external;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -42,7 +44,9 @@ public class TestBPMN_IO_Model {
 
             Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
-            assertEquals(2, participants.size());
+            assertEquals(3, participants.size());
+
+            assertTrue(model.isCollaborationDiagram());
 
             // get first participant and load the process context
             Participant bpmnParticipant = participants.iterator().next();
@@ -63,6 +67,12 @@ public class TestBPMN_IO_Model {
             BPMNElementNode sourceElement = process.findElementNodeById("Activity_1uvs84q");
             assertNotNull(sourceElement);
             assertEquals("subProcess", sourceElement.getType());
+
+            // We expect 10 Text Annotations. But these are not assigned correctly. We
+            // expect an auto assignment to the default process
+            BPMNProcess defaultProcess = model.openDefaultProces();
+            Set<TextAnnotation> textAnnotations = defaultProcess.getTextAnnotations();
+            assertEquals(12, textAnnotations.size());
 
         } catch (BPMNModelException e) {
             e.printStackTrace();

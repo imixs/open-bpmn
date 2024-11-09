@@ -99,6 +99,7 @@ public class BPMNProcess extends BPMNElement {
      */
     public void init() throws BPMNModelException {
         if (!initialized) {
+
             // now find all relevant bpmn meta elements
             NodeList childs = this.getElementNode().getChildNodes();
             for (int j = 0; j < childs.getLength(); j++) {
@@ -132,7 +133,40 @@ public class BPMNProcess extends BPMNElement {
                     // logger.warning("Unsupported node type: " + child.getNodeType());
                 }
             }
+
+            // In case of an collaboration diagram we also verify if TextAnnotations are
+            // assigned to the collaboration node. These TextAnnotations need to be assigned
+            // now to the default process
+            autoFixUnassignedTextAnnotations();
+
+            // initialization completed
             initialized = true;
+        }
+    }
+
+    /**
+     * This helper method assigns TextAnnotations that are only part of a the
+     * collaboration node to the default process.
+     * This is an auto-fix method to migrate invalid external models (e.g. form
+     * bpmn.io).
+     * 
+     * @throws BPMNModelException
+     */
+    private void autoFixUnassignedTextAnnotations() throws BPMNModelException {
+        if (this.isPublicProcess() && this.model.isCollaborationDiagram()
+                && this.model.getCollaborationElement() != null) {
+            NodeList textAnnotationNodeList = this.model.getCollaborationElement()
+                    .getElementsByTagName(this.model.getPrefix(BPMNNS.BPMN2) + BPMNTypes.TEXTANNOTATION);
+            if (textAnnotationNodeList != null && textAnnotationNodeList.getLength() > 0) {
+                for (int i = 0; i < textAnnotationNodeList.getLength(); i++) {
+                    Element item = (Element) textAnnotationNodeList.item(i);
+                    // Migrate unassigned textAnnotation
+                    String id = item.getAttribute("id");
+                    logger.fine("TextAnnotation '" + id
+                            + "' is not assigned to a process. Element will be assigned to the default process");
+                    createBPMNTextAnnotationByNode(item);
+                }
+            }
         }
     }
 

@@ -215,6 +215,7 @@ public class BPMNGModelFactory implements GModelFactory {
         List<GModelElement> gRootNodeList = new ArrayList<>();
         Map<String, PoolGNode> poolGNodeList = new HashMap<String, PoolGNode>();
 
+        BPMNProcess defaultProcess = model.openDefaultProces();
         try {
             // In case we have collaboration diagram we iterate over all participants and
             // create a pool if the contained process is private. Otherwise we create the
@@ -306,7 +307,7 @@ public class BPMNGModelFactory implements GModelFactory {
         GGraph newGModel = rootBuilder.build();
 
         // finally add the root extensions
-        applyBPMNElementExtensions(newGModel, model.openDefaultProces());
+        applyBPMNElementExtensions(newGModel, defaultProcess);
 
         return newGModel;
     }
@@ -515,6 +516,7 @@ public class BPMNGModelFactory implements GModelFactory {
             List<GModelElement> gRootNodeList)
             throws BPMNMissingElementException {
 
+        logger.debug("...computeGModel for process '" + process.getId() + "' type=" + process.getProcessType());
         List<GModelElement> gNodeList = new ArrayList<>();
 
         // Add all Lanes
