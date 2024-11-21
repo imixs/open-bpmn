@@ -332,7 +332,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     }
 
     /**
-     * This helper method is responsible to refresh teh property panel.
+     * This helper method is responsible to refresh the property panel.
      * The method loads the element from the root model context and updates
      * the JsonForms schemata.
      *
@@ -348,7 +348,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
 
         // return if we do not yet have a body DIV.
         if (!this.bodyDiv) {
-            console.log(' ------ no body div!!');
+            // console.log(' ------ no body div --------');
             return;
         }
 

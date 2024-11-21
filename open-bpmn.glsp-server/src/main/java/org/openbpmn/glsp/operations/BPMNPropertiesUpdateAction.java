@@ -17,19 +17,25 @@ import org.eclipse.glsp.server.actions.Action;
 public class BPMNPropertiesUpdateAction extends Action {
 
     public static final String KIND = "BPMNPropertiesUpdateAction";
+    private String id;
     private String data;
     private String schema;
     private String uiSchema;
 
-    public BPMNPropertiesUpdateAction() {
+    public BPMNPropertiesUpdateAction(String id, String data, String schema, String uiSchema) {
         super(KIND);
-    }
-
-    public BPMNPropertiesUpdateAction(String data, String schema, String uiSchema) {
-        super(KIND);
+        this.id = id;
         this.data = data;
         this.schema = schema;
         this.uiSchema = uiSchema;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getData() {

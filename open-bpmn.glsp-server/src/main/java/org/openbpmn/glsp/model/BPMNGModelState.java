@@ -20,11 +20,14 @@ import java.util.Stack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.graph.GGraph;
+import org.eclipse.glsp.graph.GModelElement;
+import org.eclipse.glsp.server.actions.ActionDispatcher;
 import org.eclipse.glsp.server.model.DefaultGModelState;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
+import org.openbpmn.glsp.operations.BPMNPropertiesUpdateAction;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -54,6 +57,9 @@ public class BPMNGModelState extends DefaultGModelState {
 
     @Inject
     protected BPMNGModelFactory bpmnGModelFactory;
+
+    @Inject
+    protected ActionDispatcher actionDispatcher;
 
     public BPMNGModelState() {
         resetRevisions();
@@ -231,4 +237,28 @@ public class BPMNGModelState extends DefaultGModelState {
         this.execute(new SetDirtyCommand());
     }
 
+    /**
+     * This method sends a PropertyUpdateAction to the client to refresh the
+     * property panel.
+     * 
+     * @param elementID
+     */
+    public void refreshSelection(String elementID) {
+        refreshGModelState();
+        GModelElement gModelElement = getIndex().get(elementID).orElse(null);
+        if (gModelElement == null) {
+            // reset to root (Default Process)
+            gModelElement = getRoot();
+
+        }
+        if (gModelElement != null) {
+            // Refresh the Data, Schema and UISchema (this could be changed by an extension)
+            String _data = gModelElement.getArgs().get("JSONFormsData").toString();
+            // logger.info(" -> new JSON String=" + _data);
+            String _schema = gModelElement.getArgs().get("JSONFormsSchema").toString();
+            String _uiSchema = gModelElement.getArgs().get("JSONFormsUISchema").toString();
+            actionDispatcher.dispatch(new BPMNPropertiesUpdateAction(gModelElement.getId(), _data, _schema,
+                    _uiSchema));
+        }
+    }
 }

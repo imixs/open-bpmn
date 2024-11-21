@@ -112,10 +112,10 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
     @Override
     public boolean updatePropertiesData(final JsonObject json, final String category, final BPMNElement bpmnElement,
             final GModelElement gNodeElement) {
-        boolean _update = false;
+        boolean updateClient = false;
         // we are only interested in category general and lanes
         if (!"General".equals(category) && !"Lanes".equals(category)) {
-            return _update;
+            return updateClient;
         }
 
         long l = System.currentTimeMillis();
@@ -155,8 +155,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
                     // this is a new lane - construct the lane in the BPMN model first..
                     Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
                     laneDataIDs.add(bpmnLane.getId());
-                    modelState.reset();
-                    _update = true;
+                    updateClient = true;
                 }
             }
             // now we need to delete all lanes no longer part of the laneSetValues
@@ -181,7 +180,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
         logger.debug("laneSet update in " + (System.currentTimeMillis() - l) + "ms");
 
-        return _update;
+        return updateClient;
     }
 
     /**

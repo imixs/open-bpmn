@@ -143,18 +143,11 @@ public class BPMNPropertiesApplyOperationHandler
             }
         }
 
-        // Refresh the Data, Schema and UISchema (this could be changed by an extension)
-        String _data = gModelElement.getArgs().get("JSONFormsData").toString();
-        logger.debug(" -> new JSON String=" + _data);
-        String _schema = gModelElement.getArgs().get("JSONFormsSchema").toString();
-        String _uiSchema = gModelElement.getArgs().get("JSONFormsUISchema").toString();
-
         // Finally dispatch an BPMNPropertiesUpdateAction event to refresh the
         // property panel. This action is only dispatched in case at least one extension
         // has signaled an update.
         if (clientUpdate) {
-            actionDispatcher.dispatch(new BPMNPropertiesUpdateAction(_data, _schema,
-                    _uiSchema));
+            modelState.refreshSelection(gModelElement.getId());
         }
         logger.debug("....execute Update " + operation.getId() + " in " +
                 (System.currentTimeMillis() - l) + "ms");

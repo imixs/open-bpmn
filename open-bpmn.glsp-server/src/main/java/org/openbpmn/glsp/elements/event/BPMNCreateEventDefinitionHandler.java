@@ -32,7 +32,6 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.BPMNDiagramConfiguration;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.operations.BPMNPropertiesUpdateAction;
 
 import com.google.inject.Inject;
 
@@ -103,13 +102,12 @@ public class BPMNCreateEventDefinitionHandler extends CreateBPMNNodeOperationHan
                 }
             }
         }
-        modelState.reset();
+
         if (updateClient) {
+            modelState.reset();
             // select event
             actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(eventID)));
-            // send an update for the property panel...
-            actionDispatcher
-                    .dispatchAfterNextUpdate(new BPMNPropertiesUpdateAction());
+            modelState.refreshSelection(eventID);
         }
     }
 
