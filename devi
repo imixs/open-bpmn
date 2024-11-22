@@ -53,6 +53,11 @@ if [[ "$(strip_dash $1)" == "hot" ]]; then
     cd ..
 fi
 
+if [[ "$(strip_dash $1)" == "build" ]]; then
+    echo " starting maven build..."
+    mvn clean install
+fi
+
 if [[ "$(strip_dash $1)" == "docker" ]]; then
     echo " building docker image..."
     mvn clean install -DskipTests
@@ -77,6 +82,7 @@ if [[ $# -eq 0 ]]; then
     echo "   -frontend : rebuild and start frontend components "
     echo "   -install  : install the frontend components "
     echo "   -hot      : start hot deployment mode for frontend components "
+    echo "   -build    : run a maven build "
     echo "   -clean    : clean up build "
     echo "   -docker   : build the docker image "
 
