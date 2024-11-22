@@ -445,12 +445,14 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
                 // Check if the LI element's text content matches our lastCategory
                 if (listCategories[i].textContent === this.lastCategory) {
                     // Simulate the click event on the LI element
-                    const event = new MouseEvent('click', {
-                        view: window,
-                        bubbles: true,
-                        cancelable: true
-                    });
-                    listCategories[i].dispatchEvent(event);
+                    setTimeout(() => {
+                        const event = new MouseEvent('click', {
+                            view: window,
+                            bubbles: true,
+                            cancelable: true
+                        });
+                        listCategories[i].dispatchEvent(event);
+                    }, 500);
                     break;
                 }
             }
