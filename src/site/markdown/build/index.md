@@ -33,7 +33,7 @@ For a full clean & reinstall of the GLSP Client (after upgrades), run:
 
     $ ./build.sh -c -i
 
-You will find more details in the [Client Section](./open-bpmn.glsp-client/index.html) and the [Server Section](./open-bpmn.glsp-server/index.html).
+You will find more details in the [Client Section](../glsp-client/index.html) and the [Server Section](../glsp-server/index.html).
 
 ### NodeJS and NPM
 
