@@ -49,7 +49,7 @@ The operation is handled on the server by the `BPMNPropertiesApplyOperationHandl
 
 The operation is providing the Element ID, a JSON data structure with the new/updated data and an optional category. The category can be used to update only parts on an BPMN element. This is to optimize the update performance as the data structure can become very complex or various BPMN elements.
 
-The update process is handled by the [Extension Mechanism](./BPMN_EXTENSIONS.md) in a transparent way. 
+The update process is handled by the [Extension Mechanism](../glsp-server/BPMN_EXTENSIONS.html) in a transparent way. 
 
 ## The BPMNPropertiesUpdateAction
 
