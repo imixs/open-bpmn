@@ -32,6 +32,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -64,10 +65,11 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;
                     // update the BPMN WayPoints.
                     List<GPoint> newGLSPRoutingPoints = routingInfo.getNewRoutingPoints();
-                    logger.fine("...updating " + newGLSPRoutingPoints.size() + " BPMN WayPoints for element " + id
+                    logger.fine("├── ComputedBoundsAction update " + newGLSPRoutingPoints.size()
+                            + " BPMN WayPoints for element " + id
                             + "....");
-                    bpmnElementEdge.clearWayPoints();
 
+                    bpmnElementEdge.clearWayPoints();
                     // find the process
                     Participant participant = null;
                     BPMNProcess process = null;
@@ -83,6 +85,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
 
                     // add the new routing points
                     for (GPoint point : newGLSPRoutingPoints) {
+                        point = BPMNGridSnapper.round(point);
                         BPMNPoint bpmnPoint = null;
                         double xOffset = 0;
                         double yOffset = 0;
@@ -95,7 +98,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                             }
                         }
                         bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
-                        logger.fine("...add new waypoint: " + point.getX() + "," + point.getY());
+                        logger.fine("│   ├── add point: " + point.getX() + "," + point.getY());
                         bpmnElementEdge.addWayPoint(bpmnPoint);
                     }
                 } else {

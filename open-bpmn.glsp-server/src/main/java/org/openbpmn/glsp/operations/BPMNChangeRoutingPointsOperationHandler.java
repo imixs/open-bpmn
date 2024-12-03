@@ -20,11 +20,20 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.Command;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.glsp.graph.GEdge;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
+import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Association;
+import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
 import com.google.inject.Inject;
@@ -53,19 +62,31 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
     }
 
     private void executeOperation(final ChangeRoutingPointsOperation operation) {
-
         List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
-        logger.fine("=== ChangeRoutingPointsOperation - " + routingPoints.size() + " routing points");
+        logger.fine("├── ChangeRoutingPointsOperation - got " + routingPoints.size() + " routing points");
         try {
             for (ElementAndRoutingPoints routingPoint : routingPoints) {
                 String id = routingPoint.getElementId();
                 List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
+
                 // update the GModel.
                 GEdge edge = (GEdge) modelState.getIndex().get(id).orElse(null);
+
                 if (edge != null) {
-                    logger.fine("===== Updating GLSP RoutingPoints =======");
+                    logger.fine("├── edge: " + id);
+
+                    EList<GPoint> oldPoints = edge.getRoutingPoints();
+                    logger.fine("│   ├── old points:");
+                    for (GPoint ding : oldPoints) {
+                        logger.fine("│   │   ├── " + ding.getX() + "." + ding.getY());
+                    }
+                    logger.fine("│   ├── new points:");
+                    for (GPoint ding : newGLSPRoutingPoints) {
+                        logger.fine("│   │   ├── " + ding.getX() + "." + ding.getY());
+                    }
                     edge.getRoutingPoints().clear();
                     edge.getRoutingPoints().addAll(newGLSPRoutingPoints);
+                    updateBPMNWayPoints(id, newGLSPRoutingPoints);
                 }
             }
         } catch (Exception e) {
@@ -74,4 +95,58 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
         // no more action - the GModel is now up to date
     }
 
+    /**
+     * This helper method is necessary to update parts of the BPMN waypoints
+     * immediately.
+     * 
+     * Note: The full update is performed in the BPMNComputeBoundsActionHandler.
+     * But this code is even necessary.
+     * 
+     * @param id
+     * @param newGLSPRoutingPoints
+     */
+    private void updateBPMNWayPoints(String id, List<GPoint> newGLSPRoutingPoints) {
+        logger.fine("├── ChangeRoutingPointsOperation - Update BPMN way points for " + id);
+        BPMNElement element = modelState.getBpmnModel().findElementById(id);
+        BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;
+
+        try {
+            logger.fine("│   ├── clearing all waypoints");
+            bpmnElementEdge.clearWayPoints();
+
+            // find the process
+            Participant participant = null;
+            BPMNProcess process = null;
+            if (bpmnElementEdge instanceof SequenceFlow) {
+                process = ((SequenceFlow) bpmnElementEdge).getProcess();
+            }
+            if (bpmnElementEdge instanceof Association) {
+                process = ((Association) bpmnElementEdge).getProcess();
+            }
+            if (process != null && !process.isPublicProcess()) {
+                participant = process.findParticipant();
+            }
+
+            // add the new routing points
+            for (GPoint point : newGLSPRoutingPoints) {
+                BPMNPoint bpmnPoint = null;
+                double xOffset = 0;
+                double yOffset = 0;
+                // in case we are within a Pool we need to compute the x/y offsets first
+                if (!BPMNTypes.MESSAGE_FLOW.equals(bpmnElementEdge.getType())) {
+                    if (participant != null) {
+                        // if we have a participant/pool we can compute the relative position...
+                        xOffset = participant.getBounds().getPosition().getX();
+                        yOffset = participant.getBounds().getPosition().getY();
+                    }
+                }
+                bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
+                logger.fine("│   ├── add waypoint : " + point.getX() + "," + point.getY());
+                bpmnElementEdge.addWayPoint(bpmnPoint);
+            }
+        } catch (Exception e) {
+            logger.info("Unable to update bpmn way points: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
