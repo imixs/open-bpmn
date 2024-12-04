@@ -52,6 +52,7 @@ import com.google.inject.Inject;
 public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHandler<ChangeRoutingPointsOperation> {
 
     private static Logger logger = Logger.getLogger(BPMNChangeRoutingPointsOperationHandler.class.getName());
+    private boolean debug = true;
 
     @Inject
     protected BPMNGModelState modelState;
@@ -62,8 +63,11 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
     }
 
     private void executeOperation(final ChangeRoutingPointsOperation operation) {
+        boolean debug = true;
         List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
-        logger.fine("├── ChangeRoutingPointsOperation - got " + routingPoints.size() + " routing points");
+
+        if (debug)
+            System.out.println("├── ChangeRoutingPointsOperation - got " + routingPoints.size() + " routing points");
         try {
             for (ElementAndRoutingPoints routingPoint : routingPoints) {
                 String id = routingPoint.getElementId();
@@ -73,16 +77,21 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                 GEdge edge = (GEdge) modelState.getIndex().get(id).orElse(null);
 
                 if (edge != null) {
-                    logger.fine("├── edge: " + id);
+                    if (debug)
+                        System.out.println("├── edge: " + id);
 
                     EList<GPoint> oldPoints = edge.getRoutingPoints();
-                    logger.fine("│   ├── old points:");
+                    if (debug)
+                        System.out.println("│   ├── old points:");
                     for (GPoint ding : oldPoints) {
-                        logger.fine("│   │   ├── " + ding.getX() + "." + ding.getY());
+                        if (debug)
+                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
                     }
-                    logger.fine("│   ├── new points:");
+                    if (debug)
+                        System.out.println("│   ├── new points:");
                     for (GPoint ding : newGLSPRoutingPoints) {
-                        logger.fine("│   │   ├── " + ding.getX() + "." + ding.getY());
+                        if (debug)
+                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
                     }
                     edge.getRoutingPoints().clear();
                     edge.getRoutingPoints().addAll(newGLSPRoutingPoints);
@@ -106,12 +115,14 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
      * @param newGLSPRoutingPoints
      */
     private void updateBPMNWayPoints(String id, List<GPoint> newGLSPRoutingPoints) {
-        logger.fine("├── ChangeRoutingPointsOperation - Update BPMN way points for " + id);
+        if (debug)
+            System.out.println("├── ChangeRoutingPointsOperation - Update BPMN way points for " + id);
         BPMNElement element = modelState.getBpmnModel().findElementById(id);
         BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;
 
         try {
-            logger.fine("│   ├── clearing all waypoints");
+            if (debug)
+                System.out.println("│   ├── clearing all waypoints");
             bpmnElementEdge.clearWayPoints();
 
             // find the process
@@ -141,7 +152,8 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                     }
                 }
                 bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
-                logger.fine("│   ├── add waypoint : " + point.getX() + "," + point.getY());
+                if (debug)
+                    System.out.println("│   ├── add waypoint : " + point.getX() + "," + point.getY());
                 bpmnElementEdge.addWayPoint(bpmnPoint);
             }
         } catch (Exception e) {
