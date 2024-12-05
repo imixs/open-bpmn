@@ -151,6 +151,13 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
         sequenceFlowHint.setSourceElementTypeIds(BPMNTypes.BPMN_FLOWELEMENT_NODES);
         sequenceFlowHint.setTargetElementTypeIds(BPMNTypes.BPMN_FLOWELEMENT_NODES);
+        // sequenceFlowHint.setTargetElementTypeIds(
+        // new ArrayList<>(BPMNTypes.BPMN_FLOWELEMENT_NODES) {
+        // {
+        // add(ModelTypes.ICON);
+        // }
+        // });
+
         edgeHints.add(sequenceFlowHint);
 
         // MessageFLow

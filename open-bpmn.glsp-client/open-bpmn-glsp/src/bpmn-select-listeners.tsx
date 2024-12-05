@@ -52,12 +52,12 @@ export class BPMNElementSnapper implements ISnapper {
   snap(position: Point, element: GModelElement): Point {
 
     // move routing-points by 5x5
-    if ('volatile-routing-point' === element.type) {
-      return {
-        x: Math.round(position.x / 5) * 5,
-        y: Math.round(position.y / 5) * 5
-      };
-    }
+    // if ('volatile-routing-point' === element.type) {
+    //   return {
+    //     x: Math.round(position.x / 5) * 5,
+    //     y: Math.round(position.y / 5) * 5
+    //   };
+    // }
 
     // default move 1x1...
     return {

@@ -35,6 +35,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -72,6 +73,9 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
             for (ElementAndRoutingPoints routingPoint : routingPoints) {
                 String id = routingPoint.getElementId();
                 List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
+
+                // snap the new routing points to the grid 5x5
+                BPMNGridSnapper.snapPointsToGrid(newGLSPRoutingPoints);
 
                 // update the GModel.
                 GEdge edge = (GEdge) modelState.getIndex().get(id).orElse(null);

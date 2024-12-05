@@ -1,5 +1,6 @@
 package org.openbpmn.glsp.utils;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import org.eclipse.glsp.graph.GDimension;
@@ -44,6 +45,22 @@ public class BPMNGridSnapper {
             y = y - 3;
         }
         return GraphUtil.point(x, y);
+    }
+
+    /**
+     * Helper method to snap routing points to the grid
+     */
+    public static void snapPointsToGrid(List<GPoint> points) {
+        int gridSize = 5;
+        for (GPoint point : points) {
+            // Calculate the nearest grid coordinates
+            long snappedX = Math.round(point.getX() / (float) gridSize) * gridSize;
+            long snappedY = Math.round(point.getY() / (float) gridSize) * gridSize;
+
+            // Update the existing point's coordinates
+            point.setX(snappedX);
+            point.setY(snappedY);
+        }
     }
 
     /**
