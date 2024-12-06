@@ -50,15 +50,6 @@ import { inject, injectable } from 'inversify';
 export class BPMNElementSnapper implements ISnapper {
   constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
   snap(position: Point, element: GModelElement): Point {
-
-    // move routing-points by 5x5
-    // if ('volatile-routing-point' === element.type) {
-    //   return {
-    //     x: Math.round(position.x / 5) * 5,
-    //     y: Math.round(position.y / 5) * 5
-    //   };
-    // }
-
     // default move 1x1...
     return {
       x: Math.round(position.x),

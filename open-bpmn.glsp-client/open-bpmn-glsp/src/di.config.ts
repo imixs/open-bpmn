@@ -62,6 +62,7 @@ import {
 import 'balloon-css/balloon.min.css';
 import { Container, ContainerModule } from 'inversify';
 import 'sprotty/css/edit-label.css';
+
 import '../css/diagram.css';
 import {
     BPMNGridView,
@@ -76,13 +77,13 @@ import {
     TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
+import { BPMNRouterModule } from './bpmn-router-module';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
     BPMNElementSnapper,
     BPMNMultiNodeSelectionListener,
     BPMNSelectionHelper
 } from './bpmn-select-listeners';
-
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
 
@@ -102,7 +103,6 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.ISelectionListener).to(BPMNSelectionHelper);
     bind(TYPES.ISelectionListener).to(BPMNMultiNodeSelectionListener);
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
-
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
 
     // Configure BMW View Elements
@@ -165,5 +165,11 @@ export function createBPMNDiagramContainer(...containerConfiguration: ContainerC
 
 export function initializeBPMNDiagramContainer(container: Container,
     ...containerConfiguration: ContainerConfiguration): Container {
-    return initializeDiagramContainer(container, bpmnDiagramModule, helperLineModule, BPMNPropertyModule, ...containerConfiguration);
+    return initializeDiagramContainer(
+        container,
+        bpmnDiagramModule,
+        helperLineModule,
+        BPMNPropertyModule,
+        BPMNRouterModule,
+        ...containerConfiguration);
 }
