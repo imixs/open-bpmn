@@ -19,8 +19,10 @@ import {
     Bounds,
     GLSPManhattanEdgeRouter,
     GModelElement,
+    GNode,
     GRoutableElement,
     isConnectable,
+    isRoutable,
     MouseListener,
     Point,
     RoutedPoint,
@@ -29,30 +31,43 @@ import {
 import { inject, injectable } from 'inversify';
 
 /**
+ * Interface defining the structure of movement information
+ */
+interface MovementDelta {
+    x: number;
+    y: number;
+    elementId: string;
+    edgeIds: string[];
+}
+
+/**
  * Enhanced Manhattan Edge Router for BPMN diagrams that preserves user-defined routing points
  * when moving connected elements. This router extends the default Manhattan router to handle
  * element movements while maintaining the Manhattan-style routing (right angles) and respecting
  * existing routing points.
  */
 export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
-    private debug: boolean = false;
+    private debugMode: boolean = false;
 
     /**
      * Stores the current movement information including the delta (x,y) and the ID of the moving element.
      * This is updated by the MouseListener and consumed in the next routing calculation.
      */
-    private currentDelta?: { x: number; y: number; elementId: string };
+    private currentDelta?: MovementDelta;
 
     /**
      * Updates the current movement delta. Called by the MouseListener when an element is being dragged.
      * @param delta The x,y movement delta
      * @param elementId ID of the element being moved
      */
-    public updateDelta(delta: { x: number; y: number }, elementId: string): void {
-        this.currentDelta = { ...delta, elementId };
-        if (this.debug) {
-            console.log('update delta = ' + delta.x + "," + delta.y + ' for element ' + elementId);
-        }
+    public updateDelta(delta: { x: number; y: number }, elementId: string, edgeIds: string[]): void {
+        this.currentDelta = {
+            x: delta.x,
+            y: delta.y,
+            elementId,
+            edgeIds
+        };
+        this.debug('├── update currentDelta = ' + delta.x + "," + delta.y + ' for elements: ' + edgeIds.join(', '));
     }
 
     /**
@@ -71,6 +86,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         if (!edge.source || !edge.target) {
             return [];
         }
+
 
         const routedCorners = this.createRoutedCorners(edge);
         const sourceRefPoint = routedCorners[0] ||
@@ -103,19 +119,23 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         routedCorners.forEach(corner => completeRoute.push(corner));
         completeRoute.push({ kind: 'target', ...targetAnchor });
 
-        if (this.currentDelta && completeRoute.length >= 3) {
-            if (this.debug) {
-                this.printPoints('├── origin route:', completeRoute);
-            }
-
-            const delta = this.currentDelta;
-            this.currentDelta = undefined;
+        if (this.currentDelta && completeRoute.length >= 3 && this.currentDelta.edgeIds.includes(edge.id)) {
+            this.debug('├── route ' + edge.id + '....');
+            const delta: MovementDelta = { ...this.currentDelta };
+            // remove current edge from delta..
+            this.currentDelta = delta.edgeIds.length > 1 ? {
+                ...delta,
+                edgeIds: delta.edgeIds.filter(item => item !== edge.id)
+            } : undefined;
 
             // Check if source or target is being moved
             const isSourceMoving = delta.elementId === edge.source.id;
             const isTargetMoving = delta.elementId === edge.target.id;
+            this.debug('│   ├── Source ID= ' + edge.source.id);
+            this.debug('│   ├── Target ID= ' + edge.target.id);
 
             if (isSourceMoving) {
+                this.debug('│   ├── processing source moving....');
                 // Adjust source anchor point
                 completeRoute[0] = {
                     kind: 'source',
@@ -145,6 +165,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
                     };
                 }
             } else if (isTargetMoving) {
+                this.debug('│   ├── processing target moving....');
                 // Adjust target anchor point
                 completeRoute[completeRoute.length - 1] = {
                     kind: 'target',
@@ -181,29 +202,33 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
                 y: point.y
             }));
             edge.routingPoints = newRoutingPoints;
-            if (this.debug) {
-                console.log(`Adjusted route after ${isSourceMoving ? 'source' : 'target'} movement:`, delta);
-                this.printPoints('├── adjusted route:', completeRoute);
-            }
+            this.debug(`Adjusted route after ${isSourceMoving ? 'source' : 'target'} movement:`);
+            this.debugPoints('├── adjusted route:', completeRoute);
+
             return completeRoute;
         }
 
-        if (this.debug) {
-            console.log('No adjustment needed, returning original route');
-        }
+        this.debug('No adjustment needed, returning original route');
         return completeRoute;
     }
 
     /**
-     * Helper Debug Method
+     * Helper Debug Methods
      * 
      * @param routedPoints
      */
-    private printPoints(message: string, points: Point[]) {
-        console.log(message);
-        points.forEach(point => {
-            console.log('│   ├── x=' + point.x + ' y=' + point.y);
-        });
+    private debugPoints(message: string, points: Point[]) {
+        if (this.debugMode) {
+            console.log(message);
+            points.forEach(point => {
+                console.log('│   ├── x=' + point.x + ' y=' + point.y);
+            });
+        }
+    }
+    private debug(message: string) {
+        if (this.debugMode) {
+            //   console.log(message);
+        }
     }
 }
 
@@ -217,6 +242,8 @@ export class BPMNRouterMoveListener extends MouseListener {
     protected isDragging = false;
     protected lastPosition?: Point;
     protected elementId?: string;
+    // Store affected edges
+    protected affectedEdges: string[] = [];
 
     @inject(BPMNManhattanRouter)
     protected router: BPMNManhattanRouter;
@@ -240,10 +267,27 @@ export class BPMNRouterMoveListener extends MouseListener {
                     y: event.clientY
                 };
             }
+            if (target instanceof GNode) {
+                // Collect all affected edges
+                this.affectedEdges = [];
+                if (target.incomingEdges) {
+                    target.incomingEdges.forEach(edge => {
+                        if (isRoutable(edge)) {
+                            this.affectedEdges.push(edge.id);
+                        }
+                    });
+                }
+                if (target.outgoingEdges) {
+                    target.outgoingEdges.forEach(edge => {
+                        if (isRoutable(edge)) {
+                            this.affectedEdges.push(edge.id);
+                        }
+                    });
+                }
+            }
         }
         return [];
     }
-
     /**
      * Handles mouse movement during drag operations. Calculates the movement delta
      * and informs the router about the movement.
@@ -257,15 +301,13 @@ export class BPMNRouterMoveListener extends MouseListener {
                 x: event.clientX,
                 y: event.clientY
             };
-
             // Calculate movement delta
             const delta = {
                 x: newPosition.x - this.lastPosition.x,
                 y: newPosition.y - this.lastPosition.y
             };
-
             // Inform router about new move event with element ID
-            this.router.updateDelta(delta, this.elementId);
+            this.router.updateDelta(delta, this.elementId, this.affectedEdges);
             this.lastPosition = newPosition;
         }
         return [];
@@ -282,6 +324,8 @@ export class BPMNRouterMoveListener extends MouseListener {
             this.isDragging = false;
             this.lastPosition = undefined;
             this.elementId = undefined;
+            // Clear affected edges
+            this.affectedEdges = [];
         }
         return [];
     }
