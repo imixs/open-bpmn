@@ -17,17 +17,18 @@
 import {
     Action,
     Bounds,
+    findParentByFeature,
     GLSPManhattanEdgeRouter,
     GModelElement,
-    GNode,
     GRoutableElement,
-    isConnectable,
     isRoutable,
+    ManhattanRouterOptions,
     MouseListener,
     Point,
     RoutedPoint,
     translatePoint
 } from '@eclipse-glsp/client';
+import { isBPMNNode } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 
 /**
@@ -68,6 +69,14 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
             edgeIds
         };
         this.debug('├── update currentDelta = ' + delta.x + "," + delta.y + ' for elements: ' + edgeIds.join(', '));
+    }
+
+    protected override getOptions(edge: GRoutableElement): ManhattanRouterOptions {
+        return {
+            standardDistance: 20, // 20
+            minimalPointDistance: 3,
+            selfEdgeOffset: 0.25  // 0.25
+        };
     }
 
     /**
@@ -257,28 +266,37 @@ export class BPMNRouterMoveListener extends MouseListener {
      * @param event Mouse event
      */
     override mouseDown(target: GModelElement, event: MouseEvent): Action[] {
+
+
         if (event.button === 0) { // left mouse button
             // Only track connectable elements
-            if (isConnectable(target)) {
+            let targetElement = target;
+            if (!isBPMNNode(targetElement)) {
+                const bpmnNode = findParentByFeature(targetElement, isBPMNNode);
+                if (bpmnNode) {
+                    targetElement = bpmnNode;
+                }
+            }
+            // do we have a BPMN node?
+            if (isBPMNNode(targetElement)) {
                 this.isDragging = true;
-                this.elementId = target.id;
+                this.elementId = targetElement.id;
                 this.lastPosition = {
                     x: event.clientX,
                     y: event.clientY
                 };
-            }
-            if (target instanceof GNode) {
                 // Collect all affected edges
+                // console.log('found: ' + targetElement.id);
                 this.affectedEdges = [];
-                if (target.incomingEdges) {
-                    target.incomingEdges.forEach(edge => {
+                if (targetElement.incomingEdges) {
+                    targetElement.incomingEdges.forEach(edge => {
                         if (isRoutable(edge)) {
                             this.affectedEdges.push(edge.id);
                         }
                     });
                 }
-                if (target.outgoingEdges) {
-                    target.outgoingEdges.forEach(edge => {
+                if (targetElement.outgoingEdges) {
+                    targetElement.outgoingEdges.forEach(edge => {
                         if (isRoutable(edge)) {
                             this.affectedEdges.push(edge.id);
                         }
