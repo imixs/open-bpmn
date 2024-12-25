@@ -2,6 +2,7 @@ package org.openbpmn.bpmn.elements;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
@@ -46,39 +47,47 @@ public class Event extends BPMNElementNode {
      * @throws BPMNMissingElementException
      */
     public void addEventDefinition(String type) throws BPMNModelException {
-
-        if (this.getElementNode() == null) {
-            throw new BPMNMissingElementException("Missing ElementNode!");
-        }
-        Element eventDefinition = model.createElement(BPMNNS.BPMN2, type);
-        eventDefinition.setAttribute("id", BPMNModel.generateShortID(type));
-
         // in case of a Signal Definition we need to add a reference to the first
         // existing Signal.
         if (BPMNTypes.EVENT_DEFINITION_SIGNAL.equals(type)) {
             // do we have at least one signal ?
-            if (model.getSignals().size() == 0) {
+            if (model.getSignals().isEmpty()) {
                 // create a dummy signal
                 model.addSignal("signal_1", "Signal 1");
             }
             // take the first one
             Signal signal = model.getSignals().iterator().next();
-            eventDefinition.setAttribute("signalRef", signal.getId());
-
+            addEventDefinition(signal.getId(), type);
+            return;
         }
 
         // in case of a Message Definition we need to add a reference to the first
         // existing Message.
         if (BPMNTypes.EVENT_DEFINITION_MESSAGE.equals(type)) {
             // do we have at least one message ?
-            if (model.getMessages().size() == 0) {
+            if (model.getMessages().isEmpty()) {
                 // create a dummy message
                 model.addMessage("message_1", "Message 1");
             }
             // take the first one
             Message message = model.getMessages().iterator().next();
-            eventDefinition.setAttribute("messageRef", message.getId());
+            addEventDefinition(message.getId(), type);
+        }
+    }
 
+    public void addEventDefinition(String id, String type) throws BPMNModelException {
+        if (this.getElementNode() == null) {
+            throw new BPMNMissingElementException("Missing ElementNode!");
+        }
+        Element eventDefinition = model.createElement(BPMNNS.BPMN2, type);
+        eventDefinition.setAttribute("id", BPMNModel.generateShortID(type));
+
+        if (BPMNTypes.EVENT_DEFINITION_SIGNAL.equals(type)) {
+            eventDefinition.setAttribute("signalRef", id);
+        }
+
+        if (BPMNTypes.EVENT_DEFINITION_MESSAGE.equals(type)) {
+            eventDefinition.setAttribute("messageRef", id);
         }
         this.getElementNode().appendChild(eventDefinition);
 
@@ -210,6 +219,8 @@ public class Event extends BPMNElementNode {
                         "A Catch Event must have at least one outgoing  Sequence Flow!", this.getId(),
                         BPMNValidationMarker.ErrorType.ERROR));
             }
+
+            Message message = model.getMessages().iterator().next();
         }
 
         // Throw Event?
@@ -221,6 +232,38 @@ public class Event extends BPMNElementNode {
             }
 
         }
+
+        getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_MESSAGE)
+                .forEach(ed -> {
+                    boolean hasMessage =
+                            model.getMessages().stream()
+                                    .anyMatch(m ->
+                                            Objects.equals(
+                                                    ed.getAttribute("messageRef"),
+                                                    m.getId()));
+                    if (!hasMessage) {
+                        this.addValidationMarker(
+                                new BPMNValidationMarker("Event",
+                                        "A Event must have a corresponding Message!", this.getId(),
+                                        BPMNValidationMarker.ErrorType.ERROR));
+                    }
+                });
+
+        getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_SIGNAL)
+                .forEach(ed -> {
+                    boolean hasMessage =
+                            model.getSignals().stream()
+                                    .anyMatch(m ->
+                                            Objects.equals(
+                                                    ed.getAttribute("signalRef"),
+                                                    m.getId()));
+                    if (!hasMessage) {
+                        this.addValidationMarker(
+                                new BPMNValidationMarker("Event",
+                                        "A Event must have a corresponding Signal!", this.getId(),
+                                        BPMNValidationMarker.ErrorType.ERROR));
+                    }
+                });
 
         return this.getValidationMarkers();
     }
