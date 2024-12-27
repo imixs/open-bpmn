@@ -187,14 +187,12 @@ public class Event extends BPMNElementNode {
                 this.addValidationMarker(new BPMNValidationMarker("Start Event",
                         "A Start Event may not have incoming Sequence Flows!", this.getId(),
                         BPMNValidationMarker.ErrorType.ERROR));
-
             }
             if (this.getOutgoingSequenceFlows().size() != 1) {
                 this.addValidationMarker(new BPMNValidationMarker("Start Event",
                         "A Start Event must have exactly one outgoing  Sequence Flow!", this.getId(),
                         BPMNValidationMarker.ErrorType.ERROR));
             }
-
         }
 
         // END event?
@@ -219,8 +217,6 @@ public class Event extends BPMNElementNode {
                         "A Catch Event must have at least one outgoing  Sequence Flow!", this.getId(),
                         BPMNValidationMarker.ErrorType.ERROR));
             }
-
-            Message message = model.getMessages().iterator().next();
         }
 
         // Throw Event?
@@ -230,17 +226,15 @@ public class Event extends BPMNElementNode {
                         "A Throw Event must have at least one ingoing  Sequence Flow!", this.getId(),
                         BPMNValidationMarker.ErrorType.ERROR));
             }
-
         }
 
+        // validate if the definition reference for message definitions
         getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_MESSAGE)
                 .forEach(ed -> {
-                    boolean hasMessage =
-                            model.getMessages().stream()
-                                    .anyMatch(m ->
-                                            Objects.equals(
-                                                    ed.getAttribute("messageRef"),
-                                                    m.getId()));
+                    boolean hasMessage = model.getMessages().stream()
+                            .anyMatch(m -> Objects.equals(
+                                    ed.getAttribute("messageRef"),
+                                    m.getId()));
                     if (!hasMessage) {
                         this.addValidationMarker(
                                 new BPMNValidationMarker("Event",
@@ -249,14 +243,13 @@ public class Event extends BPMNElementNode {
                     }
                 });
 
+        // validate if the definition reference for signal definitions
         getEventDefinitionsByType(BPMNTypes.EVENT_DEFINITION_SIGNAL)
                 .forEach(ed -> {
-                    boolean hasMessage =
-                            model.getSignals().stream()
-                                    .anyMatch(m ->
-                                            Objects.equals(
-                                                    ed.getAttribute("signalRef"),
-                                                    m.getId()));
+                    boolean hasMessage = model.getSignals().stream()
+                            .anyMatch(m -> Objects.equals(
+                                    ed.getAttribute("signalRef"),
+                                    m.getId()));
                     if (!hasMessage) {
                         this.addValidationMarker(
                                 new BPMNValidationMarker("Event",
