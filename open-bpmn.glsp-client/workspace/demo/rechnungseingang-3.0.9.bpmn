@@ -107,7 +107,7 @@ Das ist eine automatische generierte E-Mail. Bitte nicht auf diese E-Mail antwor
     </bpmn2:participant>
     <bpmn2:participant id="participant_qI5ylQ" name="Default Process" processRef="process_2"/>
   </bpmn2:collaboration>
-  <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Rechnungseingang">
+  <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Rechnungseingang" processType="Private">
     <bpmn2:laneSet id="LaneSet_3" name="Lane Set 3">
       <bpmn2:lane id="Lane_5" name="Empfang">
         <bpmn2:flowNodeRef>EndEvent_1</bpmn2:flowNodeRef>
@@ -2903,8 +2903,8 @@ Compute _subject and additional data fields.
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_41" id="BPMNEdge_SequenceFlow_41" sourceElement="BPMNShape_EventBasedGateway_1" targetElement="BPMNShape_IntermediateThrowEvent_1">
         <bpmndi:BPMNLabel id="BPMNLabel_80"/>
         <di:waypoint x="681.0" y="363.0"/>
-        <di:waypoint x="699.5" y="363.0"/>
-        <di:waypoint x="699.5" y="433.0"/>
+        <di:waypoint x="700.0" y="363.0"/>
+        <di:waypoint x="700.0" y="433.0"/>
         <di:waypoint x="718.0" y="433.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_49" id="BPMNEdge_SequenceFlow_49" sourceElement="BPMNShape_IntermediateCatchEvent_22" targetElement="BPMNShape_Task_1">
@@ -2935,13 +2935,13 @@ Compute _subject and additional data fields.
         <di:waypoint x="526.0" y="388.0"/>
         <di:waypoint x="526.0" y="408.0"/>
         <di:waypoint x="532.0" y="408.0"/>
-        <di:waypoint x="532.0" y="426.02943725152284"/>
+        <di:waypoint x="532.0" y="426.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_59" id="BPMNEdge_SequenceFlow_59" sourceElement="BPMNShape_Task_4" targetElement="BPMNShape_IntermediateCatchEvent_5">
         <bpmndi:BPMNLabel id="BPMNLabel_116"/>
         <di:waypoint x="841.0" y="783.0"/>
-        <di:waypoint x="782.5" y="783.0"/>
-        <di:waypoint x="782.5" y="863.0"/>
+        <di:waypoint x="783.0" y="783.0"/>
+        <di:waypoint x="783.0" y="863.0"/>
         <di:waypoint x="724.0" y="863.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_61" id="BPMNEdge_SequenceFlow_61" sourceElement="BPMNShape_ExclusiveGateway_7" targetElement="BPMNShape_Task_4">
@@ -2964,8 +2964,8 @@ Compute _subject and additional data fields.
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_14" id="BPMNEdge_SequenceFlow_16" sourceElement="BPMNShape_IntermediateCatchEvent_8" targetElement="BPMNShape_Task_5">
         <bpmndi:BPMNLabel id="BPMNLabel_65"/>
         <di:waypoint x="430.0" y="454.0"/>
-        <di:waypoint x="450.5" y="454.0"/>
-        <di:waypoint x="450.5" y="363.0"/>
+        <di:waypoint x="451.0" y="454.0"/>
+        <di:waypoint x="451.0" y="363.0"/>
         <di:waypoint x="471.0" y="363.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_16" id="BPMNEdge_SequenceFlow_18" sourceElement="BPMNShape_EventBasedGateway_1" targetElement="BPMNShape_IntermediateCatchEvent_16">
@@ -3067,7 +3067,7 @@ Compute _subject and additional data fields.
         <bpmndi:BPMNLabel id="BPMNLabel_70"/>
         <di:waypoint x="1071.0" y="1063.0"/>
         <di:waypoint x="1372.0" y="1063.0"/>
-        <di:waypoint x="1372.0" y="800.5499287747842"/>
+        <di:waypoint x="1372.0" y="801.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1" id="BPMNEdge_SequenceFlow_1" sourceElement="BPMNShape_IntermediateCatchEvent_3" targetElement="BPMNShape_Task_19">
         <bpmndi:BPMNLabel id="BPMNLabel_14"/>
@@ -3108,9 +3108,9 @@ Compute _subject and additional data fields.
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Association_3" id="BPMNEdge_Association_3" sourceElement="BPMNShape_TextAnnotation_2" targetElement="BPMNShape_IntermediateCatchEvent_39">
         <bpmndi:BPMNLabel id="BPMNLabel_69"/>
-        <di:waypoint x="1211.0" y="1254.5"/>
-        <di:waypoint x="1187.5" y="1254.5"/>
-        <di:waypoint x="1187.5" y="1253.0"/>
+        <di:waypoint x="1211.0" y="1255.0"/>
+        <di:waypoint x="1188.0" y="1255.0"/>
+        <di:waypoint x="1188.0" y="1253.0"/>
         <di:waypoint x="1164.0" y="1253.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_4" id="BPMNEdge_SequenceFlow_4" sourceElement="BPMNShape_EventBasedGateway_2" targetElement="BPMNShape_IntermediateCatchEvent_6">
@@ -3124,8 +3124,8 @@ Compute _subject and additional data fields.
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Association_1" id="BPMNEdge_Association_1" sourceElement="BPMNShape_TextAnnotation_4" targetElement="BPMNShape_IntermediateCatchEvent_12">
         <bpmndi:BPMNLabel id="BPMNLabel_33"/>
-        <di:waypoint x="1148.5" y="1449.0"/>
-        <di:waypoint x="1148.5" y="1467.0"/>
+        <di:waypoint x="1149.0" y="1449.0"/>
+        <di:waypoint x="1149.0" y="1467.0"/>
         <di:waypoint x="1146.0" y="1467.0"/>
         <di:waypoint x="1146.0" y="1485.0"/>
       </bpmndi:BPMNEdge>
@@ -3208,7 +3208,7 @@ Compute _subject and additional data fields.
         <bpmndi:BPMNLabel id="BPMNLabel_110"/>
         <di:waypoint x="1456.0" y="1478.0"/>
         <di:waypoint x="1456.0" y="1385.0"/>
-        <di:waypoint x="1538.1114561800016" y="1385.0"/>
+        <di:waypoint x="1538.0" y="1385.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_47" id="BPMNEdge_SequenceFlow_47" sourceElement="BPMNShape_Task_19" targetElement="BPMNShape_EventBasedGateway_2">
         <bpmndi:BPMNLabel id="BPMNLabel_123"/>
@@ -3307,7 +3307,7 @@ Compute _subject and additional data fields.
         <bpmndi:BPMNLabel id="BPMNLabel_141"/>
         <di:waypoint x="332.0" y="143.0"/>
         <di:waypoint x="410.0" y="143.0"/>
-        <di:waypoint x="410.0" y="185.45007122521577"/>
+        <di:waypoint x="410.0" y="185.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_60" id="BPMNEdge_SequenceFlow_60" sourceElement="BPMNShape_IntermediateCatchEvent_21" targetElement="BPMNShape_IntermediateCatchEvent_4">
         <bpmndi:BPMNLabel id="BPMNLabel_148"/>
@@ -3322,9 +3322,9 @@ Compute _subject and additional data fields.
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_64" id="BPMNEdge_SequenceFlow_64" sourceElement="BPMNShape_EventBasedGateway_5" targetElement="BPMNShape_IntermediateThrowEvent_3">
         <bpmndi:BPMNLabel id="BPMNLabel_152"/>
         <di:waypoint x="1041.0" y="783.0"/>
-        <di:waypoint x="1054.5" y="783.0"/>
-        <di:waypoint x="1054.5" y="715.0"/>
-        <di:waypoint x="1068.1114561800018" y="715.0"/>
+        <di:waypoint x="1055.0" y="783.0"/>
+        <di:waypoint x="1055.0" y="715.0"/>
+        <di:waypoint x="1068.0" y="715.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="dataStore_kaeeyA" id="BPMNShape_lgvo5A">
         <dc:Bounds height="70.0" width="100.0" x="607.0" y="144.0"/>

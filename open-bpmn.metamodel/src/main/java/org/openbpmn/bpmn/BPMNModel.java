@@ -1927,22 +1927,34 @@ public class BPMNModel {
         // find process
         NodeList processList = definitions.getElementsByTagNameNS(getUri(BPMNNS.BPMN2), "process");
         if (processList != null && processList.getLength() > 0) {
+
+            // first we need to test if all processes have a processType attribute or if we
+            // found at lease one public process!
+            for (int i = 0; i < processList.getLength(); i++) {
+                Element processElement = (Element) processList.item(i);
+                if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processElement.getAttribute("processType"))) {
+                    publicCount++;
+                }
+            }
+
+            // now we can build the process list
             for (int i = 0; i < processList.getLength(); i++) {
                 Element processElement = (Element) processList.item(i);
 
                 String processType = processElement.getAttribute("processType");
-                if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
-                    publicCount++;
-                }
                 if (processType.isEmpty()) {
                     // fix missing element attribute!
-                    // if we did not find a public process, we default now to a public type
+                    // if the model doese not contain at lease one public process, we default now to
+                    // a public type
                     if (publicCount == 0) {
                         processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
                         publicCount++;
                     } else {
+                        // else set the process to a private type!
                         processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
                     }
+                    logger.warning(
+                            "Set missing processType attribute for process " + processElement.getAttribute("id"));
                     processElement.setAttribute("processType", processType);
                     setDirty(true);
                 }

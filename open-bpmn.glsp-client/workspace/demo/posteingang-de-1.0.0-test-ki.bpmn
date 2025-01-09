@@ -66,10 +66,11 @@ Possible ImageTypes are:
  * GRAY      Shades of gray
  * RGB      Red, Green, Blue
 </bpmn2:text>
+      <bpmn2:documentation id="documentation_AtBXTg"/>
     </bpmn2:textAnnotation>
     <bpmn2:participant id="participant_MqZCmA" name="Default Process" processRef="process_2"/>
   </bpmn2:collaboration>
-  <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Posteingang">
+  <bpmn2:process definitionalCollaborationRef="Collaboration_1" id="Process_1" isExecutable="false" name="Posteingang" processType="Private">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_2" name="Empfang">
         <bpmn2:flowNodeRef>Task_4</bpmn2:flowNodeRef>
@@ -708,7 +709,9 @@ Max 10 PDF Pages will be scanned</bpmn2:text>
     <bpmn2:sequenceFlow id="sequenceFlow_kkxDRg" sourceRef="gateway_vO0Jrw" targetRef="IntermediateCatchEvent_3">
       <bpmn2:documentation id="documentation_wVueew"/>
     </bpmn2:sequenceFlow>
-    <bpmn2:dataStoreReference id="dataStoreReference_NGlFPg" name="Data Store-1"/>
+    <bpmn2:dataStoreReference id="dataStoreReference_NGlFPg" name="Data Store-1">
+      <bpmn2:documentation id="documentation_kVOQFw"/>
+    </bpmn2:dataStoreReference>
     <bpmn2:association id="association_9R2VSg" sourceRef="dataStoreReference_NGlFPg" targetRef="Task_1">
       <bpmn2:documentation id="documentation_6rKTaQ"/>
     </bpmn2:association>
@@ -886,9 +889,9 @@ Max 10 PDF Pages will be scanned</bpmn2:text>
       <bpmndi:BPMNEdge bpmnElement="Association_1" id="BPMNEdge_Association_1" sourceElement="BPMNShape_TextAnnotation_2" targetElement="BPMNShape_IntermediateCatchEvent_4">
         <bpmndi:BPMNLabel id="BPMNLabel_19"/>
         <di:waypoint x="1152.0" y="251.0"/>
-        <di:waypoint x="1152.0" y="274.5"/>
-        <di:waypoint x="966.0" y="274.5"/>
-        <di:waypoint x="966.0" y="307.0277992443886"/>
+        <di:waypoint x="1152.0" y="275.0"/>
+        <di:waypoint x="966.0" y="275.0"/>
+        <di:waypoint x="966.0" y="307.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_5" id="BPMNEdge_SequenceFlow_5" sourceElement="BPMNShape_IntermediateCatchEvent_1" targetElement="BPMNShape_Task_2">
         <bpmndi:BPMNLabel id="BPMNLabel_30"/>
@@ -910,24 +913,24 @@ Max 10 PDF Pages will be scanned</bpmn2:text>
         <bpmndi:BPMNLabel id="BPMNLabel_35"/>
         <di:waypoint x="1350.0" y="485.0"/>
         <di:waypoint x="1433.0" y="485.0"/>
-        <di:waypoint x="1433.0" y="342.9722007556114"/>
+        <di:waypoint x="1433.0" y="343.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Association_2" id="BPMNEdge_Association_2" sourceElement="BPMNShape_TextAnnotation_3" targetElement="BPMNShape_IntermediateCatchEvent_3">
         <bpmndi:BPMNLabel id="BPMNLabel_37"/>
-        <di:waypoint x="739.0" y="174.5"/>
-        <di:waypoint x="808.5" y="174.5"/>
-        <di:waypoint x="808.5" y="325.0"/>
+        <di:waypoint x="739.0" y="175.0"/>
+        <di:waypoint x="809.0" y="175.0"/>
+        <di:waypoint x="809.0" y="325.0"/>
         <di:waypoint x="878.0" y="325.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_16" id="BPMNEdge_SequenceFlow_16" sourceElement="BPMNShape_00qW5g" targetElement="BPMNShape_IntermediateCatchEvent_7">
         <bpmndi:BPMNLabel id="BPMNLabel_39"/>
         <di:waypoint x="765.0" y="340.0"/>
         <di:waypoint x="765.0" y="396.0"/>
-        <di:waypoint x="947.0277992443886" y="396.0"/>
+        <di:waypoint x="947.0" y="396.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_17" id="BPMNEdge_SequenceFlow_17" sourceElement="BPMNShape_IntermediateCatchEvent_7" targetElement="BPMNShape_ExclusiveGateway_2">
         <bpmndi:BPMNLabel id="BPMNLabel_40"/>
-        <di:waypoint x="981.124515496597" y="403.0"/>
+        <di:waypoint x="981.0" y="403.0"/>
         <di:waypoint x="1089.0" y="403.0"/>
         <di:waypoint x="1089.0" y="349.0"/>
       </bpmndi:BPMNEdge>
