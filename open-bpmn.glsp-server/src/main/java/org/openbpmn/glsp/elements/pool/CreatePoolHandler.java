@@ -15,14 +15,12 @@
  ********************************************************************************/
 package org.openbpmn.glsp.elements.pool;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GPoint;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.eclipse.glsp.server.utils.GModelUtil;
 import org.openbpmn.bpmn.BPMNModel;
@@ -84,8 +82,7 @@ public class CreatePoolHandler extends CreateBPMNNodeOperationHandler {
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
-        modelState.reset();
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(participantID)));
+        modelState.refreshGModelState();
     }
 
     @Override

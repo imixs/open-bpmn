@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- origin at X=0.0 Y=0.0 -->
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ext="http://org.eclipse.bpmn2/ext" xmlns:xs="http://www.w3.org/2001/XMLSchema" id="Definitions_1" exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1" targetNamespace="http://org.eclipse.bpmn2/default/collaboration">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+  xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:ext="http://org.eclipse.bpmn2/ext"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" id="Definitions_1"
+  exporter="org.eclipse.bpmn2.modeler.core" exporterVersion="1.5.4.RC1-v20220528-0836-B1"
+  targetNamespace="http://org.eclipse.bpmn2/default/collaboration">
   <bpmn2:collaboration id="Collaboration_1" name="Default Collaboration">
-    <bpmn2:participant id="Participant_1" name="Initiating Pool" processRef="Process_1"/>
+    <bpmn2:participant id="Participant_1" name="Initiating Pool" processRef="Process_1" />
     <bpmn2:participant id="Participant_3" name="Default Pool" processRef="Process_3">
       <bpmn2:extensionElements>
-        <ext:style/>
+        <ext:style />
       </bpmn2:extensionElements>
     </bpmn2:participant>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_1" name="Initiating Process" definitionalCollaborationRef="Collaboration_1" isExecutable="false">
+  <bpmn2:process id="Process_1" name="Initiating Process"
+    definitionalCollaborationRef="Collaboration_1" isExecutable="false" processType="Private">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Lane 1">
         <bpmn2:flowNodeRef>StartEvent_4</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>EndEvent_4</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>Task_2</bpmn2:flowNodeRef>
       </bpmn2:lane>
-      <bpmn2:lane id="Lane_2" name="Lane 2"/>
+      <bpmn2:lane id="Lane_2" name="Lane 2" />
     </bpmn2:laneSet>
     <bpmn2:startEvent id="StartEvent_4" name="Start Event 4">
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
@@ -28,63 +36,66 @@
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:task>
-    <bpmn2:sequenceFlow id="SequenceFlow_7" sourceRef="StartEvent_4" targetRef="Task_2"/>
-    <bpmn2:sequenceFlow id="SequenceFlow_8" sourceRef="Task_2" targetRef="EndEvent_4"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" sourceRef="StartEvent_4" targetRef="Task_2" />
+    <bpmn2:sequenceFlow id="SequenceFlow_8" sourceRef="Task_2" targetRef="EndEvent_4" />
   </bpmn2:process>
-  <bpmn2:process id="Process_3" name="Default Pool Process" definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
+  <bpmn2:process id="Process_3" name="Default Pool Process"
+    definitionalCollaborationRef="Collaboration_1" isExecutable="false" processType="Public" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Collaboration Diagram">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
       <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="Participant_1" isHorizontal="true">
-        <dc:Bounds height="299.0" width="530.0" x="100.0" y="100.0"/>
+        <dc:Bounds height="299.0" width="530.0" x="100.0" y="100.0" />
         <bpmndi:BPMNLabel id="BPMNLabel_1" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="74.0" width="14.0" x="106.0" y="212.0"/>
+          <dc:Bounds height="74.0" width="14.0" x="106.0" y="212.0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Lane_1" bpmnElement="Lane_1" isHorizontal="true">
-        <dc:Bounds height="150.0" width="500.0" x="130.0" y="100.0"/>
+        <dc:Bounds height="150.0" width="500.0" x="130.0" y="100.0" />
         <bpmndi:BPMNLabel id="BPMNLabel_18" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="38.0" width="14.0" x="136.0" y="156.0"/>
+          <dc:Bounds height="38.0" width="14.0" x="136.0" y="156.0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Lane_2" bpmnElement="Lane_2" isHorizontal="true">
-        <dc:Bounds height="150.0" width="500.0" x="130.0" y="249.0"/>
+        <dc:Bounds height="150.0" width="500.0" x="130.0" y="249.0" />
         <bpmndi:BPMNLabel id="BPMNLabel_2" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="38.0" width="14.0" x="136.0" y="305.0"/>
+          <dc:Bounds height="38.0" width="14.0" x="136.0" y="305.0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_StartEvent_4" bpmnElement="StartEvent_4">
-        <dc:Bounds height="36.0" width="36.0" x="190.0" y="142.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="190.0" y="142.0" />
         <bpmndi:BPMNLabel id="BPMNLabel_19" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="69.0" x="174.0" y="178.0"/>
+          <dc:Bounds height="14.0" width="69.0" x="174.0" y="178.0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_EndEvent_4" bpmnElement="EndEvent_4">
-        <dc:Bounds height="36.0" width="36.0" x="530.0" y="142.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="530.0" y="142.0" />
         <bpmndi:BPMNLabel id="BPMNLabel_20" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="66.0" x="515.0" y="178.0"/>
+          <dc:Bounds height="14.0" width="66.0" x="515.0" y="178.0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_Task_2" bpmnElement="Task_2" isExpanded="true">
-        <dc:Bounds height="50.0" width="110.0" x="330.0" y="135.0"/>
+        <dc:Bounds height="50.0" width="110.0" x="330.0" y="135.0" />
         <bpmndi:BPMNLabel id="BPMNLabel_21" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="14.0" width="35.0" x="367.0" y="153.0"/>
+          <dc:Bounds height="14.0" width="35.0" x="367.0" y="153.0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="BPMNShape_StartEvent_4" targetElement="BPMNShape_Task_2">
-        <di:waypoint xsi:type="dc:Point" x="226.0" y="160.0"/>
-        <di:waypoint xsi:type="dc:Point" x="278.0" y="160.0"/>
-        <di:waypoint xsi:type="dc:Point" x="330.0" y="160.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_22"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7"
+        sourceElement="BPMNShape_StartEvent_4" targetElement="BPMNShape_Task_2">
+        <di:waypoint xsi:type="dc:Point" x="226.0" y="160.0" />
+        <di:waypoint xsi:type="dc:Point" x="278.0" y="160.0" />
+        <di:waypoint xsi:type="dc:Point" x="330.0" y="160.0" />
+        <bpmndi:BPMNLabel id="BPMNLabel_22" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_EndEvent_4">
-        <di:waypoint xsi:type="dc:Point" x="440.0" y="160.0"/>
-        <di:waypoint xsi:type="dc:Point" x="485.0" y="160.0"/>
-        <di:waypoint xsi:type="dc:Point" x="530.0" y="160.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_23"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8"
+        sourceElement="BPMNShape_Task_2" targetElement="BPMNShape_EndEvent_4">
+        <di:waypoint xsi:type="dc:Point" x="440.0" y="160.0" />
+        <di:waypoint xsi:type="dc:Point" x="485.0" y="160.0" />
+        <di:waypoint xsi:type="dc:Point" x="530.0" y="160.0" />
+        <bpmndi:BPMNLabel id="BPMNLabel_23" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="BPMNLabelStyle_1">
-      <dc:Font name="arial" size="9.0"/>
+      <dc:Font name="arial" size="9.0" />
     </bpmndi:BPMNLabelStyle>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

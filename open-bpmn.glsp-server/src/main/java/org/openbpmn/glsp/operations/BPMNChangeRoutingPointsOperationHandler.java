@@ -53,7 +53,7 @@ import com.google.inject.Inject;
 public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHandler<ChangeRoutingPointsOperation> {
 
     private static Logger logger = Logger.getLogger(BPMNChangeRoutingPointsOperationHandler.class.getName());
-    private boolean debug = true;
+    private boolean debug = false;
 
     @Inject
     protected BPMNGModelState modelState;
@@ -64,7 +64,6 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
     }
 
     private void executeOperation(final ChangeRoutingPointsOperation operation) {
-        boolean debug = true;
         List<ElementAndRoutingPoints> routingPoints = operation.getNewRoutingPoints();
 
         if (debug)

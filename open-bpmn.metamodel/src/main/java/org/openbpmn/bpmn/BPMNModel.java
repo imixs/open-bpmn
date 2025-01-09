@@ -181,8 +181,9 @@ public class BPMNModel {
             // Load BPMNPlane element....
             loadBpmnPlane();
             // init the participant and process list
-            loadParticipantList();
             loadProcessList();
+            loadParticipantList();
+
             // load global elements
             loadMessageList();
             loadMessageFlowList();
@@ -483,20 +484,10 @@ public class BPMNModel {
                 collaborationElement.appendChild(migratedParticipantNode);
                 existingProcess.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
                 // finally add a new BPMNParticipant to the participant list
-                getParticipants().add(new Participant(this, migratedParticipantNode));
+                getParticipants().add(new Participant(this, migratedParticipantNode, existingProcess));
             }
 
         }
-
-        // create a new Dom node...
-        Element participantNode = createElement(BPMNNS.BPMN2, "participant");
-        String participantID = BPMNModel.generateShortID("participant");
-        participantNode.setAttribute("id", participantID);
-        participantNode.setAttribute("name", name);
-        this.collaborationElement.appendChild(participantNode);
-        // add BPMNParticipant instance
-        Participant bpmnParticipant = new Participant(this, participantNode);
-        getParticipants().add(bpmnParticipant);
 
         // now create and add a new Process to this Participant...
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
@@ -507,8 +498,16 @@ public class BPMNModel {
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
         process.setName(name);
 
-        bpmnParticipant.setProcessRef(process.getId());
-        bpmnParticipant.setBpmnProcess(process);
+        // create a new Dom node...
+        Element participantNode = createElement(BPMNNS.BPMN2, "participant");
+        String participantID = BPMNModel.generateShortID("participant");
+        participantNode.setAttribute("id", participantID);
+        participantNode.setAttribute("name", name);
+        this.collaborationElement.appendChild(participantNode);
+        // add BPMNParticipant instance
+        Participant bpmnParticipant = new Participant(this, participantNode, process);
+        getParticipants().add(bpmnParticipant);
+
         // create the pool shape
         createPool(bpmnParticipant);
 
@@ -587,25 +586,25 @@ public class BPMNModel {
             }
         }
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
-        Element process = createElement(BPMNNS.BPMN2, "process");
-        logger.fine(process.getNodeName());
-        logger.fine(process.getLocalName());
-        logger.fine(process.getNamespaceURI());
-        process.setAttribute("id", id);
+        Element processElement = createElement(BPMNNS.BPMN2, "process");
+        logger.fine(processElement.getNodeName());
+        logger.fine(processElement.getLocalName());
+        logger.fine(processElement.getNamespaceURI());
+        processElement.setAttribute("id", id);
         // set optional name
         if (name != null) {
-            process.setAttribute("name", name);
+            processElement.setAttribute("name", name);
         }
 
         // set type
         if (type == null || type.isEmpty()) {
             type = BPMNTypes.PROCESS_TYPE_PUBLIC;
         }
-        process.setAttribute("processType", type);
+        processElement.setAttribute("processType", type);
 
-        definitions.insertBefore(process, this.getBpmnDiagram());
+        definitions.insertBefore(processElement, this.getBpmnDiagram());
 
-        BPMNProcess bpmnProcess = new BPMNProcess(this, process, type);
+        BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, type);
         this.getProcesses().add(bpmnProcess);
 
         // add an empty BPMNPlane tag
@@ -1851,6 +1850,7 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     private void loadParticipantList() throws BPMNModelException {
+        int publicCount = 0;
         participants = new LinkedHashSet<Participant>();
         List<Element> invalidParticipantElementList = new ArrayList<Element>();
         NodeList collaborationNodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
@@ -1864,7 +1864,6 @@ public class BPMNModel {
             logger.fine("..found " + participantList.getLength() + " participants");
             for (int i = 0; i < participantList.getLength(); i++) {
                 Element item = (Element) participantList.item(i);
-                Participant participant;
                 String processRef = item.getAttribute("processRef");
                 if (processRef == null || processRef.isEmpty()) {
                     // See issue #299
@@ -1873,17 +1872,39 @@ public class BPMNModel {
                     invalidParticipantElementList.add(item);
                     continue;
                 }
-                participant = new Participant(this, item);
-                // set processRef
-                participant.setProcessRef(item.getAttribute("processRef"));
-                // update process...
-                participants.add(participant);
+                BPMNProcess process = findProcessById(processRef);
+                if (process != null) {
+                    if (process.isPublicProcess()) {
+                        publicCount++;
+                    }
+                    participants.add(new Participant(this, item, process));
+                }
             }
 
             // remove deprecated participant elements form model
             for (Element _participant : invalidParticipantElementList) {
                 collaborationElement.removeChild(_participant);
             }
+
+            // if we do not have a process at all or a public default process is missing in
+            // the participant list, we create a default process now
+            if (processes.size() == 0 || (participants.size() > 0 && publicCount == 0)) {
+                logger.warning(
+                        "Invalid model structure: No public process node found - missing default process will be added...");
+                // Do we have a normal process diagram?
+                // create a new default participant
+                addParticipant("Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+                // send a notification
+                this.setDirty(true);
+                this.getNotifications().add(new ModelNotification(ModelNotification.Severity.INFO,
+                        "Default process created.",
+                        "Empty model or missing public process. Default process was created successful."));
+
+            } else if (publicCount > 1) {
+                getLogger()
+                        .warning("Invalid model structure! The model contains more than one public process instance!");
+            }
+
         }
     }
 
@@ -1907,97 +1928,37 @@ public class BPMNModel {
         NodeList processList = definitions.getElementsByTagNameNS(getUri(BPMNNS.BPMN2), "process");
         if (processList != null && processList.getLength() > 0) {
             for (int i = 0; i < processList.getLength(); i++) {
-                Element item = (Element) processList.item(i);
-                String id = item.getAttribute("id");
-                if (id == null) {
-                    id = "";
+                Element processElement = (Element) processList.item(i);
+
+                String processType = processElement.getAttribute("processType");
+                if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
+                    publicCount++;
                 }
-                String processType = item.getAttribute("processType");
                 if (processType.isEmpty()) {
-                    // we do not have a process Type provided. We now verify
-                    // if the process ID is listed in the list of participants.
-                    // If the participant has a shape (Pool) than the type is 'Private'. Otherwise
-                    // it seems to be the public default process
-                    for (Participant participant : participants) {
-                        if (id.equals(participant.getProcessRef())) {
-                            // do we have a pool for this participant?
-                            if (participant.getBpmnShape() != null) {
-                                processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
-                            } else {
-                                // no Pool - so we assume this is the public process
-                                processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
-                                publicCount++;
-                            }
-                            break;
-                        }
-                    }
-                } else {
-                    if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
+                    // fix missing element attribute!
+                    // if we did not find a public process, we default now to a public type
+                    if (publicCount == 0) {
+                        processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
                         publicCount++;
+                    } else {
+                        processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
                     }
+                    processElement.setAttribute("processType", processType);
+                    setDirty(true);
                 }
 
-                BPMNProcess bpmnProcess = new BPMNProcess(this, item, processType);
+                BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType);
                 processes.add(bpmnProcess);
-
-                // we need to update the containing Participant
-                // This assignment can only be done now because the loadParticipantList is
-                // called
-                // before this method.
-                Participant participant = bpmnProcess.findParticipant();
-                if (participant != null) {
-                    participant.setBpmnProcess(bpmnProcess);
-                } else {
-                    // verify if we have a participant for this process. If not we create one. Issue
-                    // # #297
-                    // <bpmn2:participant id="participant_1" name="Default Process"
-                    // processRef="process_1"/>
-                    if (isCollaborationDiagram()) {
-                        logger.warning("Process " + bpmnProcess.getId()
-                                + " has no participant reference! Missing element will be added...");
-
-                        // create a new Dom node...
-                        Element participantNode = createElement(BPMNNS.BPMN2, "participant");
-                        String participantID = BPMNModel.generateShortID("participant");
-                        participantNode.setAttribute("id", participantID);
-                        participantNode.setAttribute("name", bpmnProcess.getName());
-                        participantNode.setAttribute("processRef", bpmnProcess.getId());
-                        this.collaborationElement.appendChild(participantNode);
-                        // update model
-                        Participant _new_participant = new Participant(this, participantNode);
-                        _new_participant.setBpmnProcess(bpmnProcess);
-                        participants.add(_new_participant);
-                    }
-                }
 
             }
         }
 
-        // if we do not have a process at all or a public default process is missing in
-        // the participant list, we create a default process now
-        if (processes.size() == 0 || (participants.size() > 0 && publicCount == 0)) {
-            logger.warning(
-                    "Invalid model structure: No public process node found - missing default process will be added...");
-            // Do we have a normal process diagram?
-            if (!isCollaborationDiagram()) {
-                // just create the missing public default process
-                BPMNProcess publicProcess = buildProcess("process_" + (processes.size() + 1), "Default Process",
-                        BPMNTypes.PROCESS_TYPE_PUBLIC);
-                processes.add(publicProcess);
-            } else {
-                // we have collaboration diagram with a missing default process
-                // create a new default participant
-                addParticipant("Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
-            }
-
-            // send a notification
-            this.setDirty(true);
-            this.getNotifications().add(new ModelNotification(ModelNotification.Severity.WARNING,
-                    "Fixed missing default process!",
-                    "Invalid model structure: No public process node was found. Missing default process was created automatically to fix this problem."));
-
-        } else if (publicCount > 1) {
-            getLogger().warning("Invalid model structure! The model contains more than one public process instance!");
+        // in case we found not process at all, we create a default process now
+        if (processes.size() == 0) {
+            // just create the missing public default process
+            BPMNProcess publicProcess = buildProcess("process_1",
+                    "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
+            processes.add(publicProcess);
         }
 
     }

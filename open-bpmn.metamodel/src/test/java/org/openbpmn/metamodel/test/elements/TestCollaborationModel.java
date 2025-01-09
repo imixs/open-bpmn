@@ -47,7 +47,7 @@ public class TestCollaborationModel {
 
             Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
-            assertEquals(3, participants.size());
+            assertEquals(2, participants.size());
 
             // get first participant and load the process context
             Participant bpmnParticipant = participants.iterator().next();

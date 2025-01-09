@@ -44,7 +44,7 @@ public class TestBPMN_IO_Model {
 
             Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
-            assertEquals(3, participants.size());
+            assertEquals(2, participants.size());
 
             assertTrue(model.isCollaborationDiagram());
 

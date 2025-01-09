@@ -27,8 +27,18 @@ public class Participant extends BPMNElementNode {
     protected BPMNLabel label = null;
     private String processRef = null;
 
-    public Participant(BPMNModel model, Element node) throws BPMNModelException {
+    /**
+     * Creates a new participant from a element node. The process is mandatory and
+     * defines the reference to an existing process within the current model.
+     * 
+     * @param model
+     * @param node
+     * @param processRef
+     * @throws BPMNModelException
+     */
+    public Participant(BPMNModel model, Element node, BPMNProcess process) throws BPMNModelException {
         super(model, node);
+        setBpmnProcess(process);
         // find the BPMNShape element.
         bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
     }
