@@ -83,7 +83,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
             extensionIds = new ArrayList<>();
             for (BPMNElementExtension extension : extensions) {
                 String extensionID = "extension:" + extension.getNamespace();
-                // validate if the extension is no Default Extension Namspace.
+                // validate if the extension is no Default Extension Namespace.
                 if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) && !extensionIds.contains(extensionID)) {
                     extensionIds.add(extensionID);
                 }
@@ -98,7 +98,7 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
     }
 
     /**
-     * We expect that the EventDefintion was dropped on a Event. See
+     * We expect that the EventDefinition was dropped on a Event. See
      * {@link BPMNDiagramConfiguration} method getShapeTypeHints
      */
     protected void executeOperation(final CreateNodeOperation operation) {
