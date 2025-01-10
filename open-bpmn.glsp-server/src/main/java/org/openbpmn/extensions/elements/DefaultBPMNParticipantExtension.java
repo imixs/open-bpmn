@@ -88,19 +88,37 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
     public void buildPropertiesForm(final BPMNElement bpmnElement, final DataBuilder dataBuilder,
             final SchemaBuilder schemaBuilder, final UISchemaBuilder uiSchemaBuilder) {
 
+        String sIsExecuteable = "Yes";
+        Participant participant = (Participant) bpmnElement;
+        BPMNProcess process;
+        try {
+            process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
+            if (!process.isExecutable()) {
+                sIsExecuteable = "No";
+            }
+        } catch (BPMNModelException e) {
+            // no op
+        }
+
         dataBuilder //
                 .addData("name", bpmnElement.getName()) //
+                .addData("isExecutable", sIsExecuteable) //
                 .addData("documentation", bpmnElement.getDocumentation());
 
+        String[] executeOptions = { "Yes", "No" };
         schemaBuilder. //
                 addProperty("name", "string", null). //
-                // addProperty("execution", "string", null). //
+                addProperty("isExecutable", "string", null, executeOptions). //
                 addProperty("documentation", "string", "Participant description.");
+
+        Map<String, String> radioOption = new HashMap<>();
+        radioOption.put("format", "radio");
 
         uiSchemaBuilder. //
                 addCategory("General"). //
                 addLayout(Layout.HORIZONTAL). //
                 addElements("name"). //
+                addElement("isExecutable", "Executeable", radioOption). //
                 addLayout(Layout.VERTICAL). //
                 addElement("documentation", "Documentation", this.getFileEditorOption());
 
@@ -127,35 +145,45 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
             bpmnElement.setName(json.getString("name", ""));
             process.setName(json.getString("name", ""));
             ((BPMNGNode) gNodeElement).setName(json.getString("name", ""));
+
+            String jExecuteable = json.getString("isExecutable", "Yes");
+            if ("No".equals(jExecuteable)) {
+                process.setExecutable(false);
+            } else {
+                process.setExecutable(true);
+            }
+
             bpmnElement.setDocumentation(json.getString("documentation", ""));
 
             // LaneSet...
             List<String> laneDataIDs = new ArrayList<>(); // collect remaining lanes
             logger.debug("...update feature = " + "lanes");
             JsonArray laneSetValues = json.getJsonArray("lanes");
-            for (JsonValue laneValue : laneSetValues) {
-                // update lane properties
-                JsonObject laneData = (JsonObject) laneValue;
-                if (laneData.get("id") != null) {
-                    String id = laneData.getJsonString("id").getString();
-                    // String id = jsonID.toString();
-                    laneDataIDs.add(id);
-                    Lane bpmnLane = process.findLaneById(id);
-                    if (bpmnLane != null) {
-                        bpmnLane.setName(laneData.getString("name"));
-                        bpmnLane.setDocumentation(laneData.getString("documentation"));
-                        // update gnode...
-                        Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
-                        if (_gLane.isPresent()) {
-                            LaneGNode gLane = (LaneGNode) _gLane.get();
-                            gLane.setName(laneData.getString("name"));
+            if (laneSetValues != null) {
+                for (JsonValue laneValue : laneSetValues) {
+                    // update lane properties
+                    JsonObject laneData = (JsonObject) laneValue;
+                    if (laneData.get("id") != null) {
+                        String id = laneData.getJsonString("id").getString();
+                        // String id = jsonID.toString();
+                        laneDataIDs.add(id);
+                        Lane bpmnLane = process.findLaneById(id);
+                        if (bpmnLane != null) {
+                            bpmnLane.setName(laneData.getString("name"));
+                            bpmnLane.setDocumentation(laneData.getString("documentation"));
+                            // update gnode...
+                            Optional<GModelElement> _gLane = modelState.getIndex().get(bpmnLane.getId());
+                            if (_gLane.isPresent()) {
+                                LaneGNode gLane = (LaneGNode) _gLane.get();
+                                gLane.setName(laneData.getString("name"));
+                            }
                         }
+                    } else {
+                        // this is a new lane - construct the lane in the BPMN model first..
+                        Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
+                        laneDataIDs.add(bpmnLane.getId());
+                        updateClient = true;
                     }
-                } else {
-                    // this is a new lane - construct the lane in the BPMN model first..
-                    Lane bpmnLane = process.addLane("Lane " + (process.getLanes().size() + 1));
-                    laneDataIDs.add(bpmnLane.getId());
-                    updateClient = true;
                 }
             }
             // now we need to delete all lanes no longer part of the laneSetValues

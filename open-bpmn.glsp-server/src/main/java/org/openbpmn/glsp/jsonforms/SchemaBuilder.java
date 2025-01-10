@@ -148,15 +148,6 @@ public class SchemaBuilder {
 
     }
 
-    // public void closeArray() {
-    // if (arrayObjectBuilder != null) {
-    // arrayBuilder.add(arrayObjectBuilder.build());
-    // arrayObjectBuilder = null;
-    // rootBuilder.add(arrayName, arrayBuilder.build());
-    // arrayBuilder = null;
-    // }
-    // }
-
     /**
      * Returns a String with the JSON UISchema
      */

@@ -46,6 +46,7 @@ public class BPMNProcess extends BPMNElement {
     private static Logger logger = Logger.getLogger(BPMNProcess.class.getName());
 
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
+    protected boolean isExecutable = true;
     protected Set<Activity> activities = null;
     protected Set<DataObject> dataObjects = null;
     protected Set<DataStoreReference> dataStoreReferences = null;
@@ -80,6 +81,15 @@ public class BPMNProcess extends BPMNElement {
             element.setAttribute("processType", processType);
         }
         setProcessType(processType);
+
+        // set executeable flag onloy for private process
+        if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(processType)) {
+            if ("false".equals(this.elementNode.getAttribute("isExecutable"))) {
+                setExecutable(false);
+            } else {
+                setExecutable(true);
+            }
+        }
     }
 
     public String getProcessType() {
@@ -88,6 +98,15 @@ public class BPMNProcess extends BPMNElement {
 
     public void setProcessType(String processType) {
         this.processType = processType;
+    }
+
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean isExecutable) {
+        this.isExecutable = isExecutable;
+        this.elementNode.setAttribute("isExecutable", "" + isExecutable);
     }
 
     /**
