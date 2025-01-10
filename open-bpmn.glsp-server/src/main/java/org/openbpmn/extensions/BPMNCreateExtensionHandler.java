@@ -25,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.SelectAction;
 import org.eclipse.glsp.server.operations.CreateNodeOperation;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -131,11 +130,11 @@ public class BPMNCreateExtensionHandler extends CreateBPMNNodeOperationHandler {
                 }
             }
         }
-
-        modelState.reset();
+        // refresh model State...
+        modelState.refreshGModelState();
         if (elementID != null) {
             // select event
-            actionDispatcher.dispatchAfterNextUpdate(new SelectAction(List.of(elementID)));
+            modelState.refreshSelection(elementID);
         }
     }
 
