@@ -26,7 +26,7 @@ Now you can run the release script:
 
     $ ./scripts/release.sh
 
-Finally commit your changes.
+Finally commit your changes in the client version files.
 
 ### Release Open-BPMN Client modules only
 
