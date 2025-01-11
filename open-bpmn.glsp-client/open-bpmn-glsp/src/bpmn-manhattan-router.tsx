@@ -68,7 +68,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
             elementId,
             edgeIds
         };
-        this.debug('├── update currentDelta = ' + delta.x + "," + delta.y + ' for elements: ' + edgeIds.join(', '));
+        this.debug('├── update currentDelta = ' + delta.x + ', ' + delta.y + ' for elements: ' + edgeIds.join(', '));
     }
 
     protected override getOptions(edge: GRoutableElement): ManhattanRouterOptions {
@@ -84,10 +84,10 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
      * 1. Default routing when no movement is happening
      * 2. Adjusting the route when the source element is moved
      * 3. Adjusting the route when the target element is moved
-     * 
+     *
      * The method preserves the Manhattan-style routing by ensuring that segments remain either
      * horizontal or vertical after adjustments.
-     * 
+     *
      * @param edge - the edge to be routed
      * @returns Array of points describing the complete route
      */
@@ -95,8 +95,6 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         if (!edge.source || !edge.target) {
             return [];
         }
-
-
         const routedCorners = this.createRoutedCorners(edge);
         const sourceRefPoint = routedCorners[0] ||
             translatePoint(Bounds.center(edge.target.bounds), edge.target.parent, edge.parent);
@@ -223,10 +221,10 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
 
     /**
      * Helper Debug Methods
-     * 
+     *
      * @param routedPoints
      */
-    private debugPoints(message: string, points: Point[]) {
+    private debugPoints(message: string, points: Point[]): void {
         if (this.debugMode) {
             console.log(message);
             points.forEach(point => {
@@ -234,7 +232,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
             });
         }
     }
-    private debug(message: string) {
+    private debug(message: string): void {
         if (this.debugMode) {
             //   console.log(message);
         }
@@ -261,13 +259,11 @@ export class BPMNRouterMoveListener extends MouseListener {
      * Handles mouse button press. Starts tracking if:
      * 1. It's a left mouse button press
      * 2. The target is a connectable element
-     * 
+     *
      * @param target The element under the mouse
      * @param event Mouse event
      */
     override mouseDown(target: GModelElement, event: MouseEvent): Action[] {
-
-
         if (event.button === 0) { // left mouse button
             // Only track connectable elements
             let targetElement = target;
@@ -309,7 +305,7 @@ export class BPMNRouterMoveListener extends MouseListener {
     /**
      * Handles mouse movement during drag operations. Calculates the movement delta
      * and informs the router about the movement.
-     * 
+     *
      * @param target Current element under the mouse
      * @param event Mouse event
      */
@@ -333,7 +329,7 @@ export class BPMNRouterMoveListener extends MouseListener {
 
     /**
      * Handles mouse button release. Cleans up tracking state.
-     * 
+     *
      * @param target The element under the mouse
      * @param event Mouse event
      */
