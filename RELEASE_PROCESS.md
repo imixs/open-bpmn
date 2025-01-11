@@ -28,14 +28,16 @@ Now you can run the release script:
 
 Finally commit your changes.
 
-### How to bump the pom version
+### Release Open-BPMN Client modules only
 
-If you not run the release script you can also bumping the version number of OpenBPMN using a script:
+To just release the latest client modules to [npmjs.com](https://www.npmjs.com/settings/open-bpmn/packages) you can run the script `release_npm.sh`. You need to provide the current client version and the next version:
 
-    $ changeVersion.sh <oldVersionString> <newVersionString>
+    $ ./scripts/release_npm.sh <oldVersionString> <newVersionString>
 
 Specify the old and the new version. Example:
 
-    $ changeVersion.sh 0.3.0 0.4.0
+    $ ./scripts/release_npm.sh 0.3.0 0.4.0
 
-Finally commit your changes.
+This will push the libraries to npmjs.com and update the package versions
+
+Finally you can commit your version changes to github.
