@@ -1,6 +1,6 @@
 {
   "name": "open-bpmn-app",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Web App for Open BPMN",
   "license": "(GPL-3.0)",
   "scripts": {
@@ -11,7 +11,7 @@
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {
-    "@open-bpmn/open-bpmn-theia": "1.2.3",
+    "@open-bpmn/open-bpmn-theia": "1.2.4",
     "@theia/core": "1.43.1",
     "@theia/editor": "1.43.1",
     "@theia/filesystem": "1.43.1",
