@@ -8,8 +8,8 @@ A release can be performed by calling the script "release.sh". This script is as
 
 Before you start the release process verify if the general build of open-bpmn is successful:
 
-    $ mvn clean install
-    $ ./scripts/build.sh -i
+    $ ./devi.sh build
+    $ ./devi.sh install
 
 Check current release status on npm:
 
