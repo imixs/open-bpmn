@@ -41,12 +41,22 @@ public class Event extends BPMNElementNode {
      * <p>
      * <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
      * <p>
-     * In case of a Signal Definition we need to add a reference to the first
-     * existing Signal. If not yet defined we create one from scratch.
+     * In case of a Signal or Message Definition we automatically add a reference to
+     * the first existing reference object. If not yet defined we create one from
+     * scratch.
+     * 
+     * @See Issue #373
      * 
      * @throws BPMNMissingElementException
      */
     public void addEventDefinition(String type) throws BPMNModelException {
+        if (this.getElementNode() == null) {
+            throw new BPMNMissingElementException("Missing ElementNode!");
+        }
+        // first create the eventDefinition child node
+        Element eventDefinition = model.createElement(BPMNNS.BPMN2, type);
+        eventDefinition.setAttribute("id", BPMNModel.generateShortID(type));
+
         // in case of a Signal Definition we need to add a reference to the first
         // existing Signal.
         if (BPMNTypes.EVENT_DEFINITION_SIGNAL.equals(type)) {
@@ -57,8 +67,7 @@ public class Event extends BPMNElementNode {
             }
             // take the first one
             Signal signal = model.getSignals().iterator().next();
-            addEventDefinition(signal.getId(), type);
-            return;
+            eventDefinition.setAttribute("signalRef", signal.getId());
         }
 
         // in case of a Message Definition we need to add a reference to the first
@@ -71,26 +80,11 @@ public class Event extends BPMNElementNode {
             }
             // take the first one
             Message message = model.getMessages().iterator().next();
-            addEventDefinition(message.getId(), type);
-        }
-    }
-
-    public void addEventDefinition(String id, String type) throws BPMNModelException {
-        if (this.getElementNode() == null) {
-            throw new BPMNMissingElementException("Missing ElementNode!");
-        }
-        Element eventDefinition = model.createElement(BPMNNS.BPMN2, type);
-        eventDefinition.setAttribute("id", BPMNModel.generateShortID(type));
-
-        if (BPMNTypes.EVENT_DEFINITION_SIGNAL.equals(type)) {
-            eventDefinition.setAttribute("signalRef", id);
+            eventDefinition.setAttribute("messageRef", message.getId());
         }
 
-        if (BPMNTypes.EVENT_DEFINITION_MESSAGE.equals(type)) {
-            eventDefinition.setAttribute("messageRef", id);
-        }
+        // finally add the eventDefinition to the event node element
         this.getElementNode().appendChild(eventDefinition);
-
     }
 
     /**
