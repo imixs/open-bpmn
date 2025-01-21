@@ -185,7 +185,13 @@ public class MessageEventDefinitionExtension extends AbstractBPMNElementExtensio
                 Element eventDefinitionElement = iter.next();
                 JsonObject jsonData = dataList.getJsonObject(i);
                 if (jsonData != null) {
-                    eventDefinitionElement.setAttribute("messageRef", jsonData.getString("messageRef", ""));
+                    String oldRef = eventDefinitionElement.getAttribute("messageRef");
+                    String newRef = jsonData.getString("messageRef", "");
+                    eventDefinitionElement.setAttribute("messageRef", newRef);
+                    if (!newRef.equals(oldRef)) {
+                        // reset validation and update the client view
+                        updateClient = true;
+                    }
                 }
                 i++;
                 // update completed
@@ -194,7 +200,7 @@ public class MessageEventDefinitionExtension extends AbstractBPMNElementExtensio
         }
 
         if (updateClient) {
-            // modelState.reset();
+            bpmnElement.resetValidation();
             modelState.refreshGModelState();
 
         }

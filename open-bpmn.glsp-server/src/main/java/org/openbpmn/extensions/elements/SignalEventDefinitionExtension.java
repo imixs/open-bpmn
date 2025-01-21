@@ -185,14 +185,20 @@ public class SignalEventDefinitionExtension extends AbstractBPMNElementExtension
                 Element eventDefinitionElement = iter.next();
                 JsonObject jsonData = dataList.getJsonObject(i);
                 if (jsonData != null) {
-                    eventDefinitionElement.setAttribute("signalRef", jsonData.getString("signal", ""));
+                    String oldRef = eventDefinitionElement.getAttribute("signalRef");
+                    String newRef = jsonData.getString("signal", "");
+                    eventDefinitionElement.setAttribute("signalRef", newRef);
+                    if (!newRef.equals(oldRef)) {
+                        // reset validation and update the client view
+                        updateClient = true;
+                    }
                 }
                 i++;
                 // update completed
             }
         }
         if (updateClient) {
-            // modelState.reset();
+            bpmnElement.resetValidation();
             modelState.refreshGModelState();
         }
         return updateClient;

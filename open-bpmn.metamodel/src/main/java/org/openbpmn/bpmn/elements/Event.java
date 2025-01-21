@@ -232,8 +232,9 @@ public class Event extends BPMNElementNode {
                     if (!hasMessage) {
                         this.addValidationMarker(
                                 new BPMNValidationMarker("Event",
-                                        "A Event must have a corresponding Message!", this.getId(),
-                                        BPMNValidationMarker.ErrorType.ERROR));
+                                        "A Message Event Definition should be assigned to a corresponding Message Object!",
+                                        this.getId(),
+                                        BPMNValidationMarker.ErrorType.WARNING));
                     }
                 });
 
@@ -247,8 +248,9 @@ public class Event extends BPMNElementNode {
                     if (!hasMessage) {
                         this.addValidationMarker(
                                 new BPMNValidationMarker("Event",
-                                        "A Event must have a corresponding Signal!", this.getId(),
-                                        BPMNValidationMarker.ErrorType.ERROR));
+                                        "A Signal Event Definition should be assigned to a corresponding Signal!",
+                                        this.getId(),
+                                        BPMNValidationMarker.ErrorType.WARNING));
                     }
                 });
 

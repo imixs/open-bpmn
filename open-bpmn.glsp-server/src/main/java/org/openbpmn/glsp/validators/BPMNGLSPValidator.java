@@ -29,6 +29,7 @@ import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.validation.BPMNValidationHandler;
 import org.openbpmn.bpmn.validation.BPMNValidationMarker;
+import org.openbpmn.bpmn.validation.BPMNValidationMarker.ErrorType;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.model.BPMNGModelState;
 
@@ -173,9 +174,19 @@ public class BPMNGLSPValidator implements ModelValidator {
         List<Marker> result = new ArrayList<>();
         for (BPMNValidationMarker bpmnMarker : bpmnExtensionMarkers) {
             if (bpmnMarker.getElementId().equals(element.getId())) {
-                result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
-                        bpmnMarker.getElementId(),
-                        MarkerKind.ERROR));
+                if (bpmnMarker.getErrorType() == ErrorType.ERROR) {
+                    result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
+                            bpmnMarker.getElementId(),
+                            MarkerKind.ERROR));
+                } else if (bpmnMarker.getErrorType() == ErrorType.WARNING) {
+                    result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
+                            bpmnMarker.getElementId(),
+                            MarkerKind.WARNING));
+                } else {
+                    result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
+                            bpmnMarker.getElementId(),
+                            MarkerKind.INFO));
+                }
             }
         }
 
@@ -192,9 +203,20 @@ public class BPMNGLSPValidator implements ModelValidator {
         List<Marker> result = new ArrayList<>();
         for (BPMNValidationMarker bpmnMarker : bpmnMarkers) {
             if (bpmnMarker.getElementId().equals(element.getId())) {
-                result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
-                        bpmnMarker.getElementId(),
-                        MarkerKind.ERROR));
+                if (bpmnMarker.getErrorType() == ErrorType.ERROR) {
+                    result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
+                            bpmnMarker.getElementId(),
+                            MarkerKind.ERROR));
+                } else if (bpmnMarker.getErrorType() == ErrorType.WARNING) {
+                    result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
+                            bpmnMarker.getElementId(),
+                            MarkerKind.WARNING));
+                } else {
+                    result.add(new Marker(bpmnMarker.getLabel(), bpmnMarker.getDescription(),
+                            bpmnMarker.getElementId(),
+                            MarkerKind.INFO));
+                }
+
             }
         }
 
