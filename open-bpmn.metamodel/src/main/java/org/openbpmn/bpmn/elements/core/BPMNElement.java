@@ -507,7 +507,8 @@ public abstract class BPMNElement implements BPMNValidator {
         NodeList childNodes = this.getElementNode().getChildNodes();
         for (int i = 0; i < childNodes.getLength(); i++) {
             Node childNode = childNodes.item(i);
-            if (childNode.getNodeType() == Node.ELEMENT_NODE && childNode.getLocalName().equals(localName)) {
+            if (childNode != null && childNode.getNodeType() == Node.ELEMENT_NODE
+                    && childNode.getLocalName().equals(localName)) {
                 // clear cache
                 this.childNodes.remove(childNode.getLocalName());
                 this.getElementNode().removeChild(childNode);
