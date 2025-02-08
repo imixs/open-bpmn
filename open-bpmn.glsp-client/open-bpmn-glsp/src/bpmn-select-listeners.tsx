@@ -52,14 +52,10 @@ export class BPMNElementSnapper implements ISnapper {
   snap(position: Point, element: GModelElement): Point {
     // default move 1x1...
     return {
-      // x: Math.round(position.x),
-      // y: Math.round(position.y)
-      // maybe the better snap behaviour...
+      // maybe the better snap behavior instead of round()...
       x: Math.floor(position.x),
       y: Math.floor(position.y)
     };
-
-  
   }
 }
 
