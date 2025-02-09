@@ -26,16 +26,6 @@ export class BPMNTheiaFrontendModule extends GLSPTheiaFrontendModule {
         context.bind(DiagramConfiguration).to(BPMNDiagramConfiguration);
     }
 
-
-    // override configure(context: ContainerContext): void {
-    //     // Custom workflow commands and menus
-    //     //   context.bind(CommandContribution).to(BPMNPropertiesCommandContribution);
-    //     //   context.bind(MenuContribution).to(BPMNPropertiesMenuContribution);
-    //     //  context.bind(MenuContribution).to(BPMNAlignToGridMenuContribution);
-
-
-    // }
-
     override bindGLSPClientContribution(context: ContainerContext): void {
         context.bind(GLSPClientContribution).to(BPMNGLSPClientContribution);
     }

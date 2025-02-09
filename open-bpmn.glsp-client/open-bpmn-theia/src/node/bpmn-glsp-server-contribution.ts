@@ -26,7 +26,7 @@ export const DEFAULT_PORT = 0;
 export const PORT_ARG_KEY = 'GLSP_PORT';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
 const JAR_FILE = resolve(
-    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-1.2.5-SNAPSHOT-glsp.jar')
+    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-1.2.6-SNAPSHOT-glsp.jar')
 );
 
 @injectable()
@@ -34,6 +34,10 @@ export class BPMNGLSPSocketServerContribution extends GLSPSocketServerContributi
     readonly id = BPMNLanguage.contributionId;
 
     createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
+        console.log('├── LOG_DIR = '+ LOG_DIR);
+        console.log('├── PORT_ARG_KEY = '+ PORT_ARG_KEY);
+        const _port=getPort(PORT_ARG_KEY, DEFAULT_PORT);
+        console.log('├── PORT = '+ _port);
         return {
             executable: JAR_FILE,
             additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],
@@ -43,14 +47,8 @@ export class BPMNGLSPSocketServerContribution extends GLSPSocketServerContributi
         };
     }
 
-    // createContributionOptions(): Partial<GLSPSocketServerContributionOptions> {
-    //     return {
-    //         executable: JAR_FILE,
-    //         additionalArgs: ['--no-consoleLog', '--fileLog', 'true', '--logDir', LOG_DIR],
-    //         socketConnectionOptions: {
-    //             port: getPort(PORT_ARG_KEY, DEFAULT_PORT),
-    //             path: getWebSocketPath(WEBSOCKET_PATH_ARG_KEY)
-    //         }
-    //     };
-    // }
+    protected override processLogInfo(line: string): void {
+        super.processLogInfo(line);
+        console.info(`${this.id}: ${line}`);
+    }
 }

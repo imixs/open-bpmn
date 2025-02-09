@@ -1,6 +1,6 @@
 {
   "name": "@open-bpmn/open-bpmn-glsp",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "GLSP diagrams for BPMN 2.0",
   "keywords": [
     "glsp",
@@ -24,9 +24,9 @@
     }
   ],
   "dependencies": {
-    "@eclipse-glsp/client": "2.1.0",
-    "@open-bpmn/open-bpmn-model": "1.2.5",
-    "@open-bpmn/open-bpmn-properties": "1.2.5",
+    "@eclipse-glsp/client": "2.3.0",
+    "@open-bpmn/open-bpmn-model": "1.2.6",
+    "@open-bpmn/open-bpmn-properties": "1.2.6",
     "balloon-css": "^0.5.0"
   },
   "scripts": {

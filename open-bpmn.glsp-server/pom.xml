@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.imixs.bpmn</groupId>
@@ -17,7 +19,7 @@
 		<maven.compiler.release>17</maven.compiler.release>
 		<package-type>jar</package-type>
 		<server-launcher>org.imixs.bpmn.glsp.server.launch.BPMN2ServerLauncher</server-launcher>
-		<glsp-server-version>2.0.0</glsp-server-version>
+		<glsp-server-version>2.3.0</glsp-server-version>
 	</properties>
 
 	<dependencies>
@@ -134,38 +136,26 @@
 						<version>3.2.4</version>
 						<configuration>
 							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>org.openbpmn.glsp.launch.BPMNServerLauncher</mainClass>
 									<manifestEntries>
 										<Multi-Release>true</Multi-Release>
 									</manifestEntries>
 								</transformer>
 							</transformers>
-							<artifactSet>
-								<excludes>
-									<exclude>jakarta.websocket:jakarta.websocket-api</exclude>
-									<exclude>javax.websocket:javax.websocket-api</exclude>
-									<exclude>log4j:log4j</exclude>
-								</excludes>
-							</artifactSet>
 							<filters>
 								<filter>
 									<artifact>*:*</artifact>
 									<excludes>
-										<exclude>META-INF/MANIFEST.MF</exclude>
+										<exclude>META-INF/INDEX.LIST</exclude>
+										<exclude>META-INF/*.SF</exclude>
+										<exclude>META-INF/*.DSA</exclude>
+										<exclude>META-INF/*.RSA</exclude>
+										<exclude>META-INF/LICENSE</exclude>
+										<exclude>META-INF/NOTICE</exclude>
 										<exclude>META-INF/DEPENDENCIES</exclude>
-										<exclude>META-INF/ECLIPSE_*</exclude>
-										<exclude>META-INF/LICENSE*</exclude>
-										<exclude>
-											META-INF/services/javax.servlet.ServletContainerInitializer</exclude>
-										<exclude>
-											META-INF/services/jakarta.servlet.ServletContainerInitializer*</exclude>
-										<exclude>
-											META-INF/services/org.eclipse.jetty.webapp.Configuration*</exclude>
-										<exclude>
-											META-INF/services/org.eclipse.elk.core.data.ILayoutMetaDataProvider*</exclude>
-										<exclude>META-INF/versions/9/module-info.class</exclude>
-										<exclude>META-INF/NOTICE*</exclude>
+										<exclude>META-INF/MANIFEST.MF</exclude>
 										<exclude>.options</exclude>
 										<exclude>.api_description</exclude>
 										<exclude>*.profile</exclude>
@@ -176,17 +166,12 @@
 										<exclude>modeling32.png</exclude>
 										<exclude>systembundle.properties</exclude>
 										<exclude>profile.list</exclude>
-										<exclude>module-info.class</exclude>
-										<exclude>plugin.properties</exclude>
 										<exclude>**/*._trace</exclude>
 										<exclude>**/*.g</exclude>
 										<exclude>**/*.tokens</exclude>
 										<exclude>**/*.mwe2</exclude>
 										<exclude>**/*.xtext</exclude>
 										<exclude>**/*.xtextbin</exclude>
-										<exclude>META-INF/*.SF</exclude>
-										<exclude>META-INF/*.RSA</exclude>
-										<exclude>META-INF/*.INF</exclude>
 									</excludes>
 								</filter>
 							</filters>

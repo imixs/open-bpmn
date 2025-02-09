@@ -1,6 +1,6 @@
 {
   "name": "parent",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Open BPMN 2.0",
   "homepage": "https://www.imixs.org/",
   "bugs": "https://github.com/imixs/open-bpmn/issues",
@@ -28,21 +28,22 @@
   ],
   "scripts": {
     "all": "yarn install && yarn lint",
+    "browser": " yarn --cwd open-bpmn-app",
     "build": "lerna run build",
     "clean": "lerna run clean",
     "lint": "lerna run lint",
     "lint:ci": "lerna run lint:ci",
     "prepare": "lerna run prepare",
     "rebuild:browser": "theia rebuild:browser",
-    "start": "yarn rebuild:browser && yarn --cwd open-bpmn-app start",
-    "start:external": "yarn rebuild:browser && yarn --cwd open-bpmn-app start:external",
+    "start": "yarn browser start",
+    "start:external": "yarn browser start:external",
     "watch": "lerna run --parallel watch"
   },
   "resolutions": {
     "string-width": "4.2.3"
   },
   "devDependencies": {
-    "@eclipse-glsp/dev": "2.0.0",
+    "@eclipse-glsp/dev": "2.3.0",
     "@types/node": "16.x",
     "lerna": "^7.0.0",
     "typescript": "^5.1.3",

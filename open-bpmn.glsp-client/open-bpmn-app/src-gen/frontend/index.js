@@ -14,10 +14,14 @@ FrontendApplicationConfigProvider.set({
     "defaultIconTheme": "theia-file-icons",
     "electron": {
         "windowOptions": {},
-        "showWindowEarly": true
+        "showWindowEarly": true,
+        "splashScreenOptions": {},
+        "uriScheme": "theia"
     },
     "defaultLocale": "",
-    "validatePreferencesSchema": true
+    "validatePreferencesSchema": true,
+    "reloadOnReconnect": false,
+    "uriScheme": "theia"
 });
 
 
@@ -32,9 +36,7 @@ function load(container, jsModule) {
         .then(containerModule => container.load(containerModule.default));
 }
 
-async function preload(parent) {
-    const container = new Container();
-    container.parent = parent;
+async function preload(container) {
     try {
         await load(container, import('@theia/core/lib/browser/preload/preload-module'));
         const { Preloader } = require('@theia/core/lib/browser/preload/preloader');
@@ -52,13 +54,23 @@ module.exports = (async () => {
     const { messagingFrontendModule } = require('@theia/core/lib/browser/messaging/messaging-frontend-module');
     const container = new Container();
     container.load(messagingFrontendModule);
+    
+
     await preload(container);
+
+    
+    const { MonacoInit } = require('@theia/monaco/lib/browser/monaco-init');
+    ;
+
     const { FrontendApplication } = require('@theia/core/lib/browser');
     const { frontendApplicationModule } = require('@theia/core/lib/browser/frontend-application-module');    
     const { loggerFrontendModule } = require('@theia/core/lib/browser/logger-frontend-module');
 
     container.load(frontendApplicationModule);
+    undefined
+    
     container.load(loggerFrontendModule);
+    
 
     try {
         await load(container, import('@theia/core/lib/browser/i18n/i18n-frontend-module'));
@@ -82,7 +94,11 @@ module.exports = (async () => {
         await load(container, import('@theia/userstorage/lib/browser/user-storage-frontend-module'));
         await load(container, import('@theia/preferences/lib/browser/preference-frontend-module'));
         await load(container, import('@theia/process/lib/common/process-common-module'));
+        await load(container, import('@theia/file-search/lib/browser/file-search-frontend-module'));
         await load(container, import('@theia/terminal/lib/browser/terminal-frontend-module'));
+        
+        MonacoInit.init(container);
+        ;
         await start();
     } catch (reason) {
         console.error('Failed to start the frontend application.');

@@ -21,7 +21,9 @@ const production = mode === 'production';
 const commonJsLibraries = {};
 for (const [entryPointName, entryPointPath] of Object.entries({
     
-    'nsfw-watcher': '@theia/filesystem/lib/node/nsfw-watcher',
+    'parcel-watcher': '@theia/filesystem/lib/node/parcel-watcher',
+    
+    
     
 })) {
     commonJsLibraries[entryPointName] = {
@@ -41,7 +43,8 @@ if (process.platform !== 'win32') {
 
 const nativePlugin = new NativeWebpackPlugin({
     out: 'native',
-    ripgrep: false,
+    trash: true,
+    ripgrep: true,
     pty: true,
     nativeBindings: {
         drivelist: 'drivelist/build/Release/drivelist.node'
@@ -69,8 +72,9 @@ const config = {
         // Theia's IPC mechanism:
         'ipc-bootstrap': require.resolve('@theia/core/lib/node/messaging/ipc-bootstrap'),
         
+        
         // Make sure the node-pty thread worker can be executed:
-        'worker/conoutSocketWorker': require.resolve('node-pty/lib/worker/conoutSocketWorker'),
+        'worker/conoutSocketWorker': require.resolve('node-pty/lib/worker/conoutSocketWorker'),        
         
         
         ...commonJsLibraries
@@ -135,6 +139,8 @@ const config = {
             module: /express/
         }, {
             module: /cross-spawn/
+        }, {
+            module: /@parcel\/watcher/
         }
     ]
 };

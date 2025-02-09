@@ -28,20 +28,20 @@
  *
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
-import { bindAsService } from '@eclipse-glsp/protocol';
+import { bindAsService } from '@eclipse-glsp/protocol/lib/di';
 import { GLSPServerContribution } from '@eclipse-glsp/theia-integration/lib/node';
 import { ContainerModule } from '@theia/core/shared/inversify';
 import { BPMNGLSPSocketServerContribution } from './bpmn-glsp-server-contribution';
 
 export default new ContainerModule(bind => {
     if (isDirectWebSocketConnection()) {
+        console.log('├── DirectWebSocketConnection = true');
         return;
     }
+    console.log('├── DirectWebSocketConnection = false');
+    console.log('│   └── launch server...');
     bindAsService(bind, GLSPServerContribution, BPMNGLSPSocketServerContribution);
-    // bind(BPMNGLSPSocketServerContribution).toSelf().inSingletonScope();
-    // bind(GLSPServerContribution).toService(BPMNGLSPSocketServerContribution);
 });
-
 
 const directWebSocketArg = '--directWebSocket';
 /**
@@ -51,6 +51,7 @@ const directWebSocketArg = '--directWebSocket';
  * @returns `true` if the {@link directWebSocketArg `--directWebSocket`} argument has been set.
  */
 function isDirectWebSocketConnection(): boolean {
+    console.log('args='+process.argv);
     const args = process.argv.filter(a => a.toLowerCase().startsWith(directWebSocketArg.toLowerCase()));
     return args.length > 0;
 }

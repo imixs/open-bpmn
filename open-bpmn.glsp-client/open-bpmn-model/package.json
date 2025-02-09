@@ -1,6 +1,6 @@
 {
   "name": "@open-bpmn/open-bpmn-model",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "GLSP model for BPMN 2.0",
   "license": "(GPL-3.0)",
   "main": "lib/index",
@@ -17,6 +17,6 @@
     "watch": "tsc -w"
   },
   "dependencies": {
-    "@eclipse-glsp/client": "2.1.0"
+    "@eclipse-glsp/client": "2.3.0"
   }
 }

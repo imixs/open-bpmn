@@ -80,25 +80,24 @@ import {
 import { BPMNRouterModule } from './bpmn-router-module';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
-    BPMNElementSnapper,
+    // BPMNElementSnapper,
     BPMNMultiNodeSelectionListener,
     BPMNSelectionHelper
 } from './bpmn-select-listeners';
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
-
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
 
-    bind(TYPES.ISnapper).to(BPMNElementSnapper);
+    // beaks launch
+    // bind(TYPES.ISnapper).to(BPMNElementSnapper);
     bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
         elementLines: [HelperLineType.Center, HelperLineType.Middle], // only show center and middle lines
         viewportLines: [], // do not show alignment lines for viewport
         alignmentElementFilter: element =>
             isBPMNNode(element) && !isBoundaryEvent(element),
-        minimumMoveDelta: { x: 15, y: 15 }
+        minimumMoveDelta: { x: 10, y: 10 }
     });
-
     // bind new SelectionListener for BPMNLabels and BoundaryEvents
     bind(TYPES.ISelectionListener).to(BPMNSelectionHelper);
     bind(TYPES.ISelectionListener).to(BPMNMultiNodeSelectionListener);
@@ -145,12 +144,10 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'bpmn-text-node', MultiLineTextNode, MultiLineTextNodeView);
     configureModelElement(context, 'lane-divider', LaneDivider, LaneDividerView);
     configureModelElement(context, 'container', GCompartment, GCompartmentView);
-
     // Sequence flows
     configureModelElement(context, 'sequenceFlow', BPMNEdge, BPMNEdgeView);
     configureModelElement(context, 'messageFlow', BPMNEdge, BPMNEdgeView);
     configureModelElement(context, 'association', BPMNEdge, BPMNEdgeView);
-
     // Currently unsupported Task Types
     configureModelElement(context, 'subProcess', TaskNode, TaskNodeView);
     configureModelElement(context, 'adHocSubProcess', TaskNode, TaskNodeView);

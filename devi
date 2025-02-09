@@ -27,7 +27,14 @@ strip_dash() {
 if [[ "$(strip_dash $1)" == "start" ]]; then
     echo " starting frontend only..."
     cd open-bpmn.glsp-client/
-    yarn start:external --root-dir=../open-bpmn.glsp-client/workspace
+    yarn start:external --root-dir=./open-bpmn.glsp-client/workspace
+    cd ..
+fi
+
+if [[ "$(strip_dash $1)" == "start-all" ]]; then
+    echo " starting frontend and server..."
+    cd open-bpmn.glsp-client/
+    yarn start --root-dir=./open-bpmn.glsp-client/workspace
     cd ..
 fi
 
@@ -78,7 +85,8 @@ if [[ $# -eq 0 ]]; then
 
     echo " Run with ./dev.sh -XXX"
     echo " "
-    echo "   -start    : start the frontend"
+    echo "   -start    : start the frontend only without a server"
+    echo "   -start-all: start the frontend & server"
     echo "   -frontend : rebuild and start frontend components "
     echo "   -install  : install the frontend components "
     echo "   -hot      : start hot deployment mode for frontend components "
