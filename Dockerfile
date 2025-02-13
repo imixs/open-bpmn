@@ -2,24 +2,26 @@ FROM node:18.19.0-bookworm
 
 # Install app dependencies
 RUN apt-get update && apt-get install -y libxkbfile-dev libsecret-1-dev openjdk-17-jre
-
-WORKDIR /usr/src/app
-
+WORKDIR /home/node/app
 ENV PUPPETEER_SKIP_DOWNLOAD=true
-
 
 # Create app directory
 COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 # Build GLSP Client part
-WORKDIR /usr/src/app/open-bpmn.glsp-client
+WORKDIR /home/node/app/open-bpmn.glsp-client
 RUN yarn install
 
 # Copy GLSP Server part
-WORKDIR /usr/src/app
+WORKDIR /home/node/app
+COPY scripts/launch-docker-container.sh ./
 COPY open-bpmn.glsp-server/target/open-bpmn.server-*-glsp.jar ./open-bpmn.glsp-server/target/
-# Copy Start script
-COPY scripts/start.sh start.sh
+WORKDIR /home/node/app/open-bpmn.glsp-client
 
+ENV HOME=/home/node
+RUN chown -R node:node $HOME/app/
+USER node
 EXPOSE 3000
 
-ENTRYPOINT [ "/usr/src/app/start.sh" ]
+#ENTRYPOINT [ "yarn start --root-dir=./open-bpmn.glsp-client/workspace" ]
+#ENTRYPOINT [ "yarn start:external --hostname=0.0.0.0 --root-dir=/home/node/app/open-bpmn.glsp-client/workspace/demo" ]
+ENTRYPOINT [ "/home/node/app/launch-docker-container.sh" ]

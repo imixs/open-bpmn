@@ -65,12 +65,26 @@ if [[ "$(strip_dash $1)" == "build" ]]; then
     mvn clean install
 fi
 
-if [[ "$(strip_dash $1)" == "docker" ]]; then
+
+
+if [[ "$(strip_dash $1)" == "docker-build" ]]; then
+    echo " building docker image..."
+    mvn clean install -DskipTests
+    docker build . -t imixs/open-bpmn
+fi
+
+if [[ "$(strip_dash $1)" == "docker-run" ]]; then
+    echo " start docker container..."
+    docker run -it --rm --name="open-bpmn" -p 3000:3000 imixs/open-bpmn
+fi
+
+if [[ "$(strip_dash $1)" == "docker-push" ]]; then
     echo " building docker image..."
     mvn clean install -DskipTests
     docker build . -t imixs/open-bpmn
     docker push imixs/open-bpmn
 fi
+
 
 if [[ "$(strip_dash $1)" == "clean" ]]; then
     echo " cleanup build..."
@@ -85,16 +99,17 @@ if [[ $# -eq 0 ]]; then
 
     echo " Run with ./dev.sh -XXX"
     echo " "
-    echo "   -start    : start the frontend only without a server"
-    echo "   -start-all: start the frontend & server"
-    echo "   -frontend : rebuild and start frontend components "
-    echo "   -install  : install the frontend components "
-    echo "   -hot      : start hot deployment mode for frontend components "
-    echo "   -build    : run a maven build "
-    echo "   -clean    : clean up build "
-    echo "   -docker   : build the docker image "
-
-    echo "_________________________________________"
+    echo "   -start         : start the frontend only without a server"
+    echo "   -start-all     : start the frontend & server"
+    echo "   -frontend      : rebuild and start frontend components "
+    echo "   -install       : install the frontend components "
+    echo "   -hot           : start hot deployment mode for frontend components "
+    echo "   -build         : run a maven build "
+    echo "   -clean         : clean up build "
+    echo "   -docker-build  : build docker image onle"
+    echo "   -docker-run    : run the docker container "
+    echo "   -docker-push   : build and push the docker image "
+    echo "_______________________________________________________________________"
     echo " "
 
 fi

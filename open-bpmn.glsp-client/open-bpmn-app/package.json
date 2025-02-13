@@ -6,8 +6,8 @@
   "scripts": {
     "build": "theia build --mode development",
     "prepare": "yarn build",
-    "start": "theia start --GLSP_PORT=5007 --root-dir=../workspace",
-    "start:external": "theia start --GLSP_PORT=5007 --root-dir=../workspace --loglevel=debug --glspDebug",
+    "start": "theia start --GLSP_PORT=5007 --root-dir=./workspace",
+    "start:external": "theia start --GLSP_PORT=5007 --root-dir=../workspace --glspDebug",
     "watch": "theia build --watch --mode development"
   },
   "dependencies": {
