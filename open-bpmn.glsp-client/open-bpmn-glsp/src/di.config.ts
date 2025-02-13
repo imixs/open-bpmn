@@ -37,6 +37,7 @@ import {
     helperLineModule,
     initializeDiagramContainer,
     moveFeature,
+    overrideModelElement,
     selectFeature
 } from '@eclipse-glsp/client';
 import {
@@ -106,7 +107,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
 
     // Configure BMW View Elements
     configureDefaultModelElements(context);
-    configureModelElement(context, DefaultTypes.GRAPH, GGraph, BPMNGridView);
+    overrideModelElement(context, DefaultTypes.GRAPH, GGraph, BPMNGridView);
     configureModelElement(context, 'task', TaskNode, TaskNodeView);
     configureModelElement(context, 'manualTask', TaskNode, TaskNodeView);
     configureModelElement(context, 'userTask', TaskNode, TaskNodeView);

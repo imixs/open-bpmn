@@ -34,24 +34,24 @@ import { ContainerModule } from '@theia/core/shared/inversify';
 import { BPMNGLSPSocketServerContribution } from './bpmn-glsp-server-contribution';
 
 export default new ContainerModule(bind => {
-    if (isDirectWebSocketConnection()) {
-        console.log('├── DirectWebSocketConnection = true');
-        return;
+    if (isDebugMode()) {
+        console.log('├── Running in Debug Mode');
+        console.log('│   └── connecting to external server...');
+    } else {
+        console.log('├── Lauch embedded GLSP Server...');
     }
-    console.log('├── DirectWebSocketConnection = false');
-    console.log('│   └── launch server...');
     bindAsService(bind, GLSPServerContribution, BPMNGLSPSocketServerContribution);
 });
 
-const directWebSocketArg = '--directWebSocket';
+const glspDebugArg = '--glspDebug';
 /**
  * Utility function to parse if the frontend should connect directly to a running GLSP WebSocket Server instance
- * and skip the binding of the backend contribution.
- * i.e. if the {@link directWebSocketArg `--directWebSocket`} argument has been passed.
- * @returns `true` if the {@link directWebSocketArg `--directWebSocket`} argument has been set.
+ * and skip the binding of the backend contribution (GLSP Debug mode).
+ * i.e. if the {@link glspDebug `--glspDebug`} argument has been passed.
+ * @returns `true` if the {@link glspDebug `--glspDebug`} argument has been set.
  */
-function isDirectWebSocketConnection(): boolean {
+function isDebugMode(): boolean {
     console.log('args='+process.argv);
-    const args = process.argv.filter(a => a.toLowerCase().startsWith(directWebSocketArg.toLowerCase()));
+    const args = process.argv.filter(a => a.toLowerCase().startsWith(glspDebugArg.toLowerCase()));
     return args.length > 0;
 }

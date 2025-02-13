@@ -1,5 +1,5 @@
 {
-  "extends": "@eclipse-glsp/ts-config/tsconfig.json",
+  "extends": "@eclipse-glsp/ts-config",
   "compilerOptions": {
     "rootDir": "src",
     "outDir": "lib",
