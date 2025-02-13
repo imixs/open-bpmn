@@ -38,6 +38,7 @@
 			<item name="GLSP Server" href="glsp-server/index.html" collapse="true">
 				<item name="BPMN Extensions" href="glsp-server/BPMN_EXTENSIONS.html" />
 				<item name="Model Updates" href="glsp-server/UPDATE_MODEL.html" />
+				<item name="Custom Server Contribution" href="glsp-server/SERVER_CONTRIBUTION.html" />
 			</item>
 
 

@@ -60,3 +60,4 @@ Open BPMN is based on Eclipse GLSP and adapts the different concepts in various 
 - [BPMN Router](glsp-client/BPMN_ROUTER.html)
 - [Build your Own EMF Model](architecture/BPMN_EMF.html)
 - [Anchors and Ports](glsp-client/SPROTTY_ANCHORS_AND_PORTS.html)
+- [Server Contribution](glsp-server/SERVER_CONTRIBUTION.html)
