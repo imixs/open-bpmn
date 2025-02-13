@@ -17,6 +17,7 @@ import {
   ActionDispatcher,
   GModelElement,
   GModelRoot,
+  Grid,
   ISelectionListener,
   ISnapper,
   Point,
@@ -33,7 +34,7 @@ import {
   isPoolNode,
   isTaskNode
 } from '@open-bpmn/open-bpmn-model';
-import { inject, injectable } from 'inversify';
+import { inject, injectable, optional } from 'inversify';
 
 /****************************************************************************
  * This module provides BPMN select listeners for custom behavior.
@@ -48,7 +49,8 @@ import { inject, injectable } from 'inversify';
  */
 @injectable()
 export class BPMNElementSnapper implements ISnapper {
-  constructor(public grid: { x: number; y: number } = { x: 1, y: 1 }) { }
+
+  constructor(@optional() @inject(TYPES.Grid) public readonly grid: Grid = { x: 1, y: 1 }) {}
   snap(position: Point, element: GModelElement): Point {
     // default move 1x1...
     return {

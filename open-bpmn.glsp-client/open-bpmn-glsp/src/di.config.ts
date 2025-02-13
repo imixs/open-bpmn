@@ -80,7 +80,7 @@ import {
 import { BPMNRouterModule } from './bpmn-router-module';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
-    // BPMNElementSnapper,
+    BPMNElementSnapper,
     BPMNMultiNodeSelectionListener,
     BPMNSelectionHelper
 } from './bpmn-select-listeners';
@@ -90,7 +90,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
 
     // beaks launch
-    // bind(TYPES.ISnapper).to(BPMNElementSnapper);
+    bind(TYPES.ISnapper).to(BPMNElementSnapper);
     bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({
         elementLines: [HelperLineType.Center, HelperLineType.Middle], // only show center and middle lines
         viewportLines: [], // do not show alignment lines for viewport
