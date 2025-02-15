@@ -27,8 +27,6 @@ import java.util.Set;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.glsp.server.actions.ActionDispatcher;
-import org.eclipse.glsp.server.actions.CenterAction;
-import org.eclipse.glsp.server.actions.FitToScreenAction;
 import org.eclipse.glsp.server.actions.MessageAction;
 import org.eclipse.glsp.server.actions.SaveModelAction;
 import org.eclipse.glsp.server.actions.SetDirtyStateAction;
@@ -121,15 +119,6 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                     // actionDispatcher.dispatchAfterNextUpdate(serverMessage);
                     actionDispatcher.dispatch(serverMessage);
                 }
-
-                // finally we send the center-action to center the diagram (Issue #257)
-                actionDispatcher
-                        .dispatchAfterNextUpdate(new CenterAction(new ArrayList<String>(), false,
-                                true));
-                // send fit to screen action (Issue #264)
-                actionDispatcher
-                        .dispatchAfterNextUpdate(
-                                new FitToScreenAction(FitToScreenAction.KIND, new ArrayList<String>(), 0, 1, false));
 
             } catch (BPMNModelException e) {
                 logger.error("Failed to load model source: " + e.getMessage());
