@@ -134,8 +134,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] });
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView, {
         disable: [moveFeature, selectFeature]
-    }
-    );
+    });
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
     configureModelElement(context, 'dataStore', DataStoreNode, DataStoreNodeView);
     configureModelElement(context, 'dataStoreReference', DataStoreNode, DataStoreNodeView);
