@@ -50,24 +50,24 @@ interface WayPointData {
  */
 export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
     private debugMode: boolean = false;
-    private originWaypoints: WayPointData[];
+    private originWayPointData: WayPointData[];
 
       /**
        * Updates the current movement delta. Called by the MouseListener when an element is being dragged.
        * @param delta The x,y movement delta
        * @param elementId ID of the element being moved
        */
-      public addOriginWaypoint(origin: WayPointData): void {
-        this.originWaypoints?.push(origin);
-        this.debug('setOriginWaypoint - kind=' + origin.kind 
+      public addWayPointData(origin: WayPointData): void {
+        this.originWayPointData?.push(origin);
+        this.debug('addWayPointData - kind=' + origin.kind 
             + ' dockingPoint=' +origin.elementPoint.x + ','+origin.elementPoint.y
             + ' wayPoint=' +origin.wayPoint.x +',' +origin.wayPoint.y
             + ' offsetY='+origin.offsetY
             + ' id=' + origin.edgeId );
       }
-      public initOriginWaypoint(): void {
-        this.originWaypoints = [];
-        this.debug('init WayPointOrigins');
+      public resetWayPointData(): void {
+        this.originWayPointData = [];
+        this.debug('reset WayPointData');
     }
 
     protected override getOptions(edge: GRoutableElement): ManhattanRouterOptions {
@@ -78,133 +78,73 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         };
     }
 
+    /**
+     * The route method overwrite the default behavior of the GLSPManhattanEdgeRouter.
+     * The method restore the default routing and is just adjusting the anchor point
+     * and its next waypoint.
+     * @param edge
+     * @returns
+     */
     override route(edge: GRoutableElement): RoutedPoint[] {
-
+        // Early return if source or target is missing
         if (!edge.source || !edge.target) {
             this.debug('No source or target - returning empty array');
             return [];
         }
-
-        if (this.originWaypoints
-            &&  this.originWaypoints.find(origin => origin.edgeId === edge.id)  ) {
-
-            this.debug('start routing....');
-            // first compute default route....
-            let completeRoute= super.route(edge);
-
-            // Test if we have a wayPointOrigin....
-            const wayPointOrigin = this.originWaypoints.find(origin => origin.edgeId === edge.id);
-            if (wayPointOrigin) {
-                this.debugFine('Origin element pos='+edge.source.bounds.x + ','+edge.source.bounds.y + ' yOffset='+wayPointOrigin.offsetY);
-                // Store origin Route?
-                if (!wayPointOrigin.originRoute) {
-                    wayPointOrigin.originRoute=[...completeRoute];
-                    this.debugPoints('Set origin Route.....',wayPointOrigin.originRoute);
-                } else {
-                    this.debugPoints('Restore origin Route.....',wayPointOrigin.originRoute);
-                    completeRoute=[...wayPointOrigin.originRoute];
-                    this.debugFine('Adjusting routing points...');
-
-                    // Check if source or target is being moved
-                    if (wayPointOrigin.kind === 'source') {
-                        // ========= SOURCE Moving ==========
-                        this.debugFine('processing source moving....');
-                        const verticalOffSet=edge.source.bounds.y - wayPointOrigin.elementPoint.y;
-                        const horizontalOffSet=edge.source.bounds.x - wayPointOrigin.elementPoint.x;
-                        this.debugFinest('offset=' + horizontalOffSet + ',' + verticalOffSet);
-                        const isHorizontalSegment = Math.abs(completeRoute[1].x -  completeRoute[0].x) >
-                                Math.abs(completeRoute[1].y - completeRoute[0].y);
-
-                        if (isHorizontalSegment) {
-                            this.debugFinest('horizontal segment!');
-                            completeRoute[0] = {
-                                kind: completeRoute[0].kind,
-                                pointIndex: completeRoute[0].pointIndex,
-                                isJunction: completeRoute[0].isJunction,
-                                x: completeRoute[0].x + horizontalOffSet,
-                                y: completeRoute[0].y + verticalOffSet
-                            };
-                            completeRoute[1] = {
-                                kind: completeRoute[1].kind,
-                                pointIndex: completeRoute[1].pointIndex,
-                                isJunction: completeRoute[1].isJunction,
-                                x: completeRoute[1].x,
-                                y: completeRoute[1].y + verticalOffSet
-                            };
-                        } else {
-                            // vertial
-                            this.debugFinest('vertical segment!');
-                            completeRoute[0] = {
-                                kind: completeRoute[0].kind,
-                                pointIndex: completeRoute[0].pointIndex,
-                                isJunction: completeRoute[0].isJunction,
-                                x: completeRoute[0].x + horizontalOffSet,
-                                y: completeRoute[0].y + verticalOffSet
-                            };
-                            completeRoute[1] = {
-                                kind: completeRoute[1].kind,
-                                pointIndex: completeRoute[1].pointIndex,
-                                isJunction: completeRoute[1].isJunction,
-                                x: completeRoute[1].x + horizontalOffSet,
-                                y: completeRoute[1].y
-                            };
-                        }
-                    } else {
-                        // ========= TARGET Moving ==========
-                        this.debugFine('processing target moving....');
-                        const verticalOffSet=edge.target.bounds.y - wayPointOrigin.elementPoint.y;
-                        const horizontalOffSet=edge.target.bounds.x - wayPointOrigin.elementPoint.x;
-                        this.debugFinest('offset=' + horizontalOffSet + ',' + verticalOffSet);
-                        const pIndex=completeRoute.length-1;
-                        const isHorizontalSegment = Math.abs(completeRoute[pIndex].x - completeRoute[pIndex-1].x) >
-                                Math.abs(completeRoute[pIndex].y - completeRoute[pIndex-1].y);                                
-
-                        if (isHorizontalSegment) {
-                            this.debugFinest('horizontal segment!');
-                            completeRoute[pIndex] = {
-                                kind: completeRoute[pIndex].kind,
-                                pointIndex: completeRoute[pIndex].pointIndex,
-                                isJunction: completeRoute[pIndex].isJunction,
-                                x: completeRoute[pIndex].x + horizontalOffSet,
-                                y: completeRoute[pIndex].y + verticalOffSet
-                            };
-                            completeRoute[pIndex-1] = {
-                                kind: completeRoute[1].kind,
-                                pointIndex: completeRoute[pIndex-1].pointIndex,
-                                isJunction: completeRoute[pIndex-1].isJunction,
-                                x: completeRoute[pIndex-1].x,
-                                y: completeRoute[pIndex-1].y + verticalOffSet
-                            };
-                        } else {
-                            // vertial
-                            this.debugFinest('vertical segment!');
-                            completeRoute[pIndex] = {
-                                kind: completeRoute[pIndex].kind,
-                                pointIndex: completeRoute[pIndex].pointIndex,
-                                isJunction: completeRoute[pIndex].isJunction,
-                                x: completeRoute[pIndex].x + horizontalOffSet,
-                                y: completeRoute[pIndex].y + verticalOffSet
-                            };
-                            completeRoute[pIndex-1] = {
-                                kind: completeRoute[pIndex-1].kind,
-                                pointIndex: completeRoute[pIndex-1].pointIndex,
-                                isJunction: completeRoute[pIndex-1].isJunction,
-                                x: completeRoute[pIndex-1].x + horizontalOffSet,
-                                y: completeRoute[pIndex-1].y
-                            };
-                        }
-                    }
-                }
-
-                edge.routingPoints=completeRoute;
-            }
-
-            // return full route
-            return completeRoute;
-        } else {
-        // default routing!
-        return super.route(edge);
+        // Check if we know the waypointData for the current edge
+        const currentWayPointData = this.originWayPointData?.find(origin => origin.edgeId === edge.id);
+        if (!currentWayPointData) {
+            // Default routing if no waypointData is found
+            return super.route(edge);
         }
+        this.debug('start routing....');
+        let completeRoute = super.route(edge);
+
+        // Log origin element position and offset
+        this.debugFine(`Origin element pos=${edge.source.bounds.x},${edge.source.bounds.y} yOffset=${currentWayPointData.offsetY}`);
+        if (!currentWayPointData.originRoute) {
+            // Store the original route if it doesn't exist
+            currentWayPointData.originRoute = [...completeRoute];
+            this.debugPoints('Set origin Route.....', currentWayPointData.originRoute);
+        } else {
+            // Restore the original route and adjust it
+            this.debugPoints('Restore origin Route.....', currentWayPointData.originRoute);
+            completeRoute = [...currentWayPointData.originRoute];
+            this.debugFine('Adjusting routing points...');
+
+            // Determine if the source or target is being moved
+            const isSourceMoving = currentWayPointData.kind === 'source';
+            const element = isSourceMoving ? edge.source : edge.target;
+
+            // Calculate offsets
+            const verticalOffset = element.bounds.y - currentWayPointData.elementPoint.y;
+            const horizontalOffset = element.bounds.x - currentWayPointData.elementPoint.x;
+            this.debugFinest(`offset=${horizontalOffset},${verticalOffset}`);
+
+            // Determine the index to adjust routing points (first point for source, last point for target)
+            const startIndex = isSourceMoving ? 0 : completeRoute.length - 1;
+            const routeIndex = startIndex + (isSourceMoving ? 1 : -1);
+
+            // Check if this segment is horizontal or vertical
+            const isHorizontalSegment = Math.abs(completeRoute[startIndex].x - completeRoute[routeIndex].x) >
+                Math.abs(completeRoute[startIndex].y - completeRoute[routeIndex].y);
+            this.debugFinest(isHorizontalSegment ? 'horizontal segment!' : 'vertical segment!');
+            // Adjust the routing points based on the segment type
+            completeRoute[startIndex] = {
+                ...completeRoute[startIndex],
+                x: completeRoute[startIndex].x + horizontalOffset,
+                y: completeRoute[startIndex].y + verticalOffset,
+            };
+            completeRoute[routeIndex] = {
+                ...completeRoute[routeIndex],
+                x: isHorizontalSegment ? completeRoute[routeIndex].x : completeRoute[routeIndex].x + horizontalOffset,
+                y: isHorizontalSegment ? completeRoute[routeIndex].y + verticalOffset : completeRoute[routeIndex].y,
+            };
+        }
+
+        // Update the edge's routing points and return the complete route
+        edge.routingPoints = completeRoute;
+        return completeRoute;
     }
 
     /**
@@ -268,7 +208,7 @@ export class BPMNRouterMoveListener extends MouseListener {
             // do we have a BPMN node?
             if (isBPMNNode(targetElement)) {
                 // reset origins!
-                this.router.initOriginWaypoint();
+                this.router.resetWayPointData();
                 console.log('├── Mouse Down - Element: '+target.id + ' pos= x:'+targetElement.bounds.x + ' y:'+targetElement.bounds.y);
                 this.isDragging = true;
 
@@ -277,7 +217,7 @@ export class BPMNRouterMoveListener extends MouseListener {
                     targetElement.incomingEdges.forEach(edge => {
                         if (isRoutable(edge) && edge.routingPoints.length>0) {
                             const _offsetY=edge.routingPoints[0].y-targetElement.bounds.y;
-                            this.router.addOriginWaypoint({
+                            this.router.addWayPointData({
                                 kind: 'target',
                                 elementId: targetElement.id,
                                 elementPoint: {x: targetElement.bounds.x, y:  targetElement.bounds.y },
@@ -292,7 +232,7 @@ export class BPMNRouterMoveListener extends MouseListener {
                     targetElement.outgoingEdges.forEach(edge => {
                         if (isRoutable(edge) && edge.routingPoints.length>0) {
                             const _offsetY=edge.routingPoints[0].y-targetElement.bounds.y;
-                            this.router.addOriginWaypoint({
+                            this.router.addWayPointData({
                                 kind: 'source',
                                 elementId: targetElement.id,
                                 elementPoint: {x: targetElement.bounds.x, y:  targetElement.bounds.y },
@@ -317,7 +257,7 @@ export class BPMNRouterMoveListener extends MouseListener {
     override mouseUp(target: GModelElement, event: MouseEvent): Action[] {
         if (this.isDragging) {
             this.isDragging = false;
-            this.router.initOriginWaypoint();
+            this.router.resetWayPointData();
         }
         return [];
     }
