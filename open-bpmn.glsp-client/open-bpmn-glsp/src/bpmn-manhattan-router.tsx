@@ -16,6 +16,7 @@
 
 import {
     Action,
+    Bounds,
     findParentByFeature,
     GLSPManhattanEdgeRouter,
     GModelElement,
@@ -145,6 +146,15 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
                     x: isHorizontalSegment ? completeRoute[routeIndex].x : completeRoute[routeIndex].x + horizontalOffset,
                     y: isHorizontalSegment ? completeRoute[routeIndex].y + verticalOffset : completeRoute[routeIndex].y,
                 };
+
+                // Collision-Check
+                // if the first routingPoint is inside the element, reset WayPointData!
+                if (Bounds.includes(element.bounds, completeRoute[routeIndex])) {
+                    this.debug('Collision with nearest routing point detected - reset waypoint data!');
+                    this.resetWayPointData();
+                    edge.routingPoints = completeRoute;
+                    return completeRoute;
+                }
             }
         }
 

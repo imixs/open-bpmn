@@ -15,12 +15,8 @@
  ********************************************************************************/
 import {
   ActionDispatcher,
-  GModelElement,
   GModelRoot,
-  Grid,
   ISelectionListener,
-  ISnapper,
-  Point,
   SelectAction,
   TYPES,
   filter,
@@ -34,32 +30,12 @@ import {
   isPoolNode,
   isTaskNode
 } from '@open-bpmn/open-bpmn-model';
-import { inject, injectable, optional } from 'inversify';
+import { inject, injectable } from 'inversify';
 
 /****************************************************************************
  * This module provides BPMN select listeners for custom behavior.
  *
  ****************************************************************************/
-
-/**
- * A extension that snaps BPMN elements onto a fixed gride size.
- * This snapper calculates the grid size based on the selected element to align tasks, gateways and events.
- *
- * See also discussion here: https://github.com/eclipse-glsp/glsp/discussions/1255
- */
-@injectable()
-export class BPMNElementSnapper implements ISnapper {
-
-  constructor(@optional() @inject(TYPES.Grid) public readonly grid: Grid = { x: 1, y: 1 }) {}
-  snap(position: Point, element: GModelElement): Point {
-    // default move 1x1...
-    return {
-      // maybe the better snap behavior instead of round()...
-      x: Math.floor(position.x),
-      y: Math.floor(position.y)
-    };
-  }
-}
 
 /**
  * This selectionListener selects additional associated BoundaryEvents and BPMNLabels.

@@ -73,8 +73,8 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                 String id = routingPoint.getElementId();
                 List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
 
-                // snap the new routing points to the grid 5x5
-                BPMNGridSnapper.snapPointsToGrid(newGLSPRoutingPoints);
+                // round routing points ...
+                BPMNGridSnapper.round(newGLSPRoutingPoints);
 
                 // update the GModel.
                 GEdge edge = (GEdge) modelState.getIndex().get(id).orElse(null);

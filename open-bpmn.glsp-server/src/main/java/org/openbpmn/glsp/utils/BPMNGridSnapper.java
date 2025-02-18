@@ -48,22 +48,6 @@ public class BPMNGridSnapper {
     }
 
     /**
-     * Helper method to snap routing points to the grid
-     */
-    public static void snapPointsToGrid(List<GPoint> points) {
-        int gridSize = 5;
-        for (GPoint point : points) {
-            // Calculate the nearest grid coordinates
-            long snappedX = Math.round(point.getX() / (float) gridSize) * gridSize;
-            long snappedY = Math.round(point.getY() / (float) gridSize) * gridSize;
-
-            // Update the existing point's coordinates
-            point.setX(snappedX);
-            point.setY(snappedY);
-        }
-    }
-
-    /**
      * Helper method that rounds the x/y coordinates of a GPoint
      * 
      * @param point
@@ -73,6 +57,17 @@ public class BPMNGridSnapper {
         double x = Math.round(point.getX());
         double y = Math.round(point.getY());
         return GraphUtil.point(x, y);
+    }
+
+    /**
+     * Helper method to snap routing points to the grid
+     */
+    public static void round(List<GPoint> points) {
+        for (GPoint point : points) {
+            // Update the existing point's coordinates
+            point.setX(Math.round(point.getX()));
+            point.setY(Math.round(point.getY()));
+        }
     }
 
     /**
