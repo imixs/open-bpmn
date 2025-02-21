@@ -749,9 +749,9 @@ Max 10 PDF Pages will be scanned</bpmn2:text>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="StartEvent_1" id="BPMNShape_StartEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="167.0" y="307.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="174.0" y="307.0"/>
         <bpmndi:BPMNLabel id="BPMNLabel_9" labelStyle="BPMNLabelStyle_1">
-          <dc:Bounds height="20.0" width="100.0" x="137.5" y="349.0"/>
+          <dc:Bounds height="20.0" width="100.0" x="144.5" y="349.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="Task_2" id="BPMNShape_Task_2">
@@ -878,7 +878,7 @@ Max 10 PDF Pages will be scanned</bpmn2:text>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_13" id="BPMNEdge_SequenceFlow_13" sourceElement="BPMNShape_StartEvent_1" targetElement="BPMNShape_Task_1">
         <bpmndi:BPMNLabel id="BPMNLabel_28"/>
-        <di:waypoint x="203.0" y="325.0"/>
+        <di:waypoint x="210.0" y="325.0"/>
         <di:waypoint x="240.0" y="325.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="BPMNEdge_SequenceFlow_2" sourceElement="BPMNShape_BoundaryEvent_1" targetElement="BPMNShape_IntermediateCatchEvent_3">
