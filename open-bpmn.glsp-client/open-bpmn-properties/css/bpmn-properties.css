@@ -56,6 +56,10 @@
     cursor: row-resize;
 }
 
+.bpmn-property-header .header-icon {
+    display: inherit;
+}
+
 .bpmn-property-header .header-icon i {
     padding-left: 4px;
     padding-right: 4px;
