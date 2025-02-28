@@ -70,7 +70,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
     protected override getOptions(edge: GRoutableElement): ManhattanRouterOptions {
         return {
             standardDistance: 20, // 20
-            minimalPointDistance: 3, // 3
+            minimalPointDistance:25, // 3
             selfEdgeOffset: 0.25  // 0.25
         };
     }
@@ -104,15 +104,11 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
             currentWayPointData.originRoute = [...completeRoute];
             this.debugPoints('Set origin Route for '+edge.id, currentWayPointData.originRoute);
         } else {
-
-            this.debug(' new-rout.length='+completeRoute.length + '  origin-route.length='+ currentWayPointData.originRoute.length);
-
-            if (currentWayPointData.originRoute.length<=2
-                && completeRoute.length>2 ) {
-                // Restore the original route and adjust it
+            // console.log(' new-rout.length='+completeRoute.length + '  origin-route.length='+ currentWayPointData.originRoute.length);
+            if (currentWayPointData.originRoute.length===2 ) {
+                // update the original route 
                 currentWayPointData.originRoute = [...completeRoute];
-                this.debugPoints('Reset! origin Route '+edge.id, currentWayPointData.originRoute);
-                // completeRoute = [...currentWayPointData.originRoute];
+                return super.route(edge);
             } else {
                 this.debugPoints('Restore origin Route.....', currentWayPointData.originRoute);
                 completeRoute = [...currentWayPointData.originRoute];
