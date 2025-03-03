@@ -198,6 +198,12 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         return rootHint;
     }
 
+    /**
+     * Creates a Pool Hint.
+     * <p>
+     * The method defines the containable elements.
+     * 
+     */
     private ShapeTypeHint createPoolHint() {
         ShapeTypeHint poolHint = new ShapeTypeHint(BPMNTypes.POOL, true, true, true, true);
         List<String> elementList = new ArrayList<>();
@@ -206,8 +212,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         elementList.remove(BPMNTypes.BOUNDARY_EVENT);
         // add lane
         elementList.add(BPMNTypes.LANE);
-        // add TextAnnotation
+        // add data objects
         elementList.add(BPMNTypes.TEXTANNOTATION);
+        elementList.add(BPMNTypes.DATAOBJECT);
+        elementList.add(BPMNTypes.DATASTORE);
 
         poolHint.setContainableElementTypeIds(elementList);
         return poolHint;
@@ -224,6 +232,11 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         elementList.addAll(BPMNTypes.BPMN_FLOWELEMENT_NODES);
         // remove Boundary Event
         elementList.remove(BPMNTypes.BOUNDARY_EVENT);
+
+        // add data objects
+        elementList.add(BPMNTypes.TEXTANNOTATION);
+        elementList.add(BPMNTypes.DATAOBJECT);
+        elementList.add(BPMNTypes.DATASTORE);
 
         laneHint.setContainableElementTypeIds(elementList);
         return laneHint;
