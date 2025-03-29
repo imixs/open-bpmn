@@ -70,6 +70,7 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.openbpmn.extensions.BPMNElementExtension;
 import org.openbpmn.glsp.bpmn.BPMNGEdge;
+import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.DataObjectGNode;
 import org.openbpmn.glsp.bpmn.DataStoreGNode;
 import org.openbpmn.glsp.bpmn.EventGNode;
@@ -687,7 +688,57 @@ public class BPMNGModelFactory implements GModelFactory {
         // Add all SequenceFlows
         createSequenceFlowGEdges(process.getSequenceFlows(), gNodeList, participant);
 
+        // finally check if the positions of the node elements make sense.
+        // In case all elements have the position 0,0 we adust the position here..
+        autoLayout(gNodeList);
+
         return gNodeList;
+    }
+
+    /**
+     * This is a helper method to detect missing bounds information.
+     * The method tries to init some meaningful bounds in such a situation.
+     * 
+     * @param nodelist
+     */
+    private void autoLayout(List<GModelElement> nodelist) {
+        boolean samePos = true;
+        GPoint lastPoint = null;
+        for (GModelElement gElement : nodelist) {
+            if (gElement instanceof BPMNGNode) {
+                BPMNGNode gn = (BPMNGNode) gElement;
+                GPoint position = gn.getPosition();
+                if (lastPoint == null) {
+                    lastPoint = position;
+                }
+                if (gn instanceof LabelGNode) {
+                    continue;
+                }
+                if (lastPoint.getX() != position.getX()
+                        || lastPoint.getY() != position.getY()) {
+                    samePos = false;
+                    // We found a new element position, so we assume all is fine
+                    return;
+                }
+            }
+        }
+        if (samePos) {
+            // all elements seem to have the same position!
+            // start auto layout
+            long xPos = 0;
+            for (GModelElement gElement : nodelist) {
+                if (gElement instanceof BPMNGNode) {
+                    BPMNGNode gn = (BPMNGNode) gElement;
+
+                    gn.getPosition().setX(xPos);
+                    if (gn instanceof LabelGNode) {
+                        // ignore x offset for labels
+                        continue;
+                    }
+                    xPos = xPos + 200;
+                }
+            }
+        }
     }
 
     /**

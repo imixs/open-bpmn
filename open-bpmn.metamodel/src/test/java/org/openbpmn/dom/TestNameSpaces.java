@@ -2,7 +2,9 @@ package org.openbpmn.dom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,9 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -99,6 +104,44 @@ public class TestNameSpaces {
 
         model.save(out);
         logger.info("...model update successful: " + out);
+    }
+
+    /**
+     * This test parses a bpmn file with a default namespace (no prefix) and adds a
+     * second task element
+     * 
+     * @throws BPMNModelException
+     */
+    @Test
+    public void testProcessExample02() throws BPMNModelException {
+
+        logger.info("...read model");
+
+        BPMNModel model = BPMNModelFactory.read("/process_1_custom_namespace-2.bpmn");
+
+        BPMNProcess process = model.openDefaultProces();
+
+        assertNotNull(process);
+
+        BPMNElement element = process.findElementById("Gf17b6be0df1a4474ade00c089b0af2a4");
+
+        assertNotNull(element);
+
+        if (element instanceof Gateway) {
+            Gateway gateway = (Gateway) element;
+            Set<SequenceFlow> sequenceFlowsIn = gateway.getIngoingSequenceFlows();
+            assertNotNull(sequenceFlowsIn);
+            assertEquals(1, sequenceFlowsIn.size());
+
+            Set<SequenceFlow> sequenceFlowsOut = gateway.getOutgoingSequenceFlows();
+            assertNotNull(sequenceFlowsOut);
+            assertEquals(2, sequenceFlowsOut.size());
+
+        } else {
+            fail();
+        }
+
+        logger.info("...model read successful");
     }
 
 }

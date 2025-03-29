@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="test" expressionLanguage="C# Lambda"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL">
+  <process id="G7659d650c6ba41ff82bfb5f2ffe75eaf" name="Test" processType="Public">
+    <startEvent id="Start_Event" name="Start">
+      <q1:outgoing xmlns="" xmlns:q1="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G94506efc9c90484c94f76ab9d865c3f3</q1:outgoing>
+    </startEvent>
+    <task id="Task_1" name="Task 1">
+      <q2:incoming xmlns="" xmlns:q2="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G94506efc9c90484c94f76ab9d865c3f3</q2:incoming>
+      <q3:outgoing xmlns="" xmlns:q3="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G3c32d4362fb34202afdd71d832bea159</q3:outgoing>
+    </task>
+    <sequenceFlow id="G94506efc9c90484c94f76ab9d865c3f3" sourceRef="Start_Event" targetRef="Task_1" />
+    <sequenceFlow id="G3c32d4362fb34202afdd71d832bea159" sourceRef="Task_1"
+      targetRef="Gf17b6be0df1a4474ade00c089b0af2a4" />
+    <parallelGateway id="Gf17b6be0df1a4474ade00c089b0af2a4" name="Parallel Gateway 1"
+      gatewayDirection="Diverging">
+      <q4:incoming xmlns="" xmlns:q4="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G3c32d4362fb34202afdd71d832bea159</q4:incoming>
+      <q5:outgoing xmlns="" xmlns:q5="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G1368eaa247794e79aba99e78faa68b43</q5:outgoing>
+      <q6:outgoing xmlns="" xmlns:q6="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G690fc96a505e46ac8e1bb836e91a68f7</q6:outgoing>
+    </parallelGateway>
+    <sequenceFlow id="G1368eaa247794e79aba99e78faa68b43"
+      sourceRef="Gf17b6be0df1a4474ade00c089b0af2a4" targetRef="Task_2" />
+    <task id="Task_2" name="Task 2">
+      <q7:incoming xmlns="" xmlns:q7="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G1368eaa247794e79aba99e78faa68b43</q7:incoming>
+      <q8:outgoing xmlns="" xmlns:q8="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G6f4b004c57ff4fd69a2e8d47969a1cd4</q8:outgoing>
+    </task>
+    <sequenceFlow id="G690fc96a505e46ac8e1bb836e91a68f7"
+      sourceRef="Gf17b6be0df1a4474ade00c089b0af2a4" targetRef="Task_3" />
+    <task id="Task_3" name="Task 3">
+      <q9:incoming xmlns="" xmlns:q9="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G690fc96a505e46ac8e1bb836e91a68f7</q9:incoming>
+      <q10:outgoing xmlns="" xmlns:q10="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Gd008894c897342c7a2df989d8512e647</q10:outgoing>
+    </task>
+    <sequenceFlow id="G6f4b004c57ff4fd69a2e8d47969a1cd4" sourceRef="Task_2"
+      targetRef="G83238fcdcfca426183c01bd67b23e21d" />
+    <sequenceFlow id="Gd008894c897342c7a2df989d8512e647" sourceRef="Task_3"
+      targetRef="G83238fcdcfca426183c01bd67b23e21d" />
+    <parallelGateway id="G83238fcdcfca426183c01bd67b23e21d" name="Parallel Gateway 2"
+      gatewayDirection="Converging">
+      <q11:incoming xmlns="" xmlns:q11="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G6f4b004c57ff4fd69a2e8d47969a1cd4</q11:incoming>
+      <q12:incoming xmlns="" xmlns:q12="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Gd008894c897342c7a2df989d8512e647</q12:incoming>
+      <q13:outgoing xmlns="" xmlns:q13="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Gf65d4f6da8fe49d8bbeca90cfc23f130</q13:outgoing>
+    </parallelGateway>
+    <exclusiveGateway id="G31e596bc314146428528d433f401e15b" name="Check Name"
+      default="G0156d62645cd41979c4f60dacadaf76e">
+      <q14:incoming xmlns="" xmlns:q14="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Gf65d4f6da8fe49d8bbeca90cfc23f130</q14:incoming>
+      <q15:outgoing xmlns="" xmlns:q15="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Ge5fdf5a3ace64afeb0391770454d319a</q15:outgoing>
+      <q16:outgoing xmlns="" xmlns:q16="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G0156d62645cd41979c4f60dacadaf76e</q16:outgoing>
+    </exclusiveGateway>
+    <sequenceFlow id="Gf65d4f6da8fe49d8bbeca90cfc23f130"
+      sourceRef="G83238fcdcfca426183c01bd67b23e21d" targetRef="G31e596bc314146428528d433f401e15b" />
+    <sequenceFlow id="G0156d62645cd41979c4f60dacadaf76e"
+      sourceRef="G31e596bc314146428528d433f401e15b" targetRef="End_Event" />
+    <sequenceFlow id="Ge5fdf5a3ace64afeb0391770454d319a"
+      sourceRef="G31e596bc314146428528d433f401e15b" targetRef="klaus1">
+      <conditionExpression xsi:type="tFormalExpression" id="G10c2af103a6d40e4884add371d3e2c0c">
+        <documentation id="G85255209aaf447f59140139eacfd8c97">Name muss Klaus sein</documentation>x
+        => x.Name == "Klaus"</conditionExpression>
+    </sequenceFlow>
+    <task id="klaus1" name="Ich bin Klaus">
+      <q17:incoming xmlns="" xmlns:q17="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Ge5fdf5a3ace64afeb0391770454d319a</q17:incoming>
+      <q18:outgoing xmlns="" xmlns:q18="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Gfd21215af7fb4334962afd070b3dafd7</q18:outgoing>
+    </task>
+    <sequenceFlow id="Gfd21215af7fb4334962afd070b3dafd7" sourceRef="klaus1" targetRef="End_Event" />
+    <endEvent id="End_Event" name="End">
+      <q19:incoming xmlns="" xmlns:q19="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        G0156d62645cd41979c4f60dacadaf76e</q19:incoming>
+      <q20:incoming xmlns="" xmlns:q20="http://www.omg.org/spec/BPMN/20100524/MODEL">
+        Gfd21215af7fb4334962afd070b3dafd7</q20:incoming>
+    </endEvent>
+  </process>
+  <collaboration id="G024b6d714b0e480eab24981a1d1ee8dc">
+    <participant id="G465e307c5d934e6ab5656db8cdd45779" name="Klaus"
+      processRef="G7659d650c6ba41ff82bfb5f2ffe75eaf" />
+  </collaboration>
+  <BPMNDiagram name="test" xmlns="http://www.omg.org/spec/BPMN/20100524/DI">
+    <BPMNPlane bpmnElement="G024b6d714b0e480eab24981a1d1ee8dc">
+      <BPMNShape id="G465e307c5d934e6ab5656db8cdd45779_di"
+        bpmnElement="G465e307c5d934e6ab5656db8cdd45779">
+        <Bounds x="0" y="0" width="1500" height="500" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel />
+      </BPMNShape>
+      <BPMNShape id="Start_Event_di" bpmnElement="Start_Event">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="Task_1_di" bpmnElement="Task_1">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="Gf17b6be0df1a4474ade00c089b0af2a4_di"
+        bpmnElement="Gf17b6be0df1a4474ade00c089b0af2a4">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="Task_2_di" bpmnElement="Task_2">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="Task_3_di" bpmnElement="Task_3">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="G83238fcdcfca426183c01bd67b23e21d_di"
+        bpmnElement="G83238fcdcfca426183c01bd67b23e21d">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="G31e596bc314146428528d433f401e15b_di"
+        bpmnElement="G31e596bc314146428528d433f401e15b">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="klaus1_di" bpmnElement="klaus1">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNShape id="End_Event_di" bpmnElement="End_Event">
+        <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        <BPMNLabel>
+          <Bounds x="0" y="0" width="50" height="50" xmlns="http://www.omg.org/spec/DD/20100524/DC" />
+        </BPMNLabel>
+      </BPMNShape>
+      <BPMNEdge id="G94506efc9c90484c94f76ab9d865c3f3_di"
+        bpmnElement="G94506efc9c90484c94f76ab9d865c3f3" sourceElement="Start_Event_di"
+        targetElement="Task_1_di" />
+      <BPMNEdge id="G3c32d4362fb34202afdd71d832bea159_di"
+        bpmnElement="G3c32d4362fb34202afdd71d832bea159" sourceElement="Task_1_di"
+        targetElement="Gf17b6be0df1a4474ade00c089b0af2a4_di" />
+      <BPMNEdge id="G1368eaa247794e79aba99e78faa68b43_di"
+        bpmnElement="G1368eaa247794e79aba99e78faa68b43"
+        sourceElement="Gf17b6be0df1a4474ade00c089b0af2a4_di" targetElement="Task_2_di" />
+      <BPMNEdge id="G690fc96a505e46ac8e1bb836e91a68f7_di"
+        bpmnElement="G690fc96a505e46ac8e1bb836e91a68f7"
+        sourceElement="Gf17b6be0df1a4474ade00c089b0af2a4_di" targetElement="Task_3_di" />
+      <BPMNEdge id="G6f4b004c57ff4fd69a2e8d47969a1cd4_di"
+        bpmnElement="G6f4b004c57ff4fd69a2e8d47969a1cd4" sourceElement="Task_2_di"
+        targetElement="G83238fcdcfca426183c01bd67b23e21d_di" />
+      <BPMNEdge id="Gd008894c897342c7a2df989d8512e647_di"
+        bpmnElement="Gd008894c897342c7a2df989d8512e647" sourceElement="Task_3_di"
+        targetElement="G83238fcdcfca426183c01bd67b23e21d_di" />
+      <BPMNEdge id="Gf65d4f6da8fe49d8bbeca90cfc23f130_di"
+        bpmnElement="Gf65d4f6da8fe49d8bbeca90cfc23f130"
+        sourceElement="G83238fcdcfca426183c01bd67b23e21d_di"
+        targetElement="G31e596bc314146428528d433f401e15b_di" />
+      <BPMNEdge id="G0156d62645cd41979c4f60dacadaf76e_di"
+        bpmnElement="G0156d62645cd41979c4f60dacadaf76e"
+        sourceElement="G31e596bc314146428528d433f401e15b_di" targetElement="End_Event_di" />
+      <BPMNEdge id="Ge5fdf5a3ace64afeb0391770454d319a_di"
+        bpmnElement="Ge5fdf5a3ace64afeb0391770454d319a"
+        sourceElement="G31e596bc314146428528d433f401e15b_di" targetElement="klaus1_di" />
+      <BPMNEdge id="Gfd21215af7fb4334962afd070b3dafd7_di"
+        bpmnElement="Gfd21215af7fb4334962afd070b3dafd7" sourceElement="klaus1_di"
+        targetElement="End_Event_di" />
+    </BPMNPlane>
+  </BPMNDiagram>
+</definitions>
