@@ -70,7 +70,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
     protected override getOptions(edge: GRoutableElement): ManhattanRouterOptions {
         return {
             standardDistance: 20, // 20
-            minimalPointDistance:25, // 3
+            minimalPointDistance:3, // 3  | 25
             selfEdgeOffset: 0.25  // 0.25
         };
     }
