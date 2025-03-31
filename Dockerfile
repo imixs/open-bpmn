@@ -16,7 +16,6 @@ RUN yarn install
 WORKDIR /home/node/app
 COPY scripts/launch-docker-container.sh ./
 COPY open-bpmn.glsp-server/target/open-bpmn.server-*-glsp.jar ./open-bpmn.glsp-server/target/
-RUN rm -r ./open-bpmn.glsp-client/workspace/dev
 WORKDIR /home/node/app/open-bpmn.glsp-client
 
 ENV HOME=/home/node
