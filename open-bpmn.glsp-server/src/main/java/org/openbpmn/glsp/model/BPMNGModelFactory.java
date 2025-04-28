@@ -704,6 +704,7 @@ public class BPMNGModelFactory implements GModelFactory {
     private void autoLayout(List<GModelElement> nodelist) {
         boolean samePos = true;
         GPoint lastPoint = null;
+        int gnodeCount = 0;
         for (GModelElement gElement : nodelist) {
             if (gElement instanceof BPMNGNode) {
                 BPMNGNode gn = (BPMNGNode) gElement;
@@ -714,6 +715,7 @@ public class BPMNGModelFactory implements GModelFactory {
                 if (gn instanceof LabelGNode) {
                     continue;
                 }
+                gnodeCount++;
                 if (lastPoint.getX() != position.getX()
                         || lastPoint.getY() != position.getY()) {
                     samePos = false;
@@ -722,14 +724,16 @@ public class BPMNGModelFactory implements GModelFactory {
                 }
             }
         }
-        if (samePos) {
+        // See issue #388 and #386
+        // Maybe we need another strategy here and recompute the source model instead of
+        // the GModel....?
+        if (samePos && gnodeCount > 1) {
             // all elements seem to have the same position!
             // start auto layout
             long xPos = 0;
             for (GModelElement gElement : nodelist) {
                 if (gElement instanceof BPMNGNode) {
                     BPMNGNode gn = (BPMNGNode) gElement;
-
                     gn.getPosition().setX(xPos);
                     if (gn instanceof LabelGNode) {
                         // ignore x offset for labels
