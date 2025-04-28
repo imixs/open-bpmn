@@ -175,8 +175,9 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
         // reset model state..
         modelState.reset();
 
-        // preselect new pasted elements
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(newElementIDList));
+        // Issue #387 origin elements
+        // preselect new pasted elements and deselect origin elements
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(newElementIDList, selectedElements));
     }
 
     /**
