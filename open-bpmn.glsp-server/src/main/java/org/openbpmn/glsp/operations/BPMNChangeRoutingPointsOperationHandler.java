@@ -1,3 +1,4 @@
+
 /********************************************************************************
  * Copyright (c) 2022 Imixs Software Solutions GmbH and others.
  *
@@ -21,19 +22,26 @@ import java.util.logging.Logger;
 
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.glsp.graph.GBoundsAware;
 import org.eclipse.glsp.graph.GEdge;
+import org.eclipse.glsp.graph.GModelElement;
 import org.eclipse.glsp.graph.GPoint;
+import org.eclipse.glsp.graph.util.GraphUtil;
 import org.eclipse.glsp.server.operations.ChangeRoutingPointsOperation;
 import org.eclipse.glsp.server.operations.GModelOperationHandler;
 import org.eclipse.glsp.server.types.ElementAndRoutingPoints;
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
@@ -85,19 +93,27 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
 
                     EList<GPoint> oldPoints = edge.getRoutingPoints();
                     if (debug)
-                        System.out.println("│   ├── old points:");
+                        System.out.println("│   ├── old points:");
                     for (GPoint ding : oldPoints) {
                         if (debug)
-                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
+                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
                     }
                     if (debug)
-                        System.out.println("│   ├── new points:");
+                        System.out.println("│   ├── new points:");
                     for (GPoint ding : newGLSPRoutingPoints) {
                         if (debug)
-                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
+                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
                     }
+
+                    // Adjust routing points for Events
+                    if (!newGLSPRoutingPoints.isEmpty()) {
+                        adjustEventRoutingPorts(edge, newGLSPRoutingPoints);
+                    }
+
+                    // Update BPMN Routing
                     edge.getRoutingPoints().clear();
                     edge.getRoutingPoints().addAll(newGLSPRoutingPoints);
+
                     updateBPMNWayPoints(id, newGLSPRoutingPoints);
                 }
             }
@@ -105,6 +121,108 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
+    }
+
+    /**
+     * This helper method adjusts the docking point of the last/first routing point
+     * on a BPMN Event element.
+     * 
+     * @throws BPMNMissingElementException
+     * 
+     */
+    private void adjustEventRoutingPorts(GEdge edge, List<GPoint> newGLSPRoutingPoints)
+            throws BPMNMissingElementException {
+
+        GPoint pointOfInterest = null;
+        // ist die Source ein Event?
+        BPMNElementNode sourceBPMNElement = modelState.getBpmnModel().findElementNodeById(edge.getSourceId());
+        if (sourceBPMNElement != null && BPMNModel.isEvent(sourceBPMNElement)) {
+            pointOfInterest = newGLSPRoutingPoints.get(0);
+            GPoint center = computeCenter(edge.getSource());
+            if (yInEventsBounds(center, pointOfInterest)) {
+                pointOfInterest.setY(center.getY());
+            }
+            if (xInEventsBounds(center, pointOfInterest)) {
+                pointOfInterest.setX(center.getX());
+            }
+        }
+
+        // ist das Target ein Event?
+        BPMNElementNode targetBPMNElement = modelState.getBpmnModel().findElementNodeById(edge.getTargetId());
+        if (targetBPMNElement != null && BPMNModel.isEvent(targetBPMNElement)) {
+            pointOfInterest = newGLSPRoutingPoints.get(newGLSPRoutingPoints.size() - 1);
+            GPoint center = computeCenter(edge.getTarget());
+            if (yInEventsBounds(center, pointOfInterest)) {
+                pointOfInterest.setY(center.getY());
+            }
+            if (xInEventsBounds(center, pointOfInterest)) {
+                pointOfInterest.setX(center.getX());
+            }
+        }
+    }
+
+    /**
+     * Returns the center of a GMoelElement
+     * 
+     * @param element
+     * @return
+     */
+    private GPoint computeCenter(GModelElement element) {
+        if (element instanceof GBoundsAware) {
+            GBoundsAware boundsElement = (GBoundsAware) element;
+            double radius = Event.DEFAULT_HEIGHT / 2;
+            double xCenter = boundsElement.getPosition().getX() + radius;
+            double yCenter = boundsElement.getPosition().getY() + radius;
+            return GraphUtil.point(xCenter, yCenter);
+        }
+        return GraphUtil.point(0, 0);
+
+    }
+
+    private boolean yInEventsBounds(GPoint center, GPoint routingPoint) throws BPMNMissingElementException {
+        double radius = Event.DEFAULT_HEIGHT / 2;
+
+        // Get first routing point and test position....
+        if (debug) {
+            System.out.println("│   ├── event center      = " + center);
+            System.out.println("│   ├── 1st routing point = " + routingPoint);
+        }
+        // test y
+        double rY = routingPoint.getY();
+        if (debug) {
+            System.out.println("│   ├── eY - radius =  " + (center.getY() - radius));
+            System.out.println("│   ├── eY + radius =  " + (center.getY() + radius));
+        }
+        if (rY >= (center.getY() - radius)
+                && rY <= (center.getY() + radius)) {
+            if (debug)
+                System.out.println("│   ├── Adjusting necessary");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean xInEventsBounds(GPoint center, GPoint routingPoint) throws BPMNMissingElementException {
+        double radius = Event.DEFAULT_HEIGHT / 2;
+
+        // Get first routing point and test position....
+        if (debug) {
+            System.out.println("│   ├── event center      = " + center);
+            System.out.println("│   ├── 1st routing point = " + routingPoint);
+        }
+        // test y
+        double rX = routingPoint.getX();
+        if (debug) {
+            System.out.println("│   ├── eX - radius =  " + (center.getX() - radius));
+            System.out.println("│   ├── eX + radius =  " + (center.getX() + radius));
+        }
+        if (rX >= (center.getX() - radius)
+                && rX <= (center.getX() + radius)) {
+            if (debug)
+                System.out.println("│   ├── Adjusting necessary");
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -125,7 +243,7 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
 
         try {
             if (debug)
-                System.out.println("│   ├── clearing all waypoints");
+                System.out.println("│   ├── clearing all waypoints");
             bpmnElementEdge.clearWayPoints();
 
             // find the process
@@ -156,11 +274,11 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                 }
                 bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
                 if (debug)
-                    System.out.println("│   ├── add waypoint : " + point.getX() + "," + point.getY());
+                    System.out.println("│   ├── add waypoint : " + point.getX() + "," + point.getY());
                 bpmnElementEdge.addWayPoint(bpmnPoint);
             }
         } catch (Exception e) {
-            logger.info("Unable to update bpmn way points: " + e.getMessage());
+            logger.warning("Unable to update bpmn way points: " + e.getMessage());
             e.printStackTrace();
         }
     }
