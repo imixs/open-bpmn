@@ -307,9 +307,20 @@ public class BPMNModel {
      * @param uri
      */
     public void addNamespace(String namespace, String uri) {
-        if (!definitions.hasAttribute("xmlns:" + namespace)) {
+        if (!hasNamespace(namespace)) {
             definitions.setAttribute("xmlns:" + namespace, uri);
         }
+    }
+
+    /**
+     * Returns true if the given namespace already exists in the BPMN definitions
+     * element.
+     * 
+     * @param namespace
+     * @return
+     */
+    public boolean hasNamespace(String namespace) {
+        return definitions.hasAttribute("xmlns:" + namespace);
     }
 
     /**
