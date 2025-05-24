@@ -117,7 +117,10 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createGatewayHint(BPMNTypes.COMPLEX_GATEWAY));
 
         // DataObject
-        nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false, false));
+        // nodeHints.add(new ShapeTypeHint(BPMNTypes.DATAOBJECT, true, true, false,
+        // false));
+        nodeHints.add(createDataObjectHint(BPMNTypes.DATAOBJECT));
+
         // DataStore
         nodeHints.add(new ShapeTypeHint(BPMNTypes.DATASTORE, true, true, false, false));
         // Message
@@ -151,12 +154,6 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         EdgeTypeHint sequenceFlowHint = createDefaultEdgeTypeHint(BPMNTypes.SEQUENCE_FLOW);
         sequenceFlowHint.setSourceElementTypeIds(BPMNTypes.BPMN_FLOWELEMENT_NODES);
         sequenceFlowHint.setTargetElementTypeIds(BPMNTypes.BPMN_FLOWELEMENT_NODES);
-        // sequenceFlowHint.setTargetElementTypeIds(
-        // new ArrayList<>(BPMNTypes.BPMN_FLOWELEMENT_NODES) {
-        // {
-        // add(ModelTypes.ICON);
-        // }
-        // });
 
         edgeHints.add(sequenceFlowHint);
 
@@ -267,6 +264,16 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
 
     private ShapeTypeHint createGatewayHint(final String gatewayType) {
         ShapeTypeHint hint = new ShapeTypeHint(gatewayType, true, true, false, true);
+        return hint;
+    }
+
+    private ShapeTypeHint createDataObjectHint(final String dataObjectType) {
+        ShapeTypeHint hint = new ShapeTypeHint(dataObjectType, true, true, false, true);
+
+        // Add optional Extension Hints...
+        List<String> containable = new ArrayList<>();
+        addExtensionHints(dataObjectType, containable);
+        hint.setContainableElementTypeIds(containable);
         return hint;
     }
 
@@ -433,7 +440,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
             for (BPMNElementExtension extension : extensions) {
                 String extensionType = "extension:" + extension.getNamespace();
                 // validate if the extension is no Default Extension kind and if the extension
-                // can handle this task Type
+                // can handle this element Type
                 if (!BPMNNS.BPMN2.name().equals(extension.getNamespace()) //
                         && !containables.contains(extensionType) //
                         && extension.handlesElementTypeId(bpmnType)) {

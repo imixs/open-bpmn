@@ -14,12 +14,10 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
-    CircularNodeView,
     ConsoleLogger,
     ContainerConfiguration,
     DefaultTypes,
     DeleteElementContextMenuItemProvider,
-    DiamondNodeView,
     GCompartment,
     GCompartmentView,
     GGraph,
@@ -46,7 +44,8 @@ import {
     DataStoreNode,
     EventNode,
     GatewayNode,
-    Icon, LabelNode,
+    Icon,
+    LabelNode,
     LaneDivider,
     LaneNode,
     MessageNode,
@@ -69,6 +68,8 @@ import {
     BPMNGridView,
     DataObjectNodeView,
     DataStoreNodeView,
+    EventNodeView,
+    GatewayNodeView,
     IconView,
     LaneDividerView,
     LaneHeaderView,
@@ -107,6 +108,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     // Configure BMW View Elements
     configureDefaultModelElements(context);
     overrideModelElement(context, DefaultTypes.GRAPH, GGraph, BPMNGridView);
+    // Tasks
     configureModelElement(context, 'task', TaskNode, TaskNodeView);
     configureModelElement(context, 'manualTask', TaskNode, TaskNodeView);
     configureModelElement(context, 'userTask', TaskNode, TaskNodeView);
@@ -115,25 +117,29 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'serviceTask', TaskNode, TaskNodeView);
     configureModelElement(context, 'sendTask', TaskNode, TaskNodeView);
     configureModelElement(context, 'receiveTask', TaskNode, TaskNodeView);
-    configureModelElement(context, 'startEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'endEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'intermediateCatchEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'intermediateThrowEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'boundaryEvent', EventNode, CircularNodeView);
-    configureModelElement(context, 'exclusiveGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'inclusiveGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'parallelGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'eventBasedGateway', GatewayNode, DiamondNodeView);
-    configureModelElement(context, 'complexGateway', GatewayNode, DiamondNodeView);
+    // Events
+    configureModelElement(context, 'startEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'endEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'intermediateCatchEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'intermediateThrowEvent', EventNode, EventNodeView);
+    configureModelElement(context, 'boundaryEvent', EventNode, EventNodeView);
+    // Gateways
+    configureModelElement(context, 'exclusiveGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'inclusiveGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'parallelGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'eventBasedGateway', GatewayNode, GatewayNodeView);
+    configureModelElement(context, 'complexGateway', GatewayNode, GatewayNodeView);
     configureModelElement(context, 'label:heading', GLabel, GLabelView, { enable: [editLabelFeature] });
     configureModelElement(context, 'comp:comp', GCompartment, GCompartmentView);
-    configureModelElement(context, 'icon', Icon, IconView);
+    // Lanes
+    configureModelElement(context, 'icon', Icon, IconView); // no longer used
     configureModelElement(context, 'pool_header', GCompartment, PoolHeaderView);
     configureModelElement(context, 'lane_header', GCompartment, LaneHeaderView);
     configureModelElement(context, 'pool', PoolNode, RoundedCornerNodeView, { disable: [moveFeature] });
     configureModelElement(context, 'lane', LaneNode, RoundedCornerNodeView, {
         disable: [moveFeature, selectFeature]
     });
+    // Data objects
     configureModelElement(context, 'dataObject', DataObjectNode, DataObjectNodeView);
     configureModelElement(context, 'dataStore', DataStoreNode, DataStoreNodeView);
     configureModelElement(context, 'dataStoreReference', DataStoreNode, DataStoreNodeView);

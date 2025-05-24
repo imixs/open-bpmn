@@ -48,6 +48,7 @@ import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 public interface BPMNElementExtension {
 
     public final static String INFO = "bpmnExtensionInfo";
+    public final static String SYMBOL = "bpmnSymbol";
 
     /**
      * Unique identifier specifying the Extension namespace. The default namespace
@@ -77,6 +78,16 @@ public interface BPMNElementExtension {
      * @return String
      */
     default String getInfo(final BPMNElement bpmnElement) {
+        return ""; // return empty string as default
+    }
+
+    /**
+     * Returns an optional svg icon path to be displayed within the
+     * diagram plane
+     *
+     * @return String
+     */
+    default String getSymbol(final BPMNElement bpmnElement) {
         return ""; // return empty string as default
     }
 

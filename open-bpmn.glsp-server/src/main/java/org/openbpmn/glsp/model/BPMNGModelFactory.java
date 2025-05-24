@@ -377,8 +377,8 @@ public class BPMNGModelFactory implements GModelFactory {
 
     /**
      * This method apply all possible BPMNElementExtension to the GNode. This is to
-     * build
-     * the JSONForms Sections and add additional classes for non-default Extensions.
+     * build the JSONForms Sections, optional symbol and additional classes for
+     * non-default Extensions.
      *
      * @param elementNode
      * @param bpmnElement
@@ -416,6 +416,12 @@ public class BPMNGModelFactory implements GModelFactory {
                     if (extensionInfo != null && !extensionInfo.isEmpty()) {
                         elementNode.getArgs().put(BPMNElementExtension.INFO, extensionInfo);
                         bpmnElement.getArgs().put(BPMNElementExtension.INFO, extensionInfo);
+                    }
+                    // set the optional extension icon
+                    String bpmnSymbol = extension.getSymbol(bpmnElement);
+                    if (bpmnSymbol != null && !bpmnSymbol.isEmpty()) {
+                        elementNode.getArgs().put(BPMNElementExtension.SYMBOL, bpmnSymbol);
+                        bpmnElement.getArgs().put(BPMNElementExtension.SYMBOL, bpmnSymbol);
                     }
                     // if the extension is not a Default Extension then we add the extension css
                     // class

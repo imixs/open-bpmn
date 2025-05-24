@@ -86,6 +86,7 @@ export class EventNode extends CircularNode implements BPMNFlowElement {
 		nameFeature
 	];
 	kind?: string;
+	readonly args: Args;
 	documentation: string;
 }
 
@@ -104,6 +105,7 @@ export class GatewayNode extends DiamondNode implements BPMNFlowElement {
 		nameFeature
 	];
 	kind?: string;
+	readonly args: Args;
 	documentation: string;
 }
 
@@ -120,6 +122,7 @@ export class DataObjectNode extends RectangularNode implements BPMNFlowElement {
 		popupFeature,
 		nameFeature
 	];
+	readonly args: Args;
 	documentation: string;
 }
 
