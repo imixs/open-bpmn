@@ -300,7 +300,7 @@ export class TaskNodeView extends ShapeView {
             return undefined;
         } else {
             vnode = (
-                <g class-icon={true}>
+                <g class-symbol={true}>
                     <path transform={'scale(1),translate(5,5)'} d={icon} />
                 </g>
             );
@@ -327,7 +327,7 @@ export class EventNodeView extends ShapeView {
             <circle class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
                     class-mouseover={node.hoverFeedback} class-selected={node.selected}
                     r={radius} cx={radius} cy={radius}></circle>
-            <g class-icon={true}>
+            <g class-symbol={true}>
                 <path transform={'scale(' + scaleFactor + '),translate(' + translateX + ',' + translateY + ')'} d={icon} />
             </g>
             {context.renderChildren(node)}
@@ -359,7 +359,7 @@ export class GatewayNodeView extends ShapeView {
             <polygon class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
                   class-mouseover={node.hoverFeedback} class-selected={node.selected}
                   points={points} />
-            <g class-icon={true}>
+            <g class-symbol={true}>
                 <path transform={'scale(' + scaleFactor + '),translate(' + translateX + ',' + translateY + ')'} d={icon} />
             </g>
 
@@ -384,16 +384,41 @@ export class DataObjectNodeView extends ShapeView {
         if (!this.isVisible(node, context)) {
             return undefined;
         }
-
+        const scaleFactor = 1.5;
+        const translateX = 4.0;
+        const translateY = 8.0;
         let icon = '';
         if (node.args.bpmnSymbol) {
             icon = '' + node.args.bpmnSymbol;
         }
+        // compute size
+        const width = Math.max(node.size.width, 0);
+        const height = Math.max(node.size.height, 0);
+        const bevelSize = 10; // Größe der Abschrägung
+        // Element path
+        const pathData = `
+            M 0,0 
+            L ${width - bevelSize},0
+            L ${width},${bevelSize}
+            L ${width},${height}
+            L 0,${height}
+            Z`;
+
         return <g>
-            <rect class-sprotty-node={node instanceof GNode} class-sprotty-port={node instanceof GPort}
-                class-mouseover={node.hoverFeedback} class-selected={node.selected}
-                x="0" y="0" width={Math.max(node.size.width, 0)} height={Math.max(node.size.height, 0)}></rect>
-            <polyline points={icon} />
+            <rect class-sprotty-node={node instanceof GNode}
+                class-sprotty-port={node instanceof GPort}
+                class-mouseover={node.hoverFeedback}
+                class-selected={node.selected}
+                x="0"
+                y="0"
+                width={Math.max(node.size.width, 0)}
+                height={Math.max(node.size.height, 0)}></rect>
+            <g class-sprotty-icon={'icon'} ><path stroke="currentColor" stroke-width="1.5" fill="none"
+                d={pathData} />
+            <g class-symbol={true}>
+                <path transform={'scale(' + scaleFactor + '),translate(' + translateX + ',' + translateY + ')'} d={icon} />
+            </g>
+            </g>
             {context.renderChildren(node)}
         </g>;
     }

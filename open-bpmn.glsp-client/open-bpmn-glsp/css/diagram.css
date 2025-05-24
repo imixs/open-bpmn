@@ -28,12 +28,12 @@
     stroke-width: 0.5;
 }
 
-.icon path {
+.symbol path {
     stroke-width: 0;
     fill: #f0f3f8;
 }
 
-.icon .icon-background {
+.symbol .symbol-background {
     fill: transparent;
 }
 
@@ -78,19 +78,25 @@
 }
 
 .dataObject>.sprotty-node {
-    opacity: 80%;
-    stroke: var(--theia-focusBorder);
-    outline-color: var(--theia-editor-foreground);
-    outline-style: solid;
-    outline-width: 2px;
-    fill: #82848a;
-}
-
-.dataStoreReference>.sprotty-node {
-    opacity: 80%;
     fill: transparent;
 }
+.dataObject>.sprotty-icon>path {
+    stroke-width: 1.5px;
+    fill: var(--theia-titleBar-activeBackground);
+}
+.dataObject>.sprotty-icon {
+    stroke-width: 2;
+}
 
+.dataObject .symbol path {
+    stroke-width: 0;
+    fill: var(--theia-foreground);
+}
+
+
+.dataStoreReference>.sprotty-node {
+    fill: transparent;
+}
 .dataStoreReference>.sprotty-icon {
     stroke-width: 2;
 }
@@ -139,7 +145,7 @@
     text-anchor: start;
 }
 
-.task .icon path {
+.task .symbol path {
     stroke-width: 0;
     fill: #f5f9ff;
 }
@@ -257,7 +263,7 @@
     stroke: #d48729;
 }
 
-.intermediateCatchEvent.bpmnextension-imixs .icon path {
+.intermediateCatchEvent.bpmnextension-imixs .symbol path {
     stroke-width: 0;
     fill: #f0f3f8;
 }
