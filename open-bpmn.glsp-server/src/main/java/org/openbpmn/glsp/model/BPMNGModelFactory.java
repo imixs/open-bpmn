@@ -175,9 +175,7 @@ public class BPMNGModelFactory implements GModelFactory {
             logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms - revision="
                     + modelState.getRoot().getRevision());
         } else {
-            logger.warn("Failed to create model");
-            GGraph newGModel = (GGraph) createNewEmptyRoot("process_0");
-            modelState.updateRoot(newGModel);
+            logger.debug("Model not yet available!");
         }
     }
 
