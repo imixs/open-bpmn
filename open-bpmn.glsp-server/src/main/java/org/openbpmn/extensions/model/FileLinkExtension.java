@@ -66,6 +66,9 @@ public class FileLinkExtension implements BPMNModelExtension {
 
     @Override
     public void onLoad(BPMNModel model, Path path) {
+        if (model == null || path == null) {
+            return;
+        }
         // Resolve the parent path
         Path parent = path.getParent();
         long l = System.currentTimeMillis();

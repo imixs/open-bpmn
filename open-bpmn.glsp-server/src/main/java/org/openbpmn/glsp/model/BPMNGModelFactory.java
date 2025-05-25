@@ -141,7 +141,7 @@ public class BPMNGModelFactory implements GModelFactory {
             logger.warn("no BPMNExtension found! Check DiagramModule->configureBPMNExtensions");
         }
 
-        if (!modelState.isInitialized()) {
+        if (!modelState.isInitialized() && modelState.getBpmnModel() != null) {
 
             int revision = 0;
             if (modelState.getRoot() != null) {
@@ -175,7 +175,9 @@ public class BPMNGModelFactory implements GModelFactory {
             logger.debug("===> createGModel took " + (System.currentTimeMillis() - l) + "ms - revision="
                     + modelState.getRoot().getRevision());
         } else {
-            logger.debug("===> createGModel skipped!");
+            logger.warn("Failed to create model");
+            GGraph newGModel = (GGraph) createNewEmptyRoot("process_0");
+            modelState.updateRoot(newGModel);
         }
     }
 
@@ -209,6 +211,9 @@ public class BPMNGModelFactory implements GModelFactory {
      */
     public GGraph buildGGraph(final BPMNModel model) {
 
+        if (model == null) {
+            return null;
+        }
         // create the RootBuilder
         GGraphBuilder rootBuilder = new GGraphBuilder() //
                 .id(modelState.getRootID());

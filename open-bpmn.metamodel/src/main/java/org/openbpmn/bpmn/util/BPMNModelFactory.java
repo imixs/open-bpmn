@@ -13,6 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidIDException;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidModelException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -105,9 +106,9 @@ public class BPMNModelFactory {
         try {
             return read(new FileInputStream(modelFile));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new BPMNInvalidModelException(BPMNModelException.INVALID_MODEL,
+                    "Failed to load Model '" + modelFile.toString() + "' : " + e.getMessage());
         }
-        return null;
     }
 
     /**

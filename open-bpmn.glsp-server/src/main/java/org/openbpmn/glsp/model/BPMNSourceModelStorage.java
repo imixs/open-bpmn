@@ -116,7 +116,6 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                 while (!model.getNotifications().isEmpty()) {
                     MessageAction serverMessage = BPMNActionUtil
                             .convertModelNotification(model.getNotifications().remove(0));
-                    // actionDispatcher.dispatchAfterNextUpdate(serverMessage);
                     actionDispatcher.dispatch(serverMessage);
                 }
 
