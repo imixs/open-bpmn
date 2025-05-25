@@ -78,17 +78,16 @@ public class FileLinkExtension implements BPMNModelExtension {
         for (int i = 0; i < elements.getLength(); i++) {
             Element element = (Element) elements.item(i);
             if (element.hasAttribute("open-bpmn:file-link")) {
+
                 String fileLinkRelative = element.getAttribute("open-bpmn:file-link");
                 String fileLink = fileLinkRelative.substring(6);
-                fileLink = parent + fileLink;
-                Path pathLinkFileContent = Paths.get(fileLink);
                 try {
-                    // read content...
-                    logger.fine(element.getNodeName() + " has attribute open-bpmn:file-link: "
-                            + fileLink);
+                    String fileData = readFileContent(element, path);
+                    // fileLink = parent + fileLink;
+                    // Path pathLinkFileContent = Paths.get(fileLink);
 
-                    byte[] bytes = Files.readAllBytes(pathLinkFileContent);
-                    String fileData = new String(bytes, StandardCharsets.UTF_8);
+                    // byte[] bytes = Files.readAllBytes(pathLinkFileContent);
+                    // String fileData = new String(bytes, StandardCharsets.UTF_8);
                     // Now we compare the content with the content of the CDATA Tag. If not equal we
                     // update the file!! Because we assume the .bpmn file is always right.
                     String bpmnContent = getElementContent(element);
@@ -123,6 +122,37 @@ public class FileLinkExtension implements BPMNModelExtension {
             }
         }
         logger.fine("...resolveFileLinksOnLoad took " + (System.currentTimeMillis() - l) + "ms");
+    }
+
+    /**
+     * This helper method reads the content of an external file link stored in the
+     * oepn-bpmn:file-link attribute!
+     * 
+     * @param element
+     * @param path
+     * @return file content or null if no external file content exits.
+     * @throws IOException - in case file was not available
+     */
+    public static String readFileContent(Element element, Path path) throws IOException {
+        Path parent = path.getParent();
+        if (element.hasAttribute("open-bpmn:file-link")) {
+            String fileLinkRelative = element.getAttribute("open-bpmn:file-link");
+            String fileLink = fileLinkRelative.substring(6);
+
+            fileLink = parent + fileLink;
+
+            Path pathLinkFileContent = Paths.get(fileLink);
+
+            // read content...
+            logger.fine(element.getNodeName() + " has attribute open-bpmn:file-link: "
+                    + fileLink);
+
+            byte[] bytes = Files.readAllBytes(pathLinkFileContent);
+
+            return new String(bytes, StandardCharsets.UTF_8);
+        }
+        return null;
+
     }
 
     /**
