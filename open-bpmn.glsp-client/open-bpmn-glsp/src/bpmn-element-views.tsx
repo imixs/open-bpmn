@@ -95,7 +95,7 @@ export class BPMNGridView implements IView {
 }
 
 /*
- * Deprecated: The IconView is no longer used but needed for di.config.  
+ * Deprecated: The IconView is no longer used but needed for di.config.
  */
 @injectable()
 export class IconView extends ShapeView {
@@ -475,7 +475,6 @@ export class MessageNodeView extends ShapeView {
         </g>;
     }
 }
-
 
 /*
  * Render a BPMN TextAnnotation

@@ -58,7 +58,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
        */
       public addWayPointData(origin: WayPointData): void {
         this.originWayPointData?.push(origin);
-        this.debug('addWayPointData - kind=' + origin.kind 
+        this.debug('addWayPointData - kind=' + origin.kind
             + ' dockingPoint=' +origin.elementPoint.x + ','+origin.elementPoint.y
             + ' id=' + origin.edgeId );
       }
@@ -106,7 +106,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         } else {
             // console.log(' new-rout.length='+completeRoute.length + '  origin-route.length='+ currentWayPointData.originRoute.length);
             if (currentWayPointData.originRoute.length===2 ) {
-                // update the original route 
+                // update the original route
                 currentWayPointData.originRoute = [...completeRoute];
                 return super.route(edge);
             } else {
@@ -135,12 +135,12 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
                 completeRoute[startIndex] = {
                     ...completeRoute[startIndex],
                     x: completeRoute[startIndex].x + horizontalOffset,
-                    y: completeRoute[startIndex].y + verticalOffset,
+                    y: completeRoute[startIndex].y + verticalOffset
                 };
                 completeRoute[routeIndex] = {
                     ...completeRoute[routeIndex],
                     x: isHorizontalSegment ? completeRoute[routeIndex].x : completeRoute[routeIndex].x + horizontalOffset,
-                    y: isHorizontalSegment ? completeRoute[routeIndex].y + verticalOffset : completeRoute[routeIndex].y,
+                    y: isHorizontalSegment ? completeRoute[routeIndex].y + verticalOffset : completeRoute[routeIndex].y
                 };
 
                 // Collision-Check
