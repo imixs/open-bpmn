@@ -58,7 +58,7 @@ The [open-bpmn.glsp-client](./open-bpmn.glsp-client/README.md) is the GLSP Clien
 # Tutorials
 
 Open BPMN is based on [Eclipse GLSP](https://www.eclipse.org/glsp/) and adapts a lot concepts to provide you a flexible and customizable modelling platform.
-You can find many information on the  [Open-BPMN Web site](https://www.open-bpmn.org) including tutorials regarding the GLSP framework and how to customize and adapt Open-BPMN.
+You can find many information on the [Open-BPMN Web site](https://www.open-bpmn.org) including tutorials regarding the GLSP framework and how to customize and adapt Open-BPMN.
 
 - [Build your Own BPMN Extension](https://www.open-bpmn.org/glsp-server/BPMN_EXTENSIONS.html)
 - [The BPMN Properties Panel](https://www.open-bpmn.org/glsp-client/BPMN_PROPERTIES.html)
@@ -67,17 +67,21 @@ You can find many information on the  [Open-BPMN Web site](https://www.open-bpmn
 
 # Build and Run
 
+The project provides a shell script to build and start the frontend and backend components.
+
 To build the complete project run
 
-    $ ./build.sh
+    $ ./devi -build-all
 
-This will build the server module with maven and the client modules with yarn. The script finally automatically starts the application.
+This will build the server module with maven and the client modules with yarn.
+
+To start the frontend and backend component run
+
+    $ ./devi -start-all
 
 The Application can be started from a Web Browser
 
     http://localhost:3000/
-
-**Note:** When you have installed Open-BPMN as an Extension in your VS-Code platform, you need to disable the extension before you start development!
 
 ## Locally build for Development
 
@@ -85,38 +89,37 @@ During development you can run the frontend and backend in separate tasks. This 
 
 To build & start the GLSP Server only, run:
 
-    $ ./build.sh -b
+    $ ./devi -build-server
 
 To build & start the GLSP Client only, run:
 
-    $ ./build.sh -f
+    $ ./devi -build-frontend
 
 To start the GLSP Client without building, run:
 
-    $ ./build.sh -s
+    $ ./devi -start-frontend
+
+This command expect that you have started the server already.
 
 For a full clean & reinstall of the GLSP Client (after upgrades), run:
 
-    $ ./build.sh -c -i
+    $ ./devi -clean
 
 You will find more details in the [Client Section](./open-bpmn.glsp-client/README.md) and the [Server Section](./open-bpmn.glsp-server/README.md).
 
 ### NodeJS
 
-For development the JavaScript tools [Node.js](https://nodejs.org/en/about) and [yarn](https://yarnpkg.com/) need to be installed in the correct version. 
+For development the JavaScript tools [Node.js](https://nodejs.org/en/about) and [yarn](https://yarnpkg.com/) need to be installed in the correct version.
 Using the Node Version Manager (NVM) you can easily manage multiple versions of Node.js on a single machine. It’s an essential tool for development with Node.js as it allows you to switch between different versions of Node.js without having to go through the hassle of installing or uninstalling Node.js manually each time.
 To use nvm in Debian 12 run:
 
     $ sudo apt install build-essential libssl-dev
-    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash 
+    $ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
 
-Now you can install a specific version of Node.js using the nvm install command, followed by the version number. For example, to install Node.js 18, you would type:
+Now you can install a specific version of Node.js using the nvm install command, followed by the version number. For example, to install Node.js 22, you would type:
 
-    $ nvm install 18 
+    $ nvm install 22
 
 You can list all available version with:
 
     $ nvm ls-remote
-
-In the current code base we are using 18.17.1 for development. Before version 1.2.x we used 14.21.3. 
-

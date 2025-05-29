@@ -19,15 +19,26 @@ import {
     GLSPSocketServerContributionOptions
 } from '@eclipse-glsp/theia-integration/lib/node';
 import { injectable } from '@theia/core/shared/inversify';
+import { readdirSync } from 'fs';
 import { join, resolve } from 'path';
 import { BPMNLanguage } from '../common/bpmn-language';
 
 export const DEFAULT_PORT = 0;
 export const PORT_ARG_KEY = 'GLSP_PORT';
 export const LOG_DIR = join(__dirname, '..', '..', 'logs');
-const JAR_FILE = resolve(
-    join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target', 'open-bpmn.server-1.2.6-SNAPSHOT-glsp.jar')
-);
+const SERVER_DIR = resolve(join(__dirname, '..', '..', '..', '..', 'open-bpmn.glsp-server', 'target'));
+
+// find latest .jar version
+function findJarFile(): string {
+    const files = readdirSync(SERVER_DIR);
+    const jarFile = files.find(file => file.endsWith('-glsp.jar') || file.endsWith('.jar'));
+    if (!jarFile) {
+        throw new Error(`No JAR file found in ${SERVER_DIR}`);
+    }
+    return join(SERVER_DIR, jarFile);
+}
+
+const JAR_FILE = findJarFile();
 
 @injectable()
 export class BPMNGLSPSocketServerContribution extends GLSPSocketServerContribution {
@@ -38,6 +49,7 @@ export class BPMNGLSPSocketServerContribution extends GLSPSocketServerContributi
         console.log('├── PORT_ARG_KEY = '+ PORT_ARG_KEY);
         const _port=getPort(PORT_ARG_KEY, DEFAULT_PORT);
         console.log('├── PORT = '+ _port);
+        console.log('├── JAR_FILE = '+ JAR_FILE); // Debug output for the found JAR file
         return {
             executable: JAR_FILE,
             additionalArgs: ['--consoleLog', 'false', '--fileLog', 'true', '--logDir', LOG_DIR],

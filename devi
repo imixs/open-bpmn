@@ -23,14 +23,6 @@ strip_dash() {
 # now verify params...
 
 
-
-if [[ "$(strip_dash $1)" == "start" ]]; then
-    echo " starting frontend only..."
-    cd open-bpmn.glsp-client/
-    yarn start:external --root-dir=./open-bpmn.glsp-client/workspace
-    cd ..
-fi
-
 if [[ "$(strip_dash $1)" == "start-all" ]]; then
     echo " starting frontend and server..."
     cd open-bpmn.glsp-client/
@@ -38,19 +30,37 @@ if [[ "$(strip_dash $1)" == "start-all" ]]; then
     cd ..
 fi
 
-if [[ "$(strip_dash $1)" == "install" ]]; then
+if [[ "$(strip_dash $1)" == "start-frontend" ]]; then
+    echo " starting frontend only..."
+    cd open-bpmn.glsp-client/
+    yarn start:external --root-dir=./open-bpmn.glsp-client/workspace
+    cd ..
+fi
+
+
+
+
+if [[ "$(strip_dash $1)" == "build-all" ]]; then
+    echo " starting maven build..."
+    mvn clean install -DskipTests
+    echo " install frontend..."
+    cd open-bpmn.glsp-client/
+    yarn install
+    cd ..        
+fi
+
+if [[ "$(strip_dash $1)" == "build-server" ]]; then
+    echo " starting maven build..."
+    mvn clean install
+fi
+
+if [[ "$(strip_dash $1)" == "build-frontend" ]]; then
     echo " install frontend..."
     cd open-bpmn.glsp-client/
     yarn install
     cd ..
 fi
 
-if [[ "$(strip_dash $1)" == "frontend" ]]; then
-    cd open-bpmn.glsp-client/
-    yarn 
-    yarn start:external
-    cd ..
-fi
 
 
 if [[ "$(strip_dash $1)" == "hot" ]]; then
@@ -58,11 +68,6 @@ if [[ "$(strip_dash $1)" == "hot" ]]; then
     cd open-bpmn.glsp-client/
     yarn watch
     cd ..
-fi
-
-if [[ "$(strip_dash $1)" == "build" ]]; then
-    echo " starting maven build..."
-    mvn clean install
 fi
 
 
@@ -99,16 +104,16 @@ if [[ $# -eq 0 ]]; then
 
     echo " Run with ./dev.sh -XXX"
     echo " "
-    echo "   -start         : start the frontend only without a server"
-    echo "   -start-all     : start the frontend & server"
-    echo "   -frontend      : rebuild and start frontend components "
-    echo "   -install       : install the frontend components "
-    echo "   -hot           : start hot deployment mode for frontend components "
-    echo "   -build         : run a maven build "
-    echo "   -clean         : clean up build "
-    echo "   -docker-build  : build docker image onle"
-    echo "   -docker-run    : run the docker container "
-    echo "   -docker-push   : build and push the docker image "
+    echo "   -build-all      : build the backend and frontend component"
+    echo "   -build-server   : run a maven java build "
+    echo "   -build-frontend : install the frontend components "
+    echo "   -start-all      : start the frontend & server"
+    echo "   -start-frontend : start the frontend only without a server"
+    echo "   -hot            : start hot deployment mode for frontend components "
+    echo "   -clean          : clean up build "
+    echo "   -docker-build   : build docker image only"
+    echo "   -docker-run     : run the docker container "
+    echo "   -docker-push    : build and push the docker image "
     echo "_______________________________________________________________________"
     echo " "
 
