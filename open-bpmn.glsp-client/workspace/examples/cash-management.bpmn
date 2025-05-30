@@ -196,7 +196,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_4" sourceRef="StartEvent_1" targetRef="Task_1">
       <bpmn2:documentation id="documentation_IWFF7g"/>
     </bpmn2:sequenceFlow>
-    <bpmn2:dataObject id="DataObject_1" name="Zahlungsavis">
+    <bpmn2:dataObject id="DataObject_1" imixs:datatype="form-data" name="Zahlungsavis">
       <bpmn2:documentation id="Documentation_17"><![CDATA[<?xml version="1.0"?>
 <imixs-form>
   <imixs-form-section columns="2" >
