@@ -45,7 +45,7 @@ if [[ "$(strip_dash $1)" == "build-all" ]]; then
     mvn clean install -DskipTests
     echo " install frontend..."
     cd open-bpmn.glsp-client/
-    yarn install
+    yarn install --ignore-engines
     cd ..        
 fi
 
@@ -57,7 +57,7 @@ fi
 if [[ "$(strip_dash $1)" == "build-frontend" ]]; then
     echo " install frontend..."
     cd open-bpmn.glsp-client/
-    yarn install
+    yarn install --ignore-engines
     cd ..
 fi
 
@@ -94,8 +94,8 @@ fi
 if [[ "$(strip_dash $1)" == "clean" ]]; then
     echo " cleanup build..."
     # clean up gitignore files
-    #git clean -xdf
-    mvn clean
+    git clean -xdf
+    #mvn clean
     rm open-bpmn.glsp-client/yarn.lock
 fi
 

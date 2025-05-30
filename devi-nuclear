@@ -22,8 +22,8 @@ find . -name "tsconfig.tsbuildinfo" -delete
 yarn cache clean --all
 
 # Installiere mit strenger Überprüfung
-yarn install --check-files --frozen-lockfile
+yarn install --ignore-engines --check-files --frozen-lockfile
 
 
 # Für Theia/GLSP-Projekte oft nötig
-yarn rebuild --force
+yarn rebuild --ignore-engines --force
