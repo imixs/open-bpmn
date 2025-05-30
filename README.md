@@ -119,6 +119,7 @@ To use nvm in Debian 12 run:
 Now you can install a specific version of Node.js using the nvm install command, followed by the version number. For example, to install Node.js 22, you would type:
 
     $ nvm install 22
+    $ nvm use 22
 
 You can list all available version with:
 

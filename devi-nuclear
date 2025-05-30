@@ -1,0 +1,29 @@
+#!/bin/bash
+
+############################################################
+# The Imixs Developer Script
+# start, build, deploy
+# 
+############################################################
+
+
+echo " install frontend..."
+cd open-bpmn.glsp-client/
+
+# 1. Lösche ALLE generierten Dateien und Abhängigkeiten
+yarn clean && \
+rm -rf .yarn/cache && \
+find . -name "node_modules" -type d -exec rm -rf {} + && \
+find . -name "dist" -type d -exec rm -rf {} + && \
+find . -name "lib" -type d -exec rm -rf {} + && \
+find . -name "tsconfig.tsbuildinfo" -delete
+
+# 2. Cache komplett leeren
+yarn cache clean --all
+
+# Installiere mit strenger Überprüfung
+yarn install --check-files --frozen-lockfile
+
+
+# Für Theia/GLSP-Projekte oft nötig
+yarn rebuild --force
