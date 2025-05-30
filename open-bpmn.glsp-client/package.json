@@ -40,7 +40,8 @@
     "watch": "lerna run --parallel watch"
   },
   "resolutions": {
-    "string-width": "4.2.3"
+    "string-width": "4.2.3",
+    "inversify": "6.1.3"
   },
   "devDependencies": {
     "@eclipse-glsp/dev": "2.3.0",
