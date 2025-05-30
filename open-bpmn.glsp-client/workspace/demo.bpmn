@@ -193,8 +193,8 @@
     <bpmn2:sequenceFlow id="sequenceFlow_QEXEfw" sourceRef="task_N4EcsQ" targetRef="event_RYBV0g">
       <bpmn2:documentation id="documentation_Atk6vw"/>
     </bpmn2:sequenceFlow>
-    <bpmn2:dataObject id="dataObject_9Wv5Yw" name="Order Detials">
-      <bpmn2:documentation id="documentation_Ox32SA"/>
+    <bpmn2:dataObject id="dataObject_9Wv5Yw" imixs:datatype="form-data" name="Order Detials">
+      <bpmn2:documentation id="documentation_Ox32SA"><![CDATA[<imixs-form>]]></bpmn2:documentation>
     </bpmn2:dataObject>
     <bpmn2:association id="association_q2X00Q" sourceRef="dataObject_9Wv5Yw" targetRef="task_BwJuOA">
       <bpmn2:documentation id="documentation_uPQuSQ"/>

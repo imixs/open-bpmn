@@ -1,4 +1,0 @@
-# ignore dev model files
-src-gen/
-gen-webpack.config.js
-gen-webpack.node.config.js

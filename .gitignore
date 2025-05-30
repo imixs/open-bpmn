@@ -27,4 +27,6 @@ lib
 *.log
 tsconfig.tsbuildinfo
 gen-webpack.config.js
+gen-webpack.node.config.js
+open-bpmn.glsp-client/open-bpmn-app/src-gen/
 
