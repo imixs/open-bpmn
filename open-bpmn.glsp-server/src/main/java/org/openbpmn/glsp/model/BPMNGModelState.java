@@ -69,10 +69,18 @@ public class BPMNGModelState extends DefaultGModelState {
         return bpmnModel;
     }
 
+    /**
+     * This method set the BPMNModel.
+     * The method generates a new root ID if no root ID yet exits
+     * 
+     * @param bpmnModel
+     */
     public void setBpmnModel(final BPMNModel bpmnModel) {
         this.bpmnModel = bpmnModel;
-        // create a new unique id
-        rootID = "root_" + BPMNModel.generateShortID();
+        if (rootID == null || rootID.isEmpty() || "undefined_root_id".equals(rootID)) {
+            // create a new unique id
+            rootID = "root_" + BPMNModel.generateShortID();
+        }
         this.setRoot(null);
     }
 
@@ -244,6 +252,7 @@ public class BPMNGModelState extends DefaultGModelState {
      * @param elementID
      */
     public void refreshSelection(String elementID) {
+        logger.debug("Refresh selection: " + elementID + " root id:" + getRoot().getId());
         refreshGModelState();
         GModelElement gModelElement = getIndex().get(elementID).orElse(null);
         if (gModelElement == null) {
