@@ -246,9 +246,8 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
 
                     } else {
                         // signal did not yet exist in definition list - so we create a new one
-                        int i = modelState.getBpmnModel().getSignals().size() + 1;
-                        String newSignalID = "signal_" + i;
-                        String newSignalName = "Signal " + i;
+                        String newSignalID = generateUniqueSignalIdByMaxNumber(); // find an unique id...
+                        String newSignalName = "Signal " + newSignalID.substring(7);
                         signalIdList.add(newSignalID);
                         try {
                             modelState.getBpmnModel().addSignal(newSignalID, newSignalName);
@@ -320,6 +319,28 @@ public class DefaultBPMNDefinitionsExtension extends AbstractBPMNElementExtensio
                 }
             }
         }
+    }
+
+    /**
+     * Helper Method to find the next free signal_n number to generate a unique id
+     * 
+     * @return
+     */
+    private String generateUniqueSignalIdByMaxNumber() {
+        int maxNumber = modelState.getBpmnModel().getSignals().stream()
+                .map(signal -> signal.getId())
+                .filter(id -> id.startsWith("signal_"))
+                .mapToInt(id -> {
+                    try {
+                        return Integer.parseInt(id.substring(7));
+                    } catch (NumberFormatException e) {
+                        return 0; // ignore IDs that do not match the pattern
+                    }
+                })
+                .max()
+                .orElse(0);
+
+        return "signal_" + (maxNumber + 1);
     }
 
 }
