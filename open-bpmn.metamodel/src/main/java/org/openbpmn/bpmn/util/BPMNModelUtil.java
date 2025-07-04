@@ -16,8 +16,11 @@
 package org.openbpmn.bpmn.util;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.elements.DataObject;
+import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
+import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
@@ -42,11 +45,24 @@ public class BPMNModelUtil {
     public static void resetLabelBounds(final BPMNElementNode flowElement) throws BPMNMissingElementException {
         double x = 0;
         double y = 0;
+
         if (BPMNModel.isGateway(flowElement)) {
-            // gateway dimensions...
             x = flowElement.getBounds().getPosition().getX() + (Gateway.DEFAULT_WIDTH / 2)
                     - (BPMNLabel.DEFAULT_WIDTH / 2);
             y = flowElement.getBounds().getPosition().getY() + Gateway.DEFAULT_HEIGHT + Gateway.LABEL_OFFSET;
+        } else if (BPMNModel.isDataObject(flowElement)) {
+            x = flowElement.getBounds().getPosition().getX() + (DataObject.DEFAULT_WIDTH / 2)
+                    - (BPMNLabel.DEFAULT_WIDTH / 2);
+            y = flowElement.getBounds().getPosition().getY() + DataObject.DEFAULT_HEIGHT + DataObject.LABEL_OFFSET;
+        } else if (BPMNModel.isDataStore(flowElement)) {
+            x = flowElement.getBounds().getPosition().getX() + (DataStoreReference.DEFAULT_WIDTH / 2)
+                    - (BPMNLabel.DEFAULT_WIDTH / 2);
+            y = flowElement.getBounds().getPosition().getY() + DataStoreReference.DEFAULT_HEIGHT
+                    + DataStoreReference.LABEL_OFFSET;
+        } else if (BPMNModel.isMessage(flowElement)) {
+            x = flowElement.getBounds().getPosition().getX() + (Message.DEFAULT_WIDTH / 2)
+                    - (BPMNLabel.DEFAULT_WIDTH / 2);
+            y = flowElement.getBounds().getPosition().getY() + Message.DEFAULT_HEIGHT + Message.LABEL_OFFSET;
         } else {
             // default (events)
             x = flowElement.getBounds().getPosition().getX() + (Event.DEFAULT_WIDTH / 2)

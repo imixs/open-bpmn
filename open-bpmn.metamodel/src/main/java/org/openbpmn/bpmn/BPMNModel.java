@@ -1714,6 +1714,14 @@ public class BPMNModel {
         return isDataObject(element.getElementNode());
     }
 
+    public static boolean isMessage(Node node) {
+        return (BPMNTypes.MESSAGE.equals(node.getLocalName()));
+    }
+
+    public static boolean isMessage(BPMNElementNode element) {
+        return isMessage(element.getElementNode());
+    }
+
     /**
      * Returns true if the node is a dataStore node.
      * 
@@ -1721,7 +1729,7 @@ public class BPMNModel {
      * @return
      */
     public static boolean isDataStore(Node node) {
-        return (BPMNTypes.DATASTORE.equals(node.getLocalName()));
+        return (BPMNTypes.DATASTOREREFERENCE.equals(node.getLocalName()));
     }
 
     public static boolean isDataStore(BPMNElementNode element) {
