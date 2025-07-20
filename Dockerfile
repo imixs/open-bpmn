@@ -10,7 +10,8 @@ COPY open-bpmn.glsp-client/ ./open-bpmn.glsp-client/
 
 # Build GLSP Client part
 WORKDIR /home/node/app/open-bpmn.glsp-client
-RUN yarn install
+# RUN yarn install
+RUN yarn install --ignore-engines
 
 # Copy GLSP Server part
 WORKDIR /home/node/app
