@@ -84,9 +84,7 @@ if [[ "$(strip_dash $1)" == "docker-run" ]]; then
 fi
 
 if [[ "$(strip_dash $1)" == "docker-push" ]]; then
-    echo " building docker image..."
-    mvn clean install -DskipTests
-    docker build . -t imixs/open-bpmn
+    echo " push docker image..."
     docker push imixs/open-bpmn
 fi
 
@@ -113,7 +111,7 @@ if [[ $# -eq 0 ]]; then
     echo "   -clean          : clean up build "
     echo "   -docker-build   : build docker image only"
     echo "   -docker-run     : run the docker container "
-    echo "   -docker-push    : build and push the docker image "
+    echo "   -docker-push    : push the docker image "
     echo "_______________________________________________________________________"
     echo " "
 
