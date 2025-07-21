@@ -28,7 +28,7 @@
 .bpmn-property-panel {
     position: absolute;
     bottom: 0px;
-    z-index: 20;
+    z-index: 0;
     width: 100%;
     background: var(--theia-editor-background);
     opacity: 0.98 !important;
