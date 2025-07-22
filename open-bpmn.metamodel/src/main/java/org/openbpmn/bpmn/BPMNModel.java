@@ -174,7 +174,8 @@ public class BPMNModel {
                 continue;
             }
 
-            String prefix = node.getLocalName(); // Gets the part after 'xmlns:'
+            // String prefix = node.getLocalName(); // Gets the part after 'xmlns:'
+            String prefix = nodeName.substring(6);
 
             // Map URIs to their corresponding BPMN namespace types
             mapUriToNamespace(prefix, nodeValue);

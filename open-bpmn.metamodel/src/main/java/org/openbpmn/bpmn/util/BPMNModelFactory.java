@@ -70,7 +70,8 @@ public class BPMNModelFactory {
             Element definitions = doc.createElementNS("http://www.omg.org/spec/BPMN/20100524/MODEL",
                     "bpmn2:definitions");
 
-            // set BPMN default namespaces
+            // Set BPMN default namespaces - use consistent prefixes with BPMNModel defaults
+            definitions.setAttribute("xmlns:bpmn2", "http://www.omg.org/spec/BPMN/20100524/MODEL");
             definitions.setAttribute("xmlns:bpmndi", "http://www.omg.org/spec/BPMN/20100524/DI");
             definitions.setAttribute("xmlns:di", "http://www.omg.org/spec/DD/20100524/DI");
             definitions.setAttribute("xmlns:dc", "http://www.omg.org/spec/DD/20100524/DC");
