@@ -1,0 +1,10 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://xsdTypes.org/"
+           xmlns="http://xsdTypes.org/">
+  <xs:simpleType name="tString">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="tBool">
+    <xs:restriction base="xs:boolean" />
+  </xs:simpleType>
+</xs:schema>
