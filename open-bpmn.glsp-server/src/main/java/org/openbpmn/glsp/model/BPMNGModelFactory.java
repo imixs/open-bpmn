@@ -236,7 +236,7 @@ public class BPMNGModelFactory implements GModelFactory {
                             "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
                     BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
                     // Add a Pool if the process is private
-                    if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(bpmnProcess.getProcessType())) {
+                    if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(bpmnProcess.getProcessType())) {
                         List<GModelElement> childList = computeGModelElements(bpmnProcess, participant, gRootNodeList);
 
                         PoolGNode pool = new PoolGNodeBuilder(participant) //
@@ -297,8 +297,12 @@ public class BPMNGModelFactory implements GModelFactory {
                     // the Associations inside a Pool, we need to add the edge to the
                     // PoolGNode childList
                     Participant _participant = _process.findParticipant();
-                    PoolGNode pool = poolGNodeList.get(_participant.getId());
-                    createAssociationGEdges(_process.getAssociations(), pool.getChildren(), _participant);
+                    if (_participant != null) {
+                        PoolGNode pool = poolGNodeList.get(_participant.getId());
+                        createAssociationGEdges(_process.getAssociations(), pool.getChildren(), _participant);
+                    } else {
+                        logger.warn("Unable to resove participant for process " + _process.getId());
+                    }
                 } else {
                     createAssociationGEdges(_process.getAssociations(), gRootNodeList, null);
                 }

@@ -74,16 +74,20 @@ public class BPMNProcess extends BPMNElement {
         super(model, element);
 
         // set public if not yet specified
-        if (processType == null || processType.isEmpty() || (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(processType)
-                && !BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType))) {
-            BPMNModel.getLogger().warning("bpmn2:process does not define a valid processType - default to 'Public'");
+        if (processType == null || processType.isEmpty() ||
+                (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(processType)
+                        && !BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)
+                        && !BPMNTypes.PROCESS_TYPE_NONE.equals(processType))) {
+            BPMNModel.getLogger().warning(
+                    "bpmn2:process does not define a valid processType (" + processType + ") - default to 'Public'");
             processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
             element.setAttribute("processType", processType);
         }
         setProcessType(processType);
 
-        // set executeable flag onloy for private process
-        if (BPMNTypes.PROCESS_TYPE_PRIVATE.equals(processType)) {
+        // set executeable flag only for non public processes
+        if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)
+                || BPMNTypes.PROCESS_TYPE_NONE.equals(processType)) {
             if ("false".equals(this.elementNode.getAttribute("isExecutable"))) {
                 setExecutable(false);
             } else {
