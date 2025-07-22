@@ -150,8 +150,15 @@ public class BPMNModel {
         // Test for default namespace without prefix
         String defaultNameSpace = definitions.getAttribute("xmlns");
         if (defaultNameSpace != null && !defaultNameSpace.isEmpty()) {
-            if (getUri(BPMNNS.BPMN2).equals(defaultNameSpace)) {
-                setPrefix(BPMNNS.BPMN2, "");
+            // Try to map the default namespace to any BPMN namespace
+            BPMNNS matchedNamespace = findMatchingNamespace(defaultNameSpace);
+            if (matchedNamespace != null) {
+                if (!getUri(matchedNamespace).equals(defaultNameSpace)) {
+                    logger.warning("Non-standard default namespace detected: " + defaultNameSpace + " - mapped to "
+                            + matchedNamespace);
+                }
+                setPrefix(matchedNamespace, "");
+                setUri(matchedNamespace, defaultNameSpace);
             }
         }
 
@@ -176,36 +183,60 @@ public class BPMNModel {
 
     /**
      * Helper method that maps a URI to the correct BPMN namespace based on the URI
-     * value
+     * value. Uses tolerant matching for non-standard but BPMN-like URIs.
      */
     private void mapUriToNamespace(String prefix, String uri) {
-        // BPMN2 Model namespace variants
-        if ("http://www.omg.org/spec/BPMN/20100524/MODEL".equals(uri)) {
-            setPrefix(BPMNNS.BPMN2, prefix);
-            setUri(BPMNNS.BPMN2, uri);
-            return;
+        // Try to find a matching namespace for this URI
+        BPMNNS matchedNamespace = findMatchingNamespace(uri);
+        if (matchedNamespace != null) {
+            // Check if it's a non-standard URI
+            if (!getUri(matchedNamespace).equals(uri)) {
+                logger.warning("Non-standard namespace detected: " + uri + " with prefix: " + prefix + " - mapped to "
+                        + matchedNamespace);
+            }
+            setPrefix(matchedNamespace, prefix);
+            setUri(matchedNamespace, uri);
+        }
+    }
+
+    /**
+     * Finds the matching BPMNNS enum for a given URI.
+     * First tries exact matches, then tolerant matching.
+     * 
+     * @param uri The namespace URI to match
+     * @return The matching BPMNNS enum or null if no match found
+     */
+    private BPMNNS findMatchingNamespace(String uri) {
+        if (uri == null || uri.isEmpty()) {
+            return null;
         }
 
-        // BPMN DI namespace - can be mapped to different prefixes!
-        if ("http://www.omg.org/spec/BPMN/20100524/DI".equals(uri)) {
-            setPrefix(BPMNNS.BPMNDI, prefix);
-            setUri(BPMNNS.BPMNDI, uri);
-            return;
+        // Try exact matches first for all namespaces
+        for (BPMNNS namespace : BPMNNS.values()) {
+            if (getUri(namespace).equals(uri)) {
+                return namespace;
+            }
         }
 
-        // DC namespace
-        if ("http://www.omg.org/spec/DD/20100524/DC".equals(uri)) {
-            setPrefix(BPMNNS.DC, prefix);
-            setUri(BPMNNS.DC, uri);
-            return;
+        // Tolerant matching for BPMN-like URIs
+        if (uri.startsWith("http://www.omg.org/spec/BPMN/")) {
+            if (uri.endsWith("/MODEL")) {
+                return BPMNNS.BPMN2;
+            } else if (uri.endsWith("/DI")) {
+                return BPMNNS.BPMNDI;
+            }
         }
 
-        // DI namespace
-        if ("http://www.omg.org/spec/DD/20100524/DI".equals(uri)) {
-            setPrefix(BPMNNS.DI, prefix);
-            setUri(BPMNNS.DI, uri);
-            return;
+        // Tolerant matching for DD-like URIs
+        if (uri.startsWith("http://www.omg.org/spec/DD/")) {
+            if (uri.endsWith("/DC")) {
+                return BPMNNS.DC;
+            } else if (uri.endsWith("/DI")) {
+                return BPMNNS.DI;
+            }
         }
+
+        return null; // No match found
     }
 
     /*
@@ -229,21 +260,18 @@ public class BPMNModel {
      */
     private void loadBpmnDiagram() {
         // find bpmndi:BPMNDiagram
-        // NodeList diagramList = doc.getElementsByTagName(getPrefix(BPMNNS.BPMNDI) +
-        // "BPMNDiagram");
         NodeList diagramList = findElementsByName(doc.getDocumentElement(), BPMNNS.BPMNDI, "BPMNDiagram");
         if (diagramList != null && diagramList.getLength() > 0) {
             bpmnDiagram = diagramList.item(0);
         } else {
-            logger.warning("Fatal Diagram Error - no BPMNDiagram element found!");
             // no diagram included - so we create an empty one
-            // getLogger().warning("No bpmndi:BPMNDiagram found - created default diagram");
-            // // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
-            // Element bpmnDiagram = createElement(BPMNNS.BPMNDI, "BPMNDiagram");
-            // bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
-            // bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
-            // definitions.appendChild(bpmnDiagram);
-            // setBpmnDiagram(bpmnDiagram);
+            getLogger().warning("No bpmndi:BPMNDiagram found - created default diagram");
+            // <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="Default Process Diagram">
+            Element bpmnDiagram = createElement(BPMNNS.BPMNDI, "BPMNDiagram");
+            bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
+            bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
+            definitions.appendChild(bpmnDiagram);
+            setBpmnDiagram(bpmnDiagram);
         }
     }
 
@@ -254,8 +282,6 @@ public class BPMNModel {
      */
     private void loadBpmnPlane() {
         // find the corresponding BPMNPlane
-        // NodeList planeList = doc.getElementsByTagName(getPrefix(BPMNNS.BPMNDI) +
-        // "BPMNPlane");
         NodeList planeList = findElementsByName(doc.getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
         if (planeList != null && planeList.getLength() > 0) {
             bpmnPlane = (Element) planeList.item(0);
@@ -266,13 +292,9 @@ public class BPMNModel {
             getLogger().warning("No bpmndi:BPMNPlane found - created default plane");
             bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
             bpmnPlane.setAttribute("id", "BPMNPlane_1");
-            // NodeList nodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2)
-            // + "collaboration");
             NodeList nodeList = findElementsByName(definitions, BPMNNS.BPMN2, "collaboration");
             if (nodeList == null || nodeList.getLength() == 0) {
                 // Take the default process as plane ref...
-                // nodeList = definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) +
-                // "process");
                 nodeList = findElementsByName(definitions, BPMNNS.BPMN2, "process");
             }
             if (nodeList != null && nodeList.getLength() > 0) {
