@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
@@ -58,10 +59,15 @@ public class TestCloneFlowElements {
             clonedTask.setName("Copy of Task 1");
 
             // The id from the documentation must be changed!
-            NodeList originDocumentationElements = originTask.getElementNode()
-                    .getElementsByTagName("bpmn2:documentation");
-            NodeList clonedDocumentationElements = clonedTask.getElementNode()
-                    .getElementsByTagName("bpmn2:documentation");
+            // NodeList originDocumentationElements = originTask.getElementNode()
+            // .getElementsByTagName("bpmn2:documentation");
+            NodeList originDocumentationElements = model.findElementsByName(originTask.getElementNode(), BPMNNS.BPMN2,
+                    "documentation");
+
+            // NodeList clonedDocumentationElements = clonedTask.getElementNode()
+            // .getElementsByTagName("bpmn2:documentation");
+            NodeList clonedDocumentationElements = model.findElementsByName(clonedTask.getElementNode(), BPMNNS.BPMN2,
+                    "documentation");
             assertNotNull(clonedDocumentationElements);
             assertEquals(1, clonedDocumentationElements.getLength());
             // compare IDs
@@ -71,10 +77,15 @@ public class TestCloneFlowElements {
 
             // next we expect no outgoing and incoming sequenceFlows...
 
-            NodeList incomingSequenceFlows = clonedTask.getElementNode()
-                    .getElementsByTagName("bpmn2:incoming");
-            NodeList outgoingSequenceFlows = clonedTask.getElementNode()
-                    .getElementsByTagName("bpmn2:outgoing");
+            // NodeList incomingSequenceFlows = clonedTask.getElementNode()
+            // .getElementsByTagName("bpmn2:incoming");
+            NodeList incomingSequenceFlows = model.findElementsByName(clonedTask.getElementNode(), BPMNNS.BPMN2,
+                    "incoming");
+
+            // NodeList outgoingSequenceFlows = clonedTask.getElementNode()
+            // .getElementsByTagName("bpmn2:outgoing");
+            NodeList outgoingSequenceFlows = model.findElementsByName(clonedTask.getElementNode(),
+                    BPMNNS.BPMN2, "outgoing");
 
             assertEquals(0, incomingSequenceFlows.getLength());
             assertEquals(0, outgoingSequenceFlows.getLength());

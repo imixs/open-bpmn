@@ -174,8 +174,11 @@ public class BPMNProcess extends BPMNElement {
     private void autoFixUnassignedTextAnnotations() throws BPMNModelException {
         if (this.isPublicProcess() && this.model.isCollaborationDiagram()
                 && this.model.getCollaborationElement() != null) {
-            NodeList textAnnotationNodeList = this.model.getCollaborationElement()
-                    .getElementsByTagName(this.model.getPrefix(BPMNNS.BPMN2) + BPMNTypes.TEXTANNOTATION);
+            // NodeList textAnnotationNodeList = this.model.getCollaborationElement()
+            // .getElementsByTagName(this.model.getPrefix(BPMNNS.BPMN2) +
+            // BPMNTypes.TEXTANNOTATION);
+            NodeList textAnnotationNodeList = this.model.findElementsByName(this.model.getCollaborationElement(),
+                    BPMNNS.BPMN2, BPMNTypes.TEXTANNOTATION);
             if (textAnnotationNodeList != null && textAnnotationNodeList.getLength() > 0) {
                 for (int i = 0; i < textAnnotationNodeList.getLength(); i++) {
                     Element item = (Element) textAnnotationNodeList.item(i);
