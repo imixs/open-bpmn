@@ -1,0 +1,1414 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns:dmn12="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:trisobpmn="http://www.trisotech.com/2014/triso/bpmn" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:openapi="https://openapis.org/omg/extension/1.0" xmlns:boxedext="https://www.trisotech.com/spec/DMN/20191111/EXT/" xmlns:rss="http://purl.org/rss/2.0/" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:trisofeed="http://trisotech.com/feed" xmlns:drools="http://www.jboss.org/drools" xmlns:feel="https://www.omg.org/spec/DMN/20191111/FEEL/" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:i18n="http://www.omg.org/spec/BPMN/non-normative/extensions/i18n/1.0" xmlns:include1="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643" xmlns:kp="http://knowprocess.com/bpmn" xmlns:ns1="https://www.omg.org/spec/DMN/20191111/MODEL/" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0"                        xmlns="http://www.trisotech.com/definitions/_d4aecb6e-8641-4d7a-af45-dcfae1d639ea" id="_d4aecb6e-8641-4d7a-af45-dcfae1d639ea" targetNamespace="http://www.trisotech.com/definitions/_d4aecb6e-8641-4d7a-af45-dcfae1d639ea" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/" typeLanguage="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" exporter="Workflow Modeler" exporterVersion="8.0.0" name="Vacation Request" xml:lang="en" triso:translationLanguages="" trisobpmn:logoChoice="Default">
+    <semantic:import namespace="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643" location="Vacation Approval.dmn" importType="https://www.omg.org/spec/DMN/20191111/MODEL/"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="true" structureRef="feel:string" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="triso_string" id="_triso-default-bpmnItemDefinition-string_id"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:number" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition Number" id="_24ce0503-1c7a-41eb-bbfd-28f533e0268f"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:date" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition Date" id="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:number" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_e9f96a27-1ff4-4bc0-a846-9c244d08cae7"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:string" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_bb207a19-f088-40e0-8f0a-f151c8002cf5"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:string" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_356dbbe9-8dcf-436a-a5c9-26d618dd4b5a"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:string" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_ae0f56cf-0cb4-43ec-8c77-16d0ba7b9642"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:string" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_6a883e1e-df2f-42e3-bc04-d122469b52a3"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:number" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_f6564795-5df9-4a0d-941e-72b937fcb877"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="feel:string" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_bbda4f78-e54c-434c-929c-81fbf14af93d"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="simon.1.simon.vacation" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition simon.1.simon.vacation" id="_68f999b9-915a-40d9-b3b0-78fd2b0d6b39"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="simon.1.simon.cvacation" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition simon.1.simon.cvacation" id="_55a74c87-4810-4c82-a5c1-83cbfaf0d016"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="simon.1.simon.input_vacation" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition simon.1.simon.input_vacation" id="_9f8358c3-1ac6-47cf-a768-6e90d4b81e7f"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="ApprovalStatus" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition ApprovalStatus" id="_35aa1a98-77be-4b78-a590-ba5bafe10a58"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="Vacation_Approval" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition Vacation_Approval" id="_52182389-d104-457d-b152-d312b38991f3"/>
+    <semantic:itemDefinition triso:readOnly="false" isCollection="false" triso:basicType="false" structureRef="tEmployeeInformation" triso:definitionType="http://www.trisotech.com/2015/triso/modeling/ItemDefinitionType" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" triso:name="Item Definition tEmployeeInformation" id="_8a28ca0b-0650-47a2-a1d1-a1c1b72a0997"/>
+    <semantic:error name="Not Found" errorCode="404" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_bb1e92be-5879-4fbe-8efb-4f0c6ea64187"/>
+    <semantic:message triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_b4e85145-0a59-4799-bd6c-18a5cc2b041a">
+        <semantic:extensionElements>
+            <openapi:parameter name="ToEmail" itemRef="_6a883e1e-df2f-42e3-bc04-d122469b52a3" in="body" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_ae68194f-c21d-4227-82e2-3196c4a9d54e"/>
+            <openapi:parameter name="FromEmail" itemRef="_ae0f56cf-0cb4-43ec-8c77-16d0ba7b9642" in="body" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_d6361b84-796a-48f8-a056-9af3983fe14d"/>
+            <openapi:parameter name="Subject" itemRef="_356dbbe9-8dcf-436a-a5c9-26d618dd4b5a" in="body" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_7ea780be-73b4-4f90-8d24-47aeb544faa0"/>
+            <openapi:parameter name="Body" itemRef="_bb207a19-f088-40e0-8f0a-f151c8002cf5" in="body" style="application/json" required="false" explode="false" useRichTextEditor="true" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_7e40320f-8779-4f5e-a519-06a7c640535d"/>
+        </semantic:extensionElements>
+    </semantic:message>
+    <semantic:message name="vacation" itemRef="_68f999b9-915a-40d9-b3b0-78fd2b0d6b39" openapi:produces="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_322ee005-6121-4712-ba90-909f359b9b5b">
+        <semantic:extensionElements/>
+    </semantic:message>
+    <semantic:message openapi:consumes="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_712b7cfb-332e-4df5-87ac-f5a44560c009">
+        <semantic:extensionElements>
+            <openapi:parameter name="employeeId" itemRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" in="path" style="application/json" required="true" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_cbf17f0a-63bb-44bc-a4a7-ce1ffc1d8d8d"/>
+        </semantic:extensionElements>
+    </semantic:message>
+    <semantic:message openapi:consumes="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_fc36570a-8e3d-4802-8a9a-09263799c850">
+        <semantic:extensionElements>
+            <openapi:parameter name="$filter" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_4e2fd2cf-c77d-465d-95bc-085256a00455"/>
+            <openapi:parameter name="$orderby" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_c464dfd6-aab7-4e6d-b2df-d3f9137b35fc"/>
+            <openapi:parameter name="$top" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_23d00b9b-466b-4fd8-85da-50e4b3c76bc5"/>
+            <openapi:parameter name="$skip" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_375a1990-a1f6-43ed-b482-e01d155e39be"/>
+            <openapi:parameter name="$count" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_623f3ce4-8566-42c8-93dd-32492d0efee1"/>
+            <openapi:parameter name="$select" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_5c3d8f6b-88c8-475b-8222-c50772b0afac"/>
+            <openapi:parameter name="$search" itemRef="_triso-default-bpmnItemDefinition-string_id" in="query" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_7681ec71-0fcd-4368-9689-4ada7d28be95"/>
+        </semantic:extensionElements>
+    </semantic:message>
+    <semantic:message name="vacation" itemRef="_55a74c87-4810-4c82-a5c1-83cbfaf0d016" openapi:produces="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_70e2fb1b-c19f-4c53-810c-46aaba76b4dc">
+        <semantic:extensionElements/>
+    </semantic:message>
+    <semantic:message name="OData-EntityId" itemRef="_triso-default-bpmnItemDefinition-string_id" openapi:produces="application/json" openapi:in="header" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_42a34a80-8aa4-445c-820e-974f9b759a82">
+        <semantic:extensionElements/>
+    </semantic:message>
+    <semantic:message openapi:consumes="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_9f3c81a6-53b8-4809-b771-badf80c3777c">
+        <semantic:extensionElements>
+            <openapi:parameter name="vacation" itemRef="_68f999b9-915a-40d9-b3b0-78fd2b0d6b39" in="body" style="application/json" required="true" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_f409c8e1-749a-400b-81af-df693f653ffa"/>
+            <openapi:parameter name="Prefer" itemRef="_triso-default-bpmnItemDefinition-string_id" in="header" defaultValue="return=minimal" style="application/json" required="true" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_0eff7f88-ea79-42a4-a5b3-c11036e413be"/>
+        </semantic:extensionElements>
+    </semantic:message>
+    <semantic:message openapi:consumes="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_48402d3f-cbaf-4d40-aaa7-c7a4424f26f7">
+        <semantic:extensionElements>
+            <openapi:parameter name="employeeId" itemRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" in="path" style="application/json" required="true" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_429a9bc0-a05a-45c7-8217-8675b8806b69"/>
+            <openapi:parameter name="vacation" itemRef="_9f8358c3-1ac6-47cf-a768-6e90d4b81e7f" in="body" style="application/json" required="false" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_523fbd6a-2708-4b6a-8d75-8196e38773f2"/>
+        </semantic:extensionElements>
+    </semantic:message>
+    <semantic:message openapi:consumes="application/json" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_298108a4-f565-4023-b8a8-20b0d0b4345a">
+        <semantic:extensionElements>
+            <openapi:parameter name="employeeId" itemRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" in="path" style="application/json" required="true" explode="false" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_d3fd24ba-3943-4f3f-bcf6-a407c3cc02d4"/>
+        </semantic:extensionElements>
+    </semantic:message>
+    <semantic:interface name="Email System" openapi:server="des://internal" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_7df3e21f-23aa-455b-9851-de1fa89499c4">
+        <semantic:operation name="Send Email (mock)" openapi:method="POST" triso:operation="true" openapi:path="/Do Nothing" id="_83f1c680-7e06-4a9a-9206-396ed8155a71">
+            <semantic:inMessageRef>_b4e85145-0a59-4799-bd6c-18a5cc2b041a</semantic:inMessageRef>
+            <semantic:outMessageRef>triso:unspecified</semantic:outMessageRef>
+        </semantic:operation>
+    </semantic:interface>
+    <semantic:interface name="HR System" openapi:version="1.0" openapi:server="https://odata.triso.tech/simon/simon" triso:allowProvidedAuth="false" triso:allowUrlOverride="false" id="_54b7cd6d-1e34-450f-8b7a-10567bdda33e">
+        <semantic:extensionElements>
+            <openapi:securityScheme scheme="basic" type="http"/>
+        </semantic:extensionElements>
+        <semantic:operation name="Get vacation" openapi:method="GET" triso:operation="true" openapi:path="/vacation({employeeId})" id="_cedf6a3e-14a4-4a3e-9050-3bcdcaf5e5d4">
+            <semantic:inMessageRef>_712b7cfb-332e-4df5-87ac-f5a44560c009</semantic:inMessageRef>
+            <semantic:outMessageRef>_322ee005-6121-4712-ba90-909f359b9b5b</semantic:outMessageRef>
+        </semantic:operation>
+        <semantic:operation name="Find vacation" openapi:method="GET" triso:operation="true" openapi:path="/vacation" id="_dd434d56-40a4-4d63-8a22-58d8e5a5edc7">
+            <semantic:inMessageRef>_fc36570a-8e3d-4802-8a9a-09263799c850</semantic:inMessageRef>
+            <semantic:outMessageRef>_70e2fb1b-c19f-4c53-810c-46aaba76b4dc</semantic:outMessageRef>
+        </semantic:operation>
+        <semantic:operation name="Create vacation" openapi:method="POST" triso:operation="true" openapi:path="/vacation" id="_7a131a93-ab43-4078-98ba-49f6aa077cdd">
+            <semantic:inMessageRef>_9f3c81a6-53b8-4809-b771-badf80c3777c</semantic:inMessageRef>
+            <semantic:outMessageRef>_42a34a80-8aa4-445c-820e-974f9b759a82</semantic:outMessageRef>
+        </semantic:operation>
+        <semantic:operation name="Update vacation" openapi:method="PATCH" triso:operation="true" openapi:path="/vacation({employeeId})" id="_a0e96e19-a01f-4dde-b613-0b774e8d350b">
+            <semantic:inMessageRef>_48402d3f-cbaf-4d40-aaa7-c7a4424f26f7</semantic:inMessageRef>
+            <semantic:outMessageRef>triso:unspecified</semantic:outMessageRef>
+        </semantic:operation>
+        <semantic:operation name="Delete vacation" openapi:method="DELETE" triso:operation="true" openapi:path="/vacation({employeeId})" id="_04bf649c-423c-4312-b813-cf585ce5a82f">
+            <semantic:inMessageRef>_298108a4-f565-4023-b8a8-20b0d0b4345a</semantic:inMessageRef>
+            <semantic:outMessageRef>triso:unspecified</semantic:outMessageRef>
+        </semantic:operation>
+    </semantic:interface>
+    <semantic:collaboration id="Collaboration_1rz14um">
+        <semantic:participant id="Participant_04dpvds" name="Vacation Request" triso:readOnly="false" processRef="VacationRequestProcess">
+            <semantic:extensionElements>
+                <Assignee xmlns="http://www.boc-group.com">group(owner)</Assignee>
+            </semantic:extensionElements>
+        </semantic:participant>
+    </semantic:collaboration>
+    <semantic:process id="VacationRequestProcess" name="Vacation Request" triso:readOnly="false" triso:collectEnds="true" isExecutable="true" isClosed="false">
+        <semantic:documentation>Vacation Request - BPMN MIWG demo for 2022</semantic:documentation>
+        <semantic:extensionElements>
+            <zeebe:userTaskForm id="userTaskForm_1m306cp">{
+  "schemaVersion": 2,
+  "components": [
+    {
+      "label": "Employee",
+      "type": "textfield",
+      "id": "Field_1txxerz",
+      "key": "Current Vacation Status.name",
+      "disabled": true
+    },
+    {
+      "label": "From",
+      "type": "textfield",
+      "id": "Field_01h0lq7",
+      "key": "From",
+      "disabled": true
+    },
+    {
+      "label": "To",
+      "type": "textfield",
+      "id": "Field_1ynn9n3",
+      "key": "To",
+      "disabled": true
+    },
+    {
+      "label": "Remaining Vacation Days",
+      "type": "number",
+      "id": "Field_0ymyfvx",
+      "key": "Current Vacation Status.days",
+      "disabled": true
+    },
+    {
+      "values": [
+        {
+          "label": "Approved",
+          "value": "Approved"
+        },
+        {
+          "label": "Refused",
+          "value": "Refused"
+        }
+      ],
+      "label": "Vacation Approval",
+      "type": "radio",
+      "id": "Field_1jxmax8",
+      "key": "Vacation Approval",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "Reason",
+      "type": "textfield",
+      "id": "Field_0iy9v6w",
+      "key": "Reason"
+    }
+  ],
+  "type": "default",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "1.2",
+  "id": "Manually_Approve_Vacation"
+}</zeebe:userTaskForm>
+        </semantic:extensionElements>
+        <semantic:ioSpecification>
+            <semantic:dataInput name="Employee Badge Number" triso:readOnly="false" itemSubjectRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" id="_8b9aa28f-5974-4087-9895-0467c25635dc"/>
+            <semantic:dataInput name="From" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" id="_2bed4da9-f468-4fe0-a37c-ae5d4c17e323"/>
+            <semantic:dataInput name="To" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" id="_103fd816-b422-420d-aec9-c28b54f620db"/>
+            <semantic:dataOutput name="Vacation Approval" triso:readOnly="false" itemSubjectRef="_35aa1a98-77be-4b78-a590-ba5bafe10a58" id="_c2d108b2-e6c0-47e6-a3cb-aa5321bcaeaf"/>
+            <semantic:dataOutput name="Reason" triso:readOnly="false" itemSubjectRef="_triso-default-bpmnItemDefinition-string_id" id="_dac8ee76-f637-4fd9-8357-6a87fd11ef41"/>
+            <semantic:inputSet id="_8dfe6186-8dd8-478c-b094-4851e2a5d8d7">
+                <semantic:dataInputRefs>_8b9aa28f-5974-4087-9895-0467c25635dc</semantic:dataInputRefs>
+                <semantic:dataInputRefs>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:dataInputRefs>
+                <semantic:dataInputRefs>_103fd816-b422-420d-aec9-c28b54f620db</semantic:dataInputRefs>
+            </semantic:inputSet>
+            <semantic:outputSet id="_bd2a87b8-c67a-4fb4-aa46-39c677ba9b09">
+                <semantic:dataOutputRefs>_c2d108b2-e6c0-47e6-a3cb-aa5321bcaeaf</semantic:dataOutputRefs>
+                <semantic:dataOutputRefs>_dac8ee76-f637-4fd9-8357-6a87fd11ef41</semantic:dataOutputRefs>
+            </semantic:outputSet>
+        </semantic:ioSpecification>
+        <semantic:startEvent id="_b1625a52-aaf0-4694-86cb-7af891212ac6" name="Vacation Request Received" triso:readOnly="false" kp:formKey="VacationRequest" kp:initiator="initiator">
+            <semantic:extensionElements>
+                <Description xmlns="http://www.boc-group.com">This is a demonstration scenario for automation and shows how vacation request could be handled using business rules.</Description>
+                <Owner xmlns="http://www.boc-group.com">group(Owner)</Owner>
+                <Deployer xmlns="http://www.boc-group.com">group(Designer)</Deployer>
+                <Starter xmlns="http://www.boc-group.com">group(Starter)</Starter>
+                <CountCritical xmlns="http://www.boc-group.com">true</CountCritical>
+            </semantic:extensionElements>
+            <semantic:outgoing>_b02b5bfa-5629-4af5-b1bc-ac2a86d88adb</semantic:outgoing>
+        </semantic:startEvent>
+        <semantic:serviceTask id="_2b960d84-feb1-46a9-a1a1-c300dd996b99" name="Fetch Vacation Information" triso:readOnly="false" implementation="kp:http" operationRef="_dd434d56-40a4-4d63-8a22-58d8e5a5edc7">
+            <semantic:extensionElements>
+                <Events xmlns="http://www.boc-group.com">
+                    <Event>
+                        <EventType>Node Enter</EventType>
+                        <ActionName>Fetch Approval</ActionName>
+                        <ActionClass>HttpRestHandler</ActionClass>
+                        <Parameters>
+                            <Parameter>
+                                <Name>hostName</Name>
+                                <Value>https://test-demo.trisotech.com/execution/dmn/api/run/miwg/dmn/vacation-approval</Value>
+                            </Parameter>
+                            <Parameter>
+                                <Name>method</Name>
+                                <Value>POST</Value>
+                            </Parameter>
+                            <Parameter>
+                                <Name>postParameter</Name>
+                                <Value>{    "From": "${fromdatepicker}",    "To": "${todatepicker}",    "Days Remaining": ${days-remaining}  }</Value>
+                            </Parameter>
+                            <Parameter>
+                                <Name>user</Name>
+                                <Value>bearer</Value>
+                            </Parameter>
+                            <Parameter>
+                                <Name>pass</Name>
+                                <Value>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhcHAiOiJkNmM4MTYwMS0zMTZiLTQ2NjgtOGFmMy01NWQxMTYxYzNkYTYiLCJzdWIiOiJzcmluZ3VldHRlQHRyaXNvdGVjaC5jb20iLCJpc3MiOiJ0ZXN0LWRlbW8udHJpc290ZWNoLmNvbSIsImlhdCI6MTYzNzc3MjAxNywiY2FsIjoiOTBmYTc4ZTEtMDI3ZS00YzhjLThlNTAtODJjY2ExN2M0OGVhIn0.iUzYijUAbDNPMUqJ_HzMiEq5IGNmhPwFG6ok7PkBzik</Value>
+                            </Parameter>
+                            <Parameter>
+                                <Name>authMethod</Name>
+                                <Value>basic</Value>
+                            </Parameter>
+                            <Parameter>
+                                <Name>searchByJsonPath</Name>
+                                <Value>[{path: "['results'].['Vacation Approval Status'].['Approval']", resultVariable: "result_variable"},{path: "['results'].['Vacation Approval Status'].['Reason']", resultVariable: "result_variable_reason"},{path: "['results'].['Number of days']", resultVariable: "result_variable_days"}]</Value>
+                            </Parameter>
+                        </Parameters>
+                    </Event>
+                    <Event>
+                        <EventType>Node Enter</EventType>
+                        <ActionName>Rename Instance</ActionName>
+                        <ActionClass>RenameInstanceHandler</ActionClass>
+                        <Parameters>
+                            <Parameter>
+                                <Name>instanceName</Name>
+                                <Value>Vacation Request ${SYS.PROCESSINSTANCE_ID} from ${first-name} ${last-name}</Value>
+                            </Parameter>
+                        </Parameters>
+                    </Event>
+                </Events>
+                <zeebe:taskDefinition type="http"/>
+                <zeebe:taskHeaders>
+                    <zeebe:header key="url" value="= &quot;https://odata.triso.tech/simon/simon/vacation&quot; + &quot;?$filter=employeeId eq &quot; + string(Employee Badge Number)"/>
+                </zeebe:taskHeaders>
+                <zeebe:ioMapping>
+                    <zeebe:output source="= body.value[1]" target="Current Vacation Status"/>
+                </zeebe:ioMapping>
+                <kp:field name="requestMethod" stringValue="POST"/>
+                <kp:field expression="https://crm.knowprocess.com/miwg/contacts/${employeeBadgeNumber}" name="requestUrl" stringValue="https://crm.knowprocess.com/miwg/contacts/"/>
+                <kp:field name="requestHeaders" stringValue="Content-Type:application/json"/>
+                <kp:field name="resultVariablePrefix" stringValue="fetchVacation"/>
+                <kp:field name="saveRequestVariables" stringValue="false"/>
+                <kp:field name="saveResponseParameters" stringValue="true"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_3ae25f4b-9eec-4e49-bc49-1303483a4226" name="$filter" triso:dataInputRef="_2b960d84-feb1-46a9-a1a1-c300dd996b99_4e2fd2cf-c77d-465d-95bc-085256a00455_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_7540c1a9-c358-40bc-8809-0831fbd43c57" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"employeeId eq " + string(Employee Badge Number)</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_b02b5bfa-5629-4af5-b1bc-ac2a86d88adb</semantic:incoming>
+            <semantic:outgoing>_d79c991e-446c-47d1-ac9d-9d0113e35b93</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" itemSubjectRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" id="_8fd43f87-3dd6-47b2-bbe9-39d66e7fe316"/>
+                <semantic:dataInput name="__targetRef_placeholder" triso:readOnly="false" id="DI_Property_10qeslx"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" itemSubjectRef="_68f999b9-915a-40d9-b3b0-78fd2b0d6b39" triso:hidden="false" id="_18249f3e-0eeb-4c35-adb2-af035a694a83"/>
+                <semantic:dataOutput name="__targetRef_placeholder" triso:readOnly="false" triso:hidden="false" id="DO_Property_10qeslx"/>
+                <semantic:inputSet id="_9eed8142-006d-46af-97d7-abdec861abcd">
+                    <semantic:dataInputRefs>_8fd43f87-3dd6-47b2-bbe9-39d66e7fe316</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>DI_Property_10qeslx</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_d3f65368-fb14-4eb5-ad89-71af07d4913a">
+                    <semantic:dataOutputRefs>_18249f3e-0eeb-4c35-adb2-af035a694a83</semantic:dataOutputRefs>
+                    <semantic:dataOutputRefs>DO_Property_10qeslx</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_f4f41761-cdd8-4b90-a956-9182345df488">
+                <semantic:sourceRef>_8b9aa28f-5974-4087-9895-0467c25635dc</semantic:sourceRef>
+                <semantic:targetRef>_8fd43f87-3dd6-47b2-bbe9-39d66e7fe316</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataOutputAssociation id="_40d3cb58-31bb-47a4-9591-032a38011de3">
+                <semantic:sourceRef>_18249f3e-0eeb-4c35-adb2-af035a694a83</semantic:sourceRef>
+                <semantic:targetRef>_831726fb-e5ba-40aa-b484-1fc65de4980a</semantic:targetRef>
+                <semantic:transformation language="https://www.omg.org/spec/DMN/20191111/MODEL/">
+                    <![CDATA[<ns1:literalExpression xmlns:ns1="https://www.omg.org/spec/DMN/20191111/MODEL/" id="_086343dd-32b0-4cd3-9730-9964c61de8d5" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/"><ns1:text>vacation.value[1]</ns1:text></ns1:literalExpression>]]>
+                </semantic:transformation>
+            </semantic:dataOutputAssociation>
+        </semantic:serviceTask>
+        <semantic:businessRuleTask id="_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32" name="Vacation Approval" triso:readOnly="false" triso:linkedTermsId="" implementation="kp:dmn">
+            <semantic:extensionElements>
+                <triso:copyOfLink graphType="http://www.trisotech.com/graph/1.0/decision/element#DecisionService" graphURI="http://trisotech.com/graph/1.0/graph#2b0268c3-2180-4975-809c-c4e520a3ed03" id="_7b6ee8ba-d848-49c0-ba70-78466893287e" itemName="Vacation Approval" mimeType="application/vnd.triso-dmn+json" modelName="Vacation Approval" modelType="http://www.trisotech.com/graph/1.0/element#DMNModel" modelURI="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643" uri="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643#_d394e1e3-3bf5-4adc-880e-8ed9d46c2160"/>
+                <zeebe:taskDefinition type="DMN"/>
+                <zeebe:taskHeaders>
+                    <zeebe:header key="decisionRef" value="_9ba1b7b0-c84d-484f-9203-3792edc6dcbd"/>
+                </zeebe:taskHeaders>
+                <zeebe:ioMapping>
+                    <zeebe:output source="= Vacation Approval Status.Approval" target="Vacation Approval"/>
+                    <zeebe:output source="= Vacation Approval Status.Reason" target="Reason"/>
+                </zeebe:ioMapping>
+                <kp:field name="decisionTableReferenceKey" stringValue="decision1"/>
+                <kp:field name="decisionTaskThrowErrorOnNoHits" stringValue="false"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_f16c2f9e-fbd3-45fd-98b5-2e10da45df92" name="Days Remaining" triso:dataInputRef="_c86de5bd-bc4a-49e1-ad80-ae681712f235" typeRef="feel:number"/>
+                            <ns1:literalExpression id="_05705b35-6dc5-4b54-b3a8-469dffc3700f" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.days</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_6273c7e0-1782-4ce2-9bad-0530fa4dd593" name="From" triso:dataInputRef="_06570edb-e883-409d-a645-4392e91f5cdd" typeRef="feel:date"/>
+                            <ns1:literalExpression id="_99b9ba0e-bb33-438e-991c-8e2e5455eb6f" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>From</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_b678272b-b5c4-481a-86ab-6204c72089ac" name="To" triso:dataInputRef="_efb47006-64e5-42cd-beb2-af36354e3875" typeRef="feel:date"/>
+                            <ns1:literalExpression id="_8868e304-cbc4-48ae-b8a9-85ff9ece2773" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>To</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_d79c991e-446c-47d1-ac9d-9d0113e35b93</semantic:incoming>
+            <semantic:outgoing>_ac1d82df-9bf6-404b-be70-b052e311f8b7</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Days Remaining" triso:readOnly="false" itemSubjectRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" triso:hidden="false" id="_c86de5bd-bc4a-49e1-ad80-ae681712f235"/>
+                <semantic:dataInput name="From" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_06570edb-e883-409d-a645-4392e91f5cdd"/>
+                <semantic:dataInput name="To" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_efb47006-64e5-42cd-beb2-af36354e3875"/>
+                <semantic:dataInput name="__targetRef_placeholder" triso:readOnly="false" id="DI_Property_1jfswd4"/>
+                <semantic:dataOutput name="Vacation Approval Status" triso:readOnly="false" itemSubjectRef="_52182389-d104-457d-b152-d312b38991f3" triso:hidden="false" id="_60979891-0a46-4a66-9043-492cd159a227"/>
+                <semantic:dataOutput name="__targetRef_placeholder" triso:readOnly="false" triso:hidden="false" id="DO_Property_1jfswd4"/>
+                <semantic:inputSet id="_b7c4db9c-d212-4893-b468-e4c275f868bb">
+                    <semantic:dataInputRefs>_c86de5bd-bc4a-49e1-ad80-ae681712f235</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_06570edb-e883-409d-a645-4392e91f5cdd</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_efb47006-64e5-42cd-beb2-af36354e3875</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>DI_Property_1jfswd4</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_ebc20a5a-c487-4bd7-9d14-588dbd28961a">
+                    <semantic:dataOutputRefs>_60979891-0a46-4a66-9043-492cd159a227</semantic:dataOutputRefs>
+                    <semantic:dataOutputRefs>DO_Property_1jfswd4</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_9425c610-3ef7-4a5c-bc39-e4242bd1d1a1">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_c86de5bd-bc4a-49e1-ad80-ae681712f235</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_d7aa7a34-bb93-49ae-87d7-f3ccd25add3f">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_06570edb-e883-409d-a645-4392e91f5cdd</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_bfe6b00e-a1ce-4b12-b868-f445ebc77d1d">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_efb47006-64e5-42cd-beb2-af36354e3875</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataOutputAssociation id="_3dcf2a50-5a30-4a47-956f-7962eb907737">
+                <semantic:sourceRef>_60979891-0a46-4a66-9043-492cd159a227</semantic:sourceRef>
+                <semantic:targetRef>_c2d108b2-e6c0-47e6-a3cb-aa5321bcaeaf</semantic:targetRef>
+                <semantic:transformation language="https://www.omg.org/spec/DMN/20191111/MODEL/">
+                    <![CDATA[<ns1:literalExpression xmlns:ns1="https://www.omg.org/spec/DMN/20191111/MODEL/" id="_06eb6996-5a49-4de7-a6f5-ac4f72dc253e" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/"><ns1:text>Vacation Approval Status.Approval</ns1:text></ns1:literalExpression>]]>
+                </semantic:transformation>
+            </semantic:dataOutputAssociation>
+            <semantic:dataOutputAssociation id="_66f6f24d-1cad-4c93-b9b3-b93193015a18">
+                <semantic:sourceRef>_60979891-0a46-4a66-9043-492cd159a227</semantic:sourceRef>
+                <semantic:targetRef>_dac8ee76-f637-4fd9-8357-6a87fd11ef41</semantic:targetRef>
+                <semantic:transformation language="https://www.omg.org/spec/DMN/20191111/MODEL/">
+                    <![CDATA[<ns1:literalExpression xmlns:ns1="https://www.omg.org/spec/DMN/20191111/MODEL/" id="_1ccc4a25-aca7-475b-bc42-f710be757403" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/"><ns1:text>Vacation Approval Status.Reason</ns1:text></ns1:literalExpression>]]>
+                </semantic:transformation>
+            </semantic:dataOutputAssociation>
+        </semantic:businessRuleTask>
+        <semantic:exclusiveGateway id="_42367c5f-d084-44ee-90c7-960d1ab02a3b" triso:readOnly="false" gatewayDirection="Diverging" default="_2a5ee73c-c495-48a0-945b-3dabab28ca91">
+            <semantic:extensionElements>
+                <HandlerClass xmlns="http://www.boc-group.com">VariableDecisionHandler</HandlerClass>
+                <Variables xmlns="http://www.boc-group.com">
+                    <Variable>
+                        <Name>variableName</Name>
+                        <Value>result_variable</Value>
+                    </Variable>
+                    <Variable>
+                        <Name>defaultTransition</Name>
+                        <Value>Refused</Value>
+                    </Variable>
+                </Variables>
+            </semantic:extensionElements>
+            <semantic:incoming>_ac1d82df-9bf6-404b-be70-b052e311f8b7</semantic:incoming>
+            <semantic:outgoing>_2a5ee73c-c495-48a0-945b-3dabab28ca91</semantic:outgoing>
+            <semantic:outgoing>_0a1c4f20-509f-4aeb-baf9-acc762f4fdf9</semantic:outgoing>
+            <semantic:outgoing>_325973e7-0bc8-4136-b6df-be1e681d8608</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:endEvent id="_1688f604-5edf-4187-ad9e-18f74bfede53" name="Vacation Refused Automatically" triso:readOnly="false">
+            <semantic:incoming>_130d903a-f211-4b3e-9711-9061f5978d94</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:sendTask id="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9" name="Notify Employee of Refusal" triso:readOnly="false" implementation="kp:mail" operationRef="_83f1c680-7e06-4a9a-9206-396ed8155a71">
+            <semantic:extensionElements>
+                <MailTo xmlns="http://www.boc-group.com">${email}</MailTo>
+                <MailSubject xmlns="http://www.boc-group.com">Your Vacation Request ${SYS.PROCESSINSTANCE_ID} was refused automatically</MailSubject>
+                <MailBody xmlns="http://www.boc-group.com">Dear ${first-name},
+unfortunately your Vacation Request ${SYS.PROCESSINSTANCE_ID}
+from ${fromdatepicker}
+to ${todatepicker}
+was refused automatically.
+Number of requested days: ${result_variable_days}
+Reason: ${result_variable_reason}
+Please consider the reason and create a new request if necessary.
+Best regards,
+Your BOC Adonis Process Automation</MailBody>
+                <zeebe:taskDefinition type="emailService"/>
+                <zeebe:ioMapping>
+                    <zeebe:input source="= &quot;&lt;html&gt;&lt;p&gt;Hi  &quot; + Current Vacation Status.name + &quot;,&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Your vacation request from &quot; + From + &quot; to &quot; + To + &quot; was declined for the following reason: &quot; + Reason + &quot;&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Best regards&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;&quot;" target="mailBody"/>
+                    <zeebe:input source="= &quot;Vacation Denied&quot;" target="mailSubject"/>
+                    <zeebe:input source="= Current Vacation Status.email" target="mailAddress"/>
+                </zeebe:ioMapping>
+                <kp:field name="to" stringValue="info@knowprocess.com"/>
+                <kp:field name="htmlVar" stringValue="vacationRefused"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_66bb75dc-0d15-4d4a-bff5-1facaa990f9d" name="ToEmail" triso:dataInputRef="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9_ae68194f-c21d-4227-82e2-3196c4a9d54e_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_e2eb53e8-9147-4829-9e12-227787c00697" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.email</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_29bcd07e-f276-4020-9692-974a48f02547" name="FromEmail" triso:dataInputRef="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9_d6361b84-796a-48f8-a056-9af3983fe14d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_f028dc26-6701-4c27-825f-8dc30432c7ca" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"vacationsystem@eurent.com"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_4865e6aa-a0ee-484c-8cc0-32a9f5f0011a" name="Subject" triso:dataInputRef="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9_7ea780be-73b4-4f90-8d24-47aeb544faa0_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_fc8bc676-d687-4fa1-afc3-bc8bdc51458d" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"Vacation Denied"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_841a17a0-858e-4f7e-9226-f95f34c2468e" name="Body" triso:dataInputRef="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9_7e40320f-8779-4f5e-a519-06a7c640535d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_d1713c38-e401-4968-b789-e55f0b68e161" expressionLanguage="http://www.w3.org/1999/xhtml">
+                                <ns1:text>&lt;html&gt;&lt;p&gt;Hi &lt;span class="feel-expression"&gt;Current Vacation Status.name&lt;/span&gt;,&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Your vacation request from&amp;nbsp;&lt;span class="feel-expression"&gt;date(From)&lt;/span&gt;&amp;nbsp;to &lt;span class="feel-expression"&gt;date(To)&lt;/span&gt;&amp;nbsp;was declined for the following reason: &lt;span class="feel-expression"&gt;Reason&lt;/span&gt;&amp;nbsp;&lt;br /&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;Best regards&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_2a5ee73c-c495-48a0-945b-3dabab28ca91</semantic:incoming>
+            <semantic:outgoing>_130d903a-f211-4b3e-9711-9061f5978d94</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" triso:hidden="false" id="_3664e2fd-3dbd-41f2-a931-ff00709d9f14"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" triso:hidden="false" id="_02243091-1c47-49e2-a23f-405ab423eb36"/>
+                <semantic:inputSet id="_ca96a978-8a8d-48b5-9876-594b8e1be75a">
+                    <semantic:dataInputRefs>_3664e2fd-3dbd-41f2-a931-ff00709d9f14</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_132afdae-6a94-4af3-8227-788f99c5d117">
+                    <semantic:dataOutputRefs>_02243091-1c47-49e2-a23f-405ab423eb36</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_3f72d33b-e9cb-4dce-b97f-34b1975ba494">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_3664e2fd-3dbd-41f2-a931-ff00709d9f14</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_6ae63a82-1bc1-408f-95a3-af645633672a">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_3664e2fd-3dbd-41f2-a931-ff00709d9f14</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_7e4b1382-d551-4406-979d-c586b5925e64">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_3664e2fd-3dbd-41f2-a931-ff00709d9f14</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_c5b9c7c0-35dc-4efb-93bd-a019fe7d0f5b">
+                <semantic:sourceRef>_4234afd4-3ab0-4e09-8a7c-b475458db18a</semantic:sourceRef>
+                <semantic:targetRef>_3664e2fd-3dbd-41f2-a931-ff00709d9f14</semantic:targetRef>
+            </semantic:dataInputAssociation>
+        </semantic:sendTask>
+        <semantic:userTask id="_79523269-7444-4b01-90e9-e23957a9d020" name="Manually Approve Vacation" triso:readOnly="false" kp:formKey="ApproveVacation" implementation="##unspecified">
+            <semantic:extensionElements>
+                <Tasks xmlns="http://www.boc-group.com">
+                    <Task>
+                        <TaskName>Manually Approve Vacation</TaskName>
+                        <Description>The automatic approval resulted in "Manual Validation Required". Please check the Vacation Request and approve or decline it.</Description>
+                    </Task>
+                </Tasks>
+                <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_1m306cp"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_80f3ba96-6a21-420e-b5bb-34d064642248" name="Employee" triso:dataInputRef="_5b7fefeb-4c68-4d6a-98ed-530da72165e6" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_5fa2ca94-3ea5-4d10-8f34-d827ca8253c3" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.name</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_4173880b-a3ae-41e9-8831-df027a1e4093" name="From" triso:dataInputRef="_40d4e009-34a4-401c-a8f7-acb2c6477e46" typeRef="feel:date"/>
+                            <ns1:literalExpression id="_9bed9309-d5e1-4588-b386-0f3ce2f9f1ce" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>From</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_34a84a8c-f812-4aff-8185-b88eefe88662" name="Remaining Vacation Days" triso:dataInputRef="_f27bddd0-01a1-4ce9-a36c-f25f0d3085be" typeRef="feel:number"/>
+                            <ns1:literalExpression id="_5cba8054-9875-411e-b79f-5e6b8d6a45a6" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.days</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_34ae3a88-6c59-4568-ab46-424acf554173" name="To" triso:dataInputRef="_4573edc3-bdd5-4971-af84-5b4e1a5f9fd4" typeRef="feel:date"/>
+                            <ns1:literalExpression id="_e45d95b2-30b9-481d-af9e-efd1cbc66140" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>To</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_0a1c4f20-509f-4aeb-baf9-acc762f4fdf9</semantic:incoming>
+            <semantic:outgoing>_3c50d7bb-5ecc-4d34-82a9-a5fa41d9c018</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Employee" triso:readOnly="false" itemSubjectRef="_triso-default-bpmnItemDefinition-string_id" triso:hidden="false" id="_5b7fefeb-4c68-4d6a-98ed-530da72165e6"/>
+                <semantic:dataInput name="From" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_40d4e009-34a4-401c-a8f7-acb2c6477e46"/>
+                <semantic:dataInput name="To" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" id="_4573edc3-bdd5-4971-af84-5b4e1a5f9fd4"/>
+                <semantic:dataInput name="Remaining Vacation Days" triso:readOnly="false" itemSubjectRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" triso:hidden="false" id="_f27bddd0-01a1-4ce9-a36c-f25f0d3085be"/>
+                <semantic:dataOutput name="Vacation Approval" triso:readOnly="false" itemSubjectRef="_35aa1a98-77be-4b78-a590-ba5bafe10a58" triso:hidden="false" id="_415c6b4c-7a19-4205-a306-01266576041b"/>
+                <semantic:inputSet id="_4fd72db9-08e5-4aaf-8b1a-31b4f7e038ff">
+                    <semantic:dataInputRefs>_5b7fefeb-4c68-4d6a-98ed-530da72165e6</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_40d4e009-34a4-401c-a8f7-acb2c6477e46</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_4573edc3-bdd5-4971-af84-5b4e1a5f9fd4</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_f27bddd0-01a1-4ce9-a36c-f25f0d3085be</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_5537a8b8-9dbe-47e1-8373-1ccff5bd2004">
+                    <semantic:dataOutputRefs>_415c6b4c-7a19-4205-a306-01266576041b</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_06dd6266-3084-46f1-b5fd-11ae71afdc68">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_5b7fefeb-4c68-4d6a-98ed-530da72165e6</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_760f223b-9115-45c9-a8d3-2088688398b0">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_40d4e009-34a4-401c-a8f7-acb2c6477e46</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_1e8d5b09-9085-4230-ba1d-06d53b91e0ca">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_4573edc3-bdd5-4971-af84-5b4e1a5f9fd4</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataOutputAssociation id="_166012b2-dc8c-4b7c-b383-d8720d9433df">
+                <semantic:sourceRef>_415c6b4c-7a19-4205-a306-01266576041b</semantic:sourceRef>
+                <semantic:targetRef>_c2d108b2-e6c0-47e6-a3cb-aa5321bcaeaf</semantic:targetRef>
+            </semantic:dataOutputAssociation>
+            <semantic:potentialOwner id="_b7c60f92-2ce6-4b15-8237-3558a761c2f2">
+                <semantic:resourceAssignmentExpression id="_ac0fe901-da4a-4b3b-93e4-49df342fec22">
+                    <semantic:formalExpression>manager</semantic:formalExpression>
+                </semantic:resourceAssignmentExpression>
+            </semantic:potentialOwner>
+        </semantic:userTask>
+        <semantic:sendTask id="_93ec9873-edf1-4549-b052-961994ec8234" name="Notify Employee of Approval" triso:readOnly="false" implementation="kp:mail" operationRef="_83f1c680-7e06-4a9a-9206-396ed8155a71">
+            <semantic:extensionElements>
+                <MailTo xmlns="http://www.boc-group.com">${email}</MailTo>
+                <MailSubject xmlns="http://www.boc-group.com">Your Vacation Request ${SYS.PROCESSINSTANCE_ID} was approved automatically</MailSubject>
+                <MailBody xmlns="http://www.boc-group.com">Dear ${first-name},
+your Vacation Request ${SYS.PROCESSINSTANCE_ID}
+from ${fromdatepicker}
+to ${todatepicker}
+was approved automatically.
+Best regards,
+Your BOC Adonis Process Automation</MailBody>
+                <zeebe:taskDefinition type="emailService"/>
+                <zeebe:ioMapping>
+                    <zeebe:input source="= &quot;&lt;html&gt;&lt;p&gt;Hi  &quot; + Current Vacation Status.name + &quot;,&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Your vacation request from &quot; + From + &quot; to &quot; + To + &quot; was approved.&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Best regards&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;&quot;" target="mailBody"/>
+                    <zeebe:input source="= &quot;Vacation Approved&quot;" target="mailSubject"/>
+                    <zeebe:input source="= Current Vacation Status.email" target="mailAddress"/>
+                </zeebe:ioMapping>
+                <kp:field name="to" stringValue="info@knowprocess.com"/>
+                <kp:field name="htmlVar" stringValue="vacationApproved"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_15b345fa-3cf9-480c-94af-8254cf893070" name="ToEmail" triso:dataInputRef="_93ec9873-edf1-4549-b052-961994ec8234_ae68194f-c21d-4227-82e2-3196c4a9d54e_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_8e459a3a-3522-46a9-8fe8-cdc04dce7002" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.email</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_8f40b6b3-df95-45c0-a88d-80626d15a942" name="FromEmail" triso:dataInputRef="_93ec9873-edf1-4549-b052-961994ec8234_d6361b84-796a-48f8-a056-9af3983fe14d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_2699a949-3cf1-4351-b056-6766c9f6d574" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"vacationsystem@eurent.com"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_69562d60-3953-4633-a726-84032ed4e87d" name="Subject" triso:dataInputRef="_93ec9873-edf1-4549-b052-961994ec8234_7ea780be-73b4-4f90-8d24-47aeb544faa0_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_85195d1a-718c-4f1b-8dba-8ce4e66e9be8" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"Vacation Approved"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_f3abd20a-153e-46ed-9e2d-362d962b0622" name="Body" triso:dataInputRef="_93ec9873-edf1-4549-b052-961994ec8234_7e40320f-8779-4f5e-a519-06a7c640535d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_dbb306bd-0a43-491f-a316-70aea0ca1351" expressionLanguage="http://www.w3.org/1999/xhtml">
+                                <ns1:text>&lt;html&gt;&lt;p&gt;Hi&amp;nbsp;&lt;span class="feel-expression"&gt;Current Vacation Status.name&lt;/span&gt;,&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Your vacation request from&amp;nbsp;&lt;span class="feel-expression"&gt;date(From)&lt;/span&gt;&amp;nbsp;to &lt;span class="feel-expression"&gt;date(To)&lt;/span&gt;&amp;nbsp;was approved.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Best regards&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_325973e7-0bc8-4136-b6df-be1e681d8608</semantic:incoming>
+            <semantic:outgoing>_188d38f6-b73d-4c62-964b-affc6fe040c1</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" triso:hidden="false" id="_1c26901a-059c-49ee-9458-6f9f0db67197"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" triso:hidden="false" id="_98d35e58-e638-411a-bf53-9b689a6d1170"/>
+                <semantic:inputSet id="_f1ca5d59-ff49-475b-adcf-88c191d75997">
+                    <semantic:dataInputRefs>_1c26901a-059c-49ee-9458-6f9f0db67197</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_cbe32ab6-5278-4256-a8ab-b27d201a6ad9">
+                    <semantic:dataOutputRefs>_98d35e58-e638-411a-bf53-9b689a6d1170</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_32df05cc-b9ef-417d-9eca-34c98a381182">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_1c26901a-059c-49ee-9458-6f9f0db67197</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_d2df05cc-b9ef-417d-9eca-34c98a381183">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_1c26901a-059c-49ee-9458-6f9f0db67197</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_7e7c0711-6a8c-4f30-be77-85f15ea4903c">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_1c26901a-059c-49ee-9458-6f9f0db67197</semantic:targetRef>
+            </semantic:dataInputAssociation>
+        </semantic:sendTask>
+        <semantic:endEvent id="_6677ef80-82df-4951-919d-1f36123b681b" name="Vacation Approved Automatically" triso:readOnly="false">
+            <semantic:incoming>_68ef27a7-011e-4ec0-ad45-41f52093de68</semantic:incoming>
+            <semantic:dataInput id="_9068cab3-c967-470e-86cd-180f3a207c19" name="From" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false"/>
+            <semantic:inputSet id="_d25026f4-35f0-402f-88a5-50c11e8fc6b7">
+                <semantic:dataInputRefs>_9068cab3-c967-470e-86cd-180f3a207c19</semantic:dataInputRefs>
+            </semantic:inputSet>
+        </semantic:endEvent>
+        <semantic:endEvent id="_1cd5fe29-b3ec-4f21-a1aa-57773f0729ca" name="Vacation Approved by Manager" triso:readOnly="false">
+            <semantic:incoming>_81ed1b89-5a4d-4028-a245-4fd38b866b6d</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:exclusiveGateway id="_64bb8b55-d348-41d6-9ea8-f333b1d8cb69" triso:readOnly="false" gatewayDirection="Diverging" default="_d3a575d8-cd41-4246-ad7a-7a068de6679f">
+            <semantic:extensionElements>
+                <HandlerClass xmlns="http://www.boc-group.com">VariableDecisionHandler</HandlerClass>
+                <Variables xmlns="http://www.boc-group.com">
+                    <Variable>
+                        <Name>variableName</Name>
+                        <Value>approval</Value>
+                    </Variable>
+                    <Variable>
+                        <Name>defaultTransition</Name>
+                        <Value>Refused</Value>
+                    </Variable>
+                </Variables>
+            </semantic:extensionElements>
+            <semantic:incoming>_3c50d7bb-5ecc-4d34-82a9-a5fa41d9c018</semantic:incoming>
+            <semantic:outgoing>_f2b0da63-d841-4457-ad85-7d86c8b5c1d2</semantic:outgoing>
+            <semantic:outgoing>_d3a575d8-cd41-4246-ad7a-7a068de6679f</semantic:outgoing>
+        </semantic:exclusiveGateway>
+        <semantic:sendTask id="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0" name="Notify Employee of Approval" triso:readOnly="false" implementation="kp:mail" operationRef="_83f1c680-7e06-4a9a-9206-396ed8155a71">
+            <semantic:extensionElements>
+                <MailTo xmlns="http://www.boc-group.com">${email}</MailTo>
+                <MailSubject xmlns="http://www.boc-group.com">Your Vacation Request ${SYS.PROCESSINSTANCE_ID} was approved manually</MailSubject>
+                <MailBody xmlns="http://www.boc-group.com">Dear ${first-name},
+your Vacation Request ${SYS.PROCESSINSTANCE_ID}
+from ${fromdatepicker}
+to ${todatepicker}
+was approved manually.
+Comment: ${comment}
+Best regards,
+Your BOC Adonis Process Automation</MailBody>
+                <zeebe:taskDefinition type="emailService"/>
+                <zeebe:ioMapping>
+                    <zeebe:input source="= &quot;&lt;html&gt;&lt;p&gt;Hi  &quot; + Current Vacation Status.name + &quot;,&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Your vacation request from &quot; + From + &quot; to &quot; + To + &quot; was approved.&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Best regards&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;&quot;" target="mailBody"/>
+                    <zeebe:input source="= &quot;Vacation Approved&quot;" target="mailSubject"/>
+                    <zeebe:input source="= Current Vacation Status.email" target="mailAddress"/>
+                </zeebe:ioMapping>
+                <kp:field name="to" stringValue="info@knowprocess.com"/>
+                <kp:field name="htmlVar" stringValue="vacationApproved"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_ddd49085-8640-4c03-97bc-42a5eb90ab67" name="ToEmail" triso:dataInputRef="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0_ae68194f-c21d-4227-82e2-3196c4a9d54e_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_13e0c76b-1e39-49d8-834e-3af442b8c80a" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.email</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_a8089c03-2b7a-49f5-9825-a2d37df508d9" name="FromEmail" triso:dataInputRef="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0_d6361b84-796a-48f8-a056-9af3983fe14d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_3778b80e-0e72-4176-8b0d-1845a1d35dad" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"vacationsystem@eurent.com"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_d4f0605c-cb1d-4228-bb73-75e0aeef6a65" name="Subject" triso:dataInputRef="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0_7ea780be-73b4-4f90-8d24-47aeb544faa0_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_3c80748b-77bf-4e10-8d8b-b341d3c85bcc" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"Vacation Approved"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_83999af0-8f94-4828-a5af-bf44de3dc712" name="Body" triso:dataInputRef="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0_7e40320f-8779-4f5e-a519-06a7c640535d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_f3627801-c024-4a94-a36c-514efa6fc3cc" expressionLanguage="http://www.w3.org/1999/xhtml">
+                                <ns1:text>&lt;html&gt;&lt;p&gt;Hi &amp;nbsp;&lt;span class="feel-expression"&gt;Current Vacation Status.name&lt;/span&gt;,&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Your vacation request from&amp;nbsp;&lt;span class="feel-expression"&gt;date(From)&lt;/span&gt;&amp;nbsp;to &lt;span class="feel-expression"&gt;date(To)&lt;/span&gt;&amp;nbsp;was approved.&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Best regards&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_f2b0da63-d841-4457-ad85-7d86c8b5c1d2</semantic:incoming>
+            <semantic:outgoing>_a5441c65-06f8-4972-8158-e6f61f904841</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="From" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_871b6349-9bc5-440b-9e01-6e3cf700f9e6"/>
+                <semantic:dataInput name="To" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_34c6f8e2-b981-4ff2-ad77-bf89575b604c"/>
+                <semantic:dataInput name="Current Vacation Status" triso:readOnly="false" triso:hidden="false" id="_d52e7328-818c-4352-ba80-25432f28d380"/>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_ef216ef0-3b7f-460f-aa59-52f8b6cf578b"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" triso:hidden="false" id="_351b30d2-99d9-43f3-8110-dfa85429a78a"/>
+                <semantic:inputSet id="_9cfa60fd-b2f0-44f5-b97e-5f7b7384851b">
+                    <semantic:dataInputRefs>_871b6349-9bc5-440b-9e01-6e3cf700f9e6</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_34c6f8e2-b981-4ff2-ad77-bf89575b604c</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_d52e7328-818c-4352-ba80-25432f28d380</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_ef216ef0-3b7f-460f-aa59-52f8b6cf578b</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_27eab781-b10a-4a37-9d23-cdd528f75f9e">
+                    <semantic:dataOutputRefs>_351b30d2-99d9-43f3-8110-dfa85429a78a</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_fd5f72e9-0220-4cec-9346-e5c69ea60171">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_871b6349-9bc5-440b-9e01-6e3cf700f9e6</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_7ee2312c-4d81-4d98-a903-8e2dc4398438">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_ef216ef0-3b7f-460f-aa59-52f8b6cf578b</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_76336c7a-b159-4425-94c9-57df39f635c2">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_ef216ef0-3b7f-460f-aa59-52f8b6cf578b</semantic:targetRef>
+            </semantic:dataInputAssociation>
+        </semantic:sendTask>
+        <semantic:sendTask id="_02232e32-c3d2-473c-a15d-9c5dca00eadc" name="Notify Employee of Refusal" triso:readOnly="false" implementation="kp:mail" operationRef="_83f1c680-7e06-4a9a-9206-396ed8155a71">
+            <semantic:extensionElements>
+                <MailTo xmlns="http://www.boc-group.com">${email}</MailTo>
+                <MailSubject xmlns="http://www.boc-group.com">Your Vacation Request ${SYS.PROCESSINSTANCE_ID} was refused manually</MailSubject>
+                <MailBody xmlns="http://www.boc-group.com">Dear ${first-name},
+unfortunately your Vacation Request ${SYS.PROCESSINSTANCE_ID}
+from ${fromdatepicker}
+to ${todatepicker}
+was refused manually.
+Comment: ${comment}
+Please consider the refusal comment and create a new request if necessary.
+Best regards,
+Your BOC Adonis Process Automation</MailBody>
+                <zeebe:taskDefinition type="emailService"/>
+                <zeebe:ioMapping>
+                    <zeebe:input source="= &quot;&lt;html&gt;&lt;p&gt;Hi  &quot; + Current Vacation Status.name + &quot;,&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Your vacation request from &quot; + From + &quot; to &quot; + To + &quot; was declined for the following reason: &quot; + Reason + &quot;&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;Best regards&lt;/p&gt; &lt;p&gt; &lt;/p&gt; &lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;&quot;" target="mailBody"/>
+                    <zeebe:input source="= &quot;Vacation Denied&quot;" target="mailSubject"/>
+                    <zeebe:input source="= Current Vacation Status.email" target="mailAddress"/>
+                </zeebe:ioMapping>
+                <kp:field name="to" stringValue="info@knowprocess.com"/>
+                <kp:field name="htmlVar" stringValue="vacationRefused"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_a0afa1d9-6bcc-4b00-9fb5-a0f8c8fc4ec0" name="ToEmail" triso:dataInputRef="_02232e32-c3d2-473c-a15d-9c5dca00eadc_ae68194f-c21d-4227-82e2-3196c4a9d54e_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_ad3d3db6-4c39-4963-9ad1-745e13823e10" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Current Vacation Status.email</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_83e43e25-2303-4a44-8925-5433bc9abeed" name="FromEmail" triso:dataInputRef="_02232e32-c3d2-473c-a15d-9c5dca00eadc_d6361b84-796a-48f8-a056-9af3983fe14d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_c5ae07b5-85ec-4967-a3cf-79ab8b1cc6f3" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"vacationsystem@eurent.com"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_e9877473-96c8-49a2-964c-221661bf1cf5" name="Subject" triso:dataInputRef="_02232e32-c3d2-473c-a15d-9c5dca00eadc_7ea780be-73b4-4f90-8d24-47aeb544faa0_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_61249fc4-ef20-40f1-a2b3-99593edaa28e" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>"Vacation Denied"</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_528bbb15-4f27-4fee-8168-e7dfb86d1880" name="Body" triso:dataInputRef="_02232e32-c3d2-473c-a15d-9c5dca00eadc_7e40320f-8779-4f5e-a519-06a7c640535d_in" typeRef="feel:string"/>
+                            <ns1:literalExpression id="_66bf8a7a-1365-4476-b104-3c742842cd30" expressionLanguage="http://www.w3.org/1999/xhtml">
+                                <ns1:text>&lt;html&gt;&lt;p&gt;Hi &amp;nbsp;&amp;nbsp;&lt;span class="feel-expression"&gt;Current Vacation Status.name&lt;/span&gt;&amp;nbsp;,&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;Your vacation request from&amp;nbsp;&lt;span class="feel-expression"&gt;date(From)&lt;/span&gt;&amp;nbsp;to &lt;span class="feel-expression"&gt;date(To)&lt;/span&gt;&amp;nbsp;was declined for the following reason:&amp;nbsp;&lt;span class="feel-expression"&gt;Reason&lt;/span&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;br /&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;Best regards&lt;/p&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;p&gt;This is an automated message generated by the vacation system.&lt;/p&gt;&lt;/html&gt;</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_d3a575d8-cd41-4246-ad7a-7a068de6679f</semantic:incoming>
+            <semantic:outgoing>_93ac178c-3efc-48ae-8a99-8d29a0c4aaf6</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="From" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_e5cc49f3-6c54-4673-8bf4-5a2b39bed65c"/>
+                <semantic:dataInput name="To" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_3a460194-21af-44b5-a9c9-386dd21ce7a6"/>
+                <semantic:dataInput name="Current Vacation Status" triso:readOnly="false" triso:hidden="false" id="_4e07b75e-586a-4bcb-92b8-086ab645cb89"/>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" itemSubjectRef="_7d2aae2a-a2b3-4927-8865-154dcb88e7f1" triso:hidden="false" id="_f9102b34-5286-4f47-8342-196ce9540f62"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" triso:hidden="false" id="_f581a76e-a407-4e29-8ac0-781aedc60ecd"/>
+                <semantic:inputSet id="_7fdd5a06-459c-47cc-8e2a-3a509d6ef0d6">
+                    <semantic:dataInputRefs>_e5cc49f3-6c54-4673-8bf4-5a2b39bed65c</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_3a460194-21af-44b5-a9c9-386dd21ce7a6</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_4e07b75e-586a-4bcb-92b8-086ab645cb89</semantic:dataInputRefs>
+                    <semantic:dataInputRefs>_f9102b34-5286-4f47-8342-196ce9540f62</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_c69d2a22-01ed-4886-9d43-52dc28c14fc8">
+                    <semantic:dataOutputRefs>_f581a76e-a407-4e29-8ac0-781aedc60ecd</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_0b462a60-66c6-4b03-8b35-fa9a0d04904e">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_e5cc49f3-6c54-4673-8bf4-5a2b39bed65c</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_912f2b3a-c01f-4e9c-ab7a-20e42ccc4f1f">
+                <semantic:sourceRef>_4234afd4-3ab0-4e09-8a7c-b475458db18a</semantic:sourceRef>
+                <semantic:targetRef>_e5cc49f3-6c54-4673-8bf4-5a2b39bed65c</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_0e27350a-1980-4a65-b7e0-d8725f63ffa1">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_f9102b34-5286-4f47-8342-196ce9540f62</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_d81e3c4f-3ffc-4321-83ed-979433de0163">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_f9102b34-5286-4f47-8342-196ce9540f62</semantic:targetRef>
+            </semantic:dataInputAssociation>
+        </semantic:sendTask>
+        <semantic:dataObject id="_775c93ab-82e5-4a62-97f0-d305eda76c92" name="Current Vacation Status" triso:readOnly="false" itemSubjectRef="_68f999b9-915a-40d9-b3b0-78fd2b0d6b39" isCollection="false"/>
+        <semantic:endEvent id="_3ae826ca-5f38-43c4-be3a-35d1157aa27f" name="Vacation Refused by Manager" triso:readOnly="false">
+            <semantic:incoming>_93ac178c-3efc-48ae-8a99-8d29a0c4aaf6</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:serviceTask id="_4b72053b-8ebb-4ae6-99c6-7c93cf1c1d1b" name="Update Remaining Vacation" triso:readOnly="false" implementation="kp:http" operationRef="_a0e96e19-a01f-4dde-b613-0b774e8d350b">
+            <semantic:extensionElements>
+                <zeebe:taskDefinition type="update"/>
+                <kp:field name="requestMethod" stringValue="POST"/>
+                <kp:field expression="https://crm.knowprocess.com/miwg/contacts/${employeeBadgeNumber}/customFields" name="requestUrl" stringValue="https://crm.knowprocess.com/miwg/contacts//customFields"/>
+                <kp:field name="requestHeaders" stringValue="Content-Type:application/json"/>
+                <kp:field expression="{&quot;customFields&quot;:{&quot;vacationDays&quot;:${vacationDays}}}" name="requestBody"/>
+                <kp:field name="resultVariablePrefix" stringValue="upVacation1"/>
+                <kp:field name="saveRequestVariables" stringValue="false"/>
+                <kp:field name="saveResponseParameters" stringValue="true"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_0fa68c24-33f6-45b9-b390-8cf6146ee754" name="employeeId" triso:dataInputRef="_4b72053b-8ebb-4ae6-99c6-7c93cf1c1d1b_429a9bc0-a05a-45c7-8217-8675b8806b69_in" typeRef="feel:number"/>
+                            <ns1:literalExpression id="_340d3c88-f7b8-498c-965c-87b5f647fe77" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Employee Badge Number</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_016f47b2-9713-4631-98ca-9c167be47c67" name="vacation" triso:dataInputRef="_4b72053b-8ebb-4ae6-99c6-7c93cf1c1d1b_523fbd6a-2708-4b6a-8d75-8196e38773f2_in" typeRef="simon.1.simon.input_vacation"/>
+                            <ns1:context id="_122f4d07-2608-4904-97d3-0e171d492697">
+                                <ns1:contextEntry>
+                                    <ns1:variable id="_4c86f578-029a-4c00-b34e-d6cf0dc2a6d9" name="days" typeRef="feel:number"/>
+                                    <ns1:literalExpression id="_fddc8686-9e10-4c11-9813-da3feaa49de0" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/" triso:unparsed="true">
+                                        <ns1:text>Current Vacation Status.days - ((To -From).days)</ns1:text>
+                                    </ns1:literalExpression>
+                                </ns1:contextEntry>
+                            </ns1:context>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_188d38f6-b73d-4c62-964b-affc6fe040c1</semantic:incoming>
+            <semantic:outgoing>_68ef27a7-011e-4ec0-ad45-41f52093de68</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" itemSubjectRef="_24ce0503-1c7a-41eb-bbfd-28f533e0268f" id="_803ff266-47ce-45ea-b3e6-019916eddc71"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" triso:hidden="false" id="_3eb8a29c-a29f-4cf5-bab6-95b374f1b183"/>
+                <semantic:inputSet id="_a129c4a1-10ff-4835-b36f-392feb105ebc">
+                    <semantic:dataInputRefs>_803ff266-47ce-45ea-b3e6-019916eddc71</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_cc1b25bf-8bc3-4d4c-af06-df2d6c9f7eef">
+                    <semantic:dataOutputRefs>_3eb8a29c-a29f-4cf5-bab6-95b374f1b183</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_8184912c-03a4-4c1c-a478-13b581231aa2">
+                <semantic:sourceRef>_8b9aa28f-5974-4087-9895-0467c25635dc</semantic:sourceRef>
+                <semantic:targetRef>_803ff266-47ce-45ea-b3e6-019916eddc71</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_2c85e650-0096-4780-b6fe-f52a9654af77">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_803ff266-47ce-45ea-b3e6-019916eddc71</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_2c7c930e-5b1c-4792-ba24-e4f80b6b1369">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_803ff266-47ce-45ea-b3e6-019916eddc71</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_c5c828aa-9a42-4e96-8266-7b42fad69511">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_803ff266-47ce-45ea-b3e6-019916eddc71</semantic:targetRef>
+            </semantic:dataInputAssociation>
+        </semantic:serviceTask>
+        <semantic:serviceTask id="_5e16a4e0-0f23-482a-be47-d3edbc5741ba" name="Update Remaining Vacation" triso:readOnly="false" implementation="kp:http" operationRef="_a0e96e19-a01f-4dde-b613-0b774e8d350b">
+            <semantic:extensionElements>
+                <zeebe:taskDefinition type="update"/>
+                <kp:field name="requestMethod" stringValue="POST"/>
+                <kp:field expression="https://crm.knowprocess.com/miwg/contacts/${employeeBadgeNumber}/customFields" name="requestUrl" stringValue="https://knowprocess.com"/>
+                <kp:field name="requestHeaders" stringValue="Content-Type:application/json"/>
+                <kp:field expression="{&quot;customFields&quot;:{&quot;vacationDays&quot;:${vacationDays}}}" name="requestBody"/>
+                <kp:field name="resultVariablePrefix" stringValue="upVacation2"/>
+                <kp:field name="saveRequestVariables" stringValue="false"/>
+                <kp:field name="saveResponseParameters" stringValue="true"/>
+                <triso:dataInputBindings>
+                    <ns1:context>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_237856f2-45d0-48c8-975a-2902aeedd085" name="employeeId" triso:dataInputRef="_5e16a4e0-0f23-482a-be47-d3edbc5741ba_429a9bc0-a05a-45c7-8217-8675b8806b69_in" typeRef="feel:number"/>
+                            <ns1:literalExpression id="_6ca22b42-e7b0-4aa5-ac55-a1f2bd1f1d83" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/">
+                                <ns1:text>Employee Badge Number</ns1:text>
+                            </ns1:literalExpression>
+                        </ns1:contextEntry>
+                        <ns1:contextEntry>
+                            <ns1:variable id="_c1a5282b-8165-40e8-b2ec-2d6c5699698d" name="vacation" triso:dataInputRef="_5e16a4e0-0f23-482a-be47-d3edbc5741ba_523fbd6a-2708-4b6a-8d75-8196e38773f2_in" typeRef="simon.1.simon.input_vacation"/>
+                            <ns1:context id="_6ca7b09d-7963-4733-a227-c6b9195b51fa">
+                                <ns1:contextEntry>
+                                    <ns1:variable id="_0dee6858-e8f2-4576-897d-7d868318fda9" name="days" typeRef="feel:number"/>
+                                    <ns1:literalExpression id="_e13f5a97-ffa4-464a-a97a-a00eaad6bac3" expressionLanguage="https://www.omg.org/spec/DMN/20191111/FEEL/" triso:unparsed="true">
+                                        <ns1:text>Current Vacation Status.days - ((To -From).days)</ns1:text>
+                                    </ns1:literalExpression>
+                                </ns1:contextEntry>
+                            </ns1:context>
+                        </ns1:contextEntry>
+                    </ns1:context>
+                </triso:dataInputBindings>
+            </semantic:extensionElements>
+            <semantic:incoming>_a5441c65-06f8-4972-8158-e6f61f904841</semantic:incoming>
+            <semantic:outgoing>_81ed1b89-5a4d-4028-a245-4fd38b866b6d</semantic:outgoing>
+            <semantic:ioSpecification>
+                <semantic:dataInput name="Fixed input" triso:readOnly="false" id="_751edb63-a514-44c3-a7e0-7ce5c18f09ec"/>
+                <semantic:dataOutput name="Fixed output" triso:readOnly="false" triso:hidden="false" id="_8d84c387-82d2-4d75-ac08-d9f9b5e430c8"/>
+                <semantic:inputSet id="_fc1c7175-8c6b-460a-bb71-c52a9874e7cb">
+                    <semantic:dataInputRefs>_751edb63-a514-44c3-a7e0-7ce5c18f09ec</semantic:dataInputRefs>
+                </semantic:inputSet>
+                <semantic:outputSet id="_2b9361e2-8253-481a-b773-c78d9dc59cda">
+                    <semantic:dataOutputRefs>_8d84c387-82d2-4d75-ac08-d9f9b5e430c8</semantic:dataOutputRefs>
+                </semantic:outputSet>
+            </semantic:ioSpecification>
+            <semantic:dataInputAssociation id="_95e48019-8c07-4005-a706-2c4b421bed60">
+                <semantic:sourceRef>_103fd816-b422-420d-aec9-c28b54f620db</semantic:sourceRef>
+                <semantic:targetRef>_751edb63-a514-44c3-a7e0-7ce5c18f09ec</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_3c85e650-0096-4780-b6fe-f52a9654af78">
+                <semantic:sourceRef>_775c93ab-82e5-4a62-97f0-d305eda76c92</semantic:sourceRef>
+                <semantic:targetRef>_751edb63-a514-44c3-a7e0-7ce5c18f09ec</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_6d535768-1e33-4054-bb8c-b141a0098316">
+                <semantic:sourceRef>_2bed4da9-f468-4fe0-a37c-ae5d4c17e323</semantic:sourceRef>
+                <semantic:targetRef>_751edb63-a514-44c3-a7e0-7ce5c18f09ec</semantic:targetRef>
+            </semantic:dataInputAssociation>
+            <semantic:dataInputAssociation id="_67897da3-a828-4759-bc67-ecdda5e1c550">
+                <semantic:sourceRef>_8b9aa28f-5974-4087-9895-0467c25635dc</semantic:sourceRef>
+                <semantic:targetRef>_751edb63-a514-44c3-a7e0-7ce5c18f09ec</semantic:targetRef>
+            </semantic:dataInputAssociation>
+        </semantic:serviceTask>
+        <semantic:endEvent id="_b4d636eb-b501-4462-93c8-04652db10307" name="Employee not found" triso:readOnly="false">
+            <semantic:incoming>_f250e125-23eb-45cd-9c61-191d172df093</semantic:incoming>
+        </semantic:endEvent>
+        <semantic:dataObject id="_4234afd4-3ab0-4e09-8a7c-b475458db18a" name="Reason" triso:readOnly="false" itemSubjectRef="_triso-default-bpmnItemDefinition-string_id" isCollection="false"/>
+        <semantic:dataObject id="vacationApproved" name="vacationApproved" triso:readOnly="false"/>
+        <semantic:dataObject id="vacationRefused" name="vacationRefused" triso:readOnly="false"/>
+        <semantic:boundaryEvent id="_f8fcb377-3d7d-4138-9a7e-6ab58b97e29d" triso:readOnly="false" attachedToRef="_2b960d84-feb1-46a9-a1a1-c300dd996b99">
+            <semantic:outgoing>_f250e125-23eb-45cd-9c61-191d172df093</semantic:outgoing>
+            <semantic:errorEventDefinition errorRef="_bb1e92be-5879-4fbe-8efb-4f0c6ea64187" id="_2a8bacf9-ed42-4b2c-805e-c15c1ea325af"/>
+        </semantic:boundaryEvent>
+        <semantic:dataObjectReference id="_831726fb-e5ba-40aa-b484-1fc65de4980a" name="Current Vacation Status" triso:readOnly="false" dataObjectRef="_775c93ab-82e5-4a62-97f0-d305eda76c92"/>
+        <semantic:sequenceFlow id="_b02b5bfa-5629-4af5-b1bc-ac2a86d88adb" triso:readOnly="false" sourceRef="_b1625a52-aaf0-4694-86cb-7af891212ac6" targetRef="_2b960d84-feb1-46a9-a1a1-c300dd996b99" isImmediate="false"/>
+        <semantic:sequenceFlow id="_ac1d82df-9bf6-404b-be70-b052e311f8b7" triso:readOnly="false" sourceRef="_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32" targetRef="_42367c5f-d084-44ee-90c7-960d1ab02a3b" isImmediate="false"/>
+        <semantic:sequenceFlow id="_2a5ee73c-c495-48a0-945b-3dabab28ca91" name="Refused" triso:readOnly="false" sourceRef="_42367c5f-d084-44ee-90c7-960d1ab02a3b" targetRef="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9" isImmediate="false"/>
+        <semantic:sequenceFlow id="_130d903a-f211-4b3e-9711-9061f5978d94" triso:readOnly="false" sourceRef="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9" targetRef="_1688f604-5edf-4187-ad9e-18f74bfede53" isImmediate="false"/>
+        <semantic:sequenceFlow id="_0a1c4f20-509f-4aeb-baf9-acc762f4fdf9" name="Manual Validation Required" triso:readOnly="false" sourceRef="_42367c5f-d084-44ee-90c7-960d1ab02a3b" targetRef="_79523269-7444-4b01-90e9-e23957a9d020" isImmediate="false">
+            <semantic:conditionExpression language="https://www.omg.org/spec/DMN/20191111/FEEL/" xsi:type="semantic:tFormalExpression" triso:unparsed="false">Vacation Approval = "Manual Validation Required"</semantic:conditionExpression>
+        </semantic:sequenceFlow>
+        <semantic:sequenceFlow id="_325973e7-0bc8-4136-b6df-be1e681d8608" name="Approved" triso:readOnly="false" sourceRef="_42367c5f-d084-44ee-90c7-960d1ab02a3b" targetRef="_93ec9873-edf1-4549-b052-961994ec8234" isImmediate="false">
+            <semantic:conditionExpression language="https://www.omg.org/spec/DMN/20191111/FEEL/" xsi:type="semantic:tFormalExpression" triso:unparsed="false">Vacation Approval = "Approved"</semantic:conditionExpression>
+        </semantic:sequenceFlow>
+        <semantic:sequenceFlow id="_188d38f6-b73d-4c62-964b-affc6fe040c1" triso:readOnly="false" sourceRef="_93ec9873-edf1-4549-b052-961994ec8234" targetRef="_4b72053b-8ebb-4ae6-99c6-7c93cf1c1d1b" isImmediate="false"/>
+        <semantic:sequenceFlow id="_3c50d7bb-5ecc-4d34-82a9-a5fa41d9c018" triso:readOnly="false" sourceRef="_79523269-7444-4b01-90e9-e23957a9d020" targetRef="_64bb8b55-d348-41d6-9ea8-f333b1d8cb69" isImmediate="false"/>
+        <semantic:sequenceFlow id="_f2b0da63-d841-4457-ad85-7d86c8b5c1d2" name="Approved" triso:readOnly="false" sourceRef="_64bb8b55-d348-41d6-9ea8-f333b1d8cb69" targetRef="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0" isImmediate="false">
+            <semantic:conditionExpression language="https://www.omg.org/spec/DMN/20191111/FEEL/" xsi:type="semantic:tFormalExpression" triso:unparsed="false">Vacation Approval = "Approved"</semantic:conditionExpression>
+        </semantic:sequenceFlow>
+        <semantic:sequenceFlow id="_d3a575d8-cd41-4246-ad7a-7a068de6679f" name="Refused" triso:readOnly="false" sourceRef="_64bb8b55-d348-41d6-9ea8-f333b1d8cb69" targetRef="_02232e32-c3d2-473c-a15d-9c5dca00eadc" isImmediate="false"/>
+        <semantic:sequenceFlow id="_93ac178c-3efc-48ae-8a99-8d29a0c4aaf6" triso:readOnly="false" sourceRef="_02232e32-c3d2-473c-a15d-9c5dca00eadc" targetRef="_3ae826ca-5f38-43c4-be3a-35d1157aa27f" isImmediate="false"/>
+        <semantic:sequenceFlow id="_68ef27a7-011e-4ec0-ad45-41f52093de68" triso:readOnly="false" sourceRef="_4b72053b-8ebb-4ae6-99c6-7c93cf1c1d1b" targetRef="_6677ef80-82df-4951-919d-1f36123b681b" isImmediate="false"/>
+        <semantic:sequenceFlow id="_a5441c65-06f8-4972-8158-e6f61f904841" triso:readOnly="false" sourceRef="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0" targetRef="_5e16a4e0-0f23-482a-be47-d3edbc5741ba" isImmediate="false"/>
+        <semantic:sequenceFlow id="_81ed1b89-5a4d-4028-a245-4fd38b866b6d" triso:readOnly="false" sourceRef="_5e16a4e0-0f23-482a-be47-d3edbc5741ba" targetRef="_1cd5fe29-b3ec-4f21-a1aa-57773f0729ca" isImmediate="false"/>
+        <semantic:sequenceFlow id="_f250e125-23eb-45cd-9c61-191d172df093" triso:readOnly="false" sourceRef="_f8fcb377-3d7d-4138-9a7e-6ab58b97e29d" targetRef="_b4d636eb-b501-4462-93c8-04652db10307" isImmediate="false"/>
+        <semantic:sequenceFlow id="_d79c991e-446c-47d1-ac9d-9d0113e35b93" triso:readOnly="false" sourceRef="_2b960d84-feb1-46a9-a1a1-c300dd996b99" targetRef="_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32" isImmediate="false"/>
+    </semantic:process>
+    <bpmndi:BPMNDiagram id="_a9e3a63e-db87-4fa1-9091-328acae4f490" name="Vacation Request">
+        <bpmndi:BPMNPlane bpmnElement="Collaboration_1rz14um" id="_a9e3a63e-db87-4fa1-9091-328acae4f490_plane" trisobpmn:diagramWidth="2335.0145631067962" trisobpmn:diagramHeight="1180.4477492201154">
+            <bpmndi:BPMNShape id="Participant_04dpvds_di" bpmnElement="Participant_04dpvds" isHorizontal="true" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="116" y="37" width="2169" height="793"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="793" width="16" x="116" y="37"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_68dd0da9-9366-4aeb-8336-77e65a4dbd15" bpmnElement="_b1625a52-aaf0-4694-86cb-7af891212ac6" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="187" y="297" width="32" height="32"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="148" y="338"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_ed8ce459-db6d-40e9-849c-851e388c694f" bpmnElement="_2b960d84-feb1-46a9-a1a1-c300dd996b99" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="404" y="275" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="90" x="407" y="297.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_2cb3644c-1705-4c5d-b0e5-f49bbce0c69e" bpmnElement="_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="658" y="275" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="90" x="661" y="305"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_bea74495-5ea0-457d-b858-19f230339d7d" bpmnElement="_42367c5f-d084-44ee-90c7-960d1ab02a3b" isMarkerVisible="true" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="903" y="293" width="42" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_9e3bfef6-3ae7-4133-890c-ef952085c3b3" bpmnElement="_1688f604-5edf-4187-ad9e-18f74bfede53" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="2170" y="620" width="36" height="36"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="2133" y="663"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_7f3528f8-cbbf-4f80-b2b0-e8aa94625969" bpmnElement="_9ed61a6a-7cc1-4ed1-86d8-03482b0983c9" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1226" y="600" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="90" x="1229" y="622.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_d1bc3308-4e5a-4f18-8c67-64664b16a99c" bpmnElement="_79523269-7444-4b01-90e9-e23957a9d020" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1129" y="275" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="90" x="1132" y="297.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_4bcf8b19-5b72-4fb7-b513-c6153f7b3374" bpmnElement="_93ec9873-edf1-4549-b052-961994ec8234" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1062" y="101" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="90" x="1065" y="123.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_195fe8d3-cbc5-4c02-a1ff-d81e8d0e1c7a" bpmnElement="_6677ef80-82df-4951-919d-1f36123b681b" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="2170" y="121" width="36" height="36"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="2133" y="164"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_048de96f-44f3-4982-882c-87bdd7cb5280" bpmnElement="_1cd5fe29-b3ec-4f21-a1aa-57773f0729ca" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="2170" y="295" width="36" height="36"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="2133" y="338"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_546fb89f-3b82-4b64-8680-bf9daad06dbb" bpmnElement="_64bb8b55-d348-41d6-9ea8-f333b1d8cb69" isMarkerVisible="true" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1417" y="293" width="42" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_8704eaa2-515e-44e8-accf-e3d2b3c8cc89" bpmnElement="_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1581" y="275" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="90" x="1584" y="297.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_a676e3f5-2c2a-4688-b854-b640ed019a61" bpmnElement="_02232e32-c3d2-473c-a15d-9c5dca00eadc" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1748" y="442" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="90" x="1751" y="464.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_9486f920-6c9a-4149-bd21-feb4d3b4c4f8" bpmnElement="_3ae826ca-5f38-43c4-be3a-35d1157aa27f" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="2170" y="462" width="36" height="36"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="2133" y="505"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_a1abcada-4f42-42b7-a33c-16c911d0f852" bpmnElement="_4b72053b-8ebb-4ae6-99c6-7c93cf1c1d1b" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1373" y="101" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="47" width="90" x="1376" y="115.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_694fc8c2-87dd-4209-9257-6bd49a8a8937" bpmnElement="_5e16a4e0-0f23-482a-be47-d3edbc5741ba" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="1903" y="275" width="96" height="76"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="47" width="90" x="1906" y="289.5"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_6208469e-dfc5-4925-8e96-61781613d160" bpmnElement="_b4d636eb-b501-4462-93c8-04652db10307" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="2170" y="759" width="36" height="36"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="2133" y="802"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_831726fb-e5ba-40aa-b484-1fc65de4980a_di" bpmnElement="_831726fb-e5ba-40aa-b484-1fc65de4980a" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="505" y="180" width="34" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="467" y="225"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_0c45c3e7-c292-4223-ab41-01400cb8f240" bpmnElement="_8b9aa28f-5974-4087-9895-0467c25635dc" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="322" y="180" width="34" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="284" y="225"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_76c6e132-08e5-486c-9ecc-051b14cd5cfc" bpmnElement="_2bed4da9-f468-4fe0-a37c-ae5d4c17e323" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="619" y="59" width="34" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="581" y="104"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_77e6123a-256e-49d0-b900-41b3ef0aa326" bpmnElement="_103fd816-b422-420d-aec9-c28b54f620db" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="619" y="128" width="34" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="581" y="173"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_0b8ec52f-3ebb-445a-8c04-63255675e664" bpmnElement="_c2d108b2-e6c0-47e6-a3cb-aa5321bcaeaf" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="773" y="396" width="34" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="735" y="441"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_e779f200-79af-4872-8b81-9d2907b6ce21" bpmnElement="_dac8ee76-f637-4fd9-8357-6a87fd11ef41" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="773" y="478" width="34" height="40"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="735" y="523"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNShape id="_eb45bc41-a7c9-40fc-a64a-ba273fed7c5c" bpmnElement="_f8fcb377-3d7d-4138-9a7e-6ab58b97e29d" color:background-color="#ffffff" color:border-color="#000000">
+                <dc:Bounds x="483" y="328" width="36" height="36"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNShape>
+            <bpmndi:BPMNEdge id="_e58460d8-86b0-41e4-b7c3-aef425f1bfd3" color:border-color="#000000" bpmnElement="_d79c991e-446c-47d1-ac9d-9d0113e35b93">
+                <di:waypoint x="499" y="313.2238746100577"/>
+                <di:waypoint x="657.5735931396484" y="313.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_67c19639-e759-4491-b1b6-c3ac9f71081d" color:border-color="#000000" bpmnElement="_f250e125-23eb-45cd-9c61-191d172df093">
+                <di:waypoint x="500.82753170805324" y="363.3497389447675"/>
+                <di:waypoint x="500.82753170805324" y="778.4046203701896"/>
+                <di:waypoint x="2169.8013596766205" y="778.4046203701896"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_9a5ba1fa-ae7c-4024-b40e-656e65e08eb9" color:border-color="#000000" bpmnElement="_81ed1b89-5a4d-4028-a245-4fd38b866b6d">
+                <di:waypoint x="1998.874952816269" y="313.00456061509624"/>
+                <di:waypoint x="2169.8013596766205" y="313.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_0af36f5e-c5be-48cc-97b2-06ec70fdff88" color:border-color="#000000" bpmnElement="_a5441c65-06f8-4972-8158-e6f61f904841">
+                <di:waypoint x="1676.3705310368919" y="313.435569935642"/>
+                <di:waypoint x="1902.874952816269" y="312.997461280062"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_cef8935a-37f0-4d98-a51a-6a7602727647" color:border-color="#000000" bpmnElement="_68ef27a7-011e-4ec0-ad45-41f52093de68">
+                <di:waypoint x="1468.6326173744055" y="139.00001044412295"/>
+                <di:waypoint x="2169.8014744410666" y="139.9848502237037"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_6cd82076-8cb9-4396-8bc2-c207698f2b91" color:border-color="#000000" bpmnElement="_93ac178c-3efc-48ae-8a99-8d29a0c4aaf6">
+                <di:waypoint x="1844.3607831507832" y="480.44776914860597"/>
+                <di:waypoint x="2169.8013610899598" y="481.44606794777974"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_93006eed-280b-4834-958b-ebb4200f90ff" color:border-color="#000000" bpmnElement="_d3a575d8-cd41-4246-ad7a-7a068de6679f">
+                <di:waypoint x="1437.9365044010497" y="334.2223502027814"/>
+                <di:waypoint x="1437.9365044010497" y="480.44776914860597"/>
+                <di:waypoint x="1748.3607831507832" y="480.44776914860597"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="1382.9365044010497" y="485.44776914860597"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_c4e823c3-0666-4a8e-83ee-63021ec56225" color:border-color="#000000" bpmnElement="_f2b0da63-d841-4457-ad85-7d86c8b5c1d2">
+                <di:waypoint x="1458.510097540698" y="313.2223502027814"/>
+                <di:waypoint x="1582.3705310368919" y="313.435569935642"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="1464.9564844704505" y="318.3281271796302"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_ec3b6233-46d1-4ab2-9792-9553cbc8868c" color:border-color="#000000" bpmnElement="_3c50d7bb-5ecc-4d34-82a9-a5fa41d9c018">
+                <di:waypoint x="1223.574372201582" y="313.0122098515254"/>
+                <di:waypoint x="1416.9365044010497" y="313.2223502027814"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_112d6a81-a87f-4e5c-bd59-1758f12cba36" color:border-color="#000000" bpmnElement="_188d38f6-b73d-4c62-964b-affc6fe040c1">
+                <di:waypoint x="1157.5840790786622" y="139.00001044412295"/>
+                <di:waypoint x="1372.6326173744055" y="139.00001044412295"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_2922ee8a-0adb-4253-aa64-7ee31136438d" color:border-color="#000000" bpmnElement="_325973e7-0bc8-4136-b6df-be1e681d8608">
+                <di:waypoint x="923.5735931396484" y="292.01067016660295"/>
+                <di:waypoint x="923.5735931396484" y="139.00001044412295"/>
+                <di:waypoint x="1061.5840790786622" y="139.00001044412295"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="868.5735931396484" y="144.00001044412295"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_47f0d288-cd26-4f0a-88b5-b0dd5d88cda0" color:border-color="#000000" bpmnElement="_0a1c4f20-509f-4aeb-baf9-acc762f4fdf9">
+                <di:waypoint x="944.5735931396484" y="313.01067016660295"/>
+                <di:waypoint x="1128.574372201582" y="313.0122098515254"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="31" width="110" x="982.0739826705976" y="318.01144419297293"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_2610e0bc-471d-4a4d-8b61-3dd7cf484c3b" color:border-color="#000000" bpmnElement="_130d903a-f211-4b3e-9711-9061f5978d94">
+                <di:waypoint x="1321.6617535391474" y="638.2238989210836"/>
+                <di:waypoint x="2169.8013596766205" y="639.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_a6e6e1ca-bf7f-473d-90b5-d409f60d71bc" color:border-color="#000000" bpmnElement="_2a5ee73c-c495-48a0-945b-3dabab28ca91">
+                <di:waypoint x="923.5735931396484" y="334.01067016660295"/>
+                <di:waypoint x="923.5735931396484" y="638.2238989210836"/>
+                <di:waypoint x="1225.6617535391474" y="638.2238989210836"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+                    <dc:Bounds height="16" width="110" x="868.5735931396484" y="643.2238989210836"/>
+                </bpmndi:BPMNLabel>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_0ac76b2d-ac80-4025-9726-b69c6f516be0" color:border-color="#000000" bpmnElement="_ac1d82df-9bf6-404b-be70-b052e311f8b7">
+                <di:waypoint x="752.5735931396484" y="313.2238746100577"/>
+                <di:waypoint x="902.5735931396484" y="313.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_5c28fa46-52d1-43f2-989b-b876a038a9ab" color:border-color="#000000" bpmnElement="_b02b5bfa-5629-4af5-b1bc-ac2a86d88adb">
+                <di:waypoint x="217.96116138091122" y="313.4355858361405"/>
+                <di:waypoint x="404" y="313.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_09454c51-d60a-4ea4-836b-a9e08f30e935" color:border-color="#000000" bpmnElement="_f4f41761-cdd8-4b90-a956-9182345df488" targetElement="_ed8ce459-db6d-40e9-849c-851e388c694f">
+                <di:waypoint x="356" y="200.2238746100577"/>
+                <di:waypoint x="436" y="200.2238746100577"/>
+                <di:waypoint x="436" y="275.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_bcc87914-de5c-495d-a4ae-6f663c7ce552" color:border-color="#000000" bpmnElement="_40d3cb58-31bb-47a4-9591-032a38011de3" sourceElement="_ed8ce459-db6d-40e9-849c-851e388c694f">
+                <di:waypoint x="452" y="275.2238746100577"/>
+                <di:waypoint x="452" y="200.2238746100577"/>
+                <di:waypoint x="504.82753170805324" y="200.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_a0cd8e6d-3177-4ae9-8916-bc5eb012207c" color:border-color="#000000" bpmnElement="_d7aa7a34-bb93-49ae-87d7-f3ccd25add3f" targetElement="_2cb3644c-1705-4c5d-b0e5-f49bbce0c69e">
+                <di:waypoint x="653" y="79.22387461005769"/>
+                <di:waypoint x="705.5735931396484" y="79.22387461005769"/>
+                <di:waypoint x="705.5735931396484" y="276.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_4bcb1e55-a694-4910-a953-2ce62a64d604" color:border-color="#000000" bpmnElement="_bfe6b00e-a1ce-4b12-b868-f445ebc77d1d" targetElement="_2cb3644c-1705-4c5d-b0e5-f49bbce0c69e">
+                <di:waypoint x="653" y="148.2238746100577"/>
+                <di:waypoint x="705.5735931396484" y="148.2238746100577"/>
+                <di:waypoint x="705.5735931396484" y="276.2238746100577"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_aa8a82b2-89f8-4082-acbb-a585db536256" color:border-color="#000000" bpmnElement="_3dcf2a50-5a30-4a47-956f-7962eb907737" sourceElement="_2cb3644c-1705-4c5d-b0e5-f49bbce0c69e">
+                <di:waypoint x="721.5735931396484" y="351.2238746100577"/>
+                <di:waypoint x="721.5735931396484" y="416.4477492201154"/>
+                <di:waypoint x="772.5735931396484" y="416.4477492201154"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+            <bpmndi:BPMNEdge id="_1bdf13b7-cb6f-47bd-9507-c473c08aac29" color:border-color="#000000" bpmnElement="_66f6f24d-1cad-4c93-b9b3-b93193015a18" sourceElement="_2cb3644c-1705-4c5d-b0e5-f49bbce0c69e">
+                <di:waypoint x="705.5735931396484" y="350.2238746100577"/>
+                <di:waypoint x="705.5735931396484" y="498.4477492201154"/>
+                <di:waypoint x="772.5735931396484" y="498.4477492201154"/>
+                <bpmndi:BPMNLabel color:color="#000000" triso:defaultBounds="true" triso:labelPosition="midbottom" labelStyle="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0"/>
+            </bpmndi:BPMNEdge>
+        </bpmndi:BPMNPlane>
+        <bpmndi:BPMNLabelStyle id="LS_a9e3a63e-db87-4fa1-9091-328acae4f490_0">
+            <dc:Font name="arial,helvetica,sans-serif" size="11" isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false"/>
+        </bpmndi:BPMNLabelStyle>
+    </bpmndi:BPMNDiagram>
+    <semantic:relationship type="trisoExtension">
+        <semantic:extensionElements>
+            <triso:graphRelations/>
+            <triso:itemDefinitions>
+                <triso:itemDefinition name="simon.1.simon.test_table" label="simon.1.simon.test_table" isCollection="false" openapi:propertyRef="id">
+                    <triso:itemComponent id="_8e171e34-6e9a-4ea9-bee8-861bf06dda4d" name="id" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_65fa8af6-f4b0-420f-8004-df82d25c0821" name="t" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_a515fbea-d3ba-4cd6-b089-7ed7f0df0a00" name="e" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_e601e105-9ead-4053-880b-47dfb9d3a7c6" name="s" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="simon.1.simon.vacation" label="simon.1.simon.vacation" isCollection="false" openapi:propertyRef="employeeId">
+                    <triso:itemComponent id="_e0fc6283-c1d2-4b9c-91a0-a861394176f4" name="employeeId" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_856b6fe1-3298-4fd8-8e3d-dbd81c6a68d5" name="email" isCollection="false">
+                        <triso:typeRef>string</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_f33ebdf4-15ab-49a7-b512-e6e3ae0553b1" name="name" isCollection="false">
+                        <triso:typeRef>string</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_fe0ade9b-cd74-453f-862e-2d09a30febf3" name="days" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="simon.1.simon.cvacation" label="simon.1.simon.cvacation" isCollection="false">
+                    <triso:itemComponent id="_b07be28b-47d8-4b3c-a404-1d0498cb167e" name="value" isCollection="true">
+                        <triso:typeRef>simon.1.simon.vacation</triso:typeRef>
+                    </triso:itemComponent>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="simon.1.simon.input_vacation" label="simon.1.simon.input_vacation" isCollection="false">
+                    <triso:itemComponent id="_58e092f6-86e4-421e-88a9-cffdec0b2bcf" name="email" isCollection="false">
+                        <triso:typeRef>string</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_b72df098-3c13-493a-a7a3-938ec28b577c" name="name" isCollection="false">
+                        <triso:typeRef>string</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_4cdc47eb-fcc1-4cdf-a63b-880e4314b9fc" name="days" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="ApprovalStatus" label="ApprovalStatus" isCollection="false">
+                    <triso:typeRef>string</triso:typeRef>
+                    <triso:allowedValues constraintsType="enumeration" triso:constraintsType="enumeration">
+                        <semantic:extensionElements>
+                            <triso:constraintDetails>
+                                <triso:display>"Approved", "Refused", "Manual Validation Required"</triso:display>
+                                <triso:choices>
+                                    <triso:value>"Approved"</triso:value>
+                                    <triso:display>"Approved"</triso:display>
+                                </triso:choices>
+                                <triso:choices>
+                                    <triso:value>"Refused"</triso:value>
+                                    <triso:display>"Refused"</triso:display>
+                                </triso:choices>
+                                <triso:choices>
+                                    <triso:value>"Manual Validation Required"</triso:value>
+                                    <triso:display>"Manual Validation Required"</triso:display>
+                                </triso:choices>
+                            </triso:constraintDetails>
+                        </semantic:extensionElements>
+                        <triso:text>"Approved","Refused","Manual Validation Required"</triso:text>
+                    </triso:allowedValues>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="Vacation_Approval" label="Vacation Approval" isCollection="false">
+                    <semantic:extensionElements>
+                        <triso:reuseLink graphType="http://www.trisotech.com/graph/1.0/element#ItemDefinition" graphURI="http://trisotech.com/graph/1.0/graph#2b0268c3-2180-4975-809c-c4e520a3ed03" id="_29814164-3de2-4e38-9894-e52a40a1568a" itemName="Vacation Approval" mimeType="application/vnd.triso-dmn+json" modelName="Vacation Approval" modelType="http://www.trisotech.com/graph/1.0/element#DMNModel" modelURI="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643" uri="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643#Vacation_Approval"/>
+                    </semantic:extensionElements>
+                    <triso:itemComponent id="_a073dc01-952e-4534-827c-032bd185eea6" name="Approval" isCollection="false">
+                        <triso:typeRef>Approval</triso:typeRef>
+                    </triso:itemComponent>
+                    <triso:itemComponent id="_f0a46e3f-1122-42c0-ae46-5f0279e2a474" name="Reason" isCollection="false">
+                        <triso:typeRef>string</triso:typeRef>
+                    </triso:itemComponent>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="Approval" label="Approval" isCollection="false">
+                    <semantic:extensionElements>
+                        <triso:reuseLink graphType="http://www.trisotech.com/graph/1.0/element#ItemDefinition" graphURI="http://trisotech.com/graph/1.0/graph#2b0268c3-2180-4975-809c-c4e520a3ed03" id="_0fb833bf-e713-4b68-8184-bfbc9cbb05fb" itemName="Approval" mimeType="application/vnd.triso-dmn+json" modelName="Vacation Approval" modelType="http://www.trisotech.com/graph/1.0/element#DMNModel" modelURI="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643" uri="http://www.trisotech.com/definitions/_195db244-42dd-4beb-ac9e-cc8a9b2b8643#Approval"/>
+                    </semantic:extensionElements>
+                    <triso:typeRef>string</triso:typeRef>
+                    <triso:allowedValues constraintsType="enumeration" triso:constraintsType="enumeration">
+                        <semantic:extensionElements>
+                            <triso:constraintDetails>
+                                <triso:display>"Approved", "Refused", "Manual Validation Required"</triso:display>
+                                <triso:choices>
+                                    <triso:value>"Approved"</triso:value>
+                                    <triso:display>"Approved"</triso:display>
+                                </triso:choices>
+                                <triso:choices>
+                                    <triso:value>"Refused"</triso:value>
+                                    <triso:display>"Refused"</triso:display>
+                                </triso:choices>
+                                <triso:choices>
+                                    <triso:value>"Manual Validation Required"</triso:value>
+                                    <triso:display>"Manual Validation Required"</triso:display>
+                                </triso:choices>
+                            </triso:constraintDetails>
+                        </semantic:extensionElements>
+                        <triso:text>"Approved","Refused","Manual Validation Required"</triso:text>
+                    </triso:allowedValues>
+                </triso:itemDefinition>
+                <triso:itemDefinition name="tEmployeeInformation" label="tEmployeeInformation" isCollection="false">
+                    <triso:itemComponent id="_308af89d-61bc-417a-a9a6-69d082c07b71" name="Badge Number" isCollection="false">
+                        <triso:typeRef>number</triso:typeRef>
+                    </triso:itemComponent>
+                </triso:itemDefinition>
+            </triso:itemDefinitions>
+            <triso:documentation>&lt;p&gt;Vacation Request process for EU-Rent. This process will first try to apply the company automated rules and will offer a manual approval if the manager discretion should be taken.&lt;/p&gt;</triso:documentation>
+        </semantic:extensionElements>
+        <semantic:source>_d4aecb6e-8641-4d7a-af45-dcfae1d639ea</semantic:source>
+        <semantic:target>_d4aecb6e-8641-4d7a-af45-dcfae1d639ea</semantic:target>
+    </semantic:relationship>
+</semantic:definitions>
