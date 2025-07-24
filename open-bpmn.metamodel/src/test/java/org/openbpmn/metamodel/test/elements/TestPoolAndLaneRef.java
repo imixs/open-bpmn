@@ -156,7 +156,7 @@ public class TestPoolAndLaneRef {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
-        BPMNProcess defaultProcess = model.openDefaultProces();
+        BPMNProcess defaultProcess = model.openDefaultProcess();
         try {
             assertEquals(1, model.getProcesses().size());
 

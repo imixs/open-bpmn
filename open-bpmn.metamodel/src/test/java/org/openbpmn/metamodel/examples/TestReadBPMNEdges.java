@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.Association;
-import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.MessageFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
@@ -72,7 +72,7 @@ public class TestReadBPMNEdges {
             logger.info("...read model");
             model = BPMNModelFactory.read("/refmodel-6.bpmn");
 
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 

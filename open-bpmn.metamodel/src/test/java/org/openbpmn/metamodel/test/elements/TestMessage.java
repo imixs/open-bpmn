@@ -68,7 +68,7 @@ public class TestMessage {
             model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
             assertNotNull(model);
 
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 
@@ -105,7 +105,7 @@ public class TestMessage {
             model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
             assertNotNull(model);
 
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 

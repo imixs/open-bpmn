@@ -56,7 +56,7 @@ public class TestDeleteModel {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
 
             // create Participant

@@ -102,7 +102,7 @@ public class TestFlowElements {
         logger.info("...read model");
         try {
             BPMNModel model = BPMNModelFactory.read("/refmodel-6.bpmn");
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 

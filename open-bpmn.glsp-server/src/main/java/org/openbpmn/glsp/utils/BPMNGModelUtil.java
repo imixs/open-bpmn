@@ -252,7 +252,7 @@ public class BPMNGModelUtil {
         BPMNProcess bpmnProcess = null;
         // is it the root?
         if (modelState.getRoot().getId().equals(containerId)) {
-            bpmnProcess = modelState.getBpmnModel().openDefaultProces();
+            bpmnProcess = modelState.getBpmnModel().openDefaultProcess();
         } else {
             // it should be a participant container
             if (containerId.startsWith("participant_")) {
@@ -280,7 +280,7 @@ public class BPMNGModelUtil {
     public static BPMNProcess findProcessByPoint(final BPMNGModelState modelState, final GPoint dropPoint)
             throws BPMNInvalidTypeException {
         if (!modelState.getBpmnModel().isCollaborationDiagram() || dropPoint == null) {
-            return modelState.getBpmnModel().openDefaultProces();
+            return modelState.getBpmnModel().openDefaultProcess();
         }
         Participant participant = modelState.getBpmnModel()
                 .findParticipantByPoint(BPMNGModelUtil.createBPMNPoint(dropPoint));
@@ -289,7 +289,7 @@ public class BPMNGModelUtil {
             return participant.getBpmnProcess();
         } else {
             // default to the default process
-            return modelState.getBpmnModel().openDefaultProces();
+            return modelState.getBpmnModel().openDefaultProcess();
         }
     }
 

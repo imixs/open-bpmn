@@ -39,7 +39,7 @@ public class TestEndNavigation {
 
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get start Task1
         BPMNEndElementIterator endElements = new BPMNEndElementIterator<>(process, n -> n instanceof Activity);
@@ -67,7 +67,7 @@ public class TestEndNavigation {
 
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-02.bpmn");
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // find all End Task Elements
         BPMNEndElementIterator endElements = new BPMNEndElementIterator<>(process, n -> n instanceof Activity);

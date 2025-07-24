@@ -41,7 +41,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         assertNotNull(model);
 
-        BPMNProcess defaultProcess = model.openDefaultProces();
+        BPMNProcess defaultProcess = model.openDefaultProcess();
         assertNotNull(defaultProcess);
         assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
 
@@ -64,7 +64,7 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             process.addTask("task_1", "Task-1", null);
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProces();
+            BPMNProcess processContext = model.openDefaultProcess();
 
             assertNotNull(processContext);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, processContext.getProcessType());
@@ -127,7 +127,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProces();
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event
@@ -165,7 +165,7 @@ public class TestCreateModel {
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
         try {
-            BPMNProcess processContext = model.openDefaultProces();
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event

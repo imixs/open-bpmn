@@ -36,7 +36,7 @@ public class TestReadModelTypes {
             logger.info("...read model");
             model = BPMNModelFactory.read("/refmodel-1.bpmn");
 
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, process.getProcessType());
 
@@ -70,7 +70,7 @@ public class TestReadModelTypes {
             // we expect 2 Processes
             assertEquals(2, model.getProcesses().size());
 
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
             // one activity expected
@@ -110,7 +110,7 @@ public class TestReadModelTypes {
             assertEquals(3, model.getProcesses().size());
 
             // verify Default Process
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
             assertEquals(BPMNTypes.PROCESS_TYPE_PUBLIC, defaultProcess.getProcessType());
             assertEquals("Process_1", defaultProcess.getId());

@@ -37,7 +37,7 @@ public class TestCreateElements {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             // Create a DataObject
             process.addDataObject("dataobject_1", "DataObject-1");
 

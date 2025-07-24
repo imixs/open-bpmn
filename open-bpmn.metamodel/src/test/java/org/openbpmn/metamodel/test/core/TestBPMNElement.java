@@ -37,7 +37,7 @@ public class TestBPMNElement {
         assertNotNull(model);
 
         try {
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             Activity task = process.addTask("task_1", "Task-1", null);
 

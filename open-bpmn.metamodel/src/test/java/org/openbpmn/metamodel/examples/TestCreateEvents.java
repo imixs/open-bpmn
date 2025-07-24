@@ -42,7 +42,7 @@ public class TestCreateEvents {
                 targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             // Create a Task
             Activity task = process.addTask("task-1", "Task", BPMNTypes.TASK);
 
@@ -81,7 +81,7 @@ public class TestCreateEvents {
                 targetNameSpace);
 
         try {
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             // Create a Task
             Activity task1 = process.addTask("task-1", "Task", BPMNTypes.TASK);
             Activity task2 = process.addTask("task-2", "Task", BPMNTypes.TASK);

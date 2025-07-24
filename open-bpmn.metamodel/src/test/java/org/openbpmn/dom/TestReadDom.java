@@ -70,7 +70,7 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
         assertNotNull(process);
         assertEquals(1, process.getEvents().size()); // we expect 1 start event
 
@@ -78,7 +78,7 @@ public class TestReadDom {
 
         // Now if we add a new task element to this model the xml namespace should be
         // 'bpmn:task' and not 'bpmn2:task'
-        model.openDefaultProces().addTask("task-2", "Task 2", BPMNTypes.TASK);
+        model.openDefaultProcess().addTask("task-2", "Task 2", BPMNTypes.TASK);
 
         model.save(out);
         logger.info("...model update sucessful: " + out);
@@ -101,12 +101,12 @@ public class TestReadDom {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
         assertNotNull(model);
-        BPMNProcess defaultProcess = model.openDefaultProces();
+        BPMNProcess defaultProcess = model.openDefaultProcess();
         assertNotNull(defaultProcess);
         assertEquals("process_1", defaultProcess.getId());
 
         model.save(out);
-        logger.info("...blank model created sucessful: " + out);
+        logger.info("...blank model created successful: " + out);
     }
 
     private static void printNote(NodeList nodeList) {

@@ -91,7 +91,7 @@ public class TestNameSpaces {
         // next validate the BPMN Default Namespaces
         assertEquals("http://www.omg.org/spec/BPMN/20100524/MODEL", model.getUri(BPMNNS.BPMN2));
 
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
         assertNotNull(process);
         assertEquals(2, process.getEvents().size()); // we expect 2 events (start and end event)
 
@@ -100,7 +100,7 @@ public class TestNameSpaces {
         // Now if we add a new task element to this model the xml namespace should be
         // created without a prefix
         // 'task' and not 'bpmn2:task'
-        model.openDefaultProces().addTask("task-example-002", "Example Task 002", BPMNTypes.TASK);
+        model.openDefaultProcess().addTask("task-example-002", "Example Task 002", BPMNTypes.TASK);
 
         model.save(out);
         logger.info("...model update successful: " + out);
@@ -119,7 +119,7 @@ public class TestNameSpaces {
 
         BPMNModel model = BPMNModelFactory.read("/process_1_custom_namespace-2.bpmn");
 
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         assertNotNull(process);
 

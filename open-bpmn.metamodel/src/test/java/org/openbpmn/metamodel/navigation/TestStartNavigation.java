@@ -40,7 +40,7 @@ public class TestStartNavigation {
 
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get start Task1
         BPMNStartElementIterator startElements = new BPMNStartElementIterator<>(process, n -> n instanceof Activity);
@@ -68,7 +68,7 @@ public class TestStartNavigation {
 
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get start Task1
         BPMNStartElementIterator startElements = new BPMNStartElementIterator<>(process,
@@ -99,7 +99,7 @@ public class TestStartNavigation {
 
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-04.bpmn");
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get start Task1
         BPMNStartElementIterator startElements = new BPMNStartElementIterator<>(process,

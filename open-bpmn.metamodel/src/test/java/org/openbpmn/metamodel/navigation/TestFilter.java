@@ -21,75 +21,75 @@ import org.openbpmn.metamodel.examples.TestCreateEdges;
  * 
  */
 public class TestFilter {
-    private static Logger logger = Logger.getLogger(TestCreateEdges.class.getName());
+        private static Logger logger = Logger.getLogger(TestCreateEdges.class.getName());
 
-    /**
-     * Loads a model and test the filter method.
-     * 
-     * The method applies a filter to match ThrowEvents only within a process.
-     * 
-     * @throws BPMNModelException
-     * 
-     */
-    @Test
-    public void testFilterMethod() throws BPMNModelException {
+        /**
+         * Loads a model and test the filter method.
+         * 
+         * The method applies a filter to match ThrowEvents only within a process.
+         * 
+         * @throws BPMNModelException
+         * 
+         */
+        @Test
+        public void testFilterMethod() throws BPMNModelException {
 
-        logger.info("...read model");
-        BPMNModel model = BPMNModelFactory.read("/refmodel-15.bpmn");
+                logger.info("...read model");
+                BPMNModel model = BPMNModelFactory.read("/refmodel-15.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+                assertEquals(1, model.getProcesses().size());
+                BPMNProcess process = model.openDefaultProcess();
 
-        Set<? extends BPMNElementNode> throwEvents = process
-                .findElementNodes(n -> BPMNTypes.THROW_EVENT.equals(n.getType()));
+                Set<? extends BPMNElementNode> throwEvents = process
+                                .findElementNodes(n -> BPMNTypes.THROW_EVENT.equals(n.getType()));
 
-        assertNotNull(throwEvents);
-        // We expect exactly one result.
+                assertNotNull(throwEvents);
+                // We expect exactly one result.
 
-        assertEquals(1, throwEvents.size());
+                assertEquals(1, throwEvents.size());
 
-    }
+        }
 
-    /**
-     * In this test we use a more complex filter.
-     * We expect a throw event with at least one Link Definition and the name LINK
-     * 
-     * @throws BPMNModelException
-     */
-    @Test
-    public void testComplexFilterMethod() throws BPMNModelException {
+        /**
+         * In this test we use a more complex filter.
+         * We expect a throw event with at least one Link Definition and the name LINK
+         * 
+         * @throws BPMNModelException
+         */
+        @Test
+        public void testComplexFilterMethod() throws BPMNModelException {
 
-        logger.info("...read model");
-        BPMNModel model = BPMNModelFactory.read("/refmodel-15.bpmn");
+                logger.info("...read model");
+                BPMNModel model = BPMNModelFactory.read("/refmodel-15.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+                assertEquals(1, model.getProcesses().size());
+                BPMNProcess process = model.openDefaultProcess();
 
-        Set<? extends BPMNElementNode> filterResult = process
-                .findElementNodes(
-                        n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
-                                && ((Event) n).getEventDefinitionsByType(
-                                        BPMNTypes.EVENT_DEFINITION_LINK)
-                                        .size() == 1 //
-                                && "LINK".equals(n.getName())));
+                Set<? extends BPMNElementNode> filterResult = process
+                                .findElementNodes(
+                                                n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
+                                                                && ((Event) n).getEventDefinitionsByType(
+                                                                                BPMNTypes.EVENT_DEFINITION_LINK)
+                                                                                .size() == 1 //
+                                                                && "LINK".equals(n.getName())));
 
-        assertNotNull(filterResult);
-        // We expect exactly one result.
-        assertEquals(1, filterResult.size());
+                assertNotNull(filterResult);
+                // We expect exactly one result.
+                assertEquals(1, filterResult.size());
 
-        // now we change the filter and we expect no match !
-        filterResult = process
-                .findElementNodes(
-                        n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
-                                && ((Event) n).getEventDefinitionsByType(
-                                        BPMNTypes.EVENT_DEFINITION_CANCEL)
-                                        .size() == 1 //
-                                && "LINK".equals(n.getName())));
+                // now we change the filter and we expect no match !
+                filterResult = process
+                                .findElementNodes(
+                                                n -> (BPMNTypes.CATCH_EVENT.equals(n.getType()) //
+                                                                && ((Event) n).getEventDefinitionsByType(
+                                                                                BPMNTypes.EVENT_DEFINITION_CANCEL)
+                                                                                .size() == 1 //
+                                                                && "LINK".equals(n.getName())));
 
-        assertNotNull(filterResult);
-        // We expect exactly one result.
-        assertEquals(0, filterResult.size());
+                assertNotNull(filterResult);
+                // We expect exactly one result.
+                assertEquals(0, filterResult.size());
 
-    }
+        }
 
 }

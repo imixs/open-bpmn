@@ -39,7 +39,7 @@ public class TestBPMNValidation {
         assertNotNull(model);
 
         try {
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             Event startEvent = process.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             Event endEvent = process.addEvent("end_1", "End", BPMNTypes.END_EVENT);

@@ -214,7 +214,7 @@ public abstract class BPMNElementNode extends BPMNElement {
 
             // first test if the participant need to be updated...
             Set<Participant> participants = this.model.getParticipants();
-            BPMNProcess newProcess = this.model.openDefaultProces(); // default process
+            BPMNProcess newProcess = this.model.openDefaultProcess(); // default process
             for (Participant participant : participants) {
                 if (participant.bounds == null) {
                     continue; // no bounds!

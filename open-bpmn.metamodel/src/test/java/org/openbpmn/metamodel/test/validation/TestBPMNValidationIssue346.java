@@ -48,7 +48,7 @@ public class TestBPMNValidationIssue346 {
             assertEquals(2, processes.size());
 
             // Test default process
-            BPMNProcess process = model.openDefaultProces();
+            BPMNProcess process = model.openDefaultProcess();
             assertNotNull(process);
             assertEquals(1, process.getActivities().size());
 

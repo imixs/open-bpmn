@@ -42,7 +42,7 @@ public class TestNavigation {
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
         assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get Task1
         BPMNElementNode task1 = process.findElementNodeById("task_SBK01w");
@@ -80,7 +80,7 @@ public class TestNavigation {
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
         assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get Event2
         BPMNElementNode event2 = process.findElementNodeById("event_IyD2LA");
@@ -117,7 +117,7 @@ public class TestNavigation {
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
         assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get Event2
         BPMNElementNode eventForwardAndSubmit = process.findElementNodeById("event_forwardAndSubmit");
@@ -152,7 +152,7 @@ public class TestNavigation {
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-02.bpmn");
 
         assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get Task1
         BPMNElementNode task1 = process.findElementNodeById("task_SBK01w");
@@ -191,7 +191,7 @@ public class TestNavigation {
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-02.bpmn");
 
         assertEquals(1, model.getProcesses().size());
-        BPMNProcess process = model.openDefaultProces();
+        BPMNProcess process = model.openDefaultProcess();
 
         // get Task1
         BPMNElementNode task1 = process.findElementNodeById("task_SBK01w");

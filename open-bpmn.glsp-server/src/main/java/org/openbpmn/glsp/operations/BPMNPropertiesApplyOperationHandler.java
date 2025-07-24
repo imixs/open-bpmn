@@ -96,7 +96,7 @@ public class BPMNPropertiesApplyOperationHandler
         // is the root element selected?
         if (modelState.getRoot().getId().equals(elementID)) {
             gModelElement = modelState.getRoot();
-            bpmnElement = modelState.getBpmnModel().openDefaultProces();
+            bpmnElement = modelState.getBpmnModel().openDefaultProcess();
         } else {
             // find the corresponding gModelElement and bpmnElement....
             gModelElement = modelState.getIndex().get(elementID).orElse(null);

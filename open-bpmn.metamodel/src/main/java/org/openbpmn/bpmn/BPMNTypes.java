@@ -34,6 +34,10 @@ public class BPMNTypes {
     public static final String MANUAL_TASK = "manualTask";
     public static final String BUSINESSRULE_TASK = "businessRuleTask";
     public static final String RECEIVE_TASK = "receiveTask";
+    public static final String SUB_PROCESS = "subProcess";
+    public static final String ADHOC_SUB_PROCESS = "adHocSubProcess";
+    public static final String TRANSACTION = "transaction";
+    public static final String CALL_ACTIVITY = "callActivity";
 
     // Events
     public static final String EVENT = "event";
@@ -104,7 +108,11 @@ public class BPMNTypes {
             BPMNTypes.SERVICE_TASK, //
             BPMNTypes.SEND_TASK, //
             BPMNTypes.RECEIVE_TASK, //
-            "subProcess", "adHocSubProcess", "transaction", "callActivity" });
+            BPMNTypes.SUB_PROCESS, //
+            BPMNTypes.ADHOC_SUB_PROCESS, //
+            BPMNTypes.TRANSACTION, //
+            BPMNTypes.CALL_ACTIVITY
+    });
 
     public final static List<String> BPMN_EVENTS = Arrays.asList(new String[] { //
             BPMNTypes.EVENT, //

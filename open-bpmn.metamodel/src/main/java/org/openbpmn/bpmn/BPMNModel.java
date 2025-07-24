@@ -765,7 +765,7 @@ public class BPMNModel {
      * elements of the Process. The default process always exists and is not
      * embedded in a Pool.
      */
-    public BPMNProcess openDefaultProces() {
+    public BPMNProcess openDefaultProcess() {
         try {
             return openProcess(null);
         } catch (BPMNModelException e) {
@@ -986,7 +986,7 @@ public class BPMNModel {
 
         this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
 
-        Message message = new Message(this, bpmnElement, BPMNTypes.MESSAGE, this.openDefaultProces());
+        Message message = new Message(this, bpmnElement, BPMNTypes.MESSAGE, this.openDefaultProcess());
         getMessages().add(message);
 
         return message;
@@ -1385,7 +1385,7 @@ public class BPMNModel {
                 }
             } else {
                 // just analyze the default process
-                BPMNElementNode baseElement = openDefaultProces().findElementNodeById(id);
+                BPMNElementNode baseElement = openDefaultProcess().findElementNodeById(id);
                 if (baseElement != null) {
                     return baseElement.getBounds();
                 }
@@ -1434,7 +1434,7 @@ public class BPMNModel {
             }
         }
         // no participant - return the default Participant
-        Participant defaultParticipant = findParticipantByProcessId(this.openDefaultProces().getId());
+        Participant defaultParticipant = findParticipantByProcessId(this.openDefaultProcess().getId());
         return defaultParticipant;
     }
 
@@ -2137,7 +2137,7 @@ public class BPMNModel {
         if (messageNodeList != null && messageNodeList.getLength() > 0) {
             for (int i = 0; i < messageNodeList.getLength(); i++) {
                 Element item = (Element) messageNodeList.item(i);
-                Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProces());
+                Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProcess());
                 messages.add(message);
             }
         }

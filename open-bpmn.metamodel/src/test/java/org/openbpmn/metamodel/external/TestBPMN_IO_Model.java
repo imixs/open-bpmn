@@ -70,7 +70,7 @@ public class TestBPMN_IO_Model {
 
             // We expect 10 Text Annotations. But these are not assigned correctly. We
             // expect an auto assignment to the default process
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             Set<TextAnnotation> textAnnotations = defaultProcess.getTextAnnotations();
             assertEquals(12, textAnnotations.size());
 

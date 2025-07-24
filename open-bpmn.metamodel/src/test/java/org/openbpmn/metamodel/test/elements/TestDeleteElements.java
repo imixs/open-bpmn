@@ -83,7 +83,7 @@ public class TestDeleteElements {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            BPMNProcess processContext = model.openDefaultProces();
+            BPMNProcess processContext = model.openDefaultProcess();
             assertNotNull(processContext);
 
             // add a start and end event
@@ -142,7 +142,7 @@ public class TestDeleteElements {
         String targetNameSpace = "http://org.openbpmn";
         try {
             BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-            BPMNProcess defaultProcess = model.openDefaultProces();
+            BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
 
             // create Participant
@@ -224,7 +224,7 @@ public class TestDeleteElements {
         model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            BPMNProcess publicProcess = model.openDefaultProces();
+            BPMNProcess publicProcess = model.openDefaultProcess();
             assertNotNull(publicProcess);
             // Create a pool with two lanes
             Participant participant = model.addParticipant("example-workflow");
