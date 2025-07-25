@@ -147,8 +147,10 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                     }
                     // Special snap mechanism to snap the dimensions of a Task or Pool to the Grid
                     if (bpmnElementNode instanceof Participant || bpmnElementNode instanceof Activity) {
-                        newSize.setHeight(Math.round(newSize.getHeight() / 10.0) * 10);
-                        newSize.setWidth(Math.round(newSize.getWidth() / 10.0) * 10);
+                        newSize.setHeight(Math.round(newSize.getHeight() / BPMNGridSnapper.GRID_SIZE)
+                                * BPMNGridSnapper.GRID_SIZE);
+                        newSize.setWidth(
+                                Math.round(newSize.getWidth() / BPMNGridSnapper.GRID_SIZE) * BPMNGridSnapper.GRID_SIZE);
                     }
 
                     if (bpmnElementNode instanceof Participant) {

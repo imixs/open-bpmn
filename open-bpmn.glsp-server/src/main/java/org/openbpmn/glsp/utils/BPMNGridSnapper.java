@@ -21,8 +21,7 @@ import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 public class BPMNGridSnapper {
     private static Logger logger = Logger.getLogger(BPMNGridSnapper.class.getName());
 
-    public static final double GRID_X = 10.0;
-    public static final double GRID_Y = 10.0;
+    public static final double GRID_SIZE = 10.0;
 
     private BPMNGridSnapper() {
     }
@@ -37,8 +36,8 @@ public class BPMNGridSnapper {
     public static GPoint snap(final BPMNElementNode elementNode, final GPoint point) {
         double x = point.getX();
         double y = point.getY();
-        x = Math.round(x / GRID_X) * GRID_X;
-        y = Math.round(y / GRID_Y) * GRID_Y;
+        x = Math.round(x / GRID_SIZE) * GRID_SIZE;
+        y = Math.round(y / GRID_SIZE) * GRID_SIZE;
         // In casse of an event we need to adjust the offset!
         if (elementNode instanceof Event) {
             x = x - 3;
@@ -109,8 +108,8 @@ public class BPMNGridSnapper {
     public static BPMNPoint snapBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
         double x = point.getX();
         double y = point.getY();
-        x = Math.round(x / GRID_X) * GRID_X;
-        y = Math.round(y / GRID_Y) * GRID_Y;
+        x = Math.round(x / GRID_SIZE) * GRID_SIZE;
+        y = Math.round(y / GRID_SIZE) * GRID_SIZE;
         // In casse of an event we need to adjust the offset!
         if (elementNode instanceof Event) {
             x = x - 3;
@@ -134,8 +133,8 @@ public class BPMNGridSnapper {
             double x = elementNode.getBounds().getPosition().getX();
             double y = elementNode.getBounds().getPosition().getY();
             // default snaping to current gridsize
-            x = Math.round(x / GRID_X) * GRID_X;
-            y = Math.round(y / GRID_Y) * GRID_Y;
+            x = Math.round(x / GRID_SIZE) * GRID_SIZE;
+            y = Math.round(y / GRID_SIZE) * GRID_SIZE;
             // In casse of an event we need to adjust the offset!
             if (elementNode instanceof Event) {
                 x = x - 3;
