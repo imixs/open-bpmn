@@ -120,7 +120,7 @@ public class BPMNProcess extends BPMNElement {
      * 
      * @throws BPMNModelException
      */
-    public void init() throws BPMNModelException {
+    public BPMNProcess init() throws BPMNModelException {
         if (!initialized) {
 
             // now find all relevant bpmn meta elements
@@ -165,6 +165,7 @@ public class BPMNProcess extends BPMNElement {
             // initialization completed
             initialized = true;
         }
+        return this;
     }
 
     /**

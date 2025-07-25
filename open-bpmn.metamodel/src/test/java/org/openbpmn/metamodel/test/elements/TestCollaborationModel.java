@@ -284,7 +284,38 @@ public class TestCollaborationModel {
             fail();
         }
 
-        logger.info("...model read sucessful: ");
+        logger.info("...model read successful: ");
     }
 
+    /**
+     * This test loads reference model C.4.0.bpmn.
+     * This model contains multipel collaboration models. We open the first one
+     * But we also need to resolve the lanes correctly
+     * See issue #409
+     * 
+     */
+    @Test
+    public void testMultipleCollaborationModels() {
+        logger.info("...read corrupted collaboration model...");
+
+        try {
+            model = BPMNModelFactory.read("/reference/C.4.0.bpmn");
+
+            Set<Participant> participants = model.getParticipants();
+            assertNotNull(participants);
+            assertEquals(1, participants.size());
+
+            Participant participant = participants.iterator().next();
+            assertNotNull(participant);
+            assertEquals("Money Bank", participant.getName());
+            BPMNProcess process = participant.getBpmnProcess().init();
+            assertEquals(2, process.getLanes().size());
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+
+        logger.info("...model read successful: ");
+    }
 }

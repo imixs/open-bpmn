@@ -2045,18 +2045,29 @@ public class BPMNModel {
 
                 String processType = processElement.getAttribute("processType");
                 if (processType.isEmpty()) {
-                    // fix missing element attribute!
-                    // if the model doese not contain at lease one public process, we default now to
-                    // a public type
-                    if (publicCount == 0) {
-                        processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
-                        publicCount++;
-                    } else {
-                        // else set the process to a private type!
+                    // fix missing type attribute!
+
+                    // Issue 409
+                    // in case that the process contains a laneSet we can be sure this is a private
+                    // process.
+                    Set<Element> laneSets = findChildNodesByName(processElement, BPMNNS.BPMN2, "laneSet");
+                    if (laneSets != null && laneSets.size() > 0) {
                         processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
+                    } else {
+                        // if the model doese not contain at lease one public process, we default now to
+                        // a public type
+                        if (publicCount == 0) {
+                            processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
+                            publicCount++;
+                        } else {
+                            // else set the process to a private type!
+                            processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
+                        }
                     }
+
                     logger.warning(
-                            "Set missing processType attribute for process " + processElement.getAttribute("id"));
+                            "Set missing processType=" + processType + " for process "
+                                    + processElement.getAttribute("id"));
                     processElement.setAttribute("processType", processType);
                     setDirty(true);
                 }
