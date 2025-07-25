@@ -144,4 +144,19 @@ public class TestNameSpaces {
         logger.info("...model read successful");
     }
 
+    /**
+     * Test reference model A.2.1 - resolve default process
+     * 
+     * @throws BPMNModelException
+     */
+    @Test
+    public void testRefModelA2_1() throws BPMNModelException {
+        logger.info("...read model");
+        BPMNModel model = BPMNModelFactory.read("/reference/A.2.1.bpmn");
+        BPMNProcess process = model.openDefaultProcess();
+        assertNotNull(process);
+        assertEquals(4, process.getActivities().size());
+        logger.info("...model read successful");
+    }
+
 }

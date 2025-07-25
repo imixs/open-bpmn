@@ -738,7 +738,20 @@ public class BPMNModel {
                 BPMNProcess p = it.next();
                 // default process?
                 if (id == null || id.isEmpty()) {
-                    if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())) {
+                    // if we have only one process take that one
+                    if (processes.size() == 1) {
+                        // we take the only available process
+                        process = p;
+                        if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())) {
+                            // auto fix process type
+                            logger.info("fix wrong process type to PUBIC");
+                            p.setProcessType(BPMNTypes.PROCESS_TYPE_PUBLIC);
+                        }
+                        break;
+                    }
+                    // try to get the first public process
+                    if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())
+                            || processes.size() == 1) {
                         // we take the first public process (should only exists once in the model)
                         process = p;
                         break;
