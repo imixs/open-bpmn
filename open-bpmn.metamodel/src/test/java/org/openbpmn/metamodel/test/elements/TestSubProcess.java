@@ -59,12 +59,13 @@ public class TestSubProcess {
             BPMNElement element = process.findElementById("_ee35fa2c-dfea-40cf-a469-845b765a7b50");
             assertNotNull(element);
             assertTrue(element instanceof Activity);
+
             Activity task = (Activity) element;
-            assertEquals(BPMNTypes.SUB_PROCESS, task.getType());
 
             // Test embedded process
-            BPMNProcess subProcess = new BPMNProcess(model, task.getElementNode(), null);
-            subProcess.init();
+            assertEquals(BPMNTypes.SUB_PROCESS, task.getType());
+            assertTrue(task.hasSubProcess());
+            BPMNProcess subProcess = task.openSubProcess();
             startEvents = subProcess
                     .findElementNodes(n -> (BPMNTypes.START_EVENT.equals(n.getType())));
             assertEquals(1, startEvents.size());

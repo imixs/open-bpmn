@@ -39,9 +39,12 @@
 
 /* BPMN Elements */
 .task>.sprotty-node {
-
-
     fill: #84a1bd;
+    stroke-width: 1px;
+    stroke: var(--theia-foreground);
+}
+.subProcess>.sprotty-node {
+    fill: #84a1bdb3;
     stroke-width: 1px;
     stroke: var(--theia-foreground);
 }

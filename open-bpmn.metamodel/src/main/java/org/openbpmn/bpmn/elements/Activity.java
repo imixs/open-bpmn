@@ -7,6 +7,7 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.validation.BPMNValidationMarker;
 import org.w3c.dom.Element;
@@ -17,8 +18,7 @@ import org.w3c.dom.Element;
  * part of a Process are: Task, Sub-Process, and Call Activity, which allows the
  * inclusion of re-usable Tasks and Processes in the diagram. However, a Process
  * is not a specific graphical object. Instead, it is a set of graphical
- * objects. The following sub clauses will focus on the graphical objects Sub-
- * Process and Task. Activities represent points in a Process flow where work is
+ * objects. Activities represent points in a Process flow where work is
  * performed. They are the executable elements of a BPMN Process. The Activity
  * class is an abstract element, sub-classing from FlowElement
  * 
@@ -29,9 +29,52 @@ public class Activity extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 110.0;
     public final static double DEFAULT_HEIGHT = 50.0;
+    public BPMNProcess subProcess = null;
 
     protected Activity(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
         super(model, node, type, bpmnProcess);
+    }
+
+    /**
+     * Returns true if the activity contains a BPMN sub process. This is true for
+     * the element types SubProcess, AdHocSubProcess, Transaction or CallActivity
+     * 
+     * @return
+     */
+    public boolean hasSubProcess() {
+        if (BPMNTypes.SUB_PROCESS.equals(type)
+                || BPMNTypes.CALL_ACTIVITY.equals(type)
+                || BPMNTypes.ADHOC_SUB_PROCESS.equals(type)
+                || BPMNTypes.TRANSACTION.equals(type)) {
+
+            // Test if we have a expanded shape element
+            Element shape = this.getBpmnShape();
+            if (shape != null && shape.hasAttribute("isExpanded")) {
+                return ("true".equalsIgnoreCase(shape.getAttribute("isExpanded")));
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns an initialized instance of a subprocess for this activity. A sub
+     * process can only be contained by the BPMN elements SubProcess,
+     * AdHocSubProcess, Transaction or CallActivity
+     * 
+     * @return the embedded sub process
+     * @throws BPMNModelException
+     */
+    public BPMNProcess openSubProcess() throws BPMNModelException {
+        if (!hasSubProcess()) {
+            throw new BPMNInvalidTypeException(BPMNInvalidTypeException.INVALID_TYPE,
+                    "Activity type '" + type + "' can not contain a sub process!");
+        }
+        // open embedded process
+        if (subProcess == null) {
+            subProcess = new BPMNProcess(model, this.getElementNode(), BPMNTypes.PROCESS_TYPE_NONE);
+            subProcess.init();
+        }
+        return subProcess;
     }
 
     @Override
@@ -115,13 +158,14 @@ public class Activity extends BPMNElementNode {
     public List<BPMNValidationMarker> validate() {
         resetValidation();
 
-        if (this.getIngoingSequenceFlows().size() == 0 && this.getIngoingMessageFlows().size() == 0) {
+        if (this.getIngoingSequenceFlows().size() == 0 && this.getIngoingMessageFlows().size() == 0
+                && !this.hasSubProcess()) {
             this.addValidationMarker(new BPMNValidationMarker("Task",
                     "A Task must have at least one ingoing Message Flow or Sequence Flow!", this.getId(),
                     BPMNValidationMarker.ErrorType.ERROR));
         }
 
-        if (this.getOutgoingSequenceFlows().size() == 0) {
+        if (this.getOutgoingSequenceFlows().size() == 0 && !this.hasSubProcess()) {
             this.addValidationMarker(new BPMNValidationMarker("Task",
                     "A Task must have at least one outgoing Sequence Flow!", this.getId(),
                     BPMNValidationMarker.ErrorType.ERROR));
