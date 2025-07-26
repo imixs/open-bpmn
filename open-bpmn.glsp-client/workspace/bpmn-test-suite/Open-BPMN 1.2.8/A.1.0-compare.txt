@@ -1,0 +1,5 @@
+Tool name: Open-BPMN 1.2.8 
+Tool version: 1.2.8
+Test case id: A.1.0
+Test procedure: roundtrip
+Description: reformatted XML, removed empty documentation tags

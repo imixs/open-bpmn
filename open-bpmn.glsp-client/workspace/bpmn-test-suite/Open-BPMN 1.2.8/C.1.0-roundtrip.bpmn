@@ -1,0 +1,1102 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:signavio="http://www.signavio.com" xmlns:style="http://www.w4.eu/spec/DataComposer/20120927/Diagram/Style" xmlns:w4="http://www.w4.eu/spec/BPMN/20110701/MODEL" xmlns:w4graph="http://www.w4.eu/spec/BPMN/20110930/GRAPH" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Signavio Process Editor, http://www.signavio.com" exporterVersion="7.0.0" expressionLanguage="http://www.w3.org/1999/XPath" id="sid-bdb880ac-c464-4e5c-aa56-569d709436e0" name="C.1.0" targetNamespace="http://www.signavio.com/bpmn20" typeLanguage="http://www.w3.org/2001/XMLSchema" w4:version="1.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <extensionElements>
+    <open-bpmn:auto-align/>
+  </extensionElements>
+  <message id="sid-328811a0-7f72-468f-92de-6ab19e353312" name="invoice-received-C.1.0">
+    <documentation id="documentation_Wzwvdg"/>
+  </message>
+  <collaboration id="sid-e5defbed-c12d-4c0a-9b5e-0f187e35ffd3">
+    <extensionElements>
+      <w4graph:graphStyle>
+        <w4graph:basic autoResize="false" background="0,0,0" borderColor="255,255,255" collapsed="false" foreground="0,0,0"/>
+        <w4graph:root gridVisible="true" rulerUnit="Pixels" rulerVisible="true" snapToGrid="true" snapToGuide="true">
+          <Grid color="230,230,230" spacing="15"/>
+          <VerticalRuler/>
+          <HorizontalRuler/>
+        </w4graph:root>
+      </w4graph:graphStyle>
+    </extensionElements>
+    <participant id="sid-46891B57-A9D3-4A8B-AEBF-D4BA5F3961AD" name="Team-Assistant" processRef="sid-5FBB6CB3-8A7C-42B5-9024-15BB2684EC57">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="rolle" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="192,192,192" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_4iaD8w"/>
+    </participant>
+    <participant id="Process_Engine_1" name="Process Engine - Invoice Receipt" processRef="bpmn-miwg-test-case-c.1.0">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="rolle" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="192,192,192" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_0GU79A"/>
+    </participant>
+    <messageFlow id="sid-915AC9A0-CD35-4DF2-93F7-4535397622F8" sourceRef="sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D" targetRef="reviewInvoice">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="153,153,153" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_McIWvQ"/>
+    </messageFlow>
+    <messageFlow id="sid-AB6EB7C8-DF5E-42C2-88D0-FA166583AF15" sourceRef="sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD" targetRef="assignApprover">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="153,153,153" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_Pxgt3g"/>
+    </messageFlow>
+    <messageFlow id="sid-7A070DED-8B83-48E1-88A1-5543C481E7BC" sourceRef="sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF" targetRef="StartEvent_1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="153,153,153" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_EZLUHw"/>
+    </messageFlow>
+    <messageFlow id="sid-90902E27-C1CD-4F90-A8F2-486DA4F42117" sourceRef="assignApprover" targetRef="sid-40EC6574-E644-425C-8CE7-EE384F0C3520">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="153,153,153" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_o2Crpg"/>
+    </messageFlow>
+    <messageFlow id="sid-0518A412-1ED3-4CFD-A75C-69FF37EFFC16" sourceRef="reviewInvoice" targetRef="sid-B548B980-12E3-408E-9AC4-7031B85A8F2D">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="153,153,153" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_KvQ0eg"/>
+    </messageFlow>
+    <participant id="participant_YQTkAw" name="Default Process" processRef="process_3vEORg"/>
+  </collaboration>
+  <process id="sid-5FBB6CB3-8A7C-42B5-9024-15BB2684EC57" isClosed="true" isExecutable="false" name="Team-Assistant" processType="None">
+    <extensionElements>
+      <w4graph:graphStyle>
+        <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+      </w4graph:graphStyle>
+    </extensionElements>
+    <laneSet id="sid-c6eca5e8-8b8f-4e42-b8d8-6b7e858672df">
+      <lane id="sid-744AEFB3-C93D-46A3-8976-EFA91784A51F">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue=""/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+          <w4graph:graphStyle>
+            <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          </w4graph:graphStyle>
+        </extensionElements>
+        <flowNodeRef>sid-36EA43D1-0FE6-4197-AC57-7A43785B784B</flowNodeRef>
+        <flowNodeRef>sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF</flowNodeRef>
+        <flowNodeRef>sid-CFAC8502-0E69-4F08-BE36-8499B8C0FA44</flowNodeRef>
+        <flowNodeRef>sid-BC9AC0B6-1785-4E35-A974-7FEF1A586B9D</flowNodeRef>
+        <flowNodeRef>sid-40EC6574-E644-425C-8CE7-EE384F0C3520</flowNodeRef>
+        <flowNodeRef>sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD</flowNodeRef>
+        <flowNodeRef>sid-F0D29912-929D-491C-8D23-73BD80CF980A</flowNodeRef>
+        <flowNodeRef>sid-B548B980-12E3-408E-9AC4-7031B85A8F2D</flowNodeRef>
+        <flowNodeRef>sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D</flowNodeRef>
+        <flowNodeRef>sid-0E349B8B-14A7-4565-988A-38F3A9B624D2</flowNodeRef>
+        <flowNodeRef>sid-282524E6-660F-431D-8F19-1C3E9E9DE817</flowNodeRef>
+        <documentation id="documentation_mpaDLA"/>
+      </lane>
+    </laneSet>
+    <startEvent id="sid-36EA43D1-0FE6-4197-AC57-7A43785B784B" isInterrupting="true" name="Invoice&#10;received">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="109,183,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <outgoing>sid-7971C38C-2EF5-41F2-A24E-3FFCA069EDBF</outgoing>
+      <messageEventDefinition id="sid-7f89416b-58ec-4e26-b9bc-390f9e8f2ae0"/>
+      <documentation id="documentation_rDgLjQ"/>
+    </startEvent>
+    <task completionQuantity="1" id="sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF" isForCompensation="false" name="Scan Invoice" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-7971C38C-2EF5-41F2-A24E-3FFCA069EDBF</incoming>
+      <outgoing>sid-3E8B2FCF-E408-4A5D-9455-8FDE7BB3EF96</outgoing>
+      <documentation id="documentation_ENXD7w"/>
+    </task>
+    <task completionQuantity="1" id="sid-CFAC8502-0E69-4F08-BE36-8499B8C0FA44" isForCompensation="false" name="Archive&#10;original" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-3E8B2FCF-E408-4A5D-9455-8FDE7BB3EF96</incoming>
+      <outgoing>sid-C0540F47-C3C0-4FA8-B000-6D87640A6178</outgoing>
+      <documentation id="documentation_q1ei2A"/>
+    </task>
+    <endEvent id="sid-BC9AC0B6-1785-4E35-A974-7FEF1A586B9D">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="190,0,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-3019478F-48D5-4B85-95B1-E192B9BE4183</incoming>
+      <documentation id="documentation_tEqETA"/>
+    </endEvent>
+    <intermediateCatchEvent id="sid-40EC6574-E644-425C-8CE7-EE384F0C3520" name="Approver to &#10;be assigned">
+      <extensionElements>
+        <signavio:signavioLabel ref="text_name" valign="bottom" x="16.0" y="-8.0"/>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="41,83,231" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-C0540F47-C3C0-4FA8-B000-6D87640A6178</incoming>
+      <outgoing>sid-4AD2006C-9290-42B0-A904-DD8076B791C4</outgoing>
+      <messageEventDefinition id="sid-29fbb68c-e460-48c1-bba9-a1b16906afec"/>
+      <documentation id="documentation_Xqc9Vg"/>
+    </intermediateCatchEvent>
+    <task completionQuantity="1" id="sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD" isForCompensation="false" name="Assign approver" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-4AD2006C-9290-42B0-A904-DD8076B791C4</incoming>
+      <outgoing>sid-26030150-7369-4B7F-8264-B3ABC62BA735</outgoing>
+      <documentation id="documentation_SaAWcw"/>
+    </task>
+    <eventBasedGateway eventGatewayType="Exclusive" gatewayDirection="Diverging" id="sid-F0D29912-929D-491C-8D23-73BD80CF980A" instantiate="false">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="185,139,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-26030150-7369-4B7F-8264-B3ABC62BA735</incoming>
+      <outgoing>sid-71EF9530-A32A-49BC-A783-9B98A5801362</outgoing>
+      <outgoing>sid-4686AFBC-E33A-4657-95A0-B2E27E704152</outgoing>
+      <documentation id="documentation_9LjIBg"/>
+    </eventBasedGateway>
+    <intermediateCatchEvent id="sid-B548B980-12E3-408E-9AC4-7031B85A8F2D" name="Invoice review&#10; needed">
+      <extensionElements>
+        <signavio:signavioLabel ref="text_name" valign="bottom" x="16.0" y="-8.0"/>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="41,83,231" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-4686AFBC-E33A-4657-95A0-B2E27E704152</incoming>
+      <outgoing>sid-D03CC374-8575-4F38-98B4-4DFF014C43CB</outgoing>
+      <messageEventDefinition id="sid-b9aae81c-0006-46ad-9445-89307e8eeed8"/>
+      <documentation id="documentation_1RHfUA"/>
+    </intermediateCatchEvent>
+    <task completionQuantity="1" id="sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D" isForCompensation="false" name="Review and document result" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-D03CC374-8575-4F38-98B4-4DFF014C43CB</incoming>
+      <outgoing>sid-6CB8539C-E02A-4496-94E7-17FAECB0D4B1</outgoing>
+      <documentation id="documentation_7aXwQw"/>
+    </task>
+    <intermediateCatchEvent id="sid-0E349B8B-14A7-4565-988A-38F3A9B624D2" name="7 days">
+      <extensionElements>
+        <signavio:signavioLabel ref="text_name" valign="bottom" x="16.0" y="-8.0"/>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="41,83,231" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-71EF9530-A32A-49BC-A783-9B98A5801362</incoming>
+      <outgoing>sid-3019478F-48D5-4B85-95B1-E192B9BE4183</outgoing>
+      <timerEventDefinition id="sid-6517379a-613c-497d-81cc-b710878d9ebb"/>
+      <documentation id="documentation_ww0Mdw"/>
+    </intermediateCatchEvent>
+    <endEvent id="sid-282524E6-660F-431D-8F19-1C3E9E9DE817">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="190,0,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sid-6CB8539C-E02A-4496-94E7-17FAECB0D4B1</incoming>
+      <documentation id="documentation_LTZLZQ"/>
+    </endEvent>
+    <sequenceFlow id="sid-71EF9530-A32A-49BC-A783-9B98A5801362" isImmediate="true" sourceRef="sid-F0D29912-929D-491C-8D23-73BD80CF980A" targetRef="sid-0E349B8B-14A7-4565-988A-38F3A9B624D2">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_0CVVIA"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-C0540F47-C3C0-4FA8-B000-6D87640A6178" isImmediate="true" sourceRef="sid-CFAC8502-0E69-4F08-BE36-8499B8C0FA44" targetRef="sid-40EC6574-E644-425C-8CE7-EE384F0C3520">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_x8JZdA"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-4AD2006C-9290-42B0-A904-DD8076B791C4" isImmediate="true" sourceRef="sid-40EC6574-E644-425C-8CE7-EE384F0C3520" targetRef="sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_wVmvfw"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-3E8B2FCF-E408-4A5D-9455-8FDE7BB3EF96" isImmediate="true" sourceRef="sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF" targetRef="sid-CFAC8502-0E69-4F08-BE36-8499B8C0FA44">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_7Lbq6g"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-4686AFBC-E33A-4657-95A0-B2E27E704152" isImmediate="true" sourceRef="sid-F0D29912-929D-491C-8D23-73BD80CF980A" targetRef="sid-B548B980-12E3-408E-9AC4-7031B85A8F2D">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_nc6cEQ"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-6CB8539C-E02A-4496-94E7-17FAECB0D4B1" isImmediate="true" sourceRef="sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D" targetRef="sid-282524E6-660F-431D-8F19-1C3E9E9DE817">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_CcGLLQ"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-D03CC374-8575-4F38-98B4-4DFF014C43CB" isImmediate="true" sourceRef="sid-B548B980-12E3-408E-9AC4-7031B85A8F2D" targetRef="sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_Bzz4HA"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-3019478F-48D5-4B85-95B1-E192B9BE4183" isImmediate="true" sourceRef="sid-0E349B8B-14A7-4565-988A-38F3A9B624D2" targetRef="sid-BC9AC0B6-1785-4E35-A974-7FEF1A586B9D">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_pwoCoA"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-26030150-7369-4B7F-8264-B3ABC62BA735" isImmediate="true" sourceRef="sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD" targetRef="sid-F0D29912-929D-491C-8D23-73BD80CF980A">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_y9uuQQ"/>
+    </sequenceFlow>
+    <sequenceFlow id="sid-7971C38C-2EF5-41F2-A24E-3FFCA069EDBF" isImmediate="true" sourceRef="sid-36EA43D1-0FE6-4197-AC57-7A43785B784B" targetRef="sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_J8uGwQ"/>
+    </sequenceFlow>
+  </process>
+  <process id="bpmn-miwg-test-case-c.1.0" isClosed="true" isExecutable="true" name="BPMN MIWG Test Case C.1.0" processType="None">
+    <extensionElements>
+      <w4graph:graphStyle>
+        <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+      </w4graph:graphStyle>
+    </extensionElements>
+    <laneSet id="sid-499dfba4-1449-4914-9e85-55b252800bad">
+      <lane id="Approver" name="Approver">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue=""/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+          <w4graph:graphStyle>
+            <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          </w4graph:graphStyle>
+        </extensionElements>
+        <flowNodeRef>approveInvoice</flowNodeRef>
+        <flowNodeRef>invoice_approved</flowNodeRef>
+        <documentation id="documentation_aCd6BA"/>
+      </lane>
+      <lane id="teamAssistant" name="Team Assistant">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue=""/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+          <w4graph:graphStyle>
+            <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          </w4graph:graphStyle>
+        </extensionElements>
+        <flowNodeRef>assignApprover</flowNodeRef>
+        <flowNodeRef>reviewInvoice</flowNodeRef>
+        <flowNodeRef>reviewSuccessful_gw</flowNodeRef>
+        <flowNodeRef>invoiceNotProcessed</flowNodeRef>
+        <flowNodeRef>StartEvent_1</flowNodeRef>
+        <documentation id="documentation_ZwOj8w"/>
+      </lane>
+      <lane id="Accountant" name="Accountant">
+        <extensionElements>
+          <signavio:signavioMetaData metaKey="bgcolor" metaValue=""/>
+          <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+          <w4graph:graphStyle>
+            <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          </w4graph:graphStyle>
+        </extensionElements>
+        <flowNodeRef>prepareBankTransfer</flowNodeRef>
+        <flowNodeRef>invoiceProcessed</flowNodeRef>
+        <flowNodeRef>archiveInvoice</flowNodeRef>
+        <documentation id="documentation_hJSFNw"/>
+      </lane>
+    </laneSet>
+    <userTask camunda:assignee="${approver}" camunda:formKey="app:approveInvoice.jsf" completionQuantity="1" id="approveInvoice" implementation="webService" isForCompensation="false" name="Approve Invoice" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>reviewSuccessful</incoming>
+      <incoming>sequenceFlow_178</incoming>
+      <outgoing>sequenceFlow_180</outgoing>
+      <potentialOwner id="Bpmn_ResourceRole_m_HMwJ1_EeS1-pEyeWEPig" name="Approve Invoice Potential Owner">
+        <resourceRef>Bpmn_Resource_U0nLMJ1_EeS1-pEyeWEPig</resourceRef>
+      </potentialOwner>
+      <documentation id="documentation_qHU3mg"/>
+    </userTask>
+    <exclusiveGateway gatewayDirection="Diverging" id="invoice_approved" name="Invoice&#10;approved?">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="185,139,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sequenceFlow_180</incoming>
+      <outgoing>invoiceApproved</outgoing>
+      <outgoing>invoiceNotApproved</outgoing>
+      <documentation id="documentation_xHN5gQ"/>
+    </exclusiveGateway>
+    <userTask camunda:assignee="demo" camunda:formKey="app:assignApprover.jsf" completionQuantity="1" id="assignApprover" implementation="webService" isForCompensation="false" name="Assign&#10;Approver" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>SequenceFlow_1</incoming>
+      <outgoing>sequenceFlow_178</outgoing>
+      <potentialOwner id="Bpmn_ResourceRole_cyfnwJ1_EeS1-pEyeWEPig" name="Assign Approver Potential Owner">
+        <resourceRef>Bpmn_Resource_SVLUUJ1_EeS1-pEyeWEPig</resourceRef>
+      </potentialOwner>
+      <documentation id="documentation_c4SzTA"/>
+    </userTask>
+    <userTask camunda:assignee="demo" camunda:formKey="app:reviewInvoice.jsf" completionQuantity="1" id="reviewInvoice" implementation="webService" isForCompensation="false" name="Rechnung klären" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>invoiceNotApproved</incoming>
+      <outgoing>sequenceFlow_183</outgoing>
+      <potentialOwner id="Bpmn_ResourceRole_kGy70J1_EeS1-pEyeWEPig" name="Rechnung Klären Potential Owner">
+        <resourceRef>Bpmn_Resource_SVLUUJ1_EeS1-pEyeWEPig</resourceRef>
+      </potentialOwner>
+      <documentation id="documentation_IvHyqQ"/>
+    </userTask>
+    <exclusiveGateway gatewayDirection="Diverging" id="reviewSuccessful_gw" name="Review&#10;successful?">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="185,139,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>sequenceFlow_183</incoming>
+      <outgoing>reviewSuccessful</outgoing>
+      <outgoing>reviewNotSuccessful</outgoing>
+      <documentation id="documentation_ar919A"/>
+    </exclusiveGateway>
+    <endEvent id="invoiceNotProcessed" name="Invoice not&#10;processed">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="190,0,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>reviewNotSuccessful</incoming>
+      <documentation id="documentation_SISaFg"/>
+    </endEvent>
+    <startEvent camunda:formKey="app:startProcess.jsf" id="StartEvent_1" isInterrupting="true" name="Invoice&#10;received">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="109,183,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <outgoing>SequenceFlow_1</outgoing>
+      <messageEventDefinition id="sid-14929637-5f1e-4d27-811c-ef5e4ddaa4c7" messageRef="sid-328811a0-7f72-468f-92de-6ab19e353312"/>
+      <documentation id="documentation_Vpegng"/>
+    </startEvent>
+    <userTask camunda:candidateGroups="accounting" camunda:formKey="app:prepareBankTransfer.jsf" completionQuantity="1" id="prepareBankTransfer" implementation="webService" isForCompensation="false" name="Prepare&#13;&#10;Bank&#13;&#10;Transfer" startQuantity="1">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>invoiceApproved</incoming>
+      <outgoing>SequenceFlow_2</outgoing>
+      <potentialOwner id="Bpmn_ResourceRole_qEZisJ1_EeS1-pEyeWEPig" name="Prepare Bank Transfer Potential Owner">
+        <resourceRef>Bpmn_Resource_XNpfIJ1_EeS1-pEyeWEPig</resourceRef>
+      </potentialOwner>
+      <documentation id="documentation_nZ8nYw"/>
+    </userTask>
+    <endEvent id="invoiceProcessed" name="Invoice&#10;processed">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffff"/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="190,0,0" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>SequenceFlow_3</incoming>
+      <documentation id="documentation_pxHndQ"/>
+    </endEvent>
+    <serviceTask camunda:delegateExpression="#{archiveService}" completionQuantity="1" id="archiveInvoice" implementation="webService" isForCompensation="false" name="Archive&#10;Invoice" startQuantity="1">
+      <extensionElements>
+        <camunda:field name="text0" stringValue="Hello World"/>
+        <camunda:field name="text1">
+          <camunda:expression>${genderBean.getGenderString(gender)}</camunda:expression>
+        </camunda:field>
+        <camunda:field name="text2">
+          <camunda:expression>Hello ${gender == 'male' ? 'Mr.' : 'Mrs.'} ${name}</camunda:expression>
+        </camunda:field>
+        <camunda:field name="text3">
+          <camunda:string><![CDATA[
+	          Hello World
+	      ]]></camunda:string>
+        </camunda:field>
+        <camunda:field name="text4">
+          <camunda:string><![CDATA[
+	          <p>Hello World</p><br>
+	      ]]></camunda:string>
+        </camunda:field>
+        <signavio:signavioMetaData metaKey="bgcolor" metaValue="#ffffcc"/>
+        <signavio:signavioMetaData metaKey="adaptereventtype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="documentationlink" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="test" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adaptertype" metaValue=""/>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <signavio:signavioMetaData metaKey="adapterconfiguration" metaValue=""/>
+        <signavio:signavioMetaData metaKey="adapterclassname" metaValue=""/>
+        <signavio:signavioMetaData metaKey="servicereferenz" metaValue=""/>
+        <signavio:signavioMetaData metaKey="risiko" metaValue=""/>
+        <signavio:signavioMetaData metaKey="erteiltfreigabe" metaValue=""/>
+        <signavio:signavioMetaData metaKey="riskandcontrols" metaValue=""/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="194,215,235" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <incoming>SequenceFlow_2</incoming>
+      <outgoing>SequenceFlow_3</outgoing>
+      <documentation id="documentation_yamq0g"/>
+    </serviceTask>
+    <sequenceFlow id="invoiceApproved" isImmediate="true" name="yes" sourceRef="invoice_approved" targetRef="prepareBankTransfer">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <conditionExpression id="sid-0ed8a0cb-f28a-4689-bbd8-77dafd0ccfa0" xsi:type="tFormalExpression">${approved}</conditionExpression>
+      <documentation id="documentation_JOc70A"/>
+    </sequenceFlow>
+    <sequenceFlow id="invoiceNotApproved" isImmediate="true" name="no" sourceRef="invoice_approved" targetRef="reviewInvoice">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <conditionExpression id="sid-d4f3f0f7-79c3-4b1c-817e-13d9bdd96666" xsi:type="tFormalExpression">${!approved}</conditionExpression>
+      <documentation id="documentation_3Lo96g"/>
+    </sequenceFlow>
+    <sequenceFlow id="reviewSuccessful" isImmediate="true" name="yes" sourceRef="reviewSuccessful_gw" targetRef="approveInvoice">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <conditionExpression id="sid-e669aead-8bad-4dbb-b282-e9f811e02f77" xsi:type="tFormalExpression">${clarified == 'yes'}</conditionExpression>
+      <documentation id="documentation_CJ0DIw"/>
+    </sequenceFlow>
+    <sequenceFlow id="reviewNotSuccessful" isImmediate="true" name="no" sourceRef="reviewSuccessful_gw" targetRef="invoiceNotProcessed">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <conditionExpression id="sid-628a2fdc-7654-4273-930d-8e3127b9e8b2" xsi:type="tFormalExpression">${clarified == 'no'}</conditionExpression>
+      <documentation id="documentation_QceZWg"/>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow_180" isImmediate="true" sourceRef="approveInvoice" targetRef="invoice_approved">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_iKTVfQ"/>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow_183" isImmediate="true" sourceRef="reviewInvoice" targetRef="reviewSuccessful_gw">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_WQ703g"/>
+    </sequenceFlow>
+    <sequenceFlow id="sequenceFlow_178" isImmediate="true" sourceRef="assignApprover" targetRef="approveInvoice">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_3tnR6Q"/>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_2" isImmediate="true" sourceRef="prepareBankTransfer" targetRef="archiveInvoice">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_DNbovg"/>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_3" isImmediate="true" sourceRef="archiveInvoice" targetRef="invoiceProcessed">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_oMc2uA"/>
+    </sequenceFlow>
+    <sequenceFlow id="SequenceFlow_1" isImmediate="true" sourceRef="StartEvent_1" targetRef="assignApprover">
+      <extensionElements>
+        <signavio:signavioMetaData metaKey="userstory" metaValue="[]"/>
+        <w4graph:graphStyle>
+          <w4graph:basic autoResize="false" background="255,255,255" borderColor="100,100,100" collapsed="false" foreground="0,0,0"/>
+          <w4graph:line automaticRoute="true" avoidObstacleRoute="false" closestRoute="false" routerType="Rectilinear"/>
+        </w4graph:graphStyle>
+      </extensionElements>
+      <documentation id="documentation_N08Lyg"/>
+    </sequenceFlow>
+  </process>
+  <resource id="Bpmn_Resource_SVLUUJ1_EeS1-pEyeWEPig" name="Team Assistant" w4:type="User"/>
+  <resource id="Bpmn_Resource_U0nLMJ1_EeS1-pEyeWEPig" name="Approver" w4:type="User"/>
+  <resource id="Bpmn_Resource_XNpfIJ1_EeS1-pEyeWEPig" name="Accountant" w4:type="User"/>
+  <process definitionalCollaborationRef="sid-e5defbed-c12d-4c0a-9b5e-0f187e35ffd3" id="process_3vEORg" name="Default Process" processType="Public">
+    <documentation id="documentation_mEuQew"/>
+  </process>
+  <bpmndi:BPMNDiagram id="sid-78cf0368-c97e-4dea-885f-0e535c20d6c7" name="Collaboration C.1.0">
+    <bpmndi:BPMNPlane bpmnElement="sid-e5defbed-c12d-4c0a-9b5e-0f187e35ffd3" id="sid-39085760-f7ff-4491-a241-483b340d6533">
+      <bpmndi:BPMNShape bpmnElement="sid-46891B57-A9D3-4A8B-AEBF-D4BA5F3961AD" id="sid-46891B57-A9D3-4A8B-AEBF-D4BA5F3961AD_gui" isHorizontal="true">
+        <omgdc:Bounds height="205.0" width="1007.0" x="17.0" y="15.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel__lsVELdWEeSAMrpVrpCJkg" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="99.0" width="17.0" x="19.0" y="68.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Process_Engine_1" id="Process_Engine_1_gui" isHorizontal="true">
+        <omgdc:Bounds height="488.0" width="1009.0" x="15.0" y="270.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_HHGRALdXEeSAMrpVrpCJkg" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="195.0" width="17.0" x="17.0" y="417.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-744AEFB3-C93D-46A3-8976-EFA91784A51F" id="sid-744AEFB3-C93D-46A3-8976-EFA91784A51F_gui" isHorizontal="true">
+        <omgdc:Bounds height="205.0" width="977.0" x="47.0" y="15.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-36EA43D1-0FE6-4197-AC57-7A43785B784B" color:background-color="#6db700" id="sid-36EA43D1-0FE6-4197-AC57-7A43785B784B_gui">
+        <omgdc:Bounds height="30.0" width="30.0" x="99.0" y="118.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_kPOiQJ2DEeSTzqyH1_lhMw" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="57.0" x="86.0" y="148.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF" color:background-color="#c2d7eb" id="sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="167.0" y="93.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_qN11wJ2DEeSTzqyH1_lhMw" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="85.0" x="175.0" y="125.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-CFAC8502-0E69-4F08-BE36-8499B8C0FA44" color:background-color="#c2d7eb" id="sid-CFAC8502-0E69-4F08-BE36-8499B8C0FA44_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="315.0" y="93.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_rynbMJ2DEeSTzqyH1_lhMw" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="63.0" x="334.0" y="116.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-BC9AC0B6-1785-4E35-A974-7FEF1A586B9D" color:background-color="#be0000" id="sid-BC9AC0B6-1785-4E35-A974-7FEF1A586B9D_gui">
+        <omgdc:Bounds height="28.0" width="28.0" x="941.0" y="63.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_gGu0fQ">
+          <omgdc:Bounds height="20.0" width="100.0" x="909.0" y="102.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-40EC6574-E644-425C-8CE7-EE384F0C3520" color:background-color="#2953e7" id="sid-40EC6574-E644-425C-8CE7-EE384F0C3520_gui">
+        <omgdc:Bounds height="30.0" width="30.0" x="455.75" y="118.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qM6ILbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="73.0" x="434.0" y="84.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD" color:background-color="#c2d7eb" id="sid-64AFCE49-96A2-4A51-96CB-9DF689C37DAD_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="527.5" y="93.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_kQuFIJ2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="102.0" x="526.0" y="125.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-F0D29912-929D-491C-8D23-73BD80CF980A" color:background-color="#b98b00" id="sid-F0D29912-929D-491C-8D23-73BD80CF980A_gui">
+        <omgdc:Bounds height="40.0" width="40.0" x="652.5" y="113.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_tMF7RA">
+          <omgdc:Bounds height="20.0" width="100.0" x="627.5" y="166.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-B548B980-12E3-408E-9AC4-7031B85A8F2D" color:background-color="#2953e7" id="sid-B548B980-12E3-408E-9AC4-7031B85A8F2D_gui">
+        <omgdc:Bounds height="30.0" width="30.0" x="731.75" y="159.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qNhMLbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="90.0" x="701.0" y="125.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D" color:background-color="#c2d7eb" id="sid-6FC20E19-AF3A-4A77-8588-2D671C98D93D_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="797.5" y="134.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_nPj00J2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="51.0" width="75.0" x="810.0" y="149.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-0E349B8B-14A7-4565-988A-38F3A9B624D2" color:background-color="#2953e7" id="sid-0E349B8B-14A7-4565-988A-38F3A9B624D2_gui">
+        <omgdc:Bounds height="30.0" width="30.0" x="731.75" y="62.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qNhMbbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="42.0" x="725.0" y="45.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-282524E6-660F-431D-8F19-1C3E9E9DE817" color:background-color="#be0000" id="sid-282524E6-660F-431D-8F19-1C3E9E9DE817_gui">
+        <omgdc:Bounds height="28.0" width="28.0" x="941.0" y="160.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_LujxaQ">
+          <omgdc:Bounds height="20.0" width="100.0" x="909.0" y="199.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Approver" id="Approver_gui" isHorizontal="true">
+        <omgdc:Bounds height="161.0" width="979.0" x="45.0" y="453.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_GpRFgLdXEeSAMrpVrpCJkg" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="64.0" width="17.0" x="47.0" y="501.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="teamAssistant" id="teamAssistant_gui" isHorizontal="true">
+        <omgdc:Bounds height="183.0" width="979.0" x="45.0" y="270.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_GKT4oLdXEeSAMrpVrpCJkg" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="102.0" width="17.0" x="47.0" y="310.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Accountant" id="Accountant_gui" isHorizontal="true">
+        <omgdc:Bounds height="144.0" width="979.0" x="45.0" y="614.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_Hq0CELdXEeSAMrpVrpCJkg" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="77.0" width="17.0" x="47.0" y="648.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="approveInvoice" color:background-color="#c2d7eb" id="approveInvoice_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="368.0" y="495.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel__UDvoJ2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="60.0" x="388.0" y="518.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="invoice_approved" color:background-color="#b98b00" id="invoice_approved_gui">
+        <omgdc:Bounds height="40.0" width="40.0" x="503.0" y="515.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_A3dcEJ2GEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="64.0" x="491.0" y="555.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignApprover" color:background-color="#c2d7eb" id="assignApprover_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="195.0" y="322.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_ogaYsJ2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="64.0" x="213.0" y="345.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reviewInvoice" color:background-color="#c2d7eb" id="reviewInvoice_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="563.0" y="322.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_o6ZmAJ2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="69.0" x="579.0" y="345.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="reviewSuccessful_gw" color:background-color="#b98b00" id="reviewSuccessful_gw_gui">
+        <omgdc:Bounds height="40.0" width="40.0" x="708.0" y="342.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_N4NI8LbJEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="75.0" x="691.0" y="382.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="invoiceNotProcessed" color:background-color="#be0000" id="invoiceNotProcessed_gui">
+        <omgdc:Bounds height="28.0" width="28.0" x="941.0" y="348.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_-pfvsJ2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="72.0" x="919.0" y="376.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="StartEvent_1" color:background-color="#6db700" id="StartEvent_1_gui">
+        <omgdc:Bounds height="30.0" width="30.0" x="110.0" y="347.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_dBgFYJ2FEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="57.0" x="97.0" y="377.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="prepareBankTransfer" color:background-color="#c2d7eb" id="prepareBankTransfer_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="653.0" y="655.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_BPsV4J2GEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="51.0" width="63.0" x="672.0" y="670.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="invoiceProcessed" color:background-color="#be0000" id="invoiceProcessed_gui">
+        <omgdc:Bounds height="28.0" width="28.0" x="941.0" y="681.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_CAxNgJ2GEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="63.0" x="924.0" y="709.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="archiveInvoice" color:background-color="#c2d7eb" id="archiveInvoice_gui">
+        <omgdc:Bounds height="80.0" width="100.0" x="795.0" y="655.0"/>
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_BpMbAJ2GEeSjQLtFitQlLQ" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="34.0" width="57.0" x="817.0" y="678.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-71EF9530-A32A-49BC-A783-9B98A5801362" id="sid-71EF9530-A32A-49BC-A783-9B98A5801362_gui">
+        <omgdi:waypoint x="672.0" y="119.0"/>
+        <omgdi:waypoint x="672.0" y="77.0"/>
+        <omgdi:waypoint x="731.0" y="77.0"/>
+        <omgdi:waypoint x="731.0" y="80.0"/>
+        <omgdi:waypoint x="732.0" y="80.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="invoiceApproved" id="invoiceApproved_gui">
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qOIQLbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="27.0" x="548.0" y="540.0"/>
+        </bpmndi:BPMNLabel>
+        <omgdi:waypoint x="548.0" y="535.0"/>
+        <omgdi:waypoint x="602.0" y="535.0"/>
+        <omgdi:waypoint x="602.0" y="695.0"/>
+        <omgdi:waypoint x="653.0" y="695.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-C0540F47-C3C0-4FA8-B000-6D87640A6178" id="sid-C0540F47-C3C0-4FA8-B000-6D87640A6178_gui">
+        <omgdi:waypoint x="415.0" y="133.0"/>
+        <omgdi:waypoint x="455.0" y="133.0"/>
+        <omgdi:waypoint x="456.0" y="133.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-4AD2006C-9290-42B0-A904-DD8076B791C4" id="sid-4AD2006C-9290-42B0-A904-DD8076B791C4_gui">
+        <omgdi:waypoint x="492.0" y="136.0"/>
+        <omgdi:waypoint x="527.0" y="136.0"/>
+        <omgdi:waypoint x="527.0" y="133.0"/>
+        <omgdi:waypoint x="528.0" y="133.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-3E8B2FCF-E408-4A5D-9455-8FDE7BB3EF96" id="sid-3E8B2FCF-E408-4A5D-9455-8FDE7BB3EF96_gui">
+        <omgdi:waypoint x="267.0" y="133.0"/>
+        <omgdi:waypoint x="315.0" y="133.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-4686AFBC-E33A-4657-95A0-B2E27E704152" id="sid-4686AFBC-E33A-4657-95A0-B2E27E704152_gui">
+        <omgdi:waypoint x="672.0" y="158.0"/>
+        <omgdi:waypoint x="672.0" y="174.0"/>
+        <omgdi:waypoint x="731.0" y="174.0"/>
+        <omgdi:waypoint x="731.0" y="177.0"/>
+        <omgdi:waypoint x="732.0" y="177.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="invoiceNotApproved" id="invoiceNotApproved_gui">
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qOvULbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="23.0" x="528.0" y="494.0"/>
+        </bpmndi:BPMNLabel>
+        <omgdi:waypoint x="523.0" y="520.0"/>
+        <omgdi:waypoint x="523.0" y="362.0"/>
+        <omgdi:waypoint x="563.0" y="362.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-915AC9A0-CD35-4DF2-93F7-4535397622F8" id="sid-915AC9A0-CD35-4DF2-93F7-4535397622F8_gui">
+        <omgdi:waypoint x="846.0" y="214.0"/>
+        <omgdi:waypoint x="846.0" y="254.0"/>
+        <omgdi:waypoint x="629.0" y="254.0"/>
+        <omgdi:waypoint x="629.0" y="322.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-AB6EB7C8-DF5E-42C2-88D0-FA166583AF15" id="sid-AB6EB7C8-DF5E-42C2-88D0-FA166583AF15_gui">
+        <omgdi:waypoint x="576.0" y="173.0"/>
+        <omgdi:waypoint x="576.0" y="254.0"/>
+        <omgdi:waypoint x="261.0" y="254.0"/>
+        <omgdi:waypoint x="261.0" y="322.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="reviewSuccessful" id="reviewSuccessful_gui">
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qOvUbbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="27.0" x="733.0" y="321.0"/>
+        </bpmndi:BPMNLabel>
+        <omgdi:waypoint x="728.0" y="347.0"/>
+        <omgdi:waypoint x="728.0" y="305.0"/>
+        <omgdi:waypoint x="418.0" y="305.0"/>
+        <omgdi:waypoint x="418.0" y="495.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="reviewNotSuccessful" id="reviewNotSuccessful_gui">
+        <bpmndi:BPMNLabel id="Bpmndi_BPMNLabel_4qOvUrbIEeS1kPPByrr18w" labelStyle="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+          <omgdc:Bounds height="17.0" width="23.0" x="753.0" y="367.0"/>
+        </bpmndi:BPMNLabel>
+        <omgdi:waypoint x="758.0" y="367.0"/>
+        <omgdi:waypoint x="850.0" y="367.0"/>
+        <omgdi:waypoint x="850.0" y="366.0"/>
+        <omgdi:waypoint x="941.0" y="366.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_180" id="sequenceFlow_180_gui">
+        <omgdi:waypoint x="468.0" y="535.0"/>
+        <omgdi:waypoint x="486.0" y="535.0"/>
+        <omgdi:waypoint x="486.0" y="540.0"/>
+        <omgdi:waypoint x="503.0" y="540.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-6CB8539C-E02A-4496-94E7-17FAECB0D4B1" id="sid-6CB8539C-E02A-4496-94E7-17FAECB0D4B1_gui">
+        <omgdi:waypoint x="898.0" y="174.0"/>
+        <omgdi:waypoint x="919.0" y="174.0"/>
+        <omgdi:waypoint x="919.0" y="178.0"/>
+        <omgdi:waypoint x="941.0" y="178.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_183" id="sequenceFlow_183_gui">
+        <omgdi:waypoint x="663.0" y="362.0"/>
+        <omgdi:waypoint x="686.0" y="362.0"/>
+        <omgdi:waypoint x="686.0" y="367.0"/>
+        <omgdi:waypoint x="708.0" y="367.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-7A070DED-8B83-48E1-88A1-5543C481E7BC" id="sid-7A070DED-8B83-48E1-88A1-5543C481E7BC_gui">
+        <omgdi:waypoint x="216.0" y="173.0"/>
+        <omgdi:waypoint x="216.0" y="253.0"/>
+        <omgdi:waypoint x="125.0" y="253.0"/>
+        <omgdi:waypoint x="125.0" y="347.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-D03CC374-8575-4F38-98B4-4DFF014C43CB" id="sid-D03CC374-8575-4F38-98B4-4DFF014C43CB_gui">
+        <omgdi:waypoint x="768.0" y="177.0"/>
+        <omgdi:waypoint x="797.0" y="177.0"/>
+        <omgdi:waypoint x="797.0" y="174.0"/>
+        <omgdi:waypoint x="798.0" y="174.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow_178" id="sequenceFlow_178_gui">
+        <omgdi:waypoint x="295.0" y="362.0"/>
+        <omgdi:waypoint x="325.0" y="362.0"/>
+        <omgdi:waypoint x="325.0" y="535.0"/>
+        <omgdi:waypoint x="368.0" y="535.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-90902E27-C1CD-4F90-A8F2-486DA4F42117" id="sid-90902E27-C1CD-4F90-A8F2-486DA4F42117_gui">
+        <omgdi:waypoint x="228.0" y="322.0"/>
+        <omgdi:waypoint x="228.0" y="235.0"/>
+        <omgdi:waypoint x="470.0" y="235.0"/>
+        <omgdi:waypoint x="470.0" y="154.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-0518A412-1ED3-4CFD-A75C-69FF37EFFC16" id="sid-0518A412-1ED3-4CFD-A75C-69FF37EFFC16_gui">
+        <omgdi:waypoint x="596.0" y="322.0"/>
+        <omgdi:waypoint x="596.0" y="237.0"/>
+        <omgdi:waypoint x="746.0" y="237.0"/>
+        <omgdi:waypoint x="746.0" y="195.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_2" id="SequenceFlow_2_gui">
+        <omgdi:waypoint x="753.0" y="695.0"/>
+        <omgdi:waypoint x="795.0" y="695.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_3" id="SequenceFlow_3_gui">
+        <omgdi:waypoint x="895.0" y="695.0"/>
+        <omgdi:waypoint x="918.0" y="695.0"/>
+        <omgdi:waypoint x="918.0" y="699.0"/>
+        <omgdi:waypoint x="941.0" y="699.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_1" id="SequenceFlow_1_gui">
+        <omgdi:waypoint x="146.0" y="365.0"/>
+        <omgdi:waypoint x="171.0" y="365.0"/>
+        <omgdi:waypoint x="171.0" y="362.0"/>
+        <omgdi:waypoint x="195.0" y="362.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-3019478F-48D5-4B85-95B1-E192B9BE4183" id="sid-3019478F-48D5-4B85-95B1-E192B9BE4183_gui">
+        <omgdi:waypoint x="768.0" y="80.0"/>
+        <omgdi:waypoint x="854.0" y="80.0"/>
+        <omgdi:waypoint x="854.0" y="81.0"/>
+        <omgdi:waypoint x="941.0" y="81.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-26030150-7369-4B7F-8264-B3ABC62BA735" id="sid-26030150-7369-4B7F-8264-B3ABC62BA735_gui">
+        <omgdi:waypoint x="628.0" y="133.0"/>
+        <omgdi:waypoint x="652.0" y="133.0"/>
+        <omgdi:waypoint x="658.0" y="133.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-7971C38C-2EF5-41F2-A24E-3FFCA069EDBF" id="sid-7971C38C-2EF5-41F2-A24E-3FFCA069EDBF_gui">
+        <omgdi:waypoint x="135.0" y="136.0"/>
+        <omgdi:waypoint x="151.0" y="136.0"/>
+        <omgdi:waypoint x="151.0" y="133.0"/>
+        <omgdi:waypoint x="167.0" y="133.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="participant_YQTkAw" id="BPMNShape_QCUW0g">
+        <omgdc:Bounds height="210.0" width="800.0" x="10.0" y="10.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_A7ltUQ">
+          <omgdc:Bounds x="10.0" y="10.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-328811a0-7f72-468f-92de-6ab19e353312" id="BPMNShape_736VqA">
+        <omgdc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_5Nb0UQ">
+          <omgdc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="Bpmndi_BPMNLabelStyle_M44qwJ1_EeS1-pEyeWEPig">
+      <omgdc:Font name="Segoe UI" size="11.00"/>
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</definitions>

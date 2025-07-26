@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" camunda:diagramRelationId="8dc12e9b-19d8-4ead-b538-41e8a4a9b4b2" exporter="Camunda Web Modeler" exporterVersion="3cd8340" id="_5SVkEIXnEeSmwfgVk-ryvQ" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" targetNamespace="http://camunda.org/schema/1.0/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:extensionElements>
+    <open-bpmn:auto-align/>
+  </bpmn2:extensionElements>
+  <bpmn2:import importType="http://www.omg.org/spec/BPMN/20100524/MODEL" location="C.9.1.bpmn" namespace="http://bpmn.io/schema/bpmn/Definitions_1"/>
+  <bpmn2:collaboration id="Collaboration_ManualDecision">
+    <bpmn2:participant id="Participant_01" name="Manual Check" processRef="ManualCheck"/>
+  </bpmn2:collaboration>
+  <bpmn2:message id="Message_0fvpzfg" name="Message_DocumentRequested">
+    <bpmn2:extensionElements>
+      <zeebe:subscription correlationKey="= documentReferenceId"/>
+    </bpmn2:extensionElements>
+    <bpmn2:documentation id="documentation_jfVBdw"/>
+  </bpmn2:message>
+  <bpmn2:process id="ManualCheck" isExecutable="true" name="Manual Check" processType="Public">
+    <bpmn2:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_2s8lq02">{
+  "components": [
+    {
+      "key": "applicationNumber",
+      "label": "Application Number",
+      "type": "textfield",
+      "id": "Field_1djmro0"
+    },
+    {
+      "text": "&lt;img src=\"http://localhost:8080/camunda/online/banking/img/core-img/logo.png\"&gt;&lt;h2&gt;Instructions:&lt;/h2&gt;&lt;p&gt;Based on internal protocal and the given information below, tick the checkbox for 'Approved' if this application should be approved.&lt;/p&gt;&lt;p&gt; Otherwise, leave this checkbox blank.&lt;/p&gt;",
+      "type": "text",
+      "id": "Field_0e9521u"
+    },
+    {
+      "key": "applicantName",
+      "label": "Applicant",
+      "type": "textfield",
+      "id": "Field_1ex9187"
+    },
+    {
+      "key": "age",
+      "label": "Current Age",
+      "type": "number",
+      "id": "Field_17vnd80"
+    },
+    {
+      "key": "employment",
+      "label": "Employment",
+      "type": "textfield",
+      "id": "Field_08mj5fv"
+    },
+    {
+      "key": "category",
+      "label": "Category",
+      "type": "textfield",
+      "id": "Field_1k7e84u"
+    },
+    {
+      "key": "priceIndication",
+      "label": "Price indication",
+      "type": "textfield",
+      "id": "Field_1d6bhc2"
+    },
+    {
+      "key": "approved",
+      "label": "Approved",
+      "type": "checkbox",
+      "id": "Field_0hwfap9"
+    }
+  ],
+  "schemaVersion": 4,
+  "type": "default",
+  "id": "Form_0840o2b",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "1.1",
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "1db7fd4"
+  }
+}</zeebe:userTaskForm>
+    </bpmn2:extensionElements>
+    <bpmn2:userTask id="UserTask_DecideOnApplication" name="Decide on application">
+      <bpmn2:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="= string join(risks, &quot;, &quot;)" target="risksText"/>
+          <zeebe:input source="= applicant.age" target="age"/>
+          <zeebe:input source="= applicant.name" target="applicantName"/>
+        </zeebe:ioMapping>
+        <zeebe:assignmentDefinition candidateGroups="clerks"/>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_2s8lq02"/>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>Flow_08vmski</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_0vjv3ik</bpmn2:outgoing>
+      <bpmn2:documentation id="documentation_e5su0Q"/>
+    </bpmn2:userTask>
+    <bpmn2:startEvent id="StartEvent_DecideManually" name="Decide Manually">
+      <bpmn2:outgoing>Flow_08vmski</bpmn2:outgoing>
+      <bpmn2:documentation id="documentation_VYAiMw"/>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="Flow_08vmski" sourceRef="StartEvent_DecideManually" targetRef="UserTask_DecideOnApplication">
+      <bpmn2:documentation id="documentation_Xjzzpg"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_0vjv3ik" sourceRef="UserTask_DecideOnApplication" targetRef="EndEvent_ManuallyDecided">
+      <bpmn2:documentation id="documentation_2dEDhQ"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:boundaryEvent attachedToRef="UserTask_DecideOnApplication" id="TimerEvent_Timeout" name="Timeout (7 days)">
+      <bpmn2:outgoing>Flow_03n7pdb</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_0vna3l8">
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">P7D</bpmn2:timeDuration>
+      </bpmn2:timerEventDefinition>
+      <bpmn2:documentation id="documentation_HwpbGg"/>
+    </bpmn2:boundaryEvent>
+    <bpmn2:sequenceFlow id="Flow_03n7pdb" sourceRef="TimerEvent_Timeout" targetRef="ErrorEndEvent_Timeout">
+      <bpmn2:documentation id="documentation_Gl2dwg"/>
+    </bpmn2:sequenceFlow>
+    <bpmn2:subProcess id="Activity_0uvp3cb" isExecutable="true" triggeredByEvent="true">
+      <bpmn2:startEvent id="StartMessageEvent_DocumentRequested" isInterrupting="false" name="Document requested">
+        <bpmn2:outgoing>Flow_0irfroh</bpmn2:outgoing>
+        <bpmn2:messageEventDefinition id="MessageEventDefinition_0cl167n" messageRef="Message_0fvpzfg"/>
+        <bpmn2:documentation id="documentation_0P90bg"/>
+      </bpmn2:startEvent>
+      <bpmn2:sequenceFlow id="Flow_0irfroh" sourceRef="StartMessageEvent_DocumentRequested" targetRef="CallActivity_RequestDocument">
+        <bpmn2:documentation id="documentation_jpmkpA"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:endEvent id="EndEvent_DocumentReceived" name="Document Received">
+        <bpmn2:incoming>Flow_1wwxns6</bpmn2:incoming>
+        <bpmn2:documentation id="documentation_haopcg"/>
+      </bpmn2:endEvent>
+      <bpmn2:sequenceFlow id="Flow_1wwxns6" sourceRef="CallActivity_RequestDocument" targetRef="EndEvent_DocumentReceived">
+        <bpmn2:documentation id="documentation_em0m4w"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:callActivity calledElement="requestDocument_en" id="CallActivity_RequestDocument" name="Document Request">
+        <bpmn2:extensionElements>
+          <zeebe:calledElement processId="requestDocument_en" propagateAllChildVariables="true"/>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0irfroh</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1wwxns6</bpmn2:outgoing>
+        <bpmn2:multiInstanceLoopCharacteristics>
+          <bpmn2:extensionElements>
+            <zeebe:loopCharacteristics inputCollection="=documents" inputElement="document"/>
+          </bpmn2:extensionElements>
+        </bpmn2:multiInstanceLoopCharacteristics>
+        <bpmn2:documentation id="documentation_8cCgHA"/>
+      </bpmn2:callActivity>
+      <bpmn2:documentation id="documentation_6OkMQA"/>
+    </bpmn2:subProcess>
+    <bpmn2:subProcess id="Activity_1esx1s7" isExecutable="true" triggeredByEvent="true">
+      <bpmn2:startEvent id="StartTimerEvent_AcceleratedDecision" isInterrupting="false" name="Accelerated decision">
+        <bpmn2:outgoing>Flow_0kaot38</bpmn2:outgoing>
+        <bpmn2:timerEventDefinition id="TimerEventDefinition_0kdavba">
+          <bpmn2:timeCycle xsi:type="bpmn2:tFormalExpression">R1/P5D</bpmn2:timeCycle>
+        </bpmn2:timerEventDefinition>
+        <bpmn2:documentation id="documentation_mE85yQ"/>
+      </bpmn2:startEvent>
+      <bpmn2:userTask id="UserTask_AccelerateDecision" name="Accelerate decision making">
+        <bpmn2:extensionElements>
+          <zeebe:assignmentDefinition candidateGroups="teamleaders"/>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_1octlto</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1t18skh</bpmn2:outgoing>
+        <bpmn2:documentation id="documentation_RfW8yw"/>
+      </bpmn2:userTask>
+      <bpmn2:endEvent id="EndEvent_DecisionAccelerated" name="Decision accelerated">
+        <bpmn2:incoming>Flow_1t18skh</bpmn2:incoming>
+        <bpmn2:documentation id="documentation_8yMrdQ"/>
+      </bpmn2:endEvent>
+      <bpmn2:sequenceFlow id="Flow_0kaot38" sourceRef="StartTimerEvent_AcceleratedDecision" targetRef="SendTask_NotifyCustomerDelay">
+        <bpmn2:documentation id="documentation_rpfr5w"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:sequenceFlow id="Flow_1t18skh" sourceRef="UserTask_AccelerateDecision" targetRef="EndEvent_DecisionAccelerated">
+        <bpmn2:documentation id="documentation_AwrT0Q"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:sequenceFlow id="Flow_1octlto" sourceRef="SendTask_NotifyCustomerDelay" targetRef="UserTask_AccelerateDecision">
+        <bpmn2:documentation id="documentation_beFFqQ"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:sendTask id="SendTask_NotifyCustomerDelay" name="Notify customer about delay">
+        <bpmn2:extensionElements>
+          <zeebe:taskDefinition type="notifyCustomerDelay"/>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0kaot38</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1octlto</bpmn2:outgoing>
+        <bpmn2:documentation id="documentation_AoILXw"/>
+      </bpmn2:sendTask>
+      <bpmn2:documentation id="documentation_07bZQQ"/>
+    </bpmn2:subProcess>
+    <bpmn2:subProcess id="Activity_02a6b2h" isExecutable="true" triggeredByEvent="true">
+      <bpmn2:userTask id="UserTask_CheckForFraud" name="Check for Fraud">
+        <bpmn2:extensionElements>
+          <zeebe:assignmentDefinition candidateGroups="riskteam"/>
+        </bpmn2:extensionElements>
+        <bpmn2:incoming>Flow_0nttki4</bpmn2:incoming>
+        <bpmn2:outgoing>Flow_1istmr0</bpmn2:outgoing>
+        <bpmn2:documentation id="documentation_OujIdQ"/>
+      </bpmn2:userTask>
+      <bpmn2:sequenceFlow id="Flow_0nttki4" sourceRef="StartMessageEvent_FraudSuspected" targetRef="UserTask_CheckForFraud">
+        <bpmn2:documentation id="documentation_rhTmMA"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:startEvent id="StartMessageEvent_FraudSuspected" isInterrupting="false" name="Fraud suspected">
+        <bpmn2:outgoing>Flow_0nttki4</bpmn2:outgoing>
+        <bpmn2:messageEventDefinition id="MessageEventDefinition_1qmxrb4" messageRef="Message_10rm6h0"/>
+        <bpmn2:documentation id="documentation_N0enWA"/>
+      </bpmn2:startEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_Yes" name="Yes" sourceRef="Gateway_FraudDetected" targetRef="ErrorEndEvent_FraudDetected">
+        <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">=fraud</bpmn2:conditionExpression>
+        <bpmn2:documentation id="documentation_X7S05A"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:endEvent id="ErrorEndEvent_FraudDetected" name="Fraud Detected">
+        <bpmn2:incoming>SequenceFlow_Yes</bpmn2:incoming>
+        <bpmn2:errorEventDefinition errorRef="Error_0hvt466" id="ErrorEventDefinition_06wkgx9"/>
+        <bpmn2:documentation id="documentation_ofLfFA"/>
+      </bpmn2:endEvent>
+      <bpmn2:exclusiveGateway default="SequenceFlow_No" id="Gateway_FraudDetected" name="Fraud detected?">
+        <bpmn2:incoming>Flow_1istmr0</bpmn2:incoming>
+        <bpmn2:outgoing>SequenceFlow_No</bpmn2:outgoing>
+        <bpmn2:outgoing>SequenceFlow_Yes</bpmn2:outgoing>
+        <bpmn2:documentation id="documentation_5z0hyA"/>
+      </bpmn2:exclusiveGateway>
+      <bpmn2:sequenceFlow id="Flow_1istmr0" sourceRef="UserTask_CheckForFraud" targetRef="Gateway_FraudDetected">
+        <bpmn2:documentation id="documentation_OG2KtQ"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:endEvent id="EndEvent_FraudNoDetected" name="Fraud no detected">
+        <bpmn2:incoming>SequenceFlow_No</bpmn2:incoming>
+        <bpmn2:documentation id="documentation_hyt13A"/>
+      </bpmn2:endEvent>
+      <bpmn2:sequenceFlow id="SequenceFlow_No" name="No" sourceRef="Gateway_FraudDetected" targetRef="EndEvent_FraudNoDetected">
+        <bpmn2:documentation id="documentation_HvFMog"/>
+      </bpmn2:sequenceFlow>
+      <bpmn2:documentation id="documentation_iUTNIA"/>
+    </bpmn2:subProcess>
+    <bpmn2:endEvent id="ErrorEndEvent_Timeout" name="Timeout">
+      <bpmn2:incoming>Flow_03n7pdb</bpmn2:incoming>
+      <bpmn2:errorEventDefinition errorRef="Error_0hvt466" id="ErrorEventDefinition_0zy5rzo"/>
+      <bpmn2:documentation id="documentation_kzazYQ"/>
+    </bpmn2:endEvent>
+    <bpmn2:endEvent id="EndEvent_ManuallyDecided" name="Manually Decided">
+      <bpmn2:incoming>Flow_0vjv3ik</bpmn2:incoming>
+      <bpmn2:documentation id="documentation_LGAfag"/>
+    </bpmn2:endEvent>
+    <bpmn2:documentation id="documentation_wkcMGg"/>
+  </bpmn2:process>
+  <bpmn2:error errorCode="02" id="Error_0hvt466" name="Error_FraudDetected"/>
+  <bpmn2:message id="Message_10rm6h0" name="Message_FraudSuspected">
+    <bpmn2:extensionElements>
+      <zeebe:subscription correlationKey="=fraudSuspectedId"/>
+    </bpmn2:extensionElements>
+    <bpmn2:documentation id="documentation_hYgDSQ"/>
+  </bpmn2:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane bpmnElement="Collaboration_ManualDecision" id="BPMNPlane_1">
+      <bpmndi:BPMNShape bpmnElement="Participant_01" id="Participant_1obg1jw_di" isHorizontal="true">
+        <dc:Bounds height="720" width="610" x="150" y="60"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="UserTask_DecideOnApplication" id="UserTask_1b9zsmd_di">
+        <dc:Bounds height="80" width="100" x="296" y="90"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="StartEvent_DecideManually" id="Event_1gvnk0w_di">
+        <dc:Bounds height="36" width="36" x="212" y="112"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="82" x="194" y="155"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Activity_0uvp3cb" id="Activity_0omq74z_di" isExpanded="true">
+        <dc:Bounds height="130" width="314" x="200" y="270"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="StartMessageEvent_DocumentRequested" id="Event_08x271y_di">
+        <dc:Bounds height="36" width="36" x="220" y="312"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="27" width="52" x="213" y="355"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_DocumentReceived" id="Event_072y3gq_di">
+        <dc:Bounds height="36" width="36" x="452" y="312"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="27" width="52" x="444" y="355"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="CallActivity_RequestDocument" id="Activity_1u7020p_di">
+        <dc:Bounds height="80" width="100" x="300" y="290"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0irfroh" id="Flow_0irfroh_di">
+        <di:waypoint x="256" y="330"/>
+        <di:waypoint x="300" y="330"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_1wwxns6" id="Flow_1wwxns6_di">
+        <di:waypoint x="400" y="330"/>
+        <di:waypoint x="452" y="330"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="Activity_1esx1s7" id="Activity_1q2kuce_di" isExpanded="true">
+        <dc:Bounds height="130" width="540" x="200" y="420"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="StartTimerEvent_AcceleratedDecision" id="Event_0chptl4_di">
+        <dc:Bounds height="36" width="36" x="226" y="462"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="27" width="58" x="217" y="505"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="UserTask_AccelerateDecision" id="_BPMNShape_UserTask_6">
+        <dc:Bounds height="80" width="100" x="450" y="440"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_DecisionAccelerated" id="_BPMNShape_EndEvent_28">
+        <dc:Bounds height="36" width="36" x="596" y="462"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="27" width="57" x="588" y="503"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="SendTask_NotifyCustomerDelay" id="Activity_0uvyfcs_di">
+        <dc:Bounds height="80" width="100" x="300" y="440"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0kaot38" id="Flow_0kaot38_di">
+        <di:waypoint x="262" y="480"/>
+        <di:waypoint x="300" y="480"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_1t18skh" id="Flow_1t18skh_di">
+        <di:waypoint x="550" y="480"/>
+        <di:waypoint x="596" y="480"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_1octlto" id="Flow_1octlto_di">
+        <di:waypoint x="400" y="480"/>
+        <di:waypoint x="450" y="480"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="Activity_02a6b2h" id="BPMNShape_000cefj" isExpanded="true">
+        <dc:Bounds height="190" width="410" x="200" y="570"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="UserTask_CheckForFraud" id="BPMNShape_0bmmhhb">
+        <dc:Bounds height="80" width="100" x="306" y="590"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="StartMessageEvent_FraudSuspected" id="Event_18lzvkq_di">
+        <dc:Bounds height="36" width="36" x="226" y="612"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="82" x="203" y="655"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="ErrorEndEvent_FraudDetected" id="Event_0kjtrta_di">
+        <dc:Bounds height="36" width="36" x="542" y="682"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="76" x="526" y="723"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Gateway_FraudDetected" id="Gateway_0076dah_di" isMarkerVisible="true">
+        <dc:Bounds height="50" width="50" x="445" y="605"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="81" x="431" y="583"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_FraudNoDetected" id="Event_04ww0hd_di">
+        <dc:Bounds height="36" width="36" x="542" y="612"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="90" x="517" y="655"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0nttki4" id="BPMNEdge_0km1hw9">
+        <di:waypoint x="262" y="630"/>
+        <di:waypoint x="306" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_Yes" id="BPMNEdge_10mgh4a">
+        <di:waypoint x="470" y="655"/>
+        <di:waypoint x="470" y="700"/>
+        <di:waypoint x="542" y="700"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="18" x="477" y="683"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_1istmr0" id="Flow_1istmr0_di">
+        <di:waypoint x="406" y="630"/>
+        <di:waypoint x="445" y="630"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_No" id="Flow_02x2nrk_di">
+        <di:waypoint x="495" y="630"/>
+        <di:waypoint x="542" y="630"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="15" x="502" y="612"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="ErrorEndEvent_Timeout" id="Event_1excd8o_di">
+        <dc:Bounds height="36" width="36" x="478" y="202"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="40" x="476" y="245"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent_ManuallyDecided" id="Event_019s1qx_di">
+        <dc:Bounds height="36" width="36" x="478" y="112"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="88" x="453" y="155"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="TimerEvent_Timeout" id="Event_1o138f6_di">
+        <dc:Bounds height="36" width="36" x="362" y="152"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="14" width="82" x="389" y="193"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="Flow_08vmski" id="Flow_08vmski_di">
+        <di:waypoint x="248.0" y="130.0"/>
+        <di:waypoint x="296.0" y="130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0vjv3ik" id="Flow_0vjv3ik_di">
+        <di:waypoint x="396.0" y="130.0"/>
+        <di:waypoint x="478.0" y="130.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_03n7pdb" id="Flow_03n7pdb_di">
+        <di:waypoint x="380.0" y="188.0"/>
+        <di:waypoint x="380.0" y="220.0"/>
+        <di:waypoint x="478.0" y="220.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape bpmnElement="Message_0fvpzfg" id="BPMNShape_7Pjf4A">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_xQzxZg">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_10rm6h0" id="BPMNShape_CsqIOw">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_JT0veA">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>
