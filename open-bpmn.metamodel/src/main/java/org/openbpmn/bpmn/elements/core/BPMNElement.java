@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.validation.BPMNValidationMarker;
@@ -281,11 +282,16 @@ public abstract class BPMNElement implements BPMNValidator {
                 childNode = elementList.iterator().next();
 
             } else {
-                // create a new childnode....
-                // create new node
+                // create a new child node....
                 childNode = model.createElement(ns, nodeName);
                 childNode.setAttribute("id", BPMNModel.generateShortID(nodeName));
-                elementNode.appendChild(childNode);
+                // find correct position order in tree....
+                Element insertBefore = BPMNElementOrder.findInsertPosition(elementNode, nodeName);
+                if (insertBefore != null) {
+                    elementNode.insertBefore(childNode, insertBefore);
+                } else {
+                    elementNode.appendChild(childNode); // add to the end
+                }
             }
             // put into cache
             childNodes.put(nodeName, childNode);
