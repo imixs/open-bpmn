@@ -3,7 +3,8 @@ RUN apt-get update && apt-get install -y openjdk-17-jre && rm -rf /var/lib/apt/l
 
 WORKDIR /app
 COPY . .
-RUN chown -R node:node /app/ && chmod +x /app/scripts/launch-docker-container.sh
+COPY ./open-bpmn.glsp-server/target/open-bpmn.server*-glsp.jar ./open-bpmn.glsp-server/target
+RUN chown -R node:node /app/ 
 
 USER node
 WORKDIR /app/open-bpmn.glsp-client

@@ -1,16 +1,19 @@
 # Java Source und Build-Artefakte (außer JAR)
+
 open-bpmn.glsp-server/src/
 open-bpmn.glsp-server/pom.xml
-open-bpmn.glsp-server/target/
-!open-bpmn.glsp-server/target/*-glsp.jar
+#open-bpmn.glsp-server/target/
+#!open-bpmn.glsp-server/target/\*-glsp.jar
 
 # Metamodel komplett ausschließen (wird nur für Entwicklung benötigt)
+
 open-bpmn.metamodel/
 
 # Entwicklungs-Dateien
+
 .git/
 doc/
-*.md
+\*.md
 README.md
 pom.xml
 plugin.xml
@@ -22,4 +25,6 @@ devi
 devi-nuclear
 
 # Node.js nicht benötigte Teile
-open-bpmn.glsp-client/src/
+
+open-bpmn.glsp-client/workspace/dev/
+open-bpmn.glsp-client/workspace/bpmn-test-suite/
