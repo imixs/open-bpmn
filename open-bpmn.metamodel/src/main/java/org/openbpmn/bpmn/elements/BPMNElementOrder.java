@@ -91,7 +91,48 @@ public class BPMNElementOrder {
             "messageFlowAssociation",
             "correlationKey",
             "choreographyRef",
-            "conversationLink");
+            "conversationLink",
+
+            // BPMN Diagram Interchange (BPMNDI) Elemente
+            // BPMNDiagram
+            "BPMNPlane",
+            "BPMNLabelStyle",
+
+            // BPMNPlane
+            "BPMNShape",
+            "BPMNEdge",
+
+            // BPMNShape (erweitert DiagramElement)
+            "Bounds",
+
+            // BPMNEdge (erweitert LabeledEdge)
+            // "BPMNLabel", // bereits oben definiert
+            "waypoint",
+            "BPMNLabel",
+
+            // Diagram Interchange (DI) Basis-Elemente
+            "extension");
+
+    /**
+     * Inserts a child element at the correct position in the parent element.
+     * Replaces element.appendChild() with automatic positioning.
+     * 
+     * @param parentElement Parent-Element
+     * @param childElement  new Child-Element
+     */
+    public static void appendChild(org.w3c.dom.Node parentElement, org.w3c.dom.Element childElement) {
+        if (parentElement == null || childElement == null)
+            return;
+
+        String childName = childElement.getLocalName();
+        org.w3c.dom.Element insertBefore = findInsertPosition(parentElement, childName);
+
+        if (insertBefore != null) {
+            parentElement.insertBefore(childElement, insertBefore);
+        } else {
+            parentElement.appendChild(childElement); // append at the end
+        }
+    }
 
     /**
      * Returns the position of an element in the defined order.
@@ -132,7 +173,7 @@ public class BPMNElementOrder {
      * @return The element before which the insertion should occur, or null if at
      *         the end.
      */
-    public static org.w3c.dom.Element findInsertPosition(org.w3c.dom.Element parentElement, String newElementName) {
+    public static org.w3c.dom.Element findInsertPosition(org.w3c.dom.Node parentElement, String newElementName) {
         if (parentElement == null)
             return null;
 

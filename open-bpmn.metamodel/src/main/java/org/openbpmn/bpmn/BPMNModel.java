@@ -28,6 +28,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.openbpmn.bpmn.elements.Activity;
+import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Lane;
@@ -70,6 +71,7 @@ public class BPMNModel {
 
     private Document doc;
     private Element definitions;
+    private Element defaultProcessElement;
     private Node bpmnDiagram;
     protected Element bpmnPlane = null;
     protected Set<Participant> participants = null;
@@ -139,6 +141,8 @@ public class BPMNModel {
             loadMessageList();
             loadMessageFlowList();
             loadSignalList();
+
+            defaultProcessElement = openDefaultProcess().getElementNode();
         }
 
     }
@@ -271,7 +275,7 @@ public class BPMNModel {
             Element bpmnDiagram = createElement(BPMNNS.BPMNDI, "BPMNDiagram");
             bpmnDiagram.setAttribute("id", "BPMNDiagram_1");
             bpmnDiagram.setAttribute("name", "OpenBPMN Diagram");
-            definitions.appendChild(bpmnDiagram);
+            BPMNElementOrder.appendChild(definitions, bpmnDiagram);
             setBpmnDiagram(bpmnDiagram);
         }
     }
@@ -360,6 +364,14 @@ public class BPMNModel {
 
     public Document getDoc() {
         return doc;
+    }
+
+    public Element getDefaultProcessElement() {
+        return defaultProcessElement;
+    }
+
+    public void setDefaultProcessElement(Element defaultProcessElement) {
+        this.defaultProcessElement = defaultProcessElement;
     }
 
     /**
@@ -554,7 +566,8 @@ public class BPMNModel {
                 migratedParticipantNode.setAttribute("name", existingProcess.getName());
                 migratedParticipantNode.setAttribute("processRef", existingProcess.getId());
 
-                collaborationElement.appendChild(migratedParticipantNode);
+                BPMNElementOrder.appendChild(collaborationElement, migratedParticipantNode);
+
                 existingProcess.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
                 // finally add a new BPMNParticipant to the participant list
                 getParticipants().add(new Participant(this, migratedParticipantNode, existingProcess));
@@ -576,7 +589,8 @@ public class BPMNModel {
         String participantID = BPMNModel.generateShortID("participant");
         participantNode.setAttribute("id", participantID);
         participantNode.setAttribute("name", name);
-        this.collaborationElement.appendChild(participantNode);
+        // this.collaborationElement.appendChild(participantNode);
+        BPMNElementOrder.appendChild(this.collaborationElement, participantNode);
         // add BPMNParticipant instance
         Participant bpmnParticipant = new Participant(this, participantNode, process);
         getParticipants().add(bpmnParticipant);
@@ -618,6 +632,7 @@ public class BPMNModel {
             // create BPMNLabel
             BPMNLabel bpmnLabel = new BPMNLabel(this, poolShape);
             bpmnLabel.updateLocation(10.0, 10.0);
+            bpmnLabel.updateDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
         }
     }
 
@@ -708,7 +723,8 @@ public class BPMNModel {
             bpmnShape = createElement(BPMNNS.BPMNDI, "BPMNShape");
             bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
             bpmnShape.setAttribute("bpmnElement", bpmnElement.getId());
-            getBpmnPlane().appendChild(bpmnShape);
+            // getBpmnPlane().appendChild(bpmnShape);
+            BPMNElementOrder.appendChild(getBpmnPlane(), bpmnShape);
             return bpmnShape;
         } else {
             throw new BPMNInvalidReferenceException("Missing ID attribute");
@@ -1209,8 +1225,8 @@ public class BPMNModel {
 
     /**
      * This method returns the bpmn2:extensionElements node for a given BPMN
-     * Element. If not yet defined, the
-     * method creates an new emtpy bpmn2:extensionElements node.
+     * Element. If not yet defined, the method creates an new empty
+     * bpmn2:extensionElements node.
      * 
      * The bpmn2:extensionElements node can be used to read or create custom
      * extension elements.
@@ -1226,8 +1242,8 @@ public class BPMNModel {
                 "extensionElements");
         if (extensionElement == null) {
             extensionElement = createElement(BPMNNS.BPMN2, "extensionElements");
-            element.insertBefore(extensionElement, element.getFirstChild());
-
+            // element.insertBefore(extensionElement, element.getFirstChild());
+            BPMNElementOrder.appendChild(element, extensionElement);
         }
         return extensionElement;
     }
@@ -1267,7 +1283,8 @@ public class BPMNModel {
                 String nameSpaceUri = definitions.getAttribute("xmlns:" + namespace);
                 autoAlignElement = getDoc().createElementNS(nameSpaceUri,
                         namespace + ":" + elementName);
-                extensionElement.appendChild(autoAlignElement);
+                // extensionElement.appendChild(autoAlignElement);
+                BPMNElementOrder.appendChild(extensionElement, autoAlignElement);
             } else {
                 throw new BPMNInvalidReferenceException("Namespace '" + namespace + "' not defined!");
             }

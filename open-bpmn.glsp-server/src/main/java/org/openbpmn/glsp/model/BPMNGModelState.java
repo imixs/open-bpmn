@@ -92,9 +92,11 @@ public class BPMNGModelState extends DefaultGModelState {
     public void setAutoAlign(boolean autoAlign) {
         Element autoAlignElement;
         try {
-            autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefinitions(),
-                    BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
-            autoAlignElement.setTextContent("" + autoAlign);
+            if (bpmnModel.getDefaultProcessElement() != null) {
+                autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcessElement(),
+                        BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
+                autoAlignElement.setTextContent("" + autoAlign);
+            }
         } catch (BPMNInvalidReferenceException e) {
 
             e.printStackTrace();
@@ -109,9 +111,11 @@ public class BPMNGModelState extends DefaultGModelState {
     public boolean getAutoAlign() {
         Element autoAlignElement;
         try {
-            autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefinitions(),
-                    BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
-            return Boolean.parseBoolean(autoAlignElement.getTextContent());
+            if (bpmnModel.getDefaultProcessElement() != null) {
+                autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcessElement(),
+                        BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
+                return Boolean.parseBoolean(autoAlignElement.getTextContent());
+            }
         } catch (BPMNInvalidReferenceException e) {
             // extension is not defined
         }

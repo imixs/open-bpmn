@@ -303,7 +303,7 @@ public class TestCollaborationModel {
 
             Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
-            assertEquals(1, participants.size());
+            assertEquals(2, participants.size());
 
             Participant participant = participants.iterator().next();
             assertNotNull(participant);

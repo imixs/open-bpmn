@@ -46,7 +46,8 @@ public class SequenceFlow extends BPMNElementEdge {
         // remove element from old process and assign it ot the new
         this.bpmnProcess.getElementNode().removeChild(this.elementNode);
         this.bpmnProcess = newProcess;
-        this.bpmnProcess.getElementNode().appendChild(this.elementNode);
+        BPMNElementOrder.appendChild(this.bpmnProcess.getElementNode(), elementNode);
+        // this.bpmnProcess.getElementNode().appendChild(this.elementNode);
     }
 
     /**

@@ -286,12 +286,7 @@ public abstract class BPMNElement implements BPMNValidator {
                 childNode = model.createElement(ns, nodeName);
                 childNode.setAttribute("id", BPMNModel.generateShortID(nodeName));
                 // find correct position order in tree....
-                Element insertBefore = BPMNElementOrder.findInsertPosition(elementNode, nodeName);
-                if (insertBefore != null) {
-                    elementNode.insertBefore(childNode, insertBefore);
-                } else {
-                    elementNode.appendChild(childNode); // add to the end
-                }
+                BPMNElementOrder.appendChild(elementNode, childNode);
             }
             // put into cache
             childNodes.put(nodeName, childNode);

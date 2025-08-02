@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -55,11 +56,12 @@ public abstract class BPMNElementEdge extends BPMNElement {
         }
 
         // find the BPMNShape element. If not defined create a new one
-
         bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
         if (bpmnEdge == null) {
             // create shape element
+            logger.warning("create missing shape for edge " + this.getId());
             createBPMNEdge();
+            this.addDefaultWayPoints();
         } else {
             // parse waypoints (di:waypoint)
             Set<Element> wayPoints = model.findChildNodesByName(bpmnEdge, BPMNNS.DI, "waypoint");
@@ -155,8 +157,9 @@ public abstract class BPMNElementEdge extends BPMNElement {
         if (newSourceNode != null) {
             Element refOut = model.createElement(BPMNNS.BPMN2, "outgoing");
             refOut.setTextContent(this.getId());
-            newSourceNode.getElementNode().appendChild(refOut);
 
+            // newSourceNode.getElementNode().appendChild(refOut);
+            BPMNElementOrder.appendChild(newSourceNode.getElementNode(), refOut);
             // update ref of edgeShape
             Element edgeShape = this.getBpmnEdge();
             if (edgeShape != null) {
@@ -254,7 +257,16 @@ public abstract class BPMNElementEdge extends BPMNElement {
             Element diwayPoint = model.createElement(BPMNNS.DI, "waypoint");
             diwayPoint.setAttribute("x", wayPoint.getX() + "");
             diwayPoint.setAttribute("y", wayPoint.getY() + "");
-            this.bpmnEdge.appendChild(diwayPoint);
+
+            BPMNElementOrder.appendChild(bpmnEdge, diwayPoint);
+            // // *** NEUE LOGIK: Korrekte Position finden und einfügen ***
+            // Element insertBefore = BPMNElementOrder.findInsertPosition(this.bpmnEdge,
+            // "waypoint");
+            // if (insertBefore != null) {
+            // this.bpmnEdge.insertBefore(diwayPoint, insertBefore);
+            // } else {
+            // this.bpmnEdge.appendChild(diwayPoint); // Am Ende einfügen
+            // }
         } else {
             logger.warning("missing bpmnShape for SequenceFlow: " + this.getId());
         }
