@@ -19,7 +19,7 @@ $ sudo apt install xmlstarlet
 Validate with
 
 ```
-xmlstarlet validate -e --xsd BPMN20.xsd A.1.0-roundtrip.bpmn
+$ xmlstarlet validate -e --xsd schema/BPMN20.xsd A.1.0-roundtrip.bpmn
 ```
 
 # Test Result

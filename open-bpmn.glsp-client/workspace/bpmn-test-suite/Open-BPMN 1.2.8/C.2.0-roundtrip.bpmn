@@ -1,289 +1,289 @@
 <?xml version="1.0" encoding="utf-8"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.trisotech.com/definitions/_1aa4e08d-219c-418c-8aed-5ddf4cd45a41" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="BPMN 2.0 Web Modeler" exporterVersion="4.2.3" expressionLanguage="http://www.w3.org/1999/XPath" id="_1aa4e08d-219c-418c-8aed-5ddf4cd45a41" name="C.2.0" targetNamespace="http://www.trisotech.com/definitions/_1aa4e08d-219c-418c-8aed-5ddf4cd45a41" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <semantic:extensionElements>
-    <open-bpmn:auto-align/>
-  </semantic:extensionElements>
   <semantic:message id="Message_1404332496319">
-    <semantic:documentation id="documentation_bibSyw"/>
+    <semantic:documentation id="documentation_Soq93A"/>
   </semantic:message>
   <semantic:message id="Message_1404332496320">
-    <semantic:documentation id="documentation_tAmCyA"/>
+    <semantic:documentation id="documentation_jlEaRQ"/>
   </semantic:message>
   <semantic:message id="Message_1404332496321">
-    <semantic:documentation id="documentation_NhR7xw"/>
+    <semantic:documentation id="documentation_6nJTYg"/>
   </semantic:message>
   <semantic:message id="Message_1404332496322">
-    <semantic:documentation id="documentation_XnmR5w"/>
+    <semantic:documentation id="documentation_2aPqOw"/>
   </semantic:message>
   <semantic:message id="Message_1404332496323">
-    <semantic:documentation id="documentation_avU0tg"/>
+    <semantic:documentation id="documentation_RPbSjw"/>
   </semantic:message>
   <semantic:collaboration id="C1404332496310">
     <semantic:participant id="__bb6766c5-51e3-4f04-aedc-6c9e4afe0582" name="Carrier" processRef="WFP-Page_1-2">
-      <semantic:documentation id="documentation_cBi2yg"/>
+      <semantic:documentation id="documentation_2TkOkA"/>
     </semantic:participant>
     <semantic:participant id="__3cf88d6c-e5e4-489e-bc73-e2a18be946bf" name="Credit Card Company" processRef="WFP-Page_1-1"/>
     <semantic:participant id="__6f70606b-6781-4f26-b207-5bfff80115d8" name="Customer" processRef="WFP-Page_1-3">
-      <semantic:documentation id="documentation_k4xS0Q"/>
+      <semantic:documentation id="documentation_UgtpUA"/>
     </semantic:participant>
     <semantic:participant id="__a42178ea-f777-4c5b-a0a1-c4014aee6431" name="Amazon" processRef="WFP-Page_1-4">
-      <semantic:documentation id="documentation_NYvu3Q"/>
+      <semantic:documentation id="documentation_ZF9d8Q"/>
     </semantic:participant>
     <semantic:messageFlow id="__13e0b8fd-91fe-4bbc-87ae-5ad657f6ef99" messageRef="Message_1404332496322" sourceRef="__f867d5f7-db1e-4015-9856-c53bc9cb4b51" targetRef="_95a2fb99-bb98-4d26-b5ec-3dae3a32fd79">
-      <semantic:documentation id="documentation_GwTA3A"/>
+      <semantic:documentation id="documentation_gdC0BA"/>
     </semantic:messageFlow>
     <semantic:messageFlow id="__5cdd91dd-32f6-4102-b475-bd6c7992f509" messageRef="Message_1404332496323" sourceRef="__c1a19847-8b3e-42db-a95d-9f21cffc50a3" targetRef="__e6a9dd54-6cb0-4713-8b77-e659f2658e40">
-      <semantic:documentation id="documentation_Ly1fuA"/>
+      <semantic:documentation id="documentation_6RSH0w"/>
     </semantic:messageFlow>
     <semantic:messageFlow id="__789952b8-abba-4f3f-81cd-24cbb4d0d615" messageRef="Message_1404332496321" sourceRef="_f35ee29d-018c-47e2-afeb-eebc2e25925e" targetRef="__fd16081c-ecf9-4e0f-857f-f3404a7ee784">
-      <semantic:documentation id="documentation_V5hlNQ"/>
+      <semantic:documentation id="documentation_jb0ENQ"/>
     </semantic:messageFlow>
     <semantic:messageFlow id="__86b33cf0-1b17-437f-a7cf-510e0766561f" messageRef="Message_1404332496319" name="Send Credit Card Information" sourceRef="_2f24e6da-b44f-4e30-8d85-fd35fd56e209" targetRef="__0ef615c7-5456-45c8-9cfb-f1fe30c44436">
-      <semantic:documentation id="documentation_q8HNbw"/>
+      <semantic:documentation id="documentation_l5NS9w"/>
     </semantic:messageFlow>
     <semantic:messageFlow id="__0c171c64-b342-4f84-8020-a63b6a5b296d" messageRef="Message_1404332496320" sourceRef="__4011aa2d-a7a9-4e1a-9f16-8a662d138bd4" targetRef="_2f24e6da-b44f-4e30-8d85-fd35fd56e209">
-      <semantic:documentation id="documentation_63Xl0g"/>
+      <semantic:documentation id="documentation_IHIC9Q"/>
     </semantic:messageFlow>
   </semantic:collaboration>
   <semantic:process id="WFP-Page_1-1" isExecutable="false" processType="Public">
+    <semantic:documentation id="documentation_8tlDiA"/>
+    <semantic:extensionElements>
+      <open-bpmn:auto-align/>
+    </semantic:extensionElements>
     <semantic:task completionQuantity="1" id="__a7183fc9-402a-418c-bf2a-3b1927d3798d" isForCompensation="false" name="Take Payment" startQuantity="1">
+      <semantic:documentation id="documentation_P9DKtw"/>
       <semantic:incoming>__f3f918b3-abee-4e59-8131-212d0d86b056</semantic:incoming>
       <semantic:outgoing>__47cf5284-b9ff-4136-93fd-f0f32b87810f</semantic:outgoing>
-      <semantic:documentation id="documentation_mIKVqg"/>
     </semantic:task>
     <semantic:sequenceFlow id="__47cf5284-b9ff-4136-93fd-f0f32b87810f" sourceRef="__a7183fc9-402a-418c-bf2a-3b1927d3798d" targetRef="__4011aa2d-a7a9-4e1a-9f16-8a662d138bd4">
-      <semantic:documentation id="documentation_j0j1Qw"/>
+      <semantic:documentation id="documentation_gfSXRQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="__f3f918b3-abee-4e59-8131-212d0d86b056" sourceRef="__0ef615c7-5456-45c8-9cfb-f1fe30c44436" targetRef="__a7183fc9-402a-418c-bf2a-3b1927d3798d">
-      <semantic:documentation id="documentation_39FNYQ"/>
+      <semantic:documentation id="documentation_NJ8YXA"/>
     </semantic:sequenceFlow>
     <semantic:startEvent id="__0ef615c7-5456-45c8-9cfb-f1fe30c44436" isInterrupting="true" name="Receive Credit Card Information">
+      <semantic:documentation id="documentation_AOMPbQ"/>
       <semantic:outgoing>__f3f918b3-abee-4e59-8131-212d0d86b056</semantic:outgoing>
       <semantic:messageEventDefinition messageRef="Message_1404332496319"/>
-      <semantic:documentation id="documentation_HaPLVQ"/>
     </semantic:startEvent>
     <semantic:endEvent id="__4011aa2d-a7a9-4e1a-9f16-8a662d138bd4" name="Send Result">
+      <semantic:documentation id="documentation_Q8UGxw"/>
       <semantic:incoming>__47cf5284-b9ff-4136-93fd-f0f32b87810f</semantic:incoming>
       <semantic:messageEventDefinition messageRef="Message_1404332496320"/>
-      <semantic:documentation id="documentation_SfzMuA"/>
     </semantic:endEvent>
-    <semantic:documentation id="documentation_zzkNEQ"/>
   </semantic:process>
   <semantic:process id="WFP-Page_1-2" isExecutable="false" processType="Private">
     <semantic:task completionQuantity="1" id="__f867d5f7-db1e-4015-9856-c53bc9cb4b51" isForCompensation="false" name="Deliver Items" startQuantity="1">
+      <semantic:documentation id="documentation_tiVPJA"/>
       <semantic:incoming>__36fbe220-08cc-45e8-847b-3f55002979c2</semantic:incoming>
       <semantic:outgoing>__b355021c-ac23-48bf-9d1a-45c32565ba39</semantic:outgoing>
-      <semantic:documentation id="documentation_gT0f7w"/>
     </semantic:task>
     <semantic:sequenceFlow id="__b355021c-ac23-48bf-9d1a-45c32565ba39" sourceRef="__f867d5f7-db1e-4015-9856-c53bc9cb4b51" targetRef="__6c41ae4a-64fd-40f9-a764-059b26ef8ebf">
-      <semantic:documentation id="documentation_yhllaw"/>
+      <semantic:documentation id="documentation_pH9DsA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="__36fbe220-08cc-45e8-847b-3f55002979c2" sourceRef="__a9de74be-ce4b-4d59-bafd-cf6f61f48867" targetRef="__f867d5f7-db1e-4015-9856-c53bc9cb4b51">
-      <semantic:documentation id="documentation_ZbANGA"/>
+      <semantic:documentation id="documentation_Qj5tkw"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__a9de74be-ce4b-4d59-bafd-cf6f61f48867" isForCompensation="false" name="Load Truck" startQuantity="1">
+      <semantic:documentation id="documentation_u4DYaQ"/>
       <semantic:incoming>__474f19b8-f608-4d20-a49e-907485a789c5</semantic:incoming>
       <semantic:outgoing>__36fbe220-08cc-45e8-847b-3f55002979c2</semantic:outgoing>
-      <semantic:documentation id="documentation_X1OE7g"/>
     </semantic:task>
     <semantic:sequenceFlow id="__474f19b8-f608-4d20-a49e-907485a789c5" sourceRef="__e6a9dd54-6cb0-4713-8b77-e659f2658e40" targetRef="__a9de74be-ce4b-4d59-bafd-cf6f61f48867">
-      <semantic:documentation id="documentation_xZs4XQ"/>
+      <semantic:documentation id="documentation_WI0zeQ"/>
     </semantic:sequenceFlow>
     <semantic:endEvent id="__6c41ae4a-64fd-40f9-a764-059b26ef8ebf">
+      <semantic:documentation id="documentation_Pk4wMA"/>
       <semantic:incoming>__b355021c-ac23-48bf-9d1a-45c32565ba39</semantic:incoming>
-      <semantic:documentation id="documentation_bLbFvg"/>
     </semantic:endEvent>
     <semantic:startEvent id="__e6a9dd54-6cb0-4713-8b77-e659f2658e40" isInterrupting="true" name="Pick items">
+      <semantic:documentation id="documentation_znajLg"/>
       <semantic:outgoing>__474f19b8-f608-4d20-a49e-907485a789c5</semantic:outgoing>
       <semantic:messageEventDefinition messageRef="Message_1404332496323"/>
-      <semantic:documentation id="documentation_rBvqpw"/>
     </semantic:startEvent>
   </semantic:process>
   <semantic:process id="WFP-Page_1-3" isExecutable="false" processType="Private">
     <semantic:startEvent id="__f5b8cb41-0574-4c29-aaaa-84ecce589f84">
+      <semantic:documentation id="documentation_kVoJ6Q"/>
       <semantic:outgoing>__6fd770bc-8f12-4927-96cd-e3cc53d862d3</semantic:outgoing>
-      <semantic:documentation id="documentation_wdiXiA"/>
     </semantic:startEvent>
     <semantic:sequenceFlow id="__6fd770bc-8f12-4927-96cd-e3cc53d862d3" sourceRef="__f5b8cb41-0574-4c29-aaaa-84ecce589f84" targetRef="__f61e9ae0-855f-4ce6-9e3a-4b4f5c7dd0b8">
-      <semantic:documentation id="documentation_pmfkGw"/>
+      <semantic:documentation id="documentation_UBfOmg"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__be386700-06c2-4a29-b861-c516940667fe" isForCompensation="false" name="Add Item to Cart" startQuantity="1">
+      <semantic:documentation id="documentation_ye6sNQ"/>
       <semantic:incoming>__e8a6634d-4c67-4ec3-b8cf-18bf3987c281</semantic:incoming>
       <semantic:outgoing>__82227f00-3d5e-446e-a2e7-50b907ed7c8c</semantic:outgoing>
-      <semantic:documentation id="documentation_F1G4rA"/>
     </semantic:task>
     <semantic:sequenceFlow id="__82227f00-3d5e-446e-a2e7-50b907ed7c8c" sourceRef="__be386700-06c2-4a29-b861-c516940667fe" targetRef="__509f09eb-5518-4995-b98b-db3cf3f8ea00">
-      <semantic:documentation id="documentation_nZI5RA"/>
+      <semantic:documentation id="documentation_2xrcow"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="__e8a6634d-4c67-4ec3-b8cf-18bf3987c281" sourceRef="__f61e9ae0-855f-4ce6-9e3a-4b4f5c7dd0b8" targetRef="__be386700-06c2-4a29-b861-c516940667fe">
-      <semantic:documentation id="documentation_sUR39w"/>
+      <semantic:documentation id="documentation_tjmTkA"/>
     </semantic:sequenceFlow>
-    <semantic:subProcess completionQuantity="1" id="__5ffa1675-9ad7-46f8-b19a-85cd5878496f" isExecutable="true" isForCompensation="false" name="Checkout" startQuantity="1" triggeredByEvent="false">
+    <semantic:subProcess completionQuantity="1" id="__5ffa1675-9ad7-46f8-b19a-85cd5878496f" isForCompensation="false" name="Checkout" startQuantity="1" triggeredByEvent="false">
+      <semantic:documentation id="documentation_o8ZXlA"/>
       <semantic:incoming>__a12a7547-373d-47ec-890d-af5c177203ee</semantic:incoming>
       <semantic:outgoing>__5d3be9f3-3f7a-4778-89e5-1bf4951472c2</semantic:outgoing>
       <semantic:startEvent id="__a1c27e25-4aa2-43dc-8a20-b713e8393d7f">
+        <semantic:documentation id="documentation_lJMopA"/>
         <semantic:outgoing>__00bc466e-cf1f-473c-aa39-c78bba5cef82</semantic:outgoing>
-        <semantic:documentation id="documentation_tS760g"/>
       </semantic:startEvent>
       <semantic:sequenceFlow id="__00bc466e-cf1f-473c-aa39-c78bba5cef82" sourceRef="__a1c27e25-4aa2-43dc-8a20-b713e8393d7f" targetRef="_2f24e6da-b44f-4e30-8d85-fd35fd56e209">
-        <semantic:documentation id="documentation_wY2hdQ"/>
+        <semantic:documentation id="documentation_qkrBeg"/>
       </semantic:sequenceFlow>
       <semantic:task completionQuantity="1" id="_2f24e6da-b44f-4e30-8d85-fd35fd56e209" isForCompensation="false" name="Pay Order" startQuantity="1">
+        <semantic:documentation id="documentation_wy3c7Q"/>
         <semantic:incoming>__00bc466e-cf1f-473c-aa39-c78bba5cef82</semantic:incoming>
         <semantic:incoming>_63cf98c9-d0b1-4595-a4f2-9589439b311c</semantic:incoming>
         <semantic:outgoing>_520aac43-77a5-40e8-84a4-ec51e17ad9b2</semantic:outgoing>
-        <semantic:documentation id="documentation_7cs3cA"/>
       </semantic:task>
       <semantic:sequenceFlow id="_520aac43-77a5-40e8-84a4-ec51e17ad9b2" sourceRef="_2f24e6da-b44f-4e30-8d85-fd35fd56e209" targetRef="_bb4a73bd-2291-4494-8677-5560d4842f79">
-        <semantic:documentation id="documentation_pMuSWw"/>
+        <semantic:documentation id="documentation_Fr4qjQ"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_63cf98c9-d0b1-4595-a4f2-9589439b311c" name="Yes" sourceRef="_29a5e7c6-e54e-4c61-ba35-59ae446a3462" targetRef="_2f24e6da-b44f-4e30-8d85-fd35fd56e209">
-        <semantic:documentation id="documentation_tmIQ4g"/>
+        <semantic:documentation id="documentation_h9hN2Q"/>
       </semantic:sequenceFlow>
       <semantic:exclusiveGateway gatewayDirection="Unspecified" id="_29a5e7c6-e54e-4c61-ba35-59ae446a3462" name="Retry?">
+        <semantic:documentation id="documentation_NfCQxQ"/>
         <semantic:incoming>_bfa5c7b2-f5d2-4487-a307-b2ea662bd059</semantic:incoming>
         <semantic:outgoing>_ad0872cc-e2a9-4c44-98c6-c64e0638f37e</semantic:outgoing>
         <semantic:outgoing>_63cf98c9-d0b1-4595-a4f2-9589439b311c</semantic:outgoing>
-        <semantic:documentation id="documentation_rT1vsQ"/>
       </semantic:exclusiveGateway>
       <semantic:sequenceFlow id="_ad0872cc-e2a9-4c44-98c6-c64e0638f37e" name="No" sourceRef="_29a5e7c6-e54e-4c61-ba35-59ae446a3462" targetRef="_7ea6639e-e773-4236-94bf-78f149188c30">
-        <semantic:documentation id="documentation_yyP7vQ"/>
+        <semantic:documentation id="documentation_MuyLLA"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_bfa5c7b2-f5d2-4487-a307-b2ea662bd059" name="No" sourceRef="_bb4a73bd-2291-4494-8677-5560d4842f79" targetRef="_29a5e7c6-e54e-4c61-ba35-59ae446a3462">
-        <semantic:documentation id="documentation_0ViEZQ"/>
+        <semantic:documentation id="documentation_zCbkGQ"/>
       </semantic:sequenceFlow>
       <semantic:exclusiveGateway gatewayDirection="Unspecified" id="_bb4a73bd-2291-4494-8677-5560d4842f79" name="Payment accepted?">
+        <semantic:documentation id="documentation_zo0TXg"/>
         <semantic:incoming>_520aac43-77a5-40e8-84a4-ec51e17ad9b2</semantic:incoming>
         <semantic:outgoing>_bfa5c7b2-f5d2-4487-a307-b2ea662bd059</semantic:outgoing>
         <semantic:outgoing>_50edb87c-9e46-48b1-a311-ef00e6e431e8</semantic:outgoing>
-        <semantic:documentation id="documentation_1XkKiA"/>
       </semantic:exclusiveGateway>
       <semantic:sequenceFlow id="_50edb87c-9e46-48b1-a311-ef00e6e431e8" name="Yes" sourceRef="_bb4a73bd-2291-4494-8677-5560d4842f79" targetRef="_f35ee29d-018c-47e2-afeb-eebc2e25925e">
-        <semantic:documentation id="documentation_A2rSwQ"/>
+        <semantic:documentation id="documentation_Tpi0XA"/>
       </semantic:sequenceFlow>
       <semantic:endEvent id="_7ea6639e-e773-4236-94bf-78f149188c30">
+        <semantic:documentation id="documentation_SBSiDQ"/>
         <semantic:incoming>_ad0872cc-e2a9-4c44-98c6-c64e0638f37e</semantic:incoming>
         <semantic:errorEventDefinition/>
-        <semantic:documentation id="documentation_hF5p1g"/>
       </semantic:endEvent>
       <semantic:intermediateThrowEvent id="_f35ee29d-018c-47e2-afeb-eebc2e25925e" name="Send Order">
+        <semantic:documentation id="documentation_5VrKzQ"/>
         <semantic:incoming>_50edb87c-9e46-48b1-a311-ef00e6e431e8</semantic:incoming>
         <semantic:outgoing>_30c47018-b9e8-4d09-81e2-2b592f75a5cf</semantic:outgoing>
         <semantic:messageEventDefinition messageRef="Message_1404332496321"/>
-        <semantic:documentation id="documentation_8wA0gg"/>
       </semantic:intermediateThrowEvent>
       <semantic:sequenceFlow id="_30c47018-b9e8-4d09-81e2-2b592f75a5cf" sourceRef="_f35ee29d-018c-47e2-afeb-eebc2e25925e" targetRef="_df393d97-f22e-4442-95be-918b8fdd4c3c">
-        <semantic:documentation id="documentation_WBW5EQ"/>
+        <semantic:documentation id="documentation_S8A6bQ"/>
       </semantic:sequenceFlow>
       <semantic:endEvent id="_df393d97-f22e-4442-95be-918b8fdd4c3c">
+        <semantic:documentation id="documentation_WUngkA"/>
         <semantic:incoming>_30c47018-b9e8-4d09-81e2-2b592f75a5cf</semantic:incoming>
-        <semantic:documentation id="documentation_X00ICA"/>
       </semantic:endEvent>
-      <semantic:documentation id="documentation_cWTJIw"/>
     </semantic:subProcess>
     <semantic:sequenceFlow id="__a12a7547-373d-47ec-890d-af5c177203ee" name="Yes" sourceRef="__509f09eb-5518-4995-b98b-db3cf3f8ea00" targetRef="__5ffa1675-9ad7-46f8-b19a-85cd5878496f">
-      <semantic:documentation id="documentation_0IAVXA"/>
+      <semantic:documentation id="documentation_ADzHyA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="__5d3be9f3-3f7a-4778-89e5-1bf4951472c2" sourceRef="__5ffa1675-9ad7-46f8-b19a-85cd5878496f" targetRef="_95a2fb99-bb98-4d26-b5ec-3dae3a32fd79">
-      <semantic:documentation id="documentation_cafIyQ"/>
+      <semantic:documentation id="documentation_i8LKNg"/>
     </semantic:sequenceFlow>
     <semantic:boundaryEvent attachedToRef="__5ffa1675-9ad7-46f8-b19a-85cd5878496f" id="__cec149db-adae-4b69-8ea4-b866f2eef248">
+      <semantic:documentation id="documentation_d9skrw"/>
       <semantic:outgoing>__dc6ef6c1-9c24-48ae-800f-2f9fb76d7ce6</semantic:outgoing>
       <semantic:errorEventDefinition/>
-      <semantic:documentation id="documentation_JBKzEw"/>
     </semantic:boundaryEvent>
     <semantic:sequenceFlow id="__dc6ef6c1-9c24-48ae-800f-2f9fb76d7ce6" sourceRef="__cec149db-adae-4b69-8ea4-b866f2eef248" targetRef="__8f9632f2-9fdb-4e3c-8b10-6a05091de766">
-      <semantic:documentation id="documentation_hlhUlw"/>
+      <semantic:documentation id="documentation_SrlXTA"/>
     </semantic:sequenceFlow>
     <semantic:endEvent id="__e03c9539-b011-46b1-a381-0eee5f0521b8">
+      <semantic:documentation id="documentation_aL6RYQ"/>
       <semantic:incoming>__92bd8ebf-e3b1-4270-96bb-2f6d6978c64a</semantic:incoming>
-      <semantic:documentation id="documentation_7AHFYw"/>
     </semantic:endEvent>
     <semantic:sequenceFlow id="__92bd8ebf-e3b1-4270-96bb-2f6d6978c64a" sourceRef="_95a2fb99-bb98-4d26-b5ec-3dae3a32fd79" targetRef="__e03c9539-b011-46b1-a381-0eee5f0521b8">
-      <semantic:documentation id="documentation_ezPKXw"/>
+      <semantic:documentation id="documentation_mLRjcQ"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="_95a2fb99-bb98-4d26-b5ec-3dae3a32fd79" isForCompensation="false" name="Receive items" startQuantity="1">
+      <semantic:documentation id="documentation_BwVg0Q"/>
       <semantic:incoming>__5d3be9f3-3f7a-4778-89e5-1bf4951472c2</semantic:incoming>
       <semantic:outgoing>__92bd8ebf-e3b1-4270-96bb-2f6d6978c64a</semantic:outgoing>
-      <semantic:documentation id="documentation_8f20yA"/>
     </semantic:task>
     <semantic:exclusiveGateway gatewayDirection="Unspecified" id="__509f09eb-5518-4995-b98b-db3cf3f8ea00" name="Done Shopping?">
+      <semantic:documentation id="documentation_akl7qg"/>
       <semantic:incoming>__82227f00-3d5e-446e-a2e7-50b907ed7c8c</semantic:incoming>
       <semantic:outgoing>__ffc1486a-8a32-490a-8835-d14cc5ab0a97</semantic:outgoing>
       <semantic:outgoing>__a12a7547-373d-47ec-890d-af5c177203ee</semantic:outgoing>
-      <semantic:documentation id="documentation_eJ1rjQ"/>
     </semantic:exclusiveGateway>
     <semantic:sequenceFlow id="__ffc1486a-8a32-490a-8835-d14cc5ab0a97" name="No" sourceRef="__509f09eb-5518-4995-b98b-db3cf3f8ea00" targetRef="__f61e9ae0-855f-4ce6-9e3a-4b4f5c7dd0b8">
-      <semantic:documentation id="documentation_dKzvmA"/>
+      <semantic:documentation id="documentation_LucbSg"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__f61e9ae0-855f-4ce6-9e3a-4b4f5c7dd0b8" isForCompensation="false" name="Browse Products on Amazon" startQuantity="1">
+      <semantic:documentation id="documentation_PsQu8g"/>
       <semantic:incoming>__6fd770bc-8f12-4927-96cd-e3cc53d862d3</semantic:incoming>
       <semantic:incoming>__ffc1486a-8a32-490a-8835-d14cc5ab0a97</semantic:incoming>
       <semantic:outgoing>__e8a6634d-4c67-4ec3-b8cf-18bf3987c281</semantic:outgoing>
-      <semantic:documentation id="documentation_0YZ57g"/>
     </semantic:task>
     <semantic:endEvent id="__8f9632f2-9fdb-4e3c-8b10-6a05091de766">
+      <semantic:documentation id="documentation_QxpiKg"/>
       <semantic:incoming>__dc6ef6c1-9c24-48ae-800f-2f9fb76d7ce6</semantic:incoming>
-      <semantic:documentation id="documentation_EQlCrg"/>
     </semantic:endEvent>
   </semantic:process>
   <semantic:process id="WFP-Page_1-4" isExecutable="false" processType="Private">
     <semantic:laneSet>
       <semantic:lane id="__15a180db-97af-4058-ac0a-4a31247fb797" name="Picker">
+        <semantic:documentation id="documentation_3BboYw"/>
         <semantic:flowNodeRef>__fd16081c-ecf9-4e0f-857f-f3404a7ee784</semantic:flowNodeRef>
         <semantic:flowNodeRef>__f4846d41-bca9-4788-9ce2-30ff4b9d6b7b</semantic:flowNodeRef>
         <semantic:flowNodeRef>__200e3ce9-3381-4d13-8c7e-4f8790388070</semantic:flowNodeRef>
-        <semantic:documentation id="documentation_9OYJpg"/>
       </semantic:lane>
       <semantic:lane id="__75b31592-10d5-4d4b-993e-0df32d5977ac" name="Packager">
+        <semantic:documentation id="documentation_5l7YXA"/>
         <semantic:flowNodeRef>__ac1dc01c-14c2-47cf-9bc9-2b39f5fcd379</semantic:flowNodeRef>
         <semantic:flowNodeRef>__c1a19847-8b3e-42db-a95d-9f21cffc50a3</semantic:flowNodeRef>
         <semantic:flowNodeRef>__5a9abc77-7371-4213-bede-4056f9cb7808</semantic:flowNodeRef>
-        <semantic:documentation id="documentation_kk0KmQ"/>
       </semantic:lane>
     </semantic:laneSet>
     <semantic:startEvent id="__fd16081c-ecf9-4e0f-857f-f3404a7ee784" isInterrupting="true" name="Receive Order">
+      <semantic:documentation id="documentation_5Obt0Q"/>
       <semantic:outgoing>__4ad47bad-fac8-4269-9a9b-3f68613c7fc8</semantic:outgoing>
       <semantic:messageEventDefinition messageRef="Message_1404332496321"/>
-      <semantic:documentation id="documentation_jIZoTQ"/>
     </semantic:startEvent>
     <semantic:sequenceFlow id="__4ad47bad-fac8-4269-9a9b-3f68613c7fc8" sourceRef="__fd16081c-ecf9-4e0f-857f-f3404a7ee784" targetRef="__f4846d41-bca9-4788-9ce2-30ff4b9d6b7b">
-      <semantic:documentation id="documentation_771Hfw"/>
+      <semantic:documentation id="documentation_Zw2QrQ"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__f4846d41-bca9-4788-9ce2-30ff4b9d6b7b" isForCompensation="false" name="Pick items" startQuantity="1">
+      <semantic:documentation id="documentation_XvHVIw"/>
       <semantic:incoming>__4ad47bad-fac8-4269-9a9b-3f68613c7fc8</semantic:incoming>
       <semantic:outgoing>__ce6b77ab-3b91-4ca0-b6c2-48980892e47e</semantic:outgoing>
-      <semantic:documentation id="documentation_Gc82Vg"/>
     </semantic:task>
     <semantic:sequenceFlow id="__ce6b77ab-3b91-4ca0-b6c2-48980892e47e" sourceRef="__f4846d41-bca9-4788-9ce2-30ff4b9d6b7b" targetRef="__200e3ce9-3381-4d13-8c7e-4f8790388070">
-      <semantic:documentation id="documentation_m9suqw"/>
+      <semantic:documentation id="documentation_70blTg"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__200e3ce9-3381-4d13-8c7e-4f8790388070" isForCompensation="false" name="Place in bin" startQuantity="1">
+      <semantic:documentation id="documentation_DnuCjw"/>
       <semantic:incoming>__ce6b77ab-3b91-4ca0-b6c2-48980892e47e</semantic:incoming>
       <semantic:outgoing>__04700d0b-5231-46f6-ae74-698ba3864a60</semantic:outgoing>
-      <semantic:documentation id="documentation_cu7Tow"/>
     </semantic:task>
     <semantic:sequenceFlow id="__04700d0b-5231-46f6-ae74-698ba3864a60" sourceRef="__200e3ce9-3381-4d13-8c7e-4f8790388070" targetRef="__ac1dc01c-14c2-47cf-9bc9-2b39f5fcd379">
-      <semantic:documentation id="documentation_gS9AXA"/>
+      <semantic:documentation id="documentation_Jw0kYg"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__ac1dc01c-14c2-47cf-9bc9-2b39f5fcd379" isForCompensation="false" name="Receive and Package&#10;items" startQuantity="1">
+      <semantic:documentation id="documentation_aAyHUw"/>
       <semantic:incoming>__04700d0b-5231-46f6-ae74-698ba3864a60</semantic:incoming>
       <semantic:outgoing>__c18acafe-53f8-4e7d-a6df-d12b60b5ae53</semantic:outgoing>
-      <semantic:documentation id="documentation_w0CbDQ"/>
     </semantic:task>
     <semantic:sequenceFlow id="__c18acafe-53f8-4e7d-a6df-d12b60b5ae53" sourceRef="__ac1dc01c-14c2-47cf-9bc9-2b39f5fcd379" targetRef="__c1a19847-8b3e-42db-a95d-9f21cffc50a3">
-      <semantic:documentation id="documentation_RicfnQ"/>
+      <semantic:documentation id="documentation_3cxibQ"/>
     </semantic:sequenceFlow>
     <semantic:task completionQuantity="1" id="__c1a19847-8b3e-42db-a95d-9f21cffc50a3" isForCompensation="false" name="Send to carrier dock" startQuantity="1">
+      <semantic:documentation id="documentation_XPrSBQ"/>
       <semantic:incoming>__c18acafe-53f8-4e7d-a6df-d12b60b5ae53</semantic:incoming>
       <semantic:outgoing>__18abb53a-b7c0-414e-9428-1d1a14f2e96b</semantic:outgoing>
-      <semantic:documentation id="documentation_eK0oyw"/>
     </semantic:task>
     <semantic:sequenceFlow id="__18abb53a-b7c0-414e-9428-1d1a14f2e96b" sourceRef="__c1a19847-8b3e-42db-a95d-9f21cffc50a3" targetRef="__5a9abc77-7371-4213-bede-4056f9cb7808">
-      <semantic:documentation id="documentation_0Uu2CQ"/>
+      <semantic:documentation id="documentation_k2GMqA"/>
     </semantic:sequenceFlow>
     <semantic:endEvent id="__5a9abc77-7371-4213-bede-4056f9cb7808">
+      <semantic:documentation id="documentation_Hw9Gqg"/>
       <semantic:incoming>__18abb53a-b7c0-414e-9428-1d1a14f2e96b</semantic:incoming>
-      <semantic:documentation id="documentation_PI3A7A"/>
     </semantic:endEvent>
   </semantic:process>
   <bpmndi:BPMNDiagram documentation="" id="Page_1" name="Buying at Amazon Collaboration">
@@ -300,17 +300,47 @@
           <dc:Bounds height="12" width="68.46875" x="1487.765625" y="714.5"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1404332496319" id="BPMNShape_VHEZeg">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_5cL3BA">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1404332496320" id="BPMNShape_0hL5JA">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_pVlUeA">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1404332496321" id="BPMNShape_QWDv2Q">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_Rl8mcA">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1404332496322" id="BPMNShape_j0TOhg">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_wHgVzQ">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1404332496323" id="BPMNShape_Yrh7og">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_gUtogg">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__b355021c-ac23-48bf-9d1a-45c32565ba39" id="_6b75d079-357e-49bf-a361-72b295e395a4">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1570.0" y="721.0"/>
         <di:waypoint x="1571.0" y="721.0"/>
         <di:waypoint x="1619.0" y="721.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__36fbe220-08cc-45e8-847b-3f55002979c2" id="_fe8ba97f-4313-42a0-b728-fe8dbc65b96c">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1355.0" y="721.0"/>
         <di:waypoint x="1356.0" y="721.0"/>
         <di:waypoint x="1474.0" y="721.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__a9de74be-ce4b-4d59-bafd-cf6f61f48867" id="_f840ac48-7fab-46ca-82be-7d85908b23de">
         <dc:Bounds height="76" width="96" x="1259" y="683"/>
@@ -319,11 +349,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__474f19b8-f608-4d20-a49e-907485a789c5" id="_1dbe0923-aa28-4908-84e3-9eccef9db46c">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1197.0" y="723.0"/>
         <di:waypoint x="1228.0" y="723.0"/>
         <di:waypoint x="1228.0" y="721.0"/>
         <di:waypoint x="1259.0" y="721.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__6c41ae4a-64fd-40f9-a764-059b26ef8ebf" id="_1803f4c7-e215-4029-8ff6-bbf2daf31109">
         <dc:Bounds height="36" width="36" x="1619" y="703"/>
@@ -350,16 +380,16 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__47cf5284-b9ff-4136-93fd-f0f32b87810f" id="_8fb6b2d9-a592-4cc3-b960-70c230e25059">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1027.0" y="129.0"/>
         <di:waypoint x="1087.0" y="129.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__f3f918b3-abee-4e59-8131-212d0d86b056" id="_ab4cd126-18c0-458a-a5ba-cc1d02bd6941">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="885.0" y="131.0"/>
         <di:waypoint x="908.0" y="131.0"/>
         <di:waypoint x="908.0" y="129.0"/>
         <di:waypoint x="931.0" y="129.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__0ef615c7-5456-45c8-9cfb-f1fe30c44436" id="_5b5df749-2e58-4dd2-aa92-90420c83b3a2">
         <dc:Bounds height="32" width="31" x="849" y="113"/>
@@ -386,11 +416,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__6fd770bc-8f12-4927-96cd-e3cc53d862d3" id="_48ee3c9b-dc2f-418d-94b0-30f1634d1e9e">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="324.0" y="397.0"/>
         <di:waypoint x="344.0" y="397.0"/>
         <di:waypoint x="344.0" y="395.0"/>
         <di:waypoint x="363.0" y="395.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__be386700-06c2-4a29-b861-c516940667fe" id="_b211f152-3674-4d56-8d38-6c254ec685cd">
         <dc:Bounds height="76" width="96" x="521.5" y="356.5"/>
@@ -399,18 +429,18 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__82227f00-3d5e-446e-a2e7-50b907ed7c8c" id="_6074abbe-7294-4260-9553-f3f2ec74b231">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="618.0" y="395.0"/>
         <di:waypoint x="619.0" y="395.0"/>
         <di:waypoint x="619.0" y="396.0"/>
         <di:waypoint x="689.0" y="396.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__e8a6634d-4c67-4ec3-b8cf-18bf3987c281" id="_3470f558-68b6-4a09-bddf-5c9af1f6690e">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="459.0" y="395.0"/>
         <di:waypoint x="460.0" y="395.0"/>
         <di:waypoint x="460.0" y="396.0"/>
         <di:waypoint x="522.0" y="396.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__5ffa1675-9ad7-46f8-b19a-85cd5878496f" id="_8f85b3d6-6223-446d-b4c5-2e98ae9b7ec9" isExpanded="true">
         <dc:Bounds height="209" width="547" x="828" y="290"/>
@@ -419,20 +449,20 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__a12a7547-373d-47ec-890d-af5c177203ee" id="_74f66f18-53f0-44ce-9bac-8a7fd2016ac8">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1">
-          <dc:Bounds height="12" width="19.09375" x="767.953125" y="400"/>
-        </bpmndi:BPMNLabel>
         <di:waypoint x="735.0" y="399.0"/>
         <di:waypoint x="782.0" y="399.0"/>
         <di:waypoint x="782.0" y="395.0"/>
         <di:waypoint x="828.0" y="395.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1">
+          <dc:Bounds height="12" width="19.09375" x="767.953125" y="400"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__5d3be9f3-3f7a-4778-89e5-1bf4951472c2" id="_4ca78b71-fa50-4ff1-a162-67359576eb8f">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1375.0" y="395.0"/>
         <di:waypoint x="1376.0" y="395.0"/>
         <di:waypoint x="1376.0" y="395.0"/>
         <di:waypoint x="1476.0" y="395.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__a1c27e25-4aa2-43dc-8a20-b713e8393d7f" id="_2c370da6-1a92-4fae-9882-fcf3f3092c91">
         <dc:Bounds height="32" width="32" x="849" y="379"/>
@@ -529,10 +559,10 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__dc6ef6c1-9c24-48ae-800f-2f9fb76d7ce6" id="_bd7f52ee-93f6-4736-a13f-d1acdb1630d4">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1352.0" y="517.0"/>
         <di:waypoint x="1352.0" y="546.0"/>
         <di:waypoint x="1431.0" y="546.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__e03c9539-b011-46b1-a381-0eee5f0521b8" id="_b5a71451-bb2d-45fb-b075-0b4981303b99">
         <dc:Bounds height="36" width="36" x="1614" y="376.5"/>
@@ -541,11 +571,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__92bd8ebf-e3b1-4270-96bb-2f6d6978c64a" id="_07140a2c-1e99-4404-8313-93a372c2d6ae">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1572.0" y="395.0"/>
         <di:waypoint x="1573.0" y="395.0"/>
         <di:waypoint x="1573.0" y="396.0"/>
         <di:waypoint x="1614.0" y="396.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="_95a2fb99-bb98-4d26-b5ec-3dae3a32fd79" id="_beca97c9-7c08-4f6a-861e-62959c6bf196">
         <dc:Bounds height="76" width="96" x="1476" y="356.5"/>
@@ -560,13 +590,13 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__ffc1486a-8a32-490a-8835-d14cc5ab0a97" id="_46f456b4-a7b4-461a-9cdc-f62ff777fb94">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1">
-          <dc:Bounds height="12" width="14.59375" x="557.703125" y="320.5"/>
-        </bpmndi:BPMNLabel>
         <di:waypoint x="706.0" y="378.0"/>
         <di:waypoint x="706.0" y="316.0"/>
         <di:waypoint x="412.0" y="316.0"/>
         <di:waypoint x="412.0" y="357.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1">
+          <dc:Bounds height="12" width="14.59375" x="557.703125" y="320.5"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__f61e9ae0-855f-4ce6-9e3a-4b4f5c7dd0b8" id="_686fd5b2-cf88-40ac-80e1-18c4edc862c6">
         <dc:Bounds height="76" width="96" x="363" y="356.5"/>
@@ -599,11 +629,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__4ad47bad-fac8-4269-9a9b-3f68613c7fc8" id="_f1b8e3b1-fd7e-4fdb-98e0-aa35fa62e160">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="324.0" y="693.0"/>
         <di:waypoint x="346.0" y="693.0"/>
         <di:waypoint x="346.0" y="691.0"/>
         <di:waypoint x="368.0" y="691.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__f4846d41-bca9-4788-9ce2-30ff4b9d6b7b" id="_1d93dd43-7d59-4efc-b288-6fcf57e00b26">
         <dc:Bounds height="76" width="96" x="368" y="653"/>
@@ -612,9 +642,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__ce6b77ab-3b91-4ca0-b6c2-48980892e47e" id="_60ed1a2c-fab7-4617-881f-67733c0bc41b">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="464.0" y="691.0"/>
         <di:waypoint x="500.0" y="691.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__200e3ce9-3381-4d13-8c7e-4f8790388070" id="_99312dc9-2800-4107-88ea-405a3e42e20e">
         <dc:Bounds height="76" width="96" x="500" y="653"/>
@@ -623,11 +653,11 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__04700d0b-5231-46f6-ae74-698ba3864a60" id="_5a056820-21ec-484a-ac1b-9caf84481e8a">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="596.0" y="692.0"/>
         <di:waypoint x="619.0" y="692.0"/>
         <di:waypoint x="619.0" y="828.0"/>
         <di:waypoint x="641.0" y="828.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__75b31592-10d5-4d4b-993e-0df32d5977ac" id="_ef978cb8-c159-4f43-831a-9a3aba990372" isHorizontal="true">
         <dc:Bounds height="119" width="746" x="244" y="768"/>
@@ -642,9 +672,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__c18acafe-53f8-4e7d-a6df-d12b60b5ae53" id="_0bbeed98-39d7-44ef-8b9d-f7600fb8ac20">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="737.0" y="828.0"/>
         <di:waypoint x="783.0" y="828.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__c1a19847-8b3e-42db-a95d-9f21cffc50a3" id="_8707335d-fc8f-4e32-a2b7-3ecd2ac8d86c">
         <dc:Bounds height="76" width="96" x="783" y="790"/>
@@ -653,10 +683,10 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__18abb53a-b7c0-414e-9428-1d1a14f2e96b" id="_c71d97f8-5c20-4527-bed2-528e37dad504">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="879.0" y="828.0"/>
         <di:waypoint x="880.0" y="828.0"/>
         <di:waypoint x="922.0" y="828.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="__5a9abc77-7371-4213-bede-4056f9cb7808" id="_d286b0e6-9940-4d58-ad5d-f1f472bd3c2b">
         <dc:Bounds height="36" width="36" x="922" y="810"/>
@@ -665,72 +695,42 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="__13e0b8fd-91fe-4bbc-87ae-5ad657f6ef99" id="_2fdcb9da-45a4-46c7-aab8-491d8dee9acd">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1522.0" y="683.0"/>
         <di:waypoint x="1522.0" y="434.0"/>
         <di:waypoint x="1524.0" y="434.0"/>
         <di:waypoint x="1524.0" y="433.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__5cdd91dd-32f6-4102-b475-bd6c7992f509" id="_8485f43a-fb2b-4466-b254-49452751e656">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="848.0" y="790.0"/>
         <di:waypoint x="848.0" y="762.0"/>
         <di:waypoint x="1177.0" y="762.0"/>
         <di:waypoint x="1177.0" y="741.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__789952b8-abba-4f3f-81cd-24cbb4d0d615" id="_d16a9f5d-c29a-4114-b7c6-65b2921b6c74">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1222.0" y="364.0"/>
         <di:waypoint x="1222.0" y="520.0"/>
         <di:waypoint x="304.0" y="520.0"/>
         <di:waypoint x="304.0" y="675.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__86b33cf0-1b17-437f-a7cf-510e0766561f" id="_a3b1d7c1-82fb-4b28-ad4f-c1daf17cc1c7">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1">
-          <dc:Bounds height="26" width="90.921875" x="857.0390625" y="233"/>
-        </bpmndi:BPMNLabel>
         <di:waypoint x="949.0" y="357.0"/>
         <di:waypoint x="949.0" y="228.0"/>
         <di:waypoint x="864.0" y="228.0"/>
         <di:waypoint x="864.0" y="149.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1">
+          <dc:Bounds height="26" width="90.921875" x="857.0390625" y="233"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="__0c171c64-b342-4f84-8020-a63b6a5b296d" id="_f10d64de-2a78-421b-8a62-69bb9560958c">
-        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
         <di:waypoint x="1106.0" y="147.0"/>
         <di:waypoint x="1106.0" y="230.0"/>
         <di:waypoint x="1007.0" y="230.0"/>
         <di:waypoint x="1007.0" y="357.0"/>
+        <bpmndi:BPMNLabel labelStyle="LSPage_1"/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="Message_1404332496319" id="BPMNShape_ssOwtQ">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_USsUDw">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_1404332496320" id="BPMNShape_kZn5dg">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_ap8KBQ">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_1404332496321" id="BPMNShape_sy6S9Q">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_0N00bw">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_1404332496322" id="BPMNShape_hVFhUQ">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_0W0o8w">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_1404332496323" id="BPMNShape_r5o0lA">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_9U1vfA">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="LSPage_1">
       <dc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11"/>

@@ -2,6 +2,7 @@ package org.openbpmn.bpmn.elements.core;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -65,8 +66,10 @@ public class BPMNLabel {
             // <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
             label = model.createElement(BPMNNS.BPMNDI, "BPMNLabel");
             label.setAttribute("id", BPMNModel.generateShortID("BPMNLabel"));
-            bpmnShape.appendChild(label);
+            // bpmnShape.appendChild(label);
+            BPMNElementOrder.appendChild(bpmnShape, label);
             bounds = new BPMNBounds(label, model);
+            bounds.setDimension(BPMNLabel.DEFAULT_WIDTH, BPMNLabel.DEFAULT_HEIGHT);
         }
     }
 

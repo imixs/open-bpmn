@@ -2,6 +2,7 @@ package org.openbpmn.bpmn.elements.core;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -54,7 +55,8 @@ public class BPMNBounds {
         if (elementNode == null) {
             // <dc:Bounds height="36.0" width="36.0" x="572.0" y="261.0"/>
             elementNode = model.createElement(BPMNNS.DC, "Bounds");
-            bpmndiElement.appendChild(elementNode);
+            BPMNElementOrder.appendChild(bpmndiElement, elementNode);
+            // bpmndiElement.appendChild(elementNode);
         }
 
     }

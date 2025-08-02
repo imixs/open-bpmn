@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="_1373649948794" name="A.4.0" targetNamespace="http://www.trisotech.com/definitions/_1373649948794">
-  <semantic:extensionElements>
-    <open-bpmn:auto-align/>
-  </semantic:extensionElements>
   <semantic:process id="WFP-6-1" isExecutable="false" processType="Public">
+    <semantic:documentation id="documentation_6DcG7A"/>
+    <semantic:extensionElements>
+      <open-bpmn:auto-align/>
+    </semantic:extensionElements>
     <semantic:task completionQuantity="1" id="_ab851300-b5de-4ad3-bbec-215553757fc8" isForCompensation="false" name="Task 1" startQuantity="1">
+      <semantic:documentation id="documentation_XZCK0Q"/>
       <semantic:incoming>_44b1d373-57a1-4b8e-ba2e-3204c32519e5</semantic:incoming>
       <semantic:outgoing>_6b7f2411-77f7-4152-be39-d8dbeb8bc460</semantic:outgoing>
-      <semantic:documentation id="documentation_WQ0vFQ"/>
     </semantic:task>
     <semantic:task completionQuantity="1" id="_80d1f02b-f39c-45c2-b731-43df75d81779" isForCompensation="false" name="Task 2" startQuantity="1">
+      <semantic:documentation id="documentation_IR4HkQ"/>
       <semantic:incoming>_6b7f2411-77f7-4152-be39-d8dbeb8bc460</semantic:incoming>
       <semantic:outgoing>_f35e3b07-7b1f-433d-9595-7fdea8996954</semantic:outgoing>
-      <semantic:documentation id="documentation_uyn3hw"/>
     </semantic:task>
     <semantic:endEvent id="_6e79c19f-749d-48c4-8271-d9ca028354fa" name="End Event 1">
+      <semantic:documentation id="documentation_6rXvlA"/>
       <semantic:incoming>_f35e3b07-7b1f-433d-9595-7fdea8996954</semantic:incoming>
-      <semantic:documentation id="documentation_8t6Dvg"/>
     </semantic:endEvent>
     <semantic:startEvent id="_c03f2b1f-32dc-41ef-b325-c9811a814fbe" name="Start Event 1">
+      <semantic:documentation id="documentation_IqVEzg"/>
       <semantic:outgoing>_44b1d373-57a1-4b8e-ba2e-3204c32519e5</semantic:outgoing>
-      <semantic:documentation id="documentation_859b0A"/>
     </semantic:startEvent>
     <semantic:sequenceFlow id="_44b1d373-57a1-4b8e-ba2e-3204c32519e5" name="" sourceRef="_c03f2b1f-32dc-41ef-b325-c9811a814fbe" targetRef="_ab851300-b5de-4ad3-bbec-215553757fc8">
-      <semantic:documentation id="documentation_23K9AA"/>
+      <semantic:documentation id="documentation_DxWRig"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f35e3b07-7b1f-433d-9595-7fdea8996954" name="" sourceRef="_80d1f02b-f39c-45c2-b731-43df75d81779" targetRef="_6e79c19f-749d-48c4-8271-d9ca028354fa">
-      <semantic:documentation id="documentation_36X8og"/>
+      <semantic:documentation id="documentation_au400A"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_6b7f2411-77f7-4152-be39-d8dbeb8bc460" name="" sourceRef="_ab851300-b5de-4ad3-bbec-215553757fc8" targetRef="_80d1f02b-f39c-45c2-b731-43df75d81779">
-      <semantic:documentation id="documentation_sQNpyA"/>
+      <semantic:documentation id="documentation_Fs2rtg"/>
     </semantic:sequenceFlow>
-    <semantic:documentation id="documentation_PmKwSg"/>
   </semantic:process>
   <semantic:process id="WFP-6-2" isExecutable="false" processType="Private">
     <semantic:laneSet id="ls_1373649949139">
@@ -104,10 +104,10 @@
     <semantic:sequenceFlow id="_486d13e4-86ef-49b2-bba9-f03435494f0e" name="" sourceRef="_65d1bebf-e613-4317-acb2-b12b69fc67ff" targetRef="_6fed62c8-8241-4a1d-ae67-266fda7dcead"/>
   </semantic:process>
   <semantic:message id="Message_1373649949207">
-    <semantic:documentation id="documentation_NO9mdw"/>
+    <semantic:documentation id="documentation_TdWDOA"/>
   </semantic:message>
   <semantic:message id="Message_1373649949208">
-    <semantic:documentation id="documentation_EppGzg"/>
+    <semantic:documentation id="documentation_ipoRmw"/>
   </semantic:message>
   <semantic:collaboration id="C1373649949206">
     <semantic:participant id="_046bff4f-cea3-4512-a6b1-30517fb29f2c" name="Pool" processRef="WFP-6-1"/>
@@ -236,6 +236,18 @@
           <dc:Bounds height="12.804751171875008" width="94.93333333333335" x="490.59632545931754" y="609.3333333333333"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1373649949207" id="BPMNShape_9gWVNw">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_DtLbRA">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Message_1373649949208" id="BPMNShape_0ADe3g">
+        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_XIiZ0g">
+          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_b467921a-ef7b-44c5-bf78-fd624c400d17" id="E1373649949209__b467921a-ef7b-44c5-bf78-fd624c400d17">
         <di:waypoint x="241.0" y="226.0"/>
         <di:waypoint x="240.0" y="368.0"/>
@@ -268,9 +280,9 @@
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_6b7f2411-77f7-4152-be39-d8dbeb8bc460" id="E1373649949214__6b7f2411-77f7-4152-be39-d8dbeb8bc460">
-        <bpmndi:BPMNLabel/>
         <di:waypoint x="282.0" y="192.0"/>
         <di:waypoint x="758.0" y="192.0"/>
+        <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_f5e6dc98-8c79-4e6b-aef9-c3f3bdc09136" id="E1373649949215__f5e6dc98-8c79-4e6b-aef9-c3f3bdc09136">
         <di:waypoint x="501.0" y="392.0"/>
@@ -285,12 +297,12 @@
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_f35e3b07-7b1f-433d-9595-7fdea8996954" id="E1373649949217__f35e3b07-7b1f-433d-9595-7fdea8996954">
-        <bpmndi:BPMNLabel/>
         <di:waypoint x="841.0" y="192.0"/>
         <di:waypoint x="842.0" y="192.0"/>
         <di:waypoint x="860.0" y="192.0"/>
         <di:waypoint x="860.0" y="194.0"/>
         <di:waypoint x="872.0" y="194.0"/>
+        <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_3580d9ba-4f79-48c1-96da-090bd5e5172d" id="E1373649949218__3580d9ba-4f79-48c1-96da-090bd5e5172d">
         <di:waypoint x="384.0" y="392.0"/>
@@ -317,29 +329,17 @@
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_44b1d373-57a1-4b8e-ba2e-3204c32519e5" id="E1373649949222__44b1d373-57a1-4b8e-ba2e-3204c32519e5">
-        <bpmndi:BPMNLabel/>
         <di:waypoint x="162.0" y="195.0"/>
         <di:waypoint x="181.0" y="195.0"/>
         <di:waypoint x="181.0" y="192.0"/>
         <di:waypoint x="199.0" y="192.0"/>
+        <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_ebbaed22-6fcb-4af7-8b7a-7ebc9cc7f150" id="E1373649949223__ebbaed22-6fcb-4af7-8b7a-7ebc9cc7f150">
         <di:waypoint x="608.0" y="399.0"/>
         <di:waypoint x="758.0" y="400.0"/>
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape bpmnElement="Message_1373649949207" id="BPMNShape_24fnNw">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_yFOJ0g">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_1373649949208" id="BPMNShape_F04kuQ">
-        <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_uPJXIQ">
-          <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="LS1373649949186">
       <dc:Font isBold="false" isItalic="false" isStrikeThrough="false" isUnderline="false" name="Arial" size="11.0"/>

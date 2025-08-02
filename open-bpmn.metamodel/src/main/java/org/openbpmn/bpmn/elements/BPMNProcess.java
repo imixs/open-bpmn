@@ -90,7 +90,7 @@ public class BPMNProcess extends BPMNElement {
                 || BPMNTypes.PROCESS_TYPE_NONE.equals(processType)) {
             if ("false".equals(this.elementNode.getAttribute("isExecutable"))) {
                 setExecutable(false);
-            } else {
+            } else if ("true".equals(this.elementNode.getAttribute("isExecutable"))) {
                 setExecutable(true);
             }
         }
@@ -597,7 +597,8 @@ public class BPMNProcess extends BPMNElement {
         bpmnEdgeElement.setAttribute("sourceRef", source);
         bpmnEdgeElement.setAttribute("targetRef", target);
 
-        this.getElementNode().appendChild(bpmnEdgeElement);
+        // this.getElementNode().appendChild(bpmnEdgeElement);
+        BPMNElementOrder.appendChild(this.getElementNode(), bpmnEdgeElement);
 
         SequenceFlow sequenceFlow = this.createBPMNSequenceFlowByNode(bpmnEdgeElement);
 
@@ -614,12 +615,13 @@ public class BPMNProcess extends BPMNElement {
         // add outgoing reference to source element
         Element refOut = model.createElement(BPMNNS.BPMN2, "outgoing");
         refOut.setTextContent(id);
-        sourceElement.getElementNode().appendChild(refOut);
+        // sourceElement.getElementNode().appendChild(refOut);
+        BPMNElementOrder.appendChild(sourceElement.getElementNode(), refOut);
         // add incoming reference to target element
         Element refIn = model.createElement(BPMNNS.BPMN2, "incoming");
         refIn.setTextContent(id);
-        targetElement.getElementNode().appendChild(refIn);
-
+        // targetElement.getElementNode().appendChild(refIn);
+        BPMNElementOrder.appendChild(targetElement.getElementNode(), refIn);
         return sequenceFlow;
     }
 
@@ -661,7 +663,8 @@ public class BPMNProcess extends BPMNElement {
         bpmnEdgeElement.setAttribute("sourceRef", source);
         bpmnEdgeElement.setAttribute("targetRef", target);
 
-        this.getElementNode().appendChild(bpmnEdgeElement);
+        // this.getElementNode().appendChild(bpmnEdgeElement);
+        BPMNElementOrder.appendChild(this.getElementNode(), bpmnEdgeElement);
 
         Association association = this.createBPMNAssociationByNode(bpmnEdgeElement);
         association.addDefaultWayPoints();
@@ -704,7 +707,7 @@ public class BPMNProcess extends BPMNElement {
         // first verify if the process already contains a LaneSet. If not we create
         // a bpmn2:laneSet
         if (this.laneSet == null) {
-            BPMNModel.log("create laneset...");
+            BPMNModel.log("create laneSet...");
             // create the default collaboration element
             String laneSetID = BPMNModel.generateShortID("laneset");
             laneSet = model.createElement(BPMNNS.BPMN2, BPMNTypes.LANESET);

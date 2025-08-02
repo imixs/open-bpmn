@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?><semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.trisotech.com/definitions/_af3cbf6a-9c69-460b-9a1d-276711d30213" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dmn="http://www.omg.org/spec/DMN/20180521/MODEL/" xmlns:drools="http://www.jboss.org/drools" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:openapi="https://openapis.org/omg/extension/1.0" xmlns:rss="http://purl.org/rss/2.0/" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:trisobpmn="http://www.trisotech.com/2014/triso/bpmn" xmlns:trisofeed="http://trisotech.com/feed" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="BPMN Modeler" exporterVersion="6.2.9.1" expressionLanguage="http://www.w3.org/1999/XPath" id="_af3cbf6a-9c69-460b-9a1d-276711d30213" name="Travel Booking with Event Subprocess" targetNamespace="http://www.trisotech.com/definitions/_af3cbf6a-9c69-460b-9a1d-276711d30213" trisobpmn:logoChoice="Default">
-  <semantic:extensionElements>
-    <open-bpmn:auto-align/>
-  </semantic:extensionElements>
   <semantic:process id="_898aa942-9a96-4405-ae71-22b5e2e3d235" isClosed="false" name="Simple Travel Booking" processType="Public">
+    <semantic:documentation id="documentation_USxirQ"/>
+    <semantic:extensionElements>
+      <open-bpmn:auto-align/>
+    </semantic:extensionElements>
     <semantic:ioSpecification>
       <semantic:dataInput id="_e8347f3a-e1a1-41d1-b2e1-4089c02028bc" isCollection="false" name="Travel Request"/>
       <semantic:dataOutput id="_1a713fab-bf18-4975-afe3-d2bd2820023b" isCollection="false" name="Itinerary"/>
@@ -14,192 +15,193 @@
       </semantic:outputSet>
     </semantic:ioSpecification>
     <semantic:intermediateCatchEvent id="_15fef309-6718-4352-9b71-f757bcd8c023" name="Offer Approved">
+      <semantic:documentation id="documentation_QdRgIA"/>
       <semantic:incoming>_54044d90-3a1e-4a49-99a3-1497045c7235</semantic:incoming>
       <semantic:outgoing>_c7c2f8e1-a93f-44d6-9a94-cb92d7466d73</semantic:outgoing>
       <semantic:messageEventDefinition/>
-      <semantic:documentation id="documentation_9W1T2g"/>
     </semantic:intermediateCatchEvent>
     <semantic:intermediateCatchEvent id="_e5c69e92-6f98-47c8-bc22-b75d38620f95" name="Cancel Request">
+      <semantic:documentation id="documentation_Gu0gnQ"/>
       <semantic:incoming>_2403da0e-5b49-43fa-ba00-ec6c1f3e4790</semantic:incoming>
       <semantic:outgoing>_f072c57e-dcc6-4a16-8f28-13a2cd6e43ed</semantic:outgoing>
       <semantic:messageEventDefinition/>
-      <semantic:documentation id="documentation_jSXniQ"/>
     </semantic:intermediateCatchEvent>
     <semantic:intermediateCatchEvent id="_87baeef0-f32e-4a93-b802-fdd588aaf729" name="24 Hours">
+      <semantic:documentation id="documentation_YYR0Fw"/>
       <semantic:incoming>_16857297-f0fb-4027-87f6-633a76267c84</semantic:incoming>
       <semantic:outgoing>_649072fc-31c7-4e04-bc58-d4442a06f076</semantic:outgoing>
       <semantic:timerEventDefinition>
         <semantic:timeDate/>
       </semantic:timerEventDefinition>
-      <semantic:documentation id="documentation_Afg18w"/>
     </semantic:intermediateCatchEvent>
     <semantic:intermediateThrowEvent id="_6a5cdbbf-2618-496e-b728-955dc215ef9d" name="Booking">
+      <semantic:documentation id="documentation_mSS0sw"/>
       <semantic:incoming>_b792d502-a08e-4a3d-bdc1-1fc33a2022f6</semantic:incoming>
       <semantic:outgoing>_c72535b8-43f7-4906-9f18-691e03050c24</semantic:outgoing>
       <semantic:compensateEventDefinition/>
-      <semantic:documentation id="documentation_nLaZtw"/>
     </semantic:intermediateThrowEvent>
     <semantic:endEvent id="_88247168-b457-4663-aad0-753a0236c8df" name="Offer Expired">
+      <semantic:documentation id="documentation_7aQUeA"/>
       <semantic:incoming>_51e34f49-b9eb-4f10-ac0a-7af81e1370ff</semantic:incoming>
-      <semantic:documentation id="documentation_aQ8ZCQ"/>
     </semantic:endEvent>
     <semantic:endEvent id="_7eb87eb8-0d7a-445b-b768-90d754a938ed" name="Request Cancelled">
+      <semantic:documentation id="documentation_WJPvNg"/>
       <semantic:incoming>_e396fc69-5792-41e3-8a92-ee6b83cd0909</semantic:incoming>
-      <semantic:documentation id="documentation_hIrBRw"/>
     </semantic:endEvent>
     <semantic:sendTask completionQuantity="1" id="_e839800f-ad4f-4bcc-aaf2-d38fe4a32bcd" implementation="##WebService" name="Request&#10;Credit Card Information" startQuantity="1">
+      <semantic:documentation id="documentation_bMuRvw"/>
       <semantic:incoming>_c7c2f8e1-a93f-44d6-9a94-cb92d7466d73</semantic:incoming>
       <semantic:outgoing>_7efd61ea-979e-44f4-91c8-e212ae6b22c7</semantic:outgoing>
-      <semantic:documentation id="documentation_EGEYeg"/>
     </semantic:sendTask>
     <semantic:eventBasedGateway eventGatewayType="Exclusive" gatewayDirection="Diverging" id="_7ab6dbdf-f55b-4be6-bb41-d99793135c1d" instantiate="false">
+      <semantic:documentation id="documentation_0zzmEA"/>
       <semantic:incoming>_bcb8805c-5e93-41ec-991b-575d26ed3a9c</semantic:incoming>
       <semantic:outgoing>_16857297-f0fb-4027-87f6-633a76267c84</semantic:outgoing>
       <semantic:outgoing>_54044d90-3a1e-4a49-99a3-1497045c7235</semantic:outgoing>
       <semantic:outgoing>_2403da0e-5b49-43fa-ba00-ec6c1f3e4790</semantic:outgoing>
-      <semantic:documentation id="documentation_mmtttg"/>
     </semantic:eventBasedGateway>
     <semantic:startEvent id="_44e3f1fa-42cd-40b7-9980-a51ac49d5fa3" name="Receive Travel Request">
+      <semantic:documentation id="documentation_gSdg5w"/>
       <semantic:outgoing>_9ec5ad1d-0662-42a4-9118-bca0bf744422</semantic:outgoing>
       <semantic:messageEventDefinition id="_1087adb7-2560-4fec-a13c-5a91f257819c"/>
-      <semantic:documentation id="documentation_VqIlEw"/>
     </semantic:startEvent>
     <semantic:endEvent id="_42e03d0f-6c6b-4493-971f-c6928eb563b0" name="Booking &#10;Confirmed">
+      <semantic:documentation id="documentation_2uESpg"/>
       <semantic:incoming>_c69565cd-3a08-4532-b466-8f9a9ebdc1e1</semantic:incoming>
-      <semantic:documentation id="documentation_nh9L6g"/>
     </semantic:endEvent>
     <semantic:endEvent id="_babdfa54-b55f-463f-9341-424b42db9760" name="Failed Credit&#10;Transaction">
+      <semantic:documentation id="documentation_I90ipw"/>
       <semantic:incoming>_94e0bd86-6659-4669-baee-ce671c7f33d6</semantic:incoming>
-      <semantic:documentation id="documentation_aRVKWA"/>
     </semantic:endEvent>
     <semantic:endEvent id="_a68b0941-b7e3-4791-8e13-fd9622e4448c" name="Failed &#10;Booking">
+      <semantic:documentation id="documentation_RBP0wg"/>
       <semantic:incoming>_ec8c7430-02e1-4298-9b00-33c4d56d0fac</semantic:incoming>
-      <semantic:documentation id="documentation_1D1xIA"/>
     </semantic:endEvent>
-    <semantic:subProcess completionQuantity="1" id="_c38139c7-a2d1-47c7-b75a-19e14c7212c8" isExecutable="true" name="Make Booking" startQuantity="1" triggeredByEvent="false">
+    <semantic:subProcess completionQuantity="1" id="_c38139c7-a2d1-47c7-b75a-19e14c7212c8" name="Make Booking" startQuantity="1" triggeredByEvent="false">
+      <semantic:documentation id="documentation_EzC2SA"/>
       <semantic:incoming>_7efd61ea-979e-44f4-91c8-e212ae6b22c7</semantic:incoming>
       <semantic:outgoing>_f81560f5-e1c5-497d-a159-dce350f2283c</semantic:outgoing>
       <semantic:endEvent id="_6ff2b954-2017-46dd-941e-4badd9326eac" name="Travel Booked">
+        <semantic:documentation id="documentation_tUx3vA"/>
         <semantic:incoming>_eba304c2-42e8-4d65-a9dc-e2483fd8ad86</semantic:incoming>
-        <semantic:documentation id="documentation_61IUqg"/>
       </semantic:endEvent>
       <semantic:startEvent id="_31a01c78-9a86-4b53-a485-e8a973ba6383">
+        <semantic:documentation id="documentation_9QRa3Q"/>
         <semantic:outgoing>_d51b76e8-b096-4376-ba01-7ca63ae51f70</semantic:outgoing>
-        <semantic:documentation id="documentation_6flH2w"/>
       </semantic:startEvent>
-      <semantic:subProcess completionQuantity="1" id="_e880bf53-84ca-4776-aa75-d1bf53172240" isExecutable="true" name="Handle Compensation" startQuantity="1" triggeredByEvent="true">
+      <semantic:subProcess completionQuantity="1" id="_e880bf53-84ca-4776-aa75-d1bf53172240" name="Handle Compensation" startQuantity="1" triggeredByEvent="true">
+        <semantic:documentation id="documentation_u00LsQ"/>
         <semantic:endEvent id="_fc4826b1-1e63-49f6-8670-7cc8104e45ea">
+          <semantic:documentation id="documentation_e6ybIg"/>
           <semantic:incoming>_b3d5a547-87a4-460d-b7c1-53b6506127e9</semantic:incoming>
-          <semantic:documentation id="documentation_JpexZA"/>
         </semantic:endEvent>
         <semantic:intermediateThrowEvent id="_99bf4db9-3616-4ed1-a0f8-b8175c3fd46f" name="Hotel">
+          <semantic:documentation id="documentation_zIni0A"/>
           <semantic:incoming>_64d60a4e-90cf-4a9a-afbb-631739b6b704</semantic:incoming>
           <semantic:outgoing>_8d0dadf1-129e-4ba8-b829-3e7e176bf775</semantic:outgoing>
           <semantic:compensateEventDefinition/>
-          <semantic:documentation id="documentation_PDI0lQ"/>
         </semantic:intermediateThrowEvent>
         <semantic:intermediateThrowEvent id="_e4b9fa74-efd8-409f-a2e4-ad917df767b4" name="Flight">
+          <semantic:documentation id="documentation_1Er8pw"/>
           <semantic:incoming>_3cd5068b-6df1-4a62-a06a-369d063f6160</semantic:incoming>
           <semantic:outgoing>_b62ef735-9d04-494a-aeb4-95fd4862cc45</semantic:outgoing>
           <semantic:compensateEventDefinition/>
-          <semantic:documentation id="documentation_Lkguug"/>
         </semantic:intermediateThrowEvent>
         <semantic:startEvent id="_8af17ed4-6e13-463b-8333-d397b3002c65" name="Booking">
+          <semantic:documentation id="documentation_SM8ZdQ"/>
           <semantic:outgoing>_e0c52135-c57f-4ee6-b488-22bbab06dccc</semantic:outgoing>
           <semantic:compensateEventDefinition id="_434dc71e-6d59-4940-8e27-a911bf891cdf"/>
-          <semantic:documentation id="documentation_Si2HWw"/>
         </semantic:startEvent>
         <semantic:parallelGateway gatewayDirection="Converging" id="_c4ddacd9-6e12-49e3-b058-e71c0af08c68">
+          <semantic:documentation id="documentation_po3ufQ"/>
           <semantic:incoming>_8d0dadf1-129e-4ba8-b829-3e7e176bf775</semantic:incoming>
           <semantic:incoming>_b62ef735-9d04-494a-aeb4-95fd4862cc45</semantic:incoming>
           <semantic:outgoing>_b3d5a547-87a4-460d-b7c1-53b6506127e9</semantic:outgoing>
-          <semantic:documentation id="documentation_Knvuog"/>
         </semantic:parallelGateway>
         <semantic:parallelGateway gatewayDirection="Diverging" id="_08cd4ce0-bf7c-4a05-bacf-546daa51ce9c">
+          <semantic:documentation id="documentation_NkvmLw"/>
           <semantic:incoming>_e0c52135-c57f-4ee6-b488-22bbab06dccc</semantic:incoming>
           <semantic:outgoing>_64d60a4e-90cf-4a9a-afbb-631739b6b704</semantic:outgoing>
           <semantic:outgoing>_3cd5068b-6df1-4a62-a06a-369d063f6160</semantic:outgoing>
-          <semantic:documentation id="documentation_4bcdRw"/>
         </semantic:parallelGateway>
         <semantic:sequenceFlow id="_b3d5a547-87a4-460d-b7c1-53b6506127e9" sourceRef="_c4ddacd9-6e12-49e3-b058-e71c0af08c68" targetRef="_fc4826b1-1e63-49f6-8670-7cc8104e45ea">
-          <semantic:documentation id="documentation_RiDlzA"/>
+          <semantic:documentation id="documentation_7T7DfQ"/>
         </semantic:sequenceFlow>
         <semantic:sequenceFlow id="_8d0dadf1-129e-4ba8-b829-3e7e176bf775" sourceRef="_99bf4db9-3616-4ed1-a0f8-b8175c3fd46f" targetRef="_c4ddacd9-6e12-49e3-b058-e71c0af08c68">
-          <semantic:documentation id="documentation_XOXl5Q"/>
+          <semantic:documentation id="documentation_jAfFWQ"/>
         </semantic:sequenceFlow>
         <semantic:sequenceFlow id="_b62ef735-9d04-494a-aeb4-95fd4862cc45" sourceRef="_e4b9fa74-efd8-409f-a2e4-ad917df767b4" targetRef="_c4ddacd9-6e12-49e3-b058-e71c0af08c68">
-          <semantic:documentation id="documentation_6miflQ"/>
+          <semantic:documentation id="documentation_XCDBKQ"/>
         </semantic:sequenceFlow>
         <semantic:sequenceFlow id="_64d60a4e-90cf-4a9a-afbb-631739b6b704" sourceRef="_08cd4ce0-bf7c-4a05-bacf-546daa51ce9c" targetRef="_99bf4db9-3616-4ed1-a0f8-b8175c3fd46f">
-          <semantic:documentation id="documentation_YzgpRA"/>
+          <semantic:documentation id="documentation_y2l91A"/>
         </semantic:sequenceFlow>
         <semantic:sequenceFlow id="_3cd5068b-6df1-4a62-a06a-369d063f6160" sourceRef="_08cd4ce0-bf7c-4a05-bacf-546daa51ce9c" targetRef="_e4b9fa74-efd8-409f-a2e4-ad917df767b4">
-          <semantic:documentation id="documentation_zsTHtQ"/>
+          <semantic:documentation id="documentation_ahXELA"/>
         </semantic:sequenceFlow>
         <semantic:sequenceFlow id="_e0c52135-c57f-4ee6-b488-22bbab06dccc" sourceRef="_8af17ed4-6e13-463b-8333-d397b3002c65" targetRef="_08cd4ce0-bf7c-4a05-bacf-546daa51ce9c">
-          <semantic:documentation id="documentation_moYp2g"/>
+          <semantic:documentation id="documentation_lX0eDA"/>
         </semantic:sequenceFlow>
-        <semantic:documentation id="documentation_EZtTZw"/>
       </semantic:subProcess>
       <semantic:parallelGateway gatewayDirection="Diverging" id="_749dd603-40f5-40fb-89b4-0e305b29892c">
+        <semantic:documentation id="documentation_1Gw0Lg"/>
         <semantic:incoming>_d51b76e8-b096-4376-ba01-7ca63ae51f70</semantic:incoming>
         <semantic:outgoing>_018e5307-4c8d-46fd-ba84-7b75409b3124</semantic:outgoing>
         <semantic:outgoing>_b2d48080-6bb1-4ae9-85c9-916d87536a49</semantic:outgoing>
-        <semantic:documentation id="documentation_5dtGGA"/>
       </semantic:parallelGateway>
       <semantic:parallelGateway gatewayDirection="Converging" id="_6a68d4b4-7549-42ce-b903-9da8b2024d31">
+        <semantic:documentation id="documentation_nbTIzw"/>
         <semantic:incoming>_b08efa4c-c27c-4654-9901-279a8c456a4f</semantic:incoming>
         <semantic:incoming>_e6011c12-800f-44e6-8ae8-51866664afcf</semantic:incoming>
         <semantic:outgoing>_eba304c2-42e8-4d65-a9dc-e2483fd8ad86</semantic:outgoing>
-        <semantic:documentation id="documentation_WZvUxQ"/>
       </semantic:parallelGateway>
       <semantic:serviceTask id="_3a2f133c-3ae1-4e21-94b5-6e8cf51acd74" implementation="##WebService" isForCompensation="true" name="Cancel Hotel">
-        <semantic:documentation id="documentation_XPLr4g"/>
+        <semantic:documentation id="documentation_rzZ0Vg"/>
       </semantic:serviceTask>
       <semantic:serviceTask id="_b595ec43-0769-4864-8f2e-403c405c8217" implementation="##WebService" name="Book Hotel">
+        <semantic:documentation id="documentation_E0zr8A"/>
         <semantic:incoming>_b2d48080-6bb1-4ae9-85c9-916d87536a49</semantic:incoming>
         <semantic:outgoing>_e6011c12-800f-44e6-8ae8-51866664afcf</semantic:outgoing>
-        <semantic:documentation id="documentation_CKvB4g"/>
       </semantic:serviceTask>
       <semantic:serviceTask id="_ea5cc55d-bfce-49c6-8a1a-a8a41a85da12" implementation="##WebService" name="Book Flight">
+        <semantic:documentation id="documentation_RqwsFQ"/>
         <semantic:incoming>_018e5307-4c8d-46fd-ba84-7b75409b3124</semantic:incoming>
         <semantic:outgoing>_b08efa4c-c27c-4654-9901-279a8c456a4f</semantic:outgoing>
-        <semantic:documentation id="documentation_RLdIAA"/>
       </semantic:serviceTask>
       <semantic:serviceTask id="_0198160d-b56c-4919-9920-db5f32d16b3f" implementation="##WebService" isForCompensation="true" name="Cancel Flight">
-        <semantic:documentation id="documentation_K5f0DA"/>
+        <semantic:documentation id="documentation_0NVMcA"/>
       </semantic:serviceTask>
       <semantic:boundaryEvent attachedToRef="_b595ec43-0769-4864-8f2e-403c405c8217" id="_b25ecc7c-4eff-4a70-96f2-6b2f94cf19b1" name="Hotel">
+        <semantic:documentation id="documentation_P1bIbA"/>
         <semantic:compensateEventDefinition/>
-        <semantic:documentation id="documentation_K8SNUQ"/>
       </semantic:boundaryEvent>
       <semantic:boundaryEvent attachedToRef="_ea5cc55d-bfce-49c6-8a1a-a8a41a85da12" id="_fe3f9094-097b-416d-adeb-4b7e7e753f3c" name="Flight">
+        <semantic:documentation id="documentation_0aWuYA"/>
         <semantic:compensateEventDefinition/>
-        <semantic:documentation id="documentation_2FzyNg"/>
       </semantic:boundaryEvent>
       <semantic:sequenceFlow id="_d51b76e8-b096-4376-ba01-7ca63ae51f70" sourceRef="_31a01c78-9a86-4b53-a485-e8a973ba6383" targetRef="_749dd603-40f5-40fb-89b4-0e305b29892c">
-        <semantic:documentation id="documentation_crhRyg"/>
+        <semantic:documentation id="documentation_BcTmQQ"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_eba304c2-42e8-4d65-a9dc-e2483fd8ad86" sourceRef="_6a68d4b4-7549-42ce-b903-9da8b2024d31" targetRef="_6ff2b954-2017-46dd-941e-4badd9326eac">
-        <semantic:documentation id="documentation_5A9oJg"/>
+        <semantic:documentation id="documentation_X6pwvg"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_018e5307-4c8d-46fd-ba84-7b75409b3124" sourceRef="_749dd603-40f5-40fb-89b4-0e305b29892c" targetRef="_ea5cc55d-bfce-49c6-8a1a-a8a41a85da12">
-        <semantic:documentation id="documentation_flmAmw"/>
+        <semantic:documentation id="documentation_yE20XA"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_b08efa4c-c27c-4654-9901-279a8c456a4f" sourceRef="_ea5cc55d-bfce-49c6-8a1a-a8a41a85da12" targetRef="_6a68d4b4-7549-42ce-b903-9da8b2024d31">
-        <semantic:documentation id="documentation_PDhREg"/>
+        <semantic:documentation id="documentation_pWc7aA"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_e6011c12-800f-44e6-8ae8-51866664afcf" sourceRef="_b595ec43-0769-4864-8f2e-403c405c8217" targetRef="_6a68d4b4-7549-42ce-b903-9da8b2024d31">
-        <semantic:documentation id="documentation_GEddZA"/>
+        <semantic:documentation id="documentation_PCTbCQ"/>
       </semantic:sequenceFlow>
       <semantic:sequenceFlow id="_b2d48080-6bb1-4ae9-85c9-916d87536a49" sourceRef="_749dd603-40f5-40fb-89b4-0e305b29892c" targetRef="_b595ec43-0769-4864-8f2e-403c405c8217">
-        <semantic:documentation id="documentation_6865Jg"/>
+        <semantic:documentation id="documentation_va20Uw"/>
       </semantic:sequenceFlow>
       <semantic:association associationDirection="One" id="_651344ad-d784-4ef2-9655-4bc6393ac323" sourceRef="_b25ecc7c-4eff-4a70-96f2-6b2f94cf19b1" targetRef="_3a2f133c-3ae1-4e21-94b5-6e8cf51acd74"/>
       <semantic:association associationDirection="One" id="_98b2bd26-e113-4d19-b6a8-bcda781a823b" sourceRef="_fe3f9094-097b-416d-adeb-4b7e7e753f3c" targetRef="_0198160d-b56c-4919-9920-db5f32d16b3f"/>
-      <semantic:documentation id="documentation_Oapexw"/>
     </semantic:subProcess>
     <semantic:sendTask id="_22612d45-65ca-4a74-a6eb-53af7ebcb5ff" implementation="##WebService" name="Confirm Booking">
+      <semantic:documentation id="documentation_TJDAdA"/>
       <semantic:incoming>_65293cb4-b859-4ff7-bcd3-ba4e38cf8763</semantic:incoming>
       <semantic:outgoing>_c69565cd-3a08-4532-b466-8f9a9ebdc1e1</semantic:outgoing>
       <semantic:ioSpecification>
@@ -213,19 +215,19 @@
         <semantic:sourceRef>_29b8c649-e2a0-4dd3-804b-567e8cc71718</semantic:sourceRef>
         <semantic:targetRef>_1a713fab-bf18-4975-afe3-d2bd2820023b</semantic:targetRef>
       </semantic:dataOutputAssociation>
-      <semantic:documentation id="documentation_IQ0qCQ"/>
     </semantic:sendTask>
     <semantic:sendTask id="_c8fa5253-dde9-471e-b933-58b00e8f374c" implementation="##WebService" name="Notify Failed Booking">
+      <semantic:documentation id="documentation_dbfkdg"/>
       <semantic:incoming>_8eac4fb5-c746-42e4-ab0b-80cdfaf76007</semantic:incoming>
       <semantic:outgoing>_ec8c7430-02e1-4298-9b00-33c4d56d0fac</semantic:outgoing>
-      <semantic:documentation id="documentation_23MFWg"/>
     </semantic:sendTask>
     <semantic:serviceTask id="_614d6469-2bb8-4ad6-a20a-db5db6321c6b" implementation="##WebService" name="Charge Credit Card">
+      <semantic:documentation id="documentation_YWQjyw"/>
       <semantic:incoming>_f81560f5-e1c5-497d-a159-dce350f2283c</semantic:incoming>
       <semantic:outgoing>_65293cb4-b859-4ff7-bcd3-ba4e38cf8763</semantic:outgoing>
-      <semantic:documentation id="documentation_pvvxzg"/>
     </semantic:serviceTask>
     <semantic:sendTask id="_9cc2ac34-f12c-49e0-b37c-144e5a84fd92" implementation="##WebService" name="Make Flights and Hotel Offer">
+      <semantic:documentation id="documentation_00hMeA"/>
       <semantic:incoming>_9ec5ad1d-0662-42a4-9118-bca0bf744422</semantic:incoming>
       <semantic:outgoing>_bcb8805c-5e93-41ec-991b-575d26ed3a9c</semantic:outgoing>
       <semantic:ioSpecification>
@@ -239,102 +241,100 @@
         <semantic:sourceRef>_e8347f3a-e1a1-41d1-b2e1-4089c02028bc</semantic:sourceRef>
         <semantic:targetRef>_9628422b-85a6-4857-8c14-7289b9fd9a8a</semantic:targetRef>
       </semantic:dataInputAssociation>
-      <semantic:documentation id="documentation_OvcHmQ"/>
     </semantic:sendTask>
     <semantic:serviceTask id="_8afc49f0-42c2-4da9-8e79-e08dbe349776" implementation="##WebService" name="Update Customer Record">
+      <semantic:documentation id="documentation_PQGW0Q"/>
       <semantic:incoming>_f072c57e-dcc6-4a16-8f28-13a2cd6e43ed</semantic:incoming>
       <semantic:outgoing>_e396fc69-5792-41e3-8a92-ee6b83cd0909</semantic:outgoing>
-      <semantic:documentation id="documentation_eTY86g"/>
     </semantic:serviceTask>
     <semantic:sendTask id="_de7e721e-a073-4857-b8c3-c6ae886dbb46" implementation="##WebService" name="Notify Customer&#10;Offer Expired">
+      <semantic:documentation id="documentation_qcuNaA"/>
       <semantic:incoming>_649072fc-31c7-4e04-bc58-d4442a06f076</semantic:incoming>
       <semantic:incoming>_a0c99000-31e1-4de9-baf7-45c2d09ebbff</semantic:incoming>
       <semantic:outgoing>_51e34f49-b9eb-4f10-ac0a-7af81e1370ff</semantic:outgoing>
-      <semantic:documentation id="documentation_xodhfw"/>
     </semantic:sendTask>
     <semantic:sendTask id="_2d6586cf-81fc-4e2a-83ec-6cfff5b34bb0" implementation="##WebService" name="Notify Failed Credit Transaction">
+      <semantic:documentation id="documentation_0z0lwQ"/>
       <semantic:incoming>_c72535b8-43f7-4906-9f18-691e03050c24</semantic:incoming>
       <semantic:outgoing>_94e0bd86-6659-4669-baee-ce671c7f33d6</semantic:outgoing>
-      <semantic:documentation id="documentation_beZgEQ"/>
     </semantic:sendTask>
     <semantic:boundaryEvent attachedToRef="_614d6469-2bb8-4ad6-a20a-db5db6321c6b" id="_6db9a77f-189f-4c07-b33b-e0c88f09e0db">
+      <semantic:documentation id="documentation_bW0VJQ"/>
       <semantic:outgoing>_b792d502-a08e-4a3d-bdc1-1fc33a2022f6</semantic:outgoing>
       <semantic:errorEventDefinition/>
-      <semantic:documentation id="documentation_U6nHWA"/>
     </semantic:boundaryEvent>
     <semantic:boundaryEvent attachedToRef="_c38139c7-a2d1-47c7-b75a-19e14c7212c8" id="_54d6e34f-4613-48d4-9143-b90927448adb">
+      <semantic:documentation id="documentation_miMakg"/>
       <semantic:outgoing>_8eac4fb5-c746-42e4-ab0b-80cdfaf76007</semantic:outgoing>
       <semantic:errorEventDefinition/>
-      <semantic:documentation id="documentation_y1AJGA"/>
     </semantic:boundaryEvent>
     <semantic:boundaryEvent attachedToRef="_e839800f-ad4f-4bcc-aaf2-d38fe4a32bcd" cancelActivity="true" id="_32c4138c-74ae-484a-a7e5-0609370d7080" name="24 Hours">
+      <semantic:documentation id="documentation_HKjFwg"/>
       <semantic:outgoing>_a0c99000-31e1-4de9-baf7-45c2d09ebbff</semantic:outgoing>
       <semantic:timerEventDefinition>
         <semantic:timeDate/>
       </semantic:timerEventDefinition>
-      <semantic:documentation id="documentation_DfLamg"/>
     </semantic:boundaryEvent>
     <semantic:sequenceFlow id="_c7c2f8e1-a93f-44d6-9a94-cb92d7466d73" sourceRef="_15fef309-6718-4352-9b71-f757bcd8c023" targetRef="_e839800f-ad4f-4bcc-aaf2-d38fe4a32bcd">
-      <semantic:documentation id="documentation_GRb3mw"/>
+      <semantic:documentation id="documentation_5am0fw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_16857297-f0fb-4027-87f6-633a76267c84" sourceRef="_7ab6dbdf-f55b-4be6-bb41-d99793135c1d" targetRef="_87baeef0-f32e-4a93-b802-fdd588aaf729">
-      <semantic:documentation id="documentation_Ip7FQA"/>
+      <semantic:documentation id="documentation_QOV5XA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_54044d90-3a1e-4a49-99a3-1497045c7235" sourceRef="_7ab6dbdf-f55b-4be6-bb41-d99793135c1d" targetRef="_15fef309-6718-4352-9b71-f757bcd8c023">
-      <semantic:documentation id="documentation_24jfoQ"/>
+      <semantic:documentation id="documentation_eYBEbw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_2403da0e-5b49-43fa-ba00-ec6c1f3e4790" sourceRef="_7ab6dbdf-f55b-4be6-bb41-d99793135c1d" targetRef="_e5c69e92-6f98-47c8-bc22-b75d38620f95">
-      <semantic:documentation id="documentation_hR6kPA"/>
+      <semantic:documentation id="documentation_lJImwQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_b792d502-a08e-4a3d-bdc1-1fc33a2022f6" sourceRef="_6db9a77f-189f-4c07-b33b-e0c88f09e0db" targetRef="_6a5cdbbf-2618-496e-b728-955dc215ef9d">
-      <semantic:documentation id="documentation_2Sswjw"/>
+      <semantic:documentation id="documentation_vK0QeA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_c69565cd-3a08-4532-b466-8f9a9ebdc1e1" sourceRef="_22612d45-65ca-4a74-a6eb-53af7ebcb5ff" targetRef="_42e03d0f-6c6b-4493-971f-c6928eb563b0">
-      <semantic:documentation id="documentation_KW0U1Q"/>
+      <semantic:documentation id="documentation_k7SXlw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_8eac4fb5-c746-42e4-ab0b-80cdfaf76007" sourceRef="_54d6e34f-4613-48d4-9143-b90927448adb" targetRef="_c8fa5253-dde9-471e-b933-58b00e8f374c">
-      <semantic:documentation id="documentation_gBsdbg"/>
+      <semantic:documentation id="documentation_xtu6FQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_ec8c7430-02e1-4298-9b00-33c4d56d0fac" sourceRef="_c8fa5253-dde9-471e-b933-58b00e8f374c" targetRef="_a68b0941-b7e3-4791-8e13-fd9622e4448c">
-      <semantic:documentation id="documentation_4EycEQ"/>
+      <semantic:documentation id="documentation_Qm53xA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_65293cb4-b859-4ff7-bcd3-ba4e38cf8763" sourceRef="_614d6469-2bb8-4ad6-a20a-db5db6321c6b" targetRef="_22612d45-65ca-4a74-a6eb-53af7ebcb5ff">
-      <semantic:documentation id="documentation_60ixmA"/>
+      <semantic:documentation id="documentation_oC6qZg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f81560f5-e1c5-497d-a159-dce350f2283c" sourceRef="_c38139c7-a2d1-47c7-b75a-19e14c7212c8" targetRef="_614d6469-2bb8-4ad6-a20a-db5db6321c6b">
-      <semantic:documentation id="documentation_IaxYBQ"/>
+      <semantic:documentation id="documentation_tv11tw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_9ec5ad1d-0662-42a4-9118-bca0bf744422" sourceRef="_44e3f1fa-42cd-40b7-9980-a51ac49d5fa3" targetRef="_9cc2ac34-f12c-49e0-b37c-144e5a84fd92">
-      <semantic:documentation id="documentation_VNtc6A"/>
+      <semantic:documentation id="documentation_XXJLbQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_bcb8805c-5e93-41ec-991b-575d26ed3a9c" sourceRef="_9cc2ac34-f12c-49e0-b37c-144e5a84fd92" targetRef="_7ab6dbdf-f55b-4be6-bb41-d99793135c1d">
-      <semantic:documentation id="documentation_fR9JHQ"/>
+      <semantic:documentation id="documentation_xh0aEQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f072c57e-dcc6-4a16-8f28-13a2cd6e43ed" sourceRef="_e5c69e92-6f98-47c8-bc22-b75d38620f95" targetRef="_8afc49f0-42c2-4da9-8e79-e08dbe349776">
-      <semantic:documentation id="documentation_i10Lgg"/>
+      <semantic:documentation id="documentation_NevbIA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_e396fc69-5792-41e3-8a92-ee6b83cd0909" sourceRef="_8afc49f0-42c2-4da9-8e79-e08dbe349776" targetRef="_7eb87eb8-0d7a-445b-b768-90d754a938ed">
-      <semantic:documentation id="documentation_9IlfpQ"/>
+      <semantic:documentation id="documentation_h7tsHg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_649072fc-31c7-4e04-bc58-d4442a06f076" sourceRef="_87baeef0-f32e-4a93-b802-fdd588aaf729" targetRef="_de7e721e-a073-4857-b8c3-c6ae886dbb46">
-      <semantic:documentation id="documentation_hdfG7w"/>
+      <semantic:documentation id="documentation_hYK9Sg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_51e34f49-b9eb-4f10-ac0a-7af81e1370ff" sourceRef="_de7e721e-a073-4857-b8c3-c6ae886dbb46" targetRef="_88247168-b457-4663-aad0-753a0236c8df">
-      <semantic:documentation id="documentation_4oLj1w"/>
+      <semantic:documentation id="documentation_cb20kQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_a0c99000-31e1-4de9-baf7-45c2d09ebbff" sourceRef="_32c4138c-74ae-484a-a7e5-0609370d7080" targetRef="_de7e721e-a073-4857-b8c3-c6ae886dbb46">
-      <semantic:documentation id="documentation_Btienw"/>
+      <semantic:documentation id="documentation_h00tMw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_c72535b8-43f7-4906-9f18-691e03050c24" sourceRef="_6a5cdbbf-2618-496e-b728-955dc215ef9d" targetRef="_2d6586cf-81fc-4e2a-83ec-6cfff5b34bb0">
-      <semantic:documentation id="documentation_JAojPA"/>
+      <semantic:documentation id="documentation_u4v2vA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_94e0bd86-6659-4669-baee-ce671c7f33d6" sourceRef="_2d6586cf-81fc-4e2a-83ec-6cfff5b34bb0" targetRef="_babdfa54-b55f-463f-9341-424b42db9760">
-      <semantic:documentation id="documentation_rXibSg"/>
+      <semantic:documentation id="documentation_2lkn0A"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_7efd61ea-979e-44f4-91c8-e212ae6b22c7" sourceRef="_e839800f-ad4f-4bcc-aaf2-d38fe4a32bcd" targetRef="_c38139c7-a2d1-47c7-b75a-19e14c7212c8">
-      <semantic:documentation id="documentation_0QlY0g"/>
+      <semantic:documentation id="documentation_uOVkhQ"/>
     </semantic:sequenceFlow>
-    <semantic:documentation id="documentation_rkSEvQ"/>
   </semantic:process>
   <bpmndi:BPMNDiagram id="_f1aecfc3-a3da-4bde-bece-87786e25273d" name="Simple Travel Booking">
     <bpmndi:BPMNPlane bpmnElement="_898aa942-9a96-4405-ae71-22b5e2e3d235" id="_f1aecfc3-a3da-4bde-bece-87786e25273d_plane" trisobpmn:diagramHeight="892.2783205633923" trisobpmn:diagramWidth="2031.3859249319685">
@@ -625,37 +625,37 @@
         <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_b792d502-a08e-4a3d-bdc1-1fc33a2022f6" color:border-color="#000000" id="_3966d4ad-cd46-48b8-a349-b1b0b974510a">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1677.0" y="286.0"/>
         <di:waypoint x="1677.0" y="194.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_2403da0e-5b49-43fa-ba00-ec6c1f3e4790" color:border-color="#000000" id="_7dc7952e-3ee7-4ec3-8595-23c444a8c3ae">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="290.0" y="487.0"/>
         <di:waypoint x="290.0" y="609.0"/>
         <di:waypoint x="342.0" y="609.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_54044d90-3a1e-4a49-99a3-1497045c7235" color:border-color="#000000" id="_c3a5b091-fd7e-4544-bda3-def834c84290">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="294.0" y="441.0"/>
         <di:waypoint x="294.0" y="440.0"/>
         <di:waypoint x="290.0" y="440.0"/>
         <di:waypoint x="290.0" y="329.0"/>
         <di:waypoint x="342.0" y="329.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_16857297-f0fb-4027-87f6-633a76267c84" color:border-color="#000000" id="_8cc22665-6183-47e0-9a38-0cf4761cd9bb">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="319.0" y="466.0"/>
         <di:waypoint x="331.0" y="466.0"/>
         <di:waypoint x="331.0" y="464.0"/>
         <di:waypoint x="342.0" y="464.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_c7c2f8e1-a93f-44d6-9a94-cb92d7466d73" color:border-color="#000000" id="_96b74c5a-8d04-4941-bd36-8d31911c7386">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="378.0" y="331.0"/>
         <di:waypoint x="402.0" y="331.0"/>
         <di:waypoint x="402.0" y="329.0"/>
         <di:waypoint x="425.0" y="329.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_0" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_d51b76e8-b096-4376-ba01-7ca63ae51f70" color:border-color="#000000" id="_d0eff7a2-f16e-4ff5-918b-22625e0553e7">
         <di:waypoint x="867.8741925406076" y="332.6717547013318"/>
@@ -668,86 +668,86 @@
         <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_c69565cd-3a08-4532-b466-8f9a9ebdc1e1" color:border-color="#000000" id="_a6e6b4dd-b683-4727-b2fa-39bb2d07871b">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1859.0" y="341.0"/>
         <di:waypoint x="1930.0" y="341.0"/>
         <di:waypoint x="1930.0" y="341.0"/>
         <di:waypoint x="1931.0" y="341.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_8eac4fb5-c746-42e4-ab0b-80cdfaf76007" color:border-color="#000000" id="_4b24605c-c858-49cf-9349-6eb8a95ff593">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1511.0" y="764.0"/>
         <di:waypoint x="1609.0" y="764.0"/>
         <di:waypoint x="1609.0" y="762.0"/>
         <di:waypoint x="1707.0" y="762.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_ec8c7430-02e1-4298-9b00-33c4d56d0fac" color:border-color="#000000" id="_7db2ea4d-1814-4617-93c9-4a1504d8484d">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1803.0" y="762.0"/>
         <di:waypoint x="1864.0" y="762.0"/>
         <di:waypoint x="1864.0" y="764.0"/>
         <di:waypoint x="1925.0" y="764.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_65293cb4-b859-4ff7-bcd3-ba4e38cf8763" color:border-color="#000000" id="_8d36bd8b-1a72-4a66-8532-6b73c5064dff">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1684.0" y="341.0"/>
         <di:waypoint x="1763.0" y="341.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_f81560f5-e1c5-497d-a159-dce350f2283c" color:border-color="#000000" id="_59926dec-94ba-4b32-8c19-8bdad8f8dd38">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1490.0" y="506.0"/>
         <di:waypoint x="1539.0" y="506.0"/>
         <di:waypoint x="1539.0" y="341.0"/>
         <di:waypoint x="1588.0" y="341.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_9ec5ad1d-0662-42a4-9118-bca0bf744422" color:border-color="#000000" id="_5736f5d9-2784-47ea-b595-3de421b21cb1">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="86.0" y="464.0"/>
         <di:waypoint x="112.0" y="464.0"/>
         <di:waypoint x="112.0" y="462.0"/>
         <di:waypoint x="137.0" y="462.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_bcb8805c-5e93-41ec-991b-575d26ed3a9c" color:border-color="#000000" id="_f5b9f4cc-cb66-4256-b5d0-68ff0e9ceff9">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="233.0" y="462.0"/>
         <di:waypoint x="251.0" y="462.0"/>
         <di:waypoint x="251.0" y="466.0"/>
         <di:waypoint x="269.0" y="466.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_f072c57e-dcc6-4a16-8f28-13a2cd6e43ed" color:border-color="#000000" id="_7af0cdbf-9ae1-4551-abb5-4c9fabc4050d">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="378.0" y="611.0"/>
         <di:waypoint x="404.0" y="611.0"/>
         <di:waypoint x="404.0" y="609.0"/>
         <di:waypoint x="429.0" y="609.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_e396fc69-5792-41e3-8a92-ee6b83cd0909" color:border-color="#000000" id="_ad810b20-101a-4ad0-a5c0-6f6ccb7bd0bd">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="525.0" y="609.0"/>
         <di:waypoint x="559.0" y="609.0"/>
         <di:waypoint x="559.0" y="611.0"/>
         <di:waypoint x="593.0" y="611.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_649072fc-31c7-4e04-bc58-d4442a06f076" color:border-color="#000000" id="_dbdd3ed0-60b2-4158-adee-c070ce200a32">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="378.0" y="464.0"/>
         <di:waypoint x="404.0" y="464.0"/>
         <di:waypoint x="404.0" y="462.0"/>
         <di:waypoint x="429.0" y="462.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_51e34f49-b9eb-4f10-ac0a-7af81e1370ff" color:border-color="#000000" id="_6e9383a7-1a76-4f40-bd37-50be92b52a57">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="525.0" y="462.0"/>
         <di:waypoint x="559.0" y="462.0"/>
         <di:waypoint x="559.0" y="464.0"/>
         <di:waypoint x="593.0" y="464.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_a0c99000-31e1-4de9-baf7-45c2d09ebbff" color:border-color="#000000" id="_2d36acd5-cd62-4974-aa1d-1e4954e6b8a4">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="497.0" y="386.0"/>
         <di:waypoint x="497.0" y="403.0"/>
         <di:waypoint x="477.0" y="403.0"/>
         <di:waypoint x="477.0" y="424.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_651344ad-d784-4ef2-9655-4bc6393ac323" color:border-color="#000000" id="_87b05c12-ee5c-48d8-8b4d-1483c061de42">
         <di:waypoint x="1030.286137525952" y="458.9787299537809"/>
@@ -780,18 +780,18 @@
         <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_c72535b8-43f7-4906-9f18-691e03050c24" color:border-color="#000000" id="_bdc3cb55-d91b-4298-bb47-a38da622102f">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1695.0" y="176.0"/>
         <di:waypoint x="1726.0" y="176.0"/>
         <di:waypoint x="1726.0" y="174.0"/>
         <di:waypoint x="1757.0" y="174.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_94e0bd86-6659-4669-baee-ce671c7f33d6" color:border-color="#000000" id="_1d052d49-8f08-4762-89c3-714cbd83edfb">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="1853.0" y="174.0"/>
         <di:waypoint x="1889.0" y="174.0"/>
         <di:waypoint x="1889.0" y="176.0"/>
         <di:waypoint x="1925.0" y="176.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_b2d48080-6bb1-4ae9-85c9-916d87536a49" color:border-color="#000000" id="_3f0ef0a7-c555-4187-a2c4-68ed12b93799">
         <di:waypoint x="944.8116925406076" y="353.45855025787705"/>
@@ -800,11 +800,11 @@
         <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_7efd61ea-979e-44f4-91c8-e212ae6b22c7" color:border-color="#000000" id="_643ffc6c-ac1e-4f40-b8c6-662db3fc4955">
-        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
         <di:waypoint x="528.0" y="329.0"/>
         <di:waypoint x="635.0" y="329.0"/>
         <di:waypoint x="635.0" y="506.0"/>
         <di:waypoint x="741.0" y="506.0"/>
+        <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_f1aecfc3-a3da-4bde-bece-87786e25273d_1" triso:defaultBounds="true" triso:labelPosition="midbottom"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="_82006a49-2cc8-4814-83e2-28c5a85a4c4a" color:border-color="#000000" id="_fa1439cb-56e1-4399-bfe8-638b37a16866" targetElement="_8eb52f6a-0fd6-4fad-8ade-14bca1b066bf">
         <di:waypoint x="139" y="340.8672968467124"/>
