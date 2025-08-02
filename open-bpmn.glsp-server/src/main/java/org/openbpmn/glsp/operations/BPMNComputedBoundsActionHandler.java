@@ -98,11 +98,11 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                             }
                         }
                         bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
-                        logger.fine("│   ├── add point: " + point.getX() + "," + point.getY());
+                        logger.fine("│   ├── add point: " + point.getX() + "," + point.getY());
                         bpmnElementEdge.addWayPoint(bpmnPoint);
                     }
                 } else {
-                    logger.warning("ComputedBoundsAction will be ignored as the element is not a BPMNElementEdge!");
+                    logger.fine("ComputedBoundsAction will be ignored as the element is not a BPMNElementEdge!");
                 }
             }
         } catch (
