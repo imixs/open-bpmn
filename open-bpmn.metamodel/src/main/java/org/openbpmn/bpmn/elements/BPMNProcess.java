@@ -1,7 +1,9 @@
 package org.openbpmn.bpmn.elements;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -125,13 +127,16 @@ public class BPMNProcess extends BPMNElement {
 
             // now find all relevant bpmn meta elements
             NodeList childs = this.getElementNode().getChildNodes();
-            for (int j = 0; j < childs.getLength(); j++) {
-                Node child = childs.item(j);
-                if (child.getNodeType() != Node.ELEMENT_NODE) {
-                    // continue if not a new element node
-                    continue;
-                }
 
+            // copy all Element-Nodes into a static List
+            List<Element> childElements = new ArrayList<>();
+            for (int i = 0; i < childs.getLength(); i++) {
+                Node child = childs.item(i);
+                if (child.getNodeType() == Node.ELEMENT_NODE) {
+                    childElements.add((Element) child);
+                }
+            }
+            for (Element child : childElements) {
                 // check element type
                 if (BPMNModel.isActivity(child)) {
                     this.createBPMNActivityByNode((Element) child);
@@ -1122,13 +1127,8 @@ public class BPMNProcess extends BPMNElement {
      */
     public BPMNElement findElementById(String id) {
         if (!this.initialized) {
-            try {
-                // lazy loading a process...
-                this.init();
-            } catch (BPMNModelException e) {
-                logger.severe("Unable to open Process " + this.getId());
-                return null;
-            }
+            // not yet initialized!
+            return null;
         }
         BPMNElement result = null;
         result = findElementNodeById(id);
