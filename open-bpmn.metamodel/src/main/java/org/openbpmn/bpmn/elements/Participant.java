@@ -6,6 +6,9 @@ import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * A BPMNParticipant is a container for a BPMNProcess. A BPMNParticipant can
@@ -39,8 +42,67 @@ public class Participant extends BPMNElementNode {
     public Participant(BPMNModel model, Element node, BPMNProcess process) throws BPMNModelException {
         super(model, node);
         setBpmnProcess(process);
-        // find the BPMNShape element.
-        bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+        // find the BPMNShape element - suche in allen BPMNPlanes
+        bpmnShape = findBPMNShapeInAllPlanes(model, getId());
+    }
+
+    /**
+     * Searches for a BPMNShape element with the given participant ID across all
+     * BPMNPlane elements in the BPMN document. This method is necessary because
+     * participants can be referenced from different diagram planes (main
+     * collaboration diagram vs. subprocess diagrams).
+     * 
+     * @param model         the BPMNModel containing the document to search
+     * @param participantId the ID of the participant to find the corresponding
+     *                      BPMNShape for
+     * @return the BPMNShape element that references the participant ID, or null if
+     *         not found
+     */
+    private Element findBPMNShapeInAllPlanes(BPMNModel model, String participantId) {
+        // Search all BPMNPlane elements in the entire document
+        NodeList allPlanes = model.getDoc().getElementsByTagNameNS(
+                model.getUri(BPMNNS.BPMNDI), "BPMNPlane");
+
+        // Search each BPMNPlane for the BPMNShape
+        for (int p = 0; p < allPlanes.getLength(); p++) {
+            Element plane = (Element) allPlanes.item(p);
+            Element shape = findBPMNShapeInPlane(model, plane, participantId);
+            if (shape != null) {
+                return shape;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Searches for a BPMNShape element within a specific BPMNPlane that references
+     * the given participant ID through its bpmnElement attribute.
+     * 
+     * @param model         the BPMNModel for accessing namespace prefixes
+     * @param plane         the BPMNPlane element to search within
+     * @param participantId the participant ID to match against BPMNShape
+     *                      bpmnElement attributes
+     * @return the matching BPMNShape element, or null if no match is found in this
+     *         plane
+     */
+    private Element findBPMNShapeInPlane(BPMNModel model, Element plane, String participantId) {
+        String fullNodeName = model.getPrefix(BPMNNS.BPMNDI) + "BPMNShape";
+        NodeList childList = plane.getChildNodes();
+
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
+                NamedNodeMap attributesMap = child.getAttributes();
+                for (int j = 0; j < attributesMap.getLength(); j++) {
+                    Node attr = attributesMap.item(j);
+                    if ("bpmnElement".equals(attr.getNodeName()) &&
+                            participantId.equals(attr.getNodeValue())) {
+                        return (Element) child;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     /**

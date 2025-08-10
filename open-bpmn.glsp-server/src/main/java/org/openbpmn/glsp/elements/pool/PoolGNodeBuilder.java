@@ -59,7 +59,7 @@ public class PoolGNodeBuilder extends AbstractGNodeBuilder<PoolGNode, PoolGNodeB
 
         } catch (BPMNMissingElementException e) {
             // should not happen
-            logger.severe("BPMNParticipant does not support a BPMNBounds object!");
+            logger.severe("BPMNParticipant '" + id + "' does not support a BPMNBounds object!");
         }
 
         // set css style
