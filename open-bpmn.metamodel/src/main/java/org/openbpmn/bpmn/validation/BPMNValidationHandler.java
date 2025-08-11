@@ -34,7 +34,7 @@ public class BPMNValidationHandler {
     public List<BPMNValidationMarker> validate(BPMNModel model, boolean forceValidation) throws BPMNModelException {
         List<BPMNValidationMarker> result = new ArrayList<>();
         // iterate over all process
-        Set<BPMNProcess> processes = model.getProcesses();
+        List<BPMNProcess> processes = model.getBpmnProcessList();
         for (BPMNProcess _process : processes) {
             result.addAll(validateProcess(_process, forceValidation));
         }

@@ -16,6 +16,7 @@
 package org.openbpmn.bpmn.util;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.Event;
@@ -24,6 +25,10 @@ import org.openbpmn.bpmn.elements.Message;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * The BPMNModelUtil provides helper methods for a BPMNModel and the XML
@@ -146,6 +151,67 @@ public class BPMNModelUtil {
         }
 
         return xml;
+    }
+
+    /**
+     * Searches for a BPMNShape element within a specific BPMNPlane that references
+     * the given participant ID through its bpmnElement attribute.
+     * 
+     * @param model     the BPMNModel for accessing namespace prefixes
+     * @param plane     the BPMNPlane element to search within
+     * @param elementId the element ID to match against BPMNShape
+     *                  bpmnElement attributes
+     * @return the matching BPMNShape element, or null if no match is found in this
+     *         plane
+     */
+    public static Element findBPMNShapeInPlane(BPMNModel model, Element plane, String elementId) {
+        String fullNodeName = model.getPrefix(BPMNNS.BPMNDI) + "BPMNShape";
+        NodeList childList = plane.getChildNodes();
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
+                NamedNodeMap attributesMap = child.getAttributes();
+                for (int j = 0; j < attributesMap.getLength(); j++) {
+                    Node attr = attributesMap.item(j);
+                    if ("bpmnElement".equals(attr.getNodeName()) &&
+                            elementId.equals(attr.getNodeValue())) {
+                        return (Element) child;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Searches for a BPMNEdge element within a specific BPMNPlane that references
+     * the given participant ID through its bpmnElement attribute.
+     * 
+     * @param model     the BPMNModel for accessing namespace prefixes
+     * @param plane     the BPMNPlane element to search within
+     * @param elementId the element ID to match against BPMNEdge
+     *                  bpmnElement attributes
+     * @return the matching BPMNEdge element, or null if no match is found in this
+     *         plane
+     */
+    public static Element findBPMNEdgeInPlane(BPMNModel model, Element plane, String elementId) {
+        String fullNodeName = model.getPrefix(BPMNNS.BPMNDI) + "BPMNEdge";
+        NodeList childList = plane.getChildNodes();
+
+        for (int i = 0; i < childList.getLength(); i++) {
+            Node child = childList.item(i);
+            if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
+                NamedNodeMap attributesMap = child.getAttributes();
+                for (int j = 0; j < attributesMap.getLength(); j++) {
+                    Node attr = attributesMap.item(j);
+                    if ("bpmnElement".equals(attr.getNodeName()) &&
+                            elementId.equals(attr.getNodeValue())) {
+                        return (Element) child;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 }

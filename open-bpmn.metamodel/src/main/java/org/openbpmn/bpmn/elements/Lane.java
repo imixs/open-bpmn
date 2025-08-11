@@ -9,7 +9,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
-import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
@@ -58,7 +58,9 @@ public class Lane extends BPMNElementNode {
     public Lane(BPMNModel model, Element node) {
         super(model, node);
         // find the BPMNShape element.
-        bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+        // bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+
+        bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, getBpmnProcess().getBPMNPlane(), getId());
     }
 
     /**
@@ -70,12 +72,16 @@ public class Lane extends BPMNElementNode {
     @Override
     public BPMNProcess getBpmnProcess() {
         String processID = getProcessId();
-        try {
-            return this.model.openProcess(processID);
-        } catch (BPMNModelException e) {
-            logger.severe("Faild to resolve BPMNProcess for lane '" + this.getId() + "!' ");
-        }
-        return null;
+        // try {
+
+        return model.getBpmnProcesses().get(processID);
+
+        // return this.model.openProcess(processID);
+        // } catch (BPMNModelException e) {
+        // logger.severe("Failed to resolve BPMNProcess for lane '" + this.getId() + "!'
+        // ");
+        // }
+        // return null;
     }
 
     /**

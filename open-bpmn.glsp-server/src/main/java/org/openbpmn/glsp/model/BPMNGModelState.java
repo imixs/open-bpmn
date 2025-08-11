@@ -92,8 +92,8 @@ public class BPMNGModelState extends DefaultGModelState {
     public void setAutoAlign(boolean autoAlign) {
         Element autoAlignElement;
         try {
-            if (bpmnModel.getDefaultProcessElement() != null) {
-                autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcessElement(),
+            if (bpmnModel.getDefaultProcess() != null) {
+                autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcess().getElementNode(),
                         BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
                 autoAlignElement.setTextContent("" + autoAlign);
             }
@@ -111,8 +111,8 @@ public class BPMNGModelState extends DefaultGModelState {
     public boolean getAutoAlign() {
         Element autoAlignElement;
         try {
-            if (bpmnModel.getDefaultProcessElement() != null) {
-                autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcessElement(),
+            if (bpmnModel.getDefaultProcess() != null) {
+                autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcess().getElementNode(),
                         BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
                 return Boolean.parseBoolean(autoAlignElement.getTextContent());
             }

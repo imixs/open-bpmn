@@ -72,6 +72,7 @@ public class Activity extends BPMNElementNode {
         // open embedded process
         if (subProcess == null) {
             subProcess = new BPMNProcess(model, this.getElementNode(), BPMNTypes.PROCESS_TYPE_NONE);
+            model.getBpmnProcesses().put(subProcess.getId(), subProcess);
             subProcess.init();
         }
         return subProcess;

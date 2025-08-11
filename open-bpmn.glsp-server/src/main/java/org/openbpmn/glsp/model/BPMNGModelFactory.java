@@ -289,7 +289,7 @@ public class BPMNGModelFactory implements GModelFactory {
             createMessageFlowGEdges(model.getMessageFlows(), gRootNodeList);
 
             // Add all Associations elements...
-            Set<BPMNProcess> processList = model.getProcesses();
+            List<BPMNProcess> processList = model.getBpmnProcessList();
             for (BPMNProcess _process : processList) {
                 // apply the associations for each process separately.
                 // NOTE: It is necessary to verify if the Association is inside a Pool. In this

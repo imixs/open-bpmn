@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNElementOrder;
+import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -56,11 +58,14 @@ public abstract class BPMNElementEdge extends BPMNElement {
         }
 
         // find the BPMNShape element. If not defined create a new one
-        bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
+        // bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
+        BPMNProcess process = model.findProcessById(this.getProcessId());
+        bpmnEdge = BPMNModelUtil.findBPMNEdgeInPlane(model, process.getBPMNPlane(), getId());
+
         if (bpmnEdge == null) {
             // create shape element
             logger.warning("create missing shape for edge " + this.getId());
-            createBPMNEdge();
+            createBPMNEdge(process.getBpmnPlane());
             this.addDefaultWayPoints();
         } else {
             // parse waypoints (di:waypoint)
@@ -320,20 +325,24 @@ public abstract class BPMNElementEdge extends BPMNElement {
      * <p>
      * <bpmndi:BPMNBPMNEdge id="BPMNBPMNEdge_1" bpmnElement="StartEvent_1">
      */
-    protected void createBPMNEdge() {
+    protected void createBPMNEdge(Element bpmnPlane) {
         if (bpmnEdge != null) {
             BPMNModel.getLogger().warning("bpmnShape already exits");
         }
-        if (model.getBpmnPlane() == null) {
+
+        if (bpmnPlane == null) {
+            // bpmnPlane = model.findDefaultBPMNPlane();
             BPMNModel.getLogger().warning("Missing bpmnPlane in current diagram context");
-        }
-        if (this.getId() != null) {
-            bpmnEdge = model.createElement(BPMNNS.BPMNDI, "BPMNEdge");
-            bpmnEdge.setAttribute("id", BPMNModel.generateShortID("BPMNEdge"));
-            bpmnEdge.setAttribute("bpmnElement", this.getId());
-            model.getBpmnPlane().appendChild(bpmnEdge);
         } else {
-            BPMNModel.getLogger().warning("Missing ID attribute!");
+            if (this.getId() != null) {
+                bpmnEdge = model.createElement(BPMNNS.BPMNDI, "BPMNEdge");
+                bpmnEdge.setAttribute("id", BPMNModel.generateShortID("BPMNEdge"));
+                bpmnEdge.setAttribute("bpmnElement", this.getId());
+                // model.getBpmnPlane().appendChild(bpmnEdge);
+                bpmnPlane.appendChild(bpmnEdge);
+            } else {
+                BPMNModel.getLogger().warning("Missing ID attribute!");
+            }
         }
     }
 

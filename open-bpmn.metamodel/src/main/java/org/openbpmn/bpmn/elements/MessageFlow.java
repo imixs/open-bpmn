@@ -9,6 +9,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
@@ -35,10 +36,13 @@ public class MessageFlow extends BPMNElementEdge {
 
         // find the BPMNShape element. If not defined create a new one
 
-        bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
+        BPMNProcess process = model.openDefaultProcess();
+        bpmnEdge = BPMNModelUtil.findBPMNEdgeInPlane(model, process.getBPMNPlane(), getId());
+
+        // bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
         if (bpmnEdge == null) {
             // create shape element
-            createBPMNEdge();
+            createBPMNEdge(process.getBPMNPlane());
         } else {
             // parse waypoints (di:waypoint)
             Set<Element> wayPoints = model.findChildNodesByName(bpmnEdge, BPMNNS.DI, "waypoint");

@@ -17,6 +17,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
@@ -71,11 +72,12 @@ public class BPMNModel {
 
     private Document doc;
     private Element definitions;
-    private Element defaultProcessElement;
+    // private Element defaultProcessElement;
+    private BPMNProcess defaultProcess;
     private Node bpmnDiagram;
-    protected Element bpmnPlane = null;
     protected Set<Participant> participants = null;
-    protected Set<BPMNProcess> processes = null;
+    protected Map<String, BPMNProcess> bpmnProcesses = new ConcurrentHashMap<>();
+
     protected Set<MessageFlow> messageFlows = null;
     protected Set<Signal> signals = null;
     protected Set<Message> messages = null;
@@ -132,7 +134,8 @@ public class BPMNModel {
             // Load BPMNDiagram element....
             loadBpmnDiagram();
             // Load BPMNPlane element....
-            loadBpmnPlane();
+            // loadBpmnPlanes();
+
             // init the participant and process list
             loadProcessList();
             loadParticipantList();
@@ -142,7 +145,7 @@ public class BPMNModel {
             loadMessageFlowList();
             loadSignalList();
 
-            defaultProcessElement = openDefaultProcess().getElementNode();
+            // defaultProcessElement = openDefaultProcess().getElementNode();
         }
 
     }
@@ -281,34 +284,39 @@ public class BPMNModel {
     }
 
     /**
-     * This method loads the first BPMNPlane from the BPMNDiagram. If
+     * This method loads all BPMNPlanes from the BPMNDiagram. If
      * no BPMN Plane yet exists, then the method build one.
      * 
      */
-    private void loadBpmnPlane() {
-        // find the corresponding BPMNPlane
-        NodeList planeList = findElementsByName(doc.getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
-        if (planeList != null && planeList.getLength() > 0) {
-            bpmnPlane = (Element) planeList.item(0);
-        }
-        // if no plane exists yes, we create one
-        if (bpmnPlane == null) {
-            // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
-            getLogger().warning("No bpmndi:BPMNPlane found - created default plane");
-            bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
-            bpmnPlane.setAttribute("id", "BPMNPlane_1");
-            NodeList nodeList = findElementsByName(definitions, BPMNNS.BPMN2, "collaboration");
-            if (nodeList == null || nodeList.getLength() == 0) {
-                // Take the default process as plane ref...
-                nodeList = findElementsByName(definitions, BPMNNS.BPMN2, "process");
-            }
-            if (nodeList != null && nodeList.getLength() > 0) {
-                Element refElement = (Element) nodeList.item(0);
-                bpmnPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
-            }
-            getBpmnDiagram().appendChild(bpmnPlane);
-        }
-    }
+    // private void loadBpmnPlanes() {
+    // // find the corresponding BPMNPlane
+    // bpmnPlanes = new HashSet<>();
+    // NodeList planeList = findElementsByName(doc.getDocumentElement(),
+    // BPMNNS.BPMNDI, "BPMNPlane");
+    // if (planeList != null && planeList.getLength() > 0) {
+    // Element bpmnPlane = (Element) planeList.item(0);
+    // bpmnPlanes.add(bpmnPlane);
+    // }
+    // // if no plane exists yes, we create one
+    // if (bpmnPlanes.size() == 0) {
+    // // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
+    // getLogger().warning("No bpmndi:BPMNPlane found - created default plane");
+    // Element bpmnDefaultPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
+    // bpmnDefaultPlane.setAttribute("id", "BPMNPlane_1");
+    // NodeList nodeList = findElementsByName(definitions, BPMNNS.BPMN2,
+    // "collaboration");
+    // if (nodeList == null || nodeList.getLength() == 0) {
+    // // Take the default process as plane ref...
+    // nodeList = findElementsByName(definitions, BPMNNS.BPMN2, "process");
+    // }
+    // if (nodeList != null && nodeList.getLength() > 0) {
+    // Element refElement = (Element) nodeList.item(0);
+    // bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
+    // }
+    // getBpmnDiagram().appendChild(bpmnDefaultPlane);
+    // bpmnPlanes.add(bpmnDefaultPlane);
+    // }
+    // }
 
     /**
      * Returns the namespace uri for a given namespace
@@ -366,13 +374,13 @@ public class BPMNModel {
         return doc;
     }
 
-    public Element getDefaultProcessElement() {
-        return defaultProcessElement;
-    }
+    // public Element getDefaultProcessElement() {
+    // return defaultProcessElement;
+    // }
 
-    public void setDefaultProcessElement(Element defaultProcessElement) {
-        this.defaultProcessElement = defaultProcessElement;
-    }
+    // public void setDefaultProcessElement(Element defaultProcessElement) {
+    // this.defaultProcessElement = defaultProcessElement;
+    // }
 
     /**
      * Adds a new xml namespace if not yet defined
@@ -384,6 +392,15 @@ public class BPMNModel {
         if (!hasNamespace(namespace)) {
             definitions.setAttribute("xmlns:" + namespace, uri);
         }
+    }
+
+    /**
+     * Returns the public default process
+     * 
+     * @return
+     */
+    public BPMNProcess getDefaultProcess() {
+        return defaultProcess;
     }
 
     /**
@@ -412,7 +429,8 @@ public class BPMNModel {
      * @return
      */
     public boolean isEmpty() {
-        if (processes.size() == 0 || (processes.size() == 1 && processes.iterator().next().isEmpty())) {
+        if (bpmnProcesses.size() == 0
+                || (bpmnProcesses.size() == 1 && bpmnProcesses.values().iterator().next().isEmpty())) {
             return true;
         }
         return false;
@@ -453,11 +471,31 @@ public class BPMNModel {
         this.participants = participants;
     }
 
-    public Set<BPMNProcess> getProcesses() {
-        if (processes == null) {
-            processes = new LinkedHashSet<BPMNProcess>();
+    /**
+     * Returns a List of all registered BPMNProcesses.
+     * 
+     * @return
+     */
+    public List<BPMNProcess> getBpmnProcessList() {
+        if (bpmnProcesses == null) {
+            synchronized (this) {
+                if (bpmnProcesses == null) {
+                    bpmnProcesses = new ConcurrentHashMap<>();
+                }
+            }
         }
-        return processes;
+        return new ArrayList<>(bpmnProcesses.values());
+    }
+
+    public Map<String, BPMNProcess> getBpmnProcesses() {
+        if (bpmnProcesses == null) {
+            synchronized (this) {
+                if (bpmnProcesses == null) {
+                    bpmnProcesses = new ConcurrentHashMap<>();
+                }
+            }
+        }
+        return bpmnProcesses;
     }
 
     public Set<MessageFlow> getMessageFlows() {
@@ -493,24 +531,12 @@ public class BPMNModel {
         this.messages = messages;
     }
 
-    public void setProcesses(Set<BPMNProcess> processes) {
-        this.processes = processes;
-    }
-
     public Node getBpmnDiagram() {
         return bpmnDiagram;
     }
 
     public void setBpmnDiagram(Node bpmnDiagram) {
         this.bpmnDiagram = bpmnDiagram;
-    }
-
-    public Element getBpmnPlane() {
-        return bpmnPlane;
-    }
-
-    public void setBpmnPlane(Element bpmnPlane) {
-        this.bpmnPlane = bpmnPlane;
     }
 
     /**
@@ -556,10 +582,14 @@ public class BPMNModel {
             this.definitions.insertBefore(collaborationElement, definitions.getFirstChild());
             // update the BPMNPlane attribute 'bpmnElement' which now references the
             // collaboration element
-            this.getBpmnPlane().setAttribute("bpmnElement", collaborationID);
+
+            // this.getBpmnPlane().setAttribute("bpmnElement", collaborationID);
+            // Element bpmnPlane =
+            // findBPMNPlaneByProcessId(this.getDefaultProcessElement().getAttribute("id"));
+            // bpmnPlane.setAttribute("bpmnElement", collaborationID);
 
             // Now we migrate all existing processes into the new collaboration element....
-            for (BPMNProcess existingProcess : processes) {
+            for (BPMNProcess existingProcess : getBpmnProcessList()) {
                 Element migratedParticipantNode = createElement(BPMNNS.BPMN2, "participant");
                 String participantID = BPMNModel.generateShortID("participant");
                 migratedParticipantNode.setAttribute("id", participantID);
@@ -578,7 +608,7 @@ public class BPMNModel {
         // now create and add a new Process to this Participant...
         // <bpmn2:process id="Process_2" name="Non-initiating Process"
         // definitionalCollaborationRef="Collaboration_1" isExecutable="false"/>
-        int processNumber = this.getProcesses().size() + 1;
+        int processNumber = this.bpmnProcesses.size() + 1;
         BPMNProcess process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
                 processType);
         process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
@@ -667,11 +697,9 @@ public class BPMNModel {
             throw new BPMNInvalidIDException(BPMNInvalidIDException.MISSING_ID, "id must not be empty or null!");
         }
         // verify id
-        for (BPMNProcess process : processes) {
-            if (process.getId().equals(id)) {
-                throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
-                        "id '" + id + "' is already in use!");
-            }
+        if (bpmnProcesses.containsKey(id)) {
+            throw new BPMNInvalidIDException(BPMNInvalidIDException.DUPLICATE_ID,
+                    "id '" + id + "' is already in use!");
         }
         // xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL"
         Element processElement = createElement(BPMNNS.BPMN2, "process");
@@ -693,19 +721,31 @@ public class BPMNModel {
         definitions.insertBefore(processElement, this.getBpmnDiagram());
 
         BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, type);
-        this.getProcesses().add(bpmnProcess);
-
-        // add an empty BPMNPlane tag
-        // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_2">
-        if (bpmnPlane == null) {
-            bpmnPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
-            bpmnPlane.setAttribute("id", "BPMNPlane_1");
-            bpmnPlane.setAttribute("bpmnElement", id);
-            this.getBpmnDiagram().appendChild(bpmnPlane);
-        }
+        bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
 
         return bpmnProcess;
     }
+
+    /**
+     * Finds the matching bpmn plane by a given process id
+     * // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
+     * 
+     * @return
+     */
+    // public Element xxfindBPMNPlaneByProcessId(String bpmnProcessId) {
+    // if (bpmnPlanes == null || bpmnPlanes.size() == 0) {
+    // // not defined
+    // return null;
+    // }
+    // for (Element bpmnPlane : bpmnPlanes) {
+    // String processID = bpmnPlane.getAttribute("bpmnElement");
+    // if (bpmnProcessId.equals(processID)) {
+    // return bpmnPlane;
+    // }
+    // }
+    // // default to first defined plane....
+    // return bpmnPlanes.iterator().next();
+    // }
 
     /**
      * Creates a BPMN shape node for this element
@@ -716,15 +756,17 @@ public class BPMNModel {
      */
     public Element buildBPMNShape(BPMNElementNode bpmnElement) throws BPMNModelException {
         Element bpmnShape;
-        if (getBpmnPlane() == null) {
+        // if (getBpmnPlane() == null) {
+        if (bpmnElement.getBpmnProcess().getBpmnPlane() == null) {
             throw new BPMNMissingElementException("Missing bpmnPlane in current model context");
         }
         if (bpmnElement.getId() != null) {
             bpmnShape = createElement(BPMNNS.BPMNDI, "BPMNShape");
             bpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape"));
             bpmnShape.setAttribute("bpmnElement", bpmnElement.getId());
-            // getBpmnPlane().appendChild(bpmnShape);
-            BPMNElementOrder.appendChild(getBpmnPlane(), bpmnShape);
+
+            // BPMNElementOrder.appendChild(getBpmnPlane(), bpmnShape);
+            BPMNElementOrder.appendChild(bpmnElement.getBpmnProcess().getBpmnPlane(), bpmnShape);
             return bpmnShape;
         } else {
             throw new BPMNInvalidReferenceException("Missing ID attribute");
@@ -736,8 +778,6 @@ public class BPMNModel {
      * elements of the Process. This is a lazy loading mechanism to avoid loading
      * the full model if not needed.
      * <p>
-     * The method returns null if no process with the given ID exists.
-     * <p>
      * In case no ID is provided (null) the method returns the first public
      * (default) process from the model.
      * 
@@ -746,41 +786,9 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     public BPMNProcess openProcess(String id) throws BPMNModelException {
-        BPMNProcess process = null;
-        if (processes != null) {
-            Iterator<BPMNProcess> it = processes.iterator();
 
-            while (it.hasNext()) {
-                BPMNProcess p = it.next();
-                // default process?
-                if (id == null || id.isEmpty()) {
-                    // if we have only one process take that one
-                    if (processes.size() == 1) {
-                        // we take the only available process
-                        process = p;
-                        if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())) {
-                            // auto fix process type
-                            logger.info("fix wrong process type to PUBIC");
-                            p.setProcessType(BPMNTypes.PROCESS_TYPE_PUBLIC);
-                        }
-                        break;
-                    }
-                    // try to get the first public process
-                    if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())
-                            || processes.size() == 1) {
-                        // we take the first public process (should only exists once in the model)
-                        process = p;
-                        break;
-                    }
-                } else {
-                    // verify process by id
-                    if (id.equals(p.getId())) {
-                        process = p;
-                        break;
-                    }
-                }
-            }
-        }
+        // fetch process by id
+        BPMNProcess process = findProcessById(id);
 
         // if we found a matching process than we can initialize it
         if (process != null) {
@@ -827,11 +835,13 @@ public class BPMNModel {
             process.deleteAllNodes();
             this.definitions.removeChild(process.getElementNode());
             if (participant.hasPool()) {
-                this.bpmnPlane.removeChild(participant.getBpmnShape());
+                // this.bpmnPlane.removeChild(participant.getBpmnShape());
+                participant.getBpmnProcess().getBpmnPlane().removeChild(participant.getBpmnShape());
             }
             this.collaborationElement.removeChild(participant.getElementNode());
             // remove the participant with its elements
-            this.getProcesses().remove(process);
+            // this.bpmnProcessList
+            bpmnProcesses.remove(process.getId());
             this.getParticipants().remove(participant);
         }
 
@@ -952,7 +962,14 @@ public class BPMNModel {
         // delete the flow element and the edge
         this.collaborationElement.removeChild(bpmnEdge.getElementNode());
         if (bpmnEdge.getBpmnEdge() != null) {
-            getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+            // getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+
+            BPMNProcess process = findProcessById(bpmnEdge.getProcessId());
+
+            // Element bpmnPlane = (Element) findBPMNPlaneElement("BPMNEdge",
+            // bpmnEdge.getId());
+            // bpmnPlane.removeChild(bpmnEdge.getBpmnEdge());
+            process.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
         }
 
         // finally we remove the messageFlow object form the messageFlow list
@@ -1160,7 +1177,9 @@ public class BPMNModel {
         // delete the element from the definitions and also the shape
         this.definitions.removeChild(message.getElementNode());
         if (message.getBpmnShape() != null) {
-            getBpmnPlane().removeChild(message.getBpmnShape());
+            // getBpmnPlane().removeChild(message.getBpmnShape());
+            message.getBpmnProcess().getBpmnPlane().removeChild(message.getBpmnShape());
+
         }
 
         // finally we remove the message object form the message list
@@ -1204,19 +1223,23 @@ public class BPMNModel {
         }
 
         // iterate over all processes
-        Set<BPMNProcess> processList = this.getProcesses();
+        List<BPMNProcess> processList = this.getBpmnProcessList();
         for (BPMNProcess process : processList) {
-            if (id.equals(process.getId())) {
-                // the id matches a Process
-                throw new IllegalArgumentException("unable to return process - not implemented!");
+            // if (id.equals(process.getId())) {
+            // // the id matches a Process
+            // // throw new IllegalArgumentException("unable to return process - not
+            // // implemented!");
+            // BPMNModel.getLogger()
+            // .warning("findElementById failed - unable to return process '" + id
+            // + "' - case not implemented!");
 
-            } else {
-                // analyze the content of the process
-                BPMNElement baseElement = process.findElementById(id);
-                if (baseElement != null) {
-                    return baseElement;
-                }
+            // } else {
+            // analyze the content of the process
+            BPMNElement baseElement = process.findElementById(id);
+            if (baseElement != null) {
+                return baseElement;
             }
+            // }
         }
 
         // no corresponding element found!
@@ -1302,7 +1325,7 @@ public class BPMNModel {
     public Set<Event> findAllEvents() {
         LinkedHashSet<Event> result = new LinkedHashSet<Event>();
         // iterate over all processes
-        Set<BPMNProcess> processList = this.getProcesses();
+        List<BPMNProcess> processList = this.getBpmnProcessList();
         for (BPMNProcess process : processList) {
             try {
                 process.init();
@@ -1324,7 +1347,7 @@ public class BPMNModel {
     public Set<Activity> findAllActivities() {
         LinkedHashSet<Activity> result = new LinkedHashSet<Activity>();
         // iterate over all processes
-        Set<BPMNProcess> processList = this.getProcesses();
+        List<BPMNProcess> processList = this.getBpmnProcessList();
         for (BPMNProcess process : processList) {
             try {
                 process.init();
@@ -1485,7 +1508,7 @@ public class BPMNModel {
         if (processName == null || processName.isEmpty()) {
             return null; // no name provided!
         }
-        Set<BPMNProcess> processList = getProcesses();
+        List<BPMNProcess> processList = getBpmnProcessList();
         for (BPMNProcess _process : processList) {
             if (processName.equals(_process.getName())) {
                 _process.init();
@@ -1599,18 +1622,57 @@ public class BPMNModel {
 
     /**
      * Find a BPMNProcess by its ID.
-     * The method returns null if no process with this ID exists.
      * 
-     * @param processid
+     * if the ID == null the method returns the first public
+     * (default) process from the model.
+     * 
+     * @param processId
      * @return
      */
-    public BPMNProcess findProcessById(String processid) {
-        for (BPMNProcess _process : processes) {
-            if (_process.getId().equals(processid)) {
-                return _process;
+    public BPMNProcess findProcessById(String processId) {
+        if (bpmnProcesses == null) {
+            synchronized (this) {
+                if (bpmnProcesses == null) {
+                    bpmnProcesses = new ConcurrentHashMap<>();
+                }
             }
         }
-        return null;
+
+        // Null-Check am Anfang
+        if (processId != null) {
+            return bpmnProcesses.get(processId);
+        } else {
+            if (defaultProcess != null) {
+                return defaultProcess;
+            }
+            // fallback resolve the default process
+            Iterator<BPMNProcess> it = getBpmnProcessList().iterator();
+            while (it.hasNext()) {
+                BPMNProcess p = it.next();
+                // if we have only one process take that one
+                if (bpmnProcesses.size() == 1) {
+                    // we take the only available process
+                    if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())) {
+                        // auto fix process type
+                        logger.info("fix wrong process type to PUBIC");
+                        p.setProcessType(BPMNTypes.PROCESS_TYPE_PUBLIC);
+                    }
+                    defaultProcess = p;
+                    return p;
+
+                }
+                // try to get the first public process
+                if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(p.getProcessType())
+                        || bpmnProcesses.size() == 1) {
+                    // we take the first public process (should only exists once in the model)
+                    defaultProcess = p;
+                    return p;
+                }
+
+            }
+            // not found!
+            return null;
+        }
     }
 
     /**
@@ -1900,31 +1962,34 @@ public class BPMNModel {
      * @param nodeName  - name of the element
      * @param id        - the id referring to the main BPMN element
      */
-    public Node findBPMNPlaneElement(String nodeName, String id) {
-        if (id == null || id.isEmpty() || bpmnPlane == null || nodeName == null) {
-            return null;
-        }
-        String fullNodeName = getPrefix(BPMNNS.BPMNDI) + nodeName;
-        NodeList childList = bpmnPlane.getChildNodes();
-        for (int i = 0; i < childList.getLength(); i++) {
-            Node child = childList.item(i);
-            // check the attribute bpmnElement
-            if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
-                // get attributes names and values
-                NamedNodeMap attributesMap = child.getAttributes();
-                for (int j = 0; j < attributesMap.getLength(); j++) {
-                    Node attr = attributesMap.item(j);
-                    if ("bpmnElement".equals(attr.getNodeName()) && id.equals(attr.getNodeValue())) {
-                        // found it!
-                        return child;
-                    }
-                }
-            }
-
-        }
-        // not found!
-        return null;
-    }
+    // public Node xfindBPMNPlaneElement(String nodeName, String id) {
+    // if (id == null || id.isEmpty() || bpmnPlanes == null || nodeName == null) {
+    // return null;
+    // }
+    // String fullNodeName = getPrefix(BPMNNS.BPMNDI) + nodeName;
+    // // iterate over all registered bpmnPlanes
+    // for (Element bpmnPlane : bpmnPlanes) {
+    // NodeList childList = bpmnPlane.getChildNodes();
+    // for (int i = 0; i < childList.getLength(); i++) {
+    // Node child = childList.item(i);
+    // // check the attribute bpmnElement
+    // if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
+    // // get attributes names and values
+    // NamedNodeMap attributesMap = child.getAttributes();
+    // for (int j = 0; j < attributesMap.getLength(); j++) {
+    // Node attr = attributesMap.item(j);
+    // if ("bpmnElement".equals(attr.getNodeName()) &&
+    // id.equals(attr.getNodeValue())) {
+    // // found it!
+    // return child;
+    // }
+    // }
+    // }
+    // }
+    // }
+    // // not found!
+    // return null;
+    // }
 
     /**
      * Returns the central logger instance
@@ -2005,7 +2070,7 @@ public class BPMNModel {
 
             // if we do not have a process at all or a public default process is missing in
             // the participant list, we create a default process now
-            if (processes.size() == 0 || (participants.size() > 0 && publicCount == 0)) {
+            if (bpmnProcesses.size() == 0 || (participants.size() > 0 && publicCount == 0)) {
                 logger.warning(
                         "Invalid model structure: No public process node found - missing default process will be added...");
                 // Do we have a normal process diagram?
@@ -2038,12 +2103,10 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     private void loadProcessList() throws BPMNModelException {
-        processes = new LinkedHashSet<BPMNProcess>();
+        bpmnProcesses = new ConcurrentHashMap<>();
         int publicCount = 0;
 
-        // find process
-        // NodeList processList =
-        // definitions.getElementsByTagNameNS(getUri(BPMNNS.BPMN2), "process");
+        // find processes...
         NodeList processList = findElementsByName(definitions, BPMNNS.BPMN2, "process");
         if (processList != null && processList.getLength() > 0) {
 
@@ -2071,11 +2134,12 @@ public class BPMNModel {
                     if (laneSets != null && laneSets.size() > 0) {
                         processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
                     } else {
-                        // if the model doese not contain at lease one public process, we default now to
+                        // if the model doese not contain at least one public process, we default now to
                         // a public type
                         if (publicCount == 0) {
                             processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
                             publicCount++;
+
                         } else {
                             // else set the process to a private type!
                             processType = BPMNTypes.PROCESS_TYPE_PRIVATE;
@@ -2090,17 +2154,21 @@ public class BPMNModel {
                 }
 
                 BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType);
-                processes.add(bpmnProcess);
+                bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
+                if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
+                    defaultProcess = bpmnProcess;
+                    // defaultProcessElement = processElement;
+                }
 
             }
         }
 
-        // in case we found not process at all, we create a default process now
-        if (processes.size() == 0) {
+        // in case we found no process at all, we create a default process now
+        if (bpmnProcesses.size() == 0) {
             // just create the missing public default process
             BPMNProcess publicProcess = buildProcess("process_1",
                     "Default Process", BPMNTypes.PROCESS_TYPE_PUBLIC);
-            processes.add(publicProcess);
+            bpmnProcesses.put(publicProcess.getId(), publicProcess);
         }
 
     }

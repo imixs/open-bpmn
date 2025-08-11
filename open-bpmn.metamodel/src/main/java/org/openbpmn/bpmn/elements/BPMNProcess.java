@@ -59,6 +59,7 @@ public class BPMNProcess extends BPMNElement {
     protected Set<Association> associations = null;
 
     protected Set<Lane> lanes = null;
+    protected Element bpmnPlane = null;
     protected Element laneSet = null;
 
     private boolean initialized = false;
@@ -96,6 +97,74 @@ public class BPMNProcess extends BPMNElement {
                 setExecutable(true);
             }
         }
+
+        // fine bpmnPlane
+        resolveBPMNPlane();
+    }
+
+    /**
+     * This helper method resolves the corresponding BPMNPlane element for this
+     * process. The bpmnPlane can either be associated with the process directly or
+     * via the collaboration node.
+     * <p>
+     * If the diagram does not contain a matching BPMNPlane, the method
+     * creates one.
+     */
+    private void resolveBPMNPlane() {
+        String id = this.getId();
+        // find the corresponding BPMNPlane
+        NodeList planeList = model.findElementsByName(model.getDoc().getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
+        for (int i = 0; i < planeList.getLength(); i++) {
+            Element planeElement = (Element) planeList.item(i);
+
+            String bpmnElementID = planeElement.getAttribute("bpmnElement");
+            // if the id matches we have a direct macht in a non-collaboration element
+            if (id.equals(bpmnElementID)) {
+                bpmnPlane = planeElement;
+                break;
+            }
+
+            // test if we have a collaboration model
+            // Note: we can't yet use the method 'model.isCollaborationDiagram()' here!
+            NodeList collaborationNodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2,
+                    "collaboration");
+            if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+                // we only take the first collaboration element (this is what is expected)
+                Element collaborationElement = (Element) collaborationNodeList.item(0);
+                if (collaborationElement != null) {
+                    // test the collaboration element id
+                    String colaborationElementID = collaborationElement.getAttribute("id");
+                    if (bpmnElementID.equals(colaborationElementID)) {
+                        // match!
+                        bpmnPlane = planeElement;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // if no plane exists yes, we create one
+        if (bpmnPlane == null) {
+            // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
+            logger.warning("No bpmndi:BPMNPlane found - created default plane");
+            Element bpmnDefaultPlane = model.createElement(BPMNNS.BPMNDI, "BPMNPlane");
+            bpmnDefaultPlane.setAttribute("id", "BPMNPlane_1");
+            NodeList nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "collaboration");
+            if (nodeList == null || nodeList.getLength() == 0) {
+                // Take the default process as plane ref...
+                nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "process");
+            }
+            if (nodeList != null && nodeList.getLength() > 0) {
+                Element refElement = (Element) nodeList.item(0);
+                bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
+            }
+            model.getBpmnDiagram().appendChild(bpmnDefaultPlane);
+            bpmnPlane = bpmnDefaultPlane;
+        }
+    }
+
+    public Element getBPMNPlane() {
+        return bpmnPlane;
     }
 
     public String getProcessType() {
@@ -113,6 +182,14 @@ public class BPMNProcess extends BPMNElement {
     public void setExecutable(boolean isExecutable) {
         this.isExecutable = isExecutable;
         this.elementNode.setAttribute("isExecutable", "" + isExecutable);
+    }
+
+    public Element getBpmnPlane() {
+        return bpmnPlane;
+    }
+
+    public void setBpmnPlane(Element bpmnPlane) {
+        this.bpmnPlane = bpmnPlane;
     }
 
     /**
@@ -748,7 +825,8 @@ public class BPMNProcess extends BPMNElement {
             Element laneBpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
             laneBpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
             laneBpmnShape.setAttribute("bpmnElement", laneId);
-            model.getBpmnPlane().appendChild(laneBpmnShape);
+            // model.getBpmnPlane().appendChild(laneBpmnShape);
+            this.getBpmnPlane().appendChild(laneBpmnShape);
             bpmnLane.setBpmnShape(laneBpmnShape);
 
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
@@ -847,7 +925,8 @@ public class BPMNProcess extends BPMNElement {
 
         // delete the shape from bpmndi:BPMNDiagram
         if (lane.getBpmnShape() != null) {
-            model.getBpmnPlane().removeChild(lane.getBpmnShape());
+            // model.getBpmnPlane().removeChild(lane.getBpmnShape());
+            this.getBpmnPlane().removeChild(lane.getBpmnShape());
         }
 
         // delete lane form bpmn2:laneSet
@@ -923,7 +1002,8 @@ public class BPMNProcess extends BPMNElement {
         // delete the shape....
         this.getElementNode().removeChild(bpmnElement.getElementNode());
         if (bpmnElement.getBpmnShape() != null) {
-            model.getBpmnPlane().removeChild(bpmnElement.getBpmnShape());
+            // model.getBpmnPlane().removeChild(bpmnElement.getBpmnShape());
+            bpmnElement.getBpmnProcess().getBpmnPlane().removeChild(bpmnElement.getBpmnShape());
         }
 
         // ...and finally delete the element from the corresponding element list
@@ -1090,7 +1170,8 @@ public class BPMNProcess extends BPMNElement {
         // Finally delete the flow element and the edge
         this.getElementNode().removeChild(bpmnEdge.getElementNode());
         if (bpmnEdge.getBpmnEdge() != null) {
-            model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+            // model.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+            this.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
         }
 
     }

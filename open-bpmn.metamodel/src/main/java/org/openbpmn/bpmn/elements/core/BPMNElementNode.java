@@ -24,6 +24,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -74,7 +75,10 @@ public abstract class BPMNElementNode extends BPMNElement {
         this.type = _type;
         this.bpmnProcess = _bpmnProcess;
         // find the BPMNShape element. If not defined create a new one
-        bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+        // bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+
+        bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
+
         if (bpmnShape == null) {
             // create shape element
             bpmnShape = model.buildBPMNShape(this);
