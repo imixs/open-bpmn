@@ -39,7 +39,7 @@ public class TestNavigationCallbacks {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Task1
@@ -94,7 +94,7 @@ public class TestNavigationCallbacks {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-03.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Task1

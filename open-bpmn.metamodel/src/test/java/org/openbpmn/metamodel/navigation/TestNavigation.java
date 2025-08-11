@@ -41,7 +41,7 @@ public class TestNavigation {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Task1
@@ -79,7 +79,7 @@ public class TestNavigation {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Event2
@@ -116,7 +116,7 @@ public class TestNavigation {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-01.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Event2
@@ -151,7 +151,7 @@ public class TestNavigation {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-02.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Task1
@@ -190,7 +190,7 @@ public class TestNavigation {
         logger.info("...read model");
         BPMNModel model = BPMNModelFactory.read("/refmodel-navigation-02.bpmn");
 
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
         BPMNProcess process = model.openDefaultProcess();
 
         // get Task1

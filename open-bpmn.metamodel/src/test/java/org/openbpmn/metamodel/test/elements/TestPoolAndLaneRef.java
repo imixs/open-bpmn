@@ -61,12 +61,12 @@ public class TestPoolAndLaneRef {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcesses().size());
 
             // create participant
             Participant participantSales = model.addParticipant("Sales Team");
             assertTrue(model.isCollaborationDiagram());
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
             assertEquals(2, model.getParticipants().size());
 
             BPMNProcess process = participantSales.openProcess();
@@ -158,12 +158,12 @@ public class TestPoolAndLaneRef {
 
         BPMNProcess defaultProcess = model.openDefaultProcess();
         try {
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcesses().size());
 
             // create participant1
             Participant participantSales = model.addParticipant("Sales Team");
             assertTrue(model.isCollaborationDiagram());
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
             assertEquals(2, model.getParticipants().size());
             // Set position and size of this pool
             participantSales.setPosition(10, 10);
@@ -173,7 +173,7 @@ public class TestPoolAndLaneRef {
             // create participant2
             Participant participantMarketing = model.addParticipant("Marketing Team");
             assertTrue(model.isCollaborationDiagram());
-            assertEquals(3, model.getProcesses().size());
+            assertEquals(3, model.getBpmnProcesses().size());
             assertEquals(3, model.getParticipants().size());
             // Set position and size of this pool
             participantMarketing.setPosition(10, 400);

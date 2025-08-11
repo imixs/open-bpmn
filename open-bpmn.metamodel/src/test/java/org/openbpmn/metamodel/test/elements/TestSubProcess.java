@@ -46,7 +46,7 @@ public class TestSubProcess {
             logger.info("...read model");
 
             // test processes
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
             BPMNProcess process = model.openProcess("WFP-6-2");
             assertNotNull(process);
             assertEquals(4, process.getActivities().size());

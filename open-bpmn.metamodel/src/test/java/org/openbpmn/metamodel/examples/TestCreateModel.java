@@ -71,7 +71,7 @@ public class TestCreateModel {
             fail();
         }
         assertNotNull(model);
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
 
         model.save(out);
         logger.info("...model created sucessful: " + out);

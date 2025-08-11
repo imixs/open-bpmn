@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,7 @@ public class TestBPMNValidationIssue346 {
             model = BPMNModelFactory.read("/validation_issue_346.bpmn");
             logger.info("...read model");
 
-            Set<BPMNProcess> processes = model.getProcesses();
+            List<BPMNProcess> processes = model.getBpmnProcessList();
             assertEquals(2, processes.size());
 
             // Test default process

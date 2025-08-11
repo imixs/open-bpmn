@@ -52,7 +52,7 @@ public class TestCreateEdges {
             process.addSequenceFlow("seq_1", "start_1", "task_1");
 
             assertNotNull(model);
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcesses().size());
             assertEquals(1, process.getSequenceFlows().size());
 
         } catch (BPMNModelException e) {
@@ -95,7 +95,7 @@ public class TestCreateEdges {
             fail();
         }
         assertNotNull(model);
-        assertEquals(1, model.getProcesses().size());
+        assertEquals(1, model.getBpmnProcesses().size());
 
         model.save(out);
         logger.info("...model created sucessful: " + out);
@@ -116,7 +116,9 @@ public class TestCreateEdges {
         String version = "1.0.0";
         String targetNameSpace = "http://org.openbpmn";
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
-
+        assertNotNull(model);
+        // we expect the default process
+        assertEquals(1, model.getBpmnProcesses().size());
         try {
             Participant participant1 = model.addParticipant("paticipant_1");
             participant1.setPosition(10, 10);
@@ -130,11 +132,11 @@ public class TestCreateEdges {
             e.printStackTrace();
             fail();
         }
-        assertNotNull(model);
-        assertEquals(2, model.getProcesses().size());
+        // we expect now 2 processes
+        assertEquals(2, model.getBpmnProcesses().size());
 
         model.save(out);
-        logger.info("...model created sucessful: " + out);
+        logger.info("...model created successful: " + out);
     }
 
 }

@@ -2,6 +2,6 @@
 <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="org.openbpmn" exporterVersion="1.0.0" targetNamespace="http://open-bpmn.org">
   <bpmn2:process id="process_1" name="Default Process" processType="Public"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1" name="OpenBPMN Diagram">
-    <bpmndi:BPMNPlane id="BPMNPlane_1"/>
+    <bpmndi:BPMNPlane bpmnElement="process_1" id="BPMNPlane_1"/>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>

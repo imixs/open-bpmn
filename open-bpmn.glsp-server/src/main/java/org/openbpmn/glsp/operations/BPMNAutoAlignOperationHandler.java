@@ -15,6 +15,7 @@
  ********************************************************************************/
 package org.openbpmn.glsp.operations;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -53,7 +54,7 @@ public class BPMNAutoAlignOperationHandler extends GModelOperationHandler<BPMNAu
                 BPMNGridSnapper.snap(participant);
             }
 
-            Set<BPMNProcess> processList = modelState.getBpmnModel().getProcesses();
+            List<BPMNProcess> processList = modelState.getBpmnModel().getBpmnProcessList();
             for (BPMNProcess process : processList) {
                 // snap all elements
                 Set<BPMNElementNode> allNodes = process.getAllFlowElementNodes();

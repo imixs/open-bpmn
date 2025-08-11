@@ -68,7 +68,7 @@ public class TestReadModelTypes {
             model = BPMNModelFactory.read("/refmodel-2.bpmn");
 
             // we expect 2 Processes
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
 
             BPMNProcess defaultProcess = model.openDefaultProcess();
             assertNotNull(defaultProcess);
@@ -83,6 +83,8 @@ public class TestReadModelTypes {
 
             BPMNElementNode startEvent = process1.findElementNodeById("StartEvent_1");
             assertNotNull(startEvent);
+            assertEquals("Process_1", startEvent.getProcessId());
+            assertEquals(162.0, startEvent.getBounds().getPosition().getX());
 
             // test the label position of the event
             BPMNLabel label = startEvent.getLabel();
@@ -92,7 +94,7 @@ public class TestReadModelTypes {
             e.printStackTrace();
             fail();
         }
-        logger.info("...model read sucessful: ");
+        logger.info("...model read successful: ");
     }
 
     /**
@@ -107,7 +109,7 @@ public class TestReadModelTypes {
             model = BPMNModelFactory.read("/refmodel-3.bpmn");
 
             // we expect 3 Processes
-            assertEquals(3, model.getProcesses().size());
+            assertEquals(3, model.getBpmnProcesses().size());
 
             // verify Default Process
             BPMNProcess defaultProcess = model.openDefaultProcess();
@@ -133,7 +135,7 @@ public class TestReadModelTypes {
             e.printStackTrace();
             fail();
         }
-        logger.info("...model read sucessful: ");
+        logger.info("...model read successful: ");
     }
 
 }

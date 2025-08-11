@@ -73,13 +73,13 @@ public class TestDeleteModel {
 
             // we expect 3 Flow elements and 2 Processes
             assertEquals(3, privateProcess.getAllElementNodes().size());
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcessList().size());
             assertEquals(2, model.getParticipants().size());
 
             // now delete the Participant
             model.deleteParticipant(sales);
             assertEquals(1, model.getParticipants().size());
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcessList().size());
 
         } catch (BPMNModelException e) {
             e.printStackTrace();

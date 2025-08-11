@@ -80,14 +80,14 @@ public class TestCollaborationModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcesses().size());
 
             // create two participants
             Participant participantSales = model.addParticipant("Sales Team");
             Participant participantManagement = model.addParticipant("Management");
 
             assertTrue(model.isCollaborationDiagram());
-            assertEquals(3, model.getProcesses().size());
+            assertEquals(3, model.getBpmnProcesses().size());
 
             // the default process should now be part of the participant list too
             assertEquals(3, model.getParticipants().size());
@@ -277,7 +277,7 @@ public class TestCollaborationModel {
             Set<Participant> participants = model.getParticipants();
             assertNotNull(participants);
             assertEquals(2, participants.size());
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
             model.save(new File(out));
         } catch (BPMNModelException e) {
             e.printStackTrace();

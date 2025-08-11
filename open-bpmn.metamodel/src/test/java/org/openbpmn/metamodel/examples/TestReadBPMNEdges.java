@@ -41,7 +41,7 @@ public class TestReadBPMNEdges {
             model = BPMNModelFactory.read("/refmodel-9.bpmn");
 
             // we expect 2 Processes (default + participant)
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
 
             // verify MessageFlow
             Set<MessageFlow> messageFlows = model.getMessageFlows();

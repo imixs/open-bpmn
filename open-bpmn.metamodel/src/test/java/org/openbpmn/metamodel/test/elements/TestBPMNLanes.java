@@ -75,12 +75,12 @@ public class TestBPMNLanes {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcesses().size());
 
             // create two participants
             Participant participantSales = model.addParticipant("Sales Team");
             assertTrue(model.isCollaborationDiagram());
-            assertEquals(2, model.getProcesses().size());
+            assertEquals(2, model.getBpmnProcesses().size());
             assertEquals(2, model.getParticipants().size());
 
             BPMNProcess process = participantSales.openProcess();

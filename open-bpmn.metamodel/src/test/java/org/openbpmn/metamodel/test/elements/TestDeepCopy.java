@@ -61,7 +61,7 @@ public class TestDeepCopy {
             processContext.deleteEvent("start_1");
 
             // one Process expected
-            assertEquals(1, model.getProcesses().size());
+            assertEquals(1, model.getBpmnProcesses().size());
 
             model.save(out);
 
