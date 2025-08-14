@@ -343,8 +343,11 @@ export class SubTaskNodeView extends ShapeView {
                     </clipPath>
                 </defs>
                 {this.renderPathNode(wrapper, context)}
-                <g class-symbol={true}>
-                    <path transform={'scale(1),translate(' + infoTextXOffset + ',' + infoTextYOffset + ')'} d={expandIcon} />
+                <rect class-mouseover={node.hoverFeedback} class-expand={true}
+                    x={infoTextXOffset} y={infoTextYOffset} width="15" height="15"></rect>
+                <g class-symbol={true} class-mouseover={node.hoverFeedback}> 
+                    <path transform={'scale(1),translate(' + infoTextXOffset + ',' + infoTextYOffset + ')'} d={expandIcon}
+                     style={{ pointerEvents: 'none' }} />
                 </g> );
                 {context.renderChildren(node)}
             </g>

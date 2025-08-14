@@ -541,6 +541,13 @@ export namespace BPMNPropertiesUpdateAction {
 @injectable()
 export class BPMNPropertiesMouseListener extends MouseListener {
     override doubleClick(target: GModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
+        // test if the double click event is on the subtask expand symbol?
+        const htmlTarget = event.target as HTMLElement;
+        if (htmlTarget.classList.contains('expand')) {
+            console.log('Open SubProcess....');
+            return [];
+        }
+
         // return a BPMNPropertiesToggleAction...
         return [BPMNPropertiesToggleAction.create()];
     }
