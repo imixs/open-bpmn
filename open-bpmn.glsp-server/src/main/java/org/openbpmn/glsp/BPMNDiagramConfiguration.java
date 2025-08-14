@@ -101,6 +101,7 @@ public class BPMNDiagramConfiguration extends BaseDiagramConfiguration {
         nodeHints.add(createTaskHint(BPMNTypes.SEND_TASK));
         nodeHints.add(createTaskHint(BPMNTypes.RECEIVE_TASK));
         nodeHints.add(createTaskHint(BPMNTypes.USER_TASK));
+        nodeHints.add(createTaskHint(BPMNTypes.SUB_PROCESS));
 
         // Event ShapeTypeHints
         nodeHints.add(createStartEventHint());

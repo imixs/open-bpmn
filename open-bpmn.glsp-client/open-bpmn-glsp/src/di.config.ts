@@ -76,6 +76,7 @@ import {
     MessageNodeView,
     MultiLineTextNodeView,
     PoolHeaderView,
+    SubTaskNodeView,
     TaskNodeView,
     TextAnnotationNodeView
 } from './bpmn-element-views';
@@ -154,7 +155,7 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'messageFlow', BPMNEdge, BPMNEdgeView);
     configureModelElement(context, 'association', BPMNEdge, BPMNEdgeView);
     // Currently unsupported Task Types
-    configureModelElement(context, 'subProcess', TaskNode, TaskNodeView);
+    configureModelElement(context, 'subProcess', TaskNode, SubTaskNodeView);
     configureModelElement(context, 'adHocSubProcess', TaskNode, TaskNodeView);
     configureModelElement(context, 'transaction', TaskNode, TaskNodeView);
     configureModelElement(context, 'callActivity', TaskNode, TaskNodeView);

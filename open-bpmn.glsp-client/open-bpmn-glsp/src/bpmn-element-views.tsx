@@ -308,6 +308,117 @@ export class TaskNodeView extends ShapeView {
         return vnode;
     }
 }
+
+
+/*
+ * Render a BPMN Task element
+ * A ActivityNodeView contains an optional icon and an extension text
+ *
+ * The implementation is a variant form the RoundedCornerNodeView but customizes the content.
+ *
+ * SShapeElement
+ */
+@injectable()
+export class SubTaskNodeView extends ShapeView {
+    render(node: Readonly<TaskNode & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
+        if (!this.isVisible(node, context)) {
+            return undefined;
+        }
+        const cornerRadius = new CornerRadius(5);
+        // compute expand-icon position
+        const infoTextXOffset = node.bounds.width *0.5-9;
+        const infoTextYOffset = node.bounds.height -20;
+        const wrapper = new RoundedCornerWrapper(node, cornerRadius);
+
+        // expandIcon
+        // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/ungroup-by-ref-type.svg
+        // eslint-disable-next-line max-len
+        const expandIcon='M2.9 1L5 3.1l-.8.7L3 2.6V7H2V2.5L.8 3.8l-.7-.7L2.2 1h.7zM3 13.4V9H2v4.4L.8 12.2l-.7.7L2.2 15h.7L5 12.9l-.7-.7L3 13.4zM8.5 7h-2L6 6.5v-2l.5-.5h2l.5.5v2l-.5.5zM7 6h1V5H7v1zm7.5 1h-3l-.5-.5v-3l.5-.5h3l.5.5v3l-.5.5zM12 6h2V4h-2v2zm-3.5 6h-2l-.5-.5v-2l.5-.5h2l.5.5v2l-.5.5zM7 11h1v-1H7v1zm7.5 2h-3l-.5-.5v-3l.5-.5h3l.5.5v3l-.5.5zM12 12h2v-2h-2v2zm-1-2H9v1h2v-1zm0-5H9v1h2V5z';
+
+        return (
+            <g class-node={true}>
+                <defs>
+                    <clipPath id={toClipPathId(node)}>
+                        <path d={this.renderPath(wrapper, context, 2)}></path>
+                    </clipPath>
+                </defs>
+                {this.renderPathNode(wrapper, context)}
+                <g class-symbol={true}>
+                    <path transform={'scale(1),translate(' + infoTextXOffset + ',' + infoTextYOffset + ')'} d={expandIcon} />
+                </g> );
+                {context.renderChildren(node)}
+            </g>
+        );
+    }
+
+    // Helper method to render a rounded border
+    protected renderPathNode(wrapper: Readonly<RoundedCornerWrapper>, context: RenderingContext): VNode {
+        return (
+            <path
+                d={this.renderPath(wrapper, context, 0)}
+                class-sprotty-node={wrapper.element instanceof GNode}
+                class-sprotty-port={wrapper.element instanceof GPort}
+                class-mouseover={wrapper.element.hoverFeedback}
+                class-selected={wrapper.element.selected}
+                {...this.additionalClasses(wrapper.element, context)}
+            />
+        );
+    }
+
+    // Helper method to ..?
+    protected additionalClasses(_node: Readonly<GShapeElement & Hoverable & Selectable>, _context: RenderingContext): Classes {
+        return {};
+    }
+
+    // Helper method to render a rounded border path
+    protected renderPath(wrapper: Readonly<RoundedCornerWrapper>, _context: RenderingContext, inset: number): string {
+        // Calculate length of straight line segments
+        const topLineLength = Math.max(0, wrapper.size.width - wrapper.cornerRadius.topLeft - wrapper.cornerRadius.topRight);
+        const rightLineLength = Math.max(0, wrapper.size.height - wrapper.cornerRadius.topRight - wrapper.cornerRadius.bottomRight);
+        const bottomLineLength = Math.max(0, wrapper.size.width - wrapper.cornerRadius.bottomLeft - wrapper.cornerRadius.bottomRight);
+
+        const path =
+            `M${0 + inset},${0 + wrapper.topLeftCorner.radiusY}` +
+            `q${0},${-(wrapper.topLeftCorner.radiusY - inset)} ${wrapper.topLeftCorner.radiusX - inset},${-(
+                wrapper.topLeftCorner.radiusY - inset
+            )}` +
+            `h${topLineLength}` +
+            `q${wrapper.topRightCorner.radiusX - inset},0 ${wrapper.topRightCorner.radiusX - inset},${wrapper.topRightCorner.radiusY - inset
+            }` +
+            `v${rightLineLength}` +
+            `q0,${wrapper.bottomRightCorner.radiusY - inset} 
+                ${-(wrapper.bottomRightCorner.radiusX - inset)},${wrapper.bottomRightCorner.radiusY - inset
+            }` +
+            `h${-bottomLineLength}` +
+            `q${-(wrapper.bottomLeftCorner.radiusX - inset)},0 ${-(wrapper.bottomLeftCorner.radiusX - inset)},${-(
+                wrapper.bottomLeftCorner.radiusY - inset
+            )}` +
+            'z ';
+        return path;
+    }
+
+    // This helper method computes the icon path for TaskNodes depending on its type.
+    protected computeIconPath(taskNode: Readonly<GShapeElement & TaskNode>): any {
+        let icon;
+
+        if (taskNode.args.bpmnSymbol) {
+            icon = '' + taskNode.args.bpmnSymbol;
+        }
+
+        let vnode: any;
+        if (!icon) {
+            return undefined;
+        } else {
+            vnode = (
+                <g class-symbol={true}>
+                    <path transform={'scale(1),translate(5,5)'} d={icon} />
+                </g>
+            );
+        }
+        return vnode;
+    }
+}
+
 @injectable()
 export class EventNodeView extends ShapeView {
     render(node: Readonly<GatewayNode & Hoverable & Selectable>, context: RenderingContext, args?: IViewArgs): VNode | undefined {
