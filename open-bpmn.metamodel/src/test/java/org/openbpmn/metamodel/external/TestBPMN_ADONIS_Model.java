@@ -11,9 +11,11 @@ import java.util.logging.Logger;
 import org.junit.jupiter.api.Test;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNTypes;
+import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
@@ -50,14 +52,14 @@ public class TestBPMN_ADONIS_Model {
 
             assertTrue(model.isCollaborationDiagram());
             // test shape of first collaboration
-            Participant participant = model.findParticipantById("_7b8057f2-41dc-480c-a82e-454bf47f9736");
-            assertNotNull(participant);
+            Participant participant1 = model.findParticipantById("_7b8057f2-41dc-480c-a82e-454bf47f9736");
+            assertNotNull(participant1);
 
             // test shape
-            assertNotNull(participant.getBpmnShape());
+            assertNotNull(participant1.getBpmnShape());
 
             // Test Startereignis
-            BPMNProcess process1 = model.openProcess(participant.getProcessId());
+            BPMNProcess process1 = model.openProcess(participant1.getProcessId());
             assertNotNull(process1);
             assertEquals("process_7b8057f2-41dc-480c-a82e-454bf47f9736", process1.getId());
             Set<? extends BPMNElementNode> startEvents = process1
@@ -73,6 +75,39 @@ public class TestBPMN_ADONIS_Model {
             BPMNPoint position = bounds.getPosition();
             assertNotNull(position);
             assertEquals(389, position.getX());
+
+            /**
+             * Test Subtask in participant 1
+             */
+            // test SubTask _4995ce94-2999-4b06-adef-07f29e5317c7 (Teilprozess)
+            Activity subTask = (Activity) process1.findElementById("_4995ce94-2999-4b06-adef-07f29e5317c7");
+            assertNotNull(subTask);
+            assertEquals(BPMNTypes.SUB_PROCESS, subTask.getType());
+            BPMNProcess process1Sub = subTask.openSubProcess();
+            assertNotNull(process1Sub);
+            // should have 2 tasks....
+            assertEquals(3, process1Sub.getActivities().size());
+            // we expect 7 Sequence Flows
+            assertEquals(7, process1Sub.getSequenceFlows().size());
+            for (SequenceFlow s : process1Sub.getSequenceFlows()) {
+                logger.info(" --> " + s.getId());
+            }
+
+            /**
+             * Test Subtask in participant 2
+             */
+            // test SubTask _aad7a15c-c09f-484f-8147-0f3694bcacca (Teilprozess)
+            Participant participant2 = model.findParticipantById("_8e2c1ee0-60da-404d-b8de-f1e46fbd0d0f");
+            assertNotNull(participant2);
+            BPMNProcess process2 = model.openProcess(participant2.getProcessId());
+            subTask = (Activity) process2.findElementById("_aad7a15c-c09f-484f-8147-0f3694bcacca");
+            assertNotNull(subTask);
+            assertEquals(BPMNTypes.SUB_PROCESS, subTask.getType());
+            // Now open the sub task as a BPMNProcess....
+            BPMNProcess process2Sub = subTask.openSubProcess();
+            assertNotNull(process2Sub);
+            // should have 0 tasks....
+            assertEquals(0, process2Sub.getActivities().size());
 
         } catch (BPMNModelException e) {
             e.printStackTrace();

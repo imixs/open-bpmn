@@ -513,6 +513,27 @@ export namespace BPMNPropertiesToggleAction {
 }
 
 /**
+ * Open-BPMN Expand SubProcess Action
+ * This action holds the id of the expanded subProcess.
+ */
+export interface BPMNExpandSubProcessAction extends Action {
+    kind: typeof BPMNExpandSubProcessAction.KIND;
+    processId?: string;
+}
+export namespace BPMNExpandSubProcessAction {
+    export const KIND = 'expandSubProcess';
+    export function is(object: any): object is BPMNExpandSubProcessAction {
+        return Action.hasKind(object, KIND);
+    }
+    export function create(options: {processId?: string}): BPMNExpandSubProcessAction {
+        return {
+            kind: KIND,
+            ...options
+        };
+    }
+}
+
+/**
  * Open-BPMN Update Property Panel Action
  */
 export interface BPMNPropertiesUpdateAction extends Action {
@@ -536,7 +557,8 @@ export namespace BPMNPropertiesUpdateAction {
 
 /*
  * This mouse listener reacts on double click events and opens/closes
- * the properties panel by creating a BPMNPropertiesToggleAction
+ * the properties panel by creating a BPMNPropertiesToggleAction or
+ * expands a subProcess by creating a BPMNExpandSubProcessAction
  */
 @injectable()
 export class BPMNPropertiesMouseListener extends MouseListener {
@@ -544,12 +566,23 @@ export class BPMNPropertiesMouseListener extends MouseListener {
         // test if the double click event is on the subtask expand symbol?
         const htmlTarget = event.target as HTMLElement;
         if (htmlTarget.classList.contains('expand')) {
-            console.log('Open SubProcess....');
+            // we just skip this event here - see mouseDown event
             return [];
         }
 
         // return a BPMNPropertiesToggleAction...
         return [BPMNPropertiesToggleAction.create()];
+    }
+
+     override mouseDown(target: GModelElement, event: MouseEvent): (Action | Promise<Action>)[] {
+        // test if the double click event is on the subtask expand symbol?
+        const htmlTarget = event.target as HTMLElement;
+        if (htmlTarget.classList.contains('expand')) {
+            console.log('Open SubProcess....');
+            const id=target.id;
+            return [BPMNExpandSubProcessAction.create({processId:id})];
+        }
+        return [];
     }
 }
 
