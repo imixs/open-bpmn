@@ -188,9 +188,13 @@
     fill: #f5f9ff;
 }
 
-.subProcess>rect.expand {
+.subProcess>rect.collapsed {
     fill: transparent;
     cursor: pointer;
+}
+.subProcess>rect.expanded {
+    fill: transparent;
+    cursor: default;
 }
 
 .BPMNLabel>.sprotty-node {

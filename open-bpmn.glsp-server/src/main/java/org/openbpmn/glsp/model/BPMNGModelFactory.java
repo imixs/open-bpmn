@@ -97,6 +97,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
+import org.openbpmn.glsp.utils.ModelTypes;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
@@ -642,6 +643,12 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             TaskGNode taskNode = taskNodeBuilder.build();
+
+            // is Expandable?
+            if (modelState.getBpmnModel().isExpandableSubProcess(taskNode.getId())) {
+                BPMNModel.debug("│   ├── is expandable subProcess!");
+                taskNode.getArgs().put(ModelTypes.EXPANDABLE_SUBPROCESS, "true");
+            }
             // apply BPMN Extensions
             applyBPMNElementExtensions(taskNode, activity);
 

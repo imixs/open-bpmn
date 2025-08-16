@@ -333,8 +333,14 @@ export class SubTaskNodeView extends ShapeView {
         // expandIcon
         // https://github.com/microsoft/vscode-codicons/blob/main/src/icons/ungroup-by-ref-type.svg
         // eslint-disable-next-line max-len
-        const expandIcon='M2.9 1L5 3.1l-.8.7L3 2.6V7H2V2.5L.8 3.8l-.7-.7L2.2 1h.7zM3 13.4V9H2v4.4L.8 12.2l-.7.7L2.2 15h.7L5 12.9l-.7-.7L3 13.4zM8.5 7h-2L6 6.5v-2l.5-.5h2l.5.5v2l-.5.5zM7 6h1V5H7v1zm7.5 1h-3l-.5-.5v-3l.5-.5h3l.5.5v3l-.5.5zM12 6h2V4h-2v2zm-3.5 6h-2l-.5-.5v-2l.5-.5h2l.5.5v2l-.5.5zM7 11h1v-1H7v1zm7.5 2h-3l-.5-.5v-3l.5-.5h3l.5.5v3l-.5.5zM12 12h2v-2h-2v2zm-1-2H9v1h2v-1zm0-5H9v1h2V5z';
-
+        let subProcessIcon='M2.9 1L5 3.1l-.8.7L3 2.6V7H2V2.5L.8 3.8l-.7-.7L2.2 1h.7zM3 13.4V9H2v4.4L.8 12.2l-.7.7L2.2 15h.7L5 12.9l-.7-.7L3 13.4zM8.5 7h-2L6 6.5v-2l.5-.5h2l.5.5v2l-.5.5zM7 6h1V5H7v1zm7.5 1h-3l-.5-.5v-3l.5-.5h3l.5.5v3l-.5.5zM12 6h2V4h-2v2zm-3.5 6h-2l-.5-.5v-2l.5-.5h2l.5.5v2l-.5.5zM7 11h1v-1H7v1zm7.5 2h-3l-.5-.5v-3l.5-.5h3l.5.5v3l-.5.5zM12 12h2v-2h-2v2zm-1-2H9v1h2v-1zm0-5H9v1h2V5z';
+        // show embedded icon
+        const argExpandableSubProcess=node.args.expandable_subprocess;
+        const isExpandable='true'===argExpandableSubProcess;
+        if (!isExpandable) {
+          // eslint-disable-next-line max-len
+          subProcessIcon='M1.5 1l-.5.5v3l.5.5h3l.5-.5v-3L4.5 1h-3zM2 4V2h2v2H2zm-.5 2l-.5.5v3l.5.5h3l.5-.5v-3L4.5 6h-3zM2 9V7h2v2H2zm-1 2.5l.5-.5h3l.5.5v3l-.5.5h-3l-.5-.5v-3zm1 .5v2h2v-2H2zm10.5-7l-.5.5v6l.5.5h3l.5-.5v-6l-.5-.5h-3zM15 8h-2V6h2v2zm0 3h-2V9h2v2zM9.1 8H6v1h3.1l-1 1 .7.6 1.8-1.8v-.7L8.8 6.3l-.7.7 1 1z';
+        }
         return (
             <g class-node={true}>
                 <defs>
@@ -343,10 +349,10 @@ export class SubTaskNodeView extends ShapeView {
                     </clipPath>
                 </defs>
                 {this.renderPathNode(wrapper, context)}
-                <rect class-mouseover={node.hoverFeedback} class-expand={true}
+                <rect class-mouseover={node.hoverFeedback} class-expanded={!isExpandable} class-collapsed={isExpandable}
                     x={infoTextXOffset} y={infoTextYOffset} width="15" height="15"></rect>
                 <g class-symbol={true} class-mouseover={node.hoverFeedback}>
-                    <path transform={'scale(1),translate(' + infoTextXOffset + ',' + infoTextYOffset + ')'} d={expandIcon}
+                    <path transform={'scale(1),translate(' + infoTextXOffset + ',' + infoTextYOffset + ')'} d={subProcessIcon}
                      style={{ pointerEvents: 'none' }} />
                 </g> );
                 {context.renderChildren(node)}
