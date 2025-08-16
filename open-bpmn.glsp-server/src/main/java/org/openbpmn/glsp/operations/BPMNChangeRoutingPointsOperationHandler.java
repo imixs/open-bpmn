@@ -239,6 +239,10 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
         if (debug)
             System.out.println("├── ChangeRoutingPointsOperation - Update BPMN way points for " + id);
         BPMNElement element = modelState.getBpmnModel().findElementById(id);
+        if (element == null) {
+            logger.warning("Failed to resolve waypoints for " + id);
+            return;
+        }
         BPMNElementEdge bpmnElementEdge = (BPMNElementEdge) element;
 
         try {

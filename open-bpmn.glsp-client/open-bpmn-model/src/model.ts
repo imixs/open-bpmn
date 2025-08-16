@@ -14,6 +14,7 @@
  * SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
  ********************************************************************************/
 import {
+	Action,
 	Args,
 	CircularNode,
 	DiamondNode,
@@ -335,4 +336,27 @@ export function isBoundaryEvent(element: GModelElement): element is EventNode {
  */
 export function isLaneDivider(element: GModelElement): boolean {
 	return element.type === 'lane-divider';
+}
+
+/**
+ * Open-BPMN Toggle SubProcess Action
+ * This action holds the id of the expanded subProcess.
+ * The property mode indicates if the sub process is being expanded or collapsed.
+ */
+export interface BPMNToggleSubProcessAction extends Action {
+    kind: typeof BPMNToggleSubProcessAction.KIND;
+    processId?: string;
+	mode?: string;
+}
+export namespace BPMNToggleSubProcessAction {
+    export const KIND = 'toggleSubProcess';
+    export function is(object: any): object is BPMNToggleSubProcessAction {
+        return Action.hasKind(object, KIND);
+    }
+    export function create(options: {processId?: string, mode?: string}): BPMNToggleSubProcessAction {
+        return {
+            kind: KIND,
+            ...options
+        };
+    }
 }

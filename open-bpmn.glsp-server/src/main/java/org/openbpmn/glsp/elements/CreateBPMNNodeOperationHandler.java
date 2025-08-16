@@ -76,11 +76,21 @@ public abstract class CreateBPMNNodeOperationHandler extends GModelCreateOperati
      */
     protected BPMNProcess findProcessByCreateNodeOperation(final CreateNodeOperation operation)
             throws BPMNInvalidTypeException {
+
+        // do we operate on a subprocess?
+        if (modelState.getBpmnModel().getSubProcess() != null) {
+            // the subprocess is the container ....
+            return modelState.getBpmnModel().getSubProcess();
+        }
+
+        // resolve either the default process or the partipant container of the drop
+        // operation....
         if (!modelState.getBpmnModel().isCollaborationDiagram()) {
+            // assign default process
             return modelState.getBpmnModel().openDefaultProcess();
         }
+        // assign process according to the dropPoint
         GPoint dropPoint = operation.getLocation().orElse(null);
-
         return BPMNGModelUtil.findProcessByPoint(modelState, dropPoint);
     }
 

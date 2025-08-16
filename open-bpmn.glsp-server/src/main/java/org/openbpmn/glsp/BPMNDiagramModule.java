@@ -69,11 +69,11 @@ import org.openbpmn.glsp.operations.BPMNChangeRoutingPointsOperationHandler;
 import org.openbpmn.glsp.operations.BPMNClipboardDataActionHandler;
 import org.openbpmn.glsp.operations.BPMNComputedBoundsActionHandler;
 import org.openbpmn.glsp.operations.BPMNDeleteNodeHandler;
-import org.openbpmn.glsp.operations.BPMNExpandSubProcessOperationHandler;
 import org.openbpmn.glsp.operations.BPMNPasteOperationHandler;
 import org.openbpmn.glsp.operations.BPMNPropertiesApplyOperationHandler;
 import org.openbpmn.glsp.operations.BPMNReconnectEdgeOperationHandler;
 import org.openbpmn.glsp.operations.BPMNResetRoutingOperationHandler;
+import org.openbpmn.glsp.operations.BPMNToggleSubProcessOperationHandler;
 import org.openbpmn.glsp.provider.BPMNCommandPaletteActionProvider;
 import org.openbpmn.glsp.provider.BPMNToolPaletteItemProvider;
 import org.openbpmn.glsp.validators.BPMNGLSPValidator;
@@ -141,7 +141,7 @@ public class BPMNDiagramModule extends DiagramModule {
 
         // Tasks
         binding.add(BPMNCreateTaskHandler.class);
-        binding.add(BPMNExpandSubProcessOperationHandler.class);
+        binding.add(BPMNToggleSubProcessOperationHandler.class);
 
         // Events
         binding.add(BPMNCreateEventHandler.class);

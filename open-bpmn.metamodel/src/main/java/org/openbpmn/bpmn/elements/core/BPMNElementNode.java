@@ -174,24 +174,6 @@ public abstract class BPMNElementNode extends BPMNElement {
     }
 
     /**
-     * This method update the containment regarding the
-     * participant and/or lane
-     * 
-     */
-    // public void updateContainment() {
-    // try {
-
-    // // compute center of element
-    // BPMNPoint centerPoint = this.getBounds().getCenter();
-
-    // updateContainment(this.getBounds().getPosition().getX(),
-    // this.getBounds().getPosition().getY());
-    // } catch (BPMNMissingElementException e) {
-    // logger.warning("Failed to recompute containment of elemnet " + this.getId());
-    // }
-    // }
-
-    /**
      * This helper method verifies the current containment and updates the
      * participant and/or lane in case the containment has changed.
      * 
@@ -205,6 +187,11 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (!this.model.isCollaborationDiagram()) {
             return;
         }
+        // no update if the process is a sub process....
+        if (this.bpmnProcess.isSubprocess()) {
+            return;
+        }
+
         // update is only possible for flow elements and data objects.
         if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)
                 && !BPMNTypes.isDataStoreNode(this)

@@ -96,7 +96,8 @@ public class BPMNTypes {
             BPMNTypes.BUSINESSRULE_TASK, //
             BPMNTypes.SERVICE_TASK, //
             BPMNTypes.SEND_TASK, //
-            BPMNTypes.RECEIVE_TASK //
+            BPMNTypes.RECEIVE_TASK, //
+            BPMNTypes.SUB_PROCESS
     });
 
     public final static List<String> BPMN_ACTIVITIES = Arrays.asList(new String[] { //
@@ -132,6 +133,7 @@ public class BPMNTypes {
             BPMNTypes.SERVICE_TASK, //
             BPMNTypes.SEND_TASK, //
             BPMNTypes.RECEIVE_TASK, //
+            BPMNTypes.SUB_PROCESS, //
 
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //
@@ -237,6 +239,7 @@ public class BPMNTypes {
             BPMNTypes.SERVICE_TASK, //
             BPMNTypes.SEND_TASK, //
             BPMNTypes.RECEIVE_TASK, //
+            BPMNTypes.SUB_PROCESS, //
 
             BPMNTypes.EXCLUSIVE_GATEWAY, //
             BPMNTypes.PARALLEL_GATEWAY, //

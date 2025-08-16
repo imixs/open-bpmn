@@ -212,19 +212,20 @@ public class BPMNGModelFactory implements GModelFactory {
         if (model == null) {
             return null;
         }
+        logger.info("├── build new GModel Graph...");
         // create the RootBuilder
         GGraphBuilder rootBuilder = new GGraphBuilder() //
                 .id(modelState.getRootID());
 
         List<GModelElement> gRootNodeList = new ArrayList<>();
         Map<String, PoolGNode> poolGNodeList = new HashMap<String, PoolGNode>();
-
-        BPMNProcess defaultProcess = model.openDefaultProcess();
         try {
+
             // In case we have collaboration diagram we iterate over all participants and
             // create a pool if the contained process is private. Otherwise we create the
             // default process
-            if (model.isCollaborationDiagram()) {
+            if (model.isCollaborationDiagram() && model.getSubProcess() == null) {
+                logger.info("│   ├── build collaboration diagram");
                 Set<Participant> participants = model.getParticipants();
                 for (Participant participant : participants) {
                     if ((participant.getProcessRef() == null || participant.getProcessRef().isEmpty())
@@ -258,56 +259,74 @@ public class BPMNGModelFactory implements GModelFactory {
                     }
                 }
             } else {
-                // We have a simple 'Process Diagram' type - build the GModel from default
-                // process
-                BPMNProcess bpmnProcess = model.openDefaultProcess();
-                gRootNodeList.addAll(computeGModelElements(bpmnProcess, null, gRootNodeList));
-            }
+                // We have a simple 'Process Diagram' type -
+                // if no subprocess was selected, build the GModel from default process
 
-            // Next add all Message objects.
-            // A message object is not assigned to any process!
-            for (Message message : modelState.getBpmnModel().getMessages()) {
-                logger.debug("message: " + message.getName());
-                GPoint point = computeRelativeGPoint(message.getBounds(), null);
-                List<GModelElement> containerNodeList = gRootNodeList; // default add message to root
-
-                // Build the GLSP Node....
-                MessageGNode messageNode = new MessageGNodeBuilder(message) //
-                        .position(point) //
-                        .build();
-                containerNodeList.add(messageNode);
-                // now add a GLabel
-                BPMNLabel bpmnLabel = message.getLabel();
-                LabelGNode labelNode = createLabelNode(bpmnLabel, message, null);
-                containerNodeList.add(labelNode);
-
-                // finally apply BPMN Extensions
-                applyBPMNElementExtensions(messageNode, message);
-            }
-
-            // Add all MessageFlow elements...
-            createMessageFlowGEdges(model.getMessageFlows(), gRootNodeList);
-
-            // Add all Associations elements...
-            List<BPMNProcess> processList = model.getBpmnProcessList();
-            for (BPMNProcess _process : processList) {
-                // apply the associations for each process separately.
-                // NOTE: It is necessary to verify if the Association is inside a Pool. In this
-                // case the Association becomes a child of the PoolGNode
-                if (!_process.isPublicProcess()) {
-                    // the Associations inside a Pool, we need to add the edge to the
-                    // PoolGNode childList
-                    Participant _participant = _process.findParticipant();
-                    if (_participant != null) {
-                        PoolGNode pool = poolGNodeList.get(_participant.getId());
-                        createAssociationGEdges(_process.getAssociations(), pool.getChildren(), _participant);
-                    } else {
-                        logger.warn("Unable to resove participant for process " + _process.getId());
-                    }
+                // Test if we have a expanded Subprocess?
+                if (model.getSubProcess() == null) {
+                    logger.info("│   ├── build default process diagram without participants... ");
+                    BPMNProcess defaultProcess = model.openDefaultProcess();
+                    gRootNodeList.addAll(computeGModelElements(defaultProcess, null, gRootNodeList));
                 } else {
-                    createAssociationGEdges(_process.getAssociations(), gRootNodeList, null);
+                    logger.info("│   ├── build sub process diagram... ");
+                    boolean flag = model.isDirty();
+                    BPMNProcess currentProcess = model.getSubProcess();
+                    gRootNodeList.addAll(computeGModelElements(currentProcess, null, gRootNodeList));
                 }
             }
+
+            if (model.getSubProcess() == null) {
+                logger.info("│   ├── building message flows and associations... ");
+                // Next add all Message objects.
+                // A message object is not assigned to any process!
+                for (Message message : modelState.getBpmnModel().getMessages()) {
+                    logger.debug("message: " + message.getName());
+                    GPoint point = computeRelativeGPoint(message.getBounds(), null);
+                    List<GModelElement> containerNodeList = gRootNodeList; // default add message to root
+
+                    // Build the GLSP Node....
+                    MessageGNode messageNode = new MessageGNodeBuilder(message) //
+                            .position(point) //
+                            .build();
+                    containerNodeList.add(messageNode);
+                    // now add a GLabel
+                    BPMNLabel bpmnLabel = message.getLabel();
+                    LabelGNode labelNode = createLabelNode(bpmnLabel, message, null);
+                    containerNodeList.add(labelNode);
+
+                    // finally apply BPMN Extensions
+                    applyBPMNElementExtensions(messageNode, message);
+                }
+
+                // Add all MessageFlow elements...
+                createMessageFlowGEdges(model.getMessageFlows(), gRootNodeList);
+
+                // Add all Associations elements...
+                List<BPMNProcess> processList = model.getBpmnProcessList();
+                for (BPMNProcess _process : processList) {
+                    if (_process.isSubprocess()) {
+                        // skip
+                        continue;
+                    }
+                    // apply the associations for each process separately.
+                    // NOTE: It is necessary to verify if the Association is inside a Pool. In this
+                    // case the Association becomes a child of the PoolGNode
+                    if (!_process.isPublicProcess()) {
+                        // the Associations inside a Pool, we need to add the edge to the
+                        // PoolGNode childList
+                        Participant _participant = _process.findParticipant();
+                        if (_participant != null) {
+                            PoolGNode pool = poolGNodeList.get(_participant.getId());
+                            createAssociationGEdges(_process.getAssociations(), pool.getChildren(), _participant);
+                        } else {
+                            logger.warn("│   ├── unable to resolve participant for process " + _process.getId());
+                        }
+                    } else {
+                        createAssociationGEdges(_process.getAssociations(), gRootNodeList, null);
+                    }
+                }
+            }
+
         } catch (BPMNModelException e) {
             e.printStackTrace();
         }
@@ -315,9 +334,12 @@ public class BPMNGModelFactory implements GModelFactory {
         rootBuilder.addAll(gRootNodeList);
         GGraph newGModel = rootBuilder.build();
 
-        // finally add the root extensions
-        applyBPMNElementExtensions(newGModel, defaultProcess);
+        // finally add the root extensions if we are not in a Subprocess
+        if (model.getSubProcess() == null) {
+            applyBPMNElementExtensions(newGModel, model.openDefaultProcess());
+        }
 
+        logger.info("└── GModel completed.");
         return newGModel;
     }
 
@@ -597,8 +619,9 @@ public class BPMNGModelFactory implements GModelFactory {
                     .position(point);
 
             // do we have a sub process contained by this activity?
-            if (activity.hasSubProcess()) {
-                logger.info("Activity " + activity.getId() + " '" + activity.getName() + "'' has a sub process...");
+            if (activity.hasExpandedSubProcess()) {
+                logger.info(
+                        "│   ├── open expanded subProcess for Activity " + activity.getId() + "'...");
                 try {
                     BPMNProcess subProcess = activity.openSubProcess();
                     List<GModelElement> gNodeSubProcessList = new ArrayList<>();

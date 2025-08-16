@@ -159,6 +159,11 @@ public class BPMNToolPaletteItemProvider implements ToolPaletteItemProvider {
                 item.setSortString("H");
                 result.add(item);
 
+                item = new PaletteItem(BPMNTypes.SUB_PROCESS, "Sub Process",
+                                new TriggerNodeCreationAction(BPMNTypes.SUB_PROCESS));
+                item.setSortString("I");
+                result.add(item);
+
                 return result;
         }
 

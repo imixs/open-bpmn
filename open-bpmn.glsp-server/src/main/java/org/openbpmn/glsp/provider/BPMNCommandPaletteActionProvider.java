@@ -112,6 +112,10 @@ public class BPMNCommandPaletteActionProvider implements CommandPaletteActionPro
                                         Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SCRIPT_TASK,
                                                         lastMousePosition.orElse(point(0, 0)))),
                                         "inspect"));
+                        actions.add(new LabeledAction("Create Sub Process",
+                                        Lists.newArrayList(new CreateNodeOperation(BPMNTypes.SUB_PROCESS,
+                                                        lastMousePosition.orElse(point(0, 0)))),
+                                        "inspect"));
 
                         // Events
                         actions.add(new LabeledAction("Create Start Event",

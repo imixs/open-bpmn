@@ -34,7 +34,7 @@ import {
 import { Action, Args } from '@eclipse-glsp/protocol';
 import { JsonForms } from '@jsonforms/react';
 import { vanillaCells, vanillaRenderers } from '@jsonforms/vanilla-renderers';
-import { isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
+import { BPMNToggleSubProcessAction, isBPMNEdge, isBPMNNode, isBoundaryEvent } from '@open-bpmn/open-bpmn-model';
 import { inject, injectable } from 'inversify';
 import * as React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -513,27 +513,6 @@ export namespace BPMNPropertiesToggleAction {
 }
 
 /**
- * Open-BPMN Expand SubProcess Action
- * This action holds the id of the expanded subProcess.
- */
-export interface BPMNExpandSubProcessAction extends Action {
-    kind: typeof BPMNExpandSubProcessAction.KIND;
-    processId?: string;
-}
-export namespace BPMNExpandSubProcessAction {
-    export const KIND = 'expandSubProcess';
-    export function is(object: any): object is BPMNExpandSubProcessAction {
-        return Action.hasKind(object, KIND);
-    }
-    export function create(options: {processId?: string}): BPMNExpandSubProcessAction {
-        return {
-            kind: KIND,
-            ...options
-        };
-    }
-}
-
-/**
  * Open-BPMN Update Property Panel Action
  */
 export interface BPMNPropertiesUpdateAction extends Action {
@@ -578,9 +557,9 @@ export class BPMNPropertiesMouseListener extends MouseListener {
         // test if the double click event is on the subtask expand symbol?
         const htmlTarget = event.target as HTMLElement;
         if (htmlTarget.classList.contains('expand')) {
-            console.log('Open SubProcess....');
+            // console.log('Open SubProcess....');
             const id=target.id;
-            return [BPMNExpandSubProcessAction.create({processId:id})];
+            return [BPMNToggleSubProcessAction.create({processId:id,mode:'expand'})];
         }
         return [];
     }

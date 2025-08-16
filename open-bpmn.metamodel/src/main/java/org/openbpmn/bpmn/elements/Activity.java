@@ -46,12 +46,29 @@ public class Activity extends BPMNElementNode {
                 || BPMNTypes.CALL_ACTIVITY.equals(type)
                 || BPMNTypes.ADHOC_SUB_PROCESS.equals(type)
                 || BPMNTypes.TRANSACTION.equals(type)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the activity has an expanded sub process to be displayed
+     * inline
+     * 
+     * @return
+     */
+    public boolean hasExpandedSubProcess() {
+        if (BPMNTypes.SUB_PROCESS.equals(type)
+                || BPMNTypes.CALL_ACTIVITY.equals(type)
+                || BPMNTypes.ADHOC_SUB_PROCESS.equals(type)
+                || BPMNTypes.TRANSACTION.equals(type)) {
 
             // Test if we have a expanded shape element
             Element shape = this.getBpmnShape();
             if (shape != null && shape.hasAttribute("isExpanded")) {
                 return ("true".equalsIgnoreCase(shape.getAttribute("isExpanded")));
             }
+
         }
         return false;
     }
@@ -71,10 +88,12 @@ public class Activity extends BPMNElementNode {
         }
         // open embedded process
         if (subProcess == null) {
-            subProcess = new BPMNProcess(model, this.getElementNode(), BPMNTypes.PROCESS_TYPE_NONE);
+            subProcess = new BPMNProcess(model, this.getElementNode(), BPMNTypes.PROCESS_TYPE_NONE, true);
+            // subProcess.setIsSubprocess(true);
             model.getBpmnProcesses().put(subProcess.getId(), subProcess);
             subProcess.init();
         }
+
         return subProcess;
     }
 

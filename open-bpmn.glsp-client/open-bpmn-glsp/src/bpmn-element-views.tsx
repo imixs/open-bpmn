@@ -345,7 +345,7 @@ export class SubTaskNodeView extends ShapeView {
                 {this.renderPathNode(wrapper, context)}
                 <rect class-mouseover={node.hoverFeedback} class-expand={true}
                     x={infoTextXOffset} y={infoTextYOffset} width="15" height="15"></rect>
-                <g class-symbol={true} class-mouseover={node.hoverFeedback}> 
+                <g class-symbol={true} class-mouseover={node.hoverFeedback}>
                     <path transform={'scale(1),translate(' + infoTextXOffset + ',' + infoTextYOffset + ')'} d={expandIcon}
                      style={{ pointerEvents: 'none' }} />
                 </g> );

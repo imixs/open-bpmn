@@ -25,25 +25,36 @@ import org.openbpmn.glsp.model.BPMNGModelState;
 import com.google.inject.Inject;
 
 /**
- * This ActionHandler reacts on SubProcess Expand actions send from the client
+ * This ActionHandler reacts on SubProcess Toggle actions send from the client
  *
  * @author rsoika
  *
  */
-public class BPMNExpandSubProcessOperationHandler extends GModelOperationHandler<BPMNExpandSubProcessOperation> {
+public class BPMNToggleSubProcessOperationHandler extends GModelOperationHandler<BPMNToggleSubProcessOperation> {
 
-    private static Logger logger = Logger.getLogger(BPMNExpandSubProcessOperationHandler.class.getName());
+    private static Logger logger = Logger.getLogger(BPMNToggleSubProcessOperationHandler.class.getName());
 
     @Inject
     protected BPMNGModelState modelState;
 
     @Override
-    public Optional<Command> createCommand(BPMNExpandSubProcessOperation operation) {
+    public Optional<Command> createCommand(BPMNToggleSubProcessOperation operation) {
 
         return commandOf(() -> {
-            logger.fine("Expand Sub process: " + operation.getProcessId());
-            modelState.getBpmnModel().setSubProcess(operation.getProcessId());
-            modelState.reset();
+
+            logger.fine("Toggle Sub process: " + operation.getProcessId());
+            if ("expand".equals(operation.getMode())) {
+                if (modelState.getBpmnModel().isExpandableSubProcess(operation.getProcessId())) {
+                    modelState.getBpmnModel().setSubProcess(operation.getProcessId());
+                    modelState.reset();
+                }
+            } else {
+                if (modelState.getBpmnModel().getSubProcess() != null) {
+                    modelState.getBpmnModel().setSubProcess(null);
+                    modelState.reset();
+                }
+            }
+
         });
     }
 

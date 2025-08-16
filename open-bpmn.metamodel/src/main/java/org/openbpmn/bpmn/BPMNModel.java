@@ -74,6 +74,7 @@ public class BPMNModel {
     private Element definitions;
     // private Element defaultProcessElement;
     private BPMNProcess defaultProcess;
+    private BPMNProcess subProcess;
     private Node bpmnDiagram;
     protected Set<Participant> participants = null;
     protected Map<String, BPMNProcess> bpmnProcesses = new ConcurrentHashMap<>();
@@ -374,14 +375,6 @@ public class BPMNModel {
         return doc;
     }
 
-    // public Element getDefaultProcessElement() {
-    // return defaultProcessElement;
-    // }
-
-    // public void setDefaultProcessElement(Element defaultProcessElement) {
-    // this.defaultProcessElement = defaultProcessElement;
-    // }
-
     /**
      * Adds a new xml namespace if not yet defined
      * 
@@ -401,6 +394,95 @@ public class BPMNModel {
      */
     public BPMNProcess getDefaultProcess() {
         return defaultProcess;
+    }
+
+    /**
+     * Returns the current subProcess. The subProcess property indicates a
+     * SubProcess which is currently expanded. This flag can be used by an UI to
+     * visualize the elements of a subprocess instead of the default process
+     * 
+     * @return
+     */
+    public BPMNProcess getSubProcess() {
+        return subProcess;
+    }
+
+    /**
+     * The method tests if a given SubProcess ID belongs to an expandable element.
+     * This is used by the BPMNToggleSubProcessOperation
+     * 
+     * @param subProcessId
+     * @return
+     */
+    public boolean isExpandableSubProcess(String subProcessId) {
+
+        if (subProcessId == null) {
+            this.subProcess = null;
+            return false;
+        }
+
+        // find task....
+        Activity subTask = (Activity) this.findElementNodeById(subProcessId);
+        if (subTask != null) {
+            // skip if triggeredByEvent=true
+            // if (subTask. "triggeredByEvent".)
+            String triggeredByEvent = subTask.getAttribute("triggeredByEvent");
+            boolean isTriggeredByEvent = (triggeredByEvent != null && "true".equalsIgnoreCase(triggeredByEvent));
+            if (BPMNTypes.SUB_PROCESS.equals(subTask.getType())) {
+                // In case of isTriggeredByEvent does not exist or is false we assume that we
+                // can expand the subTask
+                if (!isTriggeredByEvent) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    /**
+     * Sets the currently expanded sub-process by its ID. The sub process is a task
+     * element with embedded elements. It behaves like a Process. The Subprocess
+     * will be initialized automatically.
+     * 
+     * @param subProcess
+     */
+    public void setSubProcess(String subProcessId) {
+        try {
+            if (subProcessId == null) {
+                this.subProcess = null;
+                return;
+            }
+
+            // find task....
+            Activity subTask = (Activity) this.findElementNodeById(subProcessId);
+            if (subTask != null) {
+                // skip if triggeredByEvent=true
+                // if (subTask. "triggeredByEvent".)
+                String triggeredByEvent = subTask.getAttribute("triggeredByEvent");
+                boolean isTriggeredByEvent = (triggeredByEvent != null && "true".equalsIgnoreCase(triggeredByEvent));
+
+                if (BPMNTypes.SUB_PROCESS.equals(subTask.getType())) {
+                    // In case of isTriggeredByEvent - we exit here - seems to make no sense
+                    if (isTriggeredByEvent) {
+                        logger.info("subProcess - triggeredByEvent=" + isTriggeredByEvent);
+                        this.subProcess = null;
+                        return;
+                    }
+                    this.subProcess = subTask.openSubProcess();
+                } else {
+                    logger.warning("Invalid SubProcessID '" + subProcessId
+                            + "' - not of type subProcess. Validate Model!");
+                }
+            } else {
+                logger.warning("Invalid SubProcessID '" + subProcessId
+                        + "' - not found in current Model!");
+            }
+
+        } catch (BPMNModelException e) {
+            logger.warning("Unable to open SubProcess '" + subProcessId + "' - " + e.getMessage());
+            this.subProcess = null;
+        }
     }
 
     /**
@@ -720,7 +802,7 @@ public class BPMNModel {
 
         definitions.insertBefore(processElement, this.getBpmnDiagram());
 
-        BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, type);
+        BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, type, false);
         bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
 
         return bpmnProcess;
@@ -793,6 +875,8 @@ public class BPMNModel {
         // if we found a matching process than we can initialize it
         if (process != null) {
             process.init();
+        } else {
+            logger.warning("BPMNProcess '" + id + "' not defined in current model!");
         }
         return process;
     }
@@ -1225,21 +1309,11 @@ public class BPMNModel {
         // iterate over all processes
         List<BPMNProcess> processList = this.getBpmnProcessList();
         for (BPMNProcess process : processList) {
-            // if (id.equals(process.getId())) {
-            // // the id matches a Process
-            // // throw new IllegalArgumentException("unable to return process - not
-            // // implemented!");
-            // BPMNModel.getLogger()
-            // .warning("findElementById failed - unable to return process '" + id
-            // + "' - case not implemented!");
-
-            // } else {
             // analyze the content of the process
             BPMNElement baseElement = process.findElementById(id);
             if (baseElement != null) {
                 return baseElement;
             }
-            // }
         }
 
         // no corresponding element found!
@@ -2153,7 +2227,7 @@ public class BPMNModel {
                     setDirty(true);
                 }
 
-                BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType);
+                BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType, false);
                 bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
                 if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
                     defaultProcess = bpmnProcess;

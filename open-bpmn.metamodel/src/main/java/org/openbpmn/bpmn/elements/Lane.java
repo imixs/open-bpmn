@@ -2,7 +2,6 @@ package org.openbpmn.bpmn.elements;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
@@ -39,8 +38,6 @@ import org.w3c.dom.Text;
  */
 public class Lane extends BPMNElementNode {
 
-    private static Logger logger = Logger.getLogger(Lane.class.getName());
-
     public final static double MIN_WIDTH = 270.0;
     public final static double MIN_HEIGHT = 100.0;
     public final static double DEFAULT_WIDTH = 470.0;
@@ -55,49 +52,11 @@ public class Lane extends BPMNElementNode {
      * @param width
      * @throws BPMNMissingElementException
      */
-    public Lane(BPMNModel model, Element node) {
+    public Lane(BPMNModel model, BPMNProcess process, Element node) {
         super(model, node);
-        // find the BPMNShape element.
-        // bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
+        this.bpmnProcess = process;
+        bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
 
-        bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, getBpmnProcess().getBPMNPlane(), getId());
-    }
-
-    /**
-     * Returns the BPMNProcess the lance is a member of.
-     * 
-     * To find the BPMNProcess of a lane we need to first fetch the processID form
-     * the outer laneset.
-     */
-    @Override
-    public BPMNProcess getBpmnProcess() {
-        String processID = getProcessId();
-        // try {
-
-        return model.getBpmnProcesses().get(processID);
-
-        // return this.model.openProcess(processID);
-        // } catch (BPMNModelException e) {
-        // logger.severe("Failed to resolve BPMNProcess for lane '" + this.getId() + "!'
-        // ");
-        // }
-        // return null;
-    }
-
-    /**
-     * This method returns the corresponding BPMNProcess ID for this Element.
-     * 
-     * For a lane the process id is the parent of the parent lane set
-     * 
-     * @param bpmynElement
-     * @return
-     */
-    @Override
-    public String getProcessId() {
-        Element laneSet = (Element) getElementNode().getParentNode();
-        // now get the parent node of the laneset which is the process
-        Element parentProcess = (Element) laneSet.getParentNode();
-        return parentProcess.getAttribute("id");
     }
 
     /**
@@ -190,25 +149,6 @@ public class Lane extends BPMNElementNode {
         }
         return result;
     }
-
-    /**
-     * This method adds a flowElementID to the lane
-     * 
-     * @param id
-     */
-    /*
-     * public void addFlowElementID(String id) {
-     * // test if the id is already listed...
-     * Set<String> refList = getFlowElementIDs();
-     * if (refList.contains(id)) {
-     * // already listed - no op
-     * return;
-     * }
-     * // add id....
-     * model.createElement(null, id)
-     * 
-     * }
-     */
 
     @Override
     public double getDefaultWidth() {

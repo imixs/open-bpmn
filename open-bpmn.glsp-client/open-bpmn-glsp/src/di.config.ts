@@ -29,6 +29,7 @@ import {
     RectangularNodeView,
     RoundedCornerNodeView,
     TYPES,
+    configureActionHandler,
     configureDefaultModelElements,
     configureModelElement,
     editLabelFeature,
@@ -40,6 +41,7 @@ import {
 } from '@eclipse-glsp/client';
 import {
     BPMNEdge,
+    BPMNToggleSubProcessAction,
     DataObjectNode,
     DataStoreNode,
     EventNode,
@@ -86,6 +88,7 @@ import {
     BPMNMultiNodeSelectionListener,
     BPMNSelectionHelper
 } from './bpmn-select-listeners';
+import { SubProcessOverlay } from './bpmn-subprocess-overlay';
 const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) => {
     const context = { bind, unbind, isBound, rebind };
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
@@ -160,6 +163,11 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     configureModelElement(context, 'transaction', TaskNode, TaskNodeView);
     configureModelElement(context, 'callActivity', TaskNode, TaskNodeView);
 
+    // bind subProcess Overlay
+    bind(SubProcessOverlay).toSelf().inSingletonScope();
+    bind(TYPES.IUIExtension).toService(SubProcessOverlay);
+    bind(TYPES.IDiagramStartup).toService(SubProcessOverlay);
+    configureActionHandler(context, BPMNToggleSubProcessAction.KIND, SubProcessOverlay);
 });
 
 export function createBPMNDiagramContainer(...containerConfiguration: ContainerConfiguration): Container {

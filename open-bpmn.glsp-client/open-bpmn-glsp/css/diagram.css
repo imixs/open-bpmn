@@ -18,6 +18,41 @@
     background: var(--theia-editorHoverWidget-statusBarBackground);
 }
 
+.grid-button-overlay {
+  position: absolute;
+  left: 25px;
+  top: 25px;
+  text-align: left;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  font-family: sans-serif;
+}
+
+.overlay-button {
+  opacity: 0.75;
+  display: flex;
+  font-size: 0.95rem;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 5px;
+  border: 1px dashed var(--theia-foreground);
+}
+
+.overlay-button:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.overlay-icon {
+  margin-right: 10px;
+  padding-left: 5px;
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  font-size: 1.2rem !important;
+}
+
 .bpmn-grid-line {
     stroke-width: 0.5;
     stroke: var(--theia-titleBar-activeBackground);

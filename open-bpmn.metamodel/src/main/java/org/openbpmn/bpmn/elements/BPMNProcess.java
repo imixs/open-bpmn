@@ -57,6 +57,7 @@ public class BPMNProcess extends BPMNElement {
     protected Set<Gateway> gateways = null;
     protected Set<SequenceFlow> sequenceFlows = null;
     protected Set<Association> associations = null;
+    protected boolean isSubprocess = false;
 
     protected Set<Lane> lanes = null;
     protected Element bpmnPlane = null;
@@ -73,7 +74,7 @@ public class BPMNProcess extends BPMNElement {
      * @param model
      * @param element
      */
-    public BPMNProcess(BPMNModel model, Element element, String processType) {
+    public BPMNProcess(BPMNModel model, Element element, String processType, boolean isSubProcess) {
         super(model, element);
 
         // set public if not yet specified
@@ -87,6 +88,7 @@ public class BPMNProcess extends BPMNElement {
             element.setAttribute("processType", processType);
         }
         setProcessType(processType);
+        this.isSubprocess = isSubProcess;
 
         // set executeable flag only for non public processes
         if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)
@@ -98,8 +100,25 @@ public class BPMNProcess extends BPMNElement {
             }
         }
 
-        // fine bpmnPlane
+        // find bpmnPlane
         resolveBPMNPlane();
+    }
+
+    // /**
+    // * marks the process as a subprocess
+    // *
+    // */
+    // public void setIsSubprocess(boolean isSubprocess) {
+    // this.isSubprocess = isSubprocess;
+    // }
+
+    /**
+     * Returns true if the process is a subprocess of an activity.
+     * 
+     * @return
+     */
+    public boolean isSubprocess() {
+        return isSubprocess;
     }
 
     /**
@@ -148,15 +167,21 @@ public class BPMNProcess extends BPMNElement {
             // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
             logger.warning("No bpmndi:BPMNPlane found - created default plane");
             Element bpmnDefaultPlane = model.createElement(BPMNNS.BPMNDI, "BPMNPlane");
-            bpmnDefaultPlane.setAttribute("id", "BPMNPlane_1");
-            NodeList nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "collaboration");
-            if (nodeList == null || nodeList.getLength() == 0) {
-                // Take the default process as plane ref...
-                nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "process");
-            }
-            if (nodeList != null && nodeList.getLength() > 0) {
-                Element refElement = (Element) nodeList.item(0);
-                bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
+
+            bpmnDefaultPlane.setAttribute("id", BPMNModel.generateShortID("BPMNPlane"));
+            if (isSubprocess()) {
+                bpmnDefaultPlane.setAttribute("bpmnElement", this.getId());
+            } else {
+                // resolve associated process or collaboration element
+                NodeList nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "collaboration");
+                if (nodeList == null || nodeList.getLength() == 0) {
+                    // Take the default process as plane ref...
+                    nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "process");
+                }
+                if (nodeList != null && nodeList.getLength() > 0) {
+                    Element refElement = (Element) nodeList.item(0);
+                    bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
+                }
             }
             model.getBpmnDiagram().appendChild(bpmnDefaultPlane);
             bpmnPlane = bpmnDefaultPlane;
@@ -798,14 +823,14 @@ public class BPMNProcess extends BPMNElement {
             this.getElementNode().insertBefore(laneSet, this.getElementNode().getFirstChild());
         }
         // add the new Lane
-        Element lane = model.createElement(BPMNNS.BPMN2, BPMNTypes.LANE);
+        Element laneElement = model.createElement(BPMNNS.BPMN2, BPMNTypes.LANE);
         String laneId = BPMNModel.generateShortID("lane");
-        lane.setAttribute("id", laneId);
-        lane.setAttribute("name", name);
-        laneSet.appendChild(lane);
+        laneElement.setAttribute("id", laneId);
+        laneElement.setAttribute("name", name);
+        laneSet.appendChild(laneElement);
 
         BPMNModel.debug("new lane '" + laneId + "' added");
-        Lane bpmnLane = new Lane(model, lane);
+        Lane bpmnLane = new Lane(model, this, laneElement);
 
         // AutoCompute the Lane Bounds
         Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
@@ -839,11 +864,6 @@ public class BPMNProcess extends BPMNElement {
 
             int laneWidth = (int) (poolBounds.getDimension().getWidth() - Participant.POOL_OFFSET);
             int laneHeight = (int) (poolBounds.getDimension().getHeight() / (currentLaneCount + 1));
-            if (currentLaneCount > 0) {
-                // overlap lanes by 1 pixel
-                // laneY--;
-                // laneHeight++;
-            }
 
             bpmnLane.setDimension(laneWidth, laneHeight);
             bpmnLane.setPosition(laneX, laneY);
@@ -1230,6 +1250,18 @@ public class BPMNProcess extends BPMNElement {
             return result;
         }
 
+        // check
+        Set<Activity> listA = this.getActivities();
+        for (Activity element : listA) {
+            if (element.hasSubProcess() && element.subProcess != null) {
+                result = element.subProcess.findElementById(id);
+                if (result != null) {
+                    // Node Element found in subprocess
+                    return result;
+                }
+            }
+        }
+
         return null;
     }
 
@@ -1411,7 +1443,7 @@ public class BPMNProcess extends BPMNElement {
         // find Child Nodes
         Set<Element> laneNodes = model.findChildNodesByName(laneSet, BPMNNS.BPMN2, "lane");
         for (Element _lane : laneNodes) {
-            Lane bpmnLane = new Lane(model, _lane);
+            Lane bpmnLane = new Lane(model, this, _lane);
             this.getLanes().add(bpmnLane);
         }
     }

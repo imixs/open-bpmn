@@ -4,18 +4,20 @@ import org.eclipse.glsp.server.operations.Operation;
 
 /**
  * Action definition to toggle the property panel on the client side
+ * Possible Modes are 'collapse' and 'expand'
  * 
  */
-public class BPMNExpandSubProcessOperation extends Operation {
+public class BPMNToggleSubProcessOperation extends Operation {
 
-    public static final String KIND = "expandSubProcess";
+    public static final String KIND = "toggleSubProcess";
     private String processId;
+    private String mode;
 
-    public BPMNExpandSubProcessOperation() {
+    public BPMNToggleSubProcessOperation() {
         super(KIND);
     }
 
-    public BPMNExpandSubProcessOperation(final String processId) {
+    public BPMNToggleSubProcessOperation(final String processId) {
         super(KIND);
         this.processId = processId;
     }
@@ -26,6 +28,14 @@ public class BPMNExpandSubProcessOperation extends Operation {
 
     public void setProcessId(String processId) {
         this.processId = processId;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
 }
