@@ -205,7 +205,7 @@ public class TestCreateModel {
             Participant participantSales = model.addParticipant("Sales Team");
 
             // add a task
-            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.getBpmnProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(60, 40);
 
         } catch (BPMNModelException e) {
@@ -233,17 +233,21 @@ public class TestCreateModel {
         BPMNModel model = BPMNModelFactory.createInstance(exporter, version, targetNameSpace);
 
         try {
+            // we expect on default process only
+            assertEquals(1, model.getBpmnProcessList().size());
+
             // create two participants
             Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 100);
+            assertEquals(2, model.getBpmnProcessList().size());
 
-            BPMNProcess salesProcess = participantSales.openProcess();
+            BPMNProcess salesProcess = participantSales.getBpmnProcess();
             // add a BPMNLane
             Lane lane1 = salesProcess.addLane("Europe");
             Lane lane2 = salesProcess.addLane("United States");
 
             // add a task
-            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.getBpmnProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(100, 40);
             lane1.insert(task);
 

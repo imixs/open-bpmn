@@ -45,7 +45,7 @@ public abstract class BPMNElementNode extends BPMNElement {
     protected static Logger logger = Logger.getLogger(BPMNElementNode.class.getName());
 
     protected String type = null;
-    protected BPMNProcess bpmnProcess = null;
+
     protected BPMNLabel label = null;
     protected Element bpmnShape = null;
     protected BPMNBounds bounds = null;
@@ -62,6 +62,35 @@ public abstract class BPMNElementNode extends BPMNElement {
     }
 
     /**
+     * Create a new BPMN Base Element. The constructor expects a model instance and
+     * a node and a BPMNProcess.
+     * 
+     * @param node
+     * @param model
+     * @throws BPMNModelException
+     */
+    public BPMNElementNode(BPMNModel model, Element node, BPMNProcess _bpmnProcess) throws BPMNModelException {
+        super(model, node, _bpmnProcess);
+        if (_bpmnProcess == null) {
+            throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT, "Missing BPMNProcess");
+        }
+        bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
+
+        if (bpmnShape == null) {
+            // create shape element
+            bpmnShape = model.buildBPMNShape(this);
+            this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeight());
+            // create BPMNLabel
+            label = this.getLabel();
+            if (label != null) {
+                // set default position
+                // BPMNPoint pos = this.getBounds().getPosition();
+                label.updateLocation(0.0, 0.0);
+            }
+        }
+    }
+
+    /**
      * Creates a new BPMNFlowElement
      * 
      * @param _type
@@ -71,9 +100,9 @@ public abstract class BPMNElementNode extends BPMNElement {
      */
     public BPMNElementNode(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess)
             throws BPMNModelException {
-        super(model, node);
+        super(model, node, _bpmnProcess);
         this.type = _type;
-        this.bpmnProcess = _bpmnProcess;
+        // this.bpmnProcess = _bpmnProcess;
         // find the BPMNShape element. If not defined create a new one
         // bpmnShape = (Element) model.findBPMNPlaneElement("BPMNShape", getId());
 
@@ -91,6 +120,18 @@ public abstract class BPMNElementNode extends BPMNElement {
                 label.updateLocation(0.0, 0.0);
             }
         }
+    }
+
+    /**
+     * Returns the ID for the BPMNProcess this element is associated to.
+     * 
+     * @return
+     */
+    public String getProcessId() {
+        if (bpmnProcess != null) {
+            return bpmnProcess.getId();
+        }
+        return null;
     }
 
     /**
@@ -210,13 +251,16 @@ public abstract class BPMNElementNode extends BPMNElement {
                 if (participant.bounds == null) {
                     continue; // no bounds!
                 }
+                if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(participant.getBpmnProcess().getProcessType())) {
+                    continue; // skip public process
+                }
                 BPMNBounds participantBounds = participant.getBounds();
                 if (participantBounds.containsPoint(new BPMNPoint(centerPoint.getX(), centerPoint.getY()))) {
                     newProcess = participant.bpmnProcess;
                     break;
                 }
             }
-            if (!this.getProcessId().equals(newProcess.getId())) {
+            if (!this.bpmnProcess.getId().equals(newProcess.getId())) {
                 // change process!
                 updateBPMNProcess(newProcess);
             }

@@ -41,8 +41,12 @@ public abstract class BPMNElementEdge extends BPMNElement {
         super(model, node);
     }
 
-    public BPMNElementEdge(BPMNModel model, Element node, String _type) {
-        super(model, node);
+    public BPMNElementEdge(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
+        super(model, node, _bpmnProcess);
+    }
+
+    public BPMNElementEdge(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
+        super(model, node, _bpmnProcess);
         this.type = _type;
 
         wayPoints = new LinkedHashSet<BPMNPoint>();
@@ -58,14 +62,12 @@ public abstract class BPMNElementEdge extends BPMNElement {
         }
 
         // find the BPMNShape element. If not defined create a new one
-        // bpmnEdge = (Element) model.findBPMNPlaneElement("BPMNEdge", getId());
-        BPMNProcess process = model.findProcessById(this.getProcessId());
-        bpmnEdge = BPMNModelUtil.findBPMNEdgeInPlane(model, process.getBPMNPlane(), getId());
+        bpmnEdge = BPMNModelUtil.findBPMNEdgeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
 
         if (bpmnEdge == null) {
             // create shape element
             logger.warning("create missing shape for edge " + this.getId());
-            createBPMNEdge(process.getBpmnPlane());
+            createBPMNEdge(bpmnProcess.getBpmnPlane());
             this.addDefaultWayPoints();
         } else {
             // parse waypoints (di:waypoint)

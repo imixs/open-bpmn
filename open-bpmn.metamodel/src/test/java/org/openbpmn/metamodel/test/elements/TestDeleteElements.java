@@ -149,7 +149,7 @@ public class TestDeleteElements {
             Participant sales = model.addParticipant("Sales");
 
             // add Task
-            BPMNProcess privateProcess = sales.openProcess();
+            BPMNProcess privateProcess = sales.getBpmnProcess();
             // add a start and end event
             privateProcess.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             privateProcess.addEvent("end_1", "End", BPMNTypes.END_EVENT);
@@ -186,7 +186,7 @@ public class TestDeleteElements {
 
             Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
-            BPMNProcess process = participant.openProcess();
+            BPMNProcess process = participant.getBpmnProcess();
             assertNotNull(process);
             assertEquals("Process_1", process.getId());
 
@@ -202,7 +202,7 @@ public class TestDeleteElements {
             fail();
         }
         model.save(out);
-        logger.info("...model update sucessful: " + out);
+        logger.info("...model update successful: " + out);
     }
 
     /**
@@ -230,18 +230,29 @@ public class TestDeleteElements {
             Participant participant = model.addParticipant("example-workflow");
             participant.setPosition(50, 50);
             BPMNProcess exampleProcess = participant.getBpmnProcess();
+            logger.info("exampleProcessID=" + exampleProcess.getId());
             Lane laneSales = exampleProcess.addLane("Sales");
             Lane laneMarketing = exampleProcess.addLane("Marketing");
+
+            // We expect 2 Processes
+            assertEquals(2, model.getBpmnProcessList().size());
+
             Activity task1 = exampleProcess.addTask("task_1", "Task 1", BPMNTypes.MANUAL_TASK);
+            // task 1 should be associated with exampleProcess
+            assertEquals(exampleProcess.getId(), task1.getProcessId());
+
             // move task to 2nd lane ....
             task1.setPosition(150, 70);
+            NodeList refElementList = laneSales.getElementNode().getElementsByTagName("bpmn2:flowNodeRef");
+            assertNotNull(refElementList);
+            assertEquals(1, refElementList.getLength());
 
             Activity task2 = exampleProcess.addTask("task_2", "Task 2", BPMNTypes.MANUAL_TASK);
             // move task to 1nd lane ....
             task2.setPosition(150, 350);
 
             // We expect that the 2nd laneSet contains a bpmn2:flowNodeRef for 'task_1'
-            NodeList refElementList = laneSales.getElementNode().getElementsByTagName("bpmn2:flowNodeRef");
+            refElementList = laneSales.getElementNode().getElementsByTagName("bpmn2:flowNodeRef");
             assertNotNull(refElementList);
             assertEquals(1, refElementList.getLength());
             refElementList = laneMarketing.getElementNode().getElementsByTagName("bpmn2:flowNodeRef");

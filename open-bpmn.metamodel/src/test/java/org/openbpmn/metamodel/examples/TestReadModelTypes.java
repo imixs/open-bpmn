@@ -83,7 +83,7 @@ public class TestReadModelTypes {
 
             BPMNElementNode startEvent = process1.findElementNodeById("StartEvent_1");
             assertNotNull(startEvent);
-            assertEquals("Process_1", startEvent.getProcessId());
+            assertEquals("Process_1", startEvent.getBpmnProcess().getId());
             assertEquals(162.0, startEvent.getBounds().getPosition().getX());
 
             // test the label position of the event

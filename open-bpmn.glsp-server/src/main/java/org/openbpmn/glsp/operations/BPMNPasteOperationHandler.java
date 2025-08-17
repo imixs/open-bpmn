@@ -146,14 +146,15 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                     String newTargetID = clonedIDs.get(bpmnElementEdge.getTargetRef());
 
                     if (newSourceID != null && newTargetID != null) {
-                        BPMNProcess process = modelState.getBpmnModel().openProcess(bpmnElementEdge.getProcessId());
+
+                        BPMNProcess process = bpmnElementEdge.getBpmnProcess();
                         BPMNElementEdge newElementEdge = process.cloneBPMNElementEdge(bpmnElementEdge);
                         if (newElementEdge != null) {
                             newElementEdge.setSourceRef(newSourceID);
                             newElementEdge.setTargetRef(newTargetID);
                             // and finally we need to move the new sequenceFlow into the target process...
                             BPMNElement sourceElement = modelState.getBpmnModel().findElementById(newSourceID);
-                            String processID = sourceElement.getProcessId();
+                            String processID = sourceElement.getBpmnProcess().getId();
                             BPMNProcess targetProcess = modelState.getBpmnModel().findProcessById(processID);
                             ((SequenceFlow) newElementEdge).updateBPMNProcess(targetProcess);
 

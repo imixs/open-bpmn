@@ -31,6 +31,7 @@ import javax.xml.transform.stream.StreamResult;
 import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.CollaborationElement;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Message;
@@ -82,7 +83,7 @@ public class BPMNModel {
     protected Set<MessageFlow> messageFlows = null;
     protected Set<Signal> signals = null;
     protected Set<Message> messages = null;
-    protected Element collaborationElement = null;
+    protected CollaborationElement collaborationElement = null;
     private boolean isDirty = false;
     private List<ModelNotification> notifications = null;
 
@@ -538,7 +539,7 @@ public class BPMNModel {
         this.isDirty = isDirty;
     }
 
-    public Element getCollaborationElement() {
+    public CollaborationElement getCollaborationElement() {
         return collaborationElement;
     }
 
@@ -658,17 +659,11 @@ public class BPMNModel {
             logger.info("Migrating Process Diagram to Collaboration Diagram.");
             // create the default collaboration element
             String collaborationID = "collaboration_1";
-            collaborationElement = createElement(BPMNNS.BPMN2, "collaboration");
-            collaborationElement.setAttribute("id", collaborationID);
-            collaborationElement.setAttribute("name", "Default Collaboration");
-            this.definitions.insertBefore(collaborationElement, definitions.getFirstChild());
-            // update the BPMNPlane attribute 'bpmnElement' which now references the
-            // collaboration element
-
-            // this.getBpmnPlane().setAttribute("bpmnElement", collaborationID);
-            // Element bpmnPlane =
-            // findBPMNPlaneByProcessId(this.getDefaultProcessElement().getAttribute("id"));
-            // bpmnPlane.setAttribute("bpmnElement", collaborationID);
+            Element _collaborationElement = createElement(BPMNNS.BPMN2, "collaboration");
+            _collaborationElement.setAttribute("id", collaborationID);
+            _collaborationElement.setAttribute("name", "Default Collaboration");
+            this.definitions.insertBefore(_collaborationElement, definitions.getFirstChild());
+            collaborationElement = new CollaborationElement(this, _collaborationElement);
 
             // Now we migrate all existing processes into the new collaboration element....
             for (BPMNProcess existingProcess : getBpmnProcessList()) {
@@ -678,7 +673,7 @@ public class BPMNModel {
                 migratedParticipantNode.setAttribute("name", existingProcess.getName());
                 migratedParticipantNode.setAttribute("processRef", existingProcess.getId());
 
-                BPMNElementOrder.appendChild(collaborationElement, migratedParticipantNode);
+                BPMNElementOrder.appendChild(_collaborationElement, migratedParticipantNode);
 
                 existingProcess.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
                 // finally add a new BPMNParticipant to the participant list
@@ -693,7 +688,7 @@ public class BPMNModel {
         int processNumber = this.bpmnProcesses.size() + 1;
         BPMNProcess process = buildProcess(BPMNModel.generateShortID("process"), "Process " + processNumber,
                 processType);
-        process.setAttribute("definitionalCollaborationRef", collaborationElement.getAttribute("id"));
+        process.setAttribute("definitionalCollaborationRef", collaborationElement.getId());
         process.setName(name);
 
         // create a new Dom node...
@@ -702,7 +697,7 @@ public class BPMNModel {
         participantNode.setAttribute("id", participantID);
         participantNode.setAttribute("name", name);
         // this.collaborationElement.appendChild(participantNode);
-        BPMNElementOrder.appendChild(this.collaborationElement, participantNode);
+        BPMNElementOrder.appendChild(this.collaborationElement.getElementNode(), participantNode);
         // add BPMNParticipant instance
         Participant bpmnParticipant = new Participant(this, participantNode, process);
         getParticipants().add(bpmnParticipant);
@@ -903,7 +898,7 @@ public class BPMNModel {
      */
     public void deleteParticipant(Participant participant) {
         if (participant != null) {
-            BPMNProcess process = participant.openProcess();
+            BPMNProcess process = participant.getBpmnProcess(); // .openProcess();
             // delete all Lanes - we need first to collect the IDs to avoid recursive calls
             Iterator<Lane> lanesIterator = process.getLanes().iterator();
             List<String> laneIDs = new ArrayList<String>();
@@ -922,7 +917,8 @@ public class BPMNModel {
                 // this.bpmnPlane.removeChild(participant.getBpmnShape());
                 participant.getBpmnProcess().getBpmnPlane().removeChild(participant.getBpmnShape());
             }
-            this.collaborationElement.removeChild(participant.getElementNode());
+            this.collaborationElement.removeParticipant(participant);
+            // .removeChild(participant.getElementNode());
             // remove the participant with its elements
             // this.bpmnProcessList
             bpmnProcesses.remove(process.getId());
@@ -977,7 +973,7 @@ public class BPMNModel {
 
         // this.definitions.appendChild(bpmnEdgeElement);
 
-        this.collaborationElement.appendChild(bpmnEdgeElement);
+        this.collaborationElement.getElementNode().appendChild(bpmnEdgeElement);
 
         // .insertAfter(bpmnEdgeElement, this.collaborationElement.getLastChild());
 
@@ -995,7 +991,7 @@ public class BPMNModel {
     }
 
     /**
-     * Deletes a BPMNEdge element from this context.
+     * Deletes all message flow by id.
      * <p>
      * 
      * @param id
@@ -1043,17 +1039,16 @@ public class BPMNModel {
             }
         }
 
-        // delete the flow element and the edge
-        this.collaborationElement.removeChild(bpmnEdge.getElementNode());
-        if (bpmnEdge.getBpmnEdge() != null) {
-            // getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+        // delete the Message edge
+        if (collaborationElement != null) {
 
-            BPMNProcess process = findProcessById(bpmnEdge.getProcessId());
-
-            // Element bpmnPlane = (Element) findBPMNPlaneElement("BPMNEdge",
-            // bpmnEdge.getId());
-            // bpmnPlane.removeChild(bpmnEdge.getBpmnEdge());
-            process.getBpmnPlane().removeChild(bpmnEdge.getBpmnEdge());
+            Element bpmnPlane = collaborationElement.getBPMNPlane();
+            if (bpmnPlane != null) {
+                if (bpmnEdge.getBpmnEdge() != null) {
+                    bpmnPlane.removeChild(bpmnEdge.getBpmnEdge());
+                }
+                this.collaborationElement.getElementNode().removeChild(bpmnEdge.getElementNode());
+            }
         }
 
         // finally we remove the messageFlow object form the messageFlow list
@@ -1136,7 +1131,7 @@ public class BPMNModel {
         if (name == null || name.isEmpty()) {
             return null;
         }
-        for (Signal signal : signals) {
+        for (Signal signal : getSignals()) {
             if (name.equals(signal.getName())) {
                 return signal;
             }
@@ -1287,14 +1282,14 @@ public class BPMNModel {
         }
 
         // test signals...
-        for (Signal signal : signals) {
+        for (Signal signal : getSignals()) {
             if (id.equals(signal.getId())) {
                 return signal;
             }
         }
 
         // test messages...
-        for (Message message : messages) {
+        for (Message message : getMessages()) {
             if (id.equals(message.getId())) {
                 return message;
             }
@@ -1504,7 +1499,7 @@ public class BPMNModel {
                         return participant.getBounds();
                     } else {
                         // analyze the content of the process
-                        BPMNElementNode baseElement = participant.openProcess().findElementNodeById(id);
+                        BPMNElementNode baseElement = participant.getBpmnProcess().findElementNodeById(id);
                         if (baseElement != null) {
                             return baseElement.getBounds();
                         }
@@ -1631,7 +1626,7 @@ public class BPMNModel {
         }
         if (isCollaborationDiagram()) {
             for (Participant _participant : participants) {
-                if (processId.equals(_participant.getProcessRef())) {
+                if (processId.equals(_participant.getBpmnProcess().getId())) {
                     return _participant;
                 }
             }
@@ -2023,49 +2018,6 @@ public class BPMNModel {
     }
 
     /**
-     * This helper method returns a BPMNDI node for the given bpmnElement. A BPMNDI
-     * element is identified by the ID stored in the attribute bpmnElement
-     * <p>
-     * 
-     * <pre>
-     *  {@code<bpmndi:BPMNShape id="BPMNShape_ihwxlQ" bpmnElement="event-1">}
-     * </pre>
-     * <p>
-     * 
-     * @param bpmnPlane - the bpmnPlane Element
-     * @param nodeName  - name of the element
-     * @param id        - the id referring to the main BPMN element
-     */
-    // public Node xfindBPMNPlaneElement(String nodeName, String id) {
-    // if (id == null || id.isEmpty() || bpmnPlanes == null || nodeName == null) {
-    // return null;
-    // }
-    // String fullNodeName = getPrefix(BPMNNS.BPMNDI) + nodeName;
-    // // iterate over all registered bpmnPlanes
-    // for (Element bpmnPlane : bpmnPlanes) {
-    // NodeList childList = bpmnPlane.getChildNodes();
-    // for (int i = 0; i < childList.getLength(); i++) {
-    // Node child = childList.item(i);
-    // // check the attribute bpmnElement
-    // if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
-    // // get attributes names and values
-    // NamedNodeMap attributesMap = child.getAttributes();
-    // for (int j = 0; j < attributesMap.getLength(); j++) {
-    // Node attr = attributesMap.item(j);
-    // if ("bpmnElement".equals(attr.getNodeName()) &&
-    // id.equals(attr.getNodeValue())) {
-    // // found it!
-    // return child;
-    // }
-    // }
-    // }
-    // }
-    // }
-    // // not found!
-    // return null;
-    // }
-
-    /**
      * Returns the central logger instance
      * 
      * @return
@@ -2111,11 +2063,12 @@ public class BPMNModel {
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
 
             // we only take the first collaboration element (this is what is expected)
-            collaborationElement = (Element) collaborationNodeList.item(0);
+            Element _collaborationElement = (Element) collaborationNodeList.item(0);
+            collaborationElement = new CollaborationElement(this, _collaborationElement);
             // now find all participants...
             // NodeList participantList = collaborationElement
             // .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "participant");
-            NodeList participantList = findElementsByName(collaborationElement, BPMNNS.BPMN2, "participant");
+            NodeList participantList = findElementsByName(_collaborationElement, BPMNNS.BPMN2, "participant");
 
             logger.fine("..found " + participantList.getLength() + " participants");
             for (int i = 0; i < participantList.getLength(); i++) {
@@ -2139,7 +2092,7 @@ public class BPMNModel {
 
             // remove deprecated participant elements form model
             for (Element _participant : invalidParticipantElementList) {
-                collaborationElement.removeChild(_participant);
+                _collaborationElement.removeChild(_participant);
             }
 
             // if we do not have a process at all or a public default process is missing in
@@ -2257,23 +2210,29 @@ public class BPMNModel {
      */
     private void loadMessageFlowList() throws BPMNModelException {
         messageFlows = new LinkedHashSet<MessageFlow>();
-        // NodeList collaborationNodeList =
-        // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
-        NodeList collaborationNodeList = findElementsByName(definitions, BPMNNS.BPMN2, "collaboration");
-        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
-            // we only take the first collaboration element (this is what is expected)
-            collaborationElement = (Element) collaborationNodeList.item(0);
-            // now find all messageFlows...
-            // NodeList messageFlowList = collaborationElement
-            // .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.MESSAGE_FLOW);
-            NodeList messageFlowList = findElementsByName(collaborationElement, BPMNNS.BPMN2, BPMNTypes.MESSAGE_FLOW);
-            logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
-            for (int i = 0; i < messageFlowList.getLength(); i++) {
-                Element item = (Element) messageFlowList.item(i);
-                MessageFlow messageFlow = new MessageFlow(this, item);
-                messageFlows.add(messageFlow);
-            }
+        if (collaborationElement != null) {
+            messageFlows = collaborationElement.loadMessageFlowList();
         }
+        // // NodeList collaborationNodeList =
+        // // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) +
+        // "collaboration");
+        // NodeList collaborationNodeList = findElementsByName(definitions,
+        // BPMNNS.BPMN2, "collaboration");
+        // if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+        // // we only take the first collaboration element (this is what is expected)
+        // collaborationElement = (Element) collaborationNodeList.item(0);
+        // // now find all messageFlows...
+        // // NodeList messageFlowList = collaborationElement
+        // // .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.MESSAGE_FLOW);
+        // NodeList messageFlowList = findElementsByName(collaborationElement,
+        // BPMNNS.BPMN2, BPMNTypes.MESSAGE_FLOW);
+        // logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
+        // for (int i = 0; i < messageFlowList.getLength(); i++) {
+        // Element item = (Element) messageFlowList.item(i);
+        // MessageFlow messageFlow = new MessageFlow(this, item);
+        // messageFlows.add(messageFlow);
+        // }
+        // }
     }
 
     /**

@@ -9,6 +9,7 @@ import java.util.Set;
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.BPMNElementOrder;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.validation.BPMNValidationMarker;
@@ -37,6 +38,7 @@ public abstract class BPMNElement implements BPMNValidator {
     protected Map<String, Object> args = null;
     protected boolean validated = false;
     protected List<BPMNValidationMarker> validationMarkers = null;
+    protected BPMNProcess bpmnProcess = null;
 
     /**
      * Create a new BPMN Base Element. The constructor expects a model instnace and
@@ -44,11 +46,34 @@ public abstract class BPMNElement implements BPMNValidator {
      * 
      * @param node
      * @param model
+     * @param BPMNProcess - can be null
      */
     public BPMNElement(BPMNModel model, Element node) {
         super();
         this.model = model;
         this.elementNode = node;
+        if (this.elementNode.hasAttributes()) {
+            // get attributes names and values
+            this.attributeMap = this.elementNode.getAttributes();
+        }
+        childNodes = new HashMap<String, Element>();
+        args = new HashMap<String, Object>();
+        validationMarkers = new ArrayList<BPMNValidationMarker>();
+    }
+
+    /**
+     * Create a new BPMN Base Element. The constructor expects a model instnace and
+     * a node.
+     * 
+     * @param node
+     * @param model
+     * @param BPMNProcess - can be null
+     */
+    public BPMNElement(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
+        super();
+        this.model = model;
+        this.elementNode = node;
+        this.bpmnProcess = _bpmnProcess;
         if (this.elementNode.hasAttributes()) {
             // get attributes names and values
             this.attributeMap = this.elementNode.getAttributes();
@@ -87,16 +112,8 @@ public abstract class BPMNElement implements BPMNValidator {
         return getAttribute("id");
     }
 
-    /**
-     * This method returns the corresponding BPMNProcess ID for this Element.
-     * 
-     * @param bpmynElement
-     * @return
-     */
-    public String getProcessId() {
-        // get the parent node of the element
-        Element parent = (Element) getElementNode().getParentNode();
-        return parent.getAttribute("id");
+    public BPMNProcess getBpmnProcess() {
+        return bpmnProcess;
     }
 
     /**

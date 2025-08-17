@@ -215,8 +215,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         }
         String poolID = upperGLane.getParent().getId();
         participant = modelState.getBpmnModel().findParticipantById(poolID);
-        upperBpmnLane = participant.openProcess().findLaneById(upperLaneID);
-        lowerBpmnLane = participant.openProcess().findLaneById(lowerLaneID);
+        upperBpmnLane = participant.getBpmnProcess().findLaneById(upperLaneID);
+        lowerBpmnLane = participant.getBpmnProcess().findLaneById(lowerLaneID);
 
         logger.debug("--- " + poolID + " y=" + participant.getBounds().getPosition().getY());
 
@@ -514,7 +514,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
      */
     private void updateLaneSet(final Participant participant, final double offsetWidth, final double offsetHeight)
             throws BPMNMissingElementException {
-        BPMNProcess process = participant.openProcess();
+        BPMNProcess process = participant.getBpmnProcess();
         Lane lane = null;
         Set<Lane> bpmnLaneSet = process.getLanes();
 

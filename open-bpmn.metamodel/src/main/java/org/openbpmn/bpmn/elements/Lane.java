@@ -8,7 +8,7 @@ import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
-import org.openbpmn.bpmn.util.BPMNModelUtil;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
@@ -50,13 +50,11 @@ public class Lane extends BPMNElementNode {
      * </p>
      * 
      * @param width
+     * @throws BPMNModelException
      * @throws BPMNMissingElementException
      */
-    public Lane(BPMNModel model, BPMNProcess process, Element node) {
-        super(model, node);
-        this.bpmnProcess = process;
-        bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
-
+    public Lane(BPMNModel model, Element node, BPMNProcess process) throws BPMNModelException {
+        super(model, node, process);
     }
 
     /**

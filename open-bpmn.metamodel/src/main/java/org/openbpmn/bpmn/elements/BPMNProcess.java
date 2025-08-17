@@ -130,7 +130,21 @@ public class BPMNProcess extends BPMNElement {
      * creates one.
      */
     private void resolveBPMNPlane() {
-        String id = this.getId();
+        String colaborationElementID = null;
+
+        // resolve collaboration id if we have a collaboration Diagram...
+        // Note: we can't yet use the method 'model.isCollaborationDiagram()' here!
+        NodeList collaborationNodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2,
+                "collaboration");
+        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+            // we only take the first collaboration element (this is what is expected)
+            Element collaborationElement = (Element) collaborationNodeList.item(0);
+            if (collaborationElement != null) {
+                // test the collaboration element id
+                colaborationElementID = collaborationElement.getAttribute("id");
+            }
+        }
+
         // find the corresponding BPMNPlane
         NodeList planeList = model.findElementsByName(model.getDoc().getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
         for (int i = 0; i < planeList.getLength(); i++) {
@@ -138,28 +152,18 @@ public class BPMNProcess extends BPMNElement {
 
             String bpmnElementID = planeElement.getAttribute("bpmnElement");
             // if the id matches we have a direct macht in a non-collaboration element
-            if (id.equals(bpmnElementID)) {
+            if (this.getId() != null && this.getId().equals(bpmnElementID)) {
                 bpmnPlane = planeElement;
                 break;
             }
 
             // test if we have a collaboration model
-            // Note: we can't yet use the method 'model.isCollaborationDiagram()' here!
-            NodeList collaborationNodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2,
-                    "collaboration");
-            if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
-                // we only take the first collaboration element (this is what is expected)
-                Element collaborationElement = (Element) collaborationNodeList.item(0);
-                if (collaborationElement != null) {
-                    // test the collaboration element id
-                    String colaborationElementID = collaborationElement.getAttribute("id");
-                    if (bpmnElementID.equals(colaborationElementID)) {
-                        // match!
-                        bpmnPlane = planeElement;
-                        break;
-                    }
-                }
+            if (colaborationElementID != null && bpmnElementID.equals(colaborationElementID)) {
+                // match!
+                bpmnPlane = planeElement;
+                break;
             }
+
         }
 
         // if no plane exists yes, we create one
@@ -289,7 +293,8 @@ public class BPMNProcess extends BPMNElement {
             // NodeList textAnnotationNodeList = this.model.getCollaborationElement()
             // .getElementsByTagName(this.model.getPrefix(BPMNNS.BPMN2) +
             // BPMNTypes.TEXTANNOTATION);
-            NodeList textAnnotationNodeList = this.model.findElementsByName(this.model.getCollaborationElement(),
+            NodeList textAnnotationNodeList = this.model.findElementsByName(
+                    this.model.getCollaborationElement().getElementNode(),
                     BPMNNS.BPMN2, BPMNTypes.TEXTANNOTATION);
             if (textAnnotationNodeList != null && textAnnotationNodeList.getLength() > 0) {
                 for (int i = 0; i < textAnnotationNodeList.getLength(); i++) {
@@ -802,9 +807,9 @@ public class BPMNProcess extends BPMNElement {
      * @param model - current model instance
      * @param name  - name of the Lane
      * @return BPMNLane
-     * @throws BPMNMissingElementException
+     * @throws BPMNModelException
      */
-    public Lane addLane(String name) throws BPMNMissingElementException {
+    public Lane addLane(String name) throws BPMNModelException {
 
         if (!BPMNTypes.PROCESS_TYPE_PRIVATE.equals(this.getProcessType())) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
@@ -830,7 +835,7 @@ public class BPMNProcess extends BPMNElement {
         laneSet.appendChild(laneElement);
 
         BPMNModel.debug("new lane '" + laneId + "' added");
-        Lane bpmnLane = new Lane(model, this, laneElement);
+        Lane bpmnLane = new Lane(model, laneElement, this);
 
         // AutoCompute the Lane Bounds
         Participant bpmnParticipant = model.findParticipantByProcessId(this.getId());
@@ -846,16 +851,7 @@ public class BPMNProcess extends BPMNElement {
                 expansion = currentHeight / currentLaneCount;
                 bpmnParticipant.setDimension(currentWidth, currentHeight + expansion);
             }
-
-            Element laneBpmnShape = model.createElement(BPMNNS.BPMNDI, "BPMNShape");
-            laneBpmnShape.setAttribute("id", BPMNModel.generateShortID("BPMNShape_Lane"));
-            laneBpmnShape.setAttribute("bpmnElement", laneId);
-            // model.getBpmnPlane().appendChild(laneBpmnShape);
-            this.getBpmnPlane().appendChild(laneBpmnShape);
-            bpmnLane.setBpmnShape(laneBpmnShape);
-
             BPMNBounds poolBounds = bpmnParticipant.getBounds();
-
             int laneX = (int) (poolBounds.getPosition().getX() + Participant.POOL_OFFSET);
             int laneY = (int) poolBounds.getPosition().getY();
             if (currentLaneCount > 0) {
@@ -864,12 +860,9 @@ public class BPMNProcess extends BPMNElement {
 
             int laneWidth = (int) (poolBounds.getDimension().getWidth() - Participant.POOL_OFFSET);
             int laneHeight = (int) (poolBounds.getDimension().getHeight() / (currentLaneCount + 1));
-
             bpmnLane.setDimension(laneWidth, laneHeight);
             bpmnLane.setPosition(laneX, laneY);
-
         }
-
         this.getLanes().add(bpmnLane);
         return bpmnLane;
     }
@@ -1438,12 +1431,12 @@ public class BPMNProcess extends BPMNElement {
      * @return
      * @throws BPMNModelException
      */
-    private void createBPMNLanesByNode(Element laneSet) {
+    private void createBPMNLanesByNode(Element laneSet) throws BPMNModelException {
         this.laneSet = laneSet;
         // find Child Nodes
         Set<Element> laneNodes = model.findChildNodesByName(laneSet, BPMNNS.BPMN2, "lane");
         for (Element _lane : laneNodes) {
-            Lane bpmnLane = new Lane(model, this, _lane);
+            Lane bpmnLane = new Lane(model, _lane, this);
             this.getLanes().add(bpmnLane);
         }
     }

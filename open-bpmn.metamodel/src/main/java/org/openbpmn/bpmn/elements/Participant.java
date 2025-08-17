@@ -4,11 +4,9 @@ import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * A BPMNParticipant is a container for a BPMNProcess. A BPMNParticipant can
@@ -26,9 +24,7 @@ public class Participant extends BPMNElementNode {
     public final static double DEFAULT_WIDTH = 800.0;
     public final static double DEFAULT_HEIGHT = 210.0;
     public final static double POOL_OFFSET = 30.0;
-
     protected BPMNLabel label = null;
-    private String processRef = null;
 
     /**
      * Creates a new participant from a element node. The process is mandatory and
@@ -40,69 +36,13 @@ public class Participant extends BPMNElementNode {
      * @throws BPMNModelException
      */
     public Participant(BPMNModel model, Element node, BPMNProcess process) throws BPMNModelException {
-        super(model, node);
-        setBpmnProcess(process);
-        // find the BPMNShape element - suche in allen BPMNPlanes
-        bpmnShape = findBPMNShapeInAllPlanes(model, getId());
-    }
-
-    /**
-     * Searches for a BPMNShape element with the given participant ID across all
-     * BPMNPlane elements in the BPMN document. This method is necessary because
-     * participants can be referenced from different diagram planes (main
-     * collaboration diagram vs. subprocess diagrams).
-     * 
-     * @param model         the BPMNModel containing the document to search
-     * @param participantId the ID of the participant to find the corresponding
-     *                      BPMNShape for
-     * @return the BPMNShape element that references the participant ID, or null if
-     *         not found
-     */
-    private Element findBPMNShapeInAllPlanes(BPMNModel model, String participantId) {
-        // Search all BPMNPlane elements in the entire document
-        NodeList allPlanes = model.getDoc().getElementsByTagNameNS(
-                model.getUri(BPMNNS.BPMNDI), "BPMNPlane");
-
-        // Search each BPMNPlane for the BPMNShape
-        for (int p = 0; p < allPlanes.getLength(); p++) {
-            Element plane = (Element) allPlanes.item(p);
-            Element shape = findBPMNShapeInPlane(model, plane, participantId);
-            if (shape != null) {
-                return shape;
-            }
+        super(model, node, process);
+        // update processRef
+        if (process.getId().isEmpty()) {
+            throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
+                    "Missing id element of BPMNProcess");
         }
-        return null;
-    }
-
-    /**
-     * Searches for a BPMNShape element within a specific BPMNPlane that references
-     * the given participant ID through its bpmnElement attribute.
-     * 
-     * @param model         the BPMNModel for accessing namespace prefixes
-     * @param plane         the BPMNPlane element to search within
-     * @param participantId the participant ID to match against BPMNShape
-     *                      bpmnElement attributes
-     * @return the matching BPMNShape element, or null if no match is found in this
-     *         plane
-     */
-    private Element findBPMNShapeInPlane(BPMNModel model, Element plane, String participantId) {
-        String fullNodeName = model.getPrefix(BPMNNS.BPMNDI) + "BPMNShape";
-        NodeList childList = plane.getChildNodes();
-
-        for (int i = 0; i < childList.getLength(); i++) {
-            Node child = childList.item(i);
-            if (fullNodeName.equals(child.getNodeName()) && child.hasAttributes()) {
-                NamedNodeMap attributesMap = child.getAttributes();
-                for (int j = 0; j < attributesMap.getLength(); j++) {
-                    Node attr = attributesMap.item(j);
-                    if ("bpmnElement".equals(attr.getNodeName()) &&
-                            participantId.equals(attr.getNodeValue())) {
-                        return (Element) child;
-                    }
-                }
-            }
-        }
-        return null;
+        node.setAttribute("processRef", process.getId());
     }
 
     /**
@@ -120,58 +60,22 @@ public class Participant extends BPMNElementNode {
     }
 
     /**
-     * Returns the initialized BPMNProcess of this participant or returns null if no
-     * process exists
+     * Returns the BPMNProcess for this participant. The method ensures that the
+     * BpmnProcess is initialized.
      * 
-     * @return BPMNProcess
-     */
-    public BPMNProcess openProcess() {
-        try {
-            return model.openProcess(processRef);
-        } catch (BPMNModelException e) {
-            BPMNModel.getLogger().severe("Participant process '" + processRef + "' not fund!");
-        }
-        return null;
-    }
-
-    public String getProcessRef() {
-        return processRef;
-    }
-
-    /**
-     * This method updates the processRef attribute of the participant.
-     * If the id is empty or null the attribute will be removed.
-     * 
-     * @param processRef
-     */
-    public void setProcessRef(String processRef) {
-        this.processRef = processRef;
-        if (processRef != null && !processRef.isEmpty()) {
-            this.getElementNode().setAttribute("processRef", processRef);
-        } else {
-            this.getElementNode().removeAttribute("processRef");
-        }
-    }
-
-    /**
-     * This method returns the corresponding BPMNProcess ID for this Element.
-     * 
-     * @param bpmynElement
      * @return
      */
     @Override
-    public String getProcessId() {
-        return getProcessRef();
-    }
-
-    /**
-     * Updates the BPMNProcessRef of the Participant
-     * 
-     * @return
-     */
-    public void setBpmnProcess(BPMNProcess _process) {
-        this.bpmnProcess = _process;
-        this.setProcessRef(_process.getId());
+    public BPMNProcess getBpmnProcess() {
+        if (bpmnProcess != null) {
+            try {
+                bpmnProcess.init();
+            } catch (BPMNModelException e) {
+                logger.severe("Unable to initialized BPMNProcess '" + bpmnProcess.getId() + "' for Participant '"
+                        + this.getId() + "'!");
+            }
+        }
+        return bpmnProcess;
     }
 
     @Override

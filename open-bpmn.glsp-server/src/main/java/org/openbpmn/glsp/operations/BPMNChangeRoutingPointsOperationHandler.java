@@ -254,10 +254,10 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
             Participant participant = null;
             BPMNProcess process = null;
             if (bpmnElementEdge instanceof SequenceFlow) {
-                process = ((SequenceFlow) bpmnElementEdge).getProcess();
+                process = ((SequenceFlow) bpmnElementEdge).getBpmnProcess();
             }
             if (bpmnElementEdge instanceof Association) {
-                process = ((Association) bpmnElementEdge).getProcess();
+                process = ((Association) bpmnElementEdge).getBpmnProcess();
             }
             if (process != null && !process.isPublicProcess()) {
                 participant = process.findParticipant();

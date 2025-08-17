@@ -63,7 +63,7 @@ public class TestDeleteModel {
             Participant sales = model.addParticipant("Sales");
 
             // add Task
-            BPMNProcess privateProcess = sales.openProcess();
+            BPMNProcess privateProcess = sales.getBpmnProcess();
             // add a start and end event
             privateProcess.addEvent("start_1", "Start", BPMNTypes.START_EVENT);
             privateProcess.addEvent("end_1", "End", BPMNTypes.END_EVENT);

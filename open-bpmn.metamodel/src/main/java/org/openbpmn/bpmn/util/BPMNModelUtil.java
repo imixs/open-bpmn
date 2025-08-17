@@ -15,6 +15,8 @@
  ********************************************************************************/
 package org.openbpmn.bpmn.util;
 
+import java.util.logging.Logger;
+
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.elements.DataObject;
@@ -38,6 +40,7 @@ import org.w3c.dom.NodeList;
  *
  */
 public class BPMNModelUtil {
+    private static Logger logger = Logger.getLogger(BPMNModelUtil.class.getName());
 
     /**
      * This method resets the Label Postion and bounds to its default values. The
@@ -151,6 +154,33 @@ public class BPMNModelUtil {
         }
 
         return xml;
+    }
+
+    /**
+     * Searches for a BPMNShape element within a specific BPMNPlane that references
+     * the given participant ID through its bpmnElement attribute.
+     * 
+     * @param model     the BPMNModel for accessing namespace prefixes
+     * @param elementId the element ID to match against BPMNShape
+     *                  bpmnElement attributes
+     * @return the matching BPMNPlane element, or null
+     */
+    public static Element findBPMNPlane(BPMNModel model, String elementId) {
+
+        // find the corresponding BPMNPlane
+        NodeList planeList = model.findElementsByName(model.getDoc().getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
+
+        for (int i = 0; i < planeList.getLength(); i++) {
+            Element planeElement = (Element) planeList.item(i);
+            String bpmnElementID = planeElement.getAttribute("bpmnElement");
+            // if the id matches we have a direct macht in a non-collaboration element
+            if (elementId != null && elementId.equals(bpmnElementID)) {
+                return planeElement;
+            }
+
+        }
+        logger.warning("No BPMNPlane found for element '" + elementId + "'");
+        return null;
     }
 
     /**

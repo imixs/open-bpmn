@@ -93,7 +93,7 @@ public class TestCollaborationModel {
             assertEquals(3, model.getParticipants().size());
 
             // add a task
-            participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            participantSales.getBpmnProcess().addTask("task_1", "Task", BPMNTypes.TASK);
 
         } catch (BPMNModelException e) {
             e.printStackTrace();
@@ -124,7 +124,7 @@ public class TestCollaborationModel {
             Participant participantSales = model.addParticipant("Sales Team");
 
             // add a task
-            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.getBpmnProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(60, 40);
 
         } catch (BPMNModelException e) {
@@ -133,7 +133,7 @@ public class TestCollaborationModel {
         }
         assertNotNull(model);
         model.save(out);
-        logger.info("...model created sucessful: " + out);
+        logger.info("...model created successful: " + out);
     }
 
     /**
@@ -155,7 +155,7 @@ public class TestCollaborationModel {
             Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 200);
 
-            BPMNProcess salesProcess = participantSales.openProcess();
+            BPMNProcess salesProcess = participantSales.getBpmnProcess();
             // add a BPMNLane
             Lane lane1 = salesProcess.addLane("Europe");
             Lane lane2 = salesProcess.addLane("United States");
@@ -163,7 +163,7 @@ public class TestCollaborationModel {
             lane2.setBounds(40, 110, 470, 100);
 
             // add a task
-            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.getBpmnProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(100, 40);
             lane1.insert(task);
 
@@ -173,7 +173,7 @@ public class TestCollaborationModel {
         }
         assertNotNull(model);
         model.save(out);
-        logger.info("...model created sucessful: " + out);
+        logger.info("...model created successful: " + out);
     }
 
     /**
@@ -197,14 +197,14 @@ public class TestCollaborationModel {
             Participant participantSales = model.addParticipant("Sales Team");
             participantSales.setBounds(10, 10, 500, 200);
 
-            BPMNProcess salesProcess = participantSales.openProcess();
+            BPMNProcess salesProcess = participantSales.getBpmnProcess();
             // add a BPMNLane
             Lane lane1 = salesProcess.addLane("Europe");
             Lane lane2 = salesProcess.addLane("United States");
             Lane lane3 = salesProcess.addLane("Africa");
 
             // add a task
-            Activity task = participantSales.openProcess().addTask("task_1", "Task", BPMNTypes.TASK);
+            Activity task = participantSales.getBpmnProcess().addTask("task_1", "Task", BPMNTypes.TASK);
             task.setPosition(100, 40);
             lane1.insert(task);
 
@@ -214,7 +214,7 @@ public class TestCollaborationModel {
         }
         assertNotNull(model);
         model.save(out);
-        logger.info("...model created sucessful: " + out);
+        logger.info("...model created successful: " + out);
     }
 
     /**

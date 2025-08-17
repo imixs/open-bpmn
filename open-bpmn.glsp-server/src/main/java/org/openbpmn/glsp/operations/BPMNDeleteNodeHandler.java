@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.glsp.server.operations.DeleteOperation;
 import org.eclipse.glsp.server.operations.GModelOperationHandler;
+import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.elements.Association;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Message;
@@ -60,6 +61,7 @@ public class BPMNDeleteNodeHandler extends GModelOperationHandler<DeleteOperatio
         for (String id : elementIds) {
             // test if the element is a participant
             Participant participant = modelState.getBpmnModel().findParticipantById(id);
+            BPMNModel.debug("delete participant '" + id + "'");
             if (participant != null) {
                 // delete participant with the pool and all contained elements
                 modelState.getBpmnModel().deleteParticipant(participant);
@@ -94,14 +96,14 @@ public class BPMNDeleteNodeHandler extends GModelOperationHandler<DeleteOperatio
             }
 
             if (bpmnElement instanceof SequenceFlow) {
-                BPMNProcess process = ((SequenceFlow) bpmnElement).getProcess();
+                BPMNProcess process = ((SequenceFlow) bpmnElement).getBpmnProcess();
                 if (process != null) {
                     process.deleteSequenceFlow(id);
                 }
                 continue;
             }
             if (bpmnElement instanceof Association) {
-                BPMNProcess process = ((Association) bpmnElement).getProcess();
+                BPMNProcess process = ((Association) bpmnElement).getBpmnProcess();
                 if (process != null) {
                     process.deleteAssociation(id);
                 }

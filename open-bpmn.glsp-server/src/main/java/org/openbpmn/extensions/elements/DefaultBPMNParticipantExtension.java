@@ -92,7 +92,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
         Participant participant = (Participant) bpmnElement;
         BPMNProcess process;
         try {
-            process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
+            process = modelState.getBpmnModel().openProcess(participant.getProcessId());
             if (!process.isExecutable()) {
                 sIsExecuteable = "No";
             }
@@ -140,7 +140,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
         Participant participant = (Participant) bpmnElement;
         try {
-            BPMNProcess process = modelState.getBpmnModel().openProcess(participant.getProcessRef());
+            BPMNProcess process = modelState.getBpmnModel().openProcess(participant.getProcessId());
 
             bpmnElement.setName(json.getString("name", ""));
             process.setName(json.getString("name", ""));
@@ -224,7 +224,7 @@ public class DefaultBPMNParticipantExtension extends AbstractBPMNElementExtensio
 
         Map<String, String> multilineOption = new HashMap<>();
         multilineOption.put("multi", "true");
-        BPMNProcess process = participant.openProcess();
+        BPMNProcess process = participant.getBpmnProcess();
 
         if (process.hasLanes()) {
             Map<String, String> arrayDetailOption = new HashMap<>();

@@ -260,7 +260,7 @@ public class BPMNGModelUtil {
                 String participantID = containerId.substring(0, containerId.lastIndexOf("_"));
                 Participant bpmnParticipant = modelState.getBpmnModel().findParticipantById(participantID);
                 if (bpmnParticipant != null) {
-                    bpmnProcess = bpmnParticipant.openProcess();
+                    bpmnProcess = bpmnParticipant.getBpmnProcess();
                 }
             }
         }

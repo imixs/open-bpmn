@@ -12,11 +12,11 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
 
 public class SequenceFlow extends BPMNElementEdge {
-    protected BPMNProcess bpmnProcess = null;
+
     protected String conditionExpression = null;
 
     public SequenceFlow(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
-        super(model, node, _type);
+        super(model, node, _type, _bpmnProcess);
         this.bpmnProcess = _bpmnProcess;
     }
 
@@ -25,9 +25,9 @@ public class SequenceFlow extends BPMNElementEdge {
      * 
      * @return
      */
-    public BPMNProcess getProcess() {
-        return bpmnProcess;
-    }
+    // public BPMNProcess getProcess() {
+    // return bpmnProcess;
+    // }
 
     /**
      * This method updates the process assignment of the SequenceFlow. The element

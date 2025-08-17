@@ -17,10 +17,9 @@ import org.w3c.dom.Element;
  */
 public class Signal extends BPMNElement {
     protected String type = null;
- 
 
     /**
-     *  Creates a new BPMN Signal element node
+     * Creates a new BPMN Signal element node
      * 
      * @param node
      * @param model
@@ -28,8 +27,5 @@ public class Signal extends BPMNElement {
     public Signal(BPMNModel model, Element node) {
         super(model, node);
     }
-
-  
-  
 
 }

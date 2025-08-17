@@ -229,14 +229,14 @@ public class BPMNGModelFactory implements GModelFactory {
                 logger.info("│   ├── build collaboration diagram");
                 Set<Participant> participants = model.getParticipants();
                 for (Participant participant : participants) {
-                    if ((participant.getProcessRef() == null || participant.getProcessRef().isEmpty())
-                            && !"Public".equals(participant.getType())) {
+                    if (participant.getBpmnProcess() == null) {
                         // in case the participant does not refer to a process then we skip this element
                         continue;
                     }
                     logger.debug(
-                            "participant: " + participant.getName() + " BPMNProcess=" + participant.getProcessRef());
-                    BPMNProcess bpmnProcess = model.openProcess(participant.getProcessRef());
+                            "participant: " + participant.getName() + " BPMNProcess="
+                                    + participant.getBpmnProcess().getId());
+                    BPMNProcess bpmnProcess = participant.getBpmnProcess();
                     // Add a Pool if the process is private
                     if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(bpmnProcess.getProcessType())) {
                         List<GModelElement> childList = computeGModelElements(bpmnProcess, participant, gRootNodeList);

@@ -44,7 +44,7 @@ public class TestBPMNLanes {
             Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
 
-            BPMNProcess process = participant.openProcess();
+            BPMNProcess process = participant.getBpmnProcess();
             assertNotNull(process);
 
             BPMNElementNode bpmnFlowElement = process.findElementNodeById("StartEvent_4");
@@ -83,7 +83,7 @@ public class TestBPMNLanes {
             assertEquals(2, model.getBpmnProcesses().size());
             assertEquals(2, model.getParticipants().size());
 
-            BPMNProcess process = participantSales.openProcess();
+            BPMNProcess process = participantSales.getBpmnProcess();
             // add a new Lane
             Lane lane = process.addLane("Lane 1");
             assertNotNull(lane);
@@ -125,7 +125,7 @@ public class TestBPMNLanes {
             Participant participant = model.findParticipantById("Participant_1");
             assertNotNull(participant);
 
-            BPMNProcess process = participant.openProcess();
+            BPMNProcess process = participant.getBpmnProcess();
             assertNotNull(process);
 
             // add new Lane...

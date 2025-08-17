@@ -59,7 +59,7 @@ public class TestBPMN_ADONIS_Model {
             assertNotNull(participant1.getBpmnShape());
 
             // Test Startereignis
-            BPMNProcess process1 = model.openProcess(participant1.getProcessId());
+            BPMNProcess process1 = model.openProcess(participant1.getBpmnProcess().getId());
             assertNotNull(process1);
             assertEquals("process_7b8057f2-41dc-480c-a82e-454bf47f9736", process1.getId());
             Set<? extends BPMNElementNode> startEvents = process1
