@@ -22,12 +22,15 @@ import org.eclipse.glsp.server.launch.GLSPServerLauncher;
 import org.eclipse.glsp.server.launch.SocketGLSPServerLauncher;
 import org.eclipse.glsp.server.utils.LaunchUtil;
 import org.openbpmn.glsp.BPMNDiagramModule;
+import org.openbpmn.glsp.utils.LoggingHelper;
 
 public final class BPMNServerLauncher {
    private BPMNServerLauncher() {
    }
 
    public static void main(final String[] args) {
+      // setup custom logging format
+      LoggingHelper.setupLogging();
       String processName = "OpenBPMNServer";
       try {
          DefaultCLIParser parser = new DefaultCLIParser(args, processName);
