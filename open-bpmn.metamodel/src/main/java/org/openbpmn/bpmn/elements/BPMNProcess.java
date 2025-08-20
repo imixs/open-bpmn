@@ -57,7 +57,7 @@ public class BPMNProcess extends BPMNElement {
     protected Set<Gateway> gateways = null;
     protected Set<SequenceFlow> sequenceFlows = null;
     protected Set<Association> associations = null;
-    protected boolean isSubprocess = false;
+    protected BPMNProcess parentProcess = null;
 
     protected Set<Lane> lanes = null;
     protected Element bpmnPlane = null;
@@ -70,11 +70,17 @@ public class BPMNProcess extends BPMNElement {
      * <p>
      * The method also verify the processType attribute and defaults to 'Public' if
      * no processType is set or is invalid.
+     * <p>
+     * Optional the parameter parentProcess indicates that this process is a
+     * SubProcess embedded in a parentProcess
      * 
      * @param model
      * @param element
+     * @param processType   - optional process type (PUBLIC|PRIVATE|NONE)
+     * @param parentProcess - optional parent BPMN Process indicates that this
+     *                      process is a subProcess
      */
-    public BPMNProcess(BPMNModel model, Element element, String processType, boolean isSubProcess) {
+    public BPMNProcess(BPMNModel model, Element element, String processType, BPMNProcess parentProcess) {
         super(model, element);
 
         // set public if not yet specified
@@ -87,10 +93,12 @@ public class BPMNProcess extends BPMNElement {
             processType = BPMNTypes.PROCESS_TYPE_PUBLIC;
             element.setAttribute("processType", processType);
         }
-        setProcessType(processType);
-        this.isSubprocess = isSubProcess;
 
-        // set executeable flag only for non public processes
+        setProcessType(processType);
+        // set parent process (optional for SubProcesses)
+        this.parentProcess = parentProcess;
+
+        // set executable flag only for non public processes
         if (!BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)
                 || BPMNTypes.PROCESS_TYPE_NONE.equals(processType)) {
             if ("false".equals(this.elementNode.getAttribute("isExecutable"))) {
@@ -102,123 +110,6 @@ public class BPMNProcess extends BPMNElement {
 
         // find bpmnPlane
         resolveBPMNPlane();
-    }
-
-    // /**
-    // * marks the process as a subprocess
-    // *
-    // */
-    // public void setIsSubprocess(boolean isSubprocess) {
-    // this.isSubprocess = isSubprocess;
-    // }
-
-    /**
-     * Returns true if the process is a subprocess of an activity.
-     * 
-     * @return
-     */
-    public boolean isSubprocess() {
-        return isSubprocess;
-    }
-
-    /**
-     * This helper method resolves the corresponding BPMNPlane element for this
-     * process. The bpmnPlane can either be associated with the process directly or
-     * via the collaboration node.
-     * <p>
-     * If the diagram does not contain a matching BPMNPlane, the method
-     * creates one.
-     */
-    private void resolveBPMNPlane() {
-        String colaborationElementID = null;
-
-        // resolve collaboration id if we have a collaboration Diagram...
-        // Note: we can't yet use the method 'model.isCollaborationDiagram()' here!
-        NodeList collaborationNodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2,
-                "collaboration");
-        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
-            // we only take the first collaboration element (this is what is expected)
-            Element collaborationElement = (Element) collaborationNodeList.item(0);
-            if (collaborationElement != null) {
-                // test the collaboration element id
-                colaborationElementID = collaborationElement.getAttribute("id");
-            }
-        }
-
-        // find the corresponding BPMNPlane
-        NodeList planeList = model.findElementsByName(model.getDoc().getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
-        for (int i = 0; i < planeList.getLength(); i++) {
-            Element planeElement = (Element) planeList.item(i);
-
-            String bpmnElementID = planeElement.getAttribute("bpmnElement");
-            // if the id matches we have a direct macht in a non-collaboration element
-            if (this.getId() != null && this.getId().equals(bpmnElementID)) {
-                bpmnPlane = planeElement;
-                break;
-            }
-
-            // test if we have a collaboration model
-            if (colaborationElementID != null && bpmnElementID.equals(colaborationElementID)) {
-                // match!
-                bpmnPlane = planeElement;
-                break;
-            }
-
-        }
-
-        // if no plane exists yes, we create one
-        if (bpmnPlane == null) {
-            // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
-            logger.warning("No bpmndi:BPMNPlane found - created default plane");
-            Element bpmnDefaultPlane = model.createElement(BPMNNS.BPMNDI, "BPMNPlane");
-
-            bpmnDefaultPlane.setAttribute("id", BPMNModel.generateShortID("BPMNPlane"));
-            if (isSubprocess()) {
-                bpmnDefaultPlane.setAttribute("bpmnElement", this.getId());
-            } else {
-                // resolve associated process or collaboration element
-                NodeList nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "collaboration");
-                if (nodeList == null || nodeList.getLength() == 0) {
-                    // Take the default process as plane ref...
-                    nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "process");
-                }
-                if (nodeList != null && nodeList.getLength() > 0) {
-                    Element refElement = (Element) nodeList.item(0);
-                    bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
-                }
-            }
-            model.getBpmnDiagram().appendChild(bpmnDefaultPlane);
-            bpmnPlane = bpmnDefaultPlane;
-        }
-    }
-
-    public Element getBPMNPlane() {
-        return bpmnPlane;
-    }
-
-    public String getProcessType() {
-        return processType;
-    }
-
-    public void setProcessType(String processType) {
-        this.processType = processType;
-    }
-
-    public boolean isExecutable() {
-        return isExecutable;
-    }
-
-    public void setExecutable(boolean isExecutable) {
-        this.isExecutable = isExecutable;
-        this.elementNode.setAttribute("isExecutable", "" + isExecutable);
-    }
-
-    public Element getBpmnPlane() {
-        return bpmnPlane;
-    }
-
-    public void setBpmnPlane(Element bpmnPlane) {
-        this.bpmnPlane = bpmnPlane;
     }
 
     /**
@@ -277,6 +168,131 @@ public class BPMNProcess extends BPMNElement {
             initialized = true;
         }
         return this;
+    }
+
+    /**
+     * Returns true if the process was already initialized.
+     *
+     */
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    /**
+     * Returns true if the process is a subprocess of an activity.
+     * 
+     * @return
+     */
+    public boolean isSubprocess() {
+        return this.parentProcess != null;
+    }
+
+    /**
+     * This helper method resolves the corresponding BPMNPlane element for this
+     * process. The bpmnPlane can either be associated with the process directly or
+     * via the collaboration node.
+     * <p>
+     * If the diagram does not contain a matching BPMNPlane, the method
+     * creates one.
+     */
+    private void resolveBPMNPlane() {
+        String collaborationElementID = null;
+
+        // resolve collaboration id if we have a collaboration Diagram...
+        // Note: we can't yet use the method 'model.isCollaborationDiagram()' here!
+        NodeList collaborationNodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2,
+                "collaboration");
+        if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
+            // we only take the first collaboration element (this is what is expected)
+            Element collaborationElement = (Element) collaborationNodeList.item(0);
+            if (collaborationElement != null) {
+                // test the collaboration element id
+                collaborationElementID = collaborationElement.getAttribute("id");
+            }
+        }
+
+        // find the corresponding BPMNPlane
+        NodeList planeList = model.findElementsByName(model.getDoc().getDocumentElement(), BPMNNS.BPMNDI, "BPMNPlane");
+        for (int i = 0; i < planeList.getLength(); i++) {
+            Element planeElement = (Element) planeList.item(i);
+            String bpmnElementID = planeElement.getAttribute("bpmnElement");
+            // if the id matches we have a direct macht in a non-collaboration element
+            if (this.getId() != null && this.getId().equals(bpmnElementID)) {
+                bpmnPlane = planeElement;
+                break;
+            }
+
+            // test if we have a collaboration model
+            if (collaborationElementID != null && bpmnElementID.equals(collaborationElementID)) {
+                // match!
+                bpmnPlane = planeElement;
+                break;
+            }
+
+            // if the current process is a SubProcess than the default process is the ID for
+            // the reference
+            if (parentProcess != null && parentProcess.getId().equals(bpmnElementID)) {
+                bpmnPlane = planeElement;
+                break;
+            }
+
+        }
+
+        // if no plane exists yes, we create one
+        if (bpmnPlane == null)
+
+        {
+            // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
+            logger.warning("│   ├── No bpmndi:BPMNPlane found for '" + this.getId() + "'- creating default plane");
+            Element bpmnDefaultPlane = model.createElement(BPMNNS.BPMNDI, "BPMNPlane");
+
+            bpmnDefaultPlane.setAttribute("id", BPMNModel.generateShortID("BPMNPlane"));
+            if (isSubprocess()) {
+                bpmnDefaultPlane.setAttribute("bpmnElement", this.getId());
+            } else {
+                // resolve associated process or collaboration element
+                NodeList nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "collaboration");
+                if (nodeList == null || nodeList.getLength() == 0) {
+                    // Take the default process as plane ref...
+                    nodeList = model.findElementsByName(model.getDefinitions(), BPMNNS.BPMN2, "process");
+                }
+                if (nodeList != null && nodeList.getLength() > 0) {
+                    Element refElement = (Element) nodeList.item(0);
+                    bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
+                }
+            }
+            model.getBpmnDiagram().appendChild(bpmnDefaultPlane);
+            bpmnPlane = bpmnDefaultPlane;
+        }
+    }
+
+    public Element getBPMNPlane() {
+        return bpmnPlane;
+    }
+
+    public String getProcessType() {
+        return processType;
+    }
+
+    public void setProcessType(String processType) {
+        this.processType = processType;
+    }
+
+    public boolean isExecutable() {
+        return isExecutable;
+    }
+
+    public void setExecutable(boolean isExecutable) {
+        this.isExecutable = isExecutable;
+        this.elementNode.setAttribute("isExecutable", "" + isExecutable);
+    }
+
+    public Element getBpmnPlane() {
+        return bpmnPlane;
+    }
+
+    public void setBpmnPlane(Element bpmnPlane) {
+        this.bpmnPlane = bpmnPlane;
     }
 
     /**

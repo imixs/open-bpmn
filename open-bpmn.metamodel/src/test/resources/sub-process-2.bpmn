@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0zsk7y2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.6.1">
+  <bpmn:collaboration id="Collaboration_04o283x">
+    <bpmn:participant id="Participant_1q1wiv9" name="Pool" processRef="Process_0vroknd" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_0vroknd" isExecutable="false">
+    <bpmn:subProcess id="Activity_1uvplki" name="Subprocess">
+      <bpmn:startEvent id="Event_1gf7alb" name="Start">
+        <bpmn:outgoing>Flow_0ca1ghr</bpmn:outgoing>
+      </bpmn:startEvent>
+      <bpmn:endEvent id="Event_0v6dryq" name="End">
+        <bpmn:incoming>Flow_0ca1ghr</bpmn:incoming>
+      </bpmn:endEvent>
+      <bpmn:sequenceFlow id="Flow_0ca1ghr" sourceRef="Event_1gf7alb" targetRef="Event_0v6dryq" />
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_04o283x">
+      <bpmndi:BPMNShape id="Participant_1q1wiv9_di" bpmnElement="Participant_1q1wiv9" isHorizontal="true">
+        <dc:Bounds x="160" y="60" width="600" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1uvplki_di" bpmnElement="Activity_1uvplki" isExpanded="true">
+        <dc:Bounds x="250" y="80" width="350" height="200" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gf7alb_di" bpmnElement="Event_1gf7alb">
+        <dc:Bounds x="290" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="296" y="205" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0v6dryq_di" bpmnElement="Event_0v6dryq">
+        <dc:Bounds x="512" y="162" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="520" y="205" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ca1ghr_di" bpmnElement="Flow_0ca1ghr">
+        <di:waypoint x="326" y="180" />
+        <di:waypoint x="512" y="180" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

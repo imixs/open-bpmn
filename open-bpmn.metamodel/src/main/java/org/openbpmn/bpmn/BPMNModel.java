@@ -76,7 +76,7 @@ public class BPMNModel {
     // private Element defaultProcessElement;
     private BPMNProcess defaultProcess;
     private BPMNProcess subProcess;
-    private Node bpmnDiagram;
+    private Element bpmnDiagram;
     protected Set<Participant> participants = null;
     protected Map<String, BPMNProcess> bpmnProcesses = new ConcurrentHashMap<>();
 
@@ -272,7 +272,7 @@ public class BPMNModel {
         // find bpmndi:BPMNDiagram
         NodeList diagramList = findElementsByName(doc.getDocumentElement(), BPMNNS.BPMNDI, "BPMNDiagram");
         if (diagramList != null && diagramList.getLength() > 0) {
-            bpmnDiagram = diagramList.item(0);
+            bpmnDiagram = (Element) diagramList.item(0);
         } else {
             // no diagram included - so we create an empty one
             getLogger().warning("No bpmndi:BPMNDiagram found - created default diagram");
@@ -389,7 +389,7 @@ public class BPMNModel {
     }
 
     /**
-     * Returns the public default process
+     * Returns the public default process. The process can be not yet initialized.
      * 
      * @return
      */
@@ -614,11 +614,11 @@ public class BPMNModel {
         this.messages = messages;
     }
 
-    public Node getBpmnDiagram() {
+    public Element getBpmnDiagram() {
         return bpmnDiagram;
     }
 
-    public void setBpmnDiagram(Node bpmnDiagram) {
+    public void setBpmnDiagram(Element bpmnDiagram) {
         this.bpmnDiagram = bpmnDiagram;
     }
 
@@ -797,7 +797,7 @@ public class BPMNModel {
 
         definitions.insertBefore(processElement, this.getBpmnDiagram());
 
-        BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, type, false);
+        BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, type, null);
         bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
 
         return bpmnProcess;
@@ -2180,7 +2180,7 @@ public class BPMNModel {
                     setDirty(true);
                 }
 
-                BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType, false);
+                BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType, null);
                 bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
                 if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
                     defaultProcess = bpmnProcess;
