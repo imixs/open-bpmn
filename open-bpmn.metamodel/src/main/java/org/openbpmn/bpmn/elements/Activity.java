@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openbpmn.bpmn.BPMNModel;
-import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.openbpmn.bpmn.validation.BPMNValidationMarker;
 import org.w3c.dom.Element;
 
@@ -19,8 +19,10 @@ import org.w3c.dom.Element;
  * inclusion of re-usable Tasks and Processes in the diagram. However, a Process
  * is not a specific graphical object. Instead, it is a set of graphical
  * objects. Activities represent points in a Process flow where work is
- * performed. They are the executable elements of a BPMN Process. The Activity
- * class is an abstract element, sub-classing from FlowElement
+ * performed. They are the executable elements of a BPMN Process.
+ * <p>
+ * Note: Changing the position of a non-atomic Task leads to an update of all
+ * BPMNFlow elements embedded in the associated subProcess.
  * 
  * @author rsoika
  *
@@ -29,10 +31,11 @@ public class Activity extends BPMNElementNode {
 
     public final static double DEFAULT_WIDTH = 110.0;
     public final static double DEFAULT_HEIGHT = 50.0;
-    public BPMNProcess subProcess = null;
+    private BPMNProcess subProcess = null;
 
-    protected Activity(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
-        super(model, node, type, bpmnProcess);
+    public Activity(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess)
+            throws BPMNModelException {
+        super(model, node, _type, _bpmnProcess);
     }
 
     /**
@@ -53,7 +56,7 @@ public class Activity extends BPMNElementNode {
 
     /**
      * Returns true if the activity has an expanded sub process to be displayed
-     * inline
+     * inline in a diagram plane.
      * 
      * @return
      */
@@ -81,7 +84,7 @@ public class Activity extends BPMNElementNode {
      * @return the embedded sub process
      * @throws BPMNModelException
      */
-    public BPMNProcess openSubProcess() throws BPMNModelException {
+    public BPMNProcess getSubProcess() throws BPMNModelException {
         if (!hasSubProcess()) {
             throw new BPMNInvalidTypeException(BPMNInvalidTypeException.INVALID_TYPE,
                     "Activity type '" + type + "' can not contain a sub process!");
@@ -107,20 +110,25 @@ public class Activity extends BPMNElementNode {
     }
 
     /**
-     * Remove any embedded bpmndi:BPMNLabel element within the bpmndi:BPMNShape
-     * 
-     * Positioning of the label is part of the client. Any position update should
-     * ignore these settings in Open-BPMN.
+     * The method updates the position of the Activity in a BPMN plane.
+     * If the activity contains a expanded sub process the method will update also
+     * all embedded BPMN FlowElements.
+     * <p>
      * 
      */
     @Override
     public void setPosition(double x, double y) {
+        double offsetX = x - this.bounds.getPosition().getX();
+        double offsetY = y - this.bounds.getPosition().getY();
         super.setPosition(x, y);
 
-        // remove optional BPMNLabel
-        Element bpmnLabel = getModel().findChildNodeByName(this.bpmnShape, BPMNNS.BPMNDI, "BPMNLabel");
-        if (bpmnLabel != null) {
-            this.bpmnShape.removeChild(bpmnLabel);
+        // update embedded elements?
+        if (this.hasSubProcess()) {
+            try {
+                BPMNModelUtil.updateEmbeddedElements(this.getSubProcess(), offsetX, offsetY);
+            } catch (BPMNModelException e) {
+                logger.severe("Failed to update embedded elements: " + e.getMessage());
+            }
         }
     }
 

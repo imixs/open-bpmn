@@ -2,17 +2,28 @@ package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.bpmn.util.BPMNModelUtil;
 import org.w3c.dom.Element;
 
 /**
- * A BPMNParticipant is a container for a BPMNProcess. A BPMNParticipant can
- * contain a bpmnShape element which is in this case a BPMN Pool. If a
- * BPMNParticipant does not contain a bpmnShape (Pool) this indicates that this
- * is the public default process
+ * A Participant represents a specific PartnerEntity (e.g., a company) and/or a
+ * more general PartnerRole (e.g., a buyer, seller, or manufacturer) that are
+ * Participants in a Collaboration. A Participant is often responsible for the
+ * execution of the Process enclosed in a Pool.
+ * <p>
+ * A BPMNParticipant represents a container for a BPMNProcess. A BPMNParticipant
+ * can be associated with a bpmnShape element which is in this case a BPMN Pool.
+ * <p>
+ * If a BPMNParticipant does not contain a bpmnShape (Pool) this indicates that
+ * this is the public default process.
+ * <p>
+ * Note: Changing the position of a Pool leads to an update of all embedded
+ * BPMNFlow elements.
  * 
  * @author rsoika
  *
@@ -36,7 +47,7 @@ public class Participant extends BPMNElementNode {
      * @throws BPMNModelException
      */
     public Participant(BPMNModel model, Element node, BPMNProcess process) throws BPMNModelException {
-        super(model, node, process);
+        super(model, node, BPMNTypes.PARTICIPANT, process);
         // update processRef
         if (process.getId().isEmpty()) {
             throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
@@ -89,13 +100,17 @@ public class Participant extends BPMNElementNode {
     }
 
     /**
+     * The method updates the position of the Pool in a BPMN plane. Also all
+     * embedded BPMN FlowElements will be repositioned.
+     * <p>
      * Remove any embedded bpmndi:BPMNLabel element within the bpmndi:BPMNShape
-     * 
      * Positioning of the label is part of the client. Any position update should
      * ignore these settings in Open-BPMN.
      */
     @Override
     public void setPosition(double x, double y) {
+        double offsetX = x - this.bounds.getPosition().getX();
+        double offsetY = y - this.bounds.getPosition().getY();
         super.setPosition(x, y);
 
         // remove optional BPMNLabel
@@ -103,5 +118,8 @@ public class Participant extends BPMNElementNode {
         if (bpmnLabel != null) {
             this.bpmnShape.removeChild(bpmnLabel);
         }
+
+        // update embedded elements
+        BPMNModelUtil.updateEmbeddedElements(this.bpmnProcess, offsetX, offsetY);
     }
 }

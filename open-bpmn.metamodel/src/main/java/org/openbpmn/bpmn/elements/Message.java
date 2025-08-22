@@ -1,6 +1,7 @@
 package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
@@ -19,9 +20,9 @@ public class Message extends BPMNElementNode {
     public final static double DEFAULT_HEIGHT = 20.0;
     public static final double LABEL_OFFSET = 5;
 
-    public Message(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess)
+    public Message(BPMNModel model, Element node, BPMNProcess _bpmnProcess)
             throws BPMNModelException {
-        super(model, node, type, bpmnProcess);
+        super(model, node, BPMNTypes.MESSAGE, _bpmnProcess);
     }
 
     @Override

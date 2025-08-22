@@ -3,10 +3,7 @@ package org.openbpmn.bpmn;
 import java.util.Arrays;
 import java.util.List;
 
-import org.openbpmn.bpmn.elements.DataObject;
-import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.SequenceFlow;
-import org.openbpmn.bpmn.elements.TextAnnotation;
 import org.openbpmn.bpmn.elements.core.BPMNElement;
 import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
@@ -148,6 +145,14 @@ public class BPMNTypes {
             BPMNTypes.BOUNDARY_EVENT //
     );
 
+    public final static List<String> BPMN_DATA_ITEMS = Arrays.asList(//
+            BPMNTypes.DATAOBJECT, //
+            BPMNTypes.DATASTORE, //
+            BPMNTypes.DATASTOREREFERENCE, //
+            BPMNTypes.MESSAGE, //
+            BPMNTypes.TEXTANNOTATION //
+    );
+
     /**
      * Returns true if the given element is a FlowElement, which are all
      * BPMNElementNodes from the type Event, Gateway or Activity.
@@ -161,31 +166,11 @@ public class BPMNTypes {
     }
 
     /**
-     * Returns true if the given element is a DataObject
+     * Returns true if the given element is a Data Item
      */
-    public static boolean isDataObjectNode(BPMNElement element) {
-        if (element instanceof DataObject) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if the given element is a DataStore
-     */
-    public static boolean isDataStoreNode(BPMNElement element) {
-        if (element instanceof DataStoreReference) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Returns true if the given element is a TextAnnotation
-     */
-    public static boolean isTextAnnotationNode(BPMNElement element) {
-        if (element instanceof TextAnnotation) {
-            return true;
+    public static boolean isDataItem(BPMNElement element) {
+        if (element instanceof BPMNElementNode) {
+            return BPMN_DATA_ITEMS.contains(((BPMNElementNode) element).getType());
         }
         return false;
     }

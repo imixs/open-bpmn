@@ -16,6 +16,7 @@ import org.w3c.dom.Element;
  * @author rsoika
  */
 public class Signal extends BPMNElement {
+
     protected String type = null;
 
     /**
@@ -25,7 +26,6 @@ public class Signal extends BPMNElement {
      * @param model
      */
     public Signal(BPMNModel model, Element node) {
-        super(model, node);
+        super(model, node, null);
     }
-
 }

@@ -32,10 +32,12 @@ import org.w3c.dom.NodeList;
  *
  */
 public class CollaborationElement extends BPMNElementNode {
+
     Element bpmnPlane = null;
 
-    public CollaborationElement(BPMNModel model, Element node) {
-        super(model, node);
+    public CollaborationElement(BPMNModel model, Element node)
+            throws BPMNModelException {
+        super(model, node, null);
     }
 
     /**
@@ -82,7 +84,7 @@ public class CollaborationElement extends BPMNElementNode {
         logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
         for (int i = 0; i < messageFlowList.getLength(); i++) {
             Element item = (Element) messageFlowList.item(i);
-            MessageFlow messageFlow = new MessageFlow(model, item);
+            MessageFlow messageFlow = new MessageFlow(model, item, model.openDefaultProcess());
             messageFlows.add(messageFlow);
         }
 

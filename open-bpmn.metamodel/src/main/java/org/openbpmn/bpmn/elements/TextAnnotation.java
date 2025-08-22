@@ -2,6 +2,7 @@ package org.openbpmn.bpmn.elements;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.w3c.dom.Element;
@@ -16,7 +17,6 @@ import org.w3c.dom.Element;
  * 
  * 
  * @author rsoika
- *
  */
 public class TextAnnotation extends BPMNElementNode {
 
@@ -24,9 +24,8 @@ public class TextAnnotation extends BPMNElementNode {
     public final static double DEFAULT_HEIGHT = 50.0;
     public static final double LABEL_OFFSET = 0;
 
-    protected TextAnnotation(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess)
-            throws BPMNModelException {
-        super(model, node, type, bpmnProcess);
+    public TextAnnotation(BPMNModel model, Element node, BPMNProcess _bpmnProcess) throws BPMNModelException {
+        super(model, node, BPMNTypes.TEXTANNOTATION, _bpmnProcess);
     }
 
     @Override

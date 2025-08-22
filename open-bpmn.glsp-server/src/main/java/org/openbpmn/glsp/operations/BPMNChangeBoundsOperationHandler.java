@@ -61,9 +61,9 @@ import com.google.inject.Inject;
  * elements.
  * <p>
  * The operation synchronizes the BPMN Model by updating the BPMNBounds element
- * (position and dimension) for all BPMNFlow elements. In addition the operator
- * also updates the GModel. In this way we avoid a complete new initialization
- * of the GModel which is not necessary in this scenario.
+ * (position and dimension) for all affected BPMNFlow elements. In addition the
+ * operator also updates the GModel. In this way we avoid a complete new
+ * initialization of the GModel which is not necessary in this scenario.
  * <p>
  * For BPMN Event and Gateway elements we have in addition a special handling of
  * the corresponding label. In case only the label was moved (id ends with
@@ -119,9 +119,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             // first sort out all elementBounds from BPMNLabel objects if the flowElement is
             // part of this selection (see method updateFlowElement)
             List<ElementAndBounds> filteredElementBounds = filterElements(elementBounds);
-
             boolean allowReset = filteredElementBounds.size() == 1;
-
             for (ElementAndBounds elementBound : filteredElementBounds) {
                 String id = elementBound.getElementId();
                 GPoint newPoint = BPMNGridSnapper.round(elementBound.getNewPosition());
@@ -153,12 +151,19 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                                 Math.round(newSize.getWidth() / BPMNGridSnapper.GRID_SIZE) * BPMNGridSnapper.GRID_SIZE);
                     }
 
+                    // do we have moved a pool with elements?
                     if (bpmnElementNode instanceof Participant) {
-                        updatePool(gNode, bpmnElementNode, id, newPoint, newSize);
-                    } else {
-                        // it is a normal bpmn flow element...
-                        updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize, allowReset);
+                        updatePool(gNode, (Participant) bpmnElementNode, id, newPoint, newSize);
+                        continue;
                     }
+                    // do we have moved a SubProcess with elements?
+                    if (bpmnElementNode instanceof Activity && ((Activity) bpmnElementNode).hasSubProcess()) {
+                        updateSubProcess(gNode, (Activity) bpmnElementNode, id, newPoint, newSize);
+                        continue;
+                    }
+                    // default - it is a normal bpmn flow element...
+                    updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize, allowReset);
+
                 } else {
                     // test if we have a BPMNLabel element was selected?
                     if (BPMNGModelUtil.isBPMNLabelID(id)) {
@@ -253,15 +258,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         // Update divider position...
         gNode.setPosition(
                 GraphUtil.point(gNode.getPosition().getX(), gNode.getPosition().getY() + offsetY));
-
-        // finally we need to update the containment of all BPMN elements in the current
-        // pool.
-        if (participant != null) {
-            Set<BPMNElementNode> flowElementList = participant.getBpmnProcess().getAllFlowElementNodes();
-            for (BPMNElementNode elementNode : flowElementList) {
-                elementNode.updateContainment();
-            }
-        }
 
         modelState.reset();
     }
@@ -388,14 +384,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
      * @param newSize
      * @throws BPMNMissingElementException
      */
-    private void updatePool(final GNode gNode, final BPMNElementNode bpmnElementNode, final String id,
+    private void updatePool(final GNode gNode, final Participant participant, final String id,
             final GPoint newPoint, final GDimension newSize) throws BPMNMissingElementException {
-
-        Participant participant = modelState.getBpmnModel().findParticipantById(id);
-        if (participant == null) {
-            throw new BPMNMissingElementException(BPMNMissingElementException.MISSING_ELEMENT,
-                    "Participant " + id + " not found in model!");
-        }
 
         double offsetX = newPoint.getX() - gNode.getPosition().getX();
         double offsetY = newPoint.getY() - gNode.getPosition().getY();
@@ -433,20 +423,57 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
         gNode.setSize(newSize);
 
-        BPMNBounds bpmnBounds = bpmnElementNode.getBounds();
-
         // update BPMNElement bounds....
         // The BPMN Position is always absolute so we can simply update the element
         // bounds by the new offset and new dimensions.
         // @see https://github.com/imixs/open-bpmn/issues/208
-        bpmnElementNode.setBounds(bpmnBounds.getPosition().getX() + offsetX,
+        BPMNBounds bpmnBounds = participant.getBounds();
+        participant.setBounds(bpmnBounds.getPosition().getX() + offsetX,
                 bpmnBounds.getPosition().getY() + offsetY, newSize.getWidth(),
                 newSize.getHeight());
 
         logger.debug("...update participant pool elements: offset= " + offsetX + " , " + offsetY);
         updateLaneSet(participant, offsetWidth, offsetHeight);
-        updateEmbeddedElements(participant, offsetX, offsetY);
-        // updateMessageElements(oldPosition, oldDimensions, offsetX, offsetY);
+
+    }
+
+    /**
+     * This helper method updates the position and dimension of a BPMN SubProcess
+     * and all
+     * included BPMN Node Elements
+     *
+     * @param gNode
+     * @param bpmnElementNode
+     * @param id
+     * @param offsetX
+     * @param offsetY
+     * @param newSize
+     * @throws BPMNMissingElementException
+     */
+    private void updateSubProcess(final GNode gNode, final Activity subprocess, final String id,
+            final GPoint newPoint, final GDimension newSize) throws BPMNMissingElementException {
+
+        double offsetX = newPoint.getX() - gNode.getPosition().getX();
+        double offsetY = newPoint.getY() - gNode.getPosition().getY();
+
+        // Update GNode according to the new position....
+        gNode.setPosition(newPoint);
+        // Update GNode dimension....
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_WIDTH, newSize.getWidth());
+        gNode.getLayoutOptions().put(GLayoutOptions.KEY_PREF_HEIGHT, newSize.getHeight());
+        // calling the size method does not have an effect.
+        // see:
+        // https://github.com/eclipse-glsp/glsp/discussions/741#discussioncomment-3688606
+        gNode.setSize(newSize);
+
+        // update BPMNElement bounds....
+        // The BPMN Position is always absolute so we can simply update the element
+        // bounds by the new offset and new dimensions.
+        // @see https://github.com/imixs/open-bpmn/issues/208
+        BPMNBounds bpmnBounds = subprocess.getBounds();
+        subprocess.setBounds(bpmnBounds.getPosition().getX() + offsetX,
+                bpmnBounds.getPosition().getY() + offsetY, newSize.getWidth(),
+                newSize.getHeight());
 
     }
 
@@ -565,43 +592,6 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             // adjust laneY for the next iteration
             bpmnLaneY = (int) (bpmnLaneY + bpmnLaneBounds.getDimension().getHeight());
         }
-    }
-
-    /**
-     * This method updates the position for all BPMNElementNodes contained in a pool
-     * given a x and y offset. This method is needed because in BPMN all positions
-     * are absolute and in GLSP the position of a element embedded in a container is
-     * relative.
-     *
-     * @param process - the bpmnProcess containing the bpmn element nodes.
-     * @param offsetX - new X offset
-     * @param offsetY - new Y offset
-     * @throws BPMNMissingElementException
-     */
-    void updateEmbeddedElements(final Participant participant, final double offsetX, final double offsetY)
-            throws BPMNMissingElementException {
-
-        // Update all FlowElements
-        BPMNProcess process = participant.getBpmnProcess();
-        Set<BPMNElementNode> bpmnFlowElements = process.getAllElementNodes();
-        for (BPMNElementNode flowElement : bpmnFlowElements) {
-            logger.debug("update element bounds: " + flowElement.getId());
-            try {
-                BPMNBounds bounds = flowElement.getBounds();
-                flowElement.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
-                // if the flowElement has a BPMNLabel element we adjust position of the label
-                // too
-                BPMNLabel bpmnLabel = flowElement.getLabel();
-                if (bpmnLabel != null) {
-                    bpmnLabel.updateLocation(bpmnLabel.getPosition().getX() + offsetX,
-                            bpmnLabel.getPosition().getY() + offsetY);
-                }
-
-            } catch (BPMNMissingElementException e) {
-                logger.warn("Failed to update FlowElement bounds for : " + flowElement.getId());
-            }
-        }
-
     }
 
     /**

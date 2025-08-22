@@ -41,39 +41,26 @@ public abstract class BPMNElement implements BPMNValidator {
     protected BPMNProcess bpmnProcess = null;
 
     /**
-     * Create a new BPMN Base Element. The constructor expects a model instnace and
+     * Create a new BPMN Base Element. The constructor expects a model instance and
      * a node.
+     * <p>
+     * The optional parameter <code>bpmnProcess</code> indicates that the
+     * BPMNElement is assigned to a BPMNProcess. Flow Elements must be assigned to
+     * BPMNProcess.
+     * <p>
+     * The optional parameter <code>containerElement</code> points to an element
+     * this element is embedded.
      * 
      * @param node
      * @param model
-     * @param BPMNProcess - can be null
+     * @param bpmnProcess      - can be null
+     * @param containerElement - can be null
      */
-    public BPMNElement(BPMNModel model, Element node) {
+    public BPMNElement(BPMNModel model, Element node, BPMNProcess bpmnProcess) {
         super();
         this.model = model;
         this.elementNode = node;
-        if (this.elementNode.hasAttributes()) {
-            // get attributes names and values
-            this.attributeMap = this.elementNode.getAttributes();
-        }
-        childNodes = new HashMap<String, Element>();
-        args = new HashMap<String, Object>();
-        validationMarkers = new ArrayList<BPMNValidationMarker>();
-    }
-
-    /**
-     * Create a new BPMN Base Element. The constructor expects a model instnace and
-     * a node.
-     * 
-     * @param node
-     * @param model
-     * @param BPMNProcess - can be null
-     */
-    public BPMNElement(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
-        super();
-        this.model = model;
-        this.elementNode = node;
-        this.bpmnProcess = _bpmnProcess;
+        this.bpmnProcess = bpmnProcess;
         if (this.elementNode.hasAttributes()) {
             // get attributes names and values
             this.attributeMap = this.elementNode.getAttributes();

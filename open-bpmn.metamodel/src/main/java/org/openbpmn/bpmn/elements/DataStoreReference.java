@@ -31,9 +31,8 @@ public class DataStoreReference extends BPMNElementNode {
     public final static double DEFAULT_HEIGHT = 50.0;
     public static final double LABEL_OFFSET = 0;
 
-    protected DataStoreReference(BPMNModel model, Element node, BPMNProcess bpmnProcess)
-            throws BPMNModelException {
-        super(model, node, BPMNTypes.DATASTOREREFERENCE, bpmnProcess);
+    public DataStoreReference(BPMNModel model, Element node, BPMNProcess _bpmnProcess) throws BPMNModelException {
+        super(model, node, BPMNTypes.DATASTOREREFERENCE, _bpmnProcess);
     }
 
     @Override

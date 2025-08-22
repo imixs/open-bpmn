@@ -73,7 +73,7 @@ public class BPMNModel {
 
     private Document doc;
     private Element definitions;
-    // private Element defaultProcessElement;
+    private boolean isInitializing = false;
     private BPMNProcess defaultProcess;
     private BPMNProcess subProcess;
     private Element bpmnDiagram;
@@ -126,6 +126,7 @@ public class BPMNModel {
     public BPMNModel(Document doc) throws BPMNModelException {
         this();
         if (doc != null) {
+            this.isInitializing = true; // <-- Start initializing
             this.doc = doc;
 
             definitions = doc.getDocumentElement();
@@ -147,9 +148,13 @@ public class BPMNModel {
             loadMessageFlowList();
             loadSignalList();
 
-            // defaultProcessElement = openDefaultProcess().getElementNode();
+            this.isInitializing = false; // <-- ende initializing
         }
 
+    }
+
+    public boolean isInitializing() {
+        return isInitializing;
     }
 
     /**
@@ -470,7 +475,7 @@ public class BPMNModel {
                         this.subProcess = null;
                         return;
                     }
-                    this.subProcess = subTask.openSubProcess();
+                    this.subProcess = subTask.getSubProcess();
                 } else {
                     logger.warning("Invalid SubProcessID '" + subProcessId
                             + "' - not of type subProcess. Validate Model!");
@@ -971,13 +976,8 @@ public class BPMNModel {
         bpmnEdgeElement.setAttribute("sourceRef", sourceId);
         bpmnEdgeElement.setAttribute("targetRef", targetId);
 
-        // this.definitions.appendChild(bpmnEdgeElement);
-
         this.collaborationElement.getElementNode().appendChild(bpmnEdgeElement);
-
-        // .insertAfter(bpmnEdgeElement, this.collaborationElement.getLastChild());
-
-        MessageFlow messageFlow = new MessageFlow(this, bpmnEdgeElement);
+        MessageFlow messageFlow = new MessageFlow(this, bpmnEdgeElement, this.openDefaultProcess());
         getMessageFlows().add(messageFlow);
 
         messageFlow.addDefaultWayPoints();
@@ -1111,7 +1111,7 @@ public class BPMNModel {
 
         this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
 
-        Message message = new Message(this, bpmnElement, BPMNTypes.MESSAGE, this.openDefaultProcess());
+        Message message = new Message(this, bpmnElement, this.openDefaultProcess());
         getMessages().add(message);
 
         return message;
@@ -2184,7 +2184,6 @@ public class BPMNModel {
                 bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
                 if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
                     defaultProcess = bpmnProcess;
-                    // defaultProcessElement = processElement;
                 }
 
             }
@@ -2279,7 +2278,7 @@ public class BPMNModel {
         if (messageNodeList != null && messageNodeList.getLength() > 0) {
             for (int i = 0; i < messageNodeList.getLength(); i++) {
                 Element item = (Element) messageNodeList.item(i);
-                Message message = new Message(this, item, BPMNTypes.MESSAGE, this.openDefaultProcess());
+                Message message = new Message(this, item, this.openDefaultProcess());
                 messages.add(message);
             }
         }

@@ -136,6 +136,7 @@ public class BPMNGModelFactory implements GModelFactory {
      */
     @Override
     public void createGModel() {
+
         long l = System.currentTimeMillis();
         // verify extensions....
         if (extensions == null || extensions.size() == 0) {
@@ -315,7 +316,7 @@ public class BPMNGModelFactory implements GModelFactory {
                     if (!_process.isPublicProcess()) {
                         // the Associations inside a Pool, we need to add the edge to the
                         // PoolGNode childList
-                        Participant _participant = _process.findParticipant();
+                        Participant _participant = model.findParticipantByProcessId(_process.getId()); // .findParticipant();
                         if (_participant != null) {
                             PoolGNode pool = poolGNodeList.get(_participant.getId());
                             createAssociationGEdges(_process.getAssociations(), pool.getChildren(), _participant);
@@ -624,18 +625,15 @@ public class BPMNGModelFactory implements GModelFactory {
                 logger.info(
                         "│   ├── open expanded subProcess for Activity " + activity.getId() + "'...");
                 try {
-                    BPMNProcess subProcess = activity.openSubProcess();
-                    List<GModelElement> gNodeSubProcessList = new ArrayList<>();
-                    // Add all elements...
-                    buildGNodeActivities(subProcess.getActivities(), activity, gNodeSubProcessList);
-                    buildGNodeEvents(subProcess.getEvents(), activity, gNodeSubProcessList);
-                    buildGNodeGateways(subProcess.getGateways(), activity, gNodeSubProcessList);
+                    BPMNProcess subProcess = activity.getSubProcess();
+                    List<GModelElement> gNodeSubProcessElements = new ArrayList<>();
+                    // Add all elements..
+                    buildGNodeActivities(subProcess.getActivities(), activity, gNodeSubProcessElements);
+                    buildGNodeEvents(subProcess.getEvents(), activity, gNodeSubProcessElements);
+                    buildGNodeGateways(subProcess.getGateways(), activity, gNodeSubProcessElements);
                     // Add all SequenceFlows
-                    createSequenceFlowGEdges(subProcess.getSequenceFlows(), gNodeSubProcessList, activity);
-
-                    taskNodeBuilder //
-                            .addAll(gNodeSubProcessList); //
-
+                    createSequenceFlowGEdges(subProcess.getSequenceFlows(), gNodeSubProcessElements, activity);
+                    taskNodeBuilder.addAll(gNodeSubProcessElements);
                 } catch (BPMNModelException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -646,7 +644,7 @@ public class BPMNGModelFactory implements GModelFactory {
 
             // is Expandable?
             if (modelState.getBpmnModel().isExpandableSubProcess(taskNode.getId())) {
-                BPMNModel.debug("│   ├── is expandable subProcess!");
+                logger.debug("│   ├── is expandable subProcess!");
                 taskNode.getArgs().put(ModelTypes.EXPANDABLE_SUBPROCESS, "true");
             }
             // apply BPMN Extensions
@@ -656,10 +654,8 @@ public class BPMNGModelFactory implements GModelFactory {
             if (extensionLabelNode != null) {
                 extensionLabelNode.setText((String) taskNode.getArgs().get(BPMNElementExtension.INFO));
             }
-
             gNodeList.add(taskNode);
         }
-
     }
 
     /**
@@ -911,10 +907,11 @@ public class BPMNGModelFactory implements GModelFactory {
         }
         // compute relative position if we have a container...
         if ((container instanceof Activity && ((Activity) container).hasSubProcess())
-                ||
-                (container instanceof Participant && !container.getBpmnProcess().isPublicProcess())) {
+                || (container instanceof Participant && !container.getBpmnProcess().isPublicProcess())) {
             try {
                 BPMNBounds bpmnPoolBounds = container.getBounds();
+                logger.debug(" container bounds: " + bpmnPoolBounds.getPosition().getX() + " , "
+                        + bpmnPoolBounds.getPosition().getY());
                 GPoint poolGPoint = GraphUtil.point(bpmnPoolBounds.getPosition().getX(),
                         bpmnPoolBounds.getPosition().getY());
                 basisPoint.setX(basisPoint.getX() - poolGPoint.getX());
@@ -989,7 +986,22 @@ public class BPMNGModelFactory implements GModelFactory {
             bpmnGEdge.setKind("");
             for (BPMNPoint wayPoint : sequenceFlow.getWayPoints()) {
                 // add the waypoint to the GLSP model....
-                GPoint point = computeRelativeGPoint(wayPoint, container);
+
+                GPoint point = null;
+                if (container instanceof Activity && ((Activity) container).hasSubProcess()) {
+
+                    // point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+                    point = computeRelativeGPoint(wayPoint, container);
+                    logger.debug("  -- subtask Way x " + wayPoint.getX() + "," + wayPoint.getY() + " -> " + point.getX()
+                            + "," + point.getY());
+
+                } else {
+                    point = computeRelativeGPoint(wayPoint, container);
+                    logger.debug("  -- Converted Waypoint " + wayPoint + " -> " + point);
+                }
+
+                // GPoint point = GraphUtil.point(wayPoint.getX(), wayPoint.getY());
+
                 bpmnGEdge.getRoutingPoints().add(point);
             }
 

@@ -17,13 +17,11 @@ public class MessageFlow extends BPMNElementEdge {
 
     private static Logger logger = Logger.getLogger(MessageFlow.class.getName());
 
-    public MessageFlow(BPMNModel model, Element node) {
-        super(model, node);
+    public MessageFlow(BPMNModel model, Element node, BPMNProcess bpmnProcess) {
 
-        this.type = BPMNTypes.MESSAGE_FLOW;
+        super(model, node, BPMNTypes.MESSAGE_FLOW, bpmnProcess);
 
-        wayPoints = new LinkedHashSet<BPMNPoint>();
-
+        this.wayPoints = new LinkedHashSet<BPMNPoint>();
         this.sourceRef = this.getAttribute("sourceRef");
         if (sourceRef.isEmpty()) {
             logger.warning("Missing sourceRef!");

@@ -14,8 +14,9 @@ public class Gateway extends BPMNElementNode {
     public final static double DEFAULT_HEIGHT = 50.0;
     public static final double LABEL_OFFSET = 3;
 
-    public Gateway(BPMNModel model, Element node, String type, BPMNProcess bpmnProcess) throws BPMNModelException {
-        super(model, node, type, bpmnProcess);
+    public Gateway(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess)
+            throws BPMNModelException {
+        super(model, node, _type, _bpmnProcess);
     }
 
     @Override

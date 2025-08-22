@@ -37,14 +37,6 @@ public abstract class BPMNElementEdge extends BPMNElement {
     protected Element bpmnEdge = null;
     protected Set<BPMNPoint> wayPoints = null;
 
-    public BPMNElementEdge(BPMNModel model, Element node) {
-        super(model, node);
-    }
-
-    public BPMNElementEdge(BPMNModel model, Element node, BPMNProcess _bpmnProcess) {
-        super(model, node, _bpmnProcess);
-    }
-
     public BPMNElementEdge(BPMNModel model, Element node, String _type, BPMNProcess _bpmnProcess) {
         super(model, node, _bpmnProcess);
         this.type = _type;

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -15,7 +16,9 @@ import org.openbpmn.bpmn.elements.Activity;
 import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Lane;
 import org.openbpmn.bpmn.elements.Participant;
+import org.openbpmn.bpmn.elements.SequenceFlow;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 
@@ -139,6 +142,58 @@ public class TestBPMNLanes {
             process.insertLaneBefore(laneTest, lane2);// laneTest.insertBefore(lane2);
 
             model.save(out);
+
+        } catch (BPMNModelException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
+
+    /**
+     * This test moves the pool. We expect that the waypoints are also moved
+     */
+    @Test
+    public void testMovePoolTestWaypoints() {
+        String out = "src/test/resources/output/create-laneset_2.bpmn";
+
+        logger.info("...read model");
+        try {
+            model = BPMNModelFactory.read("/refmodel-5.bpmn");
+
+            Participant participant = model.findParticipantById("Participant_1");
+            assertNotNull(participant);
+
+            BPMNProcess process = participant.getBpmnProcess();
+            assertEquals(100, participant.getBounds().getPosition().getX());
+            assertEquals(100, participant.getBounds().getPosition().getY());
+            assertNotNull(process);
+
+            Activity task2 = (Activity) process.findElementNodeById("Task_2");
+            SequenceFlow flow7 = (SequenceFlow) process.findElementEdgeById("SequenceFlow_7");
+            Set<BPMNPoint> wayPoints = flow7.getWayPoints();
+            assertEquals(3, wayPoints.size());
+            Iterator<BPMNPoint> iter = wayPoints.iterator();
+            BPMNPoint wayPoint1 = iter.next();
+            BPMNPoint wayPoint2 = iter.next();
+            BPMNPoint wayPoint3 = iter.next();
+            assertEquals(226, wayPoint1.getX());
+            assertEquals(278, wayPoint2.getX());
+            assertEquals(330, wayPoint3.getX());
+
+            assertEquals(330, task2.getBounds().getPosition().getX());
+
+            // move the pool
+            participant.setPosition(110, 5);
+
+            // check postions
+            assertEquals(340, task2.getBounds().getPosition().getX());
+            iter = wayPoints.iterator();
+            wayPoint1 = iter.next();
+            wayPoint2 = iter.next();
+            wayPoint3 = iter.next();
+            assertEquals(236, wayPoint1.getX());
+            assertEquals(288, wayPoint2.getX());
+            assertEquals(340, wayPoint3.getX());
 
         } catch (BPMNModelException e) {
             e.printStackTrace();

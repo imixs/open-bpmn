@@ -98,8 +98,7 @@ public class BPMNSourceModelStorage implements SourceModelStorage {
                 // if the model is dirty (because linked-file content has change) we send a
                 // DirtyState action...
                 if (model.isDirty()) {
-                    logger.info("....external model content has changed.");
-
+                    logger.debug("....external model content has changed.");
                     // here we fire a noop-custom command instead of a SetDirtyStateAction to avoid
                     // the undo situation
                     modelState.execute(new SetDirtyCommand());

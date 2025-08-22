@@ -15,17 +15,23 @@
  ********************************************************************************/
 package org.openbpmn.bpmn.util;
 
+import java.util.Set;
 import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.elements.Association;
+import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.DataObject;
 import org.openbpmn.bpmn.elements.DataStoreReference;
 import org.openbpmn.bpmn.elements.Event;
 import org.openbpmn.bpmn.elements.Gateway;
 import org.openbpmn.bpmn.elements.Message;
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.elements.core.BPMNBounds;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNLabel;
+import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -98,8 +104,8 @@ public class BPMNModelUtil {
      * We can not use regex (replaceAll) here
      * 
      * xmlString =
-     * xmlString.replaceAll(">\\s*+(<\\!\\[CDATA\\[(.|\\n|\\r\\n)*?]\\]>)\\s*</",
-     * ">$1</");
+     * xmlString.replaceAll(">\s*+(<\!\[CDATA\[(.|\n|\r\n)*?]\]>)\s*</",
+     * ">Set<SequenceFlow></");
      * 
      * 
      * because of a known bug with large XML Strings. See
@@ -242,6 +248,62 @@ public class BPMNModelUtil {
             }
         }
         return null;
+    }
+
+    /**
+     * This method updates the position for all BPMNElementNodes contained in a
+     * given BPMNProcess with a X and Y offset. This method is called when a
+     * Participant (Pool) or a SubProcess are moved within the BPMN Diagram Plane.
+     *
+     * @param process - the bpmnProcess containing the bpmn element nodes.
+     * @param offsetX - new X offset
+     * @param offsetY - new Y offset
+     * @throws BPMNMissingElementException
+     */
+    public static void updateEmbeddedElements(final BPMNProcess process, final double offsetX, final double offsetY) {
+
+        // Update all FlowElements
+        Set<BPMNElementNode> bpmnFlowElements = process.getAllElementNodes();
+        for (BPMNElementNode flowElement : bpmnFlowElements) {
+            logger.fine("update element bounds: " + flowElement.getId());
+            try {
+                BPMNBounds bounds = flowElement.getBounds();
+                flowElement.setPosition(bounds.getPosition().getX() + offsetX, bounds.getPosition().getY() + offsetY);
+                // if the flowElement has a BPMNLabel element we adjust position of the label
+                // too
+                BPMNLabel bpmnLabel = flowElement.getLabel();
+                if (bpmnLabel != null) {
+                    bpmnLabel.updateLocation(bpmnLabel.getPosition().getX() + offsetX,
+                            bpmnLabel.getPosition().getY() + offsetY);
+                }
+
+            } catch (BPMNMissingElementException e) {
+                logger.warning("Failed to update FlowElement bounds for : " + flowElement.getId());
+            }
+        }
+
+        // Update waypoints....
+        Set<SequenceFlow> sequenceFlows = process.getSequenceFlows();
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            logger.fine("update sequenceFlow waypoint: " + sequenceFlow.getId());
+            Set<BPMNPoint> wayPoints = sequenceFlow.getWayPoints();
+            for (BPMNPoint wayPoint : wayPoints) {
+                wayPoint.setX(wayPoint.getX() + offsetX);
+                wayPoint.setY(wayPoint.getY() + offsetY);
+            }
+        }
+
+        // Update associations....
+        Set<Association> associations = process.getAssociations();
+        for (Association association : associations) {
+            logger.fine("update Association waypoint: " + association.getId());
+            Set<BPMNPoint> wayPoints = association.getWayPoints();
+            for (BPMNPoint wayPoint : wayPoints) {
+                wayPoint.setX(wayPoint.getX() + offsetX);
+                wayPoint.setY(wayPoint.getY() + offsetY);
+            }
+        }
+
     }
 
 }

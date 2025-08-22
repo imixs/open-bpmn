@@ -83,7 +83,7 @@ public class TestBPMN_ADONIS_Model {
             Activity subTask = (Activity) process1.findElementById("_4995ce94-2999-4b06-adef-07f29e5317c7");
             assertNotNull(subTask);
             assertEquals(BPMNTypes.SUB_PROCESS, subTask.getType());
-            BPMNProcess process1Sub = subTask.openSubProcess();
+            BPMNProcess process1Sub = subTask.getSubProcess();
             assertNotNull(process1Sub);
             // should have 2 tasks....
             assertEquals(3, process1Sub.getActivities().size());
@@ -104,7 +104,7 @@ public class TestBPMN_ADONIS_Model {
             assertNotNull(subTask);
             assertEquals(BPMNTypes.SUB_PROCESS, subTask.getType());
             // Now open the sub task as a BPMNProcess....
-            BPMNProcess process2Sub = subTask.openSubProcess();
+            BPMNProcess process2Sub = subTask.getSubProcess();
             assertNotNull(process2Sub);
             // should have 0 tasks....
             assertEquals(0, process2Sub.getActivities().size());

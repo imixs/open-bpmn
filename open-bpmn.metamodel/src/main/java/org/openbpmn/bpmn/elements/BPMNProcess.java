@@ -49,7 +49,7 @@ public class BPMNProcess extends BPMNElement {
 
     protected String processType = BPMNTypes.PROCESS_TYPE_NONE;
     protected boolean isExecutable = true;
-    protected Set<Activity> activities = null;
+    private Set<Activity> activities = null;
     protected Set<DataObject> dataObjects = null;
     protected Set<DataStoreReference> dataStoreReferences = null;
     protected Set<TextAnnotation> textAnnotations = null;
@@ -81,7 +81,7 @@ public class BPMNProcess extends BPMNElement {
      *                      process is a subProcess
      */
     public BPMNProcess(BPMNModel model, Element element, String processType, BPMNProcess parentProcess) {
-        super(model, element);
+        super(model, element, null);
 
         // set public if not yet specified
         if (processType == null || processType.isEmpty() ||
@@ -121,7 +121,7 @@ public class BPMNProcess extends BPMNElement {
      */
     public BPMNProcess init() throws BPMNModelException {
         if (!initialized) {
-
+            logger.fine("initializing BPMNProcess '" + getId() + "'");
             // now find all relevant bpmn meta elements
             NodeList childs = this.getElementNode().getChildNodes();
 
@@ -380,10 +380,6 @@ public class BPMNProcess extends BPMNElement {
         return activities;
     }
 
-    public void setActivities(Set<Activity> activities) {
-        this.activities = activities;
-    }
-
     public Set<Event> getEvents() {
         if (events == null) {
             events = new LinkedHashSet<Event>();
@@ -391,19 +387,11 @@ public class BPMNProcess extends BPMNElement {
         return events;
     }
 
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
-
     public Set<Gateway> getGateways() {
         if (gateways == null) {
             gateways = new LinkedHashSet<Gateway>();
         }
         return gateways;
-    }
-
-    public void setGateways(Set<Gateway> gateways) {
-        this.gateways = gateways;
     }
 
     /**
@@ -418,10 +406,6 @@ public class BPMNProcess extends BPMNElement {
         return dataObjects;
     }
 
-    public void setDataObjects(Set<DataObject> dataObjects) {
-        this.dataObjects = dataObjects;
-    }
-
     public Set<DataStoreReference> getDataStoreReferences() {
         if (dataStoreReferences == null) {
             dataStoreReferences = new LinkedHashSet<DataStoreReference>();
@@ -429,18 +413,10 @@ public class BPMNProcess extends BPMNElement {
         return dataStoreReferences;
     }
 
-    public void setDataStoreReferencess(Set<DataStoreReference> dataStoreReferences) {
-        this.dataStoreReferences = dataStoreReferences;
-    }
-
     public Set<TextAnnotation> getTextAnnotations() {
         if (textAnnotations == null)
             textAnnotations = new LinkedHashSet<TextAnnotation>();
         return textAnnotations;
-    }
-
-    public void setTextAnnotations(Set<TextAnnotation> textAnnotations) {
-        this.textAnnotations = textAnnotations;
     }
 
     public Set<SequenceFlow> getSequenceFlows() {
@@ -450,19 +426,11 @@ public class BPMNProcess extends BPMNElement {
         return sequenceFlows;
     }
 
-    public void setSequenceFlows(Set<SequenceFlow> sequenceFlows) {
-        this.sequenceFlows = sequenceFlows;
-    }
-
     public Set<Association> getAssociations() {
         if (associations == null) {
             associations = new LinkedHashSet<Association>();
         }
         return associations;
-    }
-
-    public void setAssociations(Set<Association> associations) {
-        this.associations = associations;
     }
 
     /**
@@ -1262,12 +1230,16 @@ public class BPMNProcess extends BPMNElement {
         // check
         Set<Activity> listA = this.getActivities();
         for (Activity element : listA) {
-            if (element.hasSubProcess() && element.subProcess != null) {
-                result = element.subProcess.findElementById(id);
-                if (result != null) {
-                    // Node Element found in subprocess
-                    return result;
+            try {
+                if (element.hasSubProcess() && element.getSubProcess() != null) {
+                    result = element.getSubProcess().findElementById(id);
+                    if (result != null) {
+                        // Node Element found in subprocess
+                        return result;
+                    }
                 }
+            } catch (BPMNModelException e) {
+                logger.warning("Failed to open subprocess for SubTask '" + element.getId() + "'");
             }
         }
 
@@ -1395,17 +1367,36 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * This method returns the BPMNParticipant of this process in case it represents
-     * a BPMN Participant.
+     * This method returns the BPMNElement this this process is contained in. This
+     * can be either a BPMN Participant or a SubProcess.
      * 
-     * The method returns null if the process is the default process (no
-     * Participant)
+     * The method returns null if the process is the default process and is not
+     * contained in a BPMNElementNode.
      * 
-     * @return participant or null if default process
+     * @return containing BPMN Element or null if default process
      */
-    public Participant findParticipant() {
+    public BPMNElementNode findContainer() {
+        if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(this.getProcessType())) {
+            return null;
+        }
         Participant result = this.getModel().findParticipantByProcessId(this.getId());
-        return result;
+        if (result != null) {
+            return result;
+        }
+        // test if we find a subProcess
+        Set<Activity> allActivities = model.findAllActivities();
+        for (Activity a : allActivities) {
+            if (BPMNTypes.SUB_PROCESS.equals(a.getType())
+                    && a.hasExpandedSubProcess()) {
+                if (a.getId().equals(this.getId())) {
+                    // we found a corresponding sub process
+                    return a;
+                }
+            }
+        }
+        // not found!
+        return null;
+
     }
 
     /**
@@ -1470,7 +1461,8 @@ public class BPMNProcess extends BPMNElement {
      * @return cloned activity
      * @throws BPMNModelException
      */
-    public BPMNElementNode cloneBPMNElementNode(BPMNElementNode _bpmnElementNode) throws BPMNModelException {
+    public BPMNElementNode cloneBPMNElementNode(BPMNElementNode _bpmnElementNode)
+            throws BPMNModelException {
         BPMNElementNode result = null;
         Element newElement = (Element) _bpmnElementNode.getElementNode().cloneNode(true);
 
@@ -1512,7 +1504,7 @@ public class BPMNProcess extends BPMNElement {
             // this.definitions.insertBefore(bpmnElement, this.getBpmnDiagram());
             Element element = (Element) this.model.getDefinitions().insertBefore(newElement,
                     this.model.getBpmnDiagram());
-            result = new Message(this.model, element, BPMNTypes.MESSAGE, this);
+            result = new Message(this.model, element, this);
             this.model.getMessages().add((Message) result);
         }
 
@@ -1541,7 +1533,8 @@ public class BPMNProcess extends BPMNElement {
      * @return cloned activity
      * @throws BPMNModelException
      */
-    public BPMNElementEdge cloneBPMNElementEdge(BPMNElementEdge _bpmnElementEdge) throws BPMNModelException {
+    public BPMNElementEdge cloneBPMNElementEdge(BPMNElementEdge _bpmnElementEdge)
+            throws BPMNModelException {
         BPMNElementEdge result = null;
         Element newElement = (Element) _bpmnElementEdge.getElementNode().cloneNode(true);
         // update id and create new Instance..
@@ -1574,7 +1567,7 @@ public class BPMNProcess extends BPMNElement {
      * @throws BPMNModelException
      */
     private DataObject createBPMNDataObjectByNode(Element element) throws BPMNModelException {
-        DataObject dataObject = new DataObject(model, element, element.getLocalName(), this);
+        DataObject dataObject = new DataObject(model, element, this);
         getDataObjects().add(dataObject);
         return dataObject;
     }
@@ -1600,7 +1593,7 @@ public class BPMNProcess extends BPMNElement {
      * @throws BPMNModelException
      */
     private TextAnnotation createBPMNTextAnnotationByNode(Element element) throws BPMNModelException {
-        TextAnnotation textAnnotation = new TextAnnotation(model, element, element.getLocalName(), this);
+        TextAnnotation textAnnotation = new TextAnnotation(model, element, this);
 
         // read text <bpmn2:text>
         Set<Element> textNodes = model.findChildNodesByName(element, BPMNNS.BPMN2, "text");
@@ -1649,7 +1642,7 @@ public class BPMNProcess extends BPMNElement {
      * @return
      */
     private SequenceFlow createBPMNSequenceFlowByNode(Element element) {
-        SequenceFlow flow = new SequenceFlow(model, element, element.getLocalName(), this);
+        SequenceFlow flow = new SequenceFlow(model, element, this);
         getSequenceFlows().add(flow);
         return flow;
     }

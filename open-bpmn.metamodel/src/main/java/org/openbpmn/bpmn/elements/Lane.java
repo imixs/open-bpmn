@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
@@ -13,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
 /**
- * The BPMNLane object represents a lane in a laneset contianed by a process
+ * The BPMNLane object represents a lane in a lane set contained by a process
  * <p>
  * e.g.:
  * <p>
@@ -44,7 +45,7 @@ public class Lane extends BPMNElementNode {
     public final static double DEFAULT_HEIGHT = 150.0;
 
     /**
-     * Creates a BPMNLane out of the bpmn elemnet
+     * Creates a BPMNLane out of the bpmn element
      * <p>
      * < <bpmn2:lane id="lane_1" name="Lane 1">
      * </p>
@@ -53,8 +54,9 @@ public class Lane extends BPMNElementNode {
      * @throws BPMNModelException
      * @throws BPMNMissingElementException
      */
-    public Lane(BPMNModel model, Element node, BPMNProcess process) throws BPMNModelException {
-        super(model, node, process);
+    public Lane(BPMNModel model, Element node, BPMNProcess _bpmnProcess)
+            throws BPMNModelException {
+        super(model, node, BPMNTypes.LANE, _bpmnProcess);
     }
 
     /**
