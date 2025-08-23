@@ -87,6 +87,7 @@ public class BPMNModel {
     private boolean isDirty = false;
     private List<ModelNotification> notifications = null;
 
+    private String defaultNameSpace = null;
     private final Map<BPMNNS, String> URI_BY_NAMESPACE = new HashMap<>();
     private final Map<BPMNNS, String> PREFIX_BY_NAMESPACE = new HashMap<>();
     public static final String FILE_PREFIX = "file://";
@@ -128,16 +129,13 @@ public class BPMNModel {
         if (doc != null) {
             this.isInitializing = true; // <-- Start initializing
             this.doc = doc;
-
-            definitions = doc.getDocumentElement();
+            this.definitions = doc.getDocumentElement();
 
             // Parse all namespaces using the new URI-based method
             parseAllNamespaces();
 
             // Load BPMNDiagram element....
             loadBpmnDiagram();
-            // Load BPMNPlane element....
-            // loadBpmnPlanes();
 
             // init the participant and process list
             loadProcessList();
@@ -150,7 +148,6 @@ public class BPMNModel {
 
             this.isInitializing = false; // <-- ende initializing
         }
-
     }
 
     public boolean isInitializing() {
@@ -162,7 +159,7 @@ public class BPMNModel {
      */
     private void parseAllNamespaces() {
         // Test for default namespace without prefix
-        String defaultNameSpace = definitions.getAttribute("xmlns");
+        defaultNameSpace = definitions.getAttribute("xmlns");
         if (defaultNameSpace != null && !defaultNameSpace.isEmpty()) {
             // Try to map the default namespace to any BPMN namespace
             BPMNNS matchedNamespace = findMatchingNamespace(defaultNameSpace);
@@ -258,14 +255,95 @@ public class BPMNModel {
      * Search a specific node by its namespace and element name
      */
     public NodeList findElementsByName(Element parent, BPMNNS namespace, String elementName) {
-        // 1. Versuch: Mit Prefix
-        NodeList result = parent.getElementsByTagName(getPrefix(namespace) + elementName);
-        if (result != null && result.getLength() > 0) {
-            return result;
+        // We always use the Namespace-URI here!
+        return parent.getElementsByTagNameNS(getUri(namespace), elementName);
+    }
+
+    /*
+     * This helper method returns a set of child nodes by name from a given parent
+     * node. If no nodes were found, the method returns an empty list.
+     * <p>
+     * The method compares the Name including the namespace of the child elements.
+     * <p>
+     * See also {@link #findChildNodeByName(Element parent, String nodeName)
+     * findChildNodeByName}
+     *
+     * @param parent
+     * 
+     * @param nodeName
+     * 
+     * @return - list of nodes. If no nodes were found, the method returns an empty
+     * list
+     */
+    public Set<Element> findChildNodesByName(Element parent, BPMNNS ns, String nodeName) {
+
+        Set<Element> result = new LinkedHashSet<Element>();
+        String uri = getUri(ns);
+
+        if (parent != null && nodeName != null) {
+            NodeList childs = parent.getChildNodes();
+            for (int i = 0; i < childs.getLength(); i++) {
+                Node childNode = childs.item(i);
+                if (childNode != null && childNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element childElement = (Element) childNode;
+                    // Use namespace URI and local name instead of node name with prefix
+                    if (uri.equals(childElement.getNamespaceURI()) &&
+                            nodeName.equals(childElement.getLocalName())) {
+                        result.add(childElement);
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    /*
+     * This helper method returns the first child node by name from a given parent
+     * node. If no nodes were found the method returns null.
+     *
+     * See also {@link #findChildNodesByName(Element parent, String nodeName)
+     * findChildNodesByName}
+     *
+     * @param parent
+     * 
+     * @param nodeName
+     * 
+     * @return - Child Element matching the given node name. If no nodes were found,
+     * the method returns null
+     */
+    public Element findChildNodeByName(Element parent, BPMNNS ns, String nodeName) {
+
+        Set<Element> elementList = findChildNodesByName(parent, ns, nodeName);
+        if (elementList.iterator().hasNext()) {
+            // return first element
+            return elementList.iterator().next();
+        } else {
+            // no child elements with the given name found!
+            return null;
+        }
+    }
+
+    /**
+     * Creates an element with a given namespace.
+     * Prefers the default namespace (without prefix) if it matches the target URI.
+     */
+    public Element createElement(BPMNNS ns, String type) {
+        String uri = getUri(ns);
+        String prefix = getPrefix(ns);
+
+        // Check if we can use the default namespace instead of a prefix
+        if (uri.equals(defaultNameSpace)) {
+            // Use default namespace (no prefix)
+            prefix = "";
         }
 
-        // 2. Fallback: with URI if prefix is empty
-        return parent.getElementsByTagNameNS(getUri(namespace), elementName);
+        // Create the element with the appropriate qualified name
+        String qualifiedName = type;
+        if (!prefix.isEmpty()) {
+            qualifiedName = prefix + type;
+        }
+
+        return this.getDoc().createElementNS(uri, qualifiedName);
     }
 
     /**
@@ -809,27 +887,6 @@ public class BPMNModel {
     }
 
     /**
-     * Finds the matching bpmn plane by a given process id
-     * // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
-     * 
-     * @return
-     */
-    // public Element xxfindBPMNPlaneByProcessId(String bpmnProcessId) {
-    // if (bpmnPlanes == null || bpmnPlanes.size() == 0) {
-    // // not defined
-    // return null;
-    // }
-    // for (Element bpmnPlane : bpmnPlanes) {
-    // String processID = bpmnPlane.getAttribute("bpmnElement");
-    // if (bpmnProcessId.equals(processID)) {
-    // return bpmnPlane;
-    // }
-    // }
-    // // default to first defined plane....
-    // return bpmnPlanes.iterator().next();
-    // }
-
-    /**
      * Creates a BPMN shape node for this element
      * <p>
      * <bpmndi:BPMNShape id="BPMNShape_1" bpmnElement="StartEvent_1">
@@ -919,25 +976,14 @@ public class BPMNModel {
             process.deleteAllNodes();
             this.definitions.removeChild(process.getElementNode());
             if (participant.hasPool()) {
-                // this.bpmnPlane.removeChild(participant.getBpmnShape());
                 participant.getBpmnProcess().getBpmnPlane().removeChild(participant.getBpmnShape());
             }
             this.collaborationElement.removeParticipant(participant);
-            // .removeChild(participant.getElementNode());
             // remove the participant with its elements
-            // this.bpmnProcessList
             bpmnProcesses.remove(process.getId());
             this.getParticipants().remove(participant);
         }
 
-    }
-
-    /**
-     * Creates an element with a given namespace
-     */
-    public Element createElement(BPMNNS ns, String type) {
-        Element element = this.getDoc().createElementNS(getUri(ns), getPrefix(ns) + type);
-        return element;
     }
 
     /**
@@ -1636,60 +1682,6 @@ public class BPMNModel {
     }
 
     /**
-     * This helper method returns a set of child nodes by name from a given parent
-     * node. If no nodes were found, the method returns an empty list.
-     * <p>
-     * The method compares the Name including the namespace of the child elements.
-     * <p>
-     * See also {@link #findChildNodeByName(Element parent, String nodeName)
-     * findChildNodeByName}
-     * 
-     * @param parent
-     * @param nodeName
-     * @return - list of nodes. If no nodes were found, the method returns an empty
-     *         list
-     */
-    public Set<Element> findChildNodesByName(Element parent, BPMNNS ns, String nodeName) {
-        Set<Element> result = new LinkedHashSet<Element>();
-        // resolve the tag name
-        String tagName = getPrefix(ns) + nodeName;
-        if (parent != null && nodeName != null) {
-            NodeList childs = parent.getChildNodes();
-            for (int i = 0; i < childs.getLength(); i++) {
-                Node childNode = childs.item(i);
-                if (childNode != null && childNode.getNodeType() == Node.ELEMENT_NODE
-                        && tagName.equals(childNode.getNodeName())) {
-                    result.add((Element) childNode);
-                }
-            }
-        }
-        return result;
-    }
-
-    /**
-     * This helper method returns the first child node by name from a given parent
-     * node. If no nodes were found the method returns null.
-     * 
-     * See also {@link #findChildNodesByName(Element parent, String nodeName)
-     * findChildNodesByName}
-     * 
-     * @param parent
-     * @param nodeName
-     * @return - Child Element matching the given node name. If no nodes were found,
-     *         the method returns null
-     */
-    public Element findChildNodeByName(Element parent, BPMNNS ns, String nodeName) {
-        Set<Element> elementList = findChildNodesByName(parent, ns, nodeName);
-        if (elementList.iterator().hasNext()) {
-            // return first element
-            return elementList.iterator().next();
-        } else {
-            // no child elements with the given name found!
-            return null;
-        }
-    }
-
-    /**
      * Find a BPMNProcess by its ID.
      * 
      * if the ID == null the method returns the first public
@@ -2056,8 +2048,6 @@ public class BPMNModel {
         int publicCount = 0;
         participants = new LinkedHashSet<Participant>();
         List<Element> invalidParticipantElementList = new ArrayList<Element>();
-        // NodeList collaborationNodeList =
-        // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
         NodeList collaborationNodeList = findElementsByName(definitions, BPMNNS.BPMN2, "collaboration");
 
         if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
@@ -2066,8 +2056,6 @@ public class BPMNModel {
             Element _collaborationElement = (Element) collaborationNodeList.item(0);
             collaborationElement = new CollaborationElement(this, _collaborationElement);
             // now find all participants...
-            // NodeList participantList = collaborationElement
-            // .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "participant");
             NodeList participantList = findElementsByName(_collaborationElement, BPMNNS.BPMN2, "participant");
 
             logger.fine("..found " + participantList.getLength() + " participants");
@@ -2212,26 +2200,6 @@ public class BPMNModel {
         if (collaborationElement != null) {
             messageFlows = collaborationElement.loadMessageFlowList();
         }
-        // // NodeList collaborationNodeList =
-        // // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) +
-        // "collaboration");
-        // NodeList collaborationNodeList = findElementsByName(definitions,
-        // BPMNNS.BPMN2, "collaboration");
-        // if (collaborationNodeList != null && collaborationNodeList.getLength() > 0) {
-        // // we only take the first collaboration element (this is what is expected)
-        // collaborationElement = (Element) collaborationNodeList.item(0);
-        // // now find all messageFlows...
-        // // NodeList messageFlowList = collaborationElement
-        // // .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.MESSAGE_FLOW);
-        // NodeList messageFlowList = findElementsByName(collaborationElement,
-        // BPMNNS.BPMN2, BPMNTypes.MESSAGE_FLOW);
-        // logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
-        // for (int i = 0; i < messageFlowList.getLength(); i++) {
-        // Element item = (Element) messageFlowList.item(i);
-        // MessageFlow messageFlow = new MessageFlow(this, item);
-        // messageFlows.add(messageFlow);
-        // }
-        // }
     }
 
     /**
@@ -2245,8 +2213,6 @@ public class BPMNModel {
     private void loadSignalList() throws BPMNModelException {
         signals = new LinkedHashSet<Signal>();
         List<String> duplicates = new ArrayList<>();
-        // NodeList signalNodeList =
-        // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.SIGNAL);
         NodeList signalNodeList = findElementsByName(definitions, BPMNNS.BPMN2, BPMNTypes.SIGNAL);
         if (signalNodeList != null && signalNodeList.getLength() > 0) {
             for (int i = 0; i < signalNodeList.getLength(); i++) {
@@ -2271,8 +2237,6 @@ public class BPMNModel {
      */
     private void loadMessageList() throws BPMNModelException {
         messages = new LinkedHashSet<Message>();
-        // NodeList messageNodeList =
-        // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) +
         // BPMNTypes.MESSAGE);
         NodeList messageNodeList = findElementsByName(definitions, BPMNNS.BPMN2, BPMNTypes.MESSAGE);
         if (messageNodeList != null && messageNodeList.getLength() > 0) {
