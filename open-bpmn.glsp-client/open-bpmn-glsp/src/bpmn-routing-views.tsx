@@ -221,31 +221,45 @@ export class BPMNEdgeView extends PolylineEdgeViewWithGapsOnIntersections {
      * If two points are very close the radius need to be reduced
      */
     protected computeMaxRadius(pCurrent: Point, pLast: Point, pNext: Point): number {
-        let radius = 10;
-        const dRef = 0.5;
-        // verify last point
-        let xDif = Math.abs(pCurrent.x - pLast.x);
-        let yDif = Math.abs(pCurrent.y - pLast.y);
-        if (xDif > 0 && xDif <= 20) {
-            radius = xDif * dRef;
-            return radius;
+        const defaultRadius = 10;
+        const minRadius = 2;     // Minimum radius for visibility
+        const maxRadiusFactor = 0.45;  // Use up to 45% of the shortest segment
+
+        // Calculate segment lengths
+        const segmentLengthBefore = Math.max(
+            Math.abs(pCurrent.x - pLast.x),
+            Math.abs(pCurrent.y - pLast.y)
+        );
+
+        const segmentLengthAfter = Math.max(
+            Math.abs(pNext.x - pCurrent.x),
+            Math.abs(pNext.y - pCurrent.y)
+        );
+
+        // Skip radius calculation if either segment is 0 (same points)
+        if (segmentLengthBefore === 0 || segmentLengthAfter === 0) {
+            return minRadius;
         }
-        if (yDif > 0 && yDif <= 20) {
-            radius = yDif * dRef;
-            return radius;
+
+        // Use the shorter segment to determine maximum possible radius
+        const shortestSegment = Math.min(segmentLengthBefore, segmentLengthAfter);
+
+        // Calculate radius based on shortest segment
+        let calculatedRadius = shortestSegment * maxRadiusFactor;
+
+        // Apply constraints
+        calculatedRadius = Math.max(minRadius, calculatedRadius);  // Not smaller than minimum
+        calculatedRadius = Math.min(defaultRadius, calculatedRadius);  // Not larger than default
+
+        // For very short segments (< 5px), use an even smaller radius
+        if (shortestSegment < 5) {
+            calculatedRadius = Math.min(calculatedRadius, shortestSegment * 0.3);
         }
-        // verify next point
-        xDif = Math.abs(pCurrent.x - pNext.x);
-        yDif = Math.abs(pCurrent.y - pNext.y);
-        if (xDif > 0 && xDif <= 20) {
-            radius = xDif * dRef;
-            return radius;
-        }
-        if (yDif > 0 && yDif <= 20) {
-            radius = yDif * dRef;
-            return radius;
-        }
-        // default
-        return radius;
+
+        // Ensure radius is never more than half of the shortest segment
+        // This prevents visual artifacts
+        calculatedRadius = Math.min(calculatedRadius, shortestSegment / 2);
+
+        return Math.round(calculatedRadius * 10) / 10;  // Round to 1 decimal place
     }
 }

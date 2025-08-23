@@ -309,7 +309,6 @@ export class TaskNodeView extends ShapeView {
     }
 }
 
-
 /*
  * Render a BPMN Task element
  * A ActivityNodeView contains an optional icon and an extension text
