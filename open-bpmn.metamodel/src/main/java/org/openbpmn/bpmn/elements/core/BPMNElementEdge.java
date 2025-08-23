@@ -55,8 +55,7 @@ public abstract class BPMNElementEdge extends BPMNElement {
 
         // find the BPMNShape element. If not defined create a new one
         bpmnEdge = BPMNModelUtil.findBPMNEdgeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
-
-        if (bpmnEdge == null) {
+        if (bpmnEdge == null && this.getSourceElement() != null && this.getTargetElement() != null) {
             // create shape element
             logger.warning("create missing shape for edge " + this.getId());
             createBPMNEdge(bpmnProcess.getBpmnPlane());
