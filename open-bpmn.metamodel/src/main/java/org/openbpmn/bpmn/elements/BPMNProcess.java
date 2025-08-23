@@ -219,29 +219,35 @@ public class BPMNProcess extends BPMNElement {
             // if the id matches we have a direct macht in a non-collaboration element
             if (this.getId() != null && this.getId().equals(bpmnElementID)) {
                 bpmnPlane = planeElement;
-                break;
+                return;
             }
 
             // test if we have a collaboration model
             if (collaborationElementID != null && bpmnElementID.equals(collaborationElementID)) {
                 // match!
                 bpmnPlane = planeElement;
-                break;
+                return;
             }
 
             // if the current process is a SubProcess than the default process is the ID for
-            // the reference
-            if (parentProcess != null && parentProcess.getId().equals(bpmnElementID)) {
-                bpmnPlane = planeElement;
-                break;
+            // the reference.
+            // We need to recursive test all parents backwards to the main process (just in
+            // case a subProcess is embedded in another Subprocess)
+            BPMNProcess currentParent = parentProcess;
+            while (currentParent != null) {
+                String parentId = null;
+                parentId = currentParent.getId();
+                if (parentId != null && parentId.equals(bpmnElementID)) {
+                    bpmnPlane = planeElement;
+                    return;
+                }
+                // check next parent if available
+                currentParent = currentParent.parentProcess;
             }
-
         }
 
         // if no plane exists yes, we create one
-        if (bpmnPlane == null)
-
-        {
+        if (bpmnPlane == null) {
             // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
             logger.warning("│   ├── No bpmndi:BPMNPlane found for '" + this.getId() + "'- creating default plane");
             Element bpmnDefaultPlane = model.createElement(BPMNNS.BPMNDI, "BPMNPlane");
@@ -261,7 +267,8 @@ public class BPMNProcess extends BPMNElement {
                     bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
                 }
             }
-            model.getBpmnDiagram().appendChild(bpmnDefaultPlane);
+            BPMNElementOrder.appendChild(model.getBpmnDiagram(), bpmnDefaultPlane);
+
             bpmnPlane = bpmnDefaultPlane;
         }
     }
