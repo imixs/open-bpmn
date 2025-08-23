@@ -97,6 +97,7 @@ import org.openbpmn.glsp.jsonforms.SchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder;
 import org.openbpmn.glsp.jsonforms.UISchemaBuilder.Layout;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -227,7 +228,7 @@ public class BPMNGModelFactory implements GModelFactory {
             // create a pool if the contained process is private. Otherwise we create the
             // default process
             if (model.isCollaborationDiagram() && model.getSubProcess() == null) {
-                logger.info("│   ├── build collaboration diagram");
+                logger.info("│   ├── add collaboration diagram");
                 Set<Participant> participants = model.getParticipants();
                 for (Participant participant : participants) {
                     if (participant.getBpmnProcess() == null) {
@@ -266,11 +267,11 @@ public class BPMNGModelFactory implements GModelFactory {
 
                 // Test if we have a expanded Subprocess?
                 if (model.getSubProcess() == null) {
-                    logger.info("│   ├── build default process diagram without participants... ");
+                    logger.info("│   ├── add default process diagram without participants... ");
                     BPMNProcess defaultProcess = model.openDefaultProcess();
                     gRootNodeList.addAll(computeGModelElements(defaultProcess, null, gRootNodeList));
                 } else {
-                    logger.info("│   ├── build sub process diagram... ");
+                    logger.info("│   ├── add sub process diagram... ");
                     boolean flag = model.isDirty();
                     BPMNProcess currentProcess = model.getSubProcess();
                     gRootNodeList.addAll(computeGModelElements(currentProcess, null, gRootNodeList));
@@ -278,7 +279,7 @@ public class BPMNGModelFactory implements GModelFactory {
             }
 
             if (model.getSubProcess() == null) {
-                logger.info("│   ├── building message flows and associations... ");
+                logger.info("│   ├── add message flows and associations... ");
                 // Next add all Message objects.
                 // A message object is not assigned to any process!
                 for (Message message : modelState.getBpmnModel().getMessages()) {
@@ -341,7 +342,17 @@ public class BPMNGModelFactory implements GModelFactory {
             applyBPMNElementExtensions(newGModel, model.openDefaultProcess());
         }
 
-        logger.info("└── GModel completed.");
+        // update grid settings
+        boolean _autoAlign = modelState.getAutoAlign();
+        if (_autoAlign) {
+            modelState.getBpmnGridSnapper().setGridSize(BPMNGridSnapper.DEFAULT_GRID_SIZE);
+            logger.info("│   ├── auto alignment enabled");
+        } else {
+            modelState.getBpmnGridSnapper().setGridSize(1.0);
+            logger.info("│   ├── auto alignment disabled");
+        }
+
+        logger.info("└── build GModel completed.");
         return newGModel;
     }
 
@@ -1057,7 +1068,7 @@ public class BPMNGModelFactory implements GModelFactory {
             builder.source(computeGPort(source));
             // We add an edge Padding of 10 pixel.
             // See the view renderer in bpmn-routing-views.tsx.
-            builder.addArgument(GArguments.edgePadding(10));
+            builder.addArgument(GArguments.edgePadding(modelState.getBpmnGridSnapper().getGridSize()));
             BPMNGEdge bpmnGEdge = builder.build();
             bpmnGEdge.setKind("");
             // add the waypoints to the GLSP model....

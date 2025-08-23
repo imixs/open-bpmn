@@ -39,7 +39,6 @@ import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.glsp.bpmn.BpmnPackage;
 import org.openbpmn.glsp.elements.CreateBPMNNodeOperationHandler;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -130,7 +129,7 @@ public class BPMNCreateEventHandler extends CreateBPMNNodeOperationHandler {
                 // compute relative center position...
                 BPMNPoint targetPosition = new BPMNPoint(point.get().getX(), point.get().getY());
                 if (modelState.getAutoAlign() == true) {
-                    targetPosition = BPMNGridSnapper.centerBPMNPoint(event, point.get());
+                    targetPosition = modelState.getBpmnGridSnapper().centerBPMNPoint(event, point.get());
                 }
                 // compute default label position
                 double labelX = targetPosition.getX() + (Event.DEFAULT_WIDTH / 2) - (BPMNLabel.DEFAULT_WIDTH / 2);

@@ -40,7 +40,6 @@ import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -79,7 +78,7 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                 List<GPoint> newGLSPRoutingPoints = routingPoint.getNewRoutingPoints();
 
                 // round routing points ...
-                BPMNGridSnapper.round(newGLSPRoutingPoints);
+                modelState.getBpmnGridSnapper().round(newGLSPRoutingPoints);
 
                 // update the GModel.
                 GEdge edge = (GEdge) modelState.getIndex().get(id).orElse(null);

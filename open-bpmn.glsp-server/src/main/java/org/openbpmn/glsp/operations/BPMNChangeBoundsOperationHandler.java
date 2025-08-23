@@ -51,7 +51,6 @@ import org.openbpmn.glsp.bpmn.BPMNGNode;
 import org.openbpmn.glsp.bpmn.PoolGNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
 import org.openbpmn.glsp.utils.BPMNGModelUtil;
-import org.openbpmn.glsp.utils.BPMNGridSnapper;
 import org.openbpmn.glsp.utils.ModelTypes;
 
 import com.google.inject.Inject;
@@ -122,8 +121,8 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             boolean allowReset = filteredElementBounds.size() == 1;
             for (ElementAndBounds elementBound : filteredElementBounds) {
                 String id = elementBound.getElementId();
-                GPoint newPoint = BPMNGridSnapper.round(elementBound.getNewPosition());
-                GDimension newSize = BPMNGridSnapper.round(elementBound.getNewSize());
+                GPoint newPoint = modelState.getBpmnGridSnapper().round(elementBound.getNewPosition());
+                GDimension newSize = modelState.getBpmnGridSnapper().round(elementBound.getNewSize());
                 // find the corresponding GNode Element
                 GNode gNode = (GNode) modelState.getIndex().get(id).orElse(null);
                 if (gNode == null) {
@@ -141,14 +140,16 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 BPMNElementNode bpmnElementNode = (BPMNElementNode) modelState.getBpmnModel().findElementById(id);
                 if (bpmnElementNode != null) {
                     if (modelState.getAutoAlign() == true) {
-                        newPoint = BPMNGridSnapper.snap(bpmnElementNode, newPoint);
+                        newPoint = modelState.getBpmnGridSnapper().snap(bpmnElementNode, newPoint);
                     }
                     // Special snap mechanism to snap the dimensions of a Task or Pool to the Grid
                     if (bpmnElementNode instanceof Participant || bpmnElementNode instanceof Activity) {
-                        newSize.setHeight(Math.round(newSize.getHeight() / BPMNGridSnapper.GRID_SIZE)
-                                * BPMNGridSnapper.GRID_SIZE);
+                        newSize.setHeight(
+                                Math.round(newSize.getHeight() / modelState.getBpmnGridSnapper().getGridSize())
+                                        * modelState.getBpmnGridSnapper().getGridSize());
                         newSize.setWidth(
-                                Math.round(newSize.getWidth() / BPMNGridSnapper.GRID_SIZE) * BPMNGridSnapper.GRID_SIZE);
+                                Math.round(newSize.getWidth() / modelState.getBpmnGridSnapper().getGridSize())
+                                        * modelState.getBpmnGridSnapper().getGridSize());
                     }
 
                     // do we have moved a pool with elements?

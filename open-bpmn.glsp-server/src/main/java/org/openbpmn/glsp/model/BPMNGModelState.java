@@ -28,6 +28,7 @@ import org.openbpmn.bpmn.exceptions.BPMNInvalidReferenceException;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelFactory;
 import org.openbpmn.glsp.operations.BPMNPropertiesUpdateAction;
+import org.openbpmn.glsp.utils.BPMNGridSnapper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -37,8 +38,8 @@ import com.google.inject.Inject;
  * The BPMNGModelState extends the DefaultGModelState and provides the property
  * 'bpmnModel' which holds an instance of the BPMN MetaModel.
  * <p>
- * The BPMNModelState also holds a revision stack of all model updates to
- * support the undo/redo actions that are triggered by ....?
+ * The BPMNModelState also holds the grid size and a revision stack of all model
+ * updates to support the undo/redo actions that are triggered by ....?
  * 
  * 
  * @author rsoika
@@ -54,6 +55,8 @@ public class BPMNGModelState extends DefaultGModelState {
     private int MAX_UNDOSTACK_SIZE = 20;
     private boolean initialized = false;
     private String rootID = "undefined_root_id";
+    private BPMNGridSnapper bpmnGridSnapper = null;
+    private Boolean autoAlign = null;
 
     @Inject
     protected BPMNGModelFactory bpmnGModelFactory;
@@ -63,6 +66,7 @@ public class BPMNGModelState extends DefaultGModelState {
 
     public BPMNGModelState() {
         resetRevisions();
+        bpmnGridSnapper = new BPMNGridSnapper();
     }
 
     public BPMNModel getBpmnModel() {
@@ -89,16 +93,22 @@ public class BPMNGModelState extends DefaultGModelState {
      * 
      * <open-bpmn:auto-align>true</open-bpmn:auto-align>
      */
-    public void setAutoAlign(boolean autoAlign) {
+    public void setAutoAlign(boolean _autoAlign) {
         Element autoAlignElement;
         try {
             if (bpmnModel.getDefaultProcess() != null) {
                 autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcess().getElementNode(),
                         BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
-                autoAlignElement.setTextContent("" + autoAlign);
+                autoAlignElement.setTextContent("" + _autoAlign);
+
+                this.autoAlign = _autoAlign;
+                if (autoAlign) {
+                    bpmnGridSnapper.setGridSize(BPMNGridSnapper.DEFAULT_GRID_SIZE);
+                } else {
+                    bpmnGridSnapper.setGridSize(1.0);
+                }
             }
         } catch (BPMNInvalidReferenceException e) {
-
             e.printStackTrace();
         }
     }
@@ -109,17 +119,25 @@ public class BPMNGModelState extends DefaultGModelState {
      * <open-bpmn:auto-align>true</open-bpmn:auto-align>
      */
     public boolean getAutoAlign() {
+        if (autoAlign != null) {
+            return autoAlign;
+        }
         Element autoAlignElement;
         try {
             if (bpmnModel.getDefaultProcess() != null) {
                 autoAlignElement = bpmnModel.findExtensionElement(bpmnModel.getDefaultProcess().getElementNode(),
                         BPMNModelFactory.OPEN_BPMN_NAMESPACE, "auto-align");
-                return Boolean.parseBoolean(autoAlignElement.getTextContent());
+                autoAlign = Boolean.parseBoolean(autoAlignElement.getTextContent());
+                return autoAlign;
             }
         } catch (BPMNInvalidReferenceException e) {
             // extension is not defined
         }
         return false;
+    }
+
+    public BPMNGridSnapper getBpmnGridSnapper() {
+        return bpmnGridSnapper;
     }
 
     /**

@@ -26,7 +26,6 @@ import org.openbpmn.bpmn.elements.BPMNProcess;
 import org.openbpmn.bpmn.elements.Participant;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -51,7 +50,7 @@ public class BPMNAutoAlignOperationHandler extends GModelOperationHandler<BPMNAu
             logger.finest("Auto align all elements....");
             Set<Participant> participants = modelState.getBpmnModel().getParticipants();
             for (Participant participant : participants) {
-                BPMNGridSnapper.snap(participant);
+                modelState.getBpmnGridSnapper().snap(participant);
             }
 
             List<BPMNProcess> processList = modelState.getBpmnModel().getBpmnProcessList();
@@ -59,7 +58,7 @@ public class BPMNAutoAlignOperationHandler extends GModelOperationHandler<BPMNAu
                 // snap all elements
                 Set<BPMNElementNode> allNodes = process.getAllFlowElementNodes();
                 for (BPMNElementNode _node : allNodes) {
-                    BPMNGridSnapper.snap(_node);
+                    modelState.getBpmnGridSnapper().snap(_node);
                 }
             }
             modelState.setAutoAlign(true);

@@ -30,7 +30,6 @@ import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.glsp.model.BPMNGModelState;
-import org.openbpmn.glsp.utils.BPMNGridSnapper;
 
 import com.google.inject.Inject;
 
@@ -83,7 +82,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     }
                     // add the new routing points
                     for (GPoint point : newGLSPRoutingPoints) {
-                        point = BPMNGridSnapper.round(point);
+                        point = modelState.getBpmnGridSnapper().round(point);
                         BPMNPoint bpmnPoint = new BPMNPoint(xOffset + point.getX(), yOffset + point.getY());
                         logger.fine("│   ├── add point: " + point.getX() + "," + point.getY());
                         bpmnElementEdge.addWayPoint(bpmnPoint);

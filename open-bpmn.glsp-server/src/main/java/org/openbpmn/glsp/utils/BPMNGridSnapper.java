@@ -21,9 +21,18 @@ import org.openbpmn.bpmn.exceptions.BPMNMissingElementException;
 public class BPMNGridSnapper {
     private static Logger logger = Logger.getLogger(BPMNGridSnapper.class.getName());
 
-    public static final double GRID_SIZE = 10.0;
+    public static final double DEFAULT_GRID_SIZE = 10.0;
+    private double GRID_SIZE = 10.0;
 
-    private BPMNGridSnapper() {
+    public BPMNGridSnapper() {
+    }
+
+    public void setGridSize(double size) {
+        GRID_SIZE = size;
+    }
+
+    public double getGridSize() {
+        return GRID_SIZE;
     }
 
     /**
@@ -33,7 +42,7 @@ public class BPMNGridSnapper {
      * @param pos
      * @return
      */
-    public static GPoint snap(final BPMNElementNode elementNode, final GPoint point) {
+    public GPoint snap(final BPMNElementNode elementNode, final GPoint point) {
         double x = point.getX();
         double y = point.getY();
         x = Math.round(x / GRID_SIZE) * GRID_SIZE;
@@ -52,7 +61,7 @@ public class BPMNGridSnapper {
      * @param point
      * @return
      */
-    public static GPoint round(final GPoint point) {
+    public GPoint round(final GPoint point) {
         double x = Math.round(point.getX());
         double y = Math.round(point.getY());
         return GraphUtil.point(x, y);
@@ -61,7 +70,7 @@ public class BPMNGridSnapper {
     /**
      * Helper method to snap routing points to the grid
      */
-    public static void round(List<GPoint> points) {
+    public void round(List<GPoint> points) {
         for (GPoint point : points) {
             // Update the existing point's coordinates
             point.setX(Math.round(point.getX()));
@@ -75,7 +84,7 @@ public class BPMNGridSnapper {
      * @param point
      * @return
      */
-    public static GDimension round(final GDimension dimension) {
+    public GDimension round(final GDimension dimension) {
         double w = Math.round(dimension.getWidth());
         double h = Math.round(dimension.getHeight());
         return GraphUtil.dimension(w, h);
@@ -89,7 +98,7 @@ public class BPMNGridSnapper {
      * @param point
      * @return a BPMNPoint
      */
-    public static BPMNPoint centerBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
+    public BPMNPoint centerBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
         // center
         point.setX(point.getX() - (elementNode.getDefaultWidth() / 2));
         point.setY(point.getY() - (elementNode.getDefaultHeight() / 2));
@@ -105,7 +114,7 @@ public class BPMNGridSnapper {
      * @param point
      * @return a BPMNPoint
      */
-    public static BPMNPoint snapBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
+    public BPMNPoint snapBPMNPoint(final BPMNElementNode elementNode, final GPoint point) {
         double x = point.getX();
         double y = point.getY();
         x = Math.round(x / GRID_SIZE) * GRID_SIZE;
@@ -127,7 +136,7 @@ public class BPMNGridSnapper {
      * @return
      * @throws BPMNMissingElementException
      */
-    public static void snap(final BPMNElementNode elementNode) {
+    public void snap(final BPMNElementNode elementNode) {
         try {
             logger.finest("...snap " + elementNode.getId() + "  Pos: " + elementNode.getBounds().getPosition());
             double x = elementNode.getBounds().getPosition().getX();
