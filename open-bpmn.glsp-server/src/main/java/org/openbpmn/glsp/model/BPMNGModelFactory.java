@@ -548,16 +548,18 @@ public class BPMNGModelFactory implements GModelFactory {
         List<GModelElement> gNodeList = new ArrayList<>();
 
         // Add all Lanes
-        for (Lane lane : process.getLanes()) {
-            logger.debug("lane: " + lane.getName());
-            // compute relative position
-            GPoint point = computeRelativeGPoint(lane.getBounds(), participant);
-            // build GNode
-            LaneGNode laneNode = new LaneGNodeBuilder(lane) //
-                    .position(point) //
-                    .build();
+        if (participant != null) {
+            for (Lane lane : process.getLanes()) {
+                logger.debug("lane: " + lane.getName());
+                // compute relative position
+                GPoint point = computeRelativeGPoint(lane.getBounds(), participant);
+                // build GNode
+                LaneGNode laneNode = new LaneGNodeBuilder(lane) //
+                        .position(point) //
+                        .build();
 
-            gNodeList.add(laneNode);
+                gNodeList.add(laneNode);
+            }
         }
 
         // Add all Tasks
