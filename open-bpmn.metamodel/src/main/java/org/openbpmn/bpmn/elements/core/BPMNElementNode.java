@@ -365,9 +365,6 @@ public abstract class BPMNElementNode extends BPMNElement {
             return; // no op!
         }
         // remove incoming childs...
-        // NodeList incomingSequenceFlows = getElementNode()
-        // .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) +
-        // "incoming");
         NodeList incomingSequenceFlows = bpmnProcess.getModel().findElementsByName(getElementNode(), BPMNNS.BPMN2,
                 "incoming");
         for (int i = 0; i < incomingSequenceFlows.getLength(); i++) {
@@ -383,9 +380,6 @@ public abstract class BPMNElementNode extends BPMNElement {
 
         }
         // remove outgoing childs...
-        // NodeList outgoingSequenceFlows = getElementNode()
-        // .getElementsByTagName(bpmnProcess.getModel().getPrefix(BPMNNS.BPMN2) +
-        // "outgoing");
         NodeList outgoingSequenceFlows = bpmnProcess.getModel().findElementsByName(getElementNode(),
                 BPMNNS.BPMN2, "outgoing");
         for (int i = 0; i < outgoingSequenceFlows.getLength(); i++) {

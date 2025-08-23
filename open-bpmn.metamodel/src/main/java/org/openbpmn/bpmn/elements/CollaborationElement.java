@@ -74,12 +74,7 @@ public class CollaborationElement extends BPMNElementNode {
      */
     public Set<MessageFlow> loadMessageFlowList() throws BPMNModelException {
         LinkedHashSet<MessageFlow> messageFlows = new LinkedHashSet<MessageFlow>();
-        // NodeList collaborationNodeList =
-        // definitions.getElementsByTagName(getPrefix(BPMNNS.BPMN2) + "collaboration");
-
         // now find all messageFlows...
-        // NodeList messageFlowList = collaborationElement
-        // .getElementsByTagName(getPrefix(BPMNNS.BPMN2) + BPMNTypes.MESSAGE_FLOW);
         NodeList messageFlowList = model.findElementsByName(this.elementNode, BPMNNS.BPMN2, BPMNTypes.MESSAGE_FLOW);
         logger.fine("..found " + messageFlowList.getLength() + " messageFlows");
         for (int i = 0; i < messageFlowList.getLength(); i++) {

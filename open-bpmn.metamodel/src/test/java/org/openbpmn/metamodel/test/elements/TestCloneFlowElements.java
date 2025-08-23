@@ -59,13 +59,9 @@ public class TestCloneFlowElements {
             clonedTask.setName("Copy of Task 1");
 
             // The id from the documentation must be changed!
-            // NodeList originDocumentationElements = originTask.getElementNode()
-            // .getElementsByTagName("bpmn2:documentation");
             NodeList originDocumentationElements = model.findElementsByName(originTask.getElementNode(), BPMNNS.BPMN2,
                     "documentation");
 
-            // NodeList clonedDocumentationElements = clonedTask.getElementNode()
-            // .getElementsByTagName("bpmn2:documentation");
             NodeList clonedDocumentationElements = model.findElementsByName(clonedTask.getElementNode(), BPMNNS.BPMN2,
                     "documentation");
             assertNotNull(clonedDocumentationElements);
@@ -76,14 +72,9 @@ public class TestCloneFlowElements {
             assertNotEquals(originDocNode.getAttribute("id"), clonedDocNode.getAttribute("id"));
 
             // next we expect no outgoing and incoming sequenceFlows...
-
-            // NodeList incomingSequenceFlows = clonedTask.getElementNode()
-            // .getElementsByTagName("bpmn2:incoming");
             NodeList incomingSequenceFlows = model.findElementsByName(clonedTask.getElementNode(), BPMNNS.BPMN2,
                     "incoming");
 
-            // NodeList outgoingSequenceFlows = clonedTask.getElementNode()
-            // .getElementsByTagName("bpmn2:outgoing");
             NodeList outgoingSequenceFlows = model.findElementsByName(clonedTask.getElementNode(),
                     BPMNNS.BPMN2, "outgoing");
 
