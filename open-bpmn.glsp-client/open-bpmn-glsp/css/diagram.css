@@ -83,6 +83,12 @@
     stroke-width: 1px;
     stroke: var(--theia-foreground);
 }
+.callActivity>.sprotty-node { 
+    fill: #84a1bd;
+    stroke-width: 3px;
+    stroke: var(--theia-foreground);
+}
+
 
 .event.startEvent>circle {
     fill: #57A14C;

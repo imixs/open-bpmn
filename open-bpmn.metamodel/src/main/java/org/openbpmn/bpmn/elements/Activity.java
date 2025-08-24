@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openbpmn.bpmn.BPMNModel;
+import org.openbpmn.bpmn.BPMNNS;
 import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.core.BPMNElementNode;
 import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
@@ -89,11 +90,39 @@ public class Activity extends BPMNElementNode {
             throw new BPMNInvalidTypeException(BPMNInvalidTypeException.INVALID_TYPE,
                     "Activity type '" + type + "' can not contain a sub process!");
         }
+
         // open embedded process
         if (subProcess == null) {
-            subProcess = new BPMNProcess(model, this.getElementNode(), BPMNTypes.PROCESS_TYPE_NONE, bpmnProcess);
-            model.getBpmnProcesses().put(subProcess.getId(), subProcess);
-            subProcess.init();
+            // in case of a bpmn:subProcess we can just open the process on the activity
+            // element node
+            if (BPMNTypes.SUB_PROCESS.equals(type)) {
+                subProcess = new BPMNProcess(model, this.getElementNode(),
+                        BPMNTypes.PROCESS_TYPE_NONE, bpmnProcess);
+                model.getBpmnProcesses().put(subProcess.getId(), subProcess);
+                subProcess.init();
+            }
+
+            // in case of a bpmn:callActivity the process is referred by the attribute
+            // 'calledElement'
+            if (BPMNTypes.CALL_ACTIVITY.equals(type)) {
+                String subProcessID = this.elementNode.getAttribute("calledElement");
+                subProcess = model.findProcessById(subProcessID);
+                // in case no subProcess was found we create a dummy process just to hold a
+                // valid instance
+                if (subProcess == null) {
+                    // try to find a bpmn:globalTask with this id
+                    Element globalTask = model.findChildNodeByName(model.getDefinitions(), BPMNNS.BPMN2,
+                            "globalTask");
+                    if (globalTask != null) {
+                        subProcess = new BPMNProcess(this.model, (Element) globalTask,
+                                BPMNTypes.PROCESS_TYPE_NONE, null);
+                    }
+                }
+                if (subProcess != null) {
+                    subProcess.init();
+                }
+
+            }
         }
 
         return subProcess;
