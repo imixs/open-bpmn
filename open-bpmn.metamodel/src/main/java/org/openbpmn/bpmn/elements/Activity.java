@@ -114,6 +114,7 @@ public class Activity extends BPMNElementNode {
                     Element globalTask = model.findChildNodeByName(model.getDefinitions(), BPMNNS.BPMN2,
                             "globalTask");
                     if (globalTask != null) {
+                        logger.warning("add missing BPMNProcess for Call Activity " + this.getId());
                         subProcess = new BPMNProcess(this.model, (Element) globalTask,
                                 BPMNTypes.PROCESS_TYPE_NONE, null);
                     }

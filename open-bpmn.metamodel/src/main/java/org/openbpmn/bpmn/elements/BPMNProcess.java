@@ -58,6 +58,7 @@ public class BPMNProcess extends BPMNElement {
     protected Set<SequenceFlow> sequenceFlows = null;
     protected Set<Association> associations = null;
     protected BPMNProcess parentProcess = null;
+    protected BPMNElementNode processContainer = null;
 
     protected Set<Lane> lanes = null;
     protected Element bpmnPlane = null;
@@ -1371,8 +1372,8 @@ public class BPMNProcess extends BPMNElement {
     }
 
     /**
-     * This method returns the BPMNElement this this process is contained in. This
-     * can be either a BPMN Participant or a SubProcess.
+     * This method returns the BPMNElement this process is contained in. This
+     * can be either a BPMN Participant or a SubProcess/CallActivity.
      * 
      * The method returns null if the process is the default process and is not
      * contained in a BPMNElementNode.
@@ -1380,21 +1381,33 @@ public class BPMNProcess extends BPMNElement {
      * @return containing BPMN Element or null if default process
      */
     public BPMNElementNode findContainer() {
-        if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(this.getProcessType())) {
-            return null;
+        if (processContainer != null) {
+            return processContainer;
         }
-        Participant result = this.getModel().findParticipantByProcessId(this.getId());
-        if (result != null) {
-            return result;
+
+        Participant participant = this.getModel().findParticipantByProcessId(this.getId());
+        if (participant != null) {
+            processContainer = participant;
+            return processContainer = participant;
         }
-        // test if we find a subProcess
+        // test if we find a subProcess/callActivity
         Set<Activity> allActivities = model.findAllActivities();
         for (Activity a : allActivities) {
             if (BPMNTypes.SUB_PROCESS.equals(a.getType())
                     && a.hasExpandedSubProcess()) {
                 if (a.getId().equals(this.getId())) {
                     // we found a corresponding sub process
-                    return a;
+                    processContainer = a;
+                    return processContainer;
+                }
+            }
+
+            if (BPMNTypes.CALL_ACTIVITY.equals(a.getType())) {
+                String calledElement = a.getAttribute("calledElement");
+                if (calledElement != null && calledElement.equals(this.getId())) {
+                    // we found a corresponding sub process
+                    processContainer = a;
+                    return processContainer;
                 }
             }
         }
