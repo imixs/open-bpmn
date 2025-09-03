@@ -472,7 +472,9 @@ public class BPMNModel {
     }
 
     /**
-     * Returns the public default process. The process can be not yet initialized.
+     * Returns the public default process.
+     * <p>
+     * Note: The process may need to be initialized first.
      * 
      * @return
      */
