@@ -5,7 +5,7 @@
     <bpmn2:participant id="Participant_00" name="Customer Onboarding" processRef="customer_onboarding_en"/>
   </bpmn2:collaboration>
   <bpmn2:process id="customer_onboarding_en" isExecutable="true" name="Customer Onboarding" processType="Public">
-    <bpmn2:documentation id="documentation_sHV96g"/>
+    <bpmn2:documentation id="documentation_SvAsKg"/>
     <bpmn2:extensionElements>
       <zeebe:userTaskForm id="userTaskForm_0khiqpl">{
   "components": [
@@ -77,7 +77,7 @@
       <open-bpmn:auto-align/>
     </bpmn2:extensionElements>
     <bpmn2:startEvent id="StartEvent_ApplicationReceived" name="Application received">
-      <bpmn2:documentation id="documentation_aWTaEg"/>
+      <bpmn2:documentation id="documentation_yjnQlw"/>
       <bpmn2:extensionElements>
         <zeebe:ioMapping>
           <zeebe:output source="= string(now())" target="documentReferenceId"/>
@@ -86,56 +86,56 @@
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_1gd6p37" sourceRef="ServiceTask_GetCreditScore" targetRef="BusinessRuleTask_CheckApplicationAutomatically">
-      <bpmn2:documentation id="documentation_EyTbNw"/>
+      <bpmn2:documentation id="documentation_Z0fCgA"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_01vh1zw" sourceRef="ServiceTask_RejectPolicy" targetRef="SendTask_SendRejection">
-      <bpmn2:documentation id="documentation_50tbaQ"/>
+      <bpmn2:documentation id="documentation_C0Co4Q"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="SendTask_SendRejection" targetRef="EndEvent_ApplicationRejected">
-      <bpmn2:documentation id="documentation_G8M7nA"/>
+      <bpmn2:documentation id="documentation_g0tOTw"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_Red" name="Red (severe risk)" sourceRef="ExclusiveGateway_Risk" targetRef="ServiceTask_RejectPolicy">
       <bpmn2:documentation>Automatic rejection -severe risk</bpmn2:documentation>
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">= some risk in riskLevels satisfies risk = "red"</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="BusinessRuleTask_CheckApplicationAutomatically" targetRef="ExclusiveGateway_Risk">
-      <bpmn2:documentation id="documentation_BttiEg"/>
+      <bpmn2:documentation id="documentation_Lo0IAA"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_Green" name="Green (no risk)" sourceRef="ExclusiveGateway_Risk" targetRef="ServiceTask_DeliverPolicy">
       <bpmn2:documentation>Automatic approval - no risk</bpmn2:documentation>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="ServiceTask_DeliverPolicy" targetRef="SendTask_SendPolicy">
-      <bpmn2:documentation id="documentation_dZj0gg"/>
+      <bpmn2:documentation id="documentation_hFAGdA"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_11" name="" sourceRef="SendTask_SendPolicy" targetRef="EndEvent_ApplicationIssued">
-      <bpmn2:documentation id="documentation_HMWg1Q"/>
+      <bpmn2:documentation id="documentation_lwdXIg"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_ApplicationAccepted" name="Application accepted" sourceRef="ExclusiveGateway_Decision" targetRef="ServiceTask_DeliverPolicy">
-      <bpmn2:documentation id="documentation_bQXGtg"/>
+      <bpmn2:documentation id="documentation_Z93D8Q"/>
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">= approved </bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_ApplicationDeclined" name="Application declined" sourceRef="ExclusiveGateway_Decision" targetRef="ServiceTask_RejectPolicy">
-      <bpmn2:documentation id="documentation_gQ7ETg"/>
+      <bpmn2:documentation id="documentation_Ax3f7Q"/>
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">= not(approved)</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="StartEvent_ApplicationReceived" targetRef="ServiceTask_GetCreditScore">
-      <bpmn2:documentation id="documentation_5kWazQ"/>
+      <bpmn2:documentation id="documentation_yL8KXA"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_Yellow" name="Yellow (moderate risk)" sourceRef="ExclusiveGateway_Risk" targetRef="Activity_ManualCheck">
       <bpmn2:documentation>Manual check - moderate risk</bpmn2:documentation>
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">= every risk in riskLevels satisfies risk = "yellow"</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="Flow_0ik8h65" sourceRef="Activity_ManualCheck" targetRef="ExclusiveGateway_Decision">
-      <bpmn2:documentation id="documentation_TnuqFQ"/>
+      <bpmn2:documentation id="documentation_YaQsig"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="Flow_177paze" sourceRef="ErrorBoundaryEvent_FraudDetected" targetRef="SendTask_ReportFraud">
-      <bpmn2:documentation id="documentation_mc0nPg"/>
+      <bpmn2:documentation id="documentation_yFkKIA"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="Flow_0cvhizd" sourceRef="SendTask_ReportFraud" targetRef="TerminateEvent_ApplicationCanceledFraud">
-      <bpmn2:documentation id="documentation_aJ8oRQ"/>
+      <bpmn2:documentation id="documentation_YI5iQg"/>
     </bpmn2:sequenceFlow>
     <bpmn2:subProcess id="Activity_1ke2ixr" triggeredByEvent="true">
-      <bpmn2:documentation id="documentation_1ICupg"/>
+      <bpmn2:documentation id="documentation_oPS0Vw"/>
       <bpmn2:endEvent id="EndMessageEvent_Timeout" name="Timeout handled">
         <bpmn2:documentation>Ends the subprocess and send message timeout handled</bpmn2:documentation>
         <bpmn2:extensionElements>
@@ -145,10 +145,10 @@
         <bpmn2:messageEventDefinition id="MessageEventDefinition_0tax7tp"/>
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="Flow_151qlxc" sourceRef="StartErrorEvent_Timeout" targetRef="UserTask_HandleTimeout">
-        <bpmn2:documentation id="documentation_19Vgsg"/>
+        <bpmn2:documentation id="documentation_05d0tg"/>
       </bpmn2:sequenceFlow>
       <bpmn2:sequenceFlow id="Flow_0dppbeu" sourceRef="UserTask_HandleTimeout" targetRef="EndMessageEvent_Timeout">
-        <bpmn2:documentation id="documentation_Roj17g"/>
+        <bpmn2:documentation id="documentation_RFqMOw"/>
       </bpmn2:sequenceFlow>
       <bpmn2:startEvent id="StartErrorEvent_Timeout" name="Timeout">
         <bpmn2:documentation>Catches timeout error event and starts the subprocess</bpmn2:documentation>
@@ -162,14 +162,14 @@
       </bpmn2:userTask>
     </bpmn2:subProcess>
     <bpmn2:subProcess id="Activity_0vp33kx" triggeredByEvent="true">
-      <bpmn2:documentation id="documentation_a2SL4w"/>
+      <bpmn2:documentation id="documentation_IMcNow"/>
       <bpmn2:startEvent id="StartMessageEvent_CancellationRequested" name="Cancelation requested">
         <bpmn2:documentation>Customer onboarding cancellation message received</bpmn2:documentation>
         <bpmn2:outgoing>Flow_12nmks0</bpmn2:outgoing>
         <bpmn2:messageEventDefinition id="MessageEventDefinition_0tj9nv6" messageRef="Message_0dm6uaq"/>
       </bpmn2:startEvent>
       <bpmn2:sequenceFlow id="Flow_12nmks0" sourceRef="StartMessageEvent_CancellationRequested" targetRef="ServiceTask_CancelApplication">
-        <bpmn2:documentation id="documentation_LZ0OMA"/>
+        <bpmn2:documentation id="documentation_RNPbGw"/>
       </bpmn2:sequenceFlow>
       <bpmn2:serviceTask id="ServiceTask_CancelApplication" name="Cancel application">
         <bpmn2:documentation>Cancel application</bpmn2:documentation>
@@ -180,7 +180,7 @@
         <bpmn2:outgoing>Flow_19iipc6</bpmn2:outgoing>
       </bpmn2:serviceTask>
       <bpmn2:sequenceFlow id="Flow_19iipc6" sourceRef="ServiceTask_CancelApplication" targetRef="ParallelGateway_CancelApplication">
-        <bpmn2:documentation id="documentation_cLc60Q"/>
+        <bpmn2:documentation id="documentation_Nr40Fw"/>
       </bpmn2:sequenceFlow>
       <bpmn2:endEvent id="EndMessageEvent_InformCustomer" name="Customer notified about successful cancelation">
         <bpmn2:documentation>Inform customer of a successful cancelation</bpmn2:documentation>
@@ -191,16 +191,16 @@
         <bpmn2:messageEventDefinition id="MessageEventDefinition_0j82oqj"/>
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="Flow_0qrakss" sourceRef="ParallelGateway_CancelApplication" targetRef="EndMessageEvent_InformCustomer">
-        <bpmn2:documentation id="documentation_QD6uXQ"/>
+        <bpmn2:documentation id="documentation_sCw2wA"/>
       </bpmn2:sequenceFlow>
       <bpmn2:parallelGateway id="ParallelGateway_CancelApplication">
-        <bpmn2:documentation id="documentation_lQfLnw"/>
+        <bpmn2:documentation id="documentation_9G8dQQ"/>
         <bpmn2:incoming>Flow_19iipc6</bpmn2:incoming>
         <bpmn2:outgoing>Flow_0qrakss</bpmn2:outgoing>
         <bpmn2:outgoing>Flow_1jml1az</bpmn2:outgoing>
       </bpmn2:parallelGateway>
       <bpmn2:sequenceFlow id="Flow_1jml1az" sourceRef="ParallelGateway_CancelApplication" targetRef="EndMessageEvent_InformOperations">
-        <bpmn2:documentation id="documentation_9DIvzw"/>
+        <bpmn2:documentation id="documentation_0CiOpg"/>
       </bpmn2:sequenceFlow>
       <bpmn2:endEvent id="EndMessageEvent_InformOperations" name="Operations Team notified about successful cancelation">
         <bpmn2:documentation>Inform operations team of a successful cancelation</bpmn2:documentation>
@@ -212,7 +212,7 @@
       </bpmn2:endEvent>
     </bpmn2:subProcess>
     <bpmn2:callActivity calledElement="ManualCheck" id="Activity_ManualCheck" name="Manual Check">
-      <bpmn2:documentation id="documentation_l7IcCA"/>
+      <bpmn2:documentation id="documentation_DzpXwA"/>
       <bpmn2:extensionElements>
         <zeebe:calledElement processId="ManualCheck" propagateAllChildVariables="false"/>
       </bpmn2:extensionElements>
@@ -224,7 +224,7 @@
       <bpmn2:incoming>SequenceFlow_11</bpmn2:incoming>
     </bpmn2:endEvent>
     <bpmn2:serviceTask id="SendTask_SendPolicy" name="Send confirmation" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v1.template" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
-      <bpmn2:documentation id="documentation_Xcpx0g"/>
+      <bpmn2:documentation id="documentation_o3il3Q"/>
       <bpmn2:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendgrid:1"/>
         <zeebe:ioMapping>
@@ -250,7 +250,7 @@
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_Decision" name="Decision?">
-      <bpmn2:documentation id="documentation_00tXtA"/>
+      <bpmn2:documentation id="documentation_fjcIGw"/>
       <bpmn2:incoming>Flow_0ik8h65</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_ApplicationAccepted</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_ApplicationDeclined</bpmn2:outgoing>
@@ -269,7 +269,7 @@
       <bpmn2:outgoing>SequenceFlow_01vh1zw</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:serviceTask id="SendTask_SendRejection" name="Send rejection" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v1.template" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
-      <bpmn2:documentation id="documentation_aHvF0w"/>
+      <bpmn2:documentation id="documentation_WzwWKw"/>
       <bpmn2:extensionElements>
         <zeebe:ioMapping>
           <zeebe:input source="secrets.SENDGRID_DEMO" target="apiKey"/>
@@ -291,7 +291,7 @@
       <bpmn2:errorEventDefinition errorRef="Error_01bezxs" id="ErrorEventDefinition_1ylbfzv"/>
     </bpmn2:boundaryEvent>
     <bpmn2:sendTask id="SendTask_ReportFraud" name="Report fraud">
-      <bpmn2:documentation id="documentation_MYlg2Q"/>
+      <bpmn2:documentation id="documentation_AsyHyQ"/>
       <bpmn2:extensionElements>
         <zeebe:taskDefinition type="reportFraud"/>
       </bpmn2:extensionElements>
@@ -332,7 +332,7 @@
     </bpmn2:serviceTask>
   </bpmn2:process>
   <bpmn2:message id="Message_0fvpzfg" name="Message_DocumentRequested">
-    <bpmn2:documentation id="documentation_Fi9FDg"/>
+    <bpmn2:documentation id="documentation_n5HHvw"/>
     <bpmn2:extensionElements>
       <zeebe:subscription correlationKey="= documentReferenceId"/>
     </bpmn2:extensionElements>
@@ -340,7 +340,7 @@
   <bpmn2:error errorCode="02" id="Error_01bezxs" name="Error_FraudDetected"/>
   <bpmn2:error errorCode="00" id="Error_1u68flh" name="Error_Timeout"/>
   <bpmn2:message id="Message_0dm6uaq" name="Message_CancellationRequested">
-    <bpmn2:documentation id="documentation_duPd9Q"/>
+    <bpmn2:documentation id="documentation_2Xx7ZA"/>
     <bpmn2:extensionElements>
       <zeebe:subscription correlationKey="=01"/>
     </bpmn2:extensionElements>
@@ -376,25 +376,25 @@
         <dc:Bounds height="80" width="100" x="310" y="262"/>
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_0fvpzfg" id="BPMNShape_TrBk1w">
+      <bpmndi:BPMNShape bpmnElement="Message_0fvpzfg" id="BPMNShape_QJ1K9Q">
         <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_f0Z80Q">
+        <bpmndi:BPMNLabel id="BPMNLabel_tP6xEw">
           <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_0dm6uaq" id="BPMNShape_DyuGlg">
+      <bpmndi:BPMNShape bpmnElement="Message_0dm6uaq" id="BPMNShape_32EgFw">
         <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_eSxZNA">
+        <bpmndi:BPMNLabel id="BPMNLabel_0JdP0A">
           <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="Flow_151qlxc" id="BPMNEdge_03tyru5">
-        <di:waypoint x="256" y="302"/>
-        <di:waypoint x="310" y="302"/>
+        <di:waypoint x="256.0" y="302.0"/>
+        <di:waypoint x="310.0" y="302.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_0dppbeu" id="BPMNEdge_0vhug0y">
-        <di:waypoint x="410" y="302"/>
-        <di:waypoint x="472" y="302"/>
+        <di:waypoint x="410.0" y="302.0"/>
+        <di:waypoint x="472.0" y="302.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="Activity_0vp33kx" id="Activity_0q5qosr_di" isExpanded="true">
         <dc:Bounds height="250" width="440" x="200" y="400"/>
@@ -417,7 +417,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="ParallelGateway_CancelApplication" id="Gateway_1a6njvb_di">
         <dc:Bounds height="50" width="50" x="465" y="437"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_y48h0g">
+        <bpmndi:BPMNLabel id="BPMNLabel_E2pZkA">
           <dc:Bounds height="20.0" width="100.0" x="440.0" y="490.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
@@ -428,21 +428,21 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="Flow_12nmks0" id="Flow_12nmks0_di">
-        <di:waypoint x="256" y="462"/>
-        <di:waypoint x="310" y="462"/>
+        <di:waypoint x="256.0" y="462.0"/>
+        <di:waypoint x="310.0" y="462.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_19iipc6" id="Flow_19iipc6_di">
-        <di:waypoint x="410" y="462"/>
-        <di:waypoint x="465" y="462"/>
+        <di:waypoint x="410.0" y="462.0"/>
+        <di:waypoint x="465.0" y="462.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_0qrakss" id="Flow_0qrakss_di">
-        <di:waypoint x="515" y="462"/>
-        <di:waypoint x="552" y="462"/>
+        <di:waypoint x="515.0" y="462.0"/>
+        <di:waypoint x="552.0" y="462.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_1jml1az" id="Flow_1jml1az_di">
-        <di:waypoint x="490" y="487"/>
-        <di:waypoint x="490" y="570"/>
-        <di:waypoint x="552" y="570"/>
+        <di:waypoint x="490.0" y="487.0"/>
+        <di:waypoint x="490.0" y="570.0"/>
+        <di:waypoint x="552.0" y="570.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="Activity_ManualCheck" id="Activity_0avcol9_di">
         <dc:Bounds height="80" width="100" x="770" y="217"/>

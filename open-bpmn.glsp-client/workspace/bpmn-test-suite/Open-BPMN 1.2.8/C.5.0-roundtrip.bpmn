@@ -2,16 +2,16 @@
 <semantic:definitions xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns="http://www.trisotech.com/definitions/_5f5fbc02-46c1-4615-b2bd-89b2d938ac0b" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:bpsim="http://www.bpsim.org/schemas/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:feel="http://www.omg.org/spec/DMN/20180521/FEEL/" xmlns:open-bpmn="http://open-bpmn.org/XMLSchema" xmlns:rss="http://purl.org/rss/2.0/" xmlns:triso="http://www.trisotech.com/2015/triso/modeling" xmlns:trisobpmn="http://www.trisotech.com/2014/triso/bpmn" xmlns:trisofeed="http://trisotech.com/feed" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="BPMN Modeler" exporterVersion="6.1.19.201902051502" expressionLanguage="http://www.w3.org/1999/XPath" id="_5f5fbc02-46c1-4615-b2bd-89b2d938ac0b" name="C.5.0" targetNamespace="http://www.trisotech.com/definitions/_5f5fbc02-46c1-4615-b2bd-89b2d938ac0b" trisobpmn:logoChoice="None">
   <semantic:collaboration id="_906eeac9-47e3-41c3-a8db-b8abb8fd95e6">
     <semantic:participant id="_f200a9f1-5554-4868-b895-707186915d62" name="Bank" processRef="_3d1ef204-2d4c-4643-8fc5-c319cc032ec0">
-      <semantic:documentation id="documentation_grU74A"/>
+      <semantic:documentation id="documentation_sNgzqQ"/>
     </semantic:participant>
-    <semantic:participant id="participant_Bf4BUg" name="Default Process" processRef="process_sAxADg"/>
+    <semantic:participant id="participant_NNO2xw" name="Default Process" processRef="process_AkAd4A"/>
   </semantic:collaboration>
   <semantic:dataStore id="_776bd6ca-5f18-432f-a748-f1930bfdf16e" name="Bank System"/>
   <semantic:dataStore id="_46aee7ee-fab2-4735-80cc-fa78092ef92e" name="Customer Data (temporary storage)"/>
   <semantic:process id="_3d1ef204-2d4c-4643-8fc5-c319cc032ec0" isClosed="false" name="Bank - Process" processType="Private" triso:defaultName="true">
     <semantic:laneSet>
       <semantic:lane id="_2935f981-e194-4a1b-bb22-846ad3c0f72c" name="Private Customer Account Manager">
-        <semantic:documentation id="documentation_0xOf4w"/>
+        <semantic:documentation id="documentation_P9KfuQ"/>
         <semantic:flowNodeRef>_0254d83d-d943-466f-8b62-20e87cdfda4e</semantic:flowNodeRef>
         <semantic:flowNodeRef>_945cd271-46b6-4d71-83a1-530e445af820</semantic:flowNodeRef>
         <semantic:flowNodeRef>_17db66a1-badd-4942-9ebd-02bc5595cdde</semantic:flowNodeRef>
@@ -37,14 +37,14 @@
         <semantic:flowNodeRef>_3f3a831c-9b08-4827-92b3-3877a749e3df</semantic:flowNodeRef>
       </semantic:lane>
       <semantic:lane id="_af0d417a-6492-48d6-ace2-f70b807564a8" name="Corporate Account Manager">
-        <semantic:documentation id="documentation_WuvpFA"/>
+        <semantic:documentation id="documentation_k4aE3g"/>
         <semantic:flowNodeRef>_f0422f0d-396b-4ee7-ad83-fdd34a8bab71</semantic:flowNodeRef>
         <semantic:flowNodeRef>_a393c065-4412-4b16-b04f-52d07e76b518</semantic:flowNodeRef>
         <semantic:flowNodeRef>_05a1a66a-9308-41c7-a611-4fc57627a058</semantic:flowNodeRef>
         <semantic:flowNodeRef>_acfa265a-a449-4e30-baa0-1ba47dbea418</semantic:flowNodeRef>
       </semantic:lane>
       <semantic:lane id="_1c6c313d-4950-47a0-b6bf-c51a4b2ea7ed" name="Head of Market Service">
-        <semantic:documentation id="documentation_0zeHWQ"/>
+        <semantic:documentation id="documentation_0XrwYg"/>
         <semantic:flowNodeRef>_1fc87527-9cad-4f8e-b9c7-ebe106cbe98d</semantic:flowNodeRef>
         <semantic:flowNodeRef>_5f56934b-8a7e-4c35-b9f7-bf2605711bfd</semantic:flowNodeRef>
         <semantic:flowNodeRef>_1da34f39-8338-4ecb-a93f-90349fa10260</semantic:flowNodeRef>
@@ -52,16 +52,16 @@
       </semantic:lane>
     </semantic:laneSet>
     <semantic:startEvent id="_0254d83d-d943-466f-8b62-20e87cdfda4e" name="Customer interested in Bank offer">
-      <semantic:documentation id="documentation_O6CyiQ"/>
+      <semantic:documentation id="documentation_j98DVA"/>
       <semantic:outgoing>_bac89998-7084-4b2e-a2ea-dff839336d74</semantic:outgoing>
     </semantic:startEvent>
     <semantic:userTask id="_945cd271-46b6-4d71-83a1-530e445af820" implementation="##unspecified" name="Interview customer">
-      <semantic:documentation id="documentation_0bJuyA"/>
+      <semantic:documentation id="documentation_purXsA"/>
       <semantic:incoming>_bac89998-7084-4b2e-a2ea-dff839336d74</semantic:incoming>
       <semantic:outgoing>_c132a484-8828-4f03-9a57-8201f4e9e864</semantic:outgoing>
     </semantic:userTask>
     <semantic:userTask id="_17db66a1-badd-4942-9ebd-02bc5595cdde" implementation="##unspecified" name="Prove/Provide identity">
-      <semantic:documentation id="documentation_DFjmzQ"/>
+      <semantic:documentation id="documentation_NRWDUg"/>
       <semantic:incoming>_c132a484-8828-4f03-9a57-8201f4e9e864</semantic:incoming>
       <semantic:outgoing>_14c352ad-cd81-4a92-89e6-85f6e658e7bb</semantic:outgoing>
       <semantic:ioSpecification>
@@ -77,13 +77,13 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:exclusiveGateway gatewayDirection="Diverging" id="_138f9ebc-0211-4051-b7c0-1c55695d5246" name="Legal entity or individual?">
-      <semantic:documentation id="documentation_KMFbJQ"/>
+      <semantic:documentation id="documentation_mVR0mA"/>
       <semantic:incoming>_14c352ad-cd81-4a92-89e6-85f6e658e7bb</semantic:incoming>
       <semantic:outgoing>_fcb09e30-bfe6-46b9-af01-6777c60026f2</semantic:outgoing>
       <semantic:outgoing>_6912e5ed-5cae-4798-b6e6-8d367ddb3f60</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:userTask id="_664f14a9-c1f1-490a-bbec-1f66ba4e7fe4" implementation="##unspecified" name="Obtain supporting data and documents of the customer">
-      <semantic:documentation id="documentation_sysIgA"/>
+      <semantic:documentation id="documentation_W6dGdw"/>
       <semantic:incoming>_b6414e79-5e61-4a8e-a584-65201c4ea9a9</semantic:incoming>
       <semantic:outgoing>_8e88b32b-90d5-4ca4-a969-00b667a92d29</semantic:outgoing>
       <semantic:ioSpecification>
@@ -99,7 +99,7 @@
       </semantic:dataInputAssociation>
     </semantic:userTask>
     <semantic:userTask id="_d22de266-6170-4783-91f9-40832e4cc58d" implementation="##unspecified" name="Check customer documents">
-      <semantic:documentation id="documentation_i0Fe1w"/>
+      <semantic:documentation id="documentation_FI0S0g"/>
       <semantic:incoming>_8e88b32b-90d5-4ca4-a969-00b667a92d29</semantic:incoming>
       <semantic:outgoing>_c2f47722-9bb7-416c-b6bc-cff4e3a6eb65</semantic:outgoing>
       <semantic:ioSpecification>
@@ -122,13 +122,13 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:exclusiveGateway gatewayDirection="Diverging" id="_a4936291-3787-404c-bec7-8a3f3c5fd6e5" name="Data complete?">
-      <semantic:documentation id="documentation_ZsW8IQ"/>
+      <semantic:documentation id="documentation_6JDI1w"/>
       <semantic:incoming>_c2f47722-9bb7-416c-b6bc-cff4e3a6eb65</semantic:incoming>
       <semantic:outgoing>_eec53048-291a-4802-8fec-012857f845eb</semantic:outgoing>
       <semantic:outgoing>_664f3a71-3efa-4c94-8797-815f2e377cf7</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:userTask id="_87785f46-7026-4d3c-b2c0-6a9468da67f6" implementation="##unspecified" name="Copy, sign, and scan documents">
-      <semantic:documentation id="documentation_E0joPg"/>
+      <semantic:documentation id="documentation_GTP2xg"/>
       <semantic:incoming>_60066421-3da9-4318-8df2-d8b16b3011bb</semantic:incoming>
       <semantic:outgoing>_65fba7be-af41-4ebe-b4e8-a8f7a830a702</semantic:outgoing>
       <semantic:ioSpecification>
@@ -151,7 +151,7 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:userTask id="_a73027a7-615e-4a4d-95ee-c4cd78ab30c4" implementation="##unspecified" name="File documents in customer file">
-      <semantic:documentation id="documentation_gSSoGw"/>
+      <semantic:documentation id="documentation_0MXc8A"/>
       <semantic:incoming>_65fba7be-af41-4ebe-b4e8-a8f7a830a702</semantic:incoming>
       <semantic:outgoing>_0cf86177-f481-4c25-8801-cd18d91ddec6</semantic:outgoing>
       <semantic:ioSpecification>
@@ -174,13 +174,13 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:parallelGateway gatewayDirection="Diverging" id="_2b156883-2852-4665-aba0-d9bc57c7c225">
-      <semantic:documentation id="documentation_okmwYg"/>
+      <semantic:documentation id="documentation_sY8TbA"/>
       <semantic:incoming>_0cf86177-f481-4c25-8801-cd18d91ddec6</semantic:incoming>
       <semantic:outgoing>_8bd8a9d5-84da-4e96-b2af-9b8e003ad5a3</semantic:outgoing>
       <semantic:outgoing>_f47c4e3f-3339-4c96-b8b0-829022bada78</semantic:outgoing>
     </semantic:parallelGateway>
     <semantic:userTask id="_9c5d383f-df57-4012-b490-fa36f9f90eed" implementation="##unspecified" name="Add personal data">
-      <semantic:documentation id="documentation_JW7WFA"/>
+      <semantic:documentation id="documentation_56uNNw"/>
       <semantic:incoming>_8bd8a9d5-84da-4e96-b2af-9b8e003ad5a3</semantic:incoming>
       <semantic:outgoing>_c7c63b1c-bdd1-443b-903b-7c31da1e6eb9</semantic:outgoing>
       <semantic:ioSpecification>
@@ -202,13 +202,13 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:parallelGateway gatewayDirection="Converging" id="_3355cffe-aab4-4a05-8388-becf8ad599ae">
-      <semantic:documentation id="documentation_xZKfeA"/>
+      <semantic:documentation id="documentation_m6d7ZQ"/>
       <semantic:incoming>_c7c63b1c-bdd1-443b-903b-7c31da1e6eb9</semantic:incoming>
       <semantic:incoming>_a4eaa7b6-f9ef-458a-ba70-e1fd3ff0595a</semantic:incoming>
       <semantic:outgoing>_1a933b26-7ac6-47a8-85de-07e658241e1e</semantic:outgoing>
     </semantic:parallelGateway>
     <semantic:userTask id="_be6ea91a-4f8e-4240-86e8-f85036aee96f" implementation="##unspecified" name="Perform risk assessment of the customer">
-      <semantic:documentation id="documentation_Epbogg"/>
+      <semantic:documentation id="documentation_gQmS0w"/>
       <semantic:incoming>_1a933b26-7ac6-47a8-85de-07e658241e1e</semantic:incoming>
       <semantic:outgoing>_40c01bbe-095a-4937-a334-95fa5b5225cc</semantic:outgoing>
       <semantic:ioSpecification>
@@ -231,13 +231,13 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:exclusiveGateway gatewayDirection="Diverging" id="_000a0565-911b-4f71-9993-1177021edd97" name="Subject to approval?">
-      <semantic:documentation id="documentation_AJdoLg"/>
+      <semantic:documentation id="documentation_Y6SFuw"/>
       <semantic:incoming>_40c01bbe-095a-4937-a334-95fa5b5225cc</semantic:incoming>
       <semantic:outgoing>_1887adee-8291-4640-a5fa-3dc5f33d5a34</semantic:outgoing>
       <semantic:outgoing>_e88d64c7-3aaf-4a5f-9787-4e5ba696312b</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:userTask id="_f006114d-c7cb-4ce0-9bfe-f0938c36a53e" implementation="##unspecified" name="Document risk assessment">
-      <semantic:documentation id="documentation_lOp67g"/>
+      <semantic:documentation id="documentation_uiqttw"/>
       <semantic:incoming>_7ab3e406-ce00-40e0-88f7-c64bcb0b864f</semantic:incoming>
       <semantic:outgoing>_f2b37ee6-7727-4106-bdd4-d93c4db15703</semantic:outgoing>
       <semantic:ioSpecification>
@@ -260,7 +260,7 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:callActivity calledElement="_774bc005-0917-43d5-ab70-0f9fe123fbd1" id="_b9338c62-a257-47dd-8c2e-88b80b73c330" name="Check for connected clients">
-      <semantic:documentation id="documentation_FqTPFQ"/>
+      <semantic:documentation id="documentation_zOvoEw"/>
       <semantic:incoming>_f2b37ee6-7727-4106-bdd4-d93c4db15703</semantic:incoming>
       <semantic:outgoing>_f974945f-f2a6-4547-9d35-0d26049dcd6f</semantic:outgoing>
       <semantic:ioSpecification>
@@ -283,7 +283,7 @@
       </semantic:dataOutputAssociation>
     </semantic:callActivity>
     <semantic:userTask id="_b360104e-8410-4b99-827a-776e2083fb96" implementation="##unspecified" name="Create customer in the system">
-      <semantic:documentation id="documentation_P0iBnw"/>
+      <semantic:documentation id="documentation_WOiajA"/>
       <semantic:incoming>_f974945f-f2a6-4547-9d35-0d26049dcd6f</semantic:incoming>
       <semantic:outgoing>_0b3ae343-49aa-49dc-8b88-fe97b4ada3eb</semantic:outgoing>
       <semantic:ioSpecification>
@@ -312,12 +312,12 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:endEvent id="_8055ae64-cafd-4fd0-be36-2216e3b02e37" name="Identity determined and new customer created">
-      <semantic:documentation id="documentation_90qzLw"/>
+      <semantic:documentation id="documentation_QIREuA"/>
       <semantic:incoming>_0b3ae343-49aa-49dc-8b88-fe97b4ada3eb</semantic:incoming>
       <semantic:signalEventDefinition id="_8c6f817f-0d1e-464a-96bc-e32dbfa8110d"/>
     </semantic:endEvent>
     <semantic:userTask id="_2fd5c7d3-797d-45a5-a0d8-dfa60654ba5e" implementation="##unspecified" name="Complete data and documents">
-      <semantic:documentation id="documentation_3xq7QA"/>
+      <semantic:documentation id="documentation_4sDz0w"/>
       <semantic:incoming>_664f3a71-3efa-4c94-8797-815f2e377cf7</semantic:incoming>
       <semantic:outgoing>_52e3c106-b055-40a0-a9f9-db9529adfb38</semantic:outgoing>
       <semantic:ioSpecification>
@@ -333,7 +333,7 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:userTask id="_09074897-556d-4fd2-afb6-2f6c774e1820" implementation="##unspecified" name="Perform know your customer (KYC) activities">
-      <semantic:documentation id="documentation_gKyFFA"/>
+      <semantic:documentation id="documentation_JbMFKw"/>
       <semantic:incoming>_f47c4e3f-3339-4c96-b8b0-829022bada78</semantic:incoming>
       <semantic:outgoing>_a4eaa7b6-f9ef-458a-ba70-e1fd3ff0595a</semantic:outgoing>
       <semantic:ioSpecification>
@@ -362,19 +362,19 @@
       </semantic:dataOutputAssociation>
     </semantic:userTask>
     <semantic:exclusiveGateway gatewayDirection="Converging" id="_54d66428-417b-447e-89d5-e726c1f12659">
-      <semantic:documentation id="documentation_UHurkw"/>
+      <semantic:documentation id="documentation_dR9gFQ"/>
       <semantic:incoming>_fcb09e30-bfe6-46b9-af01-6777c60026f2</semantic:incoming>
       <semantic:incoming>_afc35597-a482-432a-8ace-17adaf609572</semantic:incoming>
       <semantic:outgoing>_b6414e79-5e61-4a8e-a584-65201c4ea9a9</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:exclusiveGateway gatewayDirection="Converging" id="_29b4f749-037a-4199-b33f-3cd3a3c7805e">
-      <semantic:documentation id="documentation_joWFRA"/>
+      <semantic:documentation id="documentation_0uWn6A"/>
       <semantic:incoming>_eec53048-291a-4802-8fec-012857f845eb</semantic:incoming>
       <semantic:incoming>_52e3c106-b055-40a0-a9f9-db9529adfb38</semantic:incoming>
       <semantic:outgoing>_60066421-3da9-4318-8df2-d8b16b3011bb</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:exclusiveGateway gatewayDirection="Converging" id="_3f3a831c-9b08-4827-92b3-3877a749e3df">
-      <semantic:documentation id="documentation_0sMxFA"/>
+      <semantic:documentation id="documentation_CkGb5g"/>
       <semantic:incoming>_1887adee-8291-4640-a5fa-3dc5f33d5a34</semantic:incoming>
       <semantic:incoming>_8a77d7f6-320a-47ff-a155-57ee200df478</semantic:incoming>
       <semantic:outgoing>_7ab3e406-ce00-40e0-88f7-c64bcb0b864f</semantic:outgoing>
@@ -398,16 +398,16 @@
       <semantic:dataState name="with connected clients analysis"/>
     </semantic:dataObjectReference>
     <semantic:dataStoreReference dataStoreRef="_776bd6ca-5f18-432f-a748-f1930bfdf16e" id="_ffd44905-4f54-4fe0-a156-0312c2a7a3cc" name="Bank System">
-      <semantic:documentation id="documentation_lUBA4Q"/>
+      <semantic:documentation id="documentation_u4WzMg"/>
     </semantic:dataStoreReference>
     <semantic:dataStoreReference dataStoreRef="_46aee7ee-fab2-4735-80cc-fa78092ef92e" id="_66f4a1ff-fd8a-4002-ade7-7a4d1b1d529c" name="Customer Data (temporary storage)">
-      <semantic:documentation id="documentation_X9ov0Q"/>
+      <semantic:documentation id="documentation_uE0JBg"/>
     </semantic:dataStoreReference>
     <semantic:dataStoreReference dataStoreRef="_46aee7ee-fab2-4735-80cc-fa78092ef92e" id="_c5285566-0657-47c5-a7ad-d09e144377f3" name="Customer Data (temporary storage)">
-      <semantic:documentation id="documentation_Plct5Q"/>
+      <semantic:documentation id="documentation_4RK6CQ"/>
     </semantic:dataStoreReference>
     <semantic:userTask id="_f0422f0d-396b-4ee7-ad83-fdd34a8bab71" implementation="##unspecified" name="Document the identity of the economic owner">
-      <semantic:documentation id="documentation_0SyuXA"/>
+      <semantic:documentation id="documentation_fxAk5Q"/>
       <semantic:incoming>_6912e5ed-5cae-4798-b6e6-8d367ddb3f60</semantic:incoming>
       <semantic:outgoing>_a8da83e1-4e09-4a7b-a09f-1f869b372176</semantic:outgoing>
       <semantic:ioSpecification>
@@ -423,22 +423,22 @@
       </semantic:dataInputAssociation>
     </semantic:userTask>
     <semantic:exclusiveGateway gatewayDirection="Diverging" id="_a393c065-4412-4b16-b04f-52d07e76b518" name="Identity of the economic owner certifiable?">
-      <semantic:documentation id="documentation_A7ST0Q"/>
+      <semantic:documentation id="documentation_LyeoTQ"/>
       <semantic:incoming>_a8da83e1-4e09-4a7b-a09f-1f869b372176</semantic:incoming>
       <semantic:outgoing>_afc35597-a482-432a-8ace-17adaf609572</semantic:outgoing>
       <semantic:outgoing>_470d1a12-e1fa-4471-b753-cfd7dbe20d80</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:userTask id="_05a1a66a-9308-41c7-a611-4fc57627a058" implementation="##unspecified" name="End business relation">
-      <semantic:documentation id="documentation_B4700w"/>
+      <semantic:documentation id="documentation_nUIOzQ"/>
       <semantic:incoming>_470d1a12-e1fa-4471-b753-cfd7dbe20d80</semantic:incoming>
       <semantic:outgoing>_461976fc-e457-4a39-baf3-785885c58896</semantic:outgoing>
     </semantic:userTask>
     <semantic:endEvent id="_acfa265a-a449-4e30-baa0-1ba47dbea418" name="Business relation ended">
-      <semantic:documentation id="documentation_WBvkMg"/>
+      <semantic:documentation id="documentation_Hexo3w"/>
       <semantic:incoming>_461976fc-e457-4a39-baf3-785885c58896</semantic:incoming>
     </semantic:endEvent>
     <semantic:userTask id="_1fc87527-9cad-4f8e-b9c7-ebe106cbe98d" implementation="##unspecified" name="Check risk and decide about approval">
-      <semantic:documentation id="documentation_wLDiBA"/>
+      <semantic:documentation id="documentation_KtjQnQ"/>
       <semantic:incoming>_e88d64c7-3aaf-4a5f-9787-4e5ba696312b</semantic:incoming>
       <semantic:outgoing>_c3e90e5c-e5cf-4cfb-b15d-bdedcf0719ca</semantic:outgoing>
       <semantic:ioSpecification>
@@ -454,132 +454,132 @@
       </semantic:dataInputAssociation>
     </semantic:userTask>
     <semantic:exclusiveGateway gatewayDirection="Diverging" id="_5f56934b-8a7e-4c35-b9f7-bf2605711bfd" name="Approval?">
-      <semantic:documentation id="documentation_LgLWsQ"/>
+      <semantic:documentation id="documentation_1qsFcQ"/>
       <semantic:incoming>_c3e90e5c-e5cf-4cfb-b15d-bdedcf0719ca</semantic:incoming>
       <semantic:outgoing>_8a77d7f6-320a-47ff-a155-57ee200df478</semantic:outgoing>
       <semantic:outgoing>_ae94e0c1-aa12-433f-bd44-a4d8a70a089e</semantic:outgoing>
     </semantic:exclusiveGateway>
     <semantic:task id="_1da34f39-8338-4ecb-a93f-90349fa10260" name="Reject customer request">
-      <semantic:documentation id="documentation_kDAZqw"/>
+      <semantic:documentation id="documentation_pTSoJQ"/>
       <semantic:incoming>_ae94e0c1-aa12-433f-bd44-a4d8a70a089e</semantic:incoming>
       <semantic:outgoing>_f7820843-8922-430e-ab4a-974a1e35d89b</semantic:outgoing>
     </semantic:task>
     <semantic:endEvent id="_1cf552d4-5152-4595-9218-84f31533bc70" name="No business relation created">
-      <semantic:documentation id="documentation_o54YcA"/>
+      <semantic:documentation id="documentation_d9s8hg"/>
       <semantic:incoming>_f7820843-8922-430e-ab4a-974a1e35d89b</semantic:incoming>
       <semantic:signalEventDefinition id="_8374dba6-01d8-45b8-9703-103b2fdc79a7"/>
     </semantic:endEvent>
     <semantic:dataObject id="_0fa2af52-a3d6-4be6-9ecc-9fad8ca4d448" isCollection="false" name="ID document">
-      <semantic:documentation id="documentation_Eu1gXQ"/>
+      <semantic:documentation id="documentation_dEyjbg"/>
     </semantic:dataObject>
     <semantic:dataObject id="_79993b0e-60c2-487b-a12e-0cbecc2ef5c1" isCollection="false" name="Customer data">
-      <semantic:documentation id="documentation_y8C6qA"/>
+      <semantic:documentation id="documentation_FZ0ZxQ"/>
     </semantic:dataObject>
     <semantic:sequenceFlow id="_bac89998-7084-4b2e-a2ea-dff839336d74" sourceRef="_0254d83d-d943-466f-8b62-20e87cdfda4e" targetRef="_945cd271-46b6-4d71-83a1-530e445af820">
-      <semantic:documentation id="documentation_xTm0ug"/>
+      <semantic:documentation id="documentation_gQhiUA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_c132a484-8828-4f03-9a57-8201f4e9e864" sourceRef="_945cd271-46b6-4d71-83a1-530e445af820" targetRef="_17db66a1-badd-4942-9ebd-02bc5595cdde">
-      <semantic:documentation id="documentation_7TadiA"/>
+      <semantic:documentation id="documentation_XwQaUw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_14c352ad-cd81-4a92-89e6-85f6e658e7bb" sourceRef="_17db66a1-badd-4942-9ebd-02bc5595cdde" targetRef="_138f9ebc-0211-4051-b7c0-1c55695d5246">
-      <semantic:documentation id="documentation_5bcqTA"/>
+      <semantic:documentation id="documentation_dma01g"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_fcb09e30-bfe6-46b9-af01-6777c60026f2" name="Individual Person" sourceRef="_138f9ebc-0211-4051-b7c0-1c55695d5246" targetRef="_54d66428-417b-447e-89d5-e726c1f12659">
-      <semantic:documentation id="documentation_lTkWGQ"/>
+      <semantic:documentation id="documentation_EGDG5A"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_8e88b32b-90d5-4ca4-a969-00b667a92d29" sourceRef="_664f14a9-c1f1-490a-bbec-1f66ba4e7fe4" targetRef="_d22de266-6170-4783-91f9-40832e4cc58d">
-      <semantic:documentation id="documentation_mfCK4g"/>
+      <semantic:documentation id="documentation_ywQrHQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_c2f47722-9bb7-416c-b6bc-cff4e3a6eb65" sourceRef="_d22de266-6170-4783-91f9-40832e4cc58d" targetRef="_a4936291-3787-404c-bec7-8a3f3c5fd6e5">
-      <semantic:documentation id="documentation_G07lbg"/>
+      <semantic:documentation id="documentation_5qfveA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_eec53048-291a-4802-8fec-012857f845eb" name="Yes" sourceRef="_a4936291-3787-404c-bec7-8a3f3c5fd6e5" targetRef="_29b4f749-037a-4199-b33f-3cd3a3c7805e">
-      <semantic:documentation id="documentation_nrQIQw"/>
+      <semantic:documentation id="documentation_u9nLew"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_65fba7be-af41-4ebe-b4e8-a8f7a830a702" sourceRef="_87785f46-7026-4d3c-b2c0-6a9468da67f6" targetRef="_a73027a7-615e-4a4d-95ee-c4cd78ab30c4">
-      <semantic:documentation id="documentation_Q30NpQ"/>
+      <semantic:documentation id="documentation_eQSlhg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_0cf86177-f481-4c25-8801-cd18d91ddec6" sourceRef="_a73027a7-615e-4a4d-95ee-c4cd78ab30c4" targetRef="_2b156883-2852-4665-aba0-d9bc57c7c225">
-      <semantic:documentation id="documentation_0HawWg"/>
+      <semantic:documentation id="documentation_MXgqfQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_8bd8a9d5-84da-4e96-b2af-9b8e003ad5a3" sourceRef="_2b156883-2852-4665-aba0-d9bc57c7c225" targetRef="_9c5d383f-df57-4012-b490-fa36f9f90eed">
-      <semantic:documentation id="documentation_D1AhCQ"/>
+      <semantic:documentation id="documentation_KfbqOA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_c7c63b1c-bdd1-443b-903b-7c31da1e6eb9" sourceRef="_9c5d383f-df57-4012-b490-fa36f9f90eed" targetRef="_3355cffe-aab4-4a05-8388-becf8ad599ae">
-      <semantic:documentation id="documentation_WPN9fA"/>
+      <semantic:documentation id="documentation_SqXhlw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_1a933b26-7ac6-47a8-85de-07e658241e1e" sourceRef="_3355cffe-aab4-4a05-8388-becf8ad599ae" targetRef="_be6ea91a-4f8e-4240-86e8-f85036aee96f">
-      <semantic:documentation id="documentation_8G0IPw"/>
+      <semantic:documentation id="documentation_kXL4pQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_40c01bbe-095a-4937-a334-95fa5b5225cc" sourceRef="_be6ea91a-4f8e-4240-86e8-f85036aee96f" targetRef="_000a0565-911b-4f71-9993-1177021edd97">
-      <semantic:documentation id="documentation_9zEuMQ"/>
+      <semantic:documentation id="documentation_vFmiag"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_1887adee-8291-4640-a5fa-3dc5f33d5a34" name="No" sourceRef="_000a0565-911b-4f71-9993-1177021edd97" targetRef="_3f3a831c-9b08-4827-92b3-3877a749e3df">
-      <semantic:documentation id="documentation_VVtqVw"/>
+      <semantic:documentation id="documentation_sBTv5w"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f2b37ee6-7727-4106-bdd4-d93c4db15703" sourceRef="_f006114d-c7cb-4ce0-9bfe-f0938c36a53e" targetRef="_b9338c62-a257-47dd-8c2e-88b80b73c330">
-      <semantic:documentation id="documentation_844sJA"/>
+      <semantic:documentation id="documentation_oR34EA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f974945f-f2a6-4547-9d35-0d26049dcd6f" sourceRef="_b9338c62-a257-47dd-8c2e-88b80b73c330" targetRef="_b360104e-8410-4b99-827a-776e2083fb96">
-      <semantic:documentation id="documentation_nfPjPw"/>
+      <semantic:documentation id="documentation_g1G0Zw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_0b3ae343-49aa-49dc-8b88-fe97b4ada3eb" sourceRef="_b360104e-8410-4b99-827a-776e2083fb96" targetRef="_8055ae64-cafd-4fd0-be36-2216e3b02e37">
-      <semantic:documentation id="documentation_Ghplsg"/>
+      <semantic:documentation id="documentation_ICrfWQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_664f3a71-3efa-4c94-8797-815f2e377cf7" name="No" sourceRef="_a4936291-3787-404c-bec7-8a3f3c5fd6e5" targetRef="_2fd5c7d3-797d-45a5-a0d8-dfa60654ba5e">
-      <semantic:documentation id="documentation_LerL5g"/>
+      <semantic:documentation id="documentation_bXfrqQ"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_52e3c106-b055-40a0-a9f9-db9529adfb38" sourceRef="_2fd5c7d3-797d-45a5-a0d8-dfa60654ba5e" targetRef="_29b4f749-037a-4199-b33f-3cd3a3c7805e">
-      <semantic:documentation id="documentation_HK8GNw"/>
+      <semantic:documentation id="documentation_oObkww"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f47c4e3f-3339-4c96-b8b0-829022bada78" sourceRef="_2b156883-2852-4665-aba0-d9bc57c7c225" targetRef="_09074897-556d-4fd2-afb6-2f6c774e1820">
-      <semantic:documentation id="documentation_p5a3eQ"/>
+      <semantic:documentation id="documentation_tGkF2Q"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_a4eaa7b6-f9ef-458a-ba70-e1fd3ff0595a" sourceRef="_09074897-556d-4fd2-afb6-2f6c774e1820" targetRef="_3355cffe-aab4-4a05-8388-becf8ad599ae">
-      <semantic:documentation id="documentation_FlTj8Q"/>
+      <semantic:documentation id="documentation_BD0Wjg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_6912e5ed-5cae-4798-b6e6-8d367ddb3f60" name="Legal Entity" sourceRef="_138f9ebc-0211-4051-b7c0-1c55695d5246" targetRef="_f0422f0d-396b-4ee7-ad83-fdd34a8bab71">
-      <semantic:documentation id="documentation_7A6YvA"/>
+      <semantic:documentation id="documentation_vVxgeA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_a8da83e1-4e09-4a7b-a09f-1f869b372176" sourceRef="_f0422f0d-396b-4ee7-ad83-fdd34a8bab71" targetRef="_a393c065-4412-4b16-b04f-52d07e76b518">
-      <semantic:documentation id="documentation_nRJOdQ"/>
+      <semantic:documentation id="documentation_Rdz5wg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_afc35597-a482-432a-8ace-17adaf609572" name="Yes" sourceRef="_a393c065-4412-4b16-b04f-52d07e76b518" targetRef="_54d66428-417b-447e-89d5-e726c1f12659">
-      <semantic:documentation id="documentation_AwoG0Q"/>
+      <semantic:documentation id="documentation_MaZMsg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_470d1a12-e1fa-4471-b753-cfd7dbe20d80" name="No" sourceRef="_a393c065-4412-4b16-b04f-52d07e76b518" targetRef="_05a1a66a-9308-41c7-a611-4fc57627a058">
-      <semantic:documentation id="documentation_nnhn2w"/>
+      <semantic:documentation id="documentation_s09vig"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_461976fc-e457-4a39-baf3-785885c58896" sourceRef="_05a1a66a-9308-41c7-a611-4fc57627a058" targetRef="_acfa265a-a449-4e30-baa0-1ba47dbea418">
-      <semantic:documentation id="documentation_Jm28zQ"/>
+      <semantic:documentation id="documentation_d9NrdA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_e88d64c7-3aaf-4a5f-9787-4e5ba696312b" name="Yes" sourceRef="_000a0565-911b-4f71-9993-1177021edd97" targetRef="_1fc87527-9cad-4f8e-b9c7-ebe106cbe98d">
-      <semantic:documentation id="documentation_SO8u3w"/>
+      <semantic:documentation id="documentation_klZLVg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_c3e90e5c-e5cf-4cfb-b15d-bdedcf0719ca" sourceRef="_1fc87527-9cad-4f8e-b9c7-ebe106cbe98d" targetRef="_5f56934b-8a7e-4c35-b9f7-bf2605711bfd">
-      <semantic:documentation id="documentation_E5Y7Yw"/>
+      <semantic:documentation id="documentation_xUFkkw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_8a77d7f6-320a-47ff-a155-57ee200df478" name="Yes" sourceRef="_5f56934b-8a7e-4c35-b9f7-bf2605711bfd" targetRef="_3f3a831c-9b08-4827-92b3-3877a749e3df">
-      <semantic:documentation id="documentation_1BnnPA"/>
+      <semantic:documentation id="documentation_06P6Aw"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_ae94e0c1-aa12-433f-bd44-a4d8a70a089e" name="No" sourceRef="_5f56934b-8a7e-4c35-b9f7-bf2605711bfd" targetRef="_1da34f39-8338-4ecb-a93f-90349fa10260">
-      <semantic:documentation id="documentation_HM0GtA"/>
+      <semantic:documentation id="documentation_ksRKKg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_f7820843-8922-430e-ab4a-974a1e35d89b" sourceRef="_1da34f39-8338-4ecb-a93f-90349fa10260" targetRef="_1cf552d4-5152-4595-9218-84f31533bc70">
-      <semantic:documentation id="documentation_Zht0dQ"/>
+      <semantic:documentation id="documentation_Kuf7CA"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_b6414e79-5e61-4a8e-a584-65201c4ea9a9" sourceRef="_54d66428-417b-447e-89d5-e726c1f12659" targetRef="_664f14a9-c1f1-490a-bbec-1f66ba4e7fe4">
-      <semantic:documentation id="documentation_Ln0wvw"/>
+      <semantic:documentation id="documentation_48e90w"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_60066421-3da9-4318-8df2-d8b16b3011bb" sourceRef="_29b4f749-037a-4199-b33f-3cd3a3c7805e" targetRef="_87785f46-7026-4d3c-b2c0-6a9468da67f6">
-      <semantic:documentation id="documentation_6aYbwg"/>
+      <semantic:documentation id="documentation_fgsBBg"/>
     </semantic:sequenceFlow>
     <semantic:sequenceFlow id="_7ab3e406-ce00-40e0-88f7-c64bcb0b864f" sourceRef="_3f3a831c-9b08-4827-92b3-3877a749e3df" targetRef="_f006114d-c7cb-4ce0-9bfe-f0938c36a53e">
-      <semantic:documentation id="documentation_OF5Htw"/>
+      <semantic:documentation id="documentation_o7z8WQ"/>
     </semantic:sequenceFlow>
   </semantic:process>
   <semantic:process id="_774bc005-0917-43d5-ab70-0f9fe123fbd1" isClosed="false" name="Check for connected clients" processType="Public">
-    <semantic:documentation id="documentation_iYAmog"/>
+    <semantic:documentation id="documentation_mc3XVg"/>
     <semantic:extensionElements>
       <open-bpmn:auto-align/>
     </semantic:extensionElements>
@@ -614,7 +614,7 @@
     <semantic:sequenceFlow id="_90d759bb-90dc-48b7-8c06-ddf8664c36ff" sourceRef="_956bb101-c9f7-467d-b3e2-198fa1d3e12b" targetRef="_f7ce4bda-22c2-4ef9-aad9-5203dff18538"/>
     <semantic:sequenceFlow id="_c329c58d-4a71-471f-acb9-b7f7113d8547" name="No" sourceRef="_080399c9-3c91-44c6-b510-80367e23a5af" targetRef="_956bb101-c9f7-467d-b3e2-198fa1d3e12b"/>
   </semantic:process>
-  <semantic:process definitionalCollaborationRef="_906eeac9-47e3-41c3-a8db-b8abb8fd95e6" id="process_sAxADg" name="Default Process" processType="Public"/>
+  <semantic:process definitionalCollaborationRef="_906eeac9-47e3-41c3-a8db-b8abb8fd95e6" id="process_AkAd4A" name="Default Process" processType="Public"/>
   <bpmndi:BPMNDiagram id="_2fcf7782-05d8-4e1d-a8d2-51ea0ec65d7e" name="Create New Customer">
     <bpmndi:BPMNPlane bpmnElement="_906eeac9-47e3-41c3-a8db-b8abb8fd95e6" id="_2fcf7782-05d8-4e1d-a8d2-51ea0ec65d7e_plane" trisobpmn:diagramHeight="933.5239417864432" trisobpmn:diagramWidth="3771.4415588378906">
       <bpmndi:BPMNShape bpmnElement="_f200a9f1-5554-4868-b895-707186915d62" color:background-color="#ffffff" color:border-color="#000000" id="_c5d2909b-dbb7-4b69-bc63-6e60ce5c2e2e" isHorizontal="true">
@@ -881,52 +881,49 @@
           <dc:Bounds height="26" width="99.65625" x="3169.687026977539" y="789.2730447496699"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="participant_Bf4BUg" id="BPMNShape_XNLwQA">
-        <dc:Bounds height="210.0" width="800.0" x="10.0" y="10.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_rldQ0Q">
-          <dc:Bounds height="20.0" width="100.0" x="10.0" y="10.0"/>
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape bpmnElement="participant_NNO2xw" id="BPMNShape_dEIKoQ">
+        <dc:Bounds height="210.0" width="800.0" x="0.0" y="0.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_d8214574-bb4c-42ff-aabb-398eb95b2f2a" id="BPMNShape_QHqOgA">
-        <dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_tVE4ww">
-          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_8b104885-149e-4af6-a459-d924dacd81b3" id="BPMNShape_GYcbEg">
-        <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_080399c9-3c91-44c6-b510-80367e23a5af" id="BPMNShape_pHF4Eg">
-        <dc:Bounds height="50.0" width="50.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_biAlKw">
-          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_7507ae41-a1fa-405c-b4ea-85ed920eace5" id="BPMNShape_3Jxa2A">
-        <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_f7ce4bda-22c2-4ef9-aad9-5203dff18538" id="BPMNShape_Hcl8PA">
-        <dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_17yRqw">
-          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_956bb101-c9f7-467d-b3e2-198fa1d3e12b" id="BPMNShape_VI0bjQ">
-        <dc:Bounds height="50.0" width="50.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_TdeLig">
-          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_0fa2af52-a3d6-4be6-9ecc-9fad8ca4d448" id="BPMNShape_7sDHxQ">
+      <bpmndi:BPMNShape bpmnElement="_0fa2af52-a3d6-4be6-9ecc-9fad8ca4d448" id="BPMNShape_sDfIBA">
         <dc:Bounds height="50.0" width="35.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_I0VLgQ">
+        <bpmndi:BPMNLabel id="BPMNLabel_WLGk9w">
           <dc:Bounds height="20.0" width="100.0" x="-32.5" y="55.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="_79993b0e-60c2-487b-a12e-0cbecc2ef5c1" id="BPMNShape_fA0JvA">
+      <bpmndi:BPMNShape bpmnElement="_79993b0e-60c2-487b-a12e-0cbecc2ef5c1" id="BPMNShape_s463BQ">
         <dc:Bounds height="50.0" width="35.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_aviaPQ">
+        <bpmndi:BPMNLabel id="BPMNLabel_cj1JTg">
           <dc:Bounds height="20.0" width="100.0" x="-32.5" y="55.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_d8214574-bb4c-42ff-aabb-398eb95b2f2a" id="BPMNShape_QUNLww">
+        <dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_8hAjjw">
+          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8b104885-149e-4af6-a459-d924dacd81b3" id="BPMNShape_G0XAqA">
+        <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_080399c9-3c91-44c6-b510-80367e23a5af" id="BPMNShape_6k9Eaw">
+        <dc:Bounds height="50.0" width="50.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_mrz7HA">
+          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_7507ae41-a1fa-405c-b4ea-85ed920eace5" id="BPMNShape_N8Fieg">
+        <dc:Bounds height="50.0" width="110.0" x="0.0" y="0.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_f7ce4bda-22c2-4ef9-aad9-5203dff18538" id="BPMNShape_raV7gQ">
+        <dc:Bounds height="36.0" width="36.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_AmAi1A">
+          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_956bb101-c9f7-467d-b3e2-198fa1d3e12b" id="BPMNShape_SiDrdA">
+        <dc:Bounds height="50.0" width="50.0" x="0.0" y="0.0"/>
+        <bpmndi:BPMNLabel id="BPMNLabel_yIDGnQ">
+          <dc:Bounds height="20.0" width="100.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="_bac89998-7084-4b2e-a2ea-dff839336d74" color:border-color="#000000" id="_84675510-efbf-4f5a-a676-080de7b7719c">
@@ -1309,30 +1306,6 @@
         <di:waypoint x="2197.89279179004" y="189.5729771701383"/>
         <di:waypoint x="2197.89279179004" y="137.32472763934607"/>
         <bpmndi:BPMNLabel color:color="#000000" labelStyle="LS_2fcf7782-05d8-4e1d-a8d2-51ea0ec65d7e_0" triso:defaultBounds="true"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_6c121fa1-4bab-4e82-98a6-672c6a6bb6f3" id="BPMNEdge_DpUyuA">
-        <di:waypoint x="18.0" y="18.0"/>
-        <di:waypoint x="55.0" y="25.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_4e00ba20-d2c5-47d6-b53f-b50d802855fd" id="BPMNEdge_Gvm0UQ">
-        <di:waypoint x="55.0" y="25.0"/>
-        <di:waypoint x="25.0" y="25.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_e25b9c2d-690e-470b-8993-112002994fc2" id="BPMNEdge_AiTOJg">
-        <di:waypoint x="25.0" y="25.0"/>
-        <di:waypoint x="55.0" y="25.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_20c68a0e-6aba-445b-94a3-6bb588dfa2d8" id="BPMNEdge_p3qOdA">
-        <di:waypoint x="55.0" y="25.0"/>
-        <di:waypoint x="25.0" y="25.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_90d759bb-90dc-48b7-8c06-ddf8664c36ff" id="BPMNEdge_0p2qrg">
-        <di:waypoint x="25.0" y="25.0"/>
-        <di:waypoint x="18.0" y="18.0"/>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_c329c58d-4a71-471f-acb9-b7f7113d8547" id="BPMNEdge_PWgQig">
-        <di:waypoint x="25.0" y="25.0"/>
-        <di:waypoint x="25.0" y="25.0"/>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
     <bpmndi:BPMNLabelStyle id="LS_2fcf7782-05d8-4e1d-a8d2-51ea0ec65d7e_0">

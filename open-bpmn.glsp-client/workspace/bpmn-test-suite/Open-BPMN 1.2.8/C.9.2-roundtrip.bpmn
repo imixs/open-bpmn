@@ -5,13 +5,13 @@
     <bpmn2:participant id="Participant_01" name="Manual Check" processRef="ManualCheck"/>
   </bpmn2:collaboration>
   <bpmn2:message id="Message_0fvpzfg" name="Message_DocumentRequested">
-    <bpmn2:documentation id="documentation_FPajZQ"/>
+    <bpmn2:documentation id="documentation_b2p0eA"/>
     <bpmn2:extensionElements>
       <zeebe:subscription correlationKey="= documentReferenceId"/>
     </bpmn2:extensionElements>
   </bpmn2:message>
   <bpmn2:process id="ManualCheck" isExecutable="true" name="Manual Check" processType="Public">
-    <bpmn2:documentation id="documentation_0I7EhA"/>
+    <bpmn2:documentation id="documentation_KDe5Vw"/>
     <bpmn2:extensionElements>
       <zeebe:userTaskForm id="userTaskForm_2s8lq02">{
   "components": [
@@ -76,7 +76,7 @@
       <open-bpmn:auto-align/>
     </bpmn2:extensionElements>
     <bpmn2:userTask id="UserTask_DecideOnApplication" name="Decide on application">
-      <bpmn2:documentation id="documentation_IM30FA"/>
+      <bpmn2:documentation id="documentation_Fz4hwQ"/>
       <bpmn2:extensionElements>
         <zeebe:ioMapping>
           <zeebe:input source="= string join(risks, &quot;, &quot;)" target="risksText"/>
@@ -90,44 +90,44 @@
       <bpmn2:outgoing>Flow_0vjv3ik</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:startEvent id="StartEvent_DecideManually" name="Decide Manually">
-      <bpmn2:documentation id="documentation_e6kjRQ"/>
+      <bpmn2:documentation id="documentation_fXcTgA"/>
       <bpmn2:outgoing>Flow_08vmski</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="Flow_08vmski" sourceRef="StartEvent_DecideManually" targetRef="UserTask_DecideOnApplication">
-      <bpmn2:documentation id="documentation_K6j98g"/>
+      <bpmn2:documentation id="documentation_wBHG8w"/>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="Flow_0vjv3ik" sourceRef="UserTask_DecideOnApplication" targetRef="EndEvent_ManuallyDecided">
-      <bpmn2:documentation id="documentation_X30KTw"/>
+      <bpmn2:documentation id="documentation_JdshVg"/>
     </bpmn2:sequenceFlow>
     <bpmn2:boundaryEvent attachedToRef="UserTask_DecideOnApplication" id="TimerEvent_Timeout" name="Timeout (7 days)">
-      <bpmn2:documentation id="documentation_4FCgvg"/>
+      <bpmn2:documentation id="documentation_lvAmbA"/>
       <bpmn2:outgoing>Flow_03n7pdb</bpmn2:outgoing>
       <bpmn2:timerEventDefinition id="TimerEventDefinition_0vna3l8">
         <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">P7D</bpmn2:timeDuration>
       </bpmn2:timerEventDefinition>
     </bpmn2:boundaryEvent>
     <bpmn2:sequenceFlow id="Flow_03n7pdb" sourceRef="TimerEvent_Timeout" targetRef="ErrorEndEvent_Timeout">
-      <bpmn2:documentation id="documentation_rZknjA"/>
+      <bpmn2:documentation id="documentation_yz5wDw"/>
     </bpmn2:sequenceFlow>
     <bpmn2:subProcess id="Activity_0uvp3cb" triggeredByEvent="true">
-      <bpmn2:documentation id="documentation_P0I0bw"/>
+      <bpmn2:documentation id="documentation_aM44Ow"/>
       <bpmn2:startEvent id="StartMessageEvent_DocumentRequested" isInterrupting="false" name="Document requested">
-        <bpmn2:documentation id="documentation_GMbljQ"/>
+        <bpmn2:documentation id="documentation_If345Q"/>
         <bpmn2:outgoing>Flow_0irfroh</bpmn2:outgoing>
         <bpmn2:messageEventDefinition id="MessageEventDefinition_0cl167n" messageRef="Message_0fvpzfg"/>
       </bpmn2:startEvent>
       <bpmn2:sequenceFlow id="Flow_0irfroh" sourceRef="StartMessageEvent_DocumentRequested" targetRef="CallActivity_RequestDocument">
-        <bpmn2:documentation id="documentation_cdXUXg"/>
+        <bpmn2:documentation id="documentation_Y0J0nQ"/>
       </bpmn2:sequenceFlow>
       <bpmn2:endEvent id="EndEvent_DocumentReceived" name="Document Received">
-        <bpmn2:documentation id="documentation_L16Yxw"/>
+        <bpmn2:documentation id="documentation_eVT99Q"/>
         <bpmn2:incoming>Flow_1wwxns6</bpmn2:incoming>
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="Flow_1wwxns6" sourceRef="CallActivity_RequestDocument" targetRef="EndEvent_DocumentReceived">
-        <bpmn2:documentation id="documentation_0Qrd4Q"/>
+        <bpmn2:documentation id="documentation_QCvy5g"/>
       </bpmn2:sequenceFlow>
       <bpmn2:callActivity calledElement="requestDocument_en" id="CallActivity_RequestDocument" name="Document Request">
-        <bpmn2:documentation id="documentation_Hut7Ew"/>
+        <bpmn2:documentation id="documentation_0ECNYA"/>
         <bpmn2:extensionElements>
           <zeebe:calledElement processId="requestDocument_en" propagateAllChildVariables="true"/>
         </bpmn2:extensionElements>
@@ -141,16 +141,16 @@
       </bpmn2:callActivity>
     </bpmn2:subProcess>
     <bpmn2:subProcess id="Activity_1esx1s7" triggeredByEvent="true">
-      <bpmn2:documentation id="documentation_MHFTwg"/>
+      <bpmn2:documentation id="documentation_r0F1pA"/>
       <bpmn2:startEvent id="StartTimerEvent_AcceleratedDecision" isInterrupting="false" name="Accelerated decision">
-        <bpmn2:documentation id="documentation_yTq1Gw"/>
+        <bpmn2:documentation id="documentation_ozmKSQ"/>
         <bpmn2:outgoing>Flow_0kaot38</bpmn2:outgoing>
         <bpmn2:timerEventDefinition id="TimerEventDefinition_0kdavba">
           <bpmn2:timeCycle xsi:type="bpmn2:tFormalExpression">R1/P5D</bpmn2:timeCycle>
         </bpmn2:timerEventDefinition>
       </bpmn2:startEvent>
       <bpmn2:userTask id="UserTask_AccelerateDecision" name="Accelerate decision making">
-        <bpmn2:documentation id="documentation_ATTRYQ"/>
+        <bpmn2:documentation id="documentation_1BWdng"/>
         <bpmn2:extensionElements>
           <zeebe:assignmentDefinition candidateGroups="teamleaders"/>
         </bpmn2:extensionElements>
@@ -158,20 +158,20 @@
         <bpmn2:outgoing>Flow_1t18skh</bpmn2:outgoing>
       </bpmn2:userTask>
       <bpmn2:endEvent id="EndEvent_DecisionAccelerated" name="Decision accelerated">
-        <bpmn2:documentation id="documentation_9vopXQ"/>
+        <bpmn2:documentation id="documentation_SY3Zkw"/>
         <bpmn2:incoming>Flow_1t18skh</bpmn2:incoming>
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="Flow_0kaot38" sourceRef="StartTimerEvent_AcceleratedDecision" targetRef="SendTask_NotifyCustomerDelay">
-        <bpmn2:documentation id="documentation_Jyf9DA"/>
+        <bpmn2:documentation id="documentation_HWvWKA"/>
       </bpmn2:sequenceFlow>
       <bpmn2:sequenceFlow id="Flow_1t18skh" sourceRef="UserTask_AccelerateDecision" targetRef="EndEvent_DecisionAccelerated">
-        <bpmn2:documentation id="documentation_pBR0Jw"/>
+        <bpmn2:documentation id="documentation_xvTmwQ"/>
       </bpmn2:sequenceFlow>
       <bpmn2:sequenceFlow id="Flow_1octlto" sourceRef="SendTask_NotifyCustomerDelay" targetRef="UserTask_AccelerateDecision">
-        <bpmn2:documentation id="documentation_iaB6GA"/>
+        <bpmn2:documentation id="documentation_nEyKUw"/>
       </bpmn2:sequenceFlow>
       <bpmn2:sendTask id="SendTask_NotifyCustomerDelay" name="Notify customer about delay">
-        <bpmn2:documentation id="documentation_lO5IPg"/>
+        <bpmn2:documentation id="documentation_2LtaYg"/>
         <bpmn2:extensionElements>
           <zeebe:taskDefinition type="notifyCustomerDelay"/>
         </bpmn2:extensionElements>
@@ -180,9 +180,9 @@
       </bpmn2:sendTask>
     </bpmn2:subProcess>
     <bpmn2:subProcess id="Activity_02a6b2h" triggeredByEvent="true">
-      <bpmn2:documentation id="documentation_bzx6CA"/>
+      <bpmn2:documentation id="documentation_SesLZg"/>
       <bpmn2:userTask id="UserTask_CheckForFraud" name="Check for Fraud">
-        <bpmn2:documentation id="documentation_YHaeqg"/>
+        <bpmn2:documentation id="documentation_3zO3Yg"/>
         <bpmn2:extensionElements>
           <zeebe:assignmentDefinition candidateGroups="riskteam"/>
         </bpmn2:extensionElements>
@@ -190,52 +190,52 @@
         <bpmn2:outgoing>Flow_1istmr0</bpmn2:outgoing>
       </bpmn2:userTask>
       <bpmn2:sequenceFlow id="Flow_0nttki4" sourceRef="StartMessageEvent_FraudSuspected" targetRef="UserTask_CheckForFraud">
-        <bpmn2:documentation id="documentation_OUD5oQ"/>
+        <bpmn2:documentation id="documentation_cSYNLA"/>
       </bpmn2:sequenceFlow>
       <bpmn2:startEvent id="StartMessageEvent_FraudSuspected" isInterrupting="false" name="Fraud suspected">
-        <bpmn2:documentation id="documentation_1oTplw"/>
+        <bpmn2:documentation id="documentation_oYncrA"/>
         <bpmn2:outgoing>Flow_0nttki4</bpmn2:outgoing>
         <bpmn2:messageEventDefinition id="MessageEventDefinition_1qmxrb4" messageRef="Message_10rm6h0"/>
       </bpmn2:startEvent>
       <bpmn2:sequenceFlow id="SequenceFlow_Yes" name="Yes" sourceRef="Gateway_FraudDetected" targetRef="ErrorEndEvent_FraudDetected">
-        <bpmn2:documentation id="documentation_CGDkhw"/>
+        <bpmn2:documentation id="documentation_yQED9w"/>
         <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">=fraud</bpmn2:conditionExpression>
       </bpmn2:sequenceFlow>
       <bpmn2:endEvent id="ErrorEndEvent_FraudDetected" name="Fraud Detected">
-        <bpmn2:documentation id="documentation_68pFlg"/>
+        <bpmn2:documentation id="documentation_07rCnA"/>
         <bpmn2:incoming>SequenceFlow_Yes</bpmn2:incoming>
         <bpmn2:errorEventDefinition errorRef="Error_0hvt466" id="ErrorEventDefinition_06wkgx9"/>
       </bpmn2:endEvent>
       <bpmn2:exclusiveGateway default="SequenceFlow_No" id="Gateway_FraudDetected" name="Fraud detected?">
-        <bpmn2:documentation id="documentation_MSWv1A"/>
+        <bpmn2:documentation id="documentation_DEcGoQ"/>
         <bpmn2:incoming>Flow_1istmr0</bpmn2:incoming>
         <bpmn2:outgoing>SequenceFlow_No</bpmn2:outgoing>
         <bpmn2:outgoing>SequenceFlow_Yes</bpmn2:outgoing>
       </bpmn2:exclusiveGateway>
       <bpmn2:sequenceFlow id="Flow_1istmr0" sourceRef="UserTask_CheckForFraud" targetRef="Gateway_FraudDetected">
-        <bpmn2:documentation id="documentation_CofTRQ"/>
+        <bpmn2:documentation id="documentation_Euxclw"/>
       </bpmn2:sequenceFlow>
       <bpmn2:endEvent id="EndEvent_FraudNoDetected" name="Fraud no detected">
-        <bpmn2:documentation id="documentation_eO9BSQ"/>
+        <bpmn2:documentation id="documentation_w4PQlg"/>
         <bpmn2:incoming>SequenceFlow_No</bpmn2:incoming>
       </bpmn2:endEvent>
       <bpmn2:sequenceFlow id="SequenceFlow_No" name="No" sourceRef="Gateway_FraudDetected" targetRef="EndEvent_FraudNoDetected">
-        <bpmn2:documentation id="documentation_DQMFqw"/>
+        <bpmn2:documentation id="documentation_VonjMA"/>
       </bpmn2:sequenceFlow>
     </bpmn2:subProcess>
     <bpmn2:endEvent id="ErrorEndEvent_Timeout" name="Timeout">
-      <bpmn2:documentation id="documentation_s1H1eg"/>
+      <bpmn2:documentation id="documentation_WSijnw"/>
       <bpmn2:incoming>Flow_03n7pdb</bpmn2:incoming>
       <bpmn2:errorEventDefinition errorRef="Error_0hvt466" id="ErrorEventDefinition_0zy5rzo"/>
     </bpmn2:endEvent>
     <bpmn2:endEvent id="EndEvent_ManuallyDecided" name="Manually Decided">
-      <bpmn2:documentation id="documentation_XstXiQ"/>
+      <bpmn2:documentation id="documentation_X57Xfg"/>
       <bpmn2:incoming>Flow_0vjv3ik</bpmn2:incoming>
     </bpmn2:endEvent>
   </bpmn2:process>
   <bpmn2:error errorCode="02" id="Error_0hvt466" name="Error_FraudDetected"/>
   <bpmn2:message id="Message_10rm6h0" name="Message_FraudSuspected">
-    <bpmn2:documentation id="documentation_izOOtA"/>
+    <bpmn2:documentation id="documentation_ScIKcA"/>
     <bpmn2:extensionElements>
       <zeebe:subscription correlationKey="=fraudSuspectedId"/>
     </bpmn2:extensionElements>
@@ -275,25 +275,25 @@
         <dc:Bounds height="80" width="100" x="300" y="290"/>
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_0fvpzfg" id="BPMNShape_81crQg">
+      <bpmndi:BPMNShape bpmnElement="Message_0fvpzfg" id="BPMNShape_UQ6Aaw">
         <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_gwjl9w">
+        <bpmndi:BPMNLabel id="BPMNLabel_gSbyDQ">
           <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="Message_10rm6h0" id="BPMNShape_VQPLnQ">
+      <bpmndi:BPMNShape bpmnElement="Message_10rm6h0" id="BPMNShape_cJ1lmw">
         <dc:Bounds height="20.0" width="30.0" x="0.0" y="0.0"/>
-        <bpmndi:BPMNLabel id="BPMNLabel_1TQ0mA">
+        <bpmndi:BPMNLabel id="BPMNLabel_xFGHhw">
           <dc:Bounds height="20.0" width="100.0" x="-35.0" y="25.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="Flow_0irfroh" id="Flow_0irfroh_di">
-        <di:waypoint x="256" y="330"/>
-        <di:waypoint x="300" y="330"/>
+        <di:waypoint x="256.0" y="330.0"/>
+        <di:waypoint x="300.0" y="330.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_1wwxns6" id="Flow_1wwxns6_di">
-        <di:waypoint x="400" y="330"/>
-        <di:waypoint x="452" y="330"/>
+        <di:waypoint x="400.0" y="330.0"/>
+        <di:waypoint x="452.0" y="330.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="Activity_1esx1s7" id="Activity_1q2kuce_di" isExpanded="true">
         <dc:Bounds height="130" width="540" x="200" y="420"/>
@@ -319,16 +319,16 @@
         <bpmndi:BPMNLabel/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="Flow_0kaot38" id="Flow_0kaot38_di">
-        <di:waypoint x="262" y="480"/>
-        <di:waypoint x="300" y="480"/>
+        <di:waypoint x="262.0" y="480.0"/>
+        <di:waypoint x="300.0" y="480.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_1t18skh" id="Flow_1t18skh_di">
-        <di:waypoint x="550" y="480"/>
-        <di:waypoint x="596" y="480"/>
+        <di:waypoint x="550.0" y="480.0"/>
+        <di:waypoint x="596.0" y="480.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_1octlto" id="Flow_1octlto_di">
-        <di:waypoint x="400" y="480"/>
-        <di:waypoint x="450" y="480"/>
+        <di:waypoint x="400.0" y="480.0"/>
+        <di:waypoint x="450.0" y="480.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="Activity_02a6b2h" id="BPMNShape_000cefj" isExpanded="true">
         <dc:Bounds height="190" width="410" x="200" y="570"/>
@@ -362,24 +362,24 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="Flow_0nttki4" id="BPMNEdge_0km1hw9">
-        <di:waypoint x="262" y="630"/>
-        <di:waypoint x="306" y="630"/>
+        <di:waypoint x="262.0" y="630.0"/>
+        <di:waypoint x="306.0" y="630.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_Yes" id="BPMNEdge_10mgh4a">
-        <di:waypoint x="470" y="655"/>
-        <di:waypoint x="470" y="700"/>
-        <di:waypoint x="542" y="700"/>
+        <di:waypoint x="470.0" y="655.0"/>
+        <di:waypoint x="470.0" y="700.0"/>
+        <di:waypoint x="542.0" y="700.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="14" width="18" x="477" y="683"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="Flow_1istmr0" id="Flow_1istmr0_di">
-        <di:waypoint x="406" y="630"/>
-        <di:waypoint x="445" y="630"/>
+        <di:waypoint x="406.0" y="630.0"/>
+        <di:waypoint x="445.0" y="630.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_No" id="Flow_02x2nrk_di">
-        <di:waypoint x="495" y="630"/>
-        <di:waypoint x="542" y="630"/>
+        <di:waypoint x="495.0" y="630.0"/>
+        <di:waypoint x="542.0" y="630.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="14" width="15" x="502" y="612"/>
         </bpmndi:BPMNLabel>
