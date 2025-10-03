@@ -195,9 +195,14 @@ public class BPMNProcess extends BPMNElement {
      * <p>
      * If the diagram does not contain a matching BPMNPlane, the method
      * creates one.
+     * <p>
+     * If the model has a BPMNPlane without a 'bpmnElement' attribute (invalid model
+     * structure) the method assigns the process to this 'default' plane if no match
+     * was found. See also sIssue #427
      */
     private void resolveBPMNPlane() {
         String collaborationElementID = null;
+        Element defaultPlaneElement = null;
 
         // resolve collaboration id if we have a collaboration Diagram...
         // Note: we can't yet use the method 'model.isCollaborationDiagram()' here!
@@ -217,6 +222,12 @@ public class BPMNProcess extends BPMNElement {
         for (int i = 0; i < planeList.getLength(); i++) {
             Element planeElement = (Element) planeList.item(i);
             String bpmnElementID = planeElement.getAttribute("bpmnElement");
+            if (bpmnElementID.isBlank()) {
+                logger.warning(
+                        "│   ├── Missing 'bpmnElement' attribute for bpmndi:BPMNPlane '"
+                                + planeElement.getAttribute("id") + "'...");
+                defaultPlaneElement = planeElement;
+            }
             // if the id matches we have a direct macht in a non-collaboration element
             if (this.getId() != null && this.getId().equals(bpmnElementID)) {
                 bpmnPlane = planeElement;
@@ -247,7 +258,18 @@ public class BPMNProcess extends BPMNElement {
             }
         }
 
-        // if no plane exists yes, we create one
+        // We did not found a matching plane. If we have a default plane we assign the
+        // current process to this plane!
+        if (defaultPlaneElement != null) {
+            logger.warning(
+                    "│   ├── Assign '" + defaultPlaneElement.getAttribute("id") + "' to process id '"
+                            + this.getId() + "'");
+            defaultPlaneElement.setAttribute("bpmnElement", this.getId());
+            bpmnPlane = defaultPlaneElement;
+            return;
+        }
+
+        // if still no plane exists yes, we create a new one
         if (bpmnPlane == null) {
             // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
             logger.warning("│   ├── No bpmndi:BPMNPlane found for '" + this.getId() + "'- creating default plane");
@@ -269,7 +291,6 @@ public class BPMNProcess extends BPMNElement {
                 }
             }
             BPMNElementOrder.appendChild(model.getBpmnDiagram(), bpmnDefaultPlane);
-
             bpmnPlane = bpmnDefaultPlane;
         }
     }
