@@ -83,35 +83,74 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
      * @returns
      */
     override route(edge: GRoutableElement): RoutedPoint[] {
-        // Early return if source or target is missing
+        // Validate edge structure completely
         if (!edge.source || !edge.target) {
             this.debug('No source or target - returning empty array');
             return [];
         }
-        // Check if we know the waypointData for the current edge
+        // Validate bounds existence and validity
+        if (!edge.source.bounds || !edge.target.bounds) {
+            this.debug('Invalid bounds on source or target - returning empty array');
+            return [];
+        }
+        if (edge.source.bounds.width === undefined || edge.source.bounds.height === undefined ||
+            edge.target.bounds.width === undefined || edge.target.bounds.height === undefined) {
+            this.debug('Incomplete bounds data - returning empty array');
+            return [];
+        }
+
         const currentWayPointData = this.originWayPointData?.find(origin => origin.edgeId === edge.id);
         if (!currentWayPointData) {
-            // Default routing if no waypointData is found
             return super.route(edge);
         }
         this.debug('start routing '+edge.id);
-        let completeRoute = super.route(edge);
+        let completeRoute;
+        try {
+            completeRoute = super.route(edge);
+        } catch (error) {
+            this.debug('Error in super.route(): ' + error);
+            return [];
+        }
+        if (!completeRoute || completeRoute.length < 2) {
+            this.debug('Invalid route returned from super - length: ' + completeRoute?.length);
+            return [];
+        }
 
-        // Log origin element position and offset
+        // validate route
+        if (!completeRoute || completeRoute.length < 2) {
+            this.debug('Invalid route returned from super - length: ' + completeRoute?.length);
+            return super.route(edge);
+        }
+
         this.debugFine(`Origin element pos=${edge.source.bounds.x},${edge.source.bounds.y}`);
+
         if (!currentWayPointData.originRoute) {
-            // Store the original route if it doesn't exist
             currentWayPointData.originRoute = [...completeRoute];
             this.debugPoints('Set origin Route for '+edge.id, currentWayPointData.originRoute);
         } else {
-            // console.log(' new-rout.length='+completeRoute.length + '  origin-route.length='+ currentWayPointData.originRoute.length);
-            if (currentWayPointData.originRoute.length===2 ) {
-                // update the original route
+            if (currentWayPointData.originRoute.length === 2) {
                 currentWayPointData.originRoute = [...completeRoute];
                 return super.route(edge);
             } else {
+                // VALIDIERUNG: Prüfe ob originRoute gültig ist
+                if (!currentWayPointData.originRoute || currentWayPointData.originRoute.length < 2) {
+                    this.debug('Invalid originRoute - resetting');
+                    this.resetWayPointData();
+                    return super.route(edge);
+                }
                 this.debugPoints('Restore origin Route.....', currentWayPointData.originRoute);
                 completeRoute = [...currentWayPointData.originRoute];
+
+                // validate all points
+                const allPointsValid = completeRoute.every(point =>
+                    point && typeof point.x === 'number' && typeof point.y === 'number'
+                );
+
+                if (!allPointsValid) {
+                    this.debug('Invalid points in route - resetting');
+                    this.resetWayPointData();
+                    return super.route(edge);
+                }
                 this.debugFine('Adjusting routing points...');
 
                 // Determine if the source or target is being moved

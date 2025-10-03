@@ -190,6 +190,7 @@ export class MultiLineTextNode extends GShapeElement { // implements SArgumentab
 export class BPMNEdge extends GEdge {
 	kind?: string;
 	documentation: string;
+	override routerKind = 'manhattan';
 }
 
 export class Icon extends GShapeElement implements LayoutContainer {
