@@ -1068,7 +1068,7 @@ public class BPMNGModelFactory implements GModelFactory {
             builder.source(computeGPort(source));
             // We add an edge Padding of 10 pixel.
             // See the view renderer in bpmn-routing-views.tsx.
-            builder.addArgument(GArguments.edgePadding(modelState.getBpmnGridSnapper().getGridSize()));
+            builder.addArgument(GArguments.edgePadding(10));
             BPMNGEdge bpmnGEdge = builder.build();
             bpmnGEdge.setKind("");
             // add the waypoints to the GLSP model....
