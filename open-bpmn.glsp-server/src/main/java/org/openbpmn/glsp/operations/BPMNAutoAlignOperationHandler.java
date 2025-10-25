@@ -48,6 +48,7 @@ public class BPMNAutoAlignOperationHandler extends GModelOperationHandler<BPMNAu
         return commandOf(() -> {
 
             logger.finest("Auto align all elements....");
+            modelState.setAutoAlign(true);
             Set<Participant> participants = modelState.getBpmnModel().getParticipants();
             for (Participant participant : participants) {
                 modelState.getBpmnGridSnapper().snap(participant);
@@ -61,7 +62,7 @@ public class BPMNAutoAlignOperationHandler extends GModelOperationHandler<BPMNAu
                     modelState.getBpmnGridSnapper().snap(_node);
                 }
             }
-            modelState.setAutoAlign(true);
+
             modelState.reset();
         });
     }

@@ -129,7 +129,7 @@ public class BPMNGridSnapper {
 
     /**
      * Snaps a BPMN element based on its current position.
-     * This method is used by the AutoAlinOperation which snaps all elements
+     * This method is used by the AutoAlignOperation which snaps all elements
      * automatically to the grid.
      * 
      * @param pos
