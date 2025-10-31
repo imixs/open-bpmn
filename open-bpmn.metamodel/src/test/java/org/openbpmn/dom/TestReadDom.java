@@ -93,7 +93,7 @@ public class TestReadDom {
     public void testReadBlankFile() throws BPMNModelException {
         logger.info("...read blank model");
 
-        String out = "src/test/resources/out_blank.bpmn";
+        String out = "src/test/resources/output/out_blank.bpmn";
 
         BPMNModel model = BPMNModelFactory.read("/blank.bpmn");
         System.out.println("Root Element :" + model.getDoc().getDocumentElement().getNodeName());
