@@ -29,6 +29,7 @@ import {
     RectangularNodeView,
     RoundedCornerNodeView,
     TYPES,
+    ZoomMouseListener,
     configureActionHandler,
     configureDefaultModelElements,
     configureModelElement,
@@ -68,6 +69,7 @@ import 'sprotty/css/edit-label.css';
 import '../css/diagram.css';
 import {
     BPMNGridView,
+    BPMNZoomMouseListener,
     DataObjectNodeView,
     DataStoreNodeView,
     EventNodeView,
@@ -93,6 +95,9 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     const context = { bind, unbind, isBound, rebind };
     rebind(TYPES.ILogger).to(ConsoleLogger).inSingletonScope();
     rebind(TYPES.LogLevel).toConstantValue(LogLevel.warn);
+
+    // BPMN Zoom Listener
+    rebind(ZoomMouseListener).to(BPMNZoomMouseListener).inSingletonScope();
 
     // beaks launch
     bind<IHelperLineOptions>(TYPES.IHelperLineOptions).toConstantValue({

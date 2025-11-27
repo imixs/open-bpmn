@@ -29,6 +29,7 @@ import {
     SGraphImpl,
     Selectable,
     ShapeView,
+    ZoomMouseListener,
     findParentByFeature,
     getSubType,
     isBoundsAware,
@@ -91,6 +92,23 @@ export class BPMNGridView implements IView {
                 </g>
             </svg>
         );
+    }
+}
+
+/*
+ * The BPMNZoomMouseListener overwrites the origin GLSP ZoomMouseListener
+ * and changes the zoomFactor from 0.5 to 0.1
+ */
+@injectable()
+export class BPMNZoomMouseListener extends ZoomMouseListener {
+  protected override getZoomFactor(event: WheelEvent): number {
+        if (event.deltaMode === event.DOM_DELTA_PAGE) {
+            return Math.exp(-event.deltaY * 0.1);  // 0.5
+        } else if (event.deltaMode === event.DOM_DELTA_LINE) {
+            return Math.exp(-event.deltaY * 0.01); // 0.05
+        } else { // deltaMode === DOM_DELTA_PIXEL
+            return Math.exp(-event.deltaY * 0.001); // 0.005
+        }
     }
 }
 
