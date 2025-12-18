@@ -121,14 +121,6 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
 
         this.debugFine(`Origin element pos=${edge.source.bounds.x},${edge.source.bounds.y}`);
 
-        // if ('1'!==currentWayPointData.elementId) {
-        //     console.log('Ich mache nix!!');
-        //     // return super.route(edge);
-        //      //return [];
-        //       this.resetWayPointData();
-        //             return super.route(edge);
-        // }
-
         if (!currentWayPointData.originRoute) {
             currentWayPointData.originRoute = [...completeRoute];
             this.debugPoints('Set origin Route for '+edge.id, currentWayPointData.originRoute);
@@ -200,6 +192,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
 
         // optimize route be removing clusters
         completeRoute=this.collapseRoute(completeRoute);
+        completeRoute=this.collapseLoops(completeRoute);
         // Update the edge's routing points and return the complete route
         edge.routingPoints = completeRoute;
         return completeRoute;
@@ -219,6 +212,9 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         if (points.length <= 3) {
             return points;
         }
+        // this.debugMode=true;
+        // this.debugPoints('├── Origin WayPoints: ',originPoints);
+        // this.debugPoints('├── New    WayPoints: ',points);
 
         let result = [...points];
         let changed = true;
@@ -296,16 +292,16 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
     }
 
     /**
-     * Collapses a Manhattan route by removing unnecessary intermediate points
-     * that form a local "cluster" (short segments) within the given threshold.
+     * Collapses loops in a Manhattan route by finding self-intersections
+     * and creating shortcuts at crossing points.
      *
      * @param points - The route points (first and last are fixed anchor points)
-     * @param threshold - Maximum length of a segment to collapse (default: 20px)
-     * @returns Optimized route with minimal points
+     * @param threshold - Not used currently, kept for API consistency
+     * @returns Optimized route with loops removed
      */
-    public collapseRouteFirstDraft(points: RoutedPoint[], threshold = 10): RoutedPoint[] {
-        // Need at least 4 points to have a collapsible segment
-        // (3 points = already optimal L-path)
+    public collapseLoops(points: RoutedPoint[]): RoutedPoint[] {
+        // Need at least 4 points for a possible self-intersection
+        // (a loop requires at least 4 segments)
         if (points.length <= 3) {
             return points;
         }
@@ -313,51 +309,100 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         let result = [...points];
         let changed = true;
 
-        // Repeat until no more changes are made
-        // (collapsing one segment might create another short segment)
+        // Repeat until no more crossings are found
         while (changed) {
             changed = false;
 
-            // Iterate through inner segments only (skip first and last segment)
-            // First segment (0→1) connects to fixed start point
-            // Last segment (n-2→n-1) connects to fixed end point
-            for (let i = 1; i < result.length - 2; i++) {
-                const p1 = result[i];
-                const p2 = result[i + 1];
+            // Iterate through all segment pairs (i, j) where j > i+1
+            // We skip adjacent segments (they share a point, not a crossing)
+            for (let i = 0; i < result.length - 3 && !changed; i++) {
+                const a1 = result[i];
+                const a2 = result[i + 1];
 
-                // Calculate segment length
-                // For Manhattan routing, segments are either horizontal or vertical
-                const segmentLength = Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y);
+                for (let j = i + 2; j < result.length - 1 && !changed; j++) {
+                    const b1 = result[j];
+                    const b2 = result[j + 1];
 
-                if (segmentLength < threshold) {
-                    // Found a short segment → collapse it
-                    const before = result[i - 1];
-                    const after = result[i + 2];
+                    const crossing = this.findCrossing(a1, a2, b1, b2);
 
-                    // Determine segment direction to calculate the new L-point
-                    // Horizontal segment: same Y values
-                    // Vertical segment: same X values
-                    const isHorizontal = p1.y === p2.y;
+                    if (crossing) {
+                        // Found a crossing! Create shortcut.
+                        // Keep points 0..i, add crossing point, then j+1..end
+                        const crossingPoint: RoutedPoint = {
+                            x: crossing.x,
+                            y: crossing.y,
+                            kind: 'linear'
+                        };
 
-                    // The new L-point connects 'before' to 'after':
-                    // - Horizontal segment → take X from 'after', Y from 'before'
-                    // - Vertical segment   → take X from 'before', Y from 'after'
-                    const lPoint: RoutedPoint = isHorizontal
-                        ? { x: after.x, y: before.y, kind: 'linear' }
-                        : { x: before.x, y: after.y, kind: 'linear' };
+                        result = [
+                            ...result.slice(0, i + 1),    // Start up to and including point i
+                            crossingPoint,                 // The new crossing point
+                            ...result.slice(j + 1)         // From point after segment j to end
+                        ];
 
-                    // Replace points[i] and points[i+1] with the new L-point
-                    result = [
-                        ...result.slice(0, i),
-                        lPoint,
-                        ...result.slice(i + 2)
-                    ];
-                    changed = true;
-                    break; // Restart from beginning (indices have changed)
+                        changed = true;
+                    }
                 }
             }
         }
+
         return result;
+    }
+
+    /**
+     * Finds the crossing point of two Manhattan segments, if they intersect.
+     * One segment must be horizontal, the other vertical.
+     *
+     * @returns The crossing point, or null if segments don't cross
+     */
+    private findCrossing(a1: RoutedPoint, a2: RoutedPoint, b1: RoutedPoint, b2: RoutedPoint): RoutedPoint | undefined {
+        // Determine which segment is horizontal and which is vertical
+        const aIsHorizontal = a1.y === a2.y;
+        const aIsVertical = a1.x === a2.x;
+        const bIsHorizontal = b1.y === b2.y;
+        const bIsVertical = b1.x === b2.x;
+
+        // We need one horizontal and one vertical segment
+        if (aIsHorizontal && bIsVertical) {
+            return this.checkCrossing(
+                a1.x, a2.x, a1.y,  // horizontal segment: x range and y value
+                b1.y, b2.y, b1.x   // vertical segment: y range and x value
+            );
+        } else if (aIsVertical && bIsHorizontal) {
+            return this.checkCrossing(
+                b1.x, b2.x, b1.y,  // horizontal segment: x range and y value
+                a1.y, a2.y, a1.x   // vertical segment: y range and x value
+            );
+        }
+
+        // Both horizontal or both vertical → no crossing possible
+        return undefined;
+    }
+
+    /**
+     * Checks if a horizontal and vertical segment cross each other.
+     *
+     * @param hx1, hx2 - X range of horizontal segment
+     * @param hy - Y value of horizontal segment
+     * @param vy1, vy2 - Y range of vertical segment
+     * @param vx - X value of vertical segment
+     * @returns The crossing point, or null if no crossing
+     */
+    private checkCrossing(hx1: number, hx2: number, hy: number, vy1: number, vy2: number, vx: number): RoutedPoint | undefined {
+        // Get proper min/max ranges
+        const hxMin = Math.min(hx1, hx2);
+        const hxMax = Math.max(hx1, hx2);
+        const vyMin = Math.min(vy1, vy2);
+        const vyMax = Math.max(vy1, vy2);
+
+        // Check if vertical segment's X is within horizontal segment's X range
+        // AND horizontal segment's Y is within vertical segment's Y range
+        // Using strict inequality (<, >) to exclude touching at endpoints
+        if (vx > hxMin && vx < hxMax && hy > vyMin && hy < vyMax) {
+            return { x: vx, y: hy, kind: 'linear' };
+        }
+
+        return undefined;
     }
 
     /**
