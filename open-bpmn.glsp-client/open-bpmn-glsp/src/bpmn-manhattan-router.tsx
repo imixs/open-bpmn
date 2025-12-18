@@ -103,16 +103,13 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         if (!currentWayPointData) {
             return super.route(edge);
         }
+
         this.debug('start routing '+edge.id);
         let completeRoute;
         try {
             completeRoute = super.route(edge);
         } catch (error) {
             this.debug('Error in super.route(): ' + error);
-            return [];
-        }
-        if (!completeRoute || completeRoute.length < 2) {
-            this.debug('Invalid route returned from super - length: ' + completeRoute?.length);
             return [];
         }
 
@@ -123,6 +120,14 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         }
 
         this.debugFine(`Origin element pos=${edge.source.bounds.x},${edge.source.bounds.y}`);
+
+        // if ('1'!==currentWayPointData.elementId) {
+        //     console.log('Ich mache nix!!');
+        //     // return super.route(edge);
+        //      //return [];
+        //       this.resetWayPointData();
+        //             return super.route(edge);
+        // }
 
         if (!currentWayPointData.originRoute) {
             currentWayPointData.originRoute = [...completeRoute];
@@ -193,9 +198,76 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
             }
         }
 
+        // optimize route be removing clusters
+        completeRoute=this.collapseRoute(completeRoute);
         // Update the edge's routing points and return the complete route
         edge.routingPoints = completeRoute;
         return completeRoute;
+    }
+
+    /**
+     * Collapses a Manhattan route by removing unnecessary intermediate points
+     * that form a local "cluster" (short segments) within the given threshold.
+     *
+     * @param points - The route points (first and last are fixed anchor points)
+     * @param threshold - Maximum length of a segment to collapse (default: 20px)
+     * @returns Optimized route with minimal points
+     */
+    public collapseRoute(points: RoutedPoint[], threshold = 10): RoutedPoint[] {
+        // Need at least 4 points to have a collapsible segment
+        // (3 points = already optimal L-path)
+        if (points.length <= 3) {
+            return points;
+        }
+
+        let result = [...points];
+        let changed = true;
+
+        // Repeat until no more changes are made
+        // (collapsing one segment might create another short segment)
+        while (changed) {
+            changed = false;
+
+            // Iterate through inner segments only (skip first and last segment)
+            // First segment (0→1) connects to fixed start point
+            // Last segment (n-2→n-1) connects to fixed end point
+            for (let i = 1; i < result.length - 2; i++) {
+                const p1 = result[i];
+                const p2 = result[i + 1];
+
+                // Calculate segment length
+                // For Manhattan routing, segments are either horizontal or vertical
+                const segmentLength = Math.abs(p2.x - p1.x) + Math.abs(p2.y - p1.y);
+
+                if (segmentLength < threshold) {
+                    // Found a short segment → collapse it
+                    const before = result[i - 1];
+                    const after = result[i + 2];
+
+                    // Determine segment direction to calculate the new L-point
+                    // Horizontal segment: same Y values
+                    // Vertical segment: same X values
+                    const isHorizontal = p1.y === p2.y;
+
+                    // The new L-point connects 'before' to 'after':
+                    // - Horizontal segment → take X from 'after', Y from 'before'
+                    // - Vertical segment   → take X from 'before', Y from 'after'
+                    const lPoint: RoutedPoint = isHorizontal
+                        ? { x: after.x, y: before.y, kind: 'linear' }
+                        : { x: before.x, y: after.y, kind: 'linear' };
+
+                    // Replace points[i] and points[i+1] with the new L-point
+                    result = [
+                        ...result.slice(0, i),
+                        lPoint,
+                        ...result.slice(i + 2)
+                    ];
+                    changed = true;
+                    break; // Restart from beginning (indices have changed)
+                }
+            }
+        }
+        return result;
     }
 
     /**
