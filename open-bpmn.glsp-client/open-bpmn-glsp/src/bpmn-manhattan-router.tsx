@@ -205,6 +205,96 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
         return completeRoute;
     }
 
+        /**
+     * Collapses a Manhattan route by removing unnecessary intermediate points
+     * that form a local "cluster" (short segments) within the given threshold.
+     *
+     * @param points - The route points (first and last are fixed anchor points)
+     * @param threshold - Maximum length of a segment to collapse (default: 20px)
+     * @returns Optimized route with minimal points
+     */
+    public collapseRoute(points: RoutedPoint[], threshold = 20): RoutedPoint[] {
+        // Need at least 4 points to have a collapsible segment
+        // (3 points = already optimal L-path)
+        if (points.length <= 3) {
+            return points;
+        }
+
+        let result = [...points];
+        let changed = true;
+
+        // Repeat until no more changes are made
+        // (collapsing one segment might create another short segment)
+        while (changed) {
+            changed = false;
+
+            // Iterate through inner segments only (skip first and last segment)
+            // First segment (0→1) connects to fixed start point
+            // Last segment (n-2→n-1) connects to fixed end point
+            for (let i = 1; i < result.length - 2; i++) {
+                const p1 = result[i];
+                const p2 = result[i + 1];
+
+                // Calculate segment length
+                // For Manhattan routing, segments are either horizontal or vertical
+                const dx = Math.abs(p2.x - p1.x);
+                const dy = Math.abs(p2.y - p1.y);
+                const segmentLength = dx + dy;
+
+                // Skip diagonal segments (should not occur in Manhattan routing)
+                // These require different handling and might indicate a data issue
+                if (dx > 0 && dy > 0) {
+                    continue;
+                }
+
+                if (segmentLength < threshold) {
+                    // Found a short segment → collapse it
+                    const before = result[i - 1];
+                    const after = result[i + 2];
+
+                    // Safety check: ensure 'before' and 'after' exist
+                    if (!before || !after) {
+                        continue;
+                    }
+
+                    // Determine segment direction to calculate the new L-point
+                    // Horizontal segment: same Y values (dy === 0)
+                    // Vertical segment: same X values (dx === 0)
+                    const isHorizontal = dy === 0;
+
+                    // The new L-point connects 'before' to 'after':
+                    // - Horizontal segment → take X from 'after', Y from 'before'
+                    // - Vertical segment   → take X from 'before', Y from 'after'
+                    const lPoint: RoutedPoint = isHorizontal
+                        ? { x: after.x, y: before.y, kind: 'linear' }
+                        : { x: before.x, y: after.y, kind: 'linear' };
+
+                    // Validate: new L-point should create valid Manhattan segments
+                    // Skip if the new point would create a diagonal connection
+                    const createsValidRoute =
+                        (before.x === lPoint.x || before.y === lPoint.y) &&
+                        (after.x === lPoint.x || after.y === lPoint.y);
+
+                    if (!createsValidRoute) {
+                        continue;
+                    }
+
+                    // Replace points[i] and points[i+1] with the new L-point
+                    result = [
+                        ...result.slice(0, i),
+                        lPoint,
+                        ...result.slice(i + 2)
+                    ];
+
+                    changed = true;
+                    break; // Restart from beginning (indices have changed)
+                }
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Collapses a Manhattan route by removing unnecessary intermediate points
      * that form a local "cluster" (short segments) within the given threshold.
@@ -213,7 +303,7 @@ export class BPMNManhattanRouter extends GLSPManhattanEdgeRouter {
      * @param threshold - Maximum length of a segment to collapse (default: 20px)
      * @returns Optimized route with minimal points
      */
-    public collapseRoute(points: RoutedPoint[], threshold = 10): RoutedPoint[] {
+    public collapseRouteFirstDraft(points: RoutedPoint[], threshold = 10): RoutedPoint[] {
         // Need at least 4 points to have a collapsible segment
         // (3 points = already optimal L-path)
         if (points.length <= 3) {
