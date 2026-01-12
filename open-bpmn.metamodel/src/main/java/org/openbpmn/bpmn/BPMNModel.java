@@ -369,41 +369,6 @@ public class BPMNModel {
     }
 
     /**
-     * This method loads all BPMNPlanes from the BPMNDiagram. If
-     * no BPMN Plane yet exists, then the method build one.
-     * 
-     */
-    // private void loadBpmnPlanes() {
-    // // find the corresponding BPMNPlane
-    // bpmnPlanes = new HashSet<>();
-    // NodeList planeList = findElementsByName(doc.getDocumentElement(),
-    // BPMNNS.BPMNDI, "BPMNPlane");
-    // if (planeList != null && planeList.getLength() > 0) {
-    // Element bpmnPlane = (Element) planeList.item(0);
-    // bpmnPlanes.add(bpmnPlane);
-    // }
-    // // if no plane exists yes, we create one
-    // if (bpmnPlanes.size() == 0) {
-    // // <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process_1">
-    // getLogger().warning("No bpmndi:BPMNPlane found - created default plane");
-    // Element bpmnDefaultPlane = createElement(BPMNNS.BPMNDI, "BPMNPlane");
-    // bpmnDefaultPlane.setAttribute("id", "BPMNPlane_1");
-    // NodeList nodeList = findElementsByName(definitions, BPMNNS.BPMN2,
-    // "collaboration");
-    // if (nodeList == null || nodeList.getLength() == 0) {
-    // // Take the default process as plane ref...
-    // nodeList = findElementsByName(definitions, BPMNNS.BPMN2, "process");
-    // }
-    // if (nodeList != null && nodeList.getLength() > 0) {
-    // Element refElement = (Element) nodeList.item(0);
-    // bpmnDefaultPlane.setAttribute("bpmnElement", refElement.getAttribute("id"));
-    // }
-    // getBpmnDiagram().appendChild(bpmnDefaultPlane);
-    // bpmnPlanes.add(bpmnDefaultPlane);
-    // }
-    // }
-
-    /**
      * Returns the namespace uri for a given namespace
      * 
      * @param ns
@@ -2183,24 +2148,6 @@ public class BPMNModel {
                 }
 
                 BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType, null);
-
-                // Issue 436
-                // if we have a public process associated with a participant shape this is a
-                // invalid model situation.
-                // We fix this case here as we remove the irregular shape element
-                // if (bpmnProcess.isPublicProcess() && this.isCollaborationDiagram()) {
-                // // collaborationElement
-                // Participant participant =
-                // this.findParticipantByProcessId(bpmnProcess.getId());
-                // // do we have a shape?
-                // if (participant != null) {
-                // logger.warning("Remove invalid bpmn shape element for public process " +
-                // bpmnProcess.getId());
-                // Element shape = participant.getBpmnShape();
-                // shape.getParentNode().removeChild(shape);
-                // participant.setBpmnShape(null);
-                // }
-                // }
 
                 bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
                 if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {

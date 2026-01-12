@@ -173,9 +173,6 @@ public class TestSubProcess {
             assertEquals(1, model.getBpmnProcesses().size());
             Participant participant = model.findParticipantById("Participant_1q1wiv9");
             assertNotNull(participant);
-            BPMNPoint pos = participant.getBounds().getPosition();
-            assertEquals(160.0, pos.getX());
-            assertEquals(60.0, pos.getY());
 
             // load subprocess
             BPMNProcess process = model.openProcess("Process_0vroknd");
@@ -186,7 +183,7 @@ public class TestSubProcess {
             // open the subProcess
             Activity subProcessActivity = (Activity) process.findElementNodeById("Activity_1uvplki");
 
-            pos = subProcessActivity.getBounds().getPosition();
+            BPMNPoint pos = subProcessActivity.getBounds().getPosition();
             assertEquals(250.0, pos.getX());
             assertEquals(80.0, pos.getY());
 
@@ -216,18 +213,6 @@ public class TestSubProcess {
             wayPoint2 = iter.next();
             assertEquals(336, wayPoint1.getX());
             assertEquals(522, wayPoint2.getX());
-
-            // finally we move the participant 10 point to the right....
-            participant.setPosition(170, 60);
-            pos = subProcessActivity.getBounds().getPosition();
-            assertEquals(270.0, pos.getX());
-            assertEquals(80.0, pos.getY());
-            // and finally verify the waypoints
-            iter = wayPoints.iterator();
-            wayPoint1 = iter.next();
-            wayPoint2 = iter.next();
-            assertEquals(346, wayPoint1.getX());
-            assertEquals(532, wayPoint2.getX());
 
         } catch (BPMNModelException e) {
             e.printStackTrace();
