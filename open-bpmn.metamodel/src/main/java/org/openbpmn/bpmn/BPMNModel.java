@@ -2075,6 +2075,18 @@ public class BPMNModel {
                 if (process != null) {
                     if (process.isPublicProcess()) {
                         publicCount++;
+                        // Issue 436
+                        // if we have a public process associated with a participant shape this is a
+                        // invalid model situation.
+                        // We fix this case here by removing the irregular shape element
+                        String participantID = item.getAttribute("id");
+                        Element bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(this, process.getBPMNPlane(),
+                                participantID);
+                        if (bpmnShape != null) {
+                            logger.warning(
+                                    "Remove invalid bpmn shape element for public process " + processRef);
+                            process.getBPMNPlane().removeChild(bpmnShape);
+                        }
                     }
                     participants.add(new Participant(this, item, process));
                 }
@@ -2171,6 +2183,25 @@ public class BPMNModel {
                 }
 
                 BPMNProcess bpmnProcess = new BPMNProcess(this, processElement, processType, null);
+
+                // Issue 436
+                // if we have a public process associated with a participant shape this is a
+                // invalid model situation.
+                // We fix this case here as we remove the irregular shape element
+                // if (bpmnProcess.isPublicProcess() && this.isCollaborationDiagram()) {
+                // // collaborationElement
+                // Participant participant =
+                // this.findParticipantByProcessId(bpmnProcess.getId());
+                // // do we have a shape?
+                // if (participant != null) {
+                // logger.warning("Remove invalid bpmn shape element for public process " +
+                // bpmnProcess.getId());
+                // Element shape = participant.getBpmnShape();
+                // shape.getParentNode().removeChild(shape);
+                // participant.setBpmnShape(null);
+                // }
+                // }
+
                 bpmnProcesses.put(bpmnProcess.getId(), bpmnProcess);
                 if (BPMNTypes.PROCESS_TYPE_PUBLIC.equals(processType)) {
                     defaultProcess = bpmnProcess;

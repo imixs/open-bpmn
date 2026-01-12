@@ -74,7 +74,7 @@ public class BPMNComputedBoundsActionHandler extends AbstractActionHandler<Compu
                     double yOffset = 0;
                     // in case we are within a Pool we need to compute the x/y offsets first
                     if (!BPMNTypes.MESSAGE_FLOW.equals(bpmnElementEdge.getType())) {
-                        if (container != null) {
+                        if (container != null && container.getBpmnShape() != null) {
                             // if we have a participant/pool we can compute the relative position...
                             xOffset = container.getBounds().getPosition().getX();
                             yOffset = container.getBounds().getPosition().getY();

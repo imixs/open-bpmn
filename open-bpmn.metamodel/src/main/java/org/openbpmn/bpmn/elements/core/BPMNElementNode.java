@@ -76,6 +76,11 @@ public abstract class BPMNElementNode extends BPMNElement {
         if (bpmnProcess != null) {
             bpmnShape = BPMNModelUtil.findBPMNShapeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
             if (bpmnShape == null) {
+                // do not create a shape for a public process - see Issue #436
+                if (BPMNTypes.PARTICIPANT.equals(_type) && _bpmnProcess.isPublicProcess()) {
+                    // skip!
+                    return;
+                }
                 // create shape element
                 bpmnShape = model.buildBPMNShape(this);
                 this.setBounds(0.0, 0.0, getDefaultWidth(), getDefaultHeight());
