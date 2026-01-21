@@ -29,6 +29,9 @@
   </bpmn2:extensionElements>
   <bpmn2:process definitionalCollaborationRef="collaboration_1" id="process_1" name="End" processType="Public">
     <bpmn2:documentation id="documentation_X1chKA"/>
+    <bpmn2:extensionElements>
+      <open-bpmn:auto-align/>
+    </bpmn2:extensionElements>
     <bpmn2:startEvent id="event_4TeKWg" name="Start">
       <bpmn2:documentation id="documentation_YSSgdQ"/>
       <bpmn2:outgoing>sequenceFlow_TFyVmg</bpmn2:outgoing>
@@ -302,7 +305,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="messageFlow_4XD0AQ" id="BPMNEdge_dJzPcQ" sourceElement="BPMNShape_hokKbQ" targetElement="BPMNShape_2hdpog">
         <di:waypoint x="355.0" y="140.0"/>
-        <di:waypoint x="355.0" y="175.0"/>
         <di:waypoint x="355.0" y="210.0"/>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape bpmnElement="task_BwJuOA" id="BPMNShape_A03N4w">
