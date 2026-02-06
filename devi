@@ -88,6 +88,18 @@ if [[ "$(strip_dash $1)" == "docker-push" ]]; then
     docker push imixs/open-bpmn
 fi
 
+if [[ "$(strip_dash $1)" == "docker-multi-arch" ]]; then
+    echo " push docker image for Multi-Arch..."
+    docker buildx use multiarch
+    docker buildx build \
+        --platform linux/amd64,linux/arm64 \
+        -t imixs/open-bpmn:latest \
+        --push \
+        .
+    docker buildx use default
+    echo " switched back to default builder"        
+fi
+
 
 if [[ "$(strip_dash $1)" == "clean" ]]; then
     echo " cleanup build..."
@@ -112,6 +124,7 @@ if [[ $# -eq 0 ]]; then
     echo "   -docker-build   : build docker image only"
     echo "   -docker-run     : run the docker container "
     echo "   -docker-push    : push the docker image "
+    echo "   -docker-multi-arch: build an push docker image for Multi-Arch "
     echo "_______________________________________________________________________"
     echo " "
 
