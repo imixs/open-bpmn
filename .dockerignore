@@ -1,3 +1,10 @@
+# Ignore nodejs binaries
+
+node_modules
+*/node_modules
+**/.yarn
+**/yarn.lock
+
 # Java Source und Build-Artefakte (außer JAR)
 
 open-bpmn.glsp-server/src/

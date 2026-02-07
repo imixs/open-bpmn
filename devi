@@ -89,7 +89,7 @@ if [[ "$(strip_dash $1)" == "docker-push" ]]; then
 fi
 
 if [[ "$(strip_dash $1)" == "docker-multi-arch" ]]; then
-    echo " push docker image for Multi-Arch..."
+    echo "build and push docker image for Multi-Arch..."
     docker buildx use multiarch
     docker buildx build \
         --platform linux/amd64,linux/arm64 \
@@ -111,7 +111,6 @@ fi
 
 # Überprüfen, ob keine Parameter übergeben wurden - standard build
 if [[ $# -eq 0 ]]; then
-
     echo " Run with ./dev.sh -XXX"
     echo " "
     echo "   -build-all      : build the backend and frontend component"
@@ -127,5 +126,4 @@ if [[ $# -eq 0 ]]; then
     echo "   -docker-multi-arch: build an push docker image for Multi-Arch "
     echo "_______________________________________________________________________"
     echo " "
-
 fi
