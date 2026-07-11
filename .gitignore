@@ -19,6 +19,7 @@ buildNumber.properties
 .temp
 *.log
 
+
 ## Node.js/yarn/lerna ##
 node_modules
 node_modules/.yarn-integrity
@@ -31,3 +32,4 @@ gen-webpack.node.config.js
 open-bpmn.glsp-client/open-bpmn-app/src-gen/
 
 open-bpmn.metamodel/src/test/resources/out_blank.bpmn
+open-bpmn.glsp-client/workspace/examples/dev/

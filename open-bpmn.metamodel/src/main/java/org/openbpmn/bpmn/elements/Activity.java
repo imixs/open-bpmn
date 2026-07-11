@@ -201,15 +201,14 @@ public class Activity extends BPMNElementNode {
      * Validate Activity element.
      * 
      * We Expect at least one incoming message flow or sequence flow and at least
-     * one outgoing sequence flow
+     * one outgoing sequence flow, or boundary event
      * 
      * Spec:
      * 
      * A Receive Task is often used to start a Process. In a sense, the Process is
-     * bootstrapped by the receipt of the
-     * Message. In order for the Receive Task to instantiate the Process its
-     * instantiate attribute MUST be set to true
-     * and it MUST NOT have any incoming Sequence Flow.
+     * bootstrapped by the receipt of the Message. In order for the Receive Task to
+     * instantiate the Process its instantiate attribute MUST be set to true and it
+     * MUST NOT have any incoming Sequence Flow.
      */
     @Override
     public List<BPMNValidationMarker> validate() {
@@ -222,9 +221,11 @@ public class Activity extends BPMNElementNode {
                     BPMNValidationMarker.ErrorType.ERROR));
         }
 
-        if (this.getOutgoingSequenceFlows().size() == 0 && !this.hasSubProcess()) {
+        // Test outgoing flows SubProcess and Boundary events
+        if (this.getOutgoingSequenceFlows().size() == 0 && this.getAllBoundaryEvents().size() == 0
+                && !this.hasSubProcess()) {
             this.addValidationMarker(new BPMNValidationMarker("Task",
-                    "A Task must have at least one outgoing Sequence Flow!", this.getId(),
+                    "A Task must have at least one outgoing Sequence Flow!!", this.getId(),
                     BPMNValidationMarker.ErrorType.ERROR));
         }
 
