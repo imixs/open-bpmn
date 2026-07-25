@@ -169,7 +169,7 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
     }
 
     /**
-     * Builds the properties form container. 
+     * Builds the properties form container.
      *
      * We also disable the browser spellcheck for all dynamically rendered JsonForms fields.
      * The 'spellcheck' attribute is inherited by all descendant elements
