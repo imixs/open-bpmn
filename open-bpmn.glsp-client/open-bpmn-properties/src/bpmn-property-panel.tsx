@@ -168,9 +168,20 @@ export class BPMNPropertyPanel extends AbstractUIExtension implements IDiagramSt
         });
     }
 
+    /**
+     * Builds the properties form container. 
+     *
+     * We also disable the browser spellcheck for all dynamically rendered JsonForms fields.
+     * The 'spellcheck' attribute is inherited by all descendant elements
+     * that don't explicitly override it, so this covers inputs/textareas
+     * rendered later by JsonForms without touching each renderer.
+     */
     protected createBody(): void {
         const bodyDiv = document.createElement('div');
         bodyDiv.classList.add('bpmn-properties-body');
+
+        // Disable browser spellcheck
+        bodyDiv.setAttribute('spellcheck', 'false');
         this.containerElement.appendChild(bodyDiv);
         this.bodyDiv = bodyDiv;
     }
