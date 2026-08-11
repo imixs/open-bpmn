@@ -19,6 +19,10 @@
     }
   ],
   "private": true,
+  "resolutions": {
+    "@vscode/ripgrep": "1.14.2",
+    "string-width": "4.2.3"
+  },
   "workspaces": [
     "open-bpmn-model",
     "open-bpmn-properties",
