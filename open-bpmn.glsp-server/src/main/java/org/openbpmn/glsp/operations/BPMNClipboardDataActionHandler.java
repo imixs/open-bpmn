@@ -26,7 +26,13 @@ import org.eclipse.glsp.server.actions.Action;
 import org.eclipse.glsp.server.features.clipboard.RequestClipboardDataAction;
 import org.eclipse.glsp.server.features.clipboard.SetClipboardDataAction;
 import org.eclipse.glsp.server.types.EditorContext;
+import org.openbpmn.bpmn.elements.core.BPMNElementEdge;
+import org.openbpmn.bpmn.elements.core.BPMNElementNode;
+import org.openbpmn.bpmn.exceptions.BPMNModelException;
+import org.openbpmn.glsp.BPMNClipboardNode;
+import org.openbpmn.glsp.BPMNClipboardService;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
 
@@ -46,6 +52,9 @@ public class BPMNClipboardDataActionHandler extends AbstractActionHandler<Reques
     @Inject
     protected BPMNGModelState modelState;
 
+    @Inject
+    protected BPMNClipboardService clipboardService;
+
     /**
      * The RequestClipboardDataAction contains an editor context contains contextual
      * information about the editor state on the client.
@@ -63,11 +72,32 @@ public class BPMNClipboardDataActionHandler extends AbstractActionHandler<Reques
         List<String> selectedElements = ctx.getSelectedElementIds();
         logger.debug("... copy " + selectedElements.size() + " elements...");
 
-        // return a data action with the selected ids
-        Map<String, String> data = new HashMap<String, String>();
+        clipboardService.clear();
+
+        for (String id : selectedElements) {
+            BPMNElementNode bpmnElementNode = modelState.getBpmnModel().findElementNodeById(id);
+            if (bpmnElementNode != null) {
+                try {
+                    Element semanticClone = (Element) bpmnElementNode.getElementNode().cloneNode(true);
+                    Element boundsClone = (Element) bpmnElementNode.getBounds().getElementNode().cloneNode(true);
+                    clipboardService.putNode(new BPMNClipboardNode(semanticClone, boundsClone));
+                } catch (BPMNModelException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                // is it an edge?
+                BPMNElementEdge bpmnElementEdge = modelState.getBpmnModel().findElementEdgeById(id);
+                if (bpmnElementEdge != null) {
+                    Element detachedClone = (Element) bpmnElementEdge.getElementNode().cloneNode(true);
+                    clipboardService.putEdge(detachedClone);
+                }
+            }
+        }
+
+        Map<String, String> data = new HashMap<>();
         data.put("bpmn", String.join(",", selectedElements));
+
         SetClipboardDataAction clipboardDataAction = new SetClipboardDataAction(data);
         return this.listOf(clipboardDataAction);
     }
-
 }

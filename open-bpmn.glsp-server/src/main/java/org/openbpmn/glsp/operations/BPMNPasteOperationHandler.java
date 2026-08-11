@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -39,7 +38,11 @@ import org.openbpmn.bpmn.elements.core.BPMNLabel;
 import org.openbpmn.bpmn.elements.core.BPMNPoint;
 import org.openbpmn.bpmn.exceptions.BPMNModelException;
 import org.openbpmn.bpmn.util.BPMNModelUtil;
+import org.openbpmn.glsp.BPMNClipboardNode;
+import org.openbpmn.glsp.BPMNClipboardService;
 import org.openbpmn.glsp.model.BPMNGModelState;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 import com.google.inject.Inject;
 
@@ -61,6 +64,9 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
     protected BPMNGModelState modelState;
 
     @Inject
+    protected BPMNClipboardService clipboardService;
+
+    @Inject
     protected ActionDispatcher actionDispatcher;
 
     @Override
@@ -80,146 +86,143 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
      * clone to the new ElementIDs.
      */
     private void executeOperation(PasteOperation operation) {
-        BPMNPoint refPoint = null;
-        double xOffset = 0;
-        double yOffset = 0;
-        Map<String, String> clonedIDs = new HashMap<String, String>();
-        List<String> newElementIDList = new ArrayList<String>();
 
-        Map<String, String> data = operation.getClipboardData();
-        // get list of ids...
-        String idStringList = data.get("bpmn");
-        if (idStringList == null || idStringList.length() == 0) {
-            // no action needed
+        if (clipboardService.getNodes() == null) {
+            // nothing to paste
             return;
         }
 
-        // split stringList
-        List<String> selectedElements = List.of(idStringList.split(","));
-        logger.debug("... paste " + selectedElements.size() + " elements...");
+        List<BPMNClipboardNode> clipboardNodes = clipboardService.getNodes();
+        List<Element> clipboardEdges = clipboardService.getEdges();
 
-        // compute offset
+        Map<String, String> clonedIDs = new HashMap<>(); // old semantic id -> new semantic id
+        List<String> newElementIDList = new ArrayList<>();
+        List<String> originElementIDList = new ArrayList<>();
+
+        BPMNProcess targetProcess = modelState.getBpmnModel().getDefaultProcess(); // TODO-LIB: correct way to get the
+                                                                                   // "current" target process for
+                                                                                   // paste?
+        Document targetDocument = targetProcess.getElementNode().getOwnerDocument();
+
+        // --- Step 1: compute reference point (most upper-left) from the cloned bounds
+        // ---
+        BPMNPoint refPoint = computeRefPointFromClipboardNodes(clipboardNodes);
         GPoint mousePosition = operation.getEditorContext().getLastMousePosition().orElse(null);
-        refPoint = computeRefPoint(selectedElements);
-        xOffset = mousePosition.getX() - refPoint.getX();
-        yOffset = mousePosition.getY() - refPoint.getY();
+        double xOffset = mousePosition.getX() - refPoint.getX();
+        double yOffset = mousePosition.getY() - refPoint.getY();
 
-        for (String id : selectedElements) {
-            BPMNElementNode bpmnElementNode = modelState.getBpmnModel().findElementNodeById(id);
-            if (bpmnElementNode != null) {
+        // --- Step 2: import + insert nodes into target process ---
+        for (BPMNClipboardNode clipboardNode : clipboardNodes) {
+            try {
+                String oldId = clipboardNode.getSemanticElement().getAttribute("id");
+
+                // import the detached semantic clone into the target document
+                Element importedSemanticElement = (Element) targetDocument.importNode(
+                        clipboardNode.getSemanticElement(), true);
+
+                // TODO-LIB: how do we attach an already-existing (imported) Element to a
+                // BPMNProcess and get back a proper BPMNElementNode
+                // (Activity/Event/Gateway/...)
+                // including a freshly generated id?
+                // Pseudo call:
+                BPMNElementNode newElementNode = targetProcess.adoptElementNode(importedSemanticElement);
+                // newElementNode.getId() should now return a NEW, unique id
+
+                clonedIDs.put(oldId, newElementNode.getId());
+                newElementIDList.add(newElementNode.getId());
+                originElementIDList.add(oldId);
+
+                // import + apply the cloned bounds (position/size)
+                Element importedBoundsElement = (Element) targetDocument.importNode(
+                        clipboardNode.getShapeElement(), true);
+                BPMNPoint originalPos = new BPMNPoint(
+                        importedBoundsElement.getAttribute("x"),
+                        importedBoundsElement.getAttribute("y"));
+
+                double width = Double.parseDouble(importedBoundsElement.getAttribute("width"));
+                double height = Double.parseDouble(importedBoundsElement.getAttribute("height"));
+
+                newElementNode.setPosition(originalPos.getX() + xOffset, originalPos.getY() + yOffset);
+                newElementNode.setDimension(width, height);
+
+                // TODO-LIB: also transfer width/height from importedBoundsElement if the
+                // new element defaults to a different size than the original?
+
+                BPMNLabel label = newElementNode.getLabel();
+                if (label != null) {
+                    BPMNModelUtil.resetLabelBounds(newElementNode);
+                }
+            } catch (BPMNModelException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // --- Step 3: import + insert edges, but only if both ends were copied ---
+        if (clipboardEdges != null) {
+            for (Element clipboardEdgeElement : clipboardEdges) {
+                String oldSourceRef = clipboardEdgeElement.getAttribute("sourceRef");
+                String oldTargetRef = clipboardEdgeElement.getAttribute("targetRef");
+
+                String newSourceID = clonedIDs.get(oldSourceRef);
+                String newTargetID = clonedIDs.get(oldTargetRef);
+
+                // skip edges pointing to elements outside the copied selection
+                if (newSourceID == null || newTargetID == null) {
+                    continue;
+                }
+
                 try {
-                    // clone BPMNElementNodes....
-                    BPMNProcess process = bpmnElementNode.getBpmnProcess();
-                    BPMNElementNode newElementNode = process.cloneBPMNElementNode(bpmnElementNode);
-                    if (newElementNode != null) {
-                        clonedIDs.put(bpmnElementNode.getId(), newElementNode.getId());
-                        newElementIDList.add(newElementNode.getId());
+                    Element importedEdgeElement = (Element) targetDocument.importNode(clipboardEdgeElement, true);
 
-                        // adjust position. This operation will automatically also update the
-                        // containment!
-                        newElementNode.setPosition(bpmnElementNode.getBounds().getPosition().getX() + xOffset,
-                                bpmnElementNode.getBounds().getPosition().getY() + yOffset);
-                        // adjust label position?
-                        BPMNLabel label = newElementNode.getLabel();
-                        if (label != null) {
-                            BPMNModelUtil.resetLabelBounds(newElementNode);
-                            // label.updateLocation(bpmnElementNode.getLabel().getBounds().getPosition().getX()
-                            // + xOffset,
-                            // bpmnElementNode.getLabel().getBounds().getPosition().getY() + yOffset);
-                        }
-                    }
-                } catch (BPMNModelException e) {
+                    // TODO-LIB: analogous to adoptElementNode() above, but for edges:
+                    BPMNElementEdge newElementEdge = targetProcess.adoptElementEdge(importedEdgeElement, newSourceID,
+                            newTargetID);
+
+                    newElementEdge.setSourceRef(newSourceID);
+                    newElementEdge.setTargetRef(newTargetID);
+
+                    // move the new sequenceFlow into the correct target process
+                    // (relevant if source/target ended up in a Lane/SubProcess)
+                    BPMNElement sourceElement = modelState.getBpmnModel().findElementById(newSourceID);
+                    String processID = sourceElement.getBpmnProcess().getId();
+                    BPMNProcess actualTargetProcess = modelState.getBpmnModel().findProcessById(processID);
+                    ((SequenceFlow) newElementEdge).updateBPMNProcess(actualTargetProcess);
+
+                    // TODO-LIB: waypoints - do we recompute default waypoints via
+                    // newElementEdge.addDefaultWayPoints(), or do we import+offset the original
+                    // waypoints from clipboardEdgeElement the same way we did for node bounds?
+
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
 
-        // Next we try to copy the BPMNEdges....
-        for (String id : selectedElements) {
-            BPMNElementEdge bpmnElementEdge = modelState.getBpmnModel().findElementEdgeById(id);
-            if (bpmnElementEdge != null && bpmnElementEdge instanceof SequenceFlow) {
-                try {
-                    logger.debug("...copy SequenceFlow - " + bpmnElementEdge.getId());
-
-                    // do we have the corresponding source and target element?
-                    String newSourceID = clonedIDs.get(bpmnElementEdge.getSourceRef());
-                    String newTargetID = clonedIDs.get(bpmnElementEdge.getTargetRef());
-
-                    if (newSourceID != null && newTargetID != null) {
-
-                        BPMNProcess process = bpmnElementEdge.getBpmnProcess();
-                        BPMNElementEdge newElementEdge = process.cloneBPMNElementEdge(bpmnElementEdge);
-                        if (newElementEdge != null) {
-                            newElementEdge.setSourceRef(newSourceID);
-                            newElementEdge.setTargetRef(newTargetID);
-                            // and finally we need to move the new sequenceFlow into the target process...
-                            BPMNElement sourceElement = modelState.getBpmnModel().findElementById(newSourceID);
-                            String processID = sourceElement.getBpmnProcess().getId();
-                            BPMNProcess targetProcess = modelState.getBpmnModel().findProcessById(processID);
-                            ((SequenceFlow) newElementEdge).updateBPMNProcess(targetProcess);
-
-                            // update waypoints
-                            Set<BPMNPoint> sourceWayPoints = bpmnElementEdge.getWayPoints();
-                            newElementEdge.clearWayPoints();
-                            for (BPMNPoint _point : sourceWayPoints) {
-                                BPMNPoint newPoint = new BPMNPoint(_point.getX() + xOffset, _point.getY() + yOffset);
-                                newElementEdge.addWayPoint(newPoint);
-                            }
-                        }
-                    }
-                } catch (BPMNModelException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        // reset model state..
         modelState.reset();
-
-        // Issue #387 origin elements
-        // preselect new pasted elements and deselect origin elements
-        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(newElementIDList, selectedElements));
+        actionDispatcher.dispatchAfterNextUpdate(new SelectAction(newElementIDList, originElementIDList));
     }
 
     /**
-     * This helper method computes the most upper left point from the list of
-     * selected elements. This ref point is used to clone elements and adjust its
-     * position according to the mouse position.
+     * Computes the most upper-left BPMNPoint across all copied clipboard nodes,
+     * based on the cloned dc:Bounds elements (x/y attributes).
      */
-    private BPMNPoint computeRefPoint(List<String> ids) {
-
-        if (ids == null || ids.size() == 0) {
-            // no list provided
-            return new BPMNPoint(0, 0);
-        }
+    private BPMNPoint computeRefPointFromClipboardNodes(List<BPMNClipboardNode> clipboardNodes) {
         BPMNPoint result = null;
-
-        for (String id : ids) {
-            // find the BPMNNode
-            BPMNElement bpmnElement = modelState.getBpmnModel().findElementById(id);
-            if (bpmnElement != null && bpmnElement instanceof BPMNElementNode) {
-                try {
-                    BPMNElementNode bpmnElementNode = (BPMNElementNode) bpmnElement;
-                    // compute most upper left ref position...
-                    BPMNPoint _point = bpmnElementNode.getBounds().getPosition();
-                    // The first element in the list is the default result
-                    if (result == null) {
-                        result = new BPMNPoint(_point.getX(), _point.getY());
-                    } else {
-                        // test if the current point is outside of our best guest....
-                        if (_point.getX() < result.getX()) {
-                            result.setX(_point.getX());
-                        }
-                        if (_point.getY() < result.getY()) {
-                            result.setY(_point.getY());
-                        }
-                        logger.debug("...  x=" + result.getX() + " y=" + result.getY());
-                    }
-                } catch (BPMNModelException e) {
-                    e.printStackTrace();
+        for (BPMNClipboardNode clipboardNode : clipboardNodes) {
+            Element boundsElement = clipboardNode.getShapeElement();
+            double x = Double.parseDouble(boundsElement.getAttribute("x"));
+            double y = Double.parseDouble(boundsElement.getAttribute("y"));
+            if (result == null) {
+                result = new BPMNPoint(x, y);
+            } else {
+                if (x < result.getX()) {
+                    result.setX(x);
+                }
+                if (y < result.getY()) {
+                    result.setY(y);
                 }
             }
         }
-        return result;
+        return result != null ? result : new BPMNPoint(0, 0);
     }
 }

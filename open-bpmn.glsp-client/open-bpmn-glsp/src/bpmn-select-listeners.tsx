@@ -17,7 +17,9 @@ import {
   ActionDispatcher,
   GModelRoot,
   ISelectionListener,
+  PasteOperation,
   SelectAction,
+  ServerCopyPasteHandler,
   TYPES,
   filter,
   getElements,
@@ -121,4 +123,36 @@ export class BPMNMultiNodeSelectionListener implements ISelectionListener {
     // finally dispatch the updated selected and unselected IDs...
     this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: selectedElements, deselectedElementsIDs: containerIDs }));
   }
+}
+
+/**
+ * Custom copy/paste handler that always dispatches the PasteOperation to the
+ * server, regardless of what is stored in the client-side IAsyncClipboardService.
+ *
+ * The default ServerCopyPasteHandler only dispatches a PasteOperation if the
+ * client-side clipboard service has matching data for the given clipboard id.
+ * Since that service is bound per diagram editor, copying in one editor and
+ * pasting into another editor never finds matching data on the client, and
+ * the paste is silently dropped before it ever reaches the server.
+ *
+ * Our server keeps its own session-wide clipboard store (see
+ * BPMNClipboardService.java, bound as a Singleton in BPMNServerModule), which
+ * is shared across all diagram editors opened within the same connection. So
+ * we don't need the client to hold or validate any clipboard payload at all -
+ * we just need every paste event to reach the server, which then decides on
+ * its own what to paste.
+ */
+@injectable()
+export class BPMNCopyPasteHandler extends ServerCopyPasteHandler {
+
+    override handlePaste(event: ClipboardEvent): void {
+        if (event.clipboardData && this.shouldPaste(event)) {
+            // Always dispatch the PasteOperation - the server holds the actual
+            // clipboard data itself and knows what to paste.
+            this.actionDispatcher.dispatch(
+                PasteOperation.create({ clipboardData: {}, editorContext: this.editorContext.get() })
+            );
+            event.preventDefault();
+        }
+    }
 }

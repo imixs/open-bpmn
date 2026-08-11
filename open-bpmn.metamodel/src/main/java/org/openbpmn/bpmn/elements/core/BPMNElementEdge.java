@@ -133,15 +133,17 @@ public abstract class BPMNElementEdge extends BPMNElement {
         if (this.sourceRef != null && !this.sourceRef.isEmpty()) {
             // find old source Element and remove the outgoing connection
             BPMNElementNode oldSourceNode = this.model.findElementNodeById(this.sourceRef);
-            // first remove outgoing reference list
-            Set<Element> outgoingElements = model.findChildNodesByName(oldSourceNode.elementNode, BPMNNS.BPMN2,
-                    "outgoing");
-            Iterator<Element> iter = outgoingElements.iterator();
-            while (iter.hasNext()) {
-                Element child = iter.next();
-                if (this.getId().equals(child.getTextContent())) {
-                    oldSourceNode.getElementNode().removeChild(child);
-                    break;
+            if (oldSourceNode != null) {
+                // first remove outgoing reference list
+                Set<Element> outgoingElements = model.findChildNodesByName(oldSourceNode.elementNode, BPMNNS.BPMN2,
+                        "outgoing");
+                Iterator<Element> iter = outgoingElements.iterator();
+                while (iter.hasNext()) {
+                    Element child = iter.next();
+                    if (this.getId().equals(child.getTextContent())) {
+                        oldSourceNode.getElementNode().removeChild(child);
+                        break;
+                    }
                 }
             }
         }
@@ -185,15 +187,17 @@ public abstract class BPMNElementEdge extends BPMNElement {
         if (this.targetRef != null && !this.targetRef.isEmpty()) {
             // find old source Element and remove the outgoing connection
             BPMNElementNode oldTargetNode = this.model.findElementNodeById(this.targetRef);
-            // first remove outgoing reference list
-            Set<Element> outgoingElements = model.findChildNodesByName(oldTargetNode.elementNode, BPMNNS.BPMN2,
-                    "incoming");
-            Iterator<Element> iter = outgoingElements.iterator();
-            while (iter.hasNext()) {
-                Element child = iter.next();
-                if (this.getId().equals(child.getTextContent())) {
-                    oldTargetNode.getElementNode().removeChild(child);
-                    break;
+            if (oldTargetNode != null) {
+                // first remove outgoing reference list
+                Set<Element> outgoingElements = model.findChildNodesByName(oldTargetNode.elementNode, BPMNNS.BPMN2,
+                        "incoming");
+                Iterator<Element> iter = outgoingElements.iterator();
+                while (iter.hasNext()) {
+                    Element child = iter.next();
+                    if (this.getId().equals(child.getTextContent())) {
+                        oldTargetNode.getElementNode().removeChild(child);
+                        break;
+                    }
                 }
             }
         }

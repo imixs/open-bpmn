@@ -87,6 +87,7 @@ import {
 import { BPMNRouterModule } from './bpmn-router-module';
 import { BPMNEdgeView } from './bpmn-routing-views';
 import {
+    BPMNCopyPasteHandler,
     BPMNMultiNodeSelectionListener,
     BPMNSelectionHelper
 } from './bpmn-select-listeners';
@@ -113,6 +114,8 @@ const bpmnDiagramModule = new ContainerModule((bind, unbind, isBound, rebind) =>
     bind(TYPES.ISelectionListener).to(BPMNMultiNodeSelectionListener);
     bind(TYPES.MouseListener).to(BPMNPropertiesMouseListener);
     bind(TYPES.IContextMenuItemProvider).to(DeleteElementContextMenuItemProvider);
+    // rebind BPMN clipboard service
+    rebind(TYPES.ICopyPasteHandler).to(BPMNCopyPasteHandler);
 
     // Configure BMW View Elements
     configureDefaultModelElements(context);

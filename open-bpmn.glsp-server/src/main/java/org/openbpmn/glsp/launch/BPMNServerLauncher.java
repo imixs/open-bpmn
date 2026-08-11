@@ -38,7 +38,10 @@ public final class BPMNServerLauncher {
 
          int port = parser.parsePort();
          String host = parser.parseHostname();
-         ServerModule bpmnServerModule = new ServerModule()
+         // ServerModule bpmnServerModule = new ServerModule()
+         // .configureDiagramModule(new BPMNDiagramModule());
+
+         ServerModule bpmnServerModule = new BPMNServerModule()
                .configureDiagramModule(new BPMNDiagramModule());
 
          GLSPServerLauncher launcher = new SocketGLSPServerLauncher(bpmnServerModule);

@@ -1824,4 +1824,92 @@ public class BPMNProcess extends BPMNElement {
 
     }
 
+    /**
+     * Adopts an already-imported (but not yet attached) Element into this
+     * process. The element is expected to belong to the same Document as this
+     * process (see Document.importNode()), but not yet be a child of any
+     * process element.
+     * <p>
+     * This method appends the element as a child, assigns it a fresh id, and
+     * wraps it into the corresponding BPMNElementNode subtype - reusing the
+     * same type-dispatch logic as init().
+     *
+     * @param importedElement - an Element already imported into the target
+     *                        document via Document.importNode(element, true)
+     * @return the newly created BPMNElementNode
+     * @throws BPMNModelException
+     */
+    public BPMNElementNode adoptElementNode(Element importedElement) throws BPMNModelException {
+
+        // assign a fresh, unique id based on the element's tag name
+        String tag = importedElement.getLocalName();
+        importedElement.setAttribute("id", BPMNModel.generateShortID(tag));
+
+        // attach to this process
+        Element element = (Element) this.getElementNode().appendChild(importedElement);
+
+        BPMNElementNode result = null;
+        if (BPMNModel.isActivity(element)) {
+            result = this.createBPMNActivityByNode(element);
+        } else if (BPMNModel.isEvent(element)) {
+            result = this.createBPMNEventByNode(element);
+        } else if (BPMNModel.isGateway(element)) {
+            result = this.createBPMNGatewayByNode(element);
+        } else if (BPMNModel.isDataObject(element)) {
+            result = this.createBPMNDataObjectByNode(element);
+        } else if (BPMNModel.isDataStoreReference(element)) {
+            result = this.createBPMNDataStoreReferenceByNode(element);
+        } else if (BPMNModel.isTextAnnotation(element)) {
+            result = this.createBPMNTextAnnotationByNode(element);
+        } else {
+            // throw new BPMNModelException(BPMNModelException.INVALID_TYPE,
+            // "Unsupported element type for paste: " + element.getNodeName());
+        }
+
+        // cleanup invalid flow references, similar to cloneBPMNElementNode()
+        result.updateSequenceFlowReferences();
+
+        return result;
+    }
+
+    /**
+     * Adopts an already-imported (but not yet attached) Edge-Element into this
+     * process. The sourceRef/targetRef must already point to valid element ids
+     * within this process (the caller is responsible for remapping them before
+     * calling this method), so that the BPMNElementEdge constructor can resolve
+     * source/target immediately and create its BPMNEdge shape with default
+     * waypoints.
+     *
+     * @param importedElement - element already imported into the target document
+     * @param newSourceId     - id of the (already adopted) source node in this
+     *                        process
+     * @param newTargetId     - id of the (already adopted) target node in this
+     *                        process
+     * @return the newly created BPMNElementEdge
+     * @throws BPMNModelException
+     */
+    public BPMNElementEdge adoptElementEdge(Element importedElement, String newSourceId, String newTargetId)
+            throws BPMNModelException {
+
+        String tag = importedElement.getLocalName();
+        importedElement.setAttribute("id", BPMNModel.generateShortID(tag));
+
+        // set the correct, already-remapped references BEFORE the element is
+        // wrapped, so the BPMNElementEdge constructor finds valid source/target
+        // and creates its BPMNEdge shape (with default waypoints) right away
+        importedElement.setAttribute("sourceRef", newSourceId);
+        importedElement.setAttribute("targetRef", newTargetId);
+
+        Element element = (Element) this.getElementNode().appendChild(importedElement);
+
+        BPMNElementEdge result = null;
+        if (BPMNModel.isSequenceFlow(element)) {
+            result = this.createBPMNSequenceFlowByNode(element);
+        } else {
+            // throw new BPMNModelException(BPMNModelException.INVALID_TYPE,
+            // "Unsupported edge type for paste: " + element.getNodeName());
+        }
+
+        return result;
+    }
 }
