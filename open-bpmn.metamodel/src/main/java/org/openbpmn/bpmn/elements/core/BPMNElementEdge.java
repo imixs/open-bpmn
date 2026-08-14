@@ -9,9 +9,13 @@ import java.util.logging.Logger;
 
 import org.openbpmn.bpmn.BPMNModel;
 import org.openbpmn.bpmn.BPMNNS;
+import org.openbpmn.bpmn.BPMNTypes;
 import org.openbpmn.bpmn.elements.BPMNElementOrder;
 import org.openbpmn.bpmn.elements.BPMNProcess;
+import org.openbpmn.bpmn.elements.SequenceFlow;
+import org.openbpmn.bpmn.exceptions.BPMNInvalidTypeException;
 import org.openbpmn.bpmn.util.BPMNModelUtil;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -343,4 +347,47 @@ public abstract class BPMNElementEdge extends BPMNElement {
         }
     }
 
+    /**
+     * This method updates the process assignment of a EdgeElement Node. The element
+     * will be removed form the current process and added to the new process.
+     * 
+     * Also the element will be removed from an optional laneSet of the old process.
+     * 
+     * @param newProcess
+     * @throws BPMNInvalidTypeException
+     */
+    public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
+
+        if (!BPMNTypes.isSequenceFlow((this))) {
+            logger.finest(
+                    "updateBPMNProcess can only be applied for BPMN SequenceFlowElements");
+            return;
+        }
+
+        // Update the shape element....
+        Element oldPlane = this.bpmnProcess.getBpmnPlane();
+        Element newPlane = newProcess.getBpmnPlane();
+        if (oldPlane != null && newPlane != null) {
+            if (!oldPlane.getAttribute("id").equals(newPlane.getAttribute("id"))) {
+                this.bpmnEdge = (Element) oldPlane.removeChild(this.bpmnEdge);
+                newPlane.appendChild(this.bpmnEdge);
+            }
+        }
+
+        // ...remove the element from the corresponding element list
+        // and add it to the new process
+
+        this.bpmnProcess.getSequenceFlows().remove(this);
+        newProcess.getSequenceFlows().add((SequenceFlow) this);
+
+        // remove element from old process and assign it ot the new
+        try {
+            this.bpmnProcess.elementNode.removeChild(this.elementNode);
+        } catch (DOMException e) {
+            // remove was not possible
+            logger.warning("Invalid dom structure: " + e.getMessage());
+        }
+        this.bpmnProcess = newProcess;
+        this.bpmnProcess.elementNode.appendChild(this.elementNode);
+    }
 }

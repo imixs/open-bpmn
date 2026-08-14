@@ -290,10 +290,6 @@ public abstract class BPMNElementNode extends BPMNElement {
      */
     public void updateBPMNProcess(BPMNProcess newProcess) throws BPMNInvalidTypeException {
 
-        // if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataObjectNode(this)
-        // && !BPMNTypes.isDataStoreNode(this)
-        // && !BPMNTypes.isTextAnnotationNode(this)) {
-
         if (!BPMNTypes.isFlowElementNode(this) && !BPMNTypes.isDataItem(this)) {
             logger.finest(
                     "updateBPMNProcess can only be applied for BPMN FlowElements (Event, Gateway, Activity, DataObjects)");
@@ -315,9 +311,6 @@ public abstract class BPMNElementNode extends BPMNElement {
         for (Lane lane : lanes) {
             lane.remove(this);
         }
-
-        // remove all flows...
-        this.bpmnProcess.removeAllEdgesFromElement(this.getId());
 
         // ...remove the element from the corresponding element list
         // and add it to the new process
@@ -376,9 +369,8 @@ public abstract class BPMNElementNode extends BPMNElement {
             Element item = (Element) incomingSequenceFlows.item(i);
             // test if the sequence flow exists...
             BPMNElementEdge flow = bpmnProcess.findElementEdgeById(item.getTextContent());
-            if (flow != null &&
-                    (!getId().equals(flow.getElementNode().getAttribute("sourceRef"))
-                            && !getId().equals(flow.getElementNode().getAttribute("targetRef")))) {
+            if (flow == null || (!getId().equals(flow.getElementNode().getAttribute("sourceRef"))
+                    && !getId().equals(flow.getElementNode().getAttribute("targetRef")))) {
                 // invalid element
                 getElementNode().removeChild(item);
             }
@@ -391,9 +383,8 @@ public abstract class BPMNElementNode extends BPMNElement {
             Element item = (Element) outgoingSequenceFlows.item(i);
             // test if the sequence flow exists...
             BPMNElementEdge flow = bpmnProcess.findElementEdgeById(item.getTextContent());
-            if (flow != null &&
-                    (!getId().equals(flow.getElementNode().getAttribute("sourceRef"))
-                            && !getId().equals(flow.getElementNode().getAttribute("targetRef")))) {
+            if (flow == null || (!getId().equals(flow.getElementNode().getAttribute("sourceRef"))
+                    && !getId().equals(flow.getElementNode().getAttribute("targetRef")))) {
                 // invalid element
                 getElementNode().removeChild(item);
             }

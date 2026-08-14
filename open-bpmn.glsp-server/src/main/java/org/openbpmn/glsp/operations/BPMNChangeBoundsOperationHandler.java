@@ -16,6 +16,7 @@
 package org.openbpmn.glsp.operations;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -114,11 +115,13 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
 
         try {
             List<ElementAndBounds> elementBounds = operation.getNewBounds();
+            Set<SequenceFlow> affectedSequenceFlows = new HashSet<>();
+            List<BPMNElementNode> newProcessAssociationList = new ArrayList<>();
 
             // first sort out all elementBounds from BPMNLabel objects if the flowElement is
             // part of this selection (see method updateFlowElement)
             List<ElementAndBounds> filteredElementBounds = filterElements(elementBounds);
-            boolean allowReset = filteredElementBounds.size() == 1;
+            // boolean allowReset = filteredElementBounds.size() == 1;
             for (ElementAndBounds elementBound : filteredElementBounds) {
                 String id = elementBound.getElementId();
                 GPoint newPoint = modelState.getBpmnGridSnapper().round(elementBound.getNewPosition());
@@ -152,6 +155,10 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                                         * modelState.getBpmnGridSnapper().getGridSize());
                     }
 
+                    // collect all associated sequenceFlows
+                    affectedSequenceFlows.addAll(bpmnElementNode.getIngoingSequenceFlows());
+                    affectedSequenceFlows.addAll(bpmnElementNode.getOutgoingSequenceFlows());
+
                     // do we have moved a pool with elements?
                     if (bpmnElementNode instanceof Participant) {
                         updatePool(gNode, (Participant) bpmnElementNode, id, newPoint, newSize);
@@ -163,7 +170,10 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                         continue;
                     }
                     // default - it is a normal bpmn flow element...
-                    updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize, allowReset);
+                    if (updateFlowElement(gNode, bpmnElementNode, elementBound, newPoint, newSize)) {
+                        logger.info("Element node " + bpmnElementNode.getId() + " has changed pool!");
+                        newProcessAssociationList.add(bpmnElementNode);
+                    }
 
                 } else {
                     // test if we have a BPMNLabel element was selected?
@@ -181,10 +191,63 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
                 }
 
             }
+
+            // finally resolve assoziations for all sequenceFlows
+            resolveSequenceFlows(affectedSequenceFlows);
+
         } catch (BPMNMissingElementException | BPMNInvalidReferenceException | BPMNInvalidTypeException e) {
             e.printStackTrace();
         }
         // no more action - the GModel is now up to date
+    }
+
+    /**
+     * This method verifies all sequence flows of the given list of element nodes.
+     * If a sequence flow connects to an element not listed in this list this means
+     * the elements are not in the same process. In this case the sequence flow will
+     * be removed because a sequence flow can not connect elements between different
+     * pools!
+     * 
+     * @param elementNodes
+     */
+    private void resolveSequenceFlows(Set<SequenceFlow> affectedSequenceFlows) {
+
+        // check if target and source still have the same process but the connected
+        // element process has changed. If so we need to change the process for the
+        // sequenceFlow too.
+        for (SequenceFlow _flow : affectedSequenceFlows) {
+            if (_flow.getTargetElement().getProcessId().equals(_flow.getSourceElement().getProcessId())) {
+                logger.info("├── sequenceFlow " + _flow.getId() + " will be moved!");
+                BPMNProcess targetProcess = _flow.getTargetElement().getBpmnProcess();
+                try {
+                    _flow.updateBPMNProcess(targetProcess);
+                } catch (BPMNInvalidTypeException e) {
+                    e.printStackTrace();
+                }
+                continue;
+            }
+
+        }
+
+        // check if target and source still have different processes. If so we need to
+        // remove the sequenceFlow from the diagram
+        for (SequenceFlow _flow : affectedSequenceFlows) {
+            if (!_flow.getTargetElement().getProcessId().equals(_flow.getSourceElement().getProcessId())) {
+                logger.info("├── sequenceFlow " + _flow.getId() + " will be removed!");
+
+                BPMNElementNode _sourceElement = _flow.getSourceElement();
+                BPMNElementNode _targetElement = _flow.getTargetElement();
+
+                _sourceElement.getBpmnProcess().deleteSequenceFlow(_flow.getId());
+                _targetElement.getBpmnProcess().deleteSequenceFlow(_flow.getId());
+
+                _sourceElement.updateSequenceFlowReferences();
+                _targetElement.updateSequenceFlowReferences();
+
+                continue;
+            }
+        }
+
     }
 
     /**
@@ -276,7 +339,10 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
      * <p>
      * The method also takes care about a BPMNLable assigned to the Flow element and
      * adjusts the label position relative to the new element position.
-     *
+     * <p>
+     * The Method returns true if the process holding this element has changed
+     * (moved from one pool into another)
+     * 
      * @param gNode
      * @param bpmnElementNode
      * @param elementBound
@@ -287,17 +353,18 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
      * @throws BPMNMissingElementException
      * @throws BPMNInvalidReferenceException
      */
-    private void updateFlowElement(final GNode gNode, final BPMNElementNode bpmnElementNode,
-            final ElementAndBounds elementBound, final GPoint newPoint, final GDimension newSize, boolean allowReset)
+    private boolean updateFlowElement(final GNode gNode, final BPMNElementNode bpmnElementNode,
+            final ElementAndBounds elementBound, final GPoint newPoint, final GDimension newSize)
             throws BPMNInvalidTypeException, BPMNMissingElementException, BPMNInvalidReferenceException {
 
+        boolean newProcessAssociation = false;
         boolean clearRoutingPoints = false;
         double offsetX = newPoint.getX() - gNode.getPosition().getX();
         double offsetY = newPoint.getY() - gNode.getPosition().getY();
 
-        if (offsetX != 0 && offsetY != 0 && allowReset) {
-            clearRoutingPoints = true;
-        }
+        // if (offsetX != 0 && offsetY != 0 && allowReset) {
+        // clearRoutingPoints = true;
+        // }
 
         BPMNPoint oldBpmnPoint = bpmnElementNode.getBounds().getPosition();
         BPMNPoint newBpmnPoint = new BPMNPoint(oldBpmnPoint.getX() + offsetX, oldBpmnPoint.getY() + offsetY);
@@ -308,25 +375,31 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         bpmnElementNode.setBounds(newBpmnPoint.getX(), newBpmnPoint.getY(), newSize.getWidth(),
                 newSize.getHeight());
         if (!oldProcessID.equals(bpmnElementNode.getProcessId())) {
+
+            // An dieser Stelle sollten wir auch dafür sorgen, dass alle sequencflows dem
+            // neuen Prozess zugeordnet werden.
+            newProcessAssociation = true;
+
             // Update the model as the relation ship may have changed
             modelState.reset();
         }
 
         // reset sequence flows?
-        Set<SequenceFlow> sequenceFlows = bpmnElementNode.getIngoingSequenceFlows();
-        for (SequenceFlow sequenceFlow : sequenceFlows) {
-            if (clearRoutingPoints) {
-                sequenceFlow.clearWayPoints();
-                modelState.reset();
-            }
-        }
-        sequenceFlows = bpmnElementNode.getOutgoingSequenceFlows();
-        for (SequenceFlow sequenceFlow : sequenceFlows) {
-            if (clearRoutingPoints) {
-                sequenceFlow.clearWayPoints();
-                modelState.reset();
-            }
-        }
+        // Set<SequenceFlow> sequenceFlows = bpmnElementNode.getIngoingSequenceFlows();
+        // for (SequenceFlow sequenceFlow : sequenceFlows) {
+        // if (clearRoutingPoints) {
+        // sequenceFlow.clearWayPoints();
+        // modelState.reset();
+        // }
+        // }
+        // sequenceFlows = bpmnElementNode.getOutgoingSequenceFlows();
+        // for (SequenceFlow sequenceFlow : sequenceFlows) {
+        // if (clearRoutingPoints) {
+        // sequenceFlow.clearWayPoints();
+        // modelState.reset();
+        // }
+        // }
+
         // reset associations?
         Set<Association> associations = bpmnElementNode.getAssociations();
         for (Association association : associations) {
@@ -371,6 +444,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
             }
         }
 
+        return newProcessAssociation;
     }
 
     /**
