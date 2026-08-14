@@ -120,14 +120,7 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                 Element importedSemanticElement = (Element) targetDocument.importNode(
                         clipboardNode.getSemanticElement(), true);
 
-                // TODO-LIB: how do we attach an already-existing (imported) Element to a
-                // BPMNProcess and get back a proper BPMNElementNode
-                // (Activity/Event/Gateway/...)
-                // including a freshly generated id?
-                // Pseudo call:
                 BPMNElementNode newElementNode = targetProcess.adoptElementNode(importedSemanticElement);
-                // newElementNode.getId() should now return a NEW, unique id
-
                 clonedIDs.put(oldId, newElementNode.getId());
                 newElementIDList.add(newElementNode.getId());
                 originElementIDList.add(oldId);
@@ -144,10 +137,6 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
 
                 newElementNode.setPosition(originalPos.getX() + xOffset, originalPos.getY() + yOffset);
                 newElementNode.setDimension(width, height);
-
-                // TODO-LIB: also transfer width/height from importedBoundsElement if the
-                // new element defaults to a different size than the original?
-
                 BPMNLabel label = newElementNode.getLabel();
                 if (label != null) {
                     BPMNModelUtil.resetLabelBounds(newElementNode);
@@ -174,7 +163,6 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                 try {
                     Element importedEdgeElement = (Element) targetDocument.importNode(clipboardEdgeElement, true);
 
-                    // TODO-LIB: analogous to adoptElementNode() above, but for edges:
                     BPMNElementEdge newElementEdge = targetProcess.adoptElementEdge(importedEdgeElement, newSourceID,
                             newTargetID);
 
@@ -187,10 +175,6 @@ public class BPMNPasteOperationHandler extends GModelOperationHandler<PasteOpera
                     String processID = sourceElement.getBpmnProcess().getId();
                     BPMNProcess actualTargetProcess = modelState.getBpmnModel().findProcessById(processID);
                     ((SequenceFlow) newElementEdge).updateBPMNProcess(actualTargetProcess);
-
-                    // TODO-LIB: waypoints - do we recompute default waypoints via
-                    // newElementEdge.addDefaultWayPoints(), or do we import+offset the original
-                    // waypoints from clipboardEdgeElement the same way we did for node bounds?
 
                 } catch (Exception e) {
                     e.printStackTrace();

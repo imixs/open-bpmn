@@ -61,7 +61,7 @@ public abstract class BPMNElementEdge extends BPMNElement {
         bpmnEdge = BPMNModelUtil.findBPMNEdgeInPlane(model, bpmnProcess.getBPMNPlane(), getId());
         if (bpmnEdge == null && this.getSourceElement() != null && this.getTargetElement() != null) {
             // create shape element
-            logger.warning("create missing shape for edge " + this.getId());
+            logger.fine("create missing shape for edge " + this.getId());
             createBPMNEdge(bpmnProcess.getBpmnPlane());
             this.addDefaultWayPoints();
         } else {
@@ -265,14 +265,6 @@ public abstract class BPMNElementEdge extends BPMNElement {
             diwayPoint.setAttribute("y", wayPoint.getY() + "");
 
             BPMNElementOrder.appendChild(bpmnEdge, diwayPoint);
-            // // *** NEUE LOGIK: Korrekte Position finden und einfügen ***
-            // Element insertBefore = BPMNElementOrder.findInsertPosition(this.bpmnEdge,
-            // "waypoint");
-            // if (insertBefore != null) {
-            // this.bpmnEdge.insertBefore(diwayPoint, insertBefore);
-            // } else {
-            // this.bpmnEdge.appendChild(diwayPoint); // Am Ende einfügen
-            // }
         } else {
             logger.warning("missing bpmnShape for SequenceFlow: " + this.getId());
         }
@@ -303,22 +295,24 @@ public abstract class BPMNElementEdge extends BPMNElement {
      * Removes all wayPoints form this BPMNSequenceFlow
      */
     public void clearWayPoints() {
-        NodeList childList = bpmnEdge.getChildNodes();
-        List<Node> deletionList = new ArrayList<Node>();
-        // find all di:waypoint
-        for (int i = 0; i < childList.getLength(); i++) {
-            Node child = childList.item(i);
-            if ((model.getPrefix(BPMNNS.DI) + "waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
-                // collect node....
-                deletionList.add(child);
+        if (this.bpmnEdge != null) {
+            NodeList childList = bpmnEdge.getChildNodes();
+            List<Node> deletionList = new ArrayList<Node>();
+            // find all di:waypoint
+            for (int i = 0; i < childList.getLength(); i++) {
+                Node child = childList.item(i);
+                if ((model.getPrefix(BPMNNS.DI) + "waypoint").equals(child.getNodeName()) && child.hasAttributes()) {
+                    // collect node....
+                    deletionList.add(child);
+                }
             }
+            // remove nodes from Edge element...
+            for (Node element : deletionList) {
+                bpmnEdge.removeChild(element);
+            }
+            // reset wayPoints
+            wayPoints.clear();
         }
-        // remove nodes from Edge element...
-        for (Node element : deletionList) {
-            bpmnEdge.removeChild(element);
-        }
-        // reset wayPoints
-        wayPoints.clear();
     }
 
     /**
