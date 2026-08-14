@@ -123,6 +123,20 @@
       <bpmn2:outgoing>sequenceFlow_0VWdNw</bpmn2:outgoing>
     </bpmn2:eventBasedGateway>
     <bpmn2:intermediateCatchEvent id="event_srEYlA" imixs:activityid="10" name="Confirm Order">
+      <bpmn2:extensionElements>
+        <imixs:item name="nammailreceiver" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="nammailreceivercc" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="nammailreceiverbcc" type="xs:string">
+          <imixs:value/>
+        </imixs:item>
+        <imixs:item name="namMailFrom" type="xs:string">
+          <imixs:value><![CDATA[info@abc.com]]></imixs:value>
+        </imixs:item>
+      </bpmn2:extensionElements>
       <bpmn2:documentation id="documentation_sntpiA"/>
       <bpmn2:messageEventDefinition id="messageEventDefinition_q7sFXA" messageRef="message_1"/>
       <bpmn2:incoming>sequenceFlow_0VWdNw</bpmn2:incoming>
