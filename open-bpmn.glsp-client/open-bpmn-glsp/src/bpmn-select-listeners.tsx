@@ -26,6 +26,7 @@ import {
   hasArgs
 } from '@eclipse-glsp/client';
 import {
+  isBPMNEdge,
   isBPMNLabelNode,
   isBoundaryEvent,
   isLaneNode,
@@ -78,8 +79,33 @@ export class BPMNSelectionHelper implements ISelectionListener {
         additionalSelection.push(l);
       });
     }
+
+    // Finally select edges that connect two elements which are both part of the current selection
+    this.selectConnectingEdges(root, selectedElements, additionalSelection);
+
     // finally dispatch the additional elementIDs...
     this.actionDispatcher.dispatch(SelectAction.create({ selectedElementsIDs: additionalSelection }));
+  }
+
+  /**
+   * Adds the ID of every BPMNEdge to 'additionalSelection' whose sourceId AND targetId
+   * are both contained in the current selection (selectedElements + additionalSelection so far).
+   *
+   * @param root - the current GModelRoot
+   * @param selectedElements - the IDs of the originally selected elements
+   * @param additionalSelection - list of additional IDs to be selected (read & mutated in place)
+   */
+  protected selectConnectingEdges(root: Readonly<GModelRoot>, selectedElements: string[], additionalSelection: string[]): void {
+    // combine both lists so an edge connecting a node with an already-added
+    // BoundaryEvent/Label is found as well
+    const allSelectedIds = new Set([...selectedElements, ...additionalSelection]);
+
+    const edges = filter(root.index, isBPMNEdge);
+    edges.forEach(edge => {
+      if (allSelectedIds.has(edge.sourceId) && allSelectedIds.has(edge.targetId)) {
+        additionalSelection.push(edge.id);
+      }
+    });
   }
 }
 

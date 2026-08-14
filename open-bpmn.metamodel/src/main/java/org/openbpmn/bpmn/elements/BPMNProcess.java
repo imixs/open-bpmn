@@ -1547,17 +1547,19 @@ public class BPMNProcess extends BPMNElement {
         }
 
         // cleanup invalid flow references
-        result.updateSequenceFlowReferences();
+        if (result != null) {
+            result.updateSequenceFlowReferences();
 
-        // update alls id of bpmn2: childs
-        NodeList childList = result.getElementNode().getChildNodes();
-        for (int i = 0; i < childList.getLength(); i++) {
-            Element child = (Element) childList.item(i);
-            // test if we have an id...
-            if (child.hasAttribute("id")) {
-                String tag = child.getLocalName();
-                // update id....
-                child.setAttribute("id", BPMNModel.generateShortID(tag));
+            // update alls id of bpmn2: childs
+            NodeList childList = result.getElementNode().getChildNodes();
+            for (int i = 0; i < childList.getLength(); i++) {
+                Element child = (Element) childList.item(i);
+                // test if we have an id...
+                if (child.hasAttribute("id")) {
+                    String tag = child.getLocalName();
+                    // update id....
+                    child.setAttribute("id", BPMNModel.generateShortID(tag));
+                }
             }
         }
 
@@ -1867,7 +1869,9 @@ public class BPMNProcess extends BPMNElement {
         }
 
         // cleanup invalid flow references, similar to cloneBPMNElementNode()
-        result.updateSequenceFlowReferences();
+        if (result != null) {
+            result.updateSequenceFlowReferences();
+        }
 
         return result;
     }
