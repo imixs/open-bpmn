@@ -282,12 +282,13 @@ public abstract class BPMNElementEdge extends BPMNElement {
         if (this.getWayPoints().size() > 0) {
             return;
         }
-
         BPMNElementNode sourceElement = this.getSourceElement();
         BPMNElementNode targetElement = this.getTargetElement();
         if (sourceElement != null && targetElement != null) {
-            addWayPoint(sourceElement.bounds.getCenter());
-            addWayPoint(targetElement.bounds.getCenter());
+            if (sourceElement.bounds != null && targetElement.bounds != null) {
+                addWayPoint(sourceElement.bounds.getCenter());
+                addWayPoint(targetElement.bounds.getCenter());
+            }
         }
     }
 
