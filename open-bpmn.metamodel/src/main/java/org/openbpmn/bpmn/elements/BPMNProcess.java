@@ -111,16 +111,22 @@ public class BPMNProcess extends BPMNElement {
 
         // find bpmnPlane
         resolveBPMNPlane();
+
+        // init process
+        try {
+            init();
+        } catch (BPMNModelException e) {
+            logger.severe("Failed to init process : " + e.getMessage());
+        }
     }
 
     /**
      * This method parses the content of the process element and adds all tasks,
-     * gateways and events. This is a lazy loading mechanism called by the BPMNModel
-     * method OpenProcess()
+     * gateways and events.
      * 
      * @throws BPMNModelException
      */
-    public BPMNProcess init() throws BPMNModelException {
+    private BPMNProcess init() throws BPMNModelException {
         if (!initialized) {
             logger.fine("initializing BPMNProcess '" + getId() + "'");
             // now find all relevant bpmn meta elements
@@ -1230,10 +1236,6 @@ public class BPMNProcess extends BPMNElement {
      * 
      */
     public BPMNElement findElementById(String id) {
-        if (!this.initialized) {
-            // not yet initialized!
-            return null;
-        }
         BPMNElement result = null;
         result = findElementNodeById(id);
         if (result != null) {

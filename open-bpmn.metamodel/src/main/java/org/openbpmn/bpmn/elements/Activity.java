@@ -99,7 +99,6 @@ public class Activity extends BPMNElementNode {
                 subProcess = new BPMNProcess(model, this.getElementNode(),
                         BPMNTypes.PROCESS_TYPE_NONE, bpmnProcess);
                 model.getBpmnProcesses().put(subProcess.getId(), subProcess);
-                subProcess.init();
             }
 
             // in case of a bpmn:callActivity the process is referred by the attribute
@@ -119,10 +118,6 @@ public class Activity extends BPMNElementNode {
                                 BPMNTypes.PROCESS_TYPE_NONE, null);
                     }
                 }
-                if (subProcess != null) {
-                    subProcess.init();
-                }
-
             }
         }
 

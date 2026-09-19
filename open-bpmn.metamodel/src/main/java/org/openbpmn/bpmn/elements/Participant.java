@@ -78,14 +78,6 @@ public class Participant extends BPMNElementNode {
      */
     @Override
     public BPMNProcess getBpmnProcess() {
-        if (bpmnProcess != null) {
-            try {
-                bpmnProcess.init();
-            } catch (BPMNModelException e) {
-                logger.severe("Unable to initialized BPMNProcess '" + bpmnProcess.getId() + "' for Participant '"
-                        + this.getId() + "'!");
-            }
-        }
         return bpmnProcess;
     }
 

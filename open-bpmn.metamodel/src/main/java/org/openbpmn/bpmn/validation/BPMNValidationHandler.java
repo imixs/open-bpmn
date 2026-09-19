@@ -55,8 +55,6 @@ public class BPMNValidationHandler {
     public List<BPMNValidationMarker> validateProcess(BPMNProcess process, boolean forceValidation)
             throws BPMNModelException {
         List<BPMNValidationMarker> result = new ArrayList<>();
-        // make sure that the process is initialized
-        process.init();
         // validate events....
         Set<Event> events = process.getEvents();
         for (Event event : events) {

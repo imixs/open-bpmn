@@ -880,9 +880,8 @@ public class BPMNModel {
     }
 
     /**
-     * This Method opens a BPMNProcess with the given ID and initializes all BPMN
-     * elements of the Process. This is a lazy loading mechanism to avoid loading
-     * the full model if not needed.
+     * This Method opens a BPMNProcess with the given ID with all BPMN
+     * elements of the Process.
      * <p>
      * In case no ID is provided (null) the method returns the first public
      * (default) process from the model.
@@ -892,16 +891,8 @@ public class BPMNModel {
      * @throws BPMNModelException
      */
     public BPMNProcess openProcess(String id) throws BPMNModelException {
-
         // fetch process by id
         BPMNProcess process = findProcessById(id);
-
-        // if we found a matching process than we can initialize it
-        if (process != null) {
-            process.init();
-        } else {
-            logger.warning("BPMNProcess '" + id + "' not defined in current model!");
-        }
         return process;
     }
 
@@ -1409,11 +1400,6 @@ public class BPMNModel {
         // iterate over all processes
         List<BPMNProcess> processList = this.getBpmnProcessList();
         for (BPMNProcess process : processList) {
-            try {
-                process.init();
-            } catch (BPMNModelException e) {
-                e.printStackTrace();
-            }
             result.addAll(process.getEvents());
         }
         return result;
@@ -1431,11 +1417,6 @@ public class BPMNModel {
         // iterate over all processes
         List<BPMNProcess> processList = this.getBpmnProcessList();
         for (BPMNProcess process : processList) {
-            try {
-                process.init();
-            } catch (BPMNModelException e) {
-                e.printStackTrace();
-            }
             result.addAll(process.getActivities());
         }
         return result;
@@ -1593,7 +1574,6 @@ public class BPMNModel {
         List<BPMNProcess> processList = getBpmnProcessList();
         for (BPMNProcess _process : processList) {
             if (processName.equals(_process.getName())) {
-                _process.init();
                 return _process;
             }
         }

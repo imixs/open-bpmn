@@ -308,7 +308,7 @@ public class TestCollaborationModel {
             Participant participant = participants.iterator().next();
             assertNotNull(participant);
             assertEquals("Money Bank", participant.getName());
-            BPMNProcess process = participant.getBpmnProcess().init();
+            BPMNProcess process = participant.getBpmnProcess(); // .init();
             assertEquals(2, process.getLanes().size());
 
         } catch (BPMNModelException e) {
