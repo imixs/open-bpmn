@@ -17,7 +17,8 @@ import {
     Point,
     ResolvedHandleMove,
     RoutedPoint,
-    Side
+    Side,
+    translateBounds
 } from '@eclipse-glsp/client';
 import { injectable } from 'inversify';
 
@@ -226,6 +227,24 @@ export class BPMNManhattanRouter extends AbstractEdgeRouter {
      *
      * This is the BPMN-specific "follow" logic that replaces Sprotty's default
      * behavior of recalculating the entire route on element movement.
+     *
+     * IMPORTANT - Coordinate space:
+     * edge.source.bounds and edge.target.bounds are LOCAL to each element's
+     * direct parent (e.g. a Pool or Lane), not relative to edge.parent.
+     * As long as source and target live in the same container, this doesn't
+     * matter (or cancels out). But for MessageFlow/Association edges that cross
+     * container boundaries - e.g. source outside any Pool, target inside a Pool -
+     * the two bounds live in different coordinate systems and must NOT be
+     * compared or averaged directly.
+     *
+     * Both sourceBounds and targetBounds are therefore translated into
+     * edge.parent's coordinate system first (via translateBounds), mirroring
+     * what DefaultAnchors and getTranslatedAnchor() already do internally.
+     * Skipping this translation was the root cause of a bug where moving an
+     * element connected via a cross-Pool MessageFlow/Association caused the
+     * router to compute corner points at seemingly random positions on the
+     * diagram - the offset roughly matched the Pool's own position relative
+     * to the diagram root.
      */
     protected applyFollowLogic(points: Point[], edge: GRoutableElement): void {
         const sourceAnchor = this.getTranslatedAnchor(
@@ -239,16 +258,23 @@ export class BPMNManhattanRouter extends AbstractEdgeRouter {
             return;
         }
 
+        // Translate source/target bounds into edge.parent's coordinate system,
+        // exactly as DefaultAnchors does internally. Without this, elements
+        // inside a Pool/Lane (whose bounds are relative to that container)
+        // are compared against elements outside it in the wrong coordinate space.
+        const sourceBounds = translateBounds(edge.source!.bounds, edge.source!.parent, edge.parent);
+        const targetBounds = translateBounds(edge.target!.bounds, edge.target!.parent, edge.parent);
+
         if (points.length === 1) {
             const isVertical = Math.abs(points[0].x - sourceAnchor.x) < 5;
             if (isVertical) {
                 points[0] = {
                     x: sourceAnchor.x,
-                    y: Math.round(Bounds.center(edge.target!.bounds).y)
+                    y: Math.round(Bounds.center(targetBounds).y)
                 };
             } else {
                 points[0] = {
-                    x: Math.round(Bounds.center(edge.target!.bounds).x),
+                    x: Math.round(Bounds.center(targetBounds).x),
                     y: sourceAnchor.y
                 };
             }
@@ -258,11 +284,11 @@ export class BPMNManhattanRouter extends AbstractEdgeRouter {
             if (isFirstVertical) {
                 points[0] = {
                     x: points[0].x,
-                    y: Math.round(Bounds.center(edge.source!.bounds).y)
+                    y: Math.round(Bounds.center(sourceBounds).y)
                 };
             } else {
                 points[0] = {
-                    x: Math.round(Bounds.center(edge.source!.bounds).x),
+                    x: Math.round(Bounds.center(sourceBounds).x),
                     y: points[0].y
                 };
             }
@@ -272,11 +298,11 @@ export class BPMNManhattanRouter extends AbstractEdgeRouter {
             if (isLastVertical) {
                 points[last] = {
                     x: points[last].x,
-                    y: Math.round(Bounds.center(edge.target!.bounds).y)
+                    y: Math.round(Bounds.center(targetBounds).y)
                 };
             } else {
                 points[last] = {
-                    x: Math.round(Bounds.center(edge.target!.bounds).x),
+                    x: Math.round(Bounds.center(targetBounds).x),
                     y: points[last].y
                 };
             }
