@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -47,10 +48,18 @@ public class BPMNModelFactory {
      * @return
      */
     public static BPMNModel createInstance(String exporter, String exporterVersion, String targetNamespace) {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        docFactory.setNamespaceAware(true);
-        DocumentBuilder docBuilder;
         try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            // @See https://github.com/imixs/open-bpmn/issues/453
+            // Reject any DOCTYPE declaration - this alone prevents XXE, since an
+            // external entity cannot be declared without one.
+            docFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            // Guard against entity-expansion / XML bomb attacks (e.g. "Billion Laughs"),
+            // which do not require a DOCTYPE and are therefore not covered above.
+            docFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            docFactory.setNamespaceAware(true);
+            DocumentBuilder docBuilder;
+
             docBuilder = docFactory.newDocumentBuilder();
 
             /*
@@ -88,7 +97,6 @@ public class BPMNModelFactory {
             BPMNModel model = new BPMNModel(doc);
             return model;
         } catch (ParserConfigurationException | BPMNModelException e1) {
-
             e1.printStackTrace();
         }
         return null;
@@ -146,13 +154,21 @@ public class BPMNModelFactory {
             throw new BPMNInvalidIDException(BPMNModelException.INVALID_MODEL,
                     "Model can not be parsed: InputStream is null");
         }
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory
-                .newInstance();
-        docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have
-                                                              // any effect!
-        docFactory.setNamespaceAware(true);
-
         try {
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory
+                    .newInstance();
+            // @See https://github.com/imixs/open-bpmn/issues/453
+            // Reject any DOCTYPE declaration - this alone prevents XXE, since an
+            // external entity cannot be declared without one.
+            docFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            // Guard against entity-expansion / XML bomb attacks (e.g. "Billion Laughs"),
+            // which do not require a DOCTYPE and are therefore not covered above.
+            docFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+
+            docFactory.setIgnoringElementContentWhitespace(true); // because of a bug this does not have
+                                                                  // any effect!
+            docFactory.setNamespaceAware(true);
+
             if (is.available() == 0) {
                 logger.warning("Empty BPMN file - creating a default process");
                 // create a default model
