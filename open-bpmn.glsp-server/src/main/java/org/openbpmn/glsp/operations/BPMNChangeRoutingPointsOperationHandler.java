@@ -96,9 +96,9 @@ public class BPMNChangeRoutingPointsOperationHandler extends GModelOperationHand
                     }
                     if (debug)
                         System.out.println("│   ├── new points:");
-                    for (GPoint ding : newGLSPRoutingPoints) {
+                    for (GPoint nPoint : newGLSPRoutingPoints) {
                         if (debug)
-                            System.out.println("│   │   ├── " + ding.getX() + "." + ding.getY());
+                            System.out.println("│   │   ├── " + nPoint.getX() + "." + nPoint.getY());
                     }
 
                     // Adjust routing points for Events

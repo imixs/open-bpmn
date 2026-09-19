@@ -375,11 +375,7 @@ public class BPMNChangeBoundsOperationHandler extends GModelOperationHandler<Cha
         bpmnElementNode.setBounds(newBpmnPoint.getX(), newBpmnPoint.getY(), newSize.getWidth(),
                 newSize.getHeight());
         if (!oldProcessID.equals(bpmnElementNode.getProcessId())) {
-
-            // An dieser Stelle sollten wir auch dafür sorgen, dass alle sequencflows dem
-            // neuen Prozess zugeordnet werden.
             newProcessAssociation = true;
-
             // Update the model as the relation ship may have changed
             modelState.reset();
         }
